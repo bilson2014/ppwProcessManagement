@@ -10,6 +10,8 @@
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
+	
+	<mvc:view-controller path="/textC" view-name="/activiti/createFlow" />
 
 	<context:annotation-config />
 
