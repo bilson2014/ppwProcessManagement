@@ -78,7 +78,7 @@ public class InputTeamDealLogTaskLisnter implements TaskListener {
 				dealLog.setLogType(1); // 出账
 				
 				// 获取 项目名称
-				PmsProjectFlow projectFlow = flowFacade.getProjectFlowByUniqueId(
+				PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProcessInstanceId(
 						new ArrayList<String>(Arrays.asList("projectName")), processInstanceId);
 				dealLog.setProjectName(projectFlow.getProjectName());
 
