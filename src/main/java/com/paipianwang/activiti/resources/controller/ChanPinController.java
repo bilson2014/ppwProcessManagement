@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.paipianwang.activiti.domin.BaseMsg;
 import com.paipianwang.activiti.resources.model.ChanpinSelection;
@@ -25,8 +26,8 @@ import com.paipianwang.pat.facade.product.entity.PmsProductModule;
 import com.paipianwang.pat.facade.product.service.PmsChanPinConfigurationFacade;
 import com.paipianwang.pat.facade.product.service.PmsChanPinFacade;
 
-@Controller
-@RequestMapping("chanPinflow")
+
+@RestController
 public class ChanPinController {
 	
 	@Autowired

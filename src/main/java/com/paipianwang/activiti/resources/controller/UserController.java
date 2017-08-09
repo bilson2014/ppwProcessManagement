@@ -1,5 +1,6 @@
 package com.paipianwang.activiti.resources.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,19 +14,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.paipianwang.activiti.utils.UserUtil;
+import com.paipianwang.pat.facade.user.entity.PmsUser;
+import com.paipianwang.pat.facade.user.service.PmsUserFacade;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
-
+	
 	@Autowired
 	private IdentityService identityService = null;
+	@Autowired
+	private final PmsUserFacade pmsUserFacade = null;
 
 	@RequestMapping("/logon")
 	public String logon(@PathParam("userName") String userName, @RequestParam("password") String password,
@@ -61,5 +67,14 @@ public class UserController {
 		session.removeAttribute("groups");
 		return "redirect:/login";
 		
+	}
+	
+	/**
+	 * 根据客户名搜索客户
+	 */
+	@RequestMapping("/search/info")
+	public List<PmsUser> getUserByName(@RequestBody final PmsUser user) {
+		List<PmsUser> users = pmsUserFacade.findUserByName(user);
+		return users != null ? users : new ArrayList<PmsUser>();
 	}
 }
