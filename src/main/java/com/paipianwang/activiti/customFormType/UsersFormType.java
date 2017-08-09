@@ -14,7 +14,6 @@ public class UsersFormType extends AbstractFormType{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "users";
 	}
 
@@ -28,7 +27,6 @@ public class UsersFormType extends AbstractFormType{
 	@SuppressWarnings("unchecked")
 	@Override
 	public String convertModelValueToFormValue(Object modelValue) {
-		// TODO Auto-generated method stub
 		if(modelValue != null) {
 			List<String> list = (List<String>) modelValue;
 			return DataUtils.listToString(list, ',');

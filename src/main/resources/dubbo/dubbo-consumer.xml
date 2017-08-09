@@ -18,6 +18,7 @@
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade" id="pmsProjectSynergyFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade" id="pmsProjectTeamFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectUserFacade" id="pmsProjectUserFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade" id="pmsProjectColumnShipFacade" retries="1" check="false" timeout="5000" />
 	
 	<!-- 人员接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.facade.right.service.PmsEmployeeFacade" id="pmsEmployeeFacade" retries="1" check="false" timeout="5000" />
