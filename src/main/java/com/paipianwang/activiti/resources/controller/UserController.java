@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.paipianwang.activiti.utils.UserUtil;
 import com.paipianwang.pat.facade.user.entity.PmsUser;
@@ -72,8 +74,10 @@ public class UserController {
 	/**
 	 * 根据客户名搜索客户
 	 */
-	@RequestMapping("/search/info")
+	@RequestMapping(value="/search/info",method = RequestMethod.POST)
+	@ResponseBody
 	public List<PmsUser> getUserByName(@RequestBody final PmsUser user) {
+		
 		List<PmsUser> users = pmsUserFacade.findUserByName(user);
 		return users != null ? users : new ArrayList<PmsUser>();
 	}
