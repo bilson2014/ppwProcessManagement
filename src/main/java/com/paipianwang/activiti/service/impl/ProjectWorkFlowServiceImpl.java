@@ -12,7 +12,10 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +31,9 @@ import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
+import com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
@@ -64,6 +69,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsProjectUserFacade projectUserFacade = null;
+
+	@Autowired
+	private PmsEmployeeSynergyFacade employeeSynergyFacade = null;
+
+	@Autowired
+	private PmsProjectGroupColumnShipFacade shipFacade = null;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -226,6 +237,39 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public String generateProjectId() {
 		return flowFacade.generateProjectId();
+	}
+
+	@Override
+	public Map<String, Object> getReadableColumns(User user, String taskId) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		String userId = user.getId();
+		List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
+		Map<String, List<String>> columns = shipFacade.getColumns(groups);
+		List<String> flowList = columns.get("PROJECT_FLOW");
+		List<String> teamList = columns.get("PROJECT_TEAM");
+		List<String> userList = columns.get("PROJECT_USER");
+		
+		Task task = (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
+		String instanceId = task.getProcessInstanceId();
+		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId).singleResult();
+		String projectId = instance.getBusinessKey();
+		
+		if (flowList != null) {
+			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
+			param.put("PROJECT_FLOW", projectFlow);
+		}
+
+		if (teamList != null) {
+			List<Map<String, Object>> projectTeam = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList, projectId);
+			param.put("PROJECT_TEAM", projectTeam);
+		}
+
+		if (userList != null) {
+			Map<String, Object> projectUser = projectUserFacade.getProjectUserColumnByProjectId(userList, projectId);
+			param.put("PROJECT_USER", projectUser);
+		}
+		
+		return param;
 	}
 
 }

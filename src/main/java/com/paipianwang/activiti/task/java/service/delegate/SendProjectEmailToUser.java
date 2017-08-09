@@ -13,7 +13,7 @@ public class SendProjectEmailToUser implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		// TODO Auto-generated method stub
-
+		System.err.println("向客户发送项目确认函");
 	}
 
 }

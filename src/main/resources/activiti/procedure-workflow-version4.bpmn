@@ -240,8 +240,8 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_samplecustomerPass == 'false'}]]></conditionExpression>
     </sequenceFlow>
     <serviceTask id="sid-76853896-9D0A-4855-90E0-9E2CA1891DB3" name="向客户发送验收函" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendAcceptanceToUser"></serviceTask>
-    <serviceTask id="sid-2F07B2EB-5814-40AC-890B-696C5740555B" name="向供应商发送修改表" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendProjectProduceEmailToTeam"></serviceTask>
-    <serviceTask id="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7" name="向供应商发送修改表" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendProjectProduceEmailToTeam"></serviceTask>
+    <serviceTask id="sid-2F07B2EB-5814-40AC-890B-696C5740555B" name="向供应商发送修改表" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendSuggestionEmailToTeam"></serviceTask>
+    <serviceTask id="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7" name="向供应商发送修改表" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendSuggestionEmailToTeam"></serviceTask>
     <serviceTask id="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26" name="向供应商发送验收函" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendAcceptanceToTeam"></serviceTask>
     <sequenceFlow id="sid-A0D48D81-A9DB-485C-8F74-B94A61051DFC" sourceRef="sid-0EC05FB2-76D3-4042-A0D5-FC3CB41F4833" targetRef="sid-75B324FE-95AC-492E-B78A-BD82DDB83E74">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_projectmarketPass == 'true'}]]></conditionExpression>
