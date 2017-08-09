@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONArray;
 import com.paipianwang.activiti.domin.BaseMsg;
 import com.paipianwang.activiti.resources.model.ChanpinSelection;
 import com.paipianwang.pat.common.entity.DataGrid;
+import com.paipianwang.pat.common.enums.UserLevel;
 import com.paipianwang.pat.common.util.JsonUtil;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.facade.indent.entity.IndentSource;
 import com.paipianwang.pat.facade.product.entity.PmsChanPin;
 import com.paipianwang.pat.facade.product.entity.PmsChanPinConfiguration;
 import com.paipianwang.pat.facade.product.entity.PmsChanPinConfiguration_ProductModule;
@@ -93,6 +95,27 @@ public class ChanPinController {
 		result.put("chanpin", chanpin);
 		//产品配置-第一条产品下
 //		setConfigByChanpinAndConfig(result,allScene.getRows().get(0).getChanpinId(),null);
+		
+		//暂时
+		//项目来源
+		List<Map<String,Object>> emlist=new ArrayList<Map<String,Object>>();
+		for(IndentSource source:IndentSource.values()){
+			Map<String,Object> map=new HashMap<>();
+			map.put("id", source.getValue());
+			map.put("text",source.getName());
+			emlist.add(map);
+		}
+		result.put("resource", emlist);
+		//客户评级
+		List<Map<String,Object>> clientLevel=new ArrayList<Map<String,Object>>();
+		for(UserLevel level:UserLevel.values()){
+			Map<String,Object> map=new HashMap<>();
+			map.put("id", level.getId());
+			map.put("text",level.getText());
+			clientLevel.add(map);
+		}
+		result.put("clientLevel", clientLevel);
+		
 		BaseMsg baseMsg = new BaseMsg();
 		baseMsg.setCode(BaseMsg.NORMAL);
 		baseMsg.setResult(result);
