@@ -61,8 +61,9 @@
         <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string"></activiti:formProperty>
         <activiti:formProperty id="pt_planContent" name="供应商策划内容" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_planTime" name="供应商策划交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
-        <activiti:formProperty id="teamPlanId" name="策划供应商" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="pt_teamType" name="供应商类别" type="string" default="scheme" readable="false" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_accessManTelephone" name="对接人联系方式" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_teamId" name="供应商表ID" type="string" required="true"></activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${allotPlanTeamTaskLisnter}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <userTask id="sid-E04DE940-F8C8-4FD8-A22E-5232BD03D585" name="【策划】上传策划方案" activiti:assignee="${schemeId}">
@@ -100,14 +101,10 @@
     <userTask id="sid-E08726E1-EF7C-4743-A198-C4F837ED2A8D" name="【财务】填写收款信息" activiti:assignee="${financeId}">
       <extensionElements>
         <activiti:formProperty id="dl_billNo" name="订单编号" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_dealStatus" name="支付状态" type="long" default="1" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_payChannel" name="支付通道" type="string" default="下线转账" readable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_payTime" name="交易时间" type="date" datePattern="MM-dd-yyyy hh:mm:ss" required="true"></activiti:formProperty>
+        <activiti:formProperty id="dl_payTime" name="付款时间" type="date" datePattern="yyyy-MM-dd hh:mm:ss" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_payPrice" name="交易金额" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_description" name="描述" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_userType" name="用户角色" type="string" default="role_customer" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_dealLogSource" name="交易来源" type="long" default="1" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_logType" name="出入账" type="long" default="0" required="true"></activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${inputCustomerDealLogTaskLisnter}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-5DC6AA72-7DF7-40D1-A0FE-4E1C9C7FE58F" sourceRef="sid-144D920F-9FC4-484A-ABBA-6B3456CC7EF8" targetRef="sid-E08726E1-EF7C-4743-A198-C4F837ED2A8D"></sequenceFlow>
@@ -117,15 +114,11 @@
         <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_budget" name="供应商预算" type="long" required="true"></activiti:formProperty>
-        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string"></activiti:formProperty>
-        <activiti:formProperty id="pt_teamType" name="供应商类型" type="enum" required="true">
-          <activiti:value id="策划" name="scheme"></activiti:value>
-          <activiti:value id="制作" name="produce"></activiti:value>
-        </activiti:formProperty>
+        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string" readable="false" writable="false"></activiti:formProperty>
         <activiti:formProperty id="pt_makeContent" name="供应商制作内容" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_makeTime" name="项目制作交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_teamId" name="供应商唯一编号" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="teamProductId" name="分配供应商" type="string"></activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${allotProductTeamTaskLisnter}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-69CBF4D5-EF14-4800-AD82-60A53D21ADBB" sourceRef="sid-E08726E1-EF7C-4743-A198-C4F837ED2A8D" targetRef="sid-DA933A95-3A81-4D57-AC41-B2C9DE77CB90"></sequenceFlow>
@@ -139,7 +132,7 @@
     <sequenceFlow id="sid-C2C19BE4-6CAE-44EE-9AF1-6B2AF733B771" sourceRef="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" targetRef="sid-F14FA24E-C36B-4E3F-AFB9-435EDCE3A6D2"></sequenceFlow>
     <userTask id="sid-71F2FB2E-D883-43B1-942E-17197259FDCF" name="【销售】填写客户预算信息" activiti:assignee="${applyUserId}">
       <extensionElements>
-        <activiti:formProperty id="pf_projectBudget" name="项目预算（客户）" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pf_projectBudget" name="项目预算（客户）" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pu_appointedTime" name="客户启动函约定付款时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pu_deliveryTime" name="客户启动函项目交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
       </extensionElements>
@@ -180,17 +173,17 @@
     <userTask id="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A" name="【财务】填写付款信息" activiti:assignee="${financeId}">
       <extensionElements>
         <activiti:formProperty id="dl_billNo" name="订单编号" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_dealStatus" name="支付状态" type="long" default="1" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_payChannel" name="支付通道" type="string" default="下线转账" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_payTime" name="交易时间" type="date" datePattern="MM-dd-yyyy hh:mm:ss" required="true"></activiti:formProperty>
+        <activiti:formProperty id="dl_payTime" name="付款时间" type="date" datePattern="yyyy-MM-dd hh:mm:ss" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_payPrice" name="交易金额" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_description" name="描述" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_userType" name="用户角色" type="string" default="role_customer" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_dealLogSource" name="交易来源" type="long" default="1" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_logType" name="出入账" type="long" default="1" required="true"></activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${inputTeamDealLogTaskLisnter}"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <endEvent id="sid-1C13175F-35F8-41AC-92A1-4E14A4DA5353"></endEvent>
+    <endEvent id="sid-1C13175F-35F8-41AC-92A1-4E14A4DA5353">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.paipianwang.activiti.task.listener.EndProjectEventListener"></activiti:executionListener>
+      </extensionElements>
+    </endEvent>
     <sequenceFlow id="sid-13257F2C-4CBF-4F30-8247-5B7AABF64A09" sourceRef="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A" targetRef="sid-1C13175F-35F8-41AC-92A1-4E14A4DA5353"></sequenceFlow>
     <userTask id="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" name="【销售】上传验收函回复确认截图" activiti:assignee="${applyUserId}">
       <extensionElements>
@@ -202,10 +195,10 @@
       <extensionElements>
         <activiti:formProperty id="pt_actualPrice" name="供应商实际价格" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_invoiceHead" name="发票抬头" type="enum" required="true">
-          <activiti:value id="0" name="北京攀峰文化传播有限公司"></activiti:value>
-          <activiti:value id="1" name="北京拍片乐科技有限公司"></activiti:value>
+          <activiti:value id="北京攀峰文化传播有限公司" name="北京攀峰文化传播有限公司"></activiti:value>
+          <activiti:value id="北京拍片乐科技有限公司" name="北京拍片乐科技有限公司"></activiti:value>
         </activiti:formProperty>
-        <activiti:formProperty id="pt_projectTeamId" name="供应商编号" type="long" default="${teamProductId}" readable="false" writable="false" required="true"></activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${inputProduceTeamPayInfoListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-E1D6E3D2-F661-4C5B-8F92-2C06F3E07B03" sourceRef="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" targetRef="sid-BD751F20-4015-4B78-BD57-132E9B4344FB"></sequenceFlow>

@@ -9,7 +9,6 @@ import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,13 +40,6 @@ public class ProviderConfirmFileToAuditTaskListener implements TaskListener {
 		String applyUserId = (String) delegateTask.getVariable("applyUserId");
 		if(StringUtils.isNotBlank(applyUserId)) 
 			users.add(applyUserId);
-		
-		StringBuffer sb = new StringBuffer();
-		for(int num = 0; num < users.size(); num ++) {
-			sb.append(users.get(num));
-			if(num < (users.size() - 1))
-				sb.append(",");
-		}
 		
 		delegateTask.setVariable("users", users);
 	}

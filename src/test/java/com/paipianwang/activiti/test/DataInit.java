@@ -179,6 +179,16 @@ public class DataInit extends BaseTest {
 		group.setType("assignment");
 		identityService.saveGroup(group);
 
+		/*group = identityService.newGroup("teamGroup");
+		group.setName("供应商");
+		group.setType("assignment");
+		identityService.saveGroup(group);*/
+		
+		group = identityService.newGroup("customerGroup");
+		group.setName("客户");
+		group.setType("assignment");
+		identityService.saveGroup(group);
+
 		User user = identityService.newUser("36");
 		user.setEmail("test@paipianwang.cn");
 		user.setFirstName("test");
@@ -245,6 +255,24 @@ public class DataInit extends BaseTest {
 		user.setFirstName("youwen");
 		user.setPassword("000000");
 		identityService.saveUser(user);
+		
+		user = identityService.newUser("30");
+		user.setEmail("liufeng@paipianwang.cn");
+		user.setFirstName("liufeng");
+		user.setPassword("000000");
+		identityService.saveUser(user);
+		
+		user = identityService.newUser("73");
+		user.setEmail("yangwei@paipianwang.cn");
+		user.setFirstName("yangwei");
+		user.setPassword("000000");
+		identityService.saveUser(user);
+		
+		user = identityService.newUser("32");
+		user.setEmail("lihonglei@paipianwang.cn");
+		user.setFirstName("lihonglei");
+		user.setPassword("000000");
+		identityService.saveUser(user);
 
 		// 销售总监 -- 虎哥
 		identityService.createMembership("35", "saleDirector");
@@ -264,68 +292,10 @@ public class DataInit extends BaseTest {
 		identityService.createMembership("71", "teamPurchase");
 
 		// 策划供应商 -- team_001 panfeng
-
+		
 		// 制作供应商 -- team_002 youwen
-
-	}
-
-	@Test
-	public void test() {
-		// 供应商
-		User user = identityService.newUser("team_001");
-		user.setEmail("plan@paipianwang.cn");
-		user.setFirstName("panfeng");
-		user.setPassword("000000");
-		identityService.saveUser(user);
-
-		user = identityService.newUser("team_002");
-		user.setEmail("product@paipianwang.cn");
-		user.setFirstName("youwen");
-		user.setPassword("000000");
-		identityService.saveUser(user);
-	}
-
-	@Test
-	public void testGroup() {
-		Group group = identityService.newGroup("teamDirector");
-		group.setName("供应商总监");
-		group.setType("assignment");
-		identityService.saveGroup(group);
-
-		group = identityService.newGroup("financeDirector");
-		group.setName("财务总监");
-		group.setType("assignment");
-		identityService.saveGroup(group);
-
-		group = identityService.newGroup("customerDirector");
-		group.setName("客服总监");
-		group.setType("assignment");
-		identityService.saveGroup(group);
-	}
-	
-	@Test
-	public void testUser() {
-		User user = identityService.newUser("30");
-		user.setEmail("liufeng@paipianwang.cn");
-		user.setFirstName("liufeng");
-		user.setPassword("000000");
-		identityService.saveUser(user);
 		
-		user = identityService.newUser("73");
-		user.setEmail("yangwei@paipianwang.cn");
-		user.setFirstName("yangwei");
-		user.setPassword("000000");
-		identityService.saveUser(user);
 		
-		user = identityService.newUser("32");
-		user.setEmail("lihonglei@paipianwang.cn");
-		user.setFirstName("lihonglei");
-		user.setPassword("000000");
-		identityService.saveUser(user);
-	}
-	
-	@Test
-	public void testUserMerber() {
 		// 供应商总监 -- 刘峰
 		identityService.createMembership("30", "teamDirector");
 		
@@ -334,6 +304,7 @@ public class DataInit extends BaseTest {
 		
 		// 客服总监 -- 闫雪琴
 		identityService.createMembership("33", "customerDirector");
+
 	}
 	
 }
