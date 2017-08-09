@@ -25,5 +25,11 @@
 	
 	<!-- 财务接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.facade.finance.service.PmsFinanceFacade" id="pmsFinanceFacade" retries="1" check="false" timeout="5000" />
+	<!--作品服务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsChanPinConfigurationFacade" id="pmsChanPinConfigurationFacade" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsChanPinFacade" id="pmsChanPinFacade" check="false" timeout="5000" />
+	<!--用户服务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.user.service.PmsUserFacade" id="pmsUserFacade" check="false" timeout="10000" />
+	
 </beans>
 
