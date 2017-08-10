@@ -302,7 +302,7 @@ function initAutoChoose(){
 		 var level = $(this).attr('data-clientLevel');
 		 $('#pu_userName').val(name);
 		 $('#pu_userName').attr('data-id',id);
-		 $('#pu_userId').attr('data-id',id);
+		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
 		 getValue(level);
