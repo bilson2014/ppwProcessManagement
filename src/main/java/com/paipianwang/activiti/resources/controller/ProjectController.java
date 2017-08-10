@@ -1,6 +1,5 @@
 package com.paipianwang.activiti.resources.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
-import org.activiti.engine.form.AbstractFormType;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.User;
