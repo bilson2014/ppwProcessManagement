@@ -1,17 +1,17 @@
 package com.paipianwang.activiti.resources.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paipianwang.activiti.domin.BaseMsg;
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 @RestController
 @RequestMapping("/synergy")
@@ -37,13 +37,44 @@ public class SynergyController {
 		BaseMsg msg = new BaseMsg();
 		
 		Map<String, Object> memberGroup = new HashMap<String, Object>();
-		List<Group> groups = identityService.createGroupQuery().list();
-		// 遍历groups 取出对应的角色
-		if(groups != null && !groups.isEmpty()) {
-			
-		}
-		List<Group> list = new ArrayList<Group>();
 		
+		// 客户总监
+		List<User> customerDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.customerDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.customerDirector.getId(), customerDirectors);
 		
+		// 销售总监
+		List<User> saleDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.saleDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.saleDirector.getId(), saleDirectors);
+		
+		// 创意总监
+		List<User> creativityDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.creativityDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.creativityDirector.getId(), creativityDirectors);
+		
+		// 监制总监
+		List<User> superviseDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.superviseDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.superviseDirector.getId(), superviseDirectors);
+		
+		// 供应商总监
+		List<User> teamDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.teamDirector.getId(), teamDirectors);
+		
+		// 供应商管家
+		List<User> teamProviders = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamProvider.getId()).list();
+		memberGroup.put(ProjectRoleType.teamProvider.getId(), teamProviders);
+		
+		// 供应商采购
+		List<User> teamPurchases = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamPurchase.getId()).list();
+		memberGroup.put(ProjectRoleType.teamPurchase.getId(), teamPurchases);
+		
+		// 财务总监
+		List<User> financeDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.financeDirector.getId()).list();
+		memberGroup.put(ProjectRoleType.financeDirector.getId(), financeDirectors);
+		
+		// 财务出纳
+		List<User> finances = identityService.createUserQuery().memberOfGroup(ProjectRoleType.finance.getId()).list();
+		memberGroup.put(ProjectRoleType.finance.getId(), finances);
+		
+		msg.setResult(msg);
+		return msg;
 	}
 }
