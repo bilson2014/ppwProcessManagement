@@ -189,55 +189,55 @@ public class DataInit extends BaseTest {
 		group.setType("assignment");
 		identityService.saveGroup(group);
 
-		User user = identityService.newUser("36");
+		User user = identityService.newUser("employee_36");
 		user.setEmail("test@paipianwang.cn");
 		user.setFirstName("test");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("35");
+		user = identityService.newUser("employee_35");
 		user.setEmail("huge@paipianwang.cn");
 		user.setFirstName("huge");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("72");
+		user = identityService.newUser("employee_72");
 		user.setEmail("liuchao@paipianwang.cn");
 		user.setFirstName("liuchao");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("33");
+		user = identityService.newUser("employee_33");
 		user.setEmail("yanxueqin@paipianwang.cn");
 		user.setFirstName("yanxueqin");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("25");
+		user = identityService.newUser("employee_25");
 		user.setEmail("wangyi@paipianwang.cn");
 		user.setFirstName("wangyi");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("68");
+		user = identityService.newUser("employee_68");
 		user.setEmail("zhanggaoge@paipianwang.cn");
 		user.setFirstName("zhanggaoge");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("69");
+		user = identityService.newUser("employee_69");
 		user.setEmail("guofang@paipianwang.cn");
 		user.setFirstName("guofang");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("70");
+		user = identityService.newUser("employee_70");
 		user.setEmail("zhangxiaoran@paipianwang.cn");
 		user.setFirstName("zhangxiaoran");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
-		user = identityService.newUser("71");
+		user = identityService.newUser("employee_71");
 		user.setEmail("chenjingna@paipianwang.cn");
 		user.setFirstName("chenjingna");
 		user.setPassword("000000");
@@ -256,40 +256,40 @@ public class DataInit extends BaseTest {
 		user.setPassword("000000");
 		identityService.saveUser(user);
 		
-		user = identityService.newUser("30");
+		user = identityService.newUser("employee_30");
 		user.setEmail("liufeng@paipianwang.cn");
 		user.setFirstName("liufeng");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 		
-		user = identityService.newUser("73");
+		user = identityService.newUser("employee_73");
 		user.setEmail("yangwei@paipianwang.cn");
 		user.setFirstName("yangwei");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 		
-		user = identityService.newUser("32");
+		user = identityService.newUser("employee_32");
 		user.setEmail("lihonglei@paipianwang.cn");
 		user.setFirstName("lihonglei");
 		user.setPassword("000000");
 		identityService.saveUser(user);
 
 		// 销售总监 -- 虎哥
-		identityService.createMembership("35", "saleDirector");
+		identityService.createMembership("employee_35", "saleDirector");
 		// 创意总监 -- 刘超
-		identityService.createMembership("72", "creativityDirector");
+		identityService.createMembership("employee_72", "creativityDirector");
 		// 监制总监 -- 张高哥
-		identityService.createMembership("68", "superviseDirector");
+		identityService.createMembership("employee_68", "superviseDirector");
 		// 供应商管家 -- 王壹
-		identityService.createMembership("25", "teamProvider");
+		identityService.createMembership("employee_25", "teamProvider");
 		// 策划 -- 张晓冉
-		identityService.createMembership("70", "scheme");
+		identityService.createMembership("employee_70", "scheme");
 		// 财务 -- 郭芳
-		identityService.createMembership("69", "finance");
+		identityService.createMembership("employee_69", "finance");
 		// 监制 -- 闫雪琴
-		identityService.createMembership("33", "supervise");
+		identityService.createMembership("employee_33", "supervise");
 		// 供应商采购 -- 陈景娜
-		identityService.createMembership("71", "teamPurchase");
+		identityService.createMembership("employee_71", "teamPurchase");
 
 		// 策划供应商 -- team_001 panfeng
 		
@@ -297,13 +297,13 @@ public class DataInit extends BaseTest {
 		
 		
 		// 供应商总监 -- 刘峰
-		identityService.createMembership("30", "teamDirector");
+		identityService.createMembership("employee_30", "teamDirector");
 		
 		// 财务总监 -- 杨巍
-		identityService.createMembership("73", "financeDirector");
+		identityService.createMembership("employee_73", "financeDirector");
 		
 		// 客服总监 -- 闫雪琴
-		identityService.createMembership("33", "customerDirector");
+		identityService.createMembership("employee_33", "customerDirector");
 
 	}
 	
