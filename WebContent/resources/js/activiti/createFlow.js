@@ -29,8 +29,9 @@ function initAllSelectEven(){
 	initSelect();
 	initMultSelect();
 	productConfigLengthEven();
-	initProductEven();
 	timePriceEven();
+	$('#setProduct li').off('click');
+	initProductEven();
 }
 
 function dataEven(){
@@ -408,9 +409,9 @@ function getSynInfo(){
 					var html =createOption(finances[int].id,finances[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			initAllSelectEven();
 		}		
-		initSelect();
+		initAllSelectEven();
 	}, getContextPath() + '/synergy/memberGroup',null);	
 }
 
@@ -503,7 +504,7 @@ function getProduct(){
 					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
 				body.append(html);
 			};
-			initAllSelectEven();
+			initProductEven();
 		}
 		var body = $('#pResour');
 		body.html('');

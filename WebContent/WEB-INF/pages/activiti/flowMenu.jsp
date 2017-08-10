@@ -74,13 +74,13 @@
 	              <div class="treeitem" id="myOrder">
 	                  <div class="orderList"></div>
 	                  <div class="title">订单列表</div>
-	                  <img src="${imgPath}/flow/more.png">
+	                <%--   <img src="${imgPath}/flow/more.png"> --%>
 	             </div>
-	              <ul class="productList" id="orderList">
+<!-- 	              <ul class="productList" id="orderList">
 	                  <li>处理中</li>
 	                  <li>已提交</li>
 	                  <li>无效订单</li>
-	              </ul>
+	              </ul> -->
 	              <div class="treeitem">
 	                  <div class="save"></div>
 	                  <div class="title">收藏列表</div>

@@ -5,11 +5,6 @@ $().ready(function() {
 	initMenuEven();
 });
 
-function init(){
-
-	
-}
-
 function initMenuEven(){
 	
 	$('#myPro').off('click').on('click',function(){
@@ -25,7 +20,7 @@ function initMenuEven(){
 		 }
 	});
 	
-	$('#myOrder').off('click').on('click',function(){
+/*	$('#myOrder').off('click').on('click',function(){
 		var nThis = $(this);
 		 if($(this).hasClass('open')){
 			 nThis.removeClass('open');
@@ -36,7 +31,7 @@ function initMenuEven(){
 			 $('#productList').slideUp();
 			 $('#orderList').slideDown();
 		 }
-	});
+	});*/
 
 	$('.productList li').off('click').on('click',function(){
                $('.productList li').removeClass('checkLi');
