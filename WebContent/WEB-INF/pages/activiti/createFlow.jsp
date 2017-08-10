@@ -88,6 +88,7 @@
 	                  <div class="smallItem errorItem" id="productIdError">
 	                       <div class="itemTitle" >产品线<span>*</span></div>
 	                       <input type="hidden" id="pf_productId" name="pf_productId"/>
+	                       <input type="hidden" id="pf_productName" name="pf_productName"/>
 	                       <div class="orderSelect" >
 				                <div id="productId"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -279,6 +280,10 @@
 					                </ul>    
 						      </div>
 		                 </div>
+		                 <div class="midItem errorItem" id="emailError">
+		                       <div class="itemTitle">邮箱地址<span>*</span></div>
+		                       <input id="pu_email"/>
+		                 </div> 
 	                
 		           </div>
 		     </div> 
