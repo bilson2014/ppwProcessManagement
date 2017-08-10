@@ -71,7 +71,7 @@ public class PorjectFlowController extends BaseController {
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
 		// TODO 获取数据
-		Map<String, Object> formProperties = new HashMap<String, Object>();
+		Map<String, String> formProperties = new HashMap<String, String>();
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
 		
@@ -82,7 +82,6 @@ public class PorjectFlowController extends BaseController {
 			}
 		}
 		
-
 		Map<String, Object> properties = DataUtils.divideFlowData(formProperties);
 
 		logger.debug("start form parameters: {}", properties);
@@ -94,7 +93,7 @@ public class PorjectFlowController extends BaseController {
 		}
 
 		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(processDefinitionId,
-				null, user.getId(), properties);
+				formProperties, user.getId(), properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");
