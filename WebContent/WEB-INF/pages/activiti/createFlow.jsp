@@ -282,7 +282,7 @@
 		                 </div>
 		                 <div class="midItem errorItem" id="emailError">
 		                       <div class="itemTitle">邮箱地址<span>*</span></div>
-		                       <input id="pu_email"/>
+		                       <input id="pu_email" name="pu_email"/>
 		                 </div> 
 	                
 		           </div>

@@ -157,7 +157,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			}
 
 			identityService.setAuthenticatedUserId(userId);
-			processInstance = formService.submitStartFormData(processDefinitionId, String.valueOf(projectId),
+			processInstance = formService.submitStartFormData(processDefinitionId, projectId,
 					formProperties);
 
 			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
