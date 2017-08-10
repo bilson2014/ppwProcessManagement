@@ -37,10 +37,10 @@ function initAllSelectEven(){
 }
 
 function dataEven(){
-	$("#pf_createDate").datepicker({
+/*	$("#pf_createDate").datepicker({
 		language: 'zh',
 		dateFormat:'yyyy-MM-dd'
-     });	
+     });*/	
 }
 
 function checkInfo(){
@@ -80,8 +80,6 @@ function checkInfo(){
 	}else{
 		$('#pf_projectSource').val(projectSource);
 	}
-	
-	
 	if(productId == undefined || productId == "" || productId ==null ){
 		$('#productIdError').attr('data-content','产品线未填写');
 		return false;
@@ -250,8 +248,8 @@ function initMultSelect(){
 		}
 		 realPrice = parseInt(realPrice) +  parseInt(totalPrice) +  parseInt(timePrice);
 		 $('#estimatedPrice').val(realPrice);
-		 $('#productConfigAdditionalPackageIds').text(multInfo);
-		 $('#productConfigAdditionalPackageIds').attr('data-id',multID);
+		 $('#pf_productConfigAdditonalPackageName').val(multInfo);
+		 $('#pf_productConfigAdditionalPackageIds').attr('data-id',multID);
 		 var id = $(this).attr('data-id');
 		 var multInfo = $('#multInfo').text();
 	});
