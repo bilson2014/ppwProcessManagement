@@ -101,7 +101,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				for (Entry<String, Object> entry : synergyMap.entrySet()) {
 					String activitiRole = entry.getKey();
 					PmsProjectSynergy synergy = new PmsProjectSynergy();
-					synergy.setEmployeeId(Integer.getInteger(entry.getValue().toString().split("_")[1]));
+					synergy.setEmployeeId(Integer.parseInt(entry.getValue().toString().split("_")[1]));
 					synergy.setProjectId(projectId);
 					if (ProjectRoleType.customerDirector.getId().equals(activitiRole)) {
 						// 客服总监
