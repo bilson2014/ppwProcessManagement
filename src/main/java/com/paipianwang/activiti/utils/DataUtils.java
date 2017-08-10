@@ -22,12 +22,12 @@ public class DataUtils {
 	 * 
 	 * @return
 	 */
-	public static Map<String, Object> divideFlowData(Map<String, Object> form) {
+	public static Map<String, Object> divideFlowData(Map<String, String> form) {
 		Map<String, Object> flowData = new HashMap<String, Object>();
 		Map<String, Object> flowMap = new HashMap<String, Object>();
 		Map<String, Object> synergyMap = new HashMap<String, Object>();
 		Map<String, Object> userMap = new HashMap<String, Object>();
-		for (final Entry<String, Object> entry : form.entrySet()) {
+		for (final Entry<String, String> entry : form.entrySet()) {
 			String key = entry.getKey();
 
 			// PROJECT_FLOW 项目信息

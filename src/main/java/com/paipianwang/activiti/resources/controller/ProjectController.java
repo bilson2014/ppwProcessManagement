@@ -272,8 +272,8 @@ public class ProjectController {
 		return mv;
 	}
 
-	public Map<String, Object> initData() {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, String> initData() {
+		Map<String, String> map = new HashMap<String, String>();
 
 		// project_flow
 		map.put("pf_projectId", prjectWorkFlowService.generateProjectId());
@@ -281,30 +281,23 @@ public class ProjectController {
 		map.put("pf_projectSource", "线上电销");
 		map.put("pf_projectGrade", "A");
 		map.put("pf_projectDescription", "创建第一个项目");
-		map.put("pf_productId", 43);
-		map.put("pf_productConfigLevelId", 101);
+		map.put("pf_productId", "43");
+		map.put("pf_productConfigLevelId", "101");
 		map.put("pf_productConfigLevelName", "制作设备");
 		map.put("pf_productConfigLength", "3分钟");
 		map.put("productConfigAdditionalPackageIds", "1,2");
 		map.put("productConfigAdditionalPackageName", "音乐包,导演包");
 		map.put("pf_filmDestPath", "http://www.apaipian.com/play/9_7.html");
-		map.put("pf_projectBudget", 59800);
-		map.put("pf_estimatedPrice", 40000);
+		map.put("pf_projectBudget", "59800");
+		map.put("pf_estimatedPrice", "40000");
 
 		// project_synergy
-		map.put("ps_employeeId", 52);
+		map.put("ps_employeeId", "52");
 		map.put("ps_employeeName", "liting");
 		map.put("ps_employeeGroup", "scheme");
 
-		// project_team
-		map.put("pt_teamId", 774);
-		map.put("pt_teamName", "拍片网");
-		map.put("pt_linkman", "莉莉");
-		map.put("pt_telephone", "13001288066");
-		map.put("pt_email", "lily@paipianwang.cn");
-
 		// project_user
-		map.put("pu_userId", 214);
+		map.put("pu_userId", "214");
 		map.put("pu_userName", "小王LOL有限公司");
 		map.put("pu_linkman", "王留成");
 		map.put("pu_telephone", "18511631610");
