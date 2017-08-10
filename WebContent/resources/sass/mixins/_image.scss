@@ -1,0 +1,35 @@
+
+@mixin img-responsive($display: block) {
+  display: $display;
+  max-width: 100%; // Part 1: Set a maximum relative to the parent
+  height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+
+@mixin img-auto-width-height($size: 3){
+	width: ($width-min - ($video-margin * ($size - 1))) / $size - 1px;
+	height: (($width-min - ($video-margin * ($size - 1))) / $size - 1px) * 9 / 16;
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: ($width-middle - ($video-margin * ($size - 1))) / $size - 1px;
+		height: (($width-middle - ($video-margin * ($size - 1))) / $size - 1px) * 9 / 16;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: ($width-lg - ($video-margin * ($size - 1))) / $size - 1px;
+		height: (($width-lg - ($video-margin * ($size - 1))) / $size - 1px) * 9 / 16;
+	}
+}
+
+@mixin memeber_img_width() {
+	width: $member-img-mid;
+	height: $member-img-mid;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: $member-img-mid;
+		height: $member-img-mid; 
+	}
+
+	@media screen and (min-width: 1500px){
+		width: $member-img-lg;
+		height: $member-img-lg;
+	}
+}

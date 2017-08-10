@@ -1,0 +1,100 @@
+// Pagination
+//
+// Set pagination style
+@mixin pagination-link($font-color: $gray-light,$hover-font-color: $gray-light,
+	$border-color: $gray-border,$hover-border-color: $gray-light,$radius: $border-radius){
+	a{
+		display: inline-block;
+		color: $font-color;
+		border: 1px solid $border-color;
+		border-radius: $radius;
+		vertical-align: middle;
+
+		&:hover{
+			text-decoration: none;
+			text-decoration: none;
+			color: $hover-font-color;
+			border: 1px solid $hover-border-color;
+		}
+	}
+}
+
+@mixin pagination-span($active-color: $white,$disabled-color: $gray-light,
+	$bg-color: $red-base,$disabled-bg-color: #f2f2f2,
+	$border-color: $red-base,$disabled-border-color: $gray-border,$radius: $border-radius){
+	span.current{
+		display: inline-block;
+		color: $active-color;
+		background-color: $bg-color;
+		border: 1px solid $border-color;
+		border-radius: $radius;
+		vertical-align: middle;
+	}
+	
+	span.disabled{
+		color: $disabled-color;
+		background: $disabled-bg-color;
+		border: 1px solid $disabled-border-color;
+		border-radius: $radius;
+		vertical-align: middle;
+	}
+}
+
+// Pagination
+//
+// Set pagination style
+@mixin pagination($unable-color: $gray-light,$font-color: $gray-light,
+					$border-radius: 4px,$hover-border-color: $gray-light,
+					$active-color: $white)
+{
+	padding: 15px 20px;
+	color: $font-color;
+	text-align:center;
+	margin: 0 auto;
+
+	a{
+		display: inline-block;
+		color: $font-color;
+		display: inline-block;
+		height: 28px;
+		line-height: 28px;
+		padding: 0 10px;
+		border: 1px solid $gray-border;
+		margin: 0 2px;
+		border-radius: $border-radius;
+		vertical-align: middle;
+
+		&:hover{
+			text-decoration: none;
+			text-decoration: none;
+			color: $gray-light;
+			border: 1px solid $hover-border-color;
+		}
+	}
+	
+	span.current{
+		display: inline-block;
+		height: 28px;
+		line-height: 28px;
+		padding: 0 10px;
+		margin: 0 2px;
+		color: $active-color;
+		background-color: $red-base;
+		border: 1px solid $red-base;
+		border-radius: $border-radius;
+		vertical-align: middle;
+	}
+	
+	span.disabled{
+		display: inline-block;
+		height: 28px;
+		line-height: 28px;
+		padding: 0 10px;
+		margin: 0 2px;
+		color: $gray-light;
+		background: #f2f2f2;
+		border: 1px solid $gray-border;
+		border-radius: 4px;
+		vertical-align: middle;
+	}
+}

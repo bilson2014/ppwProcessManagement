@@ -1,0 +1,138 @@
+/*！
+	Header Style
+*/
+@import "compass/typography/text/ellipsis";
+
+
+a:link{text-decoration:none;}
+a:visited{text-decoration:none;}
+a:active{text-decoration:none;}
+
+.nav a {
+	text-decoration: none;
+	outline: none;
+	@include border-radius($border-radius);
+
+	&:hover {
+		//color: $red-base;
+		//background-color: lighten($gray-light,33%);
+	}
+}
+
+.nav .logo {
+	position: relative;
+	float: left;
+	top: 14px;
+	background: url(../images/common/logo.svg) no-repeat;
+	//margin-top: -4px;
+	width: 92px;
+	height: 30px;
+	margin-right: 76px;
+
+	h1 {
+		text-indent: -119988px;
+		overflow: hidden;
+		text-align: left;
+	}
+}
+
+.header-item {
+	position: relative;
+	float: left;
+	color: $black-light;
+	line-height: $header-height;
+	text-align: center;
+	font-size: $font-size-base;
+	margin-right: 26px;
+	width: $header-item-width;
+	overflow: hidden;
+    @include ellipsis;
+	cursor: pointer;
+	transition: all .8s ease-in-out 0s;	
+}
+
+.login-item {
+	color: $red-light;
+	font-weight: 500;
+	margin-right: 26px;
+
+
+}
+
+#shelper {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	
+	text-indent: 8px;
+	//background: #fff;
+	z-index: 999;
+	display: none; 
+	font-size: $font-size-base;
+	background-color: $white;
+
+	min-width: $header-search-box-min;
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		min-width: $header-search-box;
+	}
+
+	@media screen and (min-width: 1500px){
+		min-width: $header-search-box-max; 
+	}
+}
+
+#banner-search #shelper {
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	
+	text-indent: 8px;
+	text-align: left;
+	z-index: 999;
+	display: none; 
+	font-size: $font-size-base;
+	background:rgba(255, 255, 255, 0) none repeat scroll 0 0 !important;
+	filter:Alpha(opacity=0); background:#fff;
+    -moz-opacity:0;
+    -khtml-opacity: 0;
+    color: #ccc;
+	width: $banner-search-width;
+}
+
+.shelper-lucency {
+	border-left: 1px solid lighten(#ccc,10%);
+	border-right: 1px solid lighten(#ccc,10%);
+	border-bottom: 1px solid lighten(#ccc,10%);
+	color: $gray;
+	@include box-shadow(1px 1px 3px #ededed);
+}
+
+#banner-search .shelper-lucency {
+	border-left: 1px solid lighten(#ccc,10%);
+	border-right: 1px solid lighten(#ccc,10%);
+	border-bottom: 1px solid lighten(#ccc,10%);
+	color: $gray;
+	@include box-shadow(0 0 0 lighten(#ccc,10%));
+}
+
+.shelper-opacity {
+	border-left: 1px solid rgba(173,173,173,0.8);
+	border-right: 1px solid rgba(173,173,173,0.8);
+	border-bottom: 1px solid rgba(173,173,173,0.8);
+	background-color: #fff;
+	color: #666;
+}
+
+#shelper li {
+	padding: 0;
+	line-height: 22px;
+	cursor: pointer;
+	width: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+#shelper .on{ background:#f0f0f0;}
+
+#banner-search #shelper .on{ background:lighten(#ccc,40%);}

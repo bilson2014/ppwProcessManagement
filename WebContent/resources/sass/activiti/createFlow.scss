@@ -1,0 +1,294 @@
+        @import "common";
+        @import "buttons";
+        @import "video";
+        @import "orderSelect";
+        @import "compass/typography/text/ellipsis";
+
+        body {
+            background: $border-line !important;
+        }
+
+        input,
+        textarea {
+            outline: none;
+            resize: none;
+        }
+
+        .page {
+            @include media_screen_width_beta3();
+            margin: 0 auto;
+            background: white !important;
+            position: relative;
+            border-radius: 4px;
+            padding-bottom: 60px;
+            margin-top: 30px;
+            margin-bottom: 60px;
+        }
+
+        .title {
+            height: 53px;
+            line-height: 53px;
+            font-size: $font-size;
+            color: $gray-dark;
+            border-bottom: 1px solid $e;
+            padding-left: 30px;
+        }
+
+        .infoTitle {
+            font-size: 16px;
+            color: #333333;
+            padding-left: 30px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        .outSide {
+            width: 100%;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .projectInfo {
+            width: 100%;
+            background: #F8f8f8;
+            border-radius: 4px;
+            font-size: 0;
+            padding-left: 20px;
+            padding-top: 20px;
+        }
+
+
+        .smallItem,
+        .sMidItem,
+        .midItem,
+        .bigItem {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .noMargin {
+            margin-right: 0px !important;
+        }
+
+        .errorItem {
+            position: relative;
+        }
+
+        .errorItem:after {
+            content: attr(data-content);
+            color: $red-base;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 10px;
+            top: 65px
+        }
+
+        @mixin itemTitle {
+            font-size: $font-size-base;
+            color: $gray-light;
+            margin-bottom: 10px;
+            span {
+                color: $red-base;
+                padding-left: 5px;
+            }
+        }
+
+        .singleItem {
+            margin-bottom: 30px;
+            margin-left: 50px;
+            position: relative;
+            width: 250px;
+            .itemTitle {
+                @include itemTitle;
+                padding-left: 5px;
+            }
+
+            .yuan {
+                position: absolute;
+                right: 0;
+                bottom: 10px;
+                font-size: $font-size-base;
+                color: $gray-dark;
+            }
+
+            input {
+                width: 220px;
+                height: 36px;
+                background: white;
+                border: 1px solid $border-line;
+                border-radius: 4px;
+                font-size: $font-size-base;
+                color: $gray-dark;
+                line-height: 34px;
+                padding-left: 5px;
+            }
+
+            .orderSelect {
+                width: 220px;
+            }
+        }
+
+        .smallItem {
+            margin-right: 40px;
+            margin-bottom: 30px;
+            .itemTitle {
+                @include itemTitle;
+            }
+
+            input {
+                width: 160px;
+                @media screen and (min-width: 1276px) {
+                    width: 220px;
+                }
+                height: 36px;
+                background: white;
+                border: 1px solid $border-line;
+                border-radius: 4px;
+                font-size: $font-size-base;
+                color: $gray-dark;
+                line-height: 34px;
+                padding-left: 5px;
+            }
+
+            .orderSelect {
+                width: 160px;
+                @media screen and (min-width: 1276px) {
+                    width: 220px;
+                }
+            }
+        }
+
+        .sMidItem {
+            margin-right: 40px;
+            margin-bottom: 30px;
+            .itemTitle {
+                @include itemTitle;
+            }
+
+            input {
+
+                width: 200px;
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 260px;
+                }
+                @media screen and (min-width: 1500px) {
+                    width: 300px;
+                }
+                height: 36px;
+                background: white;
+                border: 1px solid $border-line;
+                border-radius: 4px;
+                font-size: $font-size-base;
+                color: $gray-dark;
+                line-height: 34px;
+                padding-left: 5px;
+            }
+
+            .orderSelect {
+                width: 200px;
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 260px;
+                }
+                @media screen and (min-width: 1500px) {
+                    width: 300px;
+                }
+            }
+        }
+
+        .midItem {
+            margin-right: 40px;
+            margin-bottom: 30px;
+            .itemTitle {
+                @include itemTitle;
+            }
+
+            input {
+                width: 200px;
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 260px;
+                }
+                @media screen and (min-width: 1500px) {
+                    width: 300px;
+                }
+
+                height: 36px;
+                border: 1px solid $border-line;
+                border-radius: 4px;
+                background: white;
+                font-size: $font-size-base;
+                color: $gray-dark;
+                line-height: 34px;
+                padding-left: 5px;
+            }
+            .autoFindCus {
+                position: absolute;
+                width: 100%;
+                top: 100%;
+                left: 0;
+                display: none;
+                z-index: 3;
+                background: white;
+                cursor: pointer;
+                border: 1px solid $gray-light;
+                border-top: 1px solid #979797;
+                max-height: 300px;
+                border-radius: 4px;
+                overflow: auto;
+                li {
+                    width: 100%;
+                    height: 36px;
+                    text-align: center;
+                    line-height: 36px;
+                    color: $gray;
+                    font-size: $font-size-base;
+                    &:hover {
+                        background: $f0;
+                    }
+                }
+            }
+
+            .orderSelect {
+                width: 200px;
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 260px;
+                }
+                @media screen and (min-width: 1500px) {
+                    width: 300px;
+                }
+            }
+        }
+
+        .bigItem {
+            margin-right: 40px;
+            margin-bottom: 30px;
+            .itemTitle {
+                @include itemTitle;
+            }
+
+            input {
+                width: 400px;
+                @media screen and (min-width: 1276px) {
+                    width: 560px;
+                }
+
+                height: 36px;
+                border: 1px solid $border-line;
+                border-radius: 4px;
+                background: white;
+                font-size: $font-size-base;
+                color: $gray-dark;
+                line-height: 34px;
+                padding-left: 5px;
+            }
+
+            .orderSelect {
+                width: 400px;
+                @media screen and (min-width: 1276px) {
+                    width: 560px;
+                }
+            }
+        }
+
+        .multSelect {
+            display: none;
+        }

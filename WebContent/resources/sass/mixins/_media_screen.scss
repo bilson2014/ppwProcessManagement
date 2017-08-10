@@ -1,0 +1,109 @@
+// media screen variants
+//
+// Easily media screen width 1024px 1276px 1528px 
+
+@mixin media_screen_width($min-width: $width-min,
+							$middle-width: $width-middle,
+							$large-width: $width-lg) {
+	width: $min-width;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: $middle-width;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: $large-width;
+	}
+}
+
+@mixin media_screen_height($height_1024,$height_1276,$height_1500) {
+	height: $height_1024;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		height: $height_1276;
+	}
+
+	@media screen and (min-width: 1500px){
+		height: $height_1500;
+	}
+}
+
+@mixin meida_screen_widthout_margin($margin:35px ,$num:	6) {
+	width: ($width-min - ($margin * ($num - 1))) / $num - 4px;
+	height: ($width-min - ($margin * ($num - 1))) / $num - 4px;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: ($width-middle - ($margin * ($num - 1))) / $num - 4px;
+		height: ($width-middle - ($margin * ($num - 1))) / $num - 4px;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: ($width-lg - ($margin * ($num - 1))) / $num - 4px;
+		height: ($width-lg - ($margin * ($num - 1))) / $num - 4px;
+	}
+}
+
+@mixin media_screen_width_avg($num: 6) {
+	width: $width-min / $num - 4px;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: $width-middle / $num - 4px;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: $width-lg / $num - 4px;
+	}
+}
+
+@mixin media_screen_width_beta3($min-width: $width-min,
+							$middle-width: $width-middle,
+							$large-width: $width-lg) {
+	width: $width-min !important;
+	
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: $width-middle !important;
+
+	}
+
+	@media screen and (min-width: 1500px){
+		width: 1300px !important;
+	}
+
+}
+
+@mixin media_motion_img($min-width: $width-min,
+							$middle-width: $width-middle,
+							$large-width: $width-lg3) {
+	width: ($width-min - 20px)/3 !important;
+	height: ($width-min - 20px)/3/432*300;
+	 line-height: ($width-min - 20px)/3/432*300;
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: ($width-middle - 20px)/3 !important;
+        height: ($width-middle - 20px)/3/432*300;
+        line-height: ($width-middle - 20px)/3/432*300;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: ($width-lg3 - 20px)/3 !important;
+        height: ($width-lg3 - 20px)/3/432*300;
+        line-height: ($width-lg3 - 20px)/3/432*300;
+	}
+
+}
+
+
+
+
+// @mixin indexScreen($min-width: $width-min,
+// 							$middle-width: $width-middle,
+// 							$large-width: $width-lg) {
+// 	width: 960px;
+// 	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+// 		width: 1080px;
+// 	}
+
+// 	@media screen and (min-width: 1500px){
+// 		width: ($width-lg - 60px) / 4 !important;
+// 		background-size: (($width-lg - 60px) / 4)  180px !important;
+// 	}
+// }

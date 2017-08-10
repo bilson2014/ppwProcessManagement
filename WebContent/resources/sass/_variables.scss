@@ -1,0 +1,252 @@
+// Variables
+
+// the Film defaults without modifying key, versioned files.
+
+// Table of ontents
+//
+// Colors
+// Header
+// Width
+// Body
+// Links
+// Fonts
+// Components
+
+// General variable structure
+
+// Colors
+//
+// Grayscale and brand colors for use across Bootstrap.
+$brand-primary:             #8a8a8a !default;
+$brand-success:             #5cb85c !default;
+$brand-info:                #5bc0de !default;
+$brand-warning:             #f0ad4e !default;
+$brand-danger:              #d9534f !default;
+
+$e:                 #eee !default;
+$gray-dark:                 #333 !default;
+$gray:                      #666 !default;
+$gray-light:                #999 !default;
+$gray-lighter:              #eceeef !default;
+$gray-lightest:             #f7f7f9 !default;
+$gray-border:				#d9d9de !default;
+
+$red-base:					#fe5453 !default;
+$red-light:					#f69452 !default;
+
+$black-light:				#140808 !default;
+
+$white:						#fff !default;
+$white-light:				#dedede !default;
+$gold-yellow:               #fb9b6a  !default;
+
+// Index html 
+$info-wrap-bg:				#f7fafa !default;
+
+$footer-desc-bg:			#FFEEEF !default;
+
+// Play html
+$play-video-section:		#f7fafa !default;
+
+// Header
+
+// Settings for the class 'header' element.
+$header-height: 			50px !default;
+
+$header-item-width:		80px !default;
+
+$banner-title-width:	560px !default;
+
+$banner-search-width:	536px !default;
+
+$info-height:				222px !default;
+
+$video-card-width:			94% !default;
+
+$video-text-height:			68px !default;
+
+$video-card-height:			415px !default;
+
+$video-margin:				19px !default;
+
+$partner-margin:			35px !default;
+
+$footer-desc-height:		285px !default;
+
+$footer-height:				330px !default;
+
+$footer-box-height:			36px !default;
+
+// Play 
+$video-play-height1024:		326px !default;
+$video-play-height1276:		396px !default;
+$video-play-height1500:		466px !default;
+$video-play-ratio:			16/9 !default;
+$video-info-height:			202px !default;
+
+// Width
+
+// Settings for the 1024px 1276px 1528px 
+$width-min: 				960px !default;
+$width-middle: 				1212px !default;
+$width-lg: 					1464px !default;
+$width-lg3: 				1300px !default;
+
+$width-border:				1px !default;
+
+$video-card-ratio-min:			0.7686;
+$video-card-ratio:				0.86;
+$video-card-ratio-max:			0.9;
+
+$header-search-box-min:			250px !default;
+$header-search-box:				490px !default;
+$header-search-box-max:			570px !default;
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-bg:					 #f9fbfb !default;
+$body-color:				 #fff !default;
+
+$footer-bg:					 #140808 !default;
+// Links
+// 
+// Style anchor elements.
+$link-color:				$brand-primary !default;
+$link-hover-color:           darken($link-color, 15%) !default;
+$link-hover-decoration:      underline !default;
+
+// Fonts
+//
+// Font, line-height, and color for body text
+
+$font-family-sans-serif:     "Microsoft YaHei","微软雅黑","Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-base:           $font-family-sans-serif !default;
+
+// Pixel value used to responsively scale all typography. Applied to the `<html>` element.
+$font-size-root:             10px !default;
+$font-size-sm10:              1rem !default;
+$font-size-sm:               1.2rem !default;
+$font-size-base:             1.4rem !default;
+$font-size:             	 1.6rem !default;
+$font-size-lg:               1.8rem !default;
+$font-size-lger:              2rem !default;
+$font-size-lg22:              2.2rem !default;
+$font-size-lg24:              2.4rem !default;
+$font-size-lg26:              2.6rem !default;
+$font-size-lg30:              3rem !default;
+$font-size-lgest:            2.6rem !default;
+$font-size-lgester:           4rem !default;
+
+// Font Weight
+$font-weight-base:			 normal !default;
+$font-weight-lg:			 600 !default;
+
+// Font Color
+$font-title:				$gray-dark !default;
+$font-desc:					$gray !default;
+$font-price:				$red-base !default;
+
+// Components
+//
+// Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
+$border-radius:          .4rem !default;
+$border-radius-lg:       .5rem !default;
+$border-radius-sm:       .3rem !default;
+$line-height:				1rem !default;
+
+// Options
+//
+// Quickly modify global styling by enabling or disabling optional features.
+
+$enable-flex:               false !default;
+$enable-rounded:            true !default;
+$enable-shadows:            false !default;
+$enable-gradients:          false !default;
+$enable-transitions:        false !default;
+$enable-hover-media-query:  false !default;
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background and border color.
+
+$btn-padding-x:                  2rem;
+$btn-padding-y:                  1.375rem;
+$btn-font-weight:                normal !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $red-base !default;
+$btn-primary-border:             darken($btn-primary-bg,10%) !default;
+
+$btn-secondary-color:            $gray-dark !default;
+$btn-secondary-bg:               #fff !default;
+$btn-secondary-border:           #ccc !default;
+$border-line:           #d1d1d1 !default;
+
+$btn-info-color:                 #fff !default;
+$btn-info-bg:                    $brand-info !default;
+$btn-info-border:                $btn-info-bg !default;
+
+$btn-success-color:              #fff !default;
+$btn-success-bg:                 $brand-success !default;
+$btn-success-border:             $btn-success-bg !default;
+
+$btn-warning-color:              #fff !default;
+$btn-warning-bg:                 $brand-warning !default;
+$btn-warning-border:             $btn-warning-bg !default;
+
+$btn-danger-color:               #fff !default;
+$btn-danger-bg:                  $brand-danger !default;
+$btn-danger-border:              $btn-danger-bg !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+
+$btn-padding-x-sm:               .75rem !default;
+$btn-padding-y-sm:               .25rem !default;
+
+$btn-padding-x-lg:               1.25rem !default;
+$btn-padding-y-lg:               .75rem !default;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:              $border-radius;
+$btn-border-radius-lg:           $border-radius-lg;
+$btn-border-radius-sm:           $border-radius-sm;
+
+$cursor-disabled:                not-allowed !default;
+
+// Spacing
+//
+// Control the default styling of most Bootstrap elements by modifying these
+// variables. Mostly focused on spacing.
+$border-width:               .0625rem !default;
+
+// add by lu tao, 2016-04-11 15:08 begin 
+//new width for screen by lu tao and new color 
+
+$about-us-width-min: 				568px    !default;
+$about-us-width-middle: 		    808px    !default;
+$about-us-width-lg: 				1070px   !default;
+
+$fire-orange:               #ff7e5f  !default;
+$flower-red:                #fe697a  !default;
+$fleshcolor:                #fcbeaa  !default;
+$ice-green:                 #00df81  !default;
+$login-border:              #d9d9df  !default;
+$no-gray:                   #dbdcdc  !default;
+
+$member-img-small:           90px !default;
+$member-img-mid:             130px !default;
+$member-img-lg:              160px !default;
+
+// add by lu tao, 2016-04-11 15:08 start
+
+$f0: #f0f2f5;
+$f8: #f8f8f8;
+$cb: #cbcbcb;
+$d8: #d8d8d8;
+$d9: #D9EBF2;
+$e3: #E3E3E3;
+$f6: #F6F9F9;
+
+// add by lu tao, 2016-04-11 15:08 end
+

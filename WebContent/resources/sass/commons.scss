@@ -1,0 +1,230 @@
+@CHARSET "UTF-8";
+
+/* global style */
+
+html,
+body {
+    /* font: normal 14px "Microsoft YaHei", Simsun; */
+    /* font: 400 14px/1.5 "Hiragino Sans GB","WenQuanYi Micro Hei",tahoma,sans-serif; */
+    font-family: "Microsoft YaHei", "微软雅黑", helvetica, arial, verdana, tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.hide {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td,
+iframe,
+article,
+section,
+header,
+footer {
+    margin: 0;
+    padding: 0;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+a,
+img {
+    border: none;
+}
+
+.clear {
+    clear: both;
+}
+
+
+/* header css */
+
+.header-content {
+    margin: 0 auto;
+    padding: 0;
+    height: 48px;
+    overflow: hidden;
+}
+
+.iframe-header {
+    position: fixed;
+    height: 48px;
+    z-index: 100000;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    line-height: 100%;
+}
+
+
+/* footer css */
+
+.footer-content {
+    margin: 0 auto;
+    padding: 0;
+    height: 175px;
+    overflow: hidden;
+}
+
+.iframe-footer {
+    height: 175px;
+}
+
+.btn-wrap {
+    width: 100%;
+}
+
+.label-left {
+    text-align: left;
+}
+
+.color-red {
+    color: #fe5453;
+}
+
+.font12 {
+    font-size: 12px;
+}
+
+
+/* 视频列表 start */
+
+.productList {
+    width: 950px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.video-content {
+    position: relative;
+    display: inline-block;
+    float: left;
+    width: 222px;
+    height: 210px;
+    border: solid 1px rgba(0, 0, 0, 0.11);
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+
+.productList > .video-content:nth-child(4),
+.productList > .video-content:nth-child(8),
+.productList > .video-content:nth-child(12),
+.productList > .video-content:nth-child(16),
+.productList > .video-content:nth-child(20),
+.productList > .video-content:nth-child(24),
+.productList > .video-content:nth-child(28),
+.productList > .video-content:nth-child(32) {
+    margin-right: 0;
+}
+
+.video-img {
+    width: 90%;
+    margin: 10px auto;
+    height: 128px;
+}
+
+.video-img img {
+    width: 100%;
+    height: 128px;
+}
+
+.video-img a {
+    cursor: pointer;
+    line-height: 100%;
+}
+
+.video-description {
+    width: 100%;
+}
+
+.video-description > h5,
+.video-description > label {
+    margin: 0;
+    width: 70%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.video-description > h5 {
+    padding-left: 12px;
+    padding-bottom: 8px;
+    font-size: 14px;
+    color: #666;
+}
+
+.video-description > label {
+    padding-top: 8px;
+    padding-left: 12px;
+    padding-bottom: 6px;
+    font-size: 16px;
+    color: #ff4646;
+}
+
+.horizontal-hr-desc {
+    position: relative;
+    height: 1px;
+    top: 3px;
+    width: 92%;
+    margin: 0 auto;
+    border-bottom: 1px dotted #ddd;
+}
+
+
+/* 视频列表 end */

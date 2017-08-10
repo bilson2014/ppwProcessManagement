@@ -1,0 +1,43 @@
+/*
+	处理块状元素居中显示
+*/
+@mixin margin-auto {
+	margin: 0 auto !important;
+}
+
+/*
+	水平布局
+*/
+@mixin layout-inline($float:left) {
+	display: inline-block;
+	float: $float;
+}
+
+@mixin flexshow($flex-width: 100%,$flex-height: 556px){
+	.flexslider{
+		position:absolute;
+		height:$flex-height;
+		width:$flex-width;
+		margin:0 auto;
+		overflow:hidden;
+		
+		.slides{
+			position:relative;
+			z-index:1;
+			
+			li {
+				height:$flex-height;
+			}
+		}
+	}
+	
+	.flex-control-nav{position:absolute;bottom:10px;z-index:2;width:$flex-width;text-align:center;display: none;}
+	.flex-control-nav li{display:inline-block;width:14px;height:14px;margin:0 5px;*display:inline;zoom:1;}
+	.flex-control-nav a{display:inline-block;width:14px;height:14px;line-height:40px;overflow:hidden;}
+	.flex-control-nav .flex-active{background-position:0 0;}
+
+	.flex-direction-nav{position:absolute;z-index:3;width:$flex-width;top:42%;}
+	.flex-direction-nav li a{display:block;width:30px;height:70px;overflow:hidden;cursor:pointer;position:absolute;}
+	.flex-direction-nav li a.flex-prev{left:0;background:url(../img/icons/prev.png) center center no-repeat;}
+	.flex-direction-nav li a.flex-next{right:0;background:url(../img/icons/next.png) center center no-repeat; }
+}
