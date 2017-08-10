@@ -26,7 +26,6 @@ public class DataUtils {
 		Map<String, Object> flowData = new HashMap<String, Object>();
 		Map<String, Object> flowMap = new HashMap<String, Object>();
 		Map<String, Object> synergyMap = new HashMap<String, Object>();
-		Map<String, Object> teamMap = new HashMap<String, Object>();
 		Map<String, Object> userMap = new HashMap<String, Object>();
 		for (final Entry<String, Object> entry : form.entrySet()) {
 			String key = entry.getKey();
@@ -40,11 +39,6 @@ public class DataUtils {
 				synergyMap.put(key.split("_")[1], entry.getValue());
 			}
 
-			// PROJECT_TEAM 供应商
-			if (StringUtils.defaultString(key).startsWith("pt_")) {
-				teamMap.put(key.split("_")[1], entry.getValue());
-			}
-
 			// PROJECT_USER 客户
 			if (StringUtils.defaultString(key).startsWith("pu_")) {
 				userMap.put(key.split("_")[1], entry.getValue());
@@ -54,7 +48,6 @@ public class DataUtils {
 
 		flowData.put(ProjectFlowConstant.PROJECT_FLOW, flowMap);
 		flowData.put(ProjectFlowConstant.PROJECT_SYNENGY, synergyMap);
-		flowData.put(ProjectFlowConstant.PROJECT_TEAM, teamMap);
 		flowData.put(ProjectFlowConstant.PROJECT_USER, userMap);
 
 		return flowData;

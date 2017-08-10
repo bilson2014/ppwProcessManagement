@@ -28,9 +28,9 @@ import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
-import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
@@ -85,48 +85,82 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 数据存储
 			Map<String, Object> flowMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_FLOW);
 			Map<String, Object> synergyMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_SYNENGY);
-			Map<String, Object> teamMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_TEAM);
 			Map<String, Object> userMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_USER);
 
-			String bussinessKey = null;
+			String projectId = null;
 			if (flowMap != null) {
 				PmsProjectFlow projectFlow = JSON.parseObject(JSON.toJSONString(flowMap), PmsProjectFlow.class);
 				if (projectFlow != null && StringUtils.isNotBlank(projectFlow.getProjectId())) {
-					bussinessKey = projectFlow.getProjectId();
-					projectFlow.setPrincipal(123);
+					projectId = projectFlow.getProjectId();
+					projectFlow.setPrincipal(Integer.getInteger(userId));
 					flowFacade.insert(projectFlow);
 				}
 			}
 
-			if (synergyMap != null) {
-				PmsProjectSynergy synergy = JSON.parseObject(JSON.toJSONString(synergyMap), PmsProjectSynergy.class);
-				if (synergy != null && synergy.getEmployeeId() != null) {
-					synergy.setProjectId(bussinessKey);
+			if (synergyMap != null && !synergyMap.isEmpty()) {
+				for (Entry<String, Object> entry : synergyMap.entrySet()) {
+					String activitiRole = entry.getKey();
+					PmsProjectSynergy synergy = new PmsProjectSynergy();
+					synergy.setEmployeeId(Integer.getInteger(entry.getValue().toString().split("_")[1]));
+					synergy.setProjectId(projectId);
+					if (ProjectRoleType.customerDirector.getId().equals(activitiRole)) {
+						// 客服总监
+						synergy.setEmployeeGroup(ProjectRoleType.customerDirector.getId());
+					}
+
+					if (ProjectRoleType.saleDirector.getId().equals(activitiRole)) {
+						// 销售总监
+						synergy.setEmployeeGroup(ProjectRoleType.saleDirector.getId());
+					}
+
+					if (ProjectRoleType.superviseDirector.getId().equals(activitiRole)) {
+						// 监制总监
+						synergy.setEmployeeGroup(ProjectRoleType.superviseDirector.getId());
+					}
+
+					if (ProjectRoleType.teamDirector.getId().equals(activitiRole)) {
+						// 供应商总监
+						synergy.setEmployeeGroup(ProjectRoleType.teamDirector.getId());
+					}
+
+					if (ProjectRoleType.teamProvider.getId().equals(activitiRole)) {
+						// 供应商管家
+						synergy.setEmployeeGroup(ProjectRoleType.teamProvider.getId());
+					}
+
+					if (ProjectRoleType.teamPurchase.getId().equals(activitiRole)) {
+						// 供应商采购
+						synergy.setEmployeeGroup(ProjectRoleType.teamPurchase.getId());
+					}
+
+					if (ProjectRoleType.financeDirector.getId().equals(activitiRole)) {
+						// 财务主管
+						synergy.setEmployeeGroup(ProjectRoleType.financeDirector.getId());
+					}
+
+					if (ProjectRoleType.finance.getId().equals(activitiRole)) {
+						// 财务
+						synergy.setEmployeeGroup(ProjectRoleType.finance.getId());
+					}
+
 					synergyFacade.insert(synergy);
 				}
-			}
-
-			if (teamMap != null) {
-				PmsProjectTeam team = JSON.parseObject(JSON.toJSONString(teamMap), PmsProjectTeam.class);
-				if (team != null && team.getTeamId() != null) {
-					team.setProjectId(bussinessKey);
-					projectTeamFacade.insert(team);
-				}
+				
 			}
 
 			if (userMap != null) {
 				PmsProjectUser user = JSON.parseObject(JSON.toJSONString(userMap), PmsProjectUser.class);
 				if (user != null && user.getUserId() != null) {
-					user.setProjectId(bussinessKey);
+					user.setProjectId(projectId);
 					projectUserFacade.insert(user);
 				}
 			}
 
 			identityService.setAuthenticatedUserId(userId);
-			processInstance = formService.submitStartFormData(processDefinitionId, String.valueOf(bussinessKey),
+			processInstance = formService.submitStartFormData(processDefinitionId, String.valueOf(projectId),
 					formProperties);
 
-			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), bussinessKey);
+			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
 			identityService.setAuthenticatedUserId(null);
@@ -248,19 +282,21 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> flowList = columns.get("PROJECT_FLOW");
 		List<String> teamList = columns.get("PROJECT_TEAM");
 		List<String> userList = columns.get("PROJECT_USER");
-		
+
 		Task task = (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
 		String instanceId = task.getProcessInstanceId();
-		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId).singleResult();
+		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId)
+				.singleResult();
 		String projectId = instance.getBusinessKey();
-		
+
 		if (flowList != null) {
 			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
 			param.put("PROJECT_FLOW", projectFlow);
 		}
 
 		if (teamList != null) {
-			List<Map<String, Object>> projectTeam = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList, projectId);
+			List<Map<String, Object>> projectTeam = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
+					projectId);
 			param.put("PROJECT_TEAM", projectTeam);
 		}
 
@@ -268,7 +304,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			Map<String, Object> projectUser = projectUserFacade.getProjectUserColumnByProjectId(userList, projectId);
 			param.put("PROJECT_USER", projectUser);
 		}
-		
+
 		return param;
 	}
 

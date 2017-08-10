@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +32,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
+import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.activiti.utils.UserUtil;
 
+/**
+ * 项目流程控制器
+ * @author jacky
+ *
+ */
 @RestController
 @RequestMapping("/project")
 public class PorjectFlowController extends BaseController {
@@ -43,10 +50,19 @@ public class PorjectFlowController extends BaseController {
 	private ProjectWorkFlowService prjectWorkFlowService = null;
 	
 	/**
+	 * 新建项目页
+	 * @return
+	 */
+	@RequestMapping("/start/project")
+	public ModelAndView createProjectFlowView(ModelMap model) {
+		// 生成项目编号
+		final String projectId = prjectWorkFlowService.generateProjectId();
+		model.addAttribute("pf_projectId", projectId);
+		return new ModelAndView("activiti/createFlow", model);
+	}
+	
+	/**
 	 * 新建项目
-	 * @param processDefinitionId
-	 * @param redirectAttributes
-	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/start-process/{processDefinitionId}")
@@ -55,13 +71,21 @@ public class PorjectFlowController extends BaseController {
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
 		// TODO 获取数据
-		Map<String, String> formProperties = new HashMap<String, String>();
+		Map<String, Object> formProperties = new HashMap<String, Object>();
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
+		
+		for (final Entry<String, String[]> entry : entrySet) {
+			String key = entry.getKey();
+			if(StringUtils.defaultString(key).contains("_")) {
+				formProperties.put(key, entry.getValue()[0]);
+			}
+		}
+		
 
-		Map<String, Object> properties = null;
+		Map<String, Object> properties = DataUtils.divideFlowData(formProperties);
 
-		logger.debug("start form parameters: {}", formProperties);
+		logger.debug("start form parameters: {}", properties);
 		User user = UserUtil.getUserFromSession(request.getSession());
 
 		// 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
@@ -70,7 +94,7 @@ public class PorjectFlowController extends BaseController {
 		}
 
 		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(processDefinitionId,
-				formProperties, user.getId(), properties);
+				null, user.getId(), properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");

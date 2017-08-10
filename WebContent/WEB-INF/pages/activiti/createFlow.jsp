@@ -46,7 +46,7 @@
 </head>
 
 <body>
-    <form method="post" action="/require" id="toListForm">
+    <form method="post" action="/project/start-process/procedure-workflow-4:1:4" id="toListForm">
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
@@ -56,7 +56,7 @@
 	           <div class="projectInfo">
 	                 <div class="smallItem errorItem" id="projectNoError">
 	                       <div class="itemTitle">项目编号<span>*</span></div>
-	                       <input readonly id="projectNo" name="pf_projectId"/>
+	                       <input readonly id="projectNo" name="pf_projectId" value="${pf_projectId }"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectNameError">
 	                       <div class="itemTitle">项目名称<span>*</span></div>
@@ -109,7 +109,7 @@
 				                <div id="productConfigLevelId"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="setpProductConfigLength">
-				                </ul>    
+				                </ul>
 					      </div>
 	                 </div>
 	                  <div class="smallItem errorItem " id="productConfigLengthError">
