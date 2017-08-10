@@ -93,14 +93,10 @@ function checkInfo(){
 		if(productConfigLevelId == undefined || productConfigLevelId == "" || productConfigLevelId ==null ){
 			$('#productConfigLevelIdError').attr('data-content','等级未填写');
 			return false;
-		}else{
-			$('#pf_productConfigLevelId').val(productConfigLevelId);
 		}
 		if(productConfigLength == undefined || productConfigLength == "" || productConfigLength ==null ){
-			$('#productConfigLengthError').attr('data-content','项目来源未填写');
+			$('#productConfigLengthError').attr('data-content','时长未填写');
 			return false;
-		}else{
-			$('#pf_productConfigLevelId').val(productConfigLength);
 		}
 		if(productConfigAdditionalPackageIds != undefined && productConfigAdditionalPackageIds != "" && productConfigAdditionalPackageIds ==null ){
 			$('#pf_productConfigAdditionalPackageIds').val(productConfigAdditionalPackageIds);
@@ -305,7 +301,9 @@ function initAutoChoose(){
 		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
+		 if($(this).attr('data-email')!=null){
 		 $('#pu_email').val($(this).attr('data-email'));
+		 }
 		 getValue(level);
 		 $('.autoFindCus').hide();
 	});
@@ -486,10 +484,12 @@ function productConfigLengthEven(){
 		    $('#pf_productConfigLength').val('');
 		    $('#productConfigAdditionalPackageIds').text('');
 		    $('#productConfigAdditionalPackageIds').attr('data-id');
-		    $('#pf_productConfigAdditionalPackageIds').val('');
+		    $('#pf_productConfigAdditionalPackageIds').val('');	    
 		    var id = $(this).attr('data-id');
 		   	$(this).parent().parent().find('div').text($(this).text());
 		   	$(this).parent().parent().find('div').attr('data-id',id);
+		   	$('#pf_productConfigLevelId').val(id);
+		   	$('#pf_productConfigLevelName').val($(this).text());
 		   	$(this).parent().slideUp();
 		   	$('.orderSelect').removeClass('selectColor');
 		   	totalPrice = parseInt($(this).attr('data-price'));
@@ -508,6 +508,7 @@ function timePriceEven(){
 		   	$(this).parent().parent().find('div').text($(this).text());
 		   	$(this).parent().parent().find('div').attr('data-id',id);
 		   	$(this).parent().slideUp();
+		   	$('#pf_productConfigLength').val(id);
 		   	$('.orderSelect').removeClass('selectColor');
 		   	timePrice = parseInt(totalPrice) + parseInt($(this).attr('data-price'));
 		   	$('#estimatedPrice').val(timePrice);	   
