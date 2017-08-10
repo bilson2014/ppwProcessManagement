@@ -114,8 +114,7 @@ public class ChanPinController {
 			map.put("text",level.getText());
 			clientLevel.add(map);
 		}
-		result.put("clientLevel", clientLevel);
-		
+		result.put("clientLevel", clientLevel);		
 		BaseMsg baseMsg = new BaseMsg();
 		baseMsg.setCode(BaseMsg.NORMAL);
 		baseMsg.setResult(result);

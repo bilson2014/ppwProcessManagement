@@ -12,6 +12,10 @@
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
 	
 	<mvc:view-controller path="/textC" view-name="/activiti/createFlow" />
+	
+	<mvc:view-controller path="/text" view-name="/activiti/textFlow" />
+	
+	<mvc:view-controller path="/textI" view-name="/activiti/flowInfo" />
 
 	<context:annotation-config />
 
