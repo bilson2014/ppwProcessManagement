@@ -130,7 +130,7 @@
 	                 
 	                  <div class="smallItem errorItem" id="createDateError">
 	                       <div class="itemTitle">立项时间<span>*</span></div>
-	                       <input id="pf_createDate" name="pf_createDate"/>
+	                       <input readonly id="pf_createDate" name="pf_createDate"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
 	                       <div class="itemTitle">项目周期<span>*</span></div>
