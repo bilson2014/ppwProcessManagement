@@ -74,7 +74,7 @@ public class SynergyController {
 		List<User> finances = identityService.createUserQuery().memberOfGroup(ProjectRoleType.finance.getId()).list();
 		memberGroup.put(ProjectRoleType.finance.getId(), finances);
 		
-		msg.setResult(msg);
+		msg.setResult(memberGroup);
 		return msg;
 	}
 }

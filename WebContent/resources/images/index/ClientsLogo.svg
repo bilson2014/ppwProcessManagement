@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="180px" height="26px" viewBox="0 0 180 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+    <title>品牌客户 标签</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-family="MicrosoftYaHei, Microsoft YaHei" font-weight="normal">
+        <g id="品牌客户-标签" fill="#333333">
+            <g transform="translate(0.000000, -6.000000)">
+                <text id="品牌" font-size="26">
+                    <tspan x="0" y="28">品牌</tspan>
+                </text>
+                <text id="客户" font-size="14">
+                    <tspan x="52" y="19">客户</tspan>
+                </text>
+                <text id="OUR-CLIENTS" font-size="8">
+                    <tspan x="52" y="30"> OUR CLIENTS</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

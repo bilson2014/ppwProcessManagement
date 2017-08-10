@@ -1,0 +1,344 @@
+            @import "common";
+            @import "buttons";
+            @import "video";
+            @import "compass/typography/text/ellipsis";
+
+            .datepickers-container {
+                z-index: 9999 !important;
+            }
+
+            body {
+                background: $border-line !important;
+            }
+
+            @mixin anmotion {
+                transition: all .3s ease-in-out .2s;
+                -moz-transition: all .3s ease-in-out .2s;
+                /* Firefox 4 */
+                -webkit-transition: all .3s ease-in-out .2s;
+                /* Safari 和 Chrome */
+                -o-transition: all .3s ease-in-out .2s;
+            }
+
+            .page {
+
+                @include media_screen_width_beta3();
+                margin: 0 auto;
+                background: transparent !important;
+                position: relative;
+                padding-left: 190px;
+                padding-top: 30px;
+                @include anmotion;
+            }
+
+            .checkLi {
+                color: $red-base !important;
+            }
+
+            .toMinLeft {
+                padding-left: 60px;
+            }
+
+            .open {
+                img {
+                    transform: rotate(90deg);
+                    -ms-transform: rotate(90deg);
+                    /* IE 9 */
+                    -moz-transform: rotate(90deg);
+                    /* Firefox */
+                    -webkit-transform: rotate(90deg);
+                    /* Safari 和 Chrome */
+                    -o-transform: rotate(90deg);
+                }
+            }
+
+            .changeMenu {
+                width: 50px !important;
+                #shortMenu {
+                    display: block !important;
+                }
+                #mainMenu {
+                    display: none !important;
+                }
+                .head {
+                    height: 50px;
+                    border-bottom: 1px solid $border-line;
+                    text-align: center;
+                    img {
+                        width: 12px;
+                        height: 12px;
+                        margin-top: 17px;
+                    }
+                }
+                .menuItem {
+                    height: 36px;
+                    padding-left: 17px;
+                    padding-top: 10px;
+                    &:hover {
+                        background: $f8;
+                    }
+                    .open {
+                        background-position-y: 14px !important;
+                    }
+                    /*                     &:hover {
+    background: $f8;
+    div {
+        background-position-y: 14px;
+        cursor: pointer;
+    }
+} */
+                    .createIcon {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/create.png);
+                        background-size: 14px 28px;
+                    }
+                    .myPro {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/myPro.png);
+                        background-size: 14px 28px;
+                    }
+                    .orderList {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/orderList.png);
+                        background-size: 14px 28px;
+                    }
+                    .save {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/save.png);
+                        background-size: 14px 28px;
+                    }
+                    .safe {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/safe.png);
+                        background-size: 14px 28px;
+                    }
+                }
+                .bottom {
+                    height: 40px;
+                    border-top: 1px solid $border-line;
+                    padding-top: 13px;
+                    padding-left: 17px;
+                    &:hover {
+                        div {
+                            background-position-y: 14px;
+                        }
+                    }
+                    .loginOut {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/loginOut.png);
+                        background-size: 14px 28px;
+                    }
+                }
+            }
+
+
+            .flowMenu {
+                width: 180px;
+                background: white;
+                border-radius: 6px;
+                transition: all .3s ease-in-out .2s;
+                -moz-transition: all .3s ease-in-out .2s;
+                /* Firefox 4 */
+                -webkit-transition: all .3s ease-in-out .2s;
+                /* Safari 和 Chrome */
+                -o-transition: all .3s ease-in-out .2s;
+                position: absolute;
+                top: 30px;
+                left: 0;
+                #mainMenu {
+                    position: relative;
+                }
+
+                #shortMenu {
+                    display: none;
+                }
+                .toMin {
+                    width: 12px;
+                    height: 12px;
+                    position: absolute;
+                    right: 14px;
+                    top: 20px;
+                }
+
+                .logoDiv {
+                    width: 100%;
+                    text-align: center;
+                    padding-top: 30px;
+                }
+
+                .logo {
+                    width: 80px;
+                    height: 80px;
+                    padding: 1px;
+                    border-radius: 100%;
+                }
+                .userName {
+                    width: 100%;
+                    margin-top: 15px;
+                    margin-bottom: 30px;
+                    font-size: $font-size;
+                    color: $gray-dark;
+                    text-align: center;
+                    @include ellipsis;
+                }
+            }
+
+            .flowTree {
+                @include anmotion;
+                .treeitem:last-child {
+                    margin-top: 20px;
+                    height: 40px !important;
+                    padding-top: 15px !important;
+                    .loginOut {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/loginOut.png);
+                        background-size: 14px 28px;
+                    }
+                }
+
+                .treeitem {
+                    height: 36px;
+                    font-size: 0;
+                    padding-left: 30px;
+                    padding-top: 11px;
+                    cursor: pointer;
+                    position: relative;
+                    div,
+                    img {
+                        display: inline-block;
+                        vertical-align: top;
+                    }
+                    img {
+                        width: 10px;
+                        height: 10px;
+                        margin-left: 40px;
+                        position: relative;
+                        top: 1px;
+                    }
+                    .line {
+                        width: 176px;
+                        height: 2px;
+                        background: $border-line;
+                        position: absolute;
+                        top: 0;
+                        left: 2px;
+                    }
+                    .createIcon {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/create.png);
+                        background-size: 14px 28px;
+                    }
+                    .myPro {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/myPro.png);
+                        background-size: 14px 28px;
+                    }
+                    .orderList {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/orderList.png);
+                        background-size: 14px 28px;
+                    }
+                    .save {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/save.png);
+                        background-size: 14px 28px;
+                    }
+                    .safe {
+                        width: 14px;
+                        height: 14px;
+                        background: url(/resources/images/flow/safe.png);
+                        background-size: 14px 28px;
+                    }
+
+                    .title {
+                        margin-left: 15px;
+                        color: $gray-dark;
+                        font-size: $font-size-base;
+                    }
+                    &:hover {
+                        background: $f8;
+                    }
+                }
+
+                .productList {
+                    font-size: 0;
+                    padding-left: 36px;
+                    padding-top: 10px;
+                    display: none;
+                    li {
+                        color: $gray-dark;
+                        font-size: $font-size-base;
+                        height: 36px;
+                        line-height: 36px;
+                        position: relative;
+                        padding-left: 30px;
+                        border-left: 1px solid $border-line;
+                        position: relative;
+                        &:hover {
+                            background: $f8;
+                        }
+
+                        div {
+                            width: 16px;
+                            height: 16px;
+                            border-radius: 100%;
+                            font-size: $font-size-sm;
+                            color: white;
+                            background: $red-base;
+                            position: absolute;
+                            right: 13px;
+                            text-align: center;
+                            line-height: 16px;
+                            top: 10px;
+                        }
+
+                        &:after {
+                            content: '';
+                            width: 10px;
+                            height: 1px;
+                            position: absolute;
+                            left: 0;
+                            top: 17px;
+                            background: $border-line;
+                        }
+                        /*                         &:hover {
+    background: $f8;
+    color: $red-base;
+} */
+                    }
+                    li:first-child {
+                        &:before {
+                            content: '';
+                            width: 1px;
+                            height: 30px;
+                            position: absolute;
+                            left: -1px;
+                            top: -20px;
+                            background: $border-line;
+                        }
+                    }
+                    li:last-child {
+                        border: none !important;
+                        &:before {
+                            content: '';
+                            width: 1px;
+                            height: 18px;
+                            position: absolute;
+                            left: 0;
+                            top: 0px;
+                            background: $border-line;
+                        }
+                    }
+                }
+            }

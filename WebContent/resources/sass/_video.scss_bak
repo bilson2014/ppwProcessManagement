@@ -1,0 +1,172 @@
+// video
+//
+// video card style
+@import "mixins/image";
+
+@import "mixins/video";
+
+.video-content {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.video-content > .video-row {
+	margin: 0 auto 52px;
+	@include media_screen_width();
+
+}
+
+.video-row:last-child {
+	margin: 0 auto;
+}
+
+.video-row > .video-card{
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+	margin-right: $video-margin;
+	border: solid $width-border $gray-border;
+	overflow: hidden;
+	
+	&:hover {
+		border: solid $width-border lighten($gray-light,12%);
+	}
+	@include border-radius(6px);
+}
+
+.video-col-3 {
+	@include video-col(3);
+}
+
+.video-col-4 {
+	@include video-col(4);
+}
+
+.video-card:last-child {
+	margin-right: 0;
+}
+
+.video-card .img-card-4 {
+	@include img-auto-width-height(4); 
+}
+
+.video-card .img-card-3 {
+	@include img-auto-width-height(3);
+} 
+
+.video-card .video-desc-section{
+	width: $video-card-width;
+	padding: 20px 0;
+	margin: auto;
+	border-bottom: solid 1px $gray-border;
+
+	h3 {
+		color: $gray-dark;
+		line-height: 12px;
+		font: {
+			size: $font-size-sm;
+			weight: 600;
+		}
+		margin-bottom: 10px;
+	}
+
+	h4 {
+		color: $gray;
+		font: {
+			size: $font-size-sm;
+			weight: normal;
+		}
+		line-height: 12px;
+		margin-bottom: 22px;
+	}
+
+	.video-desc {
+		height: 52px;
+		color: $gray;
+		font: {
+			size: $font-size-sm;
+			weight: normal;
+		}
+
+		line-height: 17px;
+		overflow: hidden;
+		letter-spacing: 1px;
+	}
+	
+}
+
+.video-card .video-price-section {
+	width: $video-card-width;
+	padding: 12px 0;
+	margin: auto;
+
+	a {
+		text-decoration: none;
+		color: $gray;
+		font-size: $font-size-sm;
+		margin-left: 4px;
+
+		&:hover {
+			color: $gray-dark;
+		}
+	}
+
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		padding: 16px 0;
+	}
+
+	@media screen and (min-width: 1500px){
+		padding: 18px 0;
+	}
+}
+
+.video-card .video-price {
+	
+	h2 {
+		display: inline-block;
+		color: $red-base;
+		font-size: $font-size-lg;
+	}
+
+	h3 {
+		display: inline-block;
+		color: $gray;
+		font-size: $font-size-base;
+	}
+	margin-bottom: 10px;
+
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		margin-bottom: 16px;
+	}
+
+	@media screen and (min-width: 1500px){
+		margin-bottom: 18px;
+	}
+}
+
+.prompt-word {
+	margin: 20px auto;
+	@include media_screen_width();
+	text-align: center;
+	font-size: $font-size-lger;
+	color: $gray;
+	line-height: $font-size-lger;
+}
+
+.prompt-level-word {
+	margin: auto;
+	margin-top: 15px;
+
+	@include media_screen_width();
+	text-align: center;
+	font-size: $font-size-lger;
+	color: $gray;
+	line-height: $font-size-lger;
+
+	a {
+		    
+		    color:blue;
+		    font-weight: 600;
+	}
+}

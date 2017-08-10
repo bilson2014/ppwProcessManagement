@@ -1,0 +1,43 @@
+@import "reboot";
+@import "navbar";
+@import "media_screen";
+@import "video";
+@import "buttons";
+@import "compass/typography/text/ellipsis";
+
+.page{
+    top: 40px !important;
+} 
+.header {
+    position: relative !important;
+}
+.titleTag {
+    background: #f0f2f5;
+    height: 50px;
+    border-bottom: 1px solid $border-line;
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    z-index: 99;
+    .titleWord {
+        @include media_screen_width_beta3();
+        margin: 0 auto;
+        font-size: 0;
+        padding-left: 16%;
+        padding-right: 16%;
+        div {
+            color: $gray-light;
+            font-size: $font-size-base;
+            width: 20%;
+            display: inline-block;
+            line-height: 49px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .checkActive {
+            color: $red-base !important;
+            border-bottom: 1px solid $red-base;
+        }
+    }
+}
+

@@ -1,0 +1,78 @@
+@mixin index-Screen-width($min-width: $width-min, $middle-width: $width-middle, $large-width: $width-lg) {
+    width: ($width-min - 60px) / 4 !important;
+    background-size: (($width-min - 60px) / 4) 180px !important;
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        width: ($width-middle - 60px) / 4 !important;
+        background-size: (($width-middle - 60px) / 4) 180px !important;
+    }
+    @media screen and (min-width: 1500px) {
+        width: ($width-lg3 - 60px) / 4 !important;
+        background-size: (($width-lg3 - 60px) / 4) 180px !important;
+    }
+}
+
+@mixin cardBgOrigin($min-width: $width-min, $middle-width: $width-middle, $large-width: $width-lg) {
+    $clipWidth: ($width-min - 60px) / 4;
+    clip: rect(180px $clipWidth 180px $clipWidth);
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        $clipWidth: ($width-middle - 60px) / 4;
+        clip: rect(180px $clipWidth 180px $clipWidth);
+    }
+    @media screen and (min-width: 1500px) {
+        $clipWidth: ($width-lg3 - 60px) / 4;
+        clip: rect(180px $clipWidth 180px $clipWidth);
+    }
+}
+
+@mixin cardBgHover($min-width: $width-min, $middle-width: $width-middle, $large-width: $width-lg) {
+    $clipWidth: ($width-min - 60px) / 4;
+    clip: rect(0px $clipWidth 180px 180px);
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        $clipWidth: ($width-middle - 60px) / 4;
+        clip: rect(0px $clipWidth 180px 180px);
+    }
+    @media screen and (min-width: 1500px) {
+        $clipWidth: ($width-lg3 - 60px) / 4;
+        clip: rect(0px $clipWidth 180px 180px);
+    }
+}
+
+@mixin cardUlWidth($min-width: $width-min, $middle-width: $width-middle, $large-width: $width-lg) {
+    width: ($width-min - 60px) / 4;
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        width: ($width-middle - 60px) / 4;
+    }
+    @media screen and (min-width: 1500px) {
+        width: ($width-lg3 - 60px) / 4;
+    }
+}
+
+@mixin cardUlImgHeight($min-width: $width-min, $middle-width: $width-middle, $large-width: $width-lg) {
+    height: ($width-min - 60px) / 4 / 16 * 9;
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        height: ($width-middle - 60px) / 4 / 16 * 9;
+    }
+    @media screen and (min-width: 1500px) {
+        height: ($width-lg3 - 60px) / 4 / 16 * 9;
+    }
+}
+
+@mixin cardUlImgHeightAuto($width:280px) {
+    height: $width / 16 * 9;
+}
+
+@mixin cardAreaHeight($width:280px) {
+    max-height:($width /16 * 9 + 30px + 30px ) * 6 - 30px;
+    min-height: 200px;   
+}
+
+
+@mixin newsCard() {
+    width: ($width-min - 192px) / 3;
+    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+        width: ($width-middle - 192px) / 3;
+    }
+    @media screen and (min-width: 1500px) {
+        width: ($width-lg3 - 192px) / 3;
+    }
+}

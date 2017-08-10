@@ -1,0 +1,18 @@
+// Video Type
+//
+// Calculate video col width / height
+@mixin video-col($num: 3){
+	width: ($width-min - ($video-margin * ($num - 1))) / $num - 2px;
+	//height: (($width-min - ($video-margin * ($num - 1)) - ($width-border * ($num * 3))) / $num - 1px) / $video-card-ratio-min;
+
+	@media screen and (min-width: 1276px) and (max-width: 1500px) {
+		width: ($width-middle - ($video-margin * ($num - 1))) / $num - 2px;
+		//height: (($width-middle - ($video-margin * ($num - 1)) - ($width-border * ($num * 3))) / $num - 1px) / $video-card-ratio;
+	}
+
+	@media screen and (min-width: 1500px){
+		width: ($width-lg - ($video-margin * ($num - 1))) / $num - 2px; 
+		//height: (($width-lg - ($video-margin * ($num - 1)) - ($width-border * ($num * 3))) / $num - 1px) / $video-card-ratio-max;
+	}
+
+}

@@ -1,0 +1,49 @@
+/*
+	常量表
+*/
+$header-section-width: 1198px !default; // 头部内容宽度
+
+$wrap-min-width: 1080px !default;
+
+$small-font-size: 12px; // 小字号
+
+$normal-font-size: 14px; // 正常字号
+
+$big-font-size: 18px; // 大字号
+
+$bigger-font-size: 20px; // 最大字号
+
+$wrap-background-color: #f0f0f0; // 首页背景颜色
+
+$header-section-height: 48px !default; // 头部高度
+
+$footer-section-height: 312px !default; // 底部高度
+
+$header-nav-width: 300px !default; // 导航栏宽度
+
+$video-col-height: 354px; // 视频高度
+
+$fe5453: #fe5453; // fe5453色值
+
+$video-section-margin: 10px; // 视频区域margin间距
+
+$font-color-deepen: #333; // 字体颜色标准(最深)
+
+$font-color-normal: #666; // 字体颜色标准(最深)
+
+$font-color-light: #999; // 字体颜色标准(最浅)
+
+
+/* PC端边框 */
+%recomment-border {
+	border: solid 1px #dddddd;
+};
+
+/* 手机端边框 */
+%phone-border {
+	border: solid 1px #ccc;	
+}
+
+%width-full {
+	width: 100%;
+}

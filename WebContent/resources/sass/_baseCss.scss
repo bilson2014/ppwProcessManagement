@@ -1,0 +1,6 @@
+// 加载compass 精灵 工具
+$common-icons-layout: horizontal;
+$common-icons-spacing: 10px;
+@import "compass/utilities/sprites"; // 加载 compass sprites模块
+//@import "common-icons/*.png"; // 导入icon目录下的所有图标
+//@include all-common-icons-sprites; // 输出所有的雪碧图css

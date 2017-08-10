@@ -1,0 +1,25 @@
+@mixin phone-div(){
+      
+      width:270px;    
+    @media screen and (max-width: 360px) {
+       width:360;    
+    }
+
+
+    @media screen and (min-width: 360px) and (max-width: 460px) {
+       width:460px;    
+    }
+
+    @media screen and (min-width: 460px) and (max-width: 640px) {
+       width:640px;    
+    }
+
+    @media screen and (min-width: 640px) and (max-width: 720px) {
+        width:720px;    
+    }
+
+    @media screen and (min-width: 720px) {
+       width:960px;    
+    }
+
+}
