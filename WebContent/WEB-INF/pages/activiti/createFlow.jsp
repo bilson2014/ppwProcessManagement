@@ -254,6 +254,7 @@
 			             <div class="midItem errorItem" id="userNameError">
 		                       <div class="itemTitle">客户名称<span>*</span></div>
 		                       <input id="pu_userName" name="pu_userName" />
+		                       <input type="hidden" id="pu_userId" name="pu_userId" />
 		                       <ul class="autoFindCus">
 		                       </ul>
 		                 </div> 
