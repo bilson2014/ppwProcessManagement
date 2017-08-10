@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.paipianwang.activiti.domin.BaseMsg;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
+/**
+ * 协同人控制器
+ * @author jacky
+ *
+ */
 @RestController
 @RequestMapping("/synergy")
-public class SynergyController {
+public class SynergyController extends BaseController{
 	
 	@Autowired
 	private IdentityService identityService = null;
@@ -33,9 +40,9 @@ public class SynergyController {
 	 * @return
 	 */
 	@RequestMapping("/memberGroup")
-	public BaseMsg getGroupMember() {
+	public BaseMsg getGroupMember(HttpServletRequest request) {
 		BaseMsg msg = new BaseMsg();
-		
+		System.err.println(getCurrentInfo(request));
 		Map<String, Object> memberGroup = new HashMap<String, Object>();
 		
 		// 客户总监
@@ -74,7 +81,7 @@ public class SynergyController {
 		List<User> finances = identityService.createUserQuery().memberOfGroup(ProjectRoleType.finance.getId()).list();
 		memberGroup.put(ProjectRoleType.finance.getId(), finances);
 		
-		msg.setResult(msg);
+		msg.setResult(memberGroup);
 		return msg;
 	}
 }
