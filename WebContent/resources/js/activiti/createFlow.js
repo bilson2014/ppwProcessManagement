@@ -408,8 +408,9 @@ function getSynInfo(){
 					var html =createOption(finances[int].id,finances[int].firstName);
 				   body.append(html);
 			};
-			
+			initSelect();
 		}		
+		initSelect();
 	}, getContextPath() + '/synergy/memberGroup',null);	
 }
 
@@ -513,7 +514,7 @@ function getProduct(){
 					var html =createOption(rowsR[int].id,rowsR[int].text);
 				body.append(html);
 			};
-			initAllSelectEven();
+			
 		}
 		
 		var body = $('#cusLevel');
@@ -525,7 +526,7 @@ function getProduct(){
 					var html =createOption(rowsC[int].id,rowsC[int].text);
 				body.append(html);
 			};
-			initAllSelectEven();
+			
 		}
 		
 	}, getContextPath() + '/product/productSelection',null);

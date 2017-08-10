@@ -764,7 +764,7 @@
 				                <ul class="oSelect" id="orderCome">
 				                     <li>adasda</li>
 				                     <li>dasdas</li>
-				                     <li>dasda</li>
+				                     <li>dasda </li>
 				                </ul>    
 					      </div>
                     </div>
