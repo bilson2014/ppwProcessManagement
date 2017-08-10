@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.ContextLoader;
+
+import com.paipianwang.activiti.mq.email.service.BaseMQService;
 
 /**
  * 向客户发送验收函
@@ -16,8 +20,12 @@ public class SendAcceptanceToUser implements JavaDelegate, Serializable {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Auto-generated method stub
 		System.err.println("向客户发送验收函");
+		
+		String projectId = execution.getProcessBusinessKey();
+		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		BaseMQService projectAcceptConfirmMQService = (BaseMQService) context.getBean("projectAcceptConfirmMQService");
+		projectAcceptConfirmMQService.sendMessage(projectId);
 	}
 
 }

@@ -20,15 +20,13 @@ public class SendProjectStartEmailToTeam implements JavaDelegate, Serializable {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Auto-generated method stub
 		System.err.println("向供应商发送项目启动函");
 		String projectId = execution.getProcessBusinessKey();
 		
 		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		BaseMQService projectInfoLetterMQService = (BaseMQService) context
-				.getBean("projectInfoLetterMQService");
-		System.err.println(projectInfoLetterMQService);
-		projectInfoLetterMQService.sendMessage(projectId);
+		BaseMQService projectPlanStartMQService = (BaseMQService) context
+				.getBean("projectPlanStartMQService");
+		projectPlanStartMQService.sendMessage(projectId);
 	}
 
 }
