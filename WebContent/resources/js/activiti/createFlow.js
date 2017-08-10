@@ -305,6 +305,7 @@ function initAutoChoose(){
 		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
+		 $('#pu_email').val($(this).attr('data-email'));
 		 getValue(level);
 		 $('.autoFindCus').hide();
 	});
@@ -317,7 +318,7 @@ function findAutoInfo(userName){
 		body.html('');
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-					var html =createUserInfo(res[int].id,res[int].userName,res[int].telephone,res[int].realName,res[int].clientLevel);
+				   var html =createUserInfo(res[int].id,res[int].userName,res[int].telephone,res[int].realName,res[int].clientLevel,res[int].email);
 				   body.append(html);
 			};
 			initAutoChoose();
@@ -601,8 +602,8 @@ function createOption(value,text,price){
 		return html;
 }
 
-function createUserInfo(id,name,phone,realName,clientLevel){
-	var html = '<li data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';
+function createUserInfo(id,name,phone,realName,clientLevel,email){
+	var html = '<li data-email="'+email+'"  data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';
 	return html;
 }
 
