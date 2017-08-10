@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -62,5 +63,7 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public String generateProjectId();
+
+	public Map<String, Object> getReadableColumns(User user, String taskId);
 
 }

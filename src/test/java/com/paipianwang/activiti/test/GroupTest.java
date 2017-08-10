@@ -19,34 +19,34 @@ import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
 public class GroupTest extends BaseTest{
 
 	@Autowired
-	PmsProjectFlowFacade flowFacade = null;
+	PmsProjectFlowFacade pmsProjectFlowFacade = null;
 
 	@Autowired
-	PmsProjectTeamFacade teamFacade = null;
+	PmsProjectTeamFacade pmsProjectTeamFacade = null;
 
 	@Autowired
-	PmsProjectUserFacade userFacade = null;
+	PmsProjectUserFacade pmsProjectUserFacade = null;
 
 	@Autowired
-	PmsProjectGroupColumnShipFacade shipFacade = null;
+	PmsProjectGroupColumnShipFacade pmsProjectColumnShipFacade = null;
 	
 	@Test
 	public void insert() {
-		List<MetaDataColumn> flowList = flowFacade.getMetaDataColumn();
+		List<MetaDataColumn> flowList = pmsProjectFlowFacade.getMetaDataColumn();
 		List<String> flows = new ArrayList<String>();
 
 		for (MetaDataColumn metaDataColumn : flowList) {
 			flows.add(metaDataColumn.getName());
 		}
 
-		List<MetaDataColumn> teamList = teamFacade.getMetaDataColumn();
+		List<MetaDataColumn> teamList = pmsProjectTeamFacade.getMetaDataColumn();
 		List<String> teams = new ArrayList<String>();
 
 		for (MetaDataColumn metaDataColumn : teamList) {
 			teams.add(metaDataColumn.getName());
 		}
 
-		List<MetaDataColumn> userList = userFacade.getMetaDataColumn();
+		List<MetaDataColumn> userList = pmsProjectUserFacade.getMetaDataColumn();
 		List<String> users = new ArrayList<String>();
 
 		for (MetaDataColumn metaDataColumn : userList) {
@@ -60,7 +60,58 @@ public class GroupTest extends BaseTest{
 
 		Group group = new GroupEntity();
 		group.setId("saleDirector");
-
-		shipFacade.updateColumnShip(group, columns);
+		// pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("sale");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		/*group = new GroupEntity();
+		group.setId("creativityDirector");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("superviseDirector");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("teamProvider");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("scheme");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("teamPlan");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("teamProduct");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("finance");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("supervise");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("teamPurchase");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("teamDirector");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("financeDirector");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);
+		
+		group = new GroupEntity();
+		group.setId("customerDirector");
+		pmsProjectColumnShipFacade.updateColumnShip(group, columns);*/
 	}
 }

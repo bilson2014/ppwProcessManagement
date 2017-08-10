@@ -29,7 +29,7 @@ import com.paipianwang.pat.facade.user.service.PmsUserFacade;
 public class UserController {
 
 	private final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private IdentityService identityService = null;
 	@Autowired
@@ -61,24 +61,25 @@ public class UserController {
 			return "redirect:/login?error=true";
 		}
 	}
-	
+
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		
+
 		UserUtil.removeUserSession(session);
 		session.removeAttribute("groups");
 		return "redirect:/login";
-		
+
 	}
-	
+
 	/**
 	 * 根据客户名搜索客户
 	 */
-	@RequestMapping(value="/search/info",method = RequestMethod.POST)
+	@RequestMapping(value = "/search/info", method = RequestMethod.POST)
 	@ResponseBody
 	public List<PmsUser> getUserByName(@RequestBody final PmsUser user) {
-		
+
 		List<PmsUser> users = pmsUserFacade.findUserByName(user);
 		return users != null ? users : new ArrayList<PmsUser>();
 	}
+
 }
