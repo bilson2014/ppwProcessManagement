@@ -11,8 +11,6 @@
 <spring:url value="/resources/js/activiti/createFlow.js" var="createFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 
-<spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
-<spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -32,8 +30,6 @@
 <script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${jsonJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${createFlowJs}"></script>
 
@@ -123,6 +119,7 @@
 	                  <div class="sMidItem noMargin errorItem" id="productConfigAdditionalPackageIdsError">
 	                       <div class="itemTitle">附加包</div>
 	                        <input type="hidden" id="pf_productConfigAdditionalPackageIds" name="pf_productConfigAdditionalPackageIds"/>
+	                        <input type="hidden" id="pf_productConfigAdditonalPackageName" name="pf_productConfigAdditonalPackageName"/>
 	                       <div class="orderSelect orderMultSelect noclick"> 
 	                            <div id="productConfigAdditionalPackageIds"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
