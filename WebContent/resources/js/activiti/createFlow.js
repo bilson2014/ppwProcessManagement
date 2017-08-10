@@ -7,21 +7,22 @@ var multPrice =0;
 $().ready(function() {
 	//getProduct();
 	//checkInfo();
-	dataEven();
-	getProduct();
+	
+	getSynInfo();
+	initAllSelectEven();
 	initAutoChoose();
 	autoInput();
 	submitEven();
-	initAllSelectEven();
-	getSynInfo();
+	dataEven();
+	getProduct();
 });
 
 function submitEven(){
 	$('#toSubmit').off('click').on('click',function(){
 		
-		/*if(checkInfo()){
+		if(checkInfo()){
 			alert('success');
-		}*/
+		}
 		$('#toListForm').submit();
 	});
 }
@@ -317,7 +318,7 @@ function getSynInfo(){
 					var html =createOption(customerDirectors[int].id,customerDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		//销售总监
 		var saleDirectors = res.result.saleDirector;
@@ -328,7 +329,7 @@ function getSynInfo(){
 					var html =createOption(saleDirectors[int].id,saleDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		//创意总监
 		var creativityDirectors = res.result.creativityDirector;
@@ -339,7 +340,7 @@ function getSynInfo(){
 					var html =createOption(creativityDirectors[int].id,creativityDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		//监制总监
 		var superviseDirectors = res.result.superviseDirector;
@@ -350,7 +351,7 @@ function getSynInfo(){
 					var html =createOption(superviseDirectors[int].id,superviseDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		//供应商总监
 		var teamDirectors = res.result.teamDirector;
@@ -361,7 +362,7 @@ function getSynInfo(){
 					var html =createOption(teamDirectors[int].id,teamDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		
 		//供应商管家
@@ -373,7 +374,7 @@ function getSynInfo(){
 					var html =createOption(teamProviders[int].id,teamProviders[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		
 		//供应商采购
@@ -385,7 +386,7 @@ function getSynInfo(){
 					var html =createOption(teamPurchases[int].id,teamPurchases[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		
 		//财务总监
@@ -397,7 +398,7 @@ function getSynInfo(){
 					var html =createOption(financeDirectors[int].id,financeDirectors[int].firstName);
 				   body.append(html);
 			};
-			initSelect();
+			
 		}
 		
 		//财务出纳
@@ -411,6 +412,7 @@ function getSynInfo(){
 			};
 			initSelect();
 		}		
+		initSelect();
 	}, getContextPath() + '/synergy/memberGroup',null);	
 }
 
@@ -514,7 +516,7 @@ function getProduct(){
 					var html =createOption(rowsR[int].id,rowsR[int].text);
 				body.append(html);
 			};
-			initAllSelectEven();
+			
 		}
 		
 		var body = $('#cusLevel');
@@ -526,7 +528,7 @@ function getProduct(){
 					var html =createOption(rowsC[int].id,rowsC[int].text);
 				body.append(html);
 			};
-			initAllSelectEven();
+			
 		}
 		
 	}, getContextPath() + '/product/productSelection',null);
