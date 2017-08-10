@@ -90,9 +90,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			String projectId = null;
 			if (flowMap != null) {
 				PmsProjectFlow projectFlow = JSON.parseObject(JSON.toJSONString(flowMap), PmsProjectFlow.class);
-				if (projectFlow != null && StringUtils.isNotBlank(projectFlow.getProjectId())) {
+				if (projectFlow != null && StringUtils.isNotBlank(projectFlow.getProjectId()) && StringUtils.isNotEmpty(userId)) {
 					projectId = projectFlow.getProjectId();
-					projectFlow.setPrincipal(Integer.getInteger(userId));
+					projectFlow.setPrincipal(Integer.parseInt(userId.split("_")[1]));
 					flowFacade.insert(projectFlow);
 				}
 			}

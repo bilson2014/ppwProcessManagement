@@ -24,7 +24,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="keywords" content="">
 <meta name="description" content="">
-<meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
 <link rel="stylesheet" href="${datepickerCss}">
@@ -38,12 +37,10 @@
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
 
-
 </head>
 
 <body>
     <form method="post" action="/project/start-process/procedure-workflow-4:1:4" id="toListForm">
-	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <div class="title">新建项目</div> 
@@ -137,7 +134,7 @@
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
 	                       <div class="itemTitle">项目周期<span>*</span></div>
-	                       <input id="pf_projectSql"/> 
+	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
 	                       <div class="itemTitle">对标影片<span>*</span></div>
@@ -256,23 +253,23 @@
 		           <div class="projectInfo">
 			             <div class="midItem errorItem" id="userNameError">
 		                       <div class="itemTitle">客户名称<span>*</span></div>
-		                       <input id="pu_userName"/>
+		                       <input id="pu_userName" name="pu_userName" />
 		                       <ul class="autoFindCus">
 		                       </ul>
 		                 </div> 
 			             <div class="smallItem errorItem" id="linkmanError">
 		                       <div class="itemTitle">客户联系人<span>*</span></div>
-		                       <input id="pu_linkman"/>
+		                       <input id="pu_linkman" name="pu_linkman"/>
 		                 </div>
 		                 <div class="smallItem errorItem" id="telephoneError">
 		                       <div class="itemTitle">客户电话<span>*</span></div>
-		                       <input id="pu_telephone"/>
+		                       <input id="pu_telephone" name="pu_telephone"/>
 		                 </div>
 		                 <div class="smallItem errorItem" id="userLevelError">
 		                       <div class="itemTitle">客户评级<span>*</span></div>
 		                       <input readonly id="pu_userLevel" name="pu_userLevel"/>
 		                       <div class="orderSelect hide" >
-					                <div id="userLevel"></div>
+					                <div id="userLevel" data-id="S"></div>
 					                <img src="${imgPath}/flow/selectOrder.png">
 					                <ul class="oSelect" id="cusLevel">
 					                    <li data-id="0">S</li>
@@ -293,13 +290,13 @@
 		     
 		      <div class="infoTitle">价格信息</div>
 		      <div class="singleItem">
-		                       <div class="itemTitle">客户联系人</div>
-		                       <input id="estimatedPrice" name="estimatedPrice" value="0"/>
+		                       <div class="itemTitle">项目预算</div>
+		                       <input id="estimatedPrice" name="pf_estimatedPrice" value="0"/>
 		                       <div class="yuan">元</div>
 		      </div>
 		      <div class="infoTitle">项目描述</div>
 		      <div class="outSide">
-		           <textarea id="projectDescription" name="projectDescription"></textarea>         
+		           <textarea id="projectDescription" name="pf_projectDescription"></textarea>         
 		      </div>
 		      
 		      <div class="btnMid">

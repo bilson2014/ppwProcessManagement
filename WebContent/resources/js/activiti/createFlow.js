@@ -21,7 +21,9 @@ function submitEven(){
 	$('#toSubmit').off('click').on('click',function(){
 		
 		if(checkInfo()){
+
 			$('#toListForm').submit();
+
 		}
 	//	
 	});
