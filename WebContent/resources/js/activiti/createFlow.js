@@ -300,8 +300,8 @@ function initAutoChoose(){
 		 var name = $(this).text();
 		 var id = $(this).attr('data-id');
 		 var level = $(this).attr('data-clientLevel');
-		 $(this).parent().parent().find('input').val(name);
-		 $(this).parent().parent().find('input').attr('data-id',id);
+		 $('#pu_userName').val(name);
+		 $('#pu_userId').attr('data-id',id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
 		 getValue(level);
