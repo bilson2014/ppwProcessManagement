@@ -248,6 +248,7 @@ function initMultSelect(){
 		}
 		 realPrice = parseInt(realPrice) +  parseInt(totalPrice) +  parseInt(timePrice);
 		 $('#estimatedPrice').val(realPrice);
+		 $('#productConfigAdditionalPackageIds').text(multInfo);
 		 $('#pf_productConfigAdditonalPackageName').val(multInfo);
 		 $('#pf_productConfigAdditionalPackageIds').attr('data-id',multID);
 		 var id = $(this).attr('data-id');
