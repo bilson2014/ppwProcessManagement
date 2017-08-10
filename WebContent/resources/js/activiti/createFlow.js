@@ -21,9 +21,9 @@ function submitEven(){
 	$('#toSubmit').off('click').on('click',function(){
 		
 		if(checkInfo()){
-			alert('success');
+			$('#toListForm').submit();
 		}
-		$('#toListForm').submit();
+	//	
 	});
 }
 
@@ -85,6 +85,7 @@ function checkInfo(){
 		return false;
 	}else{
 		$('#pf_productId').val(productId);
+		$('#pf_productName').val($('#productId').text());
 	}
 	if(productId != '0'){
 		if(productConfigLevelId == undefined || productConfigLevelId == "" || productConfigLevelId ==null ){
@@ -188,6 +189,7 @@ function checkInfo(){
 	var linkman = $('#pu_linkman').val();//客户联系人
 	var telephone = $('#pu_telephone').val();//客户电话
 	var userLevel = $('#userLevel').attr('data-id');//客户评级
+	var email = $('#pu_email').val();//客户评级
 	if(userName == undefined || userName == "" || userName ==null ){
 		$('#userNameError').attr('data-content','客户名称未填写');
 		$('#pu_userName').focus();
@@ -216,6 +218,22 @@ function checkInfo(){
 		$('#pu_userLevel').focus();
 		return false;
 	}
+	
+	if(email == undefined || email == "" || email ==null ){
+		$('#emailError').attr('data-content','邮箱未填写');
+		$('#pu_email').focus();
+		return false;
+	}
+	
+	// 验证邮箱正确性
+	if (!checkEmail(email)) {
+		$('#emailError').attr('data-content','邮箱格式不正确');
+		$('#pu_email').focus();
+		return false;
+	}
+	
+	return true;
+
 }
 
 function initMultSelect(){
