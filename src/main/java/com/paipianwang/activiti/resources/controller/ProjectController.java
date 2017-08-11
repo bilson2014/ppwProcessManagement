@@ -122,8 +122,8 @@ public class ProjectController {
 			HttpSession session) {
 		ModelAndView mv = new ModelAndView("/form/project/dynamic-form-task-list");
 		User user = UserUtil.getUserFromSession(session);
-		List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
-		mv.addObject("list", list);
+		//List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
+		//mv.addObject("list", list);
 		return mv;
 	}
 
@@ -133,8 +133,8 @@ public class ProjectController {
 		ModelAndView mv = new ModelAndView("/form/project/running-list",
 				Collections.singletonMap("processType", processType));
 		User user = UserUtil.getUserFromSession(session);
-		List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
-		mv.addObject("list", list);
+		//List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
+		//mv.addObject("list", list);
 		return mv;
 	}
 

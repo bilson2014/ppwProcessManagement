@@ -1,66 +1,86 @@
 package com.paipianwang.activiti.task.listener;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ContextLoader;
+
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
+import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 
 /**
  * 项目启动监听
+ * 
  * @author jacky
  *
  */
 @Component("startProjectEventListener")
-public class StartProjectEventListener implements JavaDelegate,Serializable {
+public class StartProjectEventListener implements JavaDelegate, Serializable {
 
 	private static final long serialVersionUID = -5886397723124115854L;
-	
+
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		
-		final IdentityService identityService = execution.getEngineServices().getIdentityService();
-		
-		UserQuery userQuery = identityService.createUserQuery();
-		// 销售总监 -- 张立虎
-		User saleDirector = userQuery.memberOfGroup("saleDirector").singleResult();
-		execution.setVariable("saleDirectorId", saleDirector.getId());
-		
-		// 创意总监 -- 刘超
-		User creativityDirector = userQuery.memberOfGroup("creativityDirector").singleResult();
-		execution.setVariable("creativityDirectorId", creativityDirector.getId());
-		
-		// 供应商管家 -- 王壹
-		User teamProvider = userQuery.memberOfGroup("teamProvider").singleResult(); 
-		execution.setVariable("teamProviderId", teamProvider.getId());
-		
-		// 财务 -- 郭芳
-		User finance = userQuery.memberOfGroup("finance").singleResult(); 
-		execution.setVariable("financeId", finance.getId());
-		
-		// 监制总监 -- 夏攀
-		User superviseDirector = userQuery.memberOfGroup("superviseDirector").singleResult(); 
-		execution.setVariable("superviseDirectorId", superviseDirector.getId());
-		
-		// 供应商采购 -- 陈景娜
-		User teamPurchase = userQuery.memberOfGroup("teamPurchase").singleResult(); 
-		execution.setVariable("teamPurchaseId", teamPurchase.getId());
-		
-		// 供应商总监 -- 刘峰
-		User teamDirector = userQuery.memberOfGroup("teamDirector").singleResult(); 
-		execution.setVariable("teamDirectorId", teamDirector.getId());
-		
-		// 财务总监 -- 杨巍
-		User financeDirector = userQuery.memberOfGroup("financeDirector").singleResult(); 
-		execution.setVariable("financeDirectorId", financeDirector.getId());
-		
-		// 客服总监 -- 闫雪琴
-		User customerDirector = userQuery.memberOfGroup("customerDirector").singleResult(); 
-		execution.setVariable("customerDirectorId", customerDirector.getId());
-		
+
+		// 项目编号
+		final String projectId = execution.getProcessBusinessKey();
+
+		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		PmsProjectSynergyFacade pmsProjectSynergyFacade = (PmsProjectSynergyFacade) context
+				.getBean("pmsProjectSynergyFacade");
+
+		// 前缀
+		final String suffix = "employee_";
+
+		// 查询协同人列表
+		Map<String, PmsProjectSynergy> synergyMap = pmsProjectSynergyFacade.getSynergysByProjectId(projectId);
+
+		// 销售总监
+		String saleDirectorId = suffix + synergyMap.get(ProjectRoleType.saleDirector.getId()).getEmployeeId();
+		execution.setVariable("saleDirectorId", saleDirectorId);
+
+		// 创意总监
+		String creativityDirectorId = suffix
+				+ synergyMap.get(ProjectRoleType.creativityDirector.getId()).getEmployeeId();
+		execution.setVariable("creativityDirectorId", creativityDirectorId);
+
+		// 供应商管家
+		String teamProviderId = suffix + synergyMap.get(ProjectRoleType.teamProvider.getId()).getEmployeeId();
+		execution.setVariable("teamProviderId", teamProviderId);
+
+		// 财务
+		String financeId = suffix + synergyMap.get(ProjectRoleType.finance.getId()).getEmployeeId();
+		execution.setVariable("financeId", financeId);
+
+		// 监制总监
+		String superviseDirectorId = suffix + synergyMap.get(ProjectRoleType.superviseDirector.getId()).getEmployeeId();
+		execution.setVariable("superviseDirectorId", superviseDirectorId);
+
+		// 供应商采购
+		String teamPurchaseId = suffix + synergyMap.get(ProjectRoleType.teamPurchase.getId()).getEmployeeId();
+		execution.setVariable("teamPurchaseId", teamPurchaseId);
+
+		// 供应商总监
+		String teamDirectorId = suffix + synergyMap.get(ProjectRoleType.teamDirector.getId()).getEmployeeId();
+		execution.setVariable("teamDirectorId", teamDirectorId);
+
+		// 财务总监
+		String financeDirectorId = suffix + synergyMap.get(ProjectRoleType.financeDirector.getId()).getEmployeeId();
+		execution.setVariable("financeDirectorId", financeDirectorId);
+
+		// 客服总监
+		String customerDirectorId = suffix + synergyMap.get(ProjectRoleType.customerDirector.getId()).getEmployeeId();
+		execution.setVariable("customerDirectorId", customerDirectorId);
+
 	}
 
 }

@@ -286,8 +286,8 @@ public class DataInit extends BaseTest {
 		identityService.createMembership("employee_70", "scheme");
 		// 财务 -- 郭芳
 		identityService.createMembership("employee_69", "finance");
-		// 监制 -- 闫雪琴
-		identityService.createMembership("employee_33", "supervise");
+		// 监制 -- 李红蕾
+		identityService.createMembership("employee_32", "supervise");
 		// 供应商采购 -- 陈景娜
 		identityService.createMembership("employee_71", "teamPurchase");
 
@@ -305,6 +305,29 @@ public class DataInit extends BaseTest {
 		// 客服总监 -- 闫雪琴
 		identityService.createMembership("employee_33", "customerDirector");
 
+	}
+	
+	@Test
+	public void test() {
+		Group group = identityService.newGroup("sale");
+		group.setName("销售");
+		group.setType("security-role");
+		identityService.saveGroup(group);
+		
+		identityService.createMembership("employee_36", "sale");
+	}
+	
+	@Test
+	public void testGroup() {
+		Group group = identityService.newGroup("teamPlan");
+		group.setName("策划供应商");
+		group.setType("assignment");
+		identityService.saveGroup(group);
+		
+		group = identityService.newGroup("teamProduct");
+		group.setName("制作供应商");
+		group.setType("assignment");
+		identityService.saveGroup(group);
 	}
 	
 }

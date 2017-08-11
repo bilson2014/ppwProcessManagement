@@ -10,15 +10,23 @@
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
-	
-	<mvc:view-controller path="/textC" view-name="/activiti/createFlow" />
-	
+
 	<mvc:view-controller path="/text" view-name="/activiti/textFlow" />
-	
+
 	<mvc:view-controller path="/textI" view-name="/activiti/flowInfo" />
 
 	<context:annotation-config />
 
 	<mvc:annotation-driven />
-	
+
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/resources/**" />
+			<mvc:exclude-mapping path="/login" />
+			<bean class="com.paipianwang.activiti.interceptors.SecurityInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 </beans>
