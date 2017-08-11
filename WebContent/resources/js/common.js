@@ -577,41 +577,7 @@ var share = {
 		}
 }
 
-var _hmt = _hmt || [];
-(function() {
-	var hm = document.createElement("script");
-	hm.src = "//hm.baidu.com/hm.js?b0ac6d7e1cee0e96c5c43106c5d43537";
-	var s = document.getElementsByTagName("script")[0];
-	s.parentNode.insertBefore(hm, s);
-})();
 
-var _hmt = _hmt || [];
-
-(function() {
-
-  var hm = document.createElement("script");
-
-  hm.src = "https://hm.baidu.com/hm.js?0087b7e6cc5371a3a8bf40eeb6ee6f0a";
-
-  var s = document.getElementsByTagName("script")[0];
-
-  s.parentNode.insertBefore(hm, s);
-
-})();
-
-var _vds = _vds || [];
-window._vds = _vds;
-(function(){
-  _vds.push(['setAccountId', '9f2e33a3d43b5d78']);
-  (function() {
-    var vds = document.createElement('script');
-    vds.type='text/javascript';
-    vds.async = true;
-    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(vds, s);
-  })();
-})();
 
 //3.0
 function playVideo() {

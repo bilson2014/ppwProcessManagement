@@ -14,6 +14,8 @@
 	<mvc:view-controller path="/text" view-name="/activiti/textFlow" />
 
 	<mvc:view-controller path="/textI" view-name="/activiti/flowInfo" />
+	
+	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
 
 	<context:annotation-config />
 
