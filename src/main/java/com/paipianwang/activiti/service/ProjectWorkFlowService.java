@@ -9,6 +9,9 @@ import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+
 public interface ProjectWorkFlowService {
 
 	/**
@@ -18,12 +21,12 @@ public interface ProjectWorkFlowService {
 			String userId, Map<String, Object> form);
 
 	/**
-	 * 获取当前登陆人正在进行中的项目
+	 * 获取当前登陆人当前参与的任务
 	 * 
 	 * @param id
 	 * @return
 	 */
-	public List<Task> getRunningTasks(String userId);
+	public List<PmsProjectFlowResult> getRunningTasks(String userId);
 
 	/**
 	 * 查询已完成任务
@@ -65,5 +68,12 @@ public interface ProjectWorkFlowService {
 	public String generateProjectId();
 
 	public Map<String, Object> getReadableColumns(User user, String taskId);
+
+	/**
+	 * 获取登陆人当前待办的任务
+	 * @param activitiUserId 登陆人activiti身份ID
+	 * @return
+	 */
+	public List<PmsProjectFlowResult> getTodoTasks(String activitiUserId);
 
 }

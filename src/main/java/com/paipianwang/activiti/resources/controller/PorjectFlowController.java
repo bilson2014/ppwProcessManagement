@@ -18,7 +18,6 @@ import org.activiti.engine.impl.form.FormPropertyImpl;
 import org.activiti.engine.impl.form.StringFormType;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +33,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.activiti.utils.UserUtil;
+import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 
 /**
  * 项目流程控制器
@@ -65,12 +67,11 @@ public class PorjectFlowController extends BaseController {
 	 * 新建项目
 	 * @return
 	 */
-	@RequestMapping("/start-process/{processDefinitionId}")
+	@RequestMapping("/start-process")
 	public ModelAndView submitStartFormAndStartProcessInstance(
-			@PathVariable("processDefinitionId") final String processDefinitionId,
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {
-
-		// TODO 获取数据
+		
+		// 获取数据
 		Map<String, String> formProperties = new HashMap<String, String>();
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
@@ -85,15 +86,10 @@ public class PorjectFlowController extends BaseController {
 		Map<String, Object> properties = DataUtils.divideFlowData(formProperties);
 
 		logger.debug("start form parameters: {}", properties);
-		User user = UserUtil.getUserFromSession(request.getSession());
+		SessionInfo info = getCurrentInfo(request);
 
-		// 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
-		if (user == null || StringUtils.isBlank(user.getId())) {
-			return new ModelAndView("redirect:/login?timeout=true");
-		}
-
-		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(processDefinitionId,
-				formProperties, user.getId(), properties);
+		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(null,
+				formProperties, info.getActivitiUserId(), properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");
@@ -105,13 +101,17 @@ public class PorjectFlowController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("running-task")
-	public ModelAndView taskList(@RequestParam(value = "processType", required = false) String processType,
-			HttpSession session) {
-		ModelAndView mv = new ModelAndView("/form/project/dynamic-form-task-list");
-		User user = UserUtil.getUserFromSession(session);
-		List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
-		mv.addObject("list", list);
+	@RequestMapping("/running-task")
+	public ModelAndView taskList(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		SessionInfo info = getCurrentInfo(request);
+		// 查询代办任务
+		List<PmsProjectFlowResult> gTasks = prjectWorkFlowService.getTodoTasks(info.getActivitiUserId());
+		
+		// 查询参与的正在进行中的任务
+		List<PmsProjectFlowResult> runnintTasks = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		mv.addObject("gTasks", gTasks);
+		mv.addObject("runningTasks", runnintTasks);
 		return mv;
 	}
 	
@@ -156,7 +156,7 @@ public class PorjectFlowController extends BaseController {
 			}
 		}
 
-		// TODO 获取可见数据
+		// 获取可见数据
 		User user = UserUtil.getUserFromSession(session);
 		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(user, taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");

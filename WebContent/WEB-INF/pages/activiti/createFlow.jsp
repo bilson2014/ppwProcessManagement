@@ -40,7 +40,7 @@
 </head>
 
 <body>
-    <form method="post" action="/project/start-process/procedure-workflow-4:1:4" id="toListForm">
+    <form method="post" action="/project/start-process" id="toListForm">
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <div class="title">新建项目</div> 
