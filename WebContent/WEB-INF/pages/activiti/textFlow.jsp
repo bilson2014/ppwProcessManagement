@@ -4,7 +4,7 @@
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
-<spring:url value="/resources/js/newFlow/textFlow.js" var="textFlowJs"/>
+<spring:url value="/resources/js/activiti/textFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -53,10 +53,11 @@
 	                    </div>
 	                </div>
 	                <div class="lineTop"></div>
+	                <div id="hideDiv">
 	                <div class="title">
-	                     <div class="titleName" id="upName">标题名字</div>
+	                     <div class="titleName" id="upName">待办任务</div>
 	                </div>
-	                <div class="setCard">
+	                <div class="setCard" id="setCard">
 	                        <div class="waitCard">
 	                             <div class="cardH">
 	                                 <div class="title">这里是卡片的标题啊啊啊啊</div>
@@ -123,11 +124,12 @@
 	                </div>
 	           </div>
 	           <div class="cardLine"><div></div></div>
+	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName">标题名字</div>
+	                     <div class="titleName" id="downName">其它任务</div>
 	                </div>
-	           <div class="setCard">
+	           <div class="setCard" id="otherCard">
 	                        <div class="otherCard">
 	                             <div class="cardH">
 	                                 <div class="title">这里是卡片的标题啊啊啊啊</div>

@@ -15,6 +15,16 @@ $().ready(function() {
 	submitEven();
 	dataEven();
 	getProduct();
+	
+	var myDate = new Date();
+	//获取当前年
+	var year=myDate.getFullYear();
+	//获取当前月
+	var month=myDate.getMonth()+1;
+	//获取当前日
+	var date=myDate.getDate();  
+	$('#pf_createDate').val(year+"-"+month+"-"+date);
+	
 });
 
 function submitEven(){
@@ -107,8 +117,14 @@ function checkInfo(){
 		$('#createDate').focus();
 		return false;
 	}
+		
 	if(projectSql == undefined || projectSql == "" || projectSql ==null ){
 		$('#projectSqlError').attr('data-content','项目周期未填写');
+		$('#pf_projectSql').focus();
+		return false;
+	}
+	if(!checkNumber(projectSql)){
+		$('#projectSqlError').attr('data-content','项目周期填写错误');
 		$('#pf_projectSql').focus();
 		return false;
 	}
@@ -144,7 +160,7 @@ function checkInfo(){
 		$('#creativityDirectorError').attr('data-content','创意总监未选择');
 		return false;
 	}else{
-		$('#ps_creativityDirector').val(customerDirector);
+		$('#ps_creativityDirector').val(creativityDirector);
 	}
 	if(superviseDirector == undefined || superviseDirector == "" || superviseDirector ==null ){
 		$('#superviseDirectorError').attr('data-content','监制总监未选择');
@@ -301,7 +317,7 @@ function initAutoChoose(){
 		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
-		 if($(this).attr('data-email')!=null){
+		 if($(this).attr('data-email')!='null'){
 		 $('#pu_email').val($(this).attr('data-email'));
 		 }
 		 getValue(level);
