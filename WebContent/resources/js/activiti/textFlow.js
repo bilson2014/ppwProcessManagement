@@ -6,7 +6,12 @@ $().ready(function() {
 	doing();
 	doPasue();
 	doFinish();
-	
+	var carNum = $('.cardNum');
+	if(carNum.length == null || carNum.length=="" ){
+		$('#cardNum').hide();
+	}else{
+		$('#cardNum').text(carNum.length);
+	}
 	$('#productList').show();
 	$('#myPro').addClass('open');
 	$('#nowDoing').addClass('checkLi');
@@ -53,6 +58,7 @@ function doing(){
 		$('.productList li').removeClass('checkLi');
         $(this).addClass('checkLi');
         $('#hideDiv').show();
+        $('.frame').attr('src',getContextPath()+"/project/running-doing");
 	});
 }
 
@@ -91,6 +97,7 @@ function doPasue(){
 		$('.productList li').removeClass('checkLi');
         $(this).addClass('checkLi');
         $('#hideDiv').hide();
+        $('.frame').attr('src',getContextPath()+"/project/suspend-task");
 	});
 }
 
@@ -120,6 +127,7 @@ function doFinish(){
 		$('.productList li').removeClass('checkLi');
         $(this).addClass('checkLi');
         $('#hideDiv').show();
+        $('.frame').attr('src',getContextPath()+"/finished/list");
 	});
 }
 

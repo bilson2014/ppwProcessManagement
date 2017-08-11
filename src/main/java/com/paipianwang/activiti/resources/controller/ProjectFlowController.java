@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 
 /**
@@ -114,8 +115,11 @@ public class ProjectFlowController extends BaseController {
 			}
 			List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
 			for (PmsProjectFlowResult result : runnintTasks) {
-				if(!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-					runningList.add(result);
+				PmsProjectFlow flow = result.getPmsProjectFlow();
+				if(flow != null && StringUtils.isEmpty(flow.getProjectId())) {
+					if(!todoProjectList.contains(flow.getProjectId())) {
+						runningList.add(result);
+					}
 				}
 			}
 			mv.addObject("runningTasks", runningList);
@@ -132,10 +136,9 @@ public class ProjectFlowController extends BaseController {
 		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		SessionInfo info = getCurrentInfo(request);
 		// 查询代办任务
-		List<PmsProjectFlowResult> gTasks = prjectWorkFlowService.getTodoTasks(info.getActivitiUserId());
-		
+		List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());		
 		// 查询参与的正在进行中的任务
-		List<PmsProjectFlowResult> runnintTasks = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
 		mv.addObject("gTasks", gTasks);
 		mv.addObject("runningTasks", runnintTasks);
 		return mv;
@@ -279,7 +282,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/finished/list")
 	public ModelAndView finished(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<HistoricProcessInstance> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("finishedTasks", list);
@@ -295,10 +298,10 @@ public class ProjectFlowController extends BaseController {
 		}
 		return mv;
 	}
-	
+	// 暂停
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<PmsProjectFlowResult> suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
 		mv.addObject("suspendTasks", suspendTasks);

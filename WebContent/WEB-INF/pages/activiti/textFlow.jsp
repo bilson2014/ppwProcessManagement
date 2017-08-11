@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
 <%-- import JS --%>
@@ -42,6 +43,12 @@
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <jsp:include flush="true" page="flowMenu.jsp"></jsp:include>  
+	    
+	    	 <c:if test="${!empty gTasks}">
+							<c:forEach items="${gTasks }" var="staff" varStatus="status">
+                                     <div class="cardNum hide"></div>
+							</c:forEach>
+			</c:if>
 	
 	<div class="productListArea">
 	           <div class="waitWork">

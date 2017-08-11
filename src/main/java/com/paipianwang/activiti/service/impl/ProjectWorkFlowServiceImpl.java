@@ -221,9 +221,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 				// 获取 流程业务数据
 				PmsProjectFlow pmsProjectFlow = flowFacade.getProjectFlowByProjectId(projectId);
-				PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
-				pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
-				result.setPmsProjectFlow(pmsProjectFlow);
+				if(pmsProjectFlow != null && pmsProjectFlow.getPrincipal() != null) {
+					PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
+					pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
+					result.setPmsProjectFlow(pmsProjectFlow);
+				}
 
 				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 						.superProcessInstanceId(processInstanceId).singleResult();
