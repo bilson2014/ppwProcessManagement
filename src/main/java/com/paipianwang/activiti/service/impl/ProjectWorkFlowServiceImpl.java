@@ -14,6 +14,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
@@ -205,8 +206,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	public List<PmsProjectFlowResult> getRunningTasks(String userId) {
 
 		NativeExecutionQuery nativeExecutionQuery = runtimeService.createNativeExecutionQuery();
-		String sql = "SELECT RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
-				+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+		String sql = "";
+		if (StringUtils.isNotBlank(userId)) {
+			// 如果userId为空，那么查询所有的项目
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+		} else {
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
+					+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+		}
 		List<Execution> executionList = nativeExecutionQuery.sql(sql).list();
 		if (executionList != null && !executionList.isEmpty()) {
 			List<PmsProjectFlowResult> list = new ArrayList<PmsProjectFlowResult>();
@@ -221,7 +228,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 				// 获取 流程业务数据
 				PmsProjectFlow pmsProjectFlow = flowFacade.getProjectFlowByProjectId(projectId);
-				if(pmsProjectFlow != null && pmsProjectFlow.getPrincipal() != null) {
+				if (pmsProjectFlow != null && pmsProjectFlow.getPrincipal() != null) {
 					PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
 					pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
 					result.setPmsProjectFlow(pmsProjectFlow);
@@ -252,10 +259,39 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public List<HistoricProcessInstance> getFinishedTask(String id) {
+	public List<PmsProjectFlowResult> getFinishedTask(String userId) {
 		List<HistoricProcessInstance> list = historyService.createHistoricProcessInstanceQuery().finished()
 				.orderByProcessInstanceEndTime().desc().list();
-		return list;
+		if (list != null && !list.isEmpty()) {
+			List<PmsProjectFlowResult> resultList = new ArrayList<PmsProjectFlowResult>();
+			for (final HistoricProcessInstance historicProcessInstance : list) {
+				String processInstanceId = historicProcessInstance.getId();
+				List<HistoricTaskInstance> hisTaskList = historyService.createHistoricTaskInstanceQuery()
+						.processInstanceId(processInstanceId).taskAssignee(userId).finished().list();
+				if (hisTaskList != null && !hisTaskList.isEmpty()) {
+					for (final HistoricTaskInstance historicTaskInstance : hisTaskList) {
+						String pinstId = historicTaskInstance.getId();
+
+						final String projectId = historyService.createHistoricProcessInstanceQuery()
+								.processInstanceId(pinstId).singleResult().getBusinessKey();
+						if (StringUtils.isNotBlank(projectId)) {
+							// 查询流程ID
+							PmsProjectFlowResult result = new PmsProjectFlowResult();
+							PmsProjectFlow flow = flowFacade.getProjectFlowByProjectId(projectId);
+							if(flow != null && flow.getPrincipal() != null) {
+								PmsEmployee employee = employeeFacade.findEmployeeById(flow.getPrincipal());
+								flow.setPrincipalName(employee.getEmployeeRealName());
+								result.setPmsProjectFlow(flow);
+							}
+							
+							resultList.add(result);
+						}
+					}
+				}
+			}
+			return resultList;
+		}
+		return null;
 	}
 
 	@Override
@@ -302,7 +338,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		try {
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
-			
+
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 			// 计算
 		} finally {
@@ -452,16 +488,22 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	public List<PmsProjectFlowResult> getSuspendTasks(String userId) {
 		List<PmsProjectFlowResult> list = new ArrayList<PmsProjectFlowResult>();
 		// 根据当前人的ID查询
-		TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned(userId)
-				.processDefinitionKey(processDefintionKey).suspended();
+		TaskQuery taskQuery = null;
+		if (StringUtils.isNotBlank(userId)) {
+			taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned(userId)
+					.processDefinitionKey(processDefintionKey).suspended();
+		} else {
+			taskQuery = taskService.createTaskQuery().processDefinitionKey(processDefintionKey).suspended();
+		}
+
 		List<Task> tasks = taskQuery.list();
-		if(tasks != null && !tasks.isEmpty()) {
-			
+		if (tasks != null && !tasks.isEmpty()) {
+
 			// 根据流程的业务ID查询实体并关联
 			for (Task task : tasks) {
 				String processInstanceId = task.getProcessInstanceId();
 				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-						.processInstanceId(processInstanceId).active().singleResult();
+						.processInstanceId(processInstanceId).singleResult();
 				if (processInstance == null) {
 					continue;
 				}
@@ -469,7 +511,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				if (projectId == null) {
 					continue;
 				}
-				
+
 				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
 				PmsEmployee employee = employeeFacade.findEmployeeById(project.getPrincipal());
 				project.setPrincipalName(employee.getEmployeeRealName());
@@ -482,7 +524,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			}
 			return list;
 		}
-		
+
 		return null;
 	}
 
