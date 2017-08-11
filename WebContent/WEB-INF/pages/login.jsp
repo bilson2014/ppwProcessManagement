@@ -5,12 +5,6 @@
 <head>
 	<%@ include file="/resources/common/global.jsp"%>
 	<title>KAD登录页 - 咖啡兔(闫洪磊)</title>
-	<script>
-		var logon = ${not empty user};
-		if (logon) {
-			location.href = '${ctx}/main/index';
-		}
-	</script>
 	<%@ include file="/resources/common/meta.jsp" %>
 	<%@ include file="/resources/common/include-jquery-ui-theme.jsp" %>
     <%@ include file="/resources/common/include-base-styles.jsp" %>
