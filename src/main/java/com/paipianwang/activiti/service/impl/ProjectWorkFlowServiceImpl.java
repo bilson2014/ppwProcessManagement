@@ -205,7 +205,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	public List<PmsProjectFlowResult> getRunningTasks(String userId) {
 
 		NativeExecutionQuery nativeExecutionQuery = runtimeService.createNativeExecutionQuery();
-		String sql = "SELECT RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
+		String sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
 				+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
 		List<Execution> executionList = nativeExecutionQuery.sql(sql).list();
 		if (executionList != null && !executionList.isEmpty()) {
@@ -221,9 +221,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 				// 获取 流程业务数据
 				PmsProjectFlow pmsProjectFlow = flowFacade.getProjectFlowByProjectId(projectId);
-				PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
-				pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
-				result.setPmsProjectFlow(pmsProjectFlow);
+				if(pmsProjectFlow != null && pmsProjectFlow.getPrincipal() != null) {
+					PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
+					pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
+					result.setPmsProjectFlow(pmsProjectFlow);
+				}
 
 				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 						.superProcessInstanceId(processInstanceId).singleResult();

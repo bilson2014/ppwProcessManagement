@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 
 /**
@@ -114,8 +115,11 @@ public class ProjectFlowController extends BaseController {
 			}
 			List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
 			for (PmsProjectFlowResult result : runnintTasks) {
-				if(!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-					runningList.add(result);
+				PmsProjectFlow flow = result.getPmsProjectFlow();
+				if(flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
+					if(!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
+						runningList.add(result);
+					}
 				}
 			}
 			mv.addObject("runningTasks", runningList);
