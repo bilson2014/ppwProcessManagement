@@ -8,7 +8,7 @@
             }
 
             body {
-                background: $border-line !important;
+                background: #F0F2F5 !important;
             }
 
             @mixin anmotion {
@@ -218,9 +218,9 @@
                     img {
                         width: 10px;
                         height: 10px;
-                        margin-left: 40px;
-                        position: relative;
-                        top: 1px;
+                        position: absolute;
+                        top: 11px;
+                        right: 15px;
                     }
                     .line {
                         width: 176px;
@@ -265,6 +265,10 @@
                         margin-left: 15px;
                         color: $gray-dark;
                         font-size: $font-size-base;
+                        span {
+                            font-size: $font-size-sm;
+                            color: $red-base;
+                        }
                     }
                     &:hover {
                         background: $f8;

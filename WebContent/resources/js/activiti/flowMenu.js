@@ -33,10 +33,10 @@ function initMenuEven(){
 		 }
 	});*/
 
-	$('.productList li').off('click').on('click',function(){
+/*	$('.productList li').off('click').on('click',function(){
                $('.productList li').removeClass('checkLi');
                $(this).addClass('checkLi');
-	});
+	});*/
 	
 	//特换到小菜单
 	$('#toMin').off('click').on('click',function(){

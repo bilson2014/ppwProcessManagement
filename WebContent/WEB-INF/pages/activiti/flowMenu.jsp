@@ -63,11 +63,11 @@
 	        <div class="flowTree">
 	              <div class="treeitem" id="myPro">
 	                  <div class="myPro"></div>
-	                  <div class="title">我的项目</div>
+	                  <div class="title">我的项目<span> Beta</span></div>
 	                  <img src="${imgPath}/flow/more.png">
 	             </div>
 	              <ul class="productList" id="productList">
-	                  <li id="nowDoing">进行中<div>10</div></li>
+	                  <li id="nowDoing" class="checkLi">进行中<div>10</div></li>
 	                  <li id="pause">暂停</li>
 	                  <li id="finish">完成/取消</li>
 	              </ul>

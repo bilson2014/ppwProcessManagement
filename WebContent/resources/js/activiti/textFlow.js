@@ -6,12 +6,16 @@ $().ready(function() {
 	doing();
 	doPasue();
 	doFinish();
-});
-
-function init(){
-
 	
-}
+	$('#productList').show();
+	$('#myPro').addClass('open');
+	$('#nowDoing').addClass('checkLi');
+	
+	$('#setCard').append(createWaitCard(0));
+	$('#setCard').append(createWaitCard(1));
+	$('#otherCard').append(createotherCard());
+	
+});
 
 function initMenuEven(){
 	
@@ -20,7 +24,9 @@ function initMenuEven(){
 		 if($(this).hasClass('open')){
 			 nThis.removeClass('open');
 			 $('#productList').slideUp();
-		 }else{
+		 }
+		 else
+		 {
 			 nThis.addClass('open');
 			 $('#productList').slideDown();
 		 }
@@ -43,70 +49,107 @@ function initMenuEven(){
 		$('.page').removeClass('toMinLeft');
 	});
 	
-	//二级菜单
-	$('#productList li').off('click').on('click',function(){
-		
-	});
-	
 }
 
 function doing(){
 	$('#nowDoing').off('click').on('click',function(){
 		$('#upName').text("待办项目");
 		$('#downName').text("其它项目");
+		$('.productList li').removeClass('checkLi');
+        $(this).addClass('checkLi');
+        $('#hideDiv').show();
 	});
+}
+
+function loadDoingInfo(){
+	
 }
 
 function doPasue(){
 	$('#pause').off('click').on('click',function(){
 		$('#upName').text("暂停项目");
-		$('#downName').text("暂停项目");  
+		$('#downName').text("暂停项目"); 
+		$('.productList li').removeClass('checkLi');
+        $(this).addClass('checkLi');
+        $('#hideDiv').hide();
 	});
+}
+
+function loadPause(){
+	
+	
+	
 }
 
 function doFinish(){
 	$('#finish').off('click').on('click',function(){
 		$('#upName').text("完成项目");
 		$('#downName').text("取消项目");
+		$('.productList li').removeClass('checkLi');
+        $(this).addClass('checkLi');
+        $('#hideDiv').show();
 	});
 }
 
-function createWaitCard(){
+function createWaitCard(res){
+	
+	if(num == 0){
+		var user = '<div class="user">负责人<span>她她她</span></div>';
+	}else{
+		var user = '<div class="your">负责人<span>负责项目</span></div>';
+	}
+
+	var imgPath = '/resources/images/flow/demoG.png';
+	var imgPath = '/resources/images/flow/demoR.png';
+	var imgPath = '/resources/images/flow/demoY.png';
 	var html = [
 	           ' <div class="waitCard"> ' ,
+	           '  <a>',
                '    <div class="cardH">' ,
-               '    <div class="title">这里是卡片的标题啊啊啊啊</div>' ,
+               '    <div class="title">'+res.projectName+'</div>' ,
                '    <div class="point">' ,
-               '        <div class="showPoint">SA</div>' ,
+               '        <div class="showPoint">'+res.projectGrade+'</div>' ,
                '        <div class="showDeil">' ,
-               '            <div class="proPoint">项目评级<span>S</span></div>' ,
-               '            <div class="cusPoint">客户评级<span>A</span></div>' ,
+               '            <div class="proPoint">项目评级<span>'+res.projectGrade+'</span></div>' ,
+               '            <div class="cusPoint hide">客户评级<span>A</span></div>' ,
                '        </div>' ,
                '    </div>' ,
-               '    <div class="your">负责项目</div>' ,
+               '    '+user+'  ',
                '  </div>' ,
                '    <div class="cardContent">' ,
                '      <img src="/resources/images/flow/demoG.png">' ,
                '       <div class="setContent">' ,
-               '           <div class="listName">上传周期表</div>' ,
+               '           <div class="listName">'+res.Task.name+'</div>' ,
                '           <div class="lastTime">已超时 24h 5min 45s</div>' ,
                '       </div>' ,
                '     </div>' ,
+               '  </a>',
                '   </div>' ,
 	].join('');
 	return html;
 }
 
 function createotherCard(){
+	
+	var level = "/resources/images/flow/isFang.png";
+	var level = "/resources/images/flow/isFinish.png";
+	var level = "/resources/images/flow/isMake.png";
+	var level = "/resources/images/flow/isPause.png";
+	var level = "/resources/images/flow/isPay.png";
+	var level = "/resources/images/flow/isPrice.png";
+	var level = "/resources/images/flow/isTalk.png";
+	
+	
 	var html = [
 	           ' <div class="otherCard"> ' ,
+	           '  <a>',
                '    <div class="cardH">' ,
                '    <div class="title">这里是卡片的标题啊啊啊啊</div>' ,
                '    <div class="point">' ,
-               '        <div class="showPoint">SA</div>' ,
+               '        <div class="showPoint">'+res.projectGrade+'</div>' ,
                '        <div class="showDeil">' ,
-               '            <div class="proPoint">项目评级<span>S</span></div>' ,
-               '            <div class="cusPoint">客户评级<span>A</span></div>' ,
+               '            <div class="proPoint">项目评级<span>'+res.projectGrade+'</span></div>' ,
+               '            <div class="cusPoint hide">客户评级<span>A</span></div>' ,
                '        </div>' ,
                '    </div>' ,
                '    <div class="user">负责人<span>她她她</span></div>' ,
@@ -117,6 +160,7 @@ function createotherCard(){
                '       </div>' ,
                '          <img src="/resources/images/flow/newFinish.png">' ,
                '     </div>' ,
+               '  </a>',
                '   </div>' ,
 	].join('');
 	return html;

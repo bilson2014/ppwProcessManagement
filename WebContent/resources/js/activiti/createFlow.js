@@ -15,6 +15,16 @@ $().ready(function() {
 	submitEven();
 	dataEven();
 	getProduct();
+	
+	var myDate = new Date();
+	//获取当前年
+	var year=myDate.getFullYear();
+	//获取当前月
+	var month=myDate.getMonth()+1;
+	//获取当前日
+	var date=myDate.getDate();  
+	$('#pf_createDate').val(year+"-"+month+"-"+date);
+	
 });
 
 function submitEven(){
@@ -307,7 +317,6 @@ function initAutoChoose(){
 		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
-
 		 if($(this).attr('data-email')!='null'){
 		 	$('#pu_email').val($(this).attr('data-email'));
 		 }
