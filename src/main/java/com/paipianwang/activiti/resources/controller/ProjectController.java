@@ -8,13 +8,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.FormPropertyHandler;
 import org.activiti.engine.impl.form.FormPropertyImpl;
 import org.activiti.engine.impl.form.StartFormDataImpl;
@@ -22,7 +20,6 @@ import org.activiti.engine.impl.form.StringFormType;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +34,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
-import com.paipianwang.activiti.utils.UserUtil;
+import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 
 @RestController
 @RequestMapping("/form/project")
-public class ProjectController {
+public class ProjectController extends BaseController{
 
 	private final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
@@ -103,15 +101,10 @@ public class ProjectController {
 		Map<String, Object> properties = DataUtils.divideFlowData(initData());
 
 		logger.debug("start form parameters: {}", formProperties);
-		User user = UserUtil.getUserFromSession(request.getSession());
-
-		// 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
-		if (user == null || StringUtils.isBlank(user.getId())) {
-			return new ModelAndView("redirect:/login?timeout=true");
-		}
+		SessionInfo info = getCurrentInfo(request);
 
 		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(processDefinitionId,
-				formProperties, user.getId(), properties);
+				formProperties, info.getActivitiUserId(), properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/form/project/process-list?processType=" + processType);
@@ -119,39 +112,39 @@ public class ProjectController {
 
 	@RequestMapping("task/list")
 	public ModelAndView taskList(@RequestParam(value = "processType", required = false) String processType,
-			HttpSession session) {
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/form/project/dynamic-form-task-list");
-		User user = UserUtil.getUserFromSession(session);
-		//List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
-		//mv.addObject("list", list);
+		SessionInfo info = getCurrentInfo(request);
+		List<PmsProjectFlowResult> list = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		mv.addObject("list", list);
 		return mv;
 	}
 
 	@RequestMapping("/process-instance/running/list")
-	public ModelAndView running(HttpSession session,
+	public ModelAndView running(HttpServletRequest request,
 			@RequestParam(value = "processType", required = false) String processType) {
 		ModelAndView mv = new ModelAndView("/form/project/running-list",
 				Collections.singletonMap("processType", processType));
-		User user = UserUtil.getUserFromSession(session);
-		//List<Task> list = prjectWorkFlowService.getRunningTasks(user.getId());
-		//mv.addObject("list", list);
+		SessionInfo info = getCurrentInfo(request);
+		List<PmsProjectFlowResult> list = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		mv.addObject("list", list);
 		return mv;
 	}
 
 	@RequestMapping("task/claim/{id}")
-	public ModelAndView claim(@PathVariable("id") final String taskId, HttpSession session,
+	public ModelAndView claim(@PathVariable("id") final String taskId,
 			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView("redirect:/form/project/task/list?processType="
 				+ StringUtils.defaultString(request.getParameter("processType")));
-		User user = UserUtil.getUserFromSession(session);
-		prjectWorkFlowService.claim(user.getId(), taskId);
+		SessionInfo info = getCurrentInfo(request);
+		prjectWorkFlowService.claim(info.getActivitiUserId(), taskId);
 		return mv;
 	}
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping("get-form/task/{taskId}")
-	public Map<String, Object> findTaskForm(@PathVariable("taskId") final String taskId, HttpSession session) {
+	public Map<String, Object> findTaskForm(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = prjectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -167,8 +160,8 @@ public class ProjectController {
 		}
 
 		// TODO 获取可见数据
-		User user = UserUtil.getUserFromSession(session);
-		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(user, taskId);
+		SessionInfo info = getCurrentInfo(request);
+		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
@@ -220,14 +213,6 @@ public class ProjectController {
 			}
 		}
 
-		/*
-		 * List<FormProperty> list = new ArrayList<FormProperty>(); FormPropertyHandler
-		 * handler = new FormPropertyHandler(); handler.setName(name);
-		 * handler.setVariableName(variableName); handler.setType(new StringFormType());
-		 * handler.setReadable(false); handler.setRequired(false);
-		 * handler.setWritable(false); FormProperty pro = new FormPropertyImpl(handler);
-		 * list.add(pro);
-		 */
 		taskFormData.setFormProperties(properties);
 		return result;
 	}
@@ -248,14 +233,9 @@ public class ProjectController {
 		}
 
 		logger.debug("start form parameters: {}", formProperties);
-
-		User user = UserUtil.getUserFromSession(request.getSession());
-
-		// 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
-		if (user == null || StringUtils.isBlank(user.getId())) {
-			return new ModelAndView("redirect:/login?timeout=true");
-		}
-		prjectWorkFlowService.completeTaskFromData(taskId, formProperties, user.getId());
+		
+		SessionInfo info = getCurrentInfo(request);
+		prjectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/form/project/task/list?processType=" + processType);
@@ -263,11 +243,11 @@ public class ProjectController {
 
 	@RequestMapping("process-instance/finished/list")
 	public ModelAndView finished(@RequestParam(value = "processType", required = false) String processType,
-			HttpSession session) {
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/form/project/finished-list",
 				Collections.singletonMap("processType", processType));
-		User user = UserUtil.getUserFromSession(session);
-		List<HistoricProcessInstance> list = prjectWorkFlowService.getFinishedTask(user.getId());
+		SessionInfo info = getCurrentInfo(request);
+		List<HistoricProcessInstance> list = prjectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("list", list);
 		return mv;
 	}

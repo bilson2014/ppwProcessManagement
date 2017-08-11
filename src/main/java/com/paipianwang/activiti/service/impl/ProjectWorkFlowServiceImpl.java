@@ -203,32 +203,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	// 获取当前登陆人参与的任务
 	@Override
 	public List<PmsProjectFlowResult> getRunningTasks(String userId) {
-		/*
-		 * List<ProcessInstance> list = runtimeService.createProcessInstanceQuery()
-		 * .processDefinitionKey(processDefintionKey).active().orderByProcessInstanceId(
-		 * ).desc().list();
-		 * 
-		 * // 关联业务实体 if (list != null && !list.isEmpty()) {
-		 * 
-		 * List<PmsProjectFlowResult> flows = new ArrayList<PmsProjectFlowResult>(); for
-		 * (ProcessInstance processInstance : list) { String projectId =
-		 * processInstance.getBusinessKey(); if (projectId == null) { continue; }
-		 * PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
-		 * PmsProjectFlowResult result = new PmsProjectFlowResult();
-		 * result.setPmsProjectFlow(project);
-		 * result.setProcessInstance(processInstance);
-		 * result.setProcessDefinition(getProcessDefinition(processInstance.
-		 * getProcessDefinitionId()));
-		 * 
-		 * // 设置当前任务信息 Task task =
-		 * taskService.createTaskQuery().processInstanceId(processInstance.getId()).
-		 * active() .orderByTaskCreateTime().desc().singleResult();
-		 * result.setTask(task);
-		 * 
-		 * flows.add(result); }
-		 * 
-		 * return flows; } return null;
-		 */
 
 		NativeExecutionQuery nativeExecutionQuery = runtimeService.createNativeExecutionQuery();
 		String sql = "SELECT RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
@@ -247,6 +221,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 				// 获取 流程业务数据
 				PmsProjectFlow pmsProjectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+				PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
+				pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
 				result.setPmsProjectFlow(pmsProjectFlow);
 
 				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
@@ -324,6 +300,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		try {
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
+			
+			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+			// 计算
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
@@ -372,9 +351,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public Map<String, Object> getReadableColumns(User user, String taskId) {
+	public Map<String, Object> getReadableColumns(String userId, String taskId) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		String userId = user.getId();
 		List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
 		Map<String, List<String>> columns = shipFacade.getColumns(groups);
 		List<String> flowList = columns.get("PROJECT_FLOW");
@@ -456,6 +434,54 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
 				.processDefinitionId(processDefinitionId).singleResult();
 		return processDefinition;
+	}
+
+	@Override
+	public void suspendProcess(String processInstanceId) {
+		runtimeService.suspendProcessInstanceById(processInstanceId);
+	}
+
+	@Override
+	public void activateProcess(String processInstanceId) {
+		runtimeService.activateProcessInstanceById(processInstanceId);
+	}
+
+	@Override
+	public List<PmsProjectFlowResult> getSuspendTasks(String userId) {
+		List<PmsProjectFlowResult> list = new ArrayList<PmsProjectFlowResult>();
+		// 根据当前人的ID查询
+		TaskQuery taskQuery = taskService.createTaskQuery().taskCandidateOrAssigned(userId)
+				.processDefinitionKey(processDefintionKey).suspended();
+		List<Task> tasks = taskQuery.list();
+		if(tasks != null && !tasks.isEmpty()) {
+			
+			// 根据流程的业务ID查询实体并关联
+			for (Task task : tasks) {
+				String processInstanceId = task.getProcessInstanceId();
+				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+						.processInstanceId(processInstanceId).active().singleResult();
+				if (processInstance == null) {
+					continue;
+				}
+				String projectId = processInstance.getBusinessKey();
+				if (projectId == null) {
+					continue;
+				}
+				
+				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
+				PmsEmployee employee = employeeFacade.findEmployeeById(project.getPrincipal());
+				project.setPrincipalName(employee.getEmployeeRealName());
+				PmsProjectFlowResult result = new PmsProjectFlowResult();
+				result.setPmsProjectFlow(project);
+				result.setTask(task);
+				result.setProcessInstance(processInstance);
+				result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
+				list.add(result);
+			}
+			return list;
+		}
+		
+		return null;
 	}
 
 }

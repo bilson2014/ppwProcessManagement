@@ -56,23 +56,23 @@
 
 		<c:forEach items="${list }" var="task">
 		<tr>
-			<td>${task.id }</td>
-			<td>${task.taskDefinitionKey }</td>
-			<td>${task.name }</td>
-			<td>${task.processDefinitionId }</td>
-			<td>${task.processInstanceId }</td>
-			<td>${task.priority }</td>
-			<td>${task.createTime }</td>
-			<td>${task.dueDate }</td>
-			<td>${task.description }</td>
-			<td>${task.owner }</td>
+			<td>${task.task.id }</td>
+			<td>${task.task.taskDefinitionKey }</td>
+			<td>${task.task.name }</td>
+			<td>${task.task.processDefinitionId }</td>
+			<td>${task.task.processInstanceId }</td>
+			<td>${task.task.priority }</td>
+			<td>${task.task.createTime }</td>
+			<td>${task.task.dueDate }</td>
+			<td>${task.task.description }</td>
+			<td>${task.task.owner }</td>
 			<td>
-				<c:if test="${empty task.assignee }">
+				<c:if test="${empty task.task.assignee }">
 					<a class="claim" href="${ctx }/form/project/task/claim/${task.id}?processType=${param.processType}">签收</a>
 				</c:if>
-				<c:if test="${not empty task.assignee }">
+				<c:if test="${not empty task.task.assignee }">
 					<%-- 此处用tkey记录当前节点的名称 --%>
-					<a class="handle" tkey='${task.taskDefinitionKey }' tname='${task.name }' tid='${task.id }' href="#">办理</a>
+					<a class="handle" tkey='${task.task.taskDefinitionKey }' tname='${task.task.name }' tid='${task.task.id }' href="#">办理</a>
 				</c:if>
 			</td>
 		</tr>

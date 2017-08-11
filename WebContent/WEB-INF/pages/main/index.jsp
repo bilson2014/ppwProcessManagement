@@ -5,12 +5,6 @@
 <html lang="en">
 <head>
 	<%@ include file="/resources/common/global.jsp"%>
-	<script>
-		var notLogon = ${empty user};
-		if (notLogon) {
-			location.href = '${ctx}/login?timeout=true';
-		}
-	</script>
 	<%@ include file="/resources/common/meta.jsp" %>
     <title>Activiti</title>
     <%@ include file="/resources/common/include-base-styles.jsp" %>

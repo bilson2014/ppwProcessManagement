@@ -3,12 +3,6 @@
 <html lang="en">
 <head>
 	<%@ include file="/resources/common/global.jsp"%>
-	<script>
-		var notLogon = ${empty user};
-		if (notLogon) {
-			location.href = '${ctx}/login?error=nologon';
-		}
-	</script>
 	<%@ include file="/resources/common/meta.jsp" %>
 	<%@ include file="/resources/common/include-base-styles.jsp" %>
 	<%@ include file="/resources/common/include-jquery-ui-theme.jsp" %>

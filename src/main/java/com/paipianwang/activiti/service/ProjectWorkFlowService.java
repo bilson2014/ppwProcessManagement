@@ -67,7 +67,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public String generateProjectId();
 
-	public Map<String, Object> getReadableColumns(User user, String taskId);
+	public Map<String, Object> getReadableColumns(String userId, String taskId);
 
 	/**
 	 * 获取登陆人当前待办的任务
@@ -75,5 +75,24 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public List<PmsProjectFlowResult> getTodoTasks(String activitiUserId);
+
+	/**
+	 * 挂起
+	 * @param processInstanceId 流程ID
+	 */
+	public void suspendProcess(String processInstanceId);
+
+	/**
+	 * 激活
+	 * @param processInstanceId 流程ID
+	 */
+	public void activateProcess(String processInstanceId);
+
+	/**
+	 * 查询挂起流程
+	 * @param activitiUserId 当前登陆人ID
+	 * @return
+	 */
+	public List<PmsProjectFlowResult> getSuspendTasks(String activitiUserId);
 
 }

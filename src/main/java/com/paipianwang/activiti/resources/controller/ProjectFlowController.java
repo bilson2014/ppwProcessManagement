@@ -1,6 +1,6 @@
 package com.paipianwang.activiti.resources.controller;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +8,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.FormPropertyHandler;
 import org.activiti.engine.impl.form.FormPropertyImpl;
 import org.activiti.engine.impl.form.StringFormType;
@@ -25,16 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
-import com.paipianwang.activiti.utils.UserUtil;
 import com.paipianwang.pat.common.entity.SessionInfo;
-import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 
 /**
@@ -44,12 +39,12 @@ import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
  */
 @RestController
 @RequestMapping("/project")
-public class PorjectFlowController extends BaseController {
+public class ProjectFlowController extends BaseController {
 
-	private final Logger logger = LoggerFactory.getLogger(PorjectFlowController.class);
+	private final Logger logger = LoggerFactory.getLogger(ProjectFlowController.class);
 
 	@Autowired
-	private ProjectWorkFlowService prjectWorkFlowService = null;
+	private ProjectWorkFlowService projectWorkFlowService = null;
 	
 	/**
 	 * 新建项目页
@@ -58,7 +53,7 @@ public class PorjectFlowController extends BaseController {
 	@RequestMapping("/start/project")
 	public ModelAndView createProjectFlowView(ModelMap model) {
 		// 生成项目编号
-		final String projectId = prjectWorkFlowService.generateProjectId();
+		final String projectId = projectWorkFlowService.generateProjectId();
 		model.addAttribute("pf_projectId", projectId);
 		return new ModelAndView("activiti/createFlow", model);
 	}
@@ -88,7 +83,7 @@ public class PorjectFlowController extends BaseController {
 		logger.debug("start form parameters: {}", properties);
 		SessionInfo info = getCurrentInfo(request);
 
-		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(null,
+		ProcessInstance processInstance = projectWorkFlowService.startFormAndProcessInstance(null,
 				formProperties, info.getActivitiUserId(), properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
@@ -97,7 +92,6 @@ public class PorjectFlowController extends BaseController {
 	
 	/**
 	 * 查询正在进行的任务列表
-	 * @param processType
 	 * @param session
 	 * @return
 	 */
@@ -106,12 +100,30 @@ public class PorjectFlowController extends BaseController {
 		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		// 查询代办任务
-		List<PmsProjectFlowResult> gTasks = prjectWorkFlowService.getTodoTasks(info.getActivitiUserId());
+		List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
 		
 		// 查询参与的正在进行中的任务
-		List<PmsProjectFlowResult> runnintTasks = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		
+		// 去除代办任务
+		if(gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
+			
+			List<String> todoProjectList = new ArrayList<String>();
+			for (final PmsProjectFlowResult result : gTasks) {
+				todoProjectList.add(result.getPmsProjectFlow().getProjectId());
+			}
+			List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
+			for (PmsProjectFlowResult result : runnintTasks) {
+				if(!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
+					runningList.add(result);
+				}
+			}
+			mv.addObject("runningTasks", runningList);
+		} else {
+			mv.addObject("runningTasks", runnintTasks);
+		}
+		
 		mv.addObject("gTasks", gTasks);
-		mv.addObject("runningTasks", runnintTasks);
 		return mv;
 	}
 	
@@ -137,13 +149,13 @@ public class PorjectFlowController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("task/claim/{id}")
-	public ModelAndView claim(@PathVariable("id") final String taskId, HttpSession session,
+	public ModelAndView claim(@PathVariable("id") final String taskId,
 			HttpServletRequest request) {
 
 		ModelAndView mv = new ModelAndView("redirect:/form/project/task/list?processType="
 				+ StringUtils.defaultString(request.getParameter("processType")));
-		User user = UserUtil.getUserFromSession(session);
-		prjectWorkFlowService.claim(user.getId(), taskId);
+		SessionInfo info = getCurrentInfo(request);
+		projectWorkFlowService.claim(info.getActivitiUserId(), taskId);
 		return mv;
 	}
 	
@@ -155,9 +167,9 @@ public class PorjectFlowController extends BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("get-form/task/{taskId}")
-	public ModelAndView findTaskForm(@PathVariable("taskId") final String taskId, HttpSession session) {
+	public ModelAndView findTaskForm(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		TaskFormDataImpl taskFormData = prjectWorkFlowService.getTaskFormData(taskId);
+		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
 
 		List<FormProperty> properties = taskFormData.getFormProperties();
@@ -171,8 +183,8 @@ public class PorjectFlowController extends BaseController {
 		}
 
 		// 获取可见数据
-		User user = UserUtil.getUserFromSession(session);
-		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(user, taskId);
+		SessionInfo info = getCurrentInfo(request);
+		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
@@ -252,16 +264,11 @@ public class PorjectFlowController extends BaseController {
 
 		logger.debug("start form parameters: {}", formProperties);
 
-		User user = UserUtil.getUserFromSession(request.getSession());
-
-		// 用户未登录不能操作，实际应用使用权限框架实现，例如Spring Security、Shiro等
-		if (user == null || StringUtils.isBlank(user.getId())) {
-			return new ModelAndView("redirect:/login?timeout=true");
-		}
-		prjectWorkFlowService.completeTaskFromData(taskId, formProperties, user.getId());
+		SessionInfo info = getCurrentInfo(request);
+		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
-		return new ModelAndView("redirect:/project/task/list");
+		return new ModelAndView("redirect:/project/activiti/textFlow");
 	}
 
 	/**
@@ -271,13 +278,45 @@ public class PorjectFlowController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/finished/list")
-	public ModelAndView finished(@RequestParam(value = "processType", required = false) String processType,
-			HttpSession session) {
-		ModelAndView mv = new ModelAndView("/project/finished-list",
-				Collections.singletonMap("processType", processType));
-		User user = UserUtil.getUserFromSession(session);
-		List<HistoricProcessInstance> list = prjectWorkFlowService.getFinishedTask(user.getId());
-		mv.addObject("list", list);
+	public ModelAndView finished(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		SessionInfo info = getCurrentInfo(request);
+		List<HistoricProcessInstance> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
+		mv.addObject("finishedTasks", list);
+		return mv;
+	}
+	
+	@RequestMapping("/suspendProcess/{processInstandeId}")
+	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		if(StringUtils.isNotBlank(processInstanceId)) {
+			// 挂起
+			projectWorkFlowService.suspendProcess(processInstanceId);
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/suspend-task")
+	public ModelAndView suspend(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		SessionInfo info = getCurrentInfo(request);
+		List<PmsProjectFlowResult> suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
+		mv.addObject("suspendTasks", suspendTasks);
+		return mv;
+	}
+	
+	/**
+	 * 激活
+	 * @param processInstanceId 流程实例ID
+	 * @return
+	 */
+	@RequestMapping("/activateProcess/{processInstandeId}")
+	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		if(StringUtils.isNotBlank(processInstanceId)) {
+			// 激活
+			projectWorkFlowService.activateProcess(processInstanceId);
+		}
 		return mv;
 	}
 }
