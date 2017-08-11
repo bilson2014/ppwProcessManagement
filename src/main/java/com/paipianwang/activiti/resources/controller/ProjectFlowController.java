@@ -131,6 +131,20 @@ public class ProjectFlowController extends BaseController {
 		return mv;
 	}
 	
+	@RequestMapping("/running-doing")
+	public ModelAndView taskListDoing(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
+		SessionInfo info = getCurrentInfo(request);
+		// 查询代办任务
+		List<PmsProjectFlowResult> gTasks = prjectWorkFlowService.getTodoTasks(info.getActivitiUserId());
+		
+		// 查询参与的正在进行中的任务
+		List<PmsProjectFlowResult> runnintTasks = prjectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		mv.addObject("gTasks", gTasks);
+		mv.addObject("runningTasks", runnintTasks);
+		return mv;
+	}
+	
 	/**
 	 * 认领任务
 	 * @param taskId

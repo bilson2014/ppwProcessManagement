@@ -4,6 +4,7 @@
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
+<spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/textFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 <!DOCTYPE html>
@@ -25,6 +26,7 @@
 <link rel="stylesheet" href="${textCss}">
 <script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
+<script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
 
 <!--[if lt IE 9]>
@@ -52,7 +54,9 @@
 	                        <div>新建项目</div>
 	                    </div>
 	                </div>
-	                <div class="lineTop"></div>
+	                
+	                <iframe class="frame" id="content-frame" class="iframe" src="<spring:url value='/project/running-doing'/>"></iframe>
+<!-- 	                <div class="lineTop"></div>
 	                <div id="hideDiv">
 	                <div class="title">
 	                     <div class="titleName" id="upName">待办任务</div>
@@ -151,9 +155,9 @@
 	                        </div>
 	                        <div class="otherCard"></div>
 	           </div>   
-	            </div>          
+	            </div>      -->    
 	           
-	</div>
+	</div> 
 	
 </div>	  
 	<!-- video-->

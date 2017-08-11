@@ -10,11 +10,6 @@ $().ready(function() {
 	$('#productList').show();
 	$('#myPro').addClass('open');
 	$('#nowDoing').addClass('checkLi');
-	
-	$('#setCard').append(createWaitCard(0));
-	$('#setCard').append(createWaitCard(1));
-	$('#otherCard').append(createotherCard());
-	
 });
 
 function initMenuEven(){
@@ -62,6 +57,30 @@ function doing(){
 }
 
 function loadDoingInfo(){
+
+	loadData(function (res){
+	
+		var body = $('#setCard');
+		body.html('');
+		var rows = res.result.config;
+		if(res != null && res != undefined){
+			for (var int = 0; int < rows.length; int++) {
+					var html =createWaitCard(res);
+				body.append(html);
+			};
+		}
+		
+		var body = $('#otherCard');
+		body.html('');
+		var rows = res.result.config;
+		if(res != null && res != undefined){
+			for (var int = 0; int < rows.length; int++) {
+					var html =createotherCard(res);
+				body.append(html);
+			};
+		}
+		
+	}, getContextPath() + '/project/gTasks',null);
 	
 }
 
@@ -77,7 +96,20 @@ function doPasue(){
 
 function loadPause(){
 	
+loadData(function (res){
 	
+	var body = $('#setpProductConfigLength');
+	body.html('');
+	var rows = res.result.config;
+	if(res != null && res != undefined){
+		for (var int = 0; int < rows.length; int++) {
+				var html =createOption(rows[int].id,rows[int].text,rows[int].price);
+			body.append(html);
+		};
+		
+	}
+		
+	}, getContextPath() + '/project/running-task',null);
 	
 }
 
@@ -89,6 +121,14 @@ function doFinish(){
         $(this).addClass('checkLi');
         $('#hideDiv').show();
 	});
+}
+
+function loadFinifsh(){
+  
+	loadData(function (res){
+		
+	}, getContextPath() + '/finished/list',null);
+	
 }
 
 function createWaitCard(res){

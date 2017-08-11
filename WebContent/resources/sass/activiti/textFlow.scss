@@ -17,7 +17,6 @@
             }
 
             .page {
-
                 @include media_screen_width_beta3();
                 margin: 0 auto;
                 background: transparent !important;
@@ -25,6 +24,11 @@
                 padding-left: 190px;
                 padding-top: 30px;
                 @include anmotion;
+            }
+
+            .frame {
+                width: 100%;
+                height: 1000px;
             }
 
 
