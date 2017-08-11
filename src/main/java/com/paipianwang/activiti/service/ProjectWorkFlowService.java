@@ -34,7 +34,7 @@ public interface ProjectWorkFlowService {
 	 * @param id
 	 * @return
 	 */
-	public List<HistoricProcessInstance> getFinishedTask(String userId);
+	public List<PmsProjectFlowResult> getFinishedTask(String userId);
 
 	/**
 	 * 获取流程节点的表单

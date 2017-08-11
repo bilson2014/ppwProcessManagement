@@ -247,7 +247,7 @@ public class ProjectController extends BaseController{
 		ModelAndView mv = new ModelAndView("/form/project/finished-list",
 				Collections.singletonMap("processType", processType));
 		SessionInfo info = getCurrentInfo(request);
-		List<HistoricProcessInstance> list = prjectWorkFlowService.getFinishedTask(info.getActivitiUserId());
+		List<PmsProjectFlowResult> list = prjectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("list", list);
 		return mv;
 	}
