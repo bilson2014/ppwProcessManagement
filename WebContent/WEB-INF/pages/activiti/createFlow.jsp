@@ -99,6 +99,7 @@
 	                 <div class="midItem errorItem" id="productConfigLevelIdError">
 	                       <div class="itemTitle">等级<span>*</span></div>
 	                       <input type="hidden" id="pf_productConfigLevelId" name="pf_productConfigLevelId"/>
+	                       <input type="hidden" id="pf_productConfigLevelName" name="pf_productConfigLevelName"/>                      
 	                       <div class="orderSelect noclick" >
 				                <div id="productConfigLevelId"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -108,7 +109,7 @@
 	                 </div>
 	                  <div class="smallItem errorItem " id="productConfigLengthError">
 	                       <div class="itemTitle">时长<span>*</span></div>
-	                       <input type="hidden" id="pf_productConfigLevelId" name="pf_productConfigLevelId"/>
+	                       <input type="hidden" id="pf_productConfigLength" name="pf_productConfigLength"/>
 	                       <div class="orderSelect noclick" >
 				                <div id="productConfigLength"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">

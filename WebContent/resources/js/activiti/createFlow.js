@@ -307,8 +307,9 @@ function initAutoChoose(){
 		 $('#pu_userId').val(id);
 		 $('#pu_linkman').val($(this).attr('data-realName'));
 		 $('#pu_telephone').val($(this).attr('data-phone'));
+
 		 if($(this).attr('data-email')!='null'){
-		 $('#pu_email').val($(this).attr('data-email'));
+		 	$('#pu_email').val($(this).attr('data-email'));
 		 }
 		 getValue(level);
 		 $('.autoFindCus').hide();
