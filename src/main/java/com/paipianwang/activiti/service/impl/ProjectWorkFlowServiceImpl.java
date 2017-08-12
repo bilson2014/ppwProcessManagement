@@ -2,6 +2,7 @@ package com.paipianwang.activiti.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,14 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade;
@@ -50,6 +53,7 @@ import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
+import com.paipianwang.pat.workflow.facade.WorkFlowFacade;
 
 @Service
 public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
@@ -96,6 +100,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsProjectGroupColumnShipFacade shipFacade = null;
+	@Autowired
+	private WorkFlowFacade workFlowFacade = null;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -590,6 +596,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			return list;
 		}
 		return null;
+	}
+	@Override
+	public ProjectCycleItem getCycleByTask(String taskId) {
+		return workFlowFacade.getCycleByTaskId(taskId);
+	}
+
+	@Override
+	public Date getExpectDate(String taskId) {
+		ProjectCycleItem cycle=workFlowFacade.getCycleByTaskId(taskId);
+		if(cycle==null || cycle.getDuration()==null){
+			//数据错误
+			return null;
+		}
+		return DateUtils.addHour(new Date(), cycle.getDuration());
 	}
 
 }
