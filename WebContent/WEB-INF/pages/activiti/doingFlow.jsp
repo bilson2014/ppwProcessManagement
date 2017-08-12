@@ -72,7 +72,7 @@
 	                                  <img src="/resources/images/flow/demoG.png">
 	                                  <div class="setContent">
 	                                      <div class="listName">${staff.task.name}</div>
-	                                      <div class="lastTime">(死的)已超时 24h 5min 45s</div>
+	                                      <div class="lastTime setLastTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
 	                            </a>  
@@ -120,7 +120,8 @@
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="lastTime">${staff.task.name}</div>
+		                                      <div class="listName">${staff.task.name}</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/newFinish.png">
 		                             </div>

@@ -3,8 +3,8 @@
  */
 $(function() {
 
-	$('.handle').click(handle);
-
+	//$('.handle').click(handle);
+	handle(); 
 });
 
 /**
@@ -67,7 +67,7 @@ function readFormFields(taskId) {
     }
 
 	// 读取启动时的表单
-	$.getJSON(ctx + '/form/project/get-form/task/' + taskId, function(datas) {
+	$.getJSON(ctx + '/form/project/get-form/task/' + '42633', function(datas) {
 		var trs = "";
 		$.each(datas.taskFormData.formProperties, function() {
 			var className = this.required === true ? "required" : "";

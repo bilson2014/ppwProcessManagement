@@ -42,10 +42,16 @@
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
 </head>
-
 <body>
 
-
+<input type="hidden" value="${taskState}" id="taskState"/>
+                                          <c:if test="${!empty gTasks}">                               	                                  
+			                                  <c:forEach var="item" items="${gTasks}"> 
+			                                        <input type="hidden" value="${item.id}" id="taskId"/>
+			                                         <input type="hidden" value="${item.name}" id="taskName"/>
+			                                  </c:forEach>
+		                                  </c:if>
+ <input type="hidden" value="${gTasks}" id="taskId"/>
 <div class="cusModel" id="cusModel">
      <div class="modelCard">
             <div class="cardTop">
@@ -1048,8 +1054,8 @@
 	    
 	           <div class="productInfo">
 	                <div class="infoTitle">
-	                     <div class="titleName">项目详情标题</div>
-	                     <div class="point">
+	                     <div class="titleName">${flow_info.projectName}</div>
+	                     <div class="point hide">
                               <div class="showPoint">SA</div>
                               <div class="showDeil showDownDeil">
                                     <div class="proPoint">项目评级<span>S</span></div>
@@ -1160,7 +1166,7 @@
 	                                   </div>
 	                               </div>
 	                       </div>
-	                       
+	                       <c:if test="${!empty synergyList}"> 
 	                         <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
@@ -1168,41 +1174,28 @@
 
 	                            </div>
 	                            <div class="getInfoItemContent">
-	                                 <div class="imgItem">
+	                            <c:forEach var="item" items="${synergyList}"> 
+											  <div class="imgItem">
+	                                      <img src="${file_locate_storage_path }${item.imgUrl}">
+	                                      <ul>
+	                                          <li>${item.employeeName}</li>
+	                                          <li>${item.employeeGroup}</li>
+	                                          <li>${item.telephone}</li>
+	                                      </ul>
+	                                 </div>
+								 </c:forEach> 
+	                              <!--     <div class="imgItem">
 	                                      <img src>
 	                                      <ul>
 	                                          <li>三维</li>
 	                                          <li>负责人</li>
 	                                          <li>线上-网站</li>
 	                                      </ul>
-	                                 </div>
-	                                  <div class="imgItem">
-	                                      <img src>
-	                                      <ul>
-	                                          <li>三维</li>
-	                                          <li>负责人</li>
-	                                          <li>线上-网站</li>
-	                                      </ul>
-	                                 </div>
-	                                  <div class="imgItem">
-	                                      <img src>
-	                                      <ul>
-	                                          <li>三维</li>
-	                                          <li>负责人</li>
-	                                          <li>线上-网站</li>
-	                                      </ul>
-	                                 </div>
-	                                  <div class="imgItem">
-	                                      <img src>
-	                                      <ul>
-	                                          <li>三维</li>
-	                                          <li>负责人</li>
-	                                          <li>线上-网站</li>
-	                                      </ul>
-	                                 </div>
+	                                 </div> -->
+	                              
 	                            </div>
 	                         </div>   
-	                       
+	                       </c:if>
 	                        <c:if test="${!empty flow_info}"> 
 	                       <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
@@ -1315,23 +1308,32 @@
 	                                  </div>
 	                            </div>
 	                       </div>
-	                       
+	                       <c:if test="${!empty flow_info}">
 	                       <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">价格信息</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
-	                                  <div class="contentItem">
-	                                  
-	                                  <c:if test="${!empty forms}">
-		                                  <c:forEach var="item" items="${forms}"> 
-											   <div class="item">
-		                                          <div>${item.key}</div>
-		                                          <div>${item.value}</div>
-		                                       </div>
+	                                  <div class="contentItem">	                                  	                                  
+		                                  <c:forEach var="item" items="${flow_info}"> 
+		                                  	  	        
+		                                  	  <c:if test="${item.key == 'projectBudget' }">
+													<div class="item">
+			                                          <div>${item.key}</div>
+			                                          <div>${item.value}</div>
+			                                       </div>
+												</c:if>
+												
+												 <c:if test="${item.key == 'estimatedPrice'}">
+													<div class="item">
+			                                          <div>${item.key}</div>
+			                                          <div>${item.value}</div>
+			                                       </div>
+												</c:if>                               
+																		   
 										  </c:forEach> 
-							          </c:if>
+							         </div>
 	                                    <!--    <div class="item">
 	                                          <div>预估价格</div>
 	                                          <div>内容内容</div>
@@ -1348,17 +1350,17 @@
 	                                          <div>制作供应商预算</div>
 	                                          <div>内容内容</div>
 	                                       </div> -->
-	                                  </div>
-	                                  <div class="contentItem">
+	                                  
+	                                <!--   <div class="contentItem">
 	                                       <div class="item">
 	                                          <div>制作供应商结算</div>
 	                                          <div>内容内容</div>
 	                                       </div>
-	                                  </div>
+	                                  </div> -->
 	                            </div>
 	                       </div>
-	                       
-	                       <div class="getInfoItem lastItem">
+	                        </c:if>
+	                     <!--   <div class="getInfoItem lastItem">
 	                            <div class="getInfoItemTop ">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">其它信息</div>
@@ -1397,7 +1399,7 @@
 	                                       </div>
 	                                  </div>
 	                            </div>
-	                       </div>
+	                       </div> -->
 	                                              
 	                   <div class="projectTitle">项目文件
 	                        <div class="conMod hide btn-c-r">版本管理</div>

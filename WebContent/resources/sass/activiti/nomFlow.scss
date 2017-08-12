@@ -38,6 +38,7 @@
                     color: $gray-dark;
                     height: 55px;
                     line-height: 55px;
+                    padding-left: 20px;
                 }
             }
 
@@ -238,6 +239,7 @@ $ba:#bababa; */
             .productListAreas .setCard {
                 font-size: 0;
                 height: auto;
+                padding-left: 20px;
                 .waitCard {
                     width: ($smallWidth - $noNeedpad*3)/3;
                     @media screen and (min-width: 761px) and (max-width: 1029px) {
@@ -320,9 +322,11 @@ $ba:#bababa; */
                     color: $gray-dark;
                     height: 65px;
                     line-height: 65px;
+                    padding-left: 20px;
                 }
                 .setCard {
                     .otherCard {
+                        padding-left: 20px;
                         width: ($smallWidth - $noNeedpad*3)/3;
                         @media screen and (min-width: 761px) and (max-width: 1029px) {
                             width: ($areaMidWidth - $noNeedpad*3)/3;
