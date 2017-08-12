@@ -273,6 +273,7 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("taskState", state.get("taskState"));
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
+		mv.addObject("taskId",taskId);
 		return mv;
 	}
 

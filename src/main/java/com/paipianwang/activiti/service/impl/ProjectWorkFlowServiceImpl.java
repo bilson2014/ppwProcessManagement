@@ -276,6 +276,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				}
 				result.setProcessInstance(processInstance);
 				result.setProcessDefinitionId(processDefinitionId);
+				
+				String taskStage = (String) taskService.getVariable(result.getTask().getId(), "task_stage");
+				String taskDescription = (String) taskService.getVariable(result.getTask().getId(), "task_description");
+				result.setTaskStage(taskStage);
+				result.setTaskDescription(taskDescription);
+				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
+				if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
+					//当前负责人
+					result.setIsPrincipal(1);
+				}else{
+					result.setIsPrincipal(0);
+				}
+				
 				list.add(result);
 			}
 			return list;
@@ -517,6 +530,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setTask(task);
 				result.setProcessInstance(processInstance);
 				result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
+				
+				String taskStage = (String) taskService.getVariable(result.getTask().getId(), "task_stage");
+				String taskDescription = (String) taskService.getVariable(result.getTask().getId(), "task_description");
+				result.setTaskStage(taskStage);
+				result.setTaskDescription(taskDescription);
+				if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
+					//当前负责人
+					result.setIsPrincipal(1);
+				}else{
+					result.setIsPrincipal(0);
+				}
 				list.add(result);
 			}
 
@@ -584,6 +608,18 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setTask(task);
 				result.setProcessInstance(processInstance);
 				result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
+				
+				String taskStage = (String) taskService.getVariable(task.getId(), "task_stage");
+				String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
+				result.setTaskStage(taskStage);
+				result.setTaskDescription(taskDescription);
+				if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
+					//当前负责人
+					result.setIsPrincipal(1);
+				}else{
+					result.setIsPrincipal(0);
+				}
+				
 				list.add(result);
 			}
 			return list;
