@@ -1,16 +1,16 @@
 package com.paipianwang.activiti.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 
-import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 
 public interface ProjectWorkFlowService {
 
@@ -18,7 +18,7 @@ public interface ProjectWorkFlowService {
 	 * 流程启动
 	 */
 	public ProcessInstance startFormAndProcessInstance(String processDefinitionId, Map<String, String> formProperties,
-			String userId, Map<String, Object> form);
+			SessionInfo info, Map<String, Object> form);
 
 	/**
 	 * 获取当前登陆人当前参与的任务
@@ -94,5 +94,21 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public List<PmsProjectFlowResult> getSuspendTasks(String activitiUserId);
+	
+	/**
+	 * 获取项目task节点周期
+	 * @param taskId
+	 * @return
+	 */
+	public ProjectCycleItem getCycleByTask(String taskId);
+	
+	/**
+	 * 获取task预期结束时间
+	 * @param taskId
+	 * @return
+	 */
+	public Date getExpectDate(String taskId);
+
+	public List<PmsProjectSynergy> getSynergy(String activitiUserId, String taskId);
 
 }

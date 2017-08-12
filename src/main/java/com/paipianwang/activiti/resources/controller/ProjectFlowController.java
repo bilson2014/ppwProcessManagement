@@ -10,10 +10,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.impl.form.FormPropertyHandler;
-import org.activiti.engine.impl.form.FormPropertyImpl;
-import org.activiti.engine.impl.form.StringFormType;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +28,7 @@ import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 /**
@@ -89,7 +86,7 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 
 		ProcessInstance processInstance = projectWorkFlowService.startFormAndProcessInstance(null, formProperties,
-				info.getActivitiUserId(), properties);
+				info, properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");
@@ -104,60 +101,6 @@ public class ProjectFlowController extends BaseController {
 	@RequestMapping("/running-task")
 	public ModelAndView taskList(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/textFlow");
-		SessionInfo info = getCurrentInfo(request);
-		List<String> groups = info.getActivitGroups();
-		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
-			mv.addObject("runningTasks", runnintTasks);
-		} else {
-			// 查询代办任务
-			List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
-
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
-
-			// 去除代办任务
-			if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
-
-				List<String> todoProjectList = new ArrayList<String>();
-				for (final PmsProjectFlowResult result : gTasks) {
-					todoProjectList.add(result.getPmsProjectFlow().getProjectId());
-				}
-				List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
-				for (PmsProjectFlowResult result : runnintTasks) {
-					PmsProjectFlow flow = result.getPmsProjectFlow();
-					if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
-						if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-							runningList.add(result);
-						}
-					}
-				}
-				mv.addObject("runningTasks", runningList);
-			} else {
-				mv.addObject("runningTasks", runnintTasks);
-			}
-
-			mv.addObject("gTasks", gTasks);
-		}
-
-		return mv;
-	}
-	
-
-	/**
-	 * 查询正在进行的任务列表
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/running-doing")
-	public ModelAndView taskListS(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		// 判断身份
@@ -222,14 +165,12 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 查询当前task的表单数据
-	 * 
 	 * @param taskId
-	 * @param session
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("get-form/task/{taskId}")
-	public ModelAndView findTaskForm(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
+	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -243,68 +184,12 @@ public class ProjectFlowController extends BaseController {
 				}
 			}
 		}
-
-		// 获取可见数据
-		SessionInfo info = getCurrentInfo(request);
-		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
-		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
-		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
-		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-
-		if (flowMap != null && !flowMap.isEmpty()) {
-			for (Entry<String, Object> entry : flowMap.entrySet()) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-				FormPropertyHandler handler = new FormPropertyHandler();
-				handler.setId(name);
-				handler.setName("column:");
-				handler.setType(new StringFormType());
-				handler.setWritable(false);
-				FormPropertyImpl pro = new FormPropertyImpl(handler);
-				pro.setValue(value != null ? value.toString() : null);
-				properties.add(pro);
-			}
-		}
-
-		if (userMap != null && !userMap.isEmpty()) {
-			for (Entry<String, Object> entry : userMap.entrySet()) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-				FormPropertyHandler handler = new FormPropertyHandler();
-				handler.setId(name);
-				handler.setName("column:");
-				handler.setType(new StringFormType());
-				handler.setWritable(false);
-				FormPropertyImpl pro = new FormPropertyImpl(handler);
-				pro.setValue(value != null ? value.toString() : null);
-				properties.add(pro);
-			}
-		}
-
-		if (teamMap != null && !teamMap.isEmpty()) {
-			for (Map<String, Object> map : teamMap) {
-				for (Entry<String, Object> entry : map.entrySet()) {
-					String name = entry.getKey();
-					Object value = entry.getValue();
-					FormPropertyHandler handler = new FormPropertyHandler();
-					handler.setId(name);
-					handler.setName("column:");
-					handler.setWritable(false);
-					handler.setType(new StringFormType());
-					FormPropertyImpl pro = new FormPropertyImpl(handler);
-					pro.setValue(value != null ? value.toString() : null);
-					properties.add(pro);
-				}
-			}
-		}
-
-		taskFormData.setFormProperties(properties);
-		return new ModelAndView("/task", result);
+		
+		return result;
 	}
-
+	
 	/**
 	 * 详情页面
-	 * 
 	 * @param taskId
 	 * @param session
 	 * @return
@@ -312,31 +197,20 @@ public class ProjectFlowController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/task/{taskId}")
 	public ModelAndView TaskFormV(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
-		result.put("taskFormData", taskFormData);
-
-		List<FormProperty> properties = taskFormData.getFormProperties();
-		if (properties != null) {
-			for (final FormProperty formProperty : properties) {
-				Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
-				if (values != null) {
-					result.put(formProperty.getId(), values);
-				}
-			}
-		}
-
 		// 获取可见数据
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
+		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
-		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
+		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
+		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-
+		
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
-		mv.addObject("forms", result);
 		mv.addObject("flow_info", flowMap);
-		mv.addObject("team_info", teamMap);
+		mv.addObject("teamPlan_info", teamPlanMap);
+		mv.addObject("teamProduct_info", teamProductMap);
+		mv.addObject("synergyList", synergyList);
 		mv.addObject("user_info", userMap);
 		return mv;
 	}
@@ -382,7 +256,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/finished/list")
 	public ModelAndView finished(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("finishedTasks", list);
@@ -401,7 +275,7 @@ public class ProjectFlowController extends BaseController {
 
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<PmsProjectFlowResult> suspendTasks = null;

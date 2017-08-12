@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.FormService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.form.FormPropertyHandler;
 import org.activiti.engine.impl.form.FormPropertyImpl;
 import org.activiti.engine.impl.form.StartFormDataImpl;
@@ -104,7 +103,7 @@ public class ProjectController extends BaseController{
 		SessionInfo info = getCurrentInfo(request);
 
 		ProcessInstance processInstance = prjectWorkFlowService.startFormAndProcessInstance(processDefinitionId,
-				formProperties, info.getActivitiUserId(), properties);
+				formProperties, info, properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/form/project/process-list?processType=" + processType);
