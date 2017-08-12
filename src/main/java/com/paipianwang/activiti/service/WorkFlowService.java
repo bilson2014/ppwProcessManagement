@@ -6,6 +6,7 @@ import java.util.Map;
 import org.activiti.engine.runtime.ProcessInstance;
 
 import com.paipianwang.pat.workflow.entity.PmsVacation;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 
 public interface WorkFlowService {
 
@@ -22,4 +23,6 @@ public interface WorkFlowService {
 	public void complete(String taskId, Map<String, Object> variables);
 
 	public void setAssert(String taskId, String string);
+
+	public ProjectCycleItem getCycleByTask(String taskId);
 }
