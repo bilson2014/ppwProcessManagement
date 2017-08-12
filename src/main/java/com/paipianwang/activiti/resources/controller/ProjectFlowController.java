@@ -10,10 +10,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.form.FormProperty;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.impl.form.FormPropertyHandler;
-import org.activiti.engine.impl.form.FormPropertyImpl;
-import org.activiti.engine.impl.form.StringFormType;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang3.StringUtils;
@@ -30,8 +26,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 /**
@@ -89,7 +87,7 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 
 		ProcessInstance processInstance = projectWorkFlowService.startFormAndProcessInstance(null, formProperties,
-				info.getActivitiUserId(), properties);
+				info, properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");
@@ -168,14 +166,12 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 查询当前task的表单数据
-	 * 
 	 * @param taskId
-	 * @param session
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("get-form/task/{taskId}")
-	public ModelAndView findTaskForm(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
+	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -189,65 +185,9 @@ public class ProjectFlowController extends BaseController {
 				}
 			}
 		}
-
-		// 获取可见数据
-		SessionInfo info = getCurrentInfo(request);
-		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
-		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
-		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
-		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-
-		if (flowMap != null && !flowMap.isEmpty()) {
-			for (Entry<String, Object> entry : flowMap.entrySet()) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-				FormPropertyHandler handler = new FormPropertyHandler();
-				handler.setId(name);
-				handler.setName("column:");
-				handler.setType(new StringFormType());
-				handler.setWritable(false);
-				FormPropertyImpl pro = new FormPropertyImpl(handler);
-				pro.setValue(value != null ? value.toString() : null);
-				properties.add(pro);
-			}
-		}
-
-		if (userMap != null && !userMap.isEmpty()) {
-			for (Entry<String, Object> entry : userMap.entrySet()) {
-				String name = entry.getKey();
-				Object value = entry.getValue();
-				FormPropertyHandler handler = new FormPropertyHandler();
-				handler.setId(name);
-				handler.setName("column:");
-				handler.setType(new StringFormType());
-				handler.setWritable(false);
-				FormPropertyImpl pro = new FormPropertyImpl(handler);
-				pro.setValue(value != null ? value.toString() : null);
-				properties.add(pro);
-			}
-		}
-
-		if (teamMap != null && !teamMap.isEmpty()) {
-			for (Map<String, Object> map : teamMap) {
-				for (Entry<String, Object> entry : map.entrySet()) {
-					String name = entry.getKey();
-					Object value = entry.getValue();
-					FormPropertyHandler handler = new FormPropertyHandler();
-					handler.setId(name);
-					handler.setName("column:");
-					handler.setWritable(false);
-					handler.setType(new StringFormType());
-					FormPropertyImpl pro = new FormPropertyImpl(handler);
-					pro.setValue(value != null ? value.toString() : null);
-					properties.add(pro);
-				}
-			}
-		}
-
-		taskFormData.setFormProperties(properties);
-		return new ModelAndView("/task", result);
+		
+		return result;
 	}
-	
 	
 	/**
 	 * 详情页面
@@ -258,31 +198,20 @@ public class ProjectFlowController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/task/{taskId}")
 	public ModelAndView TaskFormV(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
-		result.put("taskFormData", taskFormData);
-
-		List<FormProperty> properties = taskFormData.getFormProperties();
-		if (properties != null) {
-			for (final FormProperty formProperty : properties) {
-				Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
-				if (values != null) {
-					result.put(formProperty.getId(), values);
-				}
-			}
-		}
-
 		// 获取可见数据
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
+		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
-		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
+		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
+		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
 		
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
-		mv.addObject("forms", result);
 		mv.addObject("flow_info", flowMap);
-		mv.addObject("team_info", teamMap);
+		mv.addObject("teamPlan_info", teamPlanMap);
+		mv.addObject("teamProduct_info", teamProductMap);
+		mv.addObject("synergyList", synergyList);
 		mv.addObject("user_info", userMap);
 		return mv;
 	}

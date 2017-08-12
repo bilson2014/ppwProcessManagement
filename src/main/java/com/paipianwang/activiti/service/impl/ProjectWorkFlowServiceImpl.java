@@ -1,6 +1,7 @@
 package com.paipianwang.activiti.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -98,9 +100,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ProcessInstance startFormAndProcessInstance(String processDefinitionId, Map<String, String> formProperties,
-			String userId, Map<String, Object> form) {
+			SessionInfo info, Map<String, Object> form) {
 		ProcessInstance processInstance = null;
 		try {
+			String userId = info.getActivitiUserId();
+			String realName = info.getRealName();
 			// 数据存储
 			Map<String, Object> flowMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_FLOW);
 			Map<String, Object> synergyMap = (Map<String, Object>) form.get(ProjectFlowConstant.PROJECT_SYNENGY);
@@ -113,6 +117,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						&& StringUtils.isNotEmpty(userId)) {
 					projectId = projectFlow.getProjectId();
 					projectFlow.setPrincipal(Integer.parseInt(userId.split("_")[1]));
+					projectFlow.setPrincipalName(realName);
 					flowFacade.insert(projectFlow);
 				}
 			}
@@ -123,6 +128,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					PmsProjectSynergy synergy = new PmsProjectSynergy();
 					synergy.setEmployeeId(Integer.parseInt(entry.getValue().toString().split("_")[1]));
 					synergy.setProjectId(projectId);
+					
+					// 查询员工电话
+					PmsEmployee employee = employeeFacade.findEmployeeById(Integer.parseInt(entry.getValue().toString().split("_")[1]));
+					synergy.setTelephone(employee.getPhoneNumber());
+					
 					if (ProjectRoleType.customerDirector.getId().equals(activitiRole)) {
 						// 客服总监
 						synergy.setEmployeeGroup(ProjectRoleType.customerDirector.getId());
@@ -340,7 +350,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			formService.submitTaskFormData(taskId, formProperties);
 
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-			// 计算
+			// TODO 添加 最终日期
+			// taskService.setDueDate(taskId, dueDate);
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
@@ -409,9 +420,37 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		if (teamList != null) {
-			List<Map<String, Object>> projectTeam = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-					projectId);
-			param.put("PROJECT_TEAM", projectTeam);
+			
+			// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
+			List<String> teamGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamDirector.getId(),ProjectRoleType.teamPurchase.getId(), ProjectRoleType.teamProvider.getId()));
+			// 如果是 策划供应商可以看见 策划供应商信息
+			List<String> teamPlanGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamPlan.getId()));
+			// 如果是制作供应商可以看见制作供应商信息
+			List<String> teamProudctGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamProduct.getId()));
+			
+			for (final Group group : groups) {
+				String groupId = group.getId();
+				if(teamGroup.contains(groupId)) {
+					// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
+					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
+							projectId, ProjectRoleType.teamPlan.getId());
+					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
+					
+					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
+							projectId, ProjectRoleType.teamProduct.getId());
+					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
+				} else if(teamPlanGroup.contains(groupId)) {
+					// 如果是 策划供应商可以看见 策划供应商信息
+					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
+							projectId, ProjectRoleType.teamPlan.getId());
+					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
+				} else if(teamProudctGroup.contains(groupId)) {
+					// 如果是制作供应商可以看见制作供应商信息
+					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
+							projectId, ProjectRoleType.teamProduct.getId());
+					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
+				}
+			}
 		}
 
 		if (userList != null) {
@@ -525,6 +564,31 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			return list;
 		}
 
+		return null;
+	}
+
+	@Override
+	public List<PmsProjectSynergy> getSynergy(String userId, String taskId) {
+		if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(taskId)) {
+			// 
+			List<PmsProjectSynergy> list = new ArrayList<PmsProjectSynergy>();
+			Map<String, Object> variables = taskService.getVariables(taskId);
+			for (Entry<String,Object> entry : variables.entrySet()) {
+				String key = entry.getKey();
+				ProjectRoleType type = ProjectRoleType.getEnum(key + "Id");
+				if(type != null) {
+					String activitiUserId = entry.getValue().toString();
+					PmsEmployee employee = employeeFacade.findEmployeeById(Long.parseLong(activitiUserId.split("_")[1]));
+					PmsProjectSynergy synergy = new PmsProjectSynergy();
+					synergy.setEmployeeName(employee.getEmployeeRealName());
+					synergy.setImgUrl(employee.getEmployeeImg());
+					synergy.setTelephone(employee.getPhoneNumber());
+					synergy.setEmployeeGroup(type.getText());
+					list.add(synergy);
+				}
+			}
+			return list;
+		}
 		return null;
 	}
 
