@@ -271,6 +271,7 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("synergyList", synergyList);
 		// 当前任务所在阶段
 		mv.addObject("taskState", state.get("taskState"));
+		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
 		mv.addObject("taskId",taskId);

@@ -10,7 +10,7 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/js/activiti/textFlowI.js" var="textFlowIJs"/>
-<spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/>
+<%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
 
 <!DOCTYPE html>
@@ -45,13 +45,20 @@
 <body>
 
 <input type="hidden" value="${taskState}" id="taskState"/>
-                                          <c:if test="${!empty gTasks}">                               	                                  
+                                          <%-- <c:if test="${!empty gTasks}">                               	                                  
 			                                  <c:forEach var="item" items="${gTasks}"> 
 			                                        <input type="hidden" value="${item.id}" id="taskId"/>
 			                                         <input type="hidden" value="${item.name}" id="taskName"/>
 			                                  </c:forEach>
-		                                  </c:if>
+		                                  </c:if> --%>
  <input type="hidden" value="${gTasks}" id="taskId"/>
+ 
+ <input type="hidden" value="${taskId }" id="currentTaskId" />
+ 
+ <div id="formState">
+ 	
+ </div>
+ 
 <div class="cusModel" id="cusModel">
      <div class="modelCard">
             <div class="cardTop">

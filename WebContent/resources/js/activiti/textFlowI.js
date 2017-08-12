@@ -7,7 +7,84 @@ $().ready(function() {
 	initEvenInfo();
 	initSelect();
 	flagEven();
+	
+	// 加载动态表单
+	addForm();
 });
+
+//加载动态表单
+function addForm() {
+	loadData(function(datas) {
+		var trs = "";
+		$.each(datas.taskFormData.formProperties, function() {
+			var className = this.required === true ? "required" : "";
+			this.value = this.value ? this.value : "";
+			trs += "<tr>" + createFieldHtml(this, datas, className);
+			if (this.required === true) {
+				trs += "<span style='color:red'>*</span>";
+			}
+			trs += "</td></tr>";
+		});
+		$('#formState').html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
+		var $form = $('.dynamic-form');
+		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
+		
+		trs += '<tr><td><input type="submit" value="提交"/></td></tr>'
+		
+		// 添加table内容
+		$('.dynamic-form-table').html(trs);
+	}, '/project/get-form/task/' + $('#currentTaskId').val(), null);
+}
+
+/**
+ * 生成一个field的html代码
+ */
+function createFieldHtml(prop, obj, className) {
+	return formFieldCreator[prop.type.name](prop, obj, className);
+}
+
+var formFieldCreator = {
+		'string': function(prop, datas, className) {
+			var result = "<td width='120'>" + prop.name + "：</td>";
+			if (prop.writable === true) {
+				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "' value='" + prop.value + "' />";
+			} else {
+				result += "<td>" + prop.value;
+			}
+			return result;
+		},
+		'date': function(prop, datas, className) {
+			var result = "<td width='120'>" + prop.name + "：</td>";
+			if (prop.writable === true) {
+				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date " + className + "' value='" + prop.value + "'/>";
+			} else {
+				result += "<td>" + prop.value;
+			}
+			return result;
+		},
+		'long': function(prop, datas, className) {
+			var result = "<td width='120'>" + prop.name + "：</td>";
+			if (prop.writable === true) {
+				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "' value='" + prop.value + "'/>";
+			} else {
+				result += "<td>" + prop.value;
+			}
+			return result;
+		},
+		'enum': function(prop, datas, className) {
+			var result = "<td width='120'>" + prop.name + "：</td>";
+			if (prop.writable === true) {
+				result += "<td><select id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
+				$.each(datas[prop.id], function(k, v) {
+					result += "<option value='" + k + "'>" + v + "</option>";
+				});
+				result += "</select>";
+			} else {
+				result += "<td>" + prop.value;
+			}
+			return result;
+		}
+	};
 
 function initEvenInfo(){
 	$('#toFinish').off('click').on('click',function(){
