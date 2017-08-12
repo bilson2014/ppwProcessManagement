@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -169,7 +170,7 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping("get-form/task/{taskId}")
+	@RequestMapping(value = "get-form/task/{taskId}", method = RequestMethod.POST)
 	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
@@ -178,6 +179,7 @@ public class ProjectFlowController extends BaseController {
 		List<FormProperty> properties = taskFormData.getFormProperties();
 		if (properties != null) {
 			for (final FormProperty formProperty : properties) {
+				// enum
 				Map<String, String> values = (Map<String, String>) formProperty.getType().getInformation("values");
 				if (values != null) {
 					result.put(formProperty.getId(), values);
@@ -196,22 +198,33 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/task/{taskId}")
-	public ModelAndView TaskFormV(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
+	public ModelAndView TaskFormView(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
 		// 获取可见数据
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
 		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
+		// 获取当前节点所在阶段 以及 备注信息
+		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
 		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
 		
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
+		// 项目信息
 		mv.addObject("flow_info", flowMap);
+		// 策划供应商信息
 		mv.addObject("teamPlan_info", teamPlanMap);
+		// 制作供应商信息
 		mv.addObject("teamProduct_info", teamProductMap);
-		mv.addObject("synergyList", synergyList);
+		// 客户信息
 		mv.addObject("user_info", userMap);
+		// 协同人信息
+		mv.addObject("synergyList", synergyList);
+		// 当前任务所在阶段
+		mv.addObject("taskState", state.get("taskState"));
+		// 当前任务的描述信息
+		mv.addObject("taskDescription", state.get("taskDescription"));
 		return mv;
 	}
 
@@ -263,6 +276,7 @@ public class ProjectFlowController extends BaseController {
 		return mv;
 	}
 
+	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
 		ModelAndView mv = new ModelAndView("/activiti/textFlow");
@@ -273,6 +287,11 @@ public class ProjectFlowController extends BaseController {
 		return mv;
 	}
 
+	/**
+	 * 查询挂起列表
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/textFlow");
@@ -293,7 +312,6 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 激活
-	 * 
 	 * @param processInstanceId
 	 *            流程实例ID
 	 * @return
