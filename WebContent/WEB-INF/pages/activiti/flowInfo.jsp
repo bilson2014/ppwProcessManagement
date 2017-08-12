@@ -1268,8 +1268,8 @@
 	                            <div class="getInfoItemContent">
 	                                  <div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                                  <div class="contentItem">
-	                                  <c:if test="${!empty team_info}">
-		                                  <c:forEach var="item" items="${team_info}"> 
+	                                  <c:if test="${!empty teamPlan_info}">
+		                                  <c:forEach var="item" items="${teamPlan_info}"> 
 											   <div class="item">
 		                                          <div>${item.key}</div>
 		                                          <div>${item.value}</div>
@@ -1291,7 +1291,16 @@
 	                                  </div>
 	                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 	                                  <div class="contentItem">
-	                                       <div class="item">
+	                                  
+	                                  <c:if test="${!empty teamProduct_info}">
+		                                  <c:forEach var="item" items="${teamProduct_info}"> 
+											   <div class="item">
+		                                          <div>${item.key}</div>
+		                                          <div>${item.value}</div>
+		                                       </div>
+										  </c:forEach> 
+							          </c:if>
+	                            <!--            <div class="item">
 	                                          <div>供应商名称</div>
 	                                          <div>内容内容</div>
 	                                       </div>
@@ -1302,7 +1311,7 @@
 	                                        <div class="item">
 	                                          <div>供应商联系电话</div>
 	                                          <div>内容内容</div>
-	                                       </div>
+	                                       </div> -->
 	                                  </div>
 	                            </div>
 	                       </div>
@@ -1314,7 +1323,16 @@
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
-	                                       <div class="item">
+	                                  
+	                                  <c:if test="${!empty forms}">
+		                                  <c:forEach var="item" items="${forms}"> 
+											   <div class="item">
+		                                          <div>${item.key}</div>
+		                                          <div>${item.value}</div>
+		                                       </div>
+										  </c:forEach> 
+							          </c:if>
+	                                    <!--    <div class="item">
 	                                          <div>预估价格</div>
 	                                          <div>内容内容</div>
 	                                       </div>
@@ -1329,7 +1347,7 @@
 	                                       <div class="item">
 	                                          <div>制作供应商预算</div>
 	                                          <div>内容内容</div>
-	                                       </div>
+	                                       </div> -->
 	                                  </div>
 	                                  <div class="contentItem">
 	                                       <div class="item">
