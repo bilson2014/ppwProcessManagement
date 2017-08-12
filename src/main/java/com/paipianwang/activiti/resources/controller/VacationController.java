@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.WorkFlowService;
 import com.paipianwang.pat.workflow.entity.PmsVacation;
 import com.paipianwang.pat.workflow.entity.PmsVariable;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 
 @RestController
 @RequestMapping("/vacation")
@@ -114,4 +115,14 @@ public class VacationController {
             return "error";
         }
     }
+    
+	/**
+	 * 获取节点周期
+	 * @param taskId
+	 * @return
+	 */
+	@RequestMapping("/getCycleByTask/{taskId}")
+	public ProjectCycleItem getProjectMessage(@PathVariable("taskId") String taskId){
+		return workflowService.getCycleByTask(taskId);
+	}
 }

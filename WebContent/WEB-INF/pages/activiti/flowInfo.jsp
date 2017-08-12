@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
@@ -9,9 +10,8 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/js/activiti/textFlowI.js" var="textFlowIJs"/>
-<spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="textFlowIJs"/>
+<spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/>
 <spring:url value="/resources/images" var="imgPath" />
-
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -36,6 +36,7 @@
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${dynamicJs}"></script>
 <script type="text/javascript" src="${textFlowIJs}"></script>
 
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
@@ -1031,7 +1032,7 @@
 </div> --%>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
-	    <div class="page">
+	    <div class="pages">
 	    <div id="showPrice">收款信息</div>
 	    <div id="showBudget">客户预算</div>
 	    <div id="showRealPrice">实际金额</div>
@@ -1045,8 +1046,6 @@
 	    <div id="finishCus">完善客户信息</div>
 	    <div id="showshowExecutive">分配监制</div>
 	    
-             	    	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
-	                        <jsp:include flush="true" page="flowMenu.jsp"></jsp:include>  
 	           <div class="productInfo">
 	                <div class="infoTitle">
 	                     <div class="titleName">项目详情标题</div>
@@ -1166,8 +1165,7 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">团队信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r" >更新</div>
+
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                 <div class="imgItem">
@@ -1205,46 +1203,25 @@
 	                            </div>
 	                         </div>   
 	                       
+	                        <c:if test="${!empty flow_info}"> 
 	                       <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">项目信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r">更新</div>
+	                                 <div class="time"></div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>项目编号</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>项目名称</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>项目评级</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>项目来源</div>
-	                                          <div>内容内容</div>
-	                                       </div>
+	                                 
+		                                  <c:forEach var="item" items="${flow_info}"> 
+											   <div class="item">
+		                                          <div>${item.key}</div>
+		                                          <div>${item.value}</div>
+		                                       </div>
+										  </c:forEach> 
+	                                       
 	                                  </div>
-	                                   <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>产品线</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>项目周期</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>立项时间</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                  </div>
+	                            <!--      
 	                                  <div class="longItem">
 	                                      <div>项目配置</div>
 	                                      <div>内容内容</div>
@@ -1256,51 +1233,50 @@
 	                                   <div class="longItem">
 	                                      <div>项目描述</div>
 	                                      <div>内容内容</div>
-	                                  </div>
+	                                  </div> -->
 	                            </div>
 	                       </div>
 	                       
-	                        <div class="getInfoItem">
-	                            <div class="getInfoItemTop">
-	                                 <div class="controlOpen"></div>
-	                                 <div class="info">客户信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r">更新</div>
-	                            </div>
-	                            <div class="getInfoItemContent">
-	                                  
-	                                  <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>客户名称</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>客户评级</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>客户联系人</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>客户电话</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                  </div>
-	                            </div>
-	                       </div>
-	                       
+	                        </c:if> 
+	                      <c:if test="${!empty user_info}"> 
+		                       <div class="getInfoItem">
+		                            <div class="getInfoItemTop">
+		                                 <div class="controlOpen"></div>
+		                                 <div class="info">客户信息</div>
+		                                
+		                            </div>
+		                            <div class="getInfoItemContent">
+		                                  <div class="contentItem">
+		                                  
+			                                  <c:forEach var="item" items="${user_info}"> 
+												   <div class="item">
+			                                          <div>${item.key}</div>
+			                                          <div>${item.value}</div>
+			                                       </div>
+											  </c:forEach> 
+		                                  </div>
+		                            </div>
+		                       </div>
+	                        </c:if>
 	                        <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r">更新</div>
+	                                 <div class="time"></div>
+	                                 <div class="update hide btn-c-r">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                                  <div class="contentItem">
-	                                       <div class="item">
+	                                  <c:if test="${!empty team_info}">
+		                                  <c:forEach var="item" items="${team_info}"> 
+											   <div class="item">
+		                                          <div>${item.key}</div>
+		                                          <div>${item.value}</div>
+		                                       </div>
+										  </c:forEach> 
+							          </c:if>
+	                                       <!-- <div class="item">
 	                                          <div>供应商名称</div>
 	                                          <div>内容内容</div>
 	                                       </div>
@@ -1311,7 +1287,7 @@
 	                                        <div class="item">
 	                                          <div>供应商联系电话</div>
 	                                          <div>内容内容</div>
-	                                       </div>
+	                                       </div> -->
 	                                  </div>
 	                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 	                                  <div class="contentItem">
@@ -1335,8 +1311,6 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">价格信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
@@ -1370,8 +1344,6 @@
 	                            <div class="getInfoItemTop ">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">其它信息</div>
-	                                 <div class="time">最后更新于 2017-07-09  14：00</div>
-	                                 <div class="update btn-c-r">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
@@ -1410,7 +1382,7 @@
 	                       </div>
 	                                              
 	                   <div class="projectTitle">项目文件
-	                        <div class="conMod btn-c-r">版本管理</div>
+	                        <div class="conMod hide btn-c-r">版本管理</div>
 	                        <div class="upFile btn-c-r">上传</div>
 	                   </div>
 	                       <div class="projectFilm">
@@ -1419,7 +1391,6 @@
 	                                    <div class="filmName">文件名</div>
 	                                    <div class="fileType"><div>策划方案</div></div>
 	                                    <div class="fileTypeName"><div>测试文件</div></div>
-	                                    <div class="time"><div>上传于：2017-07-09  14：00</div></div>
 	                                    <div class="icon">
 	                                          <div class="look"></div>
 	                                          <div class="share"></div>

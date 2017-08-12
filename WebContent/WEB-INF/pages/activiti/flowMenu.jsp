@@ -73,7 +73,7 @@
 	              </ul>
 	              <div class="treeitem" id="myOrder">
 	                  <div class="orderList"></div>
-	                  <div class="title">订单列表</div>
+	                  <a href="/order/myOrder"><div class="title">订单列表</div></a>
 	                <%--   <img src="${imgPath}/flow/more.png"> --%>
 	             </div>
 <!-- 	              <ul class="productList" id="orderList">
@@ -83,9 +83,9 @@
 	              </ul> -->
 	              <div class="treeitem">
 	                  <div class="save"></div>
-	                  <div class="title">收藏列表</div>
+	                 <a href="/mgr/favourites"> <div class="title">收藏列表</div></a>
 	             </div>
-	              <div class="treeitem">
+	              <div class="treeitem hide">
 	                  <div class="safe"></div>
 	                  <div class="title">安全设置</div>
 	             </div>
@@ -93,7 +93,7 @@
 	             <div class="treeitem">
 	                  <div class="line"></div>
 	                  <div class="loginOut"></div>
-	                  <div class="title">退出登录</div>
+	                 <a href="/login/loginout"> <div class="title">退出登录</div></a>
 	             </div>
 	        </div>
 	   </div>

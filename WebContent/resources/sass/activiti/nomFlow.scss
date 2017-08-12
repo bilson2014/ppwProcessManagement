@@ -1,0 +1,374 @@
+            @import "common";
+            @import "buttons";
+            @import "video";
+            @import "compass/typography/text/ellipsis";
+
+            body {
+                background: white !important;
+            }
+
+            @mixin anmotion {
+                transition: all .3s ease-in-out .2s;
+                -moz-transition: all .3s ease-in-out .2s;
+                /* Firefox 4 */
+                -webkit-transition: all .3s ease-in-out .2s;
+                /* Safari 和 Chrome */
+                -o-transition: all .3s ease-in-out .2s;
+            }
+
+            .frame {
+                width: 100%;
+                height: 1000px;
+            }
+
+
+            .productListAreas {
+                width: 100%;
+                height: auto;
+                background: white;
+                border-radius: 6px;
+                min-height: 300px;
+                @include anmotion;
+                position: relative;
+            }
+
+            .waitWork {
+                .titleName {
+                    font-size: $font-size;
+                    color: $gray-dark;
+                    height: 55px;
+                    line-height: 55px;
+                }
+            }
+
+
+            .titleNameWork {
+                height: 55px;
+                position: relative;
+                padding-top: 12px;
+                .name {
+                    font-size: $font-size-sm;
+                    color: $gray;
+                }
+                .search {
+                    width: 56px;
+                    height: 30px;
+                    line-height: 30px;
+                    font-size: $font-size-sm;
+                    color: white;
+                    border-radius: 4px;
+                    text-align: center;
+                }
+                .createPro {
+                    position: absolute;
+                    right: 30px;
+                    width: 120px;
+                    height: 30px;
+                    border: 1px solid $gray-light;
+                    border-radius: 4px;
+                    text-align: center;
+                    color: $gray-dark;
+                    font-size: $font-size-base;
+                    padding-top: 6px;
+                    cursor: pointer;
+                    .newAdd {
+                        width: 14px;
+                        height: 14px;
+                        margin-right: 5px;
+                        background: url(/resources/images/provider/add.png);
+                        background-size: 14px 28px;
+                    }
+                    &:hover {
+                        background: $red-base;
+                        color: white;
+                        border: 1px solid $red-base;
+                        .newAdd {
+                            background-position-y: -14px;
+                        }
+                    }
+                }
+                input {
+                    background: #F6F9F9;
+                    border: none;
+                    border: 1px solid $gray-light;
+                    border-radius: 4px;
+                    width: 120px;
+                    height: 30px;
+                    line-height: 30px;
+                    padding-left: 5px;
+                    font-size: $font-size-sm;
+                    color: $gray-dark;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
+                div,
+                img,
+                input {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+            /*             $noNeedpad:20px;
+$areaWidth:1110px;
+$areaMidWidth:1000px;
+$smallWidth:770px;
+$areaMinWidth:1240px;
+$areaMinMidWidth:1132px;
+$smallMinWidth:900px;
+$ba:#bababa; */
+
+            $noNeedpad:20px;
+            $areaWidth:1110px;
+            $areaMidWidth:1020px;
+            $smallMinWidth:900px;
+            $ba:#bababa;
+            $smallWidth:780px;
+            $areaMinMidWidth:1100px;
+            $areaMinWidth:1260px;
+
+            .lineTop {
+                width: 100%;
+                position: absolute;
+                height: 1px;
+                left: 0;
+                border: 1px solid $e;
+            }
+
+            @mixin cardhead {
+                .cardH {
+                    height: 39px;
+                    border-bottom: 1px solid $border-line;
+                    font-size: 0;
+                    position: relative;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    div {
+                        display: inline-block;
+                        vertical-align: top;
+                    }
+                    .title {
+                        line-height: 39px;
+                        font-size: $font-size-base;
+                        color: $gray-dark;
+                        width: 40%;
+                        @include ellipsis;
+                    }
+                    .your {
+                        width: 80px;
+                        height: 20px;
+                        border-radius: 4px;
+                        background: $red-base;
+                        color: white;
+                        line-height: 20px;
+                        text-align: center;
+                        font-size: $font-size-sm;
+                        position: absolute;
+                        right: 12px;
+                        top: 8px;
+                    }
+                    .point {
+                        width: 40px;
+                        height: 20px;
+                        margin-left: 5px;
+                        @media screen and (min-width: 1276px) {
+                            margin-left: 25px;
+                        }
+                        border-radius: 68px;
+                        position: relative;
+                        top: 8px;
+                        text-align: center;
+                        border: 1px solid $gray-light;
+                        &:hover {
+                            .showDeil {
+                                display: block !important;
+                            }
+                        }
+                        .showPoint {
+                            text-align: center;
+                            line-height: 20px;
+                            color: $gray-light;
+                            font-size: $font-size-sm;
+                        }
+                        .showDeil {
+                            width: 130px;
+                            height: 97px;
+                            background: url(/resources/images/flow/points.png);
+                            position: absolute;
+                            top: -99px;
+                            left: -44px;
+                            display: none;
+                            div {
+                                color: $gray-dark;
+                                font-size: $font-size-base;
+                                display: block;
+                            }
+                            .proPoint {
+                                margin-top: 15px;
+                                margin-bottom: 15px;
+                                span {
+                                    margin-left: 10px;
+                                    color: $red-base;
+                                    font-size: $font-size-lg;
+                                    font-weight: bold;
+                                }
+                            }
+                            .cusPoint {
+                                span {
+                                    margin-left: 10px;
+                                    color: #F6A623;
+                                    font-size: $font-size-lg;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                    .user {
+                        position: absolute;
+                        right: 15px;
+                        top: 12px;
+                        font-size: $font-size-sm !important;
+                        color: $gray;
+                    }
+                }
+            }
+
+
+
+
+            .productListAreas .setCard {
+                font-size: 0;
+                height: auto;
+                .waitCard {
+                    width: ($smallWidth - $noNeedpad*3)/3;
+                    @media screen and (min-width: 761px) and (max-width: 1029px) {
+                        width: ($areaMidWidth - $noNeedpad*3)/3;
+                    }
+                    @media screen and (min-width: 1030px) {
+                        width: ($areaWidth - $noNeedpad*3)/3;
+                    }
+                    height: 134px;
+                    margin-right: 10px;
+                    margin-bottom: 30px;
+                    border: 1px solid $ba;
+                    border-radius: 6px;
+                    @include anmotion;
+                    display: inline-block;
+                    vertical-align: top;
+                    @include cardhead;
+                    .cardContent {
+                        img {
+                            width: 70px;
+                            height: 70px;
+                            margin-left: 15px;
+                            margin-top: 12px;
+                            display: inline-block;
+                            vertical-align: top;
+                        }
+                        .setContent {
+                            display: inline-block;
+                            vertical-align: top;
+                            margin-top: 25px;
+                            margin-left: 15px;
+                            .listName {
+                                font-size: $font-size-base;
+                                color: $gray;
+                                margin-bottom: 10px;
+                            }
+                            .lastTime {
+                                font-size: $font-size-sm;
+                                color: $gray-light;
+                            }
+                        }
+                    }
+                }
+
+                .waitCard:nth-child(3n) {
+                    margin-right: 0px !important;
+                }
+            }
+
+
+
+            .toMinLeft .setCard {
+                .waitCard,
+                .otherCard {
+                    cursor: pointer;
+                    width: ($smallMinWidth - $noNeedpad*3)/3 !important;
+                    @media screen and (min-width: 761px) and (max-width: 1000px) {
+                        width: ($areaMinMidWidth - $noNeedpad*3)/3 !important;
+                    }
+                    @media screen and (min-width: 1005px) {
+                        width: ($areaMinWidth - $noNeedpad*3)/3 !important;
+                    }
+                }
+            }
+
+            .cardLine {
+                width: 100%;
+                height: 1px;
+                padding-right: 20px;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    background: $border-line;
+                }
+            }
+
+            .otherWork {
+                .titleName {
+                    font-size: $font-size;
+                    color: $gray-dark;
+                    height: 65px;
+                    line-height: 65px;
+                }
+                .setCard {
+                    .otherCard {
+                        width: ($smallWidth - $noNeedpad*3)/3;
+                        @media screen and (min-width: 761px) and (max-width: 1029px) {
+                            width: ($areaMidWidth - $noNeedpad*3)/3;
+                        }
+                        @media screen and (min-width: 1030px) {
+                            width: ($areaWidth - $noNeedpad*3)/3;
+                        }
+                        height: 134px;
+                        margin-right: 10px;
+                        margin-bottom: 30px;
+                        border: 1px solid $ba;
+                        border-radius: 6px;
+                        @include anmotion;
+                        display: inline-block;
+                        vertical-align: top;
+                        @include cardhead;
+                        position: relative;
+                        .cardContent {
+                            img {
+                                width: 84px;
+                                height: 56px;
+                                position: absolute;
+                                bottom: 15px;
+                                right: 15px;
+                            }
+                            .setContent {
+                                display: inline-block;
+                                vertical-align: top;
+                                margin-top: 25px;
+                                margin-left: 15px;
+                                width: 50%;
+                                .listName {
+                                    font-size: $font-size-base;
+                                    color: $gray;
+                                    margin-bottom: 10px;
+                                    @include ellipsis;
+                                }
+                                .lastTime {
+                                    font-size: $font-size-sm;
+                                    color: $gray;
+                                    line-height: 20px;
+                                    height: 40px;
+                                    overflow: hidden;
+                                }
+                            }
+                        }
+                    }
+                }
+            }

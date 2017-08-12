@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.paipianwang.activiti.service.WorkFlowService;
 import com.paipianwang.pat.workflow.entity.PmsVacation;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.facade.WorkFlowFacade;
 
 @Service("workFlowFacade")
@@ -168,6 +169,11 @@ public class WorkFlowServiceImpl implements WorkFlowService {
 	@Override
 	public void setAssert(String taskId, String userId) {
 		taskService.setAssignee(taskId, userId);
+	}
+
+	@Override
+	public ProjectCycleItem getCycleByTask(String taskId) {
+		return workFlowFacade.getCycleByTaskId(taskId);
 	}
 
 }

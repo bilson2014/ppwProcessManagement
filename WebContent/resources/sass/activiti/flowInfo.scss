@@ -3,6 +3,11 @@
             @import "video";
             @import "compass/typography/text/ellipsis";
 
+
+            body {
+                background: #F0F2F5 !important;
+            }
+
             input,
             textarea {
                 outline: none;
@@ -13,7 +18,7 @@
                 padding: 5px !important;
             }
 
-            .page {
+            .pages {
                 margin-bottom: 30px;
             }
 

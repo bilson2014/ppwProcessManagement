@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
 <%-- import JS --%>
@@ -39,22 +40,20 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <jsp:include flush="true" page="flowMenu.jsp"></jsp:include>  
+	    
+	    	<c:if test="${!empty gTasks}">
+							<c:forEach items="${gTasks }" var="staff" varStatus="status">
+                                     <div class="cardNum hide"></div>
+							</c:forEach>
+			</c:if>
 	
 	<div class="productListArea">
 	           <div class="waitWork">
-	                <div class="titleNameWork">
-	                    <div class="name">项目名称</div>
-	                    <input>
-	                    <div class="search btn-c-r">搜索</div>
-	                    <div class="createPro">
-	                        <div class="newAdd"></div>
-	                        <div>新建项目</div>
-	                    </div>
-	                </div>
-	                
+	               
 	                <iframe class="frame" id="content-frame" class="iframe" src="<spring:url value='/project/running-doing'/>"></iframe>
 <!-- 	                <div class="lineTop"></div>
 	                <div id="hideDiv">
