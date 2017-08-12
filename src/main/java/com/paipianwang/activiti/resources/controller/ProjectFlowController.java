@@ -26,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
-import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
@@ -145,60 +144,6 @@ public class ProjectFlowController extends BaseController {
 
 		return mv;
 	}
-	
-
-	/**
-	 * 查询正在进行的任务列表
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/running-doing")
-	public ModelAndView taskListS(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
-		SessionInfo info = getCurrentInfo(request);
-		List<String> groups = info.getActivitGroups();
-		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
-			mv.addObject("runningTasks", runnintTasks);
-		} else {
-			// 查询代办任务
-			List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
-
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
-
-			// 去除代办任务
-			if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
-
-				List<String> todoProjectList = new ArrayList<String>();
-				for (final PmsProjectFlowResult result : gTasks) {
-					todoProjectList.add(result.getPmsProjectFlow().getProjectId());
-				}
-				List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
-				for (PmsProjectFlowResult result : runnintTasks) {
-					PmsProjectFlow flow = result.getPmsProjectFlow();
-					if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
-						if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-							runningList.add(result);
-						}
-					}
-				}
-				mv.addObject("runningTasks", runningList);
-			} else {
-				mv.addObject("runningTasks", runnintTasks);
-			}
-
-			mv.addObject("gTasks", gTasks);
-		}
-
-		return mv;
-	}
 
 	/**
 	 * 认领任务
@@ -245,7 +190,6 @@ public class ProjectFlowController extends BaseController {
 	
 	/**
 	 * 详情页面
-	 * 
 	 * @param taskId
 	 * @param session
 	 * @return
@@ -261,7 +205,7 @@ public class ProjectFlowController extends BaseController {
 		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
 		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-
+		
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
 		mv.addObject("flow_info", flowMap);
 		mv.addObject("teamPlan_info", teamPlanMap);
@@ -312,7 +256,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/finished/list")
 	public ModelAndView finished(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("finishedTasks", list);
@@ -331,7 +275,7 @@ public class ProjectFlowController extends BaseController {
 
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
+		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<PmsProjectFlowResult> suspendTasks = null;
