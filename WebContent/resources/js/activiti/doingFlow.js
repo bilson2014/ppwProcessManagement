@@ -11,5 +11,7 @@ $().ready(function() {
 		$(window.parent.document).find('#cardNum').text(cardNUm);
 	}*/
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+
 });
+
 

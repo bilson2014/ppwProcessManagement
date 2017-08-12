@@ -44,6 +44,17 @@
 	
 	<div class="productListAreas">
 	           <div class="waitWork">
+	           
+	                 <div class="titleNameWork">
+	                    <div class="name">项目名称</div>
+	                    <input>
+	                    <div class="search btn-c-r">搜索</div>
+	                    <div class="createPro">
+	                        <div class="newAdd"></div>
+	                        <div>新建项目</div>
+	                    </div>
+	                </div>
+	           
 	                <div class="lineTop"></div>
 	                <c:if test="${!empty gTasks}">
 	                <div class="title">
@@ -52,6 +63,7 @@
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard">
+						       <a href="/project/task/${staff.task.id}">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 	                                 <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
@@ -63,6 +75,7 @@
 	                                      <div class="lastTime">(死的)已超时 24h 5min 45s</div>
 	                                  </div>
 	                             </div>
+	                            </a>  
 	                        </div>
 							</c:forEach>
 					
@@ -100,9 +113,9 @@
 	            <c:if test="${!empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard">
+							        <a href="/project/task/${staff.task.id}">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                          
 		                                 <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
 		                             </div>
 		                             <div class="cardContent">
@@ -111,10 +124,10 @@
 		                                  </div>
 		                                  <img src="/resources/images/flow/newFinish.png">
 		                             </div>
+		                            </a> 
 		                        </div>
 							</c:forEach>
 					</c:if>
-
 	           </div>   
 	            </div>    
 	</div> 

@@ -44,6 +44,17 @@
 	
 	<div class="productListAreas">
 	           <div class="waitWork">
+	           
+	                <div class="titleNameWork">
+	                    <div class="name">项目名称</div>
+	                    <input>
+	                    <div class="search btn-c-r">搜索</div>
+	                    <div class="createPro">
+	                        <div class="newAdd"></div>
+	                        <div>新建项目</div>
+	                    </div>
+	                </div>
+	                
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">

@@ -127,7 +127,7 @@ function doFinish(){
 		$('.productList li').removeClass('checkLi');
         $(this).addClass('checkLi');
         $('#hideDiv').show();
-        $('.frame').attr('src',getContextPath()+"/finished/list");
+        $('.frame').attr('src',getContextPath()+"/project/finished/list");
 	});
 }
 
