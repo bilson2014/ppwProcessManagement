@@ -9,12 +9,14 @@
     <userTask id="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" name="【销售】上传项目简报" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="file_projectBrief" name="项目简报" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7" sourceRef="startEvent" targetRef="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB"></sequenceFlow>
     <userTask id="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715" name="【销售】项目排期" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="file_projectPlan" name="项目排期" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71" sourceRef="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" targetRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715"></sequenceFlow>
@@ -24,6 +26,7 @@
           <activiti:value id="true" name="确认"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-F09FAB69-E29A-46D0-B1AD-EF01BE0DE0DF" sourceRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715" targetRef="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225"></sequenceFlow>
@@ -34,6 +37,7 @@
           <activiti:value id="true" name="确认"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-8706AD6D-C469-4063-A8C0-4B2C6AAC2C1B"></exclusiveGateway>
@@ -43,6 +47,7 @@
           <activiti:value id="inner" name="内部"></activiti:value>
           <activiti:value id="outer" name="外部"></activiti:value>
         </activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-C481F0F9-816C-4BEB-8B9A-21770190CDA9"></exclusiveGateway>
@@ -50,6 +55,7 @@
     <userTask id="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" name="【创意总监】分配内部策划" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="schemeId" name="策划" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}" writable="false"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <userTask id="sid-3891F78C-418D-42E8-BB3E-7D2952A69618" name="【供应商管家】分配供应商" activiti:assignee="${teamProviderId}">
@@ -63,12 +69,14 @@
         <activiti:formProperty id="pt_planTime" name="供应商策划交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_accessManTelephone" name="对接人联系方式" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_teamId" name="供应商表ID" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${allotPlanTeamTaskLisnter}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <userTask id="sid-E04DE940-F8C8-4FD8-A22E-5232BD03D585" name="【策划】上传策划方案" activiti:assignee="${schemeId}">
       <extensionElements>
         <activiti:formProperty id="file_planning" name="策划方案" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="project_stage" name="项目阶段" type="string" default="${project_stage}"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-0DCBEA80-0586-4F37-9F56-51BD1B092652" sourceRef="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" targetRef="sid-E04DE940-F8C8-4FD8-A22E-5232BD03D585"></sequenceFlow>
@@ -292,8 +300,8 @@
     <sequenceFlow id="flow6" sourceRef="usertask1" targetRef="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="sid-ED17751D-4D1B-4EB6-BCD3-1D0716FEA54E" targetRef="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A"></sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_procedure-workflow-4">
-    <bpmndi:BPMNPlane bpmnElement="procedure-workflow-4" id="BPMNPlane_procedure-workflow-4">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_procedure-workflow">
+    <bpmndi:BPMNPlane bpmnElement="procedure-workflow" id="BPMNPlane_procedure-workflow">
       <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
         <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="282.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>

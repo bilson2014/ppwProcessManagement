@@ -100,6 +100,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsProjectGroupColumnShipFacade shipFacade = null;
+	
 	@Autowired
 	private WorkFlowFacade workFlowFacade = null;
 
@@ -207,8 +208,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					.processDefinitionKey(processDefintionKey).latestVersion().orderByProcessDefinitionVersion().desc()
 					.singleResult();
 			processInstance = formService.submitStartFormData(definition.getId(), projectId, formProperties);
-
+			
+			// 添加 最终日期
+			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getId()).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getId()).getDescription());
 			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
+			
+			
+			// TODO 添加任务启动的系统留言
+			
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
 			identityService.setAuthenticatedUserId(null);
@@ -352,12 +362,21 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		try {
+			// TODO 需要完成系统留言
+			// 节点名称
+			String taskName = task.getName();
+			// 办理人 employee_36
+			String activitiUserId = task.getAssignee();
+			Date date = new Date();
+			
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
 
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-			// TODO 添加 最终日期
-			// taskService.setDueDate(taskId, dueDate);
+			// 添加 最终日期
+			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getId()).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getId()).getDescription());
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
@@ -610,6 +629,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			return null;
 		}
 		return DateUtils.addHour(new Date(), cycle.getDuration());
+	}
+
+	@Override
+	public Map<String, String> getTaskStateAndDescription(String taskId) {
+		Map<String , String> param = new HashMap<String, String>();
+		// 当前节点的阶段
+		String taskStage = (String) taskService.getVariable(taskId, "task_stage");
+		String taskDescription = (String) taskService.getVariable(taskId, "task_description");
+		param.put("taskStage", taskStage);
+		param.put("taskDescription",taskDescription);
+		return param;
 	}
 
 }

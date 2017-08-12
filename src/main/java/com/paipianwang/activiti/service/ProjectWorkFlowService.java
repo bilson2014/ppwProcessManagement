@@ -111,4 +111,11 @@ public interface ProjectWorkFlowService {
 
 	public List<PmsProjectSynergy> getSynergy(String activitiUserId, String taskId);
 
+	/**
+	 * 获取当前节点所在阶段 以及 备注信息
+	 * @param taskId
+	 * @return
+	 */
+	public Map<String, String> getTaskStateAndDescription(String taskId);
+
 }
