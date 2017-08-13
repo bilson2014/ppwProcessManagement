@@ -279,7 +279,7 @@ public class ProjectFlowController extends BaseController {
 		// 协同人信息
 		mv.addObject("synergyList", synergyList);
 		// 当前任务所在阶段
-		mv.addObject("taskState", state.get("taskState"));
+		mv.addObject("taskStage", state.get("taskStage"));
 		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
@@ -317,7 +317,7 @@ public class ProjectFlowController extends BaseController {
 		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
-		return new ModelAndView("redirect:/project/activiti/textFlow");
+		return new ModelAndView("redirect:/project/running-doing");
 	}
 
 	/**
