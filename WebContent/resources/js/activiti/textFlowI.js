@@ -132,7 +132,7 @@ function findAutoInfo(userName){
 			};
 			autoLi();
 		}
-	}, getContextPath() + '/user/search/info', $.toJSON({
+	}, getContextPath() + '/team/listByName', $.toJSON({
 		userName : userName
 	}));
 }
