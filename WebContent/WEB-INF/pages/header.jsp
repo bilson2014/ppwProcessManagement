@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%-- <%@ taglib prefix="r" uri="/mytaglib" %> --%>
+<%@ taglib prefix="r" uri="/mytaglib" %>
 
 <!-- imgPath -->
 <spring:url value="/resources/images" var="imgPath" />
