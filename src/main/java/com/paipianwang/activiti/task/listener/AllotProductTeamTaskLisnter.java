@@ -5,15 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.FormService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 
@@ -35,6 +39,9 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 
 		// projectId
 		final String projectId = delegateTask.getExecution().getProcessBusinessKey();
+		
+		// 权限服务
+		final IdentityService identityService = delegateTask.getExecution().getEngineServices().getIdentityService();
 		
 		// 获取form表单信息
 		FormService formService = delegateTask.getExecution().getEngineServices().getFormService();
@@ -58,9 +65,28 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 				ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 				PmsProjectTeamFacade pmsProjectTeamFacade = (PmsProjectTeamFacade) context
 						.getBean("pmsProjectTeamFacade");
+				String activitiTeamId = "team_" + String.valueOf(param.get("teamId"));
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
-				delegateTask.setVariable("teamProductId", param.get("teamId")); // 设置供应商唯一ID
+				delegateTask.setVariable("teamProductId", activitiTeamId); // 设置供应商唯一ID
 				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置策划供应商的唯一ID
+				
+				// 检测该供应商在activiti表中是否存在
+				User team = identityService.createUserQuery().userId(activitiTeamId).singleResult();
+				if(team == null) {
+					// 在activiti用户表总创建 供应商
+					User activitiTeam = identityService.newUser(activitiTeamId);
+					activitiTeam.setEmail((String) param.get("email"));
+					activitiTeam.setFirstName((String) param.get("teamName"));
+					activitiTeam.setPassword("000000");
+					identityService.saveUser(activitiTeam);
+				}
+				
+				// 检测策划供应商关系表中是否有数据
+				Group group = identityService.createGroupQuery().groupMember(activitiTeamId).groupId(ProjectRoleType.teamProduct.getId()).singleResult();
+				if(group == null) {
+					// 将 该供应商加入  策划供应商组
+					identityService.createMembership(activitiTeamId, ProjectRoleType.teamProduct.getId());
+				}
 			}
 		}
 	}
