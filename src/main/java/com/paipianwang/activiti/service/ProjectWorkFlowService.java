@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 
@@ -11,6 +12,7 @@ import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 public interface ProjectWorkFlowService {
 
@@ -117,5 +119,12 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public Map<String, String> getTaskStateAndDescription(String taskId);
+
+	/**
+	 * 根据角色获取协同人列表
+	 * @param roleType
+	 * @return
+	 */
+	public Map<String, String> getUserByRole(String roleType);
 
 }

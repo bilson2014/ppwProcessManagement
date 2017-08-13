@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang3.StringUtils;
@@ -232,9 +233,16 @@ public class ProjectFlowController extends BaseController {
 				if (values != null) {
 					result.put(formProperty.getId(), values);
 				}
+				if(formProperty.getId().equals("schemeId")){
+					Map<String,String> scheme=projectWorkFlowService.getUserByRole(ProjectRoleType.scheme.getId());
+					result.put("schemeId", scheme);
+				}else if(formProperty.getId().equals("superviseId")){
+					Map<String,String> supervise=projectWorkFlowService.getUserByRole(ProjectRoleType.supervise.getId());
+					result.put("superviseId", supervise);
+				}
+				
 			}
 		}
-		
 		return result;
 	}
 	
