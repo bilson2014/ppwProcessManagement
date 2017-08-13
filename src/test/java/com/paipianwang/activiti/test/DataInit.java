@@ -120,7 +120,7 @@ public class DataInit extends BaseTest {
 		identityService.createMembership("lily", "deptLeader");
 		identityService.createMembership("lily", "user");
 	}
-
+	
 	@Test
 	public void initDataSource() {
 		// 销售总监
