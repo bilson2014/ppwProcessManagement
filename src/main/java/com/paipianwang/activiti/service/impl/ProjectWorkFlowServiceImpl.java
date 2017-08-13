@@ -679,4 +679,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		return param;
 	}
 
+	@Override
+	public Map<String, String> getUserByRole(String roleType) {
+		Map<String , String> param = new HashMap<String, String>();
+		List<User> userList=identityService.createUserQuery().memberOfGroup(roleType).list();
+		for(User user:userList){
+			param.put(user.getId(), user.getFirstName());
+		}
+		return param;
+	}
+
 }
