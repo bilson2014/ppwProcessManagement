@@ -321,7 +321,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/finished/list")
 	public ModelAndView finished(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("finishedTasks", list);
@@ -331,7 +331,7 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId);
@@ -346,7 +346,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<PmsProjectFlowResult> suspendTasks = null;
@@ -370,7 +370,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 激活
 			projectWorkFlowService.activateProcess(processInstanceId);
