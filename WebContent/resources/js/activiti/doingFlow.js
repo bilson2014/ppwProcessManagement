@@ -12,6 +12,9 @@ $().ready(function() {
 	}*/
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	getDate();
+	$('#toCreate').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('#toCreate').click();
+	});
 });
 
 function getDate(){

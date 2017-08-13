@@ -39,6 +39,8 @@
 
 <body>
 
+     <a href="/project/start/project"><div id="toCreate"></div></a>
+     
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	
 	<div class="page">
@@ -52,9 +54,6 @@
 			</c:if>
 	
 	<div class="productListArea">
-	
-	
-	
 	           <div class="waitWork">
 	               
 	                <iframe class="frame" id="content-frame" class="iframe" src="<spring:url value='/project/running-doing'/>"></iframe>
@@ -162,6 +161,7 @@
 	</div> 
 	
 </div>	  
+
 	<!-- video-->
 </body>
 
