@@ -387,8 +387,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 			// 添加 最终日期
 			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getId()).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getId()).getDescription());
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getTaskDefinitionKey()).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getTaskDefinitionKey()).getDescription());
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
