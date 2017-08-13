@@ -82,9 +82,9 @@ public class AllotPlanTeamTaskLisnter implements TaskListener {
 				
 				// 检测策划供应商关系表中是否有数据
 				Group group = identityService.createGroupQuery().groupMember(activitiTeamId).groupId(ProjectRoleType.teamPlan.getId()).singleResult();
-				if(group != null) {
+				if(group == null) {
 					// 将 该供应商加入  策划供应商组
-					identityService.createMembership(activitiTeamId, group.getId());
+					identityService.createMembership(activitiTeamId, ProjectRoleType.teamPlan.getId());
 				}
 			}
 		}

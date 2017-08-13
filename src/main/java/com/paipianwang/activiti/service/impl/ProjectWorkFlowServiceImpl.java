@@ -49,7 +49,6 @@ import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
-import com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
@@ -93,9 +92,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsProjectUserFacade projectUserFacade = null;
-
-	@Autowired
-	private PmsEmployeeSynergyFacade employeeSynergyFacade = null;
 
 	@Autowired
 	private PmsEmployeeFacade employeeFacade = null;
