@@ -326,7 +326,7 @@ $ba:#bababa; */
                 }
                 .setCard {
                     .otherCard {
-                        padding-left: 20px;
+                        padding-left: 0px !important;
                         width: ($smallWidth - $noNeedpad*3)/3;
                         @media screen and (min-width: 761px) and (max-width: 1029px) {
                             width: ($areaMidWidth - $noNeedpad*3)/3;

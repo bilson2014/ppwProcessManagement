@@ -41,12 +41,8 @@
 </head>
 <body>
 
-<input type="hidden" value="${taskState}" id="taskState"/>
-
-<input type="hidden" value="${gTasks}" id="taskState"/>
-                                         
-<input type="hidden" value="${gTasks}" id="taskId"/>
- 
+<input type="hidden" value="${taskStage}" id="taskStage"/>
+<input type="hidden" value="${gTasks}" id="taskId"/> 
 <input type="hidden" value="${taskId }" id="currentTaskId" />
 <input type="hidden" value="${taskName}" id="taskName" />
 
@@ -1104,8 +1100,8 @@
 	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div> -->
 	                            <div class="contentDiv">
 	                               <div class="setContent">
-	                                    <div class="redContent">测试文字测试文字</div>
-	                                    <div class="simContent">测试文字测试文字</div>
+	                                    <div class="redContent hide"></div>
+	                                    <div class="simContent">${taskDescription}</div>
 	                                    <div class="setBtn">
 	                                         <div class="redBtn btn-c-r" id="toFinish">任务完善</div>
 	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->

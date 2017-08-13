@@ -66,7 +66,6 @@
 						       <a href="/project/task/${staff.task.id}">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
