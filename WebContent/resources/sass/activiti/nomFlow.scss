@@ -272,14 +272,17 @@ $ba:#bababa; */
                             vertical-align: top;
                             margin-top: 25px;
                             margin-left: 15px;
+                            width: 50%;
                             .listName {
                                 font-size: $font-size-base;
                                 color: $gray;
                                 margin-bottom: 10px;
+                                @include ellipsis;
                             }
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
+                                @include ellipsis;
                             }
                         }
                     }
