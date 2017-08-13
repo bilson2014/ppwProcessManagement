@@ -110,11 +110,12 @@ function UploadFile(){
 		$(".progress-bar").css('width', percentage * 100 + '%');
 	});*/
 	upload_Video.on('uploadSuccess', function(file,response) {
-		alert('successs');
-		if(response.code == 1){
-			
-		}else{
 		
+		if(response){
+			$('#errorInfo').text('上传成功');
+			initFormEven();
+		}else{
+			$('#errorInfo').text('上传失败');
 		}
 	});
 	upload_Video.on('error', function(type) {
@@ -134,7 +135,6 @@ function UploadFile(){
 		upload_Video.upload();
 		$('#errorInfo').text('上传中...');
 	});
-	_this.submit();
 }
 
 //动态下拉框
