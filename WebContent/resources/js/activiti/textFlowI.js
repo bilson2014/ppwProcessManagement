@@ -13,8 +13,25 @@ $().ready(function() {
 	pageInit();
 	addForm();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
-	checkState()
+	checkState();
+	getFileInfo();
 });
+
+function getFileInfo(){
+	loadData(function(res){
+		var res = res;
+	/*	var body = $('.utoInfo');
+		body.html('');*/
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].id,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			
+		}
+	}, getContextPath() + '/resource/version/'+$('#currentTaskId').val(),null);
+}
+
 
 function checkState(){
 	var href = window.location.href;
@@ -72,7 +89,6 @@ function checkForm(){
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
-	
 }
 
 function initFormEven(){
