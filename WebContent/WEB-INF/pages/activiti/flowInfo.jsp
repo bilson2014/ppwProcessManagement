@@ -1107,7 +1107,7 @@
 	                                    <div class="redContent">测试文字测试文字</div>
 	                                    <div class="simContent">测试文字测试文字</div>
 	                                    <div class="setBtn">
-	                                         <div class="redBtn btn-c-r" id="toFinish">立即完善</div>
+	                                         <div class="redBtn btn-c-r" id="toFinish">任务完善</div>
 	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
 	                                    </div>
 	                               </div>

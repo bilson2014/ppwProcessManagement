@@ -39,9 +39,8 @@ function checkForm(){
 	}
 	
 	if(checkFlag){
-		//$('#toSubmitForm').prop("type","submit");
-		
-		alert(2);
+		$('#toSubmitForm').prop("type","submit");
+
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
@@ -234,6 +233,19 @@ var formFieldCreator = {
 			result += "<ul class='utoInfo'></ul>";
 			return result;
 		}
+		
+	     if(isWhat == 'schemeId'  || isWhat == 'superviseId')	{
+	    	result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+	 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
+	 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
+	 		result += "<ul class='autoSelectUl'>";
+	 		$.each(datas[prop.id], function(k, v) {
+	 			result += "<li data-id='" + k + "'>" + v + "</li>";
+	 		});
+	 		result += "</ul>";
+	 		return result;
+	     }
+		
 		if(isWhat == "file"){
 			result += "<input readonly type='text' id='file' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
