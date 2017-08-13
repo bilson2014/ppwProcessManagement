@@ -22,7 +22,7 @@ public class TeamController {
 	
 	@RequestMapping(value = "/listByName/{teamName}", method = RequestMethod.POST)
 	public List<PmsTeam> getTaskForm(@PathVariable("teamName") final String teamName) {
-		if(ValidateUtil.isValid(teamName)){
+		if(!ValidateUtil.isValid(teamName)){
 			return new ArrayList<>();
 		}
 		return pmsTeamFacade.listByTeamName(teamName);
