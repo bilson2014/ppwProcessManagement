@@ -42,6 +42,8 @@
      <a href="/project/start/project"><div id="toCreate"></div></a>
      
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="realName" value="${realName}" />
+	<input type="hidden" id="phone" value="${photo}" />
 	
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>

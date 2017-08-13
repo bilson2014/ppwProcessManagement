@@ -1084,10 +1084,10 @@
                                     <div class="cusPoint">客户评级<span>A</span></div>
                               </div>
 	                     </div>
-	                     <div class="proControl">项目操作
+	                     <div class="proControl hide">项目操作
 	                         <div class="newControl">
-	                              <div id="showWarn">暂停项目</div>
-	                              <div id="showWarn">取消项目</div>
+	                              <a href="/project/suspendProcess/${currentTaskId}"><div id="showWarn">暂停项目</div></a>
+	                              <a href="/project/activateProcess/${currentTaskId}"><div id="showWarn">取消项目</div></a>
 	                         </div>
 	                     </div>
 	                </div>

@@ -43,6 +43,18 @@ function getDate(){
 	    }		
 	}
 	
+	
+	var otherTime = $('.otherTime');
+	if(otherTime.length >= 0){
+        for (var i = 0; i < otherTime.length; i++) {
+		   var time =Date.parse($(otherTime[i]).text())/1000;
+		   var getTime = Date.parse($(otherTime[i]).text());
+		   var d = new Date(getTime);
+		   $(otherTime[i]).text('您于'+formatDate(d));
+	    }		
+	}
+	
+	
 }
 
 function   formatDate(now)   {     

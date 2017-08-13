@@ -90,7 +90,7 @@ function UploadFile(){
 		timeout:0,
 		fileSingleSizeLimit : video_max_size,
 	});
-	uploader.option('formData', {
+	upload_Video.option('formData', {
 		resourceName:$('#file').val(),
 		taskId : $('#taskId').val(),
 		resourceType:$('#file').attr('data-name')

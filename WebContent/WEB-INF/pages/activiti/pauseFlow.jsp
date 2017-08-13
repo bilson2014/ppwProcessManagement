@@ -67,7 +67,6 @@
 							     <div class="otherCard">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
@@ -77,7 +76,8 @@
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="lastTime">${staff.task.name} ${staff.task.assignee }</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="listName">${staff.task.name}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

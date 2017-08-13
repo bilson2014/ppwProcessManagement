@@ -67,7 +67,6 @@
 						   <div class="waitCard">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
@@ -78,8 +77,8 @@
 	                             <div class="cardContent">
 	                                  <img src="/resources/images/flow/isFinish.png">
 	                                  <div class="setContent">
-	                                      <div class="listName">${staff.task.name}</div>
-	                                      <div class="lastTime">(死的)已超时 24h 5min 45s</div>
+	                                          <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="listName">${staff.task.name}</div>
 	                                  </div>
 	                             </div>
 	                        </div>

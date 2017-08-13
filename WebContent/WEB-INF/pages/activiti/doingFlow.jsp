@@ -130,10 +130,24 @@
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="listName">${staff.task.name}</div>
 		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="listName">${staff.task.name}</div>
 		                                  </div>
-		                                  <img src="/resources/images/flow/newFinish.png">
+		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
+		                                  <img src="/resources/images/flow/isTalk.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '方案阶段'}">
+		                                  <img src="/resources/images/flow/isFang.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '商务阶段'}">
+		                                  <img src="/resources/images/flow/isPrice.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '制作阶段'}">
+		                                  <img src="/resources/images/flow/isMake.png">
+		                                  </c:if>
+		                                  <c:if test="${staff.taskStage == '交付阶段'}">
+		                                  <img src="/resources/images/flow/isPay.png">
+		                                  </c:if>
 		                             </div>
 		                            </a> 
 		                        </div>
