@@ -2,7 +2,7 @@
  * 动态Form办理功能
  */
 $(function() {
-
+	alert('ddd');
 	//$('.handle').click(handle);
 	handle(); 
 });
@@ -57,7 +57,7 @@ function readFormFields(taskId) {
 	var $form = $('.dynamic-form');
 
 	// 设置表单提交id
-	$form.attr('action', ctx + '/form/project/task/complete/' + taskId);
+	$form.attr('action', ctx + '/project/task/complete/' + taskId);
 
     // 添加隐藏域
     if ($('#processType').length == 0) {
@@ -69,7 +69,9 @@ function readFormFields(taskId) {
     }*/
 
 	// 读取启动时的表单
+
 	$.getJSON(getContextPath() + '/form/project/get-form/task/' + taskId, function(datas) {
+
 		var trs = "";
 		$.each(datas.taskFormData.formProperties, function() {
 			var className = this.required === true ? "required" : "";
