@@ -85,20 +85,16 @@ function UploadFile(){
 		server : '/resource/addResource',
 		pick : {
 			id:picker,
-			multiple :false//弹窗时不允许多选
+			multiple :false//弹窗时不允许多选,
 		},
 		timeout:0,
 		fileSingleSizeLimit : video_max_size,
 	});
-	uploader.option('formData', {
-		resourceName:$('#file').val(),
-		taskId : $('#taskId').val(),
-		resourceType:$('#file').attr('data-name')
-	});
+	
 	
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
-	    $('.btnInput').off('click');
+	   $('.btnInput').off('click');
 	});
 /*	upload_Video.on('fileQueued', function(file) {
 		//跳转step2.添加信息
@@ -125,10 +121,15 @@ function UploadFile(){
 	});
 	
 	$("#uploadVideo").on('click', function() {
+		upload_Video.option('formData', {
+    		resourceName:$('#file').attr('data-title'),
+    		taskId : $('#currentTaskId').val(),
+    		resourceType:$('#file').attr('data-name')
+    	});
 		upload_Video.upload();
 		$('#errorInfo').text('上传中...');
 	});
-
+	_this.submit();
 }
 
 //动态下拉框
@@ -271,7 +272,7 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input readonly type='text' id='file' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 			result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";
 			return result;

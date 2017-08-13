@@ -143,7 +143,12 @@ public class ProjectFlowController extends BaseController {
 
 			mv.addObject("gTasks", gTasks);
 		}
-
+		
+		
+		//当前登陆人信息
+		mv.addObject("realName", info.getRealName());
+		mv.addObject("photo", info.getPhoto());
+		
 		return mv;
 	}
 	
