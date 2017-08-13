@@ -30,7 +30,7 @@
 					<a href="<spring:url value='/mgr/index'/>" class="header-item" >所有项目<span></span></a>
 				</r:identity>
 				<r:identity role="employee">
-					<a href="<spring:url value='/mgr/index'/>" class="header-item" >项目<span></span></a>
+					<a href="<spring:url value='/mgr/index'/>" class="header-item" >办公<span></span></a>
 					<a href="<spring:url value='/product/EnterprisePromotionalVideo/main'/>" class="header-item" >产品<span></span></a>
 					<a href="<spring:url value='/cost/cal'/>" class="header-item">估算成本<span></span></a>
 				</r:identity>
@@ -80,6 +80,7 @@
 					         <a href="<spring:url value="/user/info" />"><li class="toSet">个人信息</li></a>
 					         <a href="<spring:url value="/user/info?safeInfo" />"><li class="toSafe">安全设置</li></a>
 					         <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
+					          <a href="<spring:url value="/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					   </div>
 					</div>
@@ -94,6 +95,7 @@
 					         <a href="<spring:url value="/provider/portal?safe-info" />"><li class="toSafe">安全设置</li></a>
 					         <a href="<spring:url value="/provider/portal" />"><li class="toList">作品列表</li></a>
 					         <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
+					          <a href="<spring:url value="/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					       </div>
 					</div>
@@ -109,6 +111,7 @@
 					         </r:permission>
 					          <r:permission uri="/mgr/index">
 					                  <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
+					                   <a href="<spring:url value="/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         </r:permission>
 					         <a href="<spring:url value="/mgr/favourites" />"><li class="toCollect">收藏列表</li></a>
 					         <a href="<spring:url value="/login/loginout" />"><li class="loginOut">退出登录</li></a>
