@@ -211,11 +211,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			
 			// 添加 最终日期
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getId()).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getId()).getDescription());
+			String taskDefinitionKey = nextTask.getTaskDefinitionKey();
+			taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
 			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
-			
 			
 			// TODO 添加任务启动的系统留言
 			
@@ -385,9 +385,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 			// 添加 最终日期
-			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getTaskDefinitionKey()).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getTaskDefinitionKey()).getDescription());
+			String taskDefinitionKey = nextTask.getTaskDefinitionKey();
+			taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
