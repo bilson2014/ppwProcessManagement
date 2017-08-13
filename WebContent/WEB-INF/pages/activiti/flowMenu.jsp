@@ -30,8 +30,8 @@
 <link rel="stylesheet" href="${datepickerCss}">
 <script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
+<%-- <script type="text/javascript" src="${datepickerJs}"></script>
+<script type="text/javascript" src="${datepickerZhJs}"></script> --%>
 <script type="text/javascript" src="${flowMenuJs}"></script>
 
 <!--[if lt IE 9]>

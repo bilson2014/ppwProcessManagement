@@ -2,7 +2,11 @@
             @import "buttons";
             @import "video";
             @import "compass/typography/text/ellipsis";
+           
 
+           .datepickers-container{
+            z-index: 999999 !important;
+           }
 
             body {
                 background: #F0F2F5 !important;
@@ -1111,6 +1115,11 @@
                             color: $gray-dark;
                             padding-left: 30px;
                             line-height: 50px;
+                            span{
+                                color:$red-base;
+                                margin-left: 10px;
+                                font-size: $font-size-sm;
+                            }
                         }
                         .state {
                             vertical-align: top;
@@ -1578,6 +1587,10 @@
                                 font-size: $font-size-base;
                                 color: $gray;
                                 margin-bottom: 10px;
+                                span {
+                                    font-size: $font-size-sm;
+                                    color: $red-base;
+                                }
                             }
                             input {
                                 width: 240px;
@@ -1601,6 +1614,26 @@
                                 padding: 5px;
                                 line-height: 20px;
                                 resize: none;
+                            }
+                        }
+
+                        .btnInput {
+                            width: 100%;
+                            text-align: center;
+                            margin-top: 30px;
+                            input {
+                                border:none;
+                                outline: none;
+                                color: white;
+                                line-height: 36px;
+                                font-size: $font-size-base;
+                                width: 120px;
+                                height: 36px;
+                                display: inline-block;
+                                vertical-align: top;
+                                text-align: center;
+                                border-radius: 4px;
+                                margin: 0 auto;
                             }
                         }
                     } //收款信息

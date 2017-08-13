@@ -32,12 +32,7 @@
 <link rel="stylesheet" href="${datepickerCss}">
 <link rel="stylesheet" href="${flowInfoCss}">
 
-<script type="text/javascript" src="${jqueryJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
-<script type="text/javascript" src="${commonJs}"></script>
-<script type="text/javascript" src="${dynamicJs}"></script>
-<script type="text/javascript" src="${textFlowIJs}"></script>
+
 
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
@@ -48,24 +43,11 @@
 
 <input type="hidden" value="${gTasks}" id="taskState"/>
                                          
-                                          <%-- <c:if test="${!empty gTasks}">                               	                                  
->>>>>>> 0f990bdd98c3707c910954fb5bd73e35ff0b0739
-			                                  <c:forEach var="item" items="${gTasks}"> 
-			                                        <input type="hidden" value="${item.id}" id="taskId"/>
-			                                        <input type="hidden" value="${item.name}" id="taskName"/>
-			                                  </c:forEach>
-<<<<<<< HEAD
-		                                  </c:if>
- <input type="hidden" value="${taskId}" id="taskId"/>
-=======
-		                                  </c:if> --%>
- <input type="hidden" value="${gTasks}" id="taskId"/>
+<input type="hidden" value="${gTasks}" id="taskId"/>
  
- <input type="hidden" value="${taskId }" id="currentTaskId" />
+<input type="hidden" value="${taskId }" id="currentTaskId" />
  
- <div id="formState">
- 	
- </div>
+<div id="formState"></div>
  
 
 <div class="cusModel" id="cusModel">
@@ -557,7 +539,7 @@
 	</div>
 </div>
  <!-- 填写收款信息 -->
-<div class="cusModel" id="getPriceModel">
+<div class="cusModel" id="getPriceModel" >
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">填写收款信息</div>
@@ -936,6 +918,28 @@
 </div>
 </div>
 
+<!-- 动态加载信息信息修改 -->
+<div class="cusModel" id="autoSet">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">其它信息修改<span id="errorInfo"></span> </div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="otherContent" id="setAutoInfo">
+                     
+          <!--            <div class="item">
+	                       <div class="title">客户约定付款时间</div>
+	                       <input>
+                     </div>
+                      <div class="item">
+	                       <div class="title">客户项目交付时间</div>
+	                       <input>
+                     </div> -->
+                                     
+            </div>
+</div>
+</div>
+
 <!-- 价格信息修改 -->
 <div class="cusModel" >
      <div class="modelCard">
@@ -1088,33 +1092,17 @@
 	                <div class="infoLine"></div>
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
-	                            <div class="missinName">待办任务一 : </div>
+	                            <div class="missinName">待办任务 : </div>
 	                            <div class="missinInfo">完善客户信息</div>
-	                            <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
-	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div>
+	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
+	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div> -->
 	                            <div class="contentDiv">
 	                               <div class="setContent">
 	                                    <div class="redContent">测试文字测试文字</div>
 	                                    <div class="simContent">测试文字测试文字</div>
 	                                    <div class="setBtn">
 	                                         <div class="grayBtn btn-c-g" id="toFinish">立即完善</div>
-	                                         <div class="redBtn btn-c-r">确认完成</div>
-	                                    </div>
-	                               </div>
-	                            </div>
-	                       </div>
-	                       <div class="missionTop">
-	                            <div class="missinName">待办任务二 : </div>
-	                            <div class="missinInfo">完善客户信息</div>
-	                            <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>2017</div></div>
-	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>2017</div></div>
-	                            <div class="contentDiv">
-	                               <div class="setContent">
-	                                    <div class="redContent">测试文字测试文字</div>
-	                                    <div class="simContent">测试文字测试文字</div>
-	                                    <div class="setBtn">
-	                                         <div class="grayBtn btn-c-g">立即上传</div>
-	                                         <div class="redBtn btn-c-r">确认完成</div>
+	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
 	                                    </div>
 	                               </div>
 	                            </div>
@@ -1515,7 +1503,13 @@
 	                </div>
 	           </div>              
 	    </div>
-	<!-- video-->
+	<!-- js-->
+<script type="text/javascript" src="${jqueryJs}"></script>
+<script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${dynamicJs}"></script>
+<script type="text/javascript" src="${datepickerJs}"></script>
+<script type="text/javascript" src="${datepickerZhJs}"></script>
+<script type="text/javascript" src="${textFlowIJs}"></script>
 </body>
 
 </html>

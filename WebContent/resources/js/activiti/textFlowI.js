@@ -7,10 +7,41 @@ $().ready(function() {
 	initEvenInfo();
 	initSelect();
 	flagEven();
-	
 	// 加载动态表单
 	addForm();
+	$('#toFinish').off('click').on('click',function(){
+		$('#autoSet').show();
+	});
 });
+
+//表单验证
+function checkForm(){
+	$('#errorInfo').text('');
+	var getCheckInfo = $('.checkInfo');
+	var checkFlag = true;
+	for (var i = 0; i < getCheckInfo.length; i++) {
+		var check = $(getCheckInfo[i]).val();
+               if(check == null || check == "" || check == undefined )	{
+            	   checkFlag = false;
+               }	
+	}
+	
+	if(checkFlag){
+		alert('suucess');
+	}else{
+		$('#errorInfo').text('请补充必填信息');
+	}
+	
+}
+
+function initFormEven(){
+	$('.btnInput').off('click').on('click',function(){
+		checkForm();
+	});
+	
+	dataEven();
+
+}
 
 //加载动态表单
 function addForm() {
@@ -19,20 +50,20 @@ function addForm() {
 		$.each(datas.taskFormData.formProperties, function() {
 			var className = this.required === true ? "required" : "";
 			this.value = this.value ? this.value : "";
-			trs += "<tr>" + createFieldHtml(this, datas, className);
-			if (this.required === true) {
-				trs += "<span style='color:red'>*</span>";
-			}
-			trs += "</td></tr>";
+			var isRe = this.required;
+			trs += "<div class='item'>" + createFieldHtml(this, datas, className);
+			trs += "</div>";
 		});
-		$('#formState').html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
+		//$('#formState').html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
+		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
 		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
-		
-		trs += '<tr><td><input type="submit" value="提交"/></td></tr>'
+		trs += '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>'
 		
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
+		initFormEven();
+		
 	}, '/project/get-form/task/' + $('#currentTaskId').val(), null);
 }
 
@@ -44,6 +75,73 @@ function createFieldHtml(prop, obj, className) {
 }
 
 var formFieldCreator = {
+'string': function(prop, datas, className) {
+	if(prop.required){
+		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var isCheck = "checkInfo";
+	}else{
+		var result = "<div class='title'>" + prop.name + "</div>";
+		var isCheck = "noCheckInfo";
+	}
+	if (prop.writable === true) {
+		result += "<<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='"+isCheck+"" + className + "' value='" + prop.value + "' />";
+	} else {
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+	}
+	return result;
+},
+'date': function(prop, datas, className) {
+	if(prop.required){
+		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var isCheck = "checkInfo";
+	}else{
+		var result = "<div class='title'>" + prop.name + "</div>";
+		var isCheck = "noCheckInfo";
+	}
+	if (prop.writable === true) {
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+	} else {
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+	}
+	return result;
+},
+'long': function(prop, datas, className) {
+	if(prop.required){
+		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var isCheck = "checkInfo";
+	}else{
+		var result = "<div class='title'>" + prop.name + "</div>";
+		var isCheck = "noCheckInfo";
+	}
+	if (prop.writable === true) {
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+	} else {
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+	}
+	return result;
+},
+'enum': function(prop, datas, className) {
+	if(prop.required){
+		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var isCheck = "checkInfo";
+	}else{
+		var result = "<div class='title'>" + prop.name + "</div>";
+		var isCheck = "noCheckInfo";
+	}
+	if (prop.writable === true) {
+		result += "<select id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
+		$.each(datas[prop.id], function(k, v) {
+			result += "<option value='" + k + "'>" + v + "</option>";
+		});
+		result += "</select>";
+	} else {
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+	}
+	return result;
+}
+};
+
+/*var formFieldCreator = {
 		'string': function(prop, datas, className) {
 			var result = "<td width='120'>" + prop.name + "：</td>";
 			if (prop.writable === true) {
@@ -84,7 +182,7 @@ var formFieldCreator = {
 			}
 			return result;
 		}
-	};
+	};*/
 
 function initEvenInfo(){
 	$('#toFinish').off('click').on('click',function(){
@@ -166,6 +264,11 @@ function dataEven(){
 		dateFormat:'yyyy-MM-dd'
      });
 	$("#orderTime").datepicker({
+		language: 'zh',
+		dateFormat:'yyyy-MM-dd'
+     });
+	
+	$(".date").datepicker({
 		language: 'zh',
 		dateFormat:'yyyy-MM-dd'
      });
