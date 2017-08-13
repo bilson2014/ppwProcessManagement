@@ -17,6 +17,8 @@ $().ready(function() {
 function pageInit(){
 	$('#toFinish').off('click').on('click',function(){
 		$('#autoSet').show();
+		$('#autoSet .item input').val('');
+		$('#autoSet .item input').attr('data-id','');
 	});
 	var taskName = $('#taskName').val();
 	 if(taskName == null || taskName == "" || taskName == undefined )	{
@@ -53,6 +55,7 @@ function initFormEven(){
 	
 	dataEven();
 	autoInput();
+	autoSelect();
 }
 
 //上传
@@ -105,12 +108,36 @@ function UploadFile(){
 
 }
 
+//动态下拉框
+
+function autoSelect(){
+	
+	$('.autoSelect').off('click').on('click',function(){
+		 $(this).parent().find('ul').show();
+	});
+	autoSelectUl();
+}
+
+function autoSelectUl(){
+	
+	$('.autoSelectUl li').off('click').on('click',function(){
+		$('.autoSelectUl').hide();
+			var name = $(this).text();
+			var id = $(this).attr('data-id');
+		 $(this).parent().parent().find('input').val(name);
+		 $(this).parent().parent().find('input').attr('data-id',id);
+	});
+	
+}
+
+
+
 //动态联动事件
 
 //自动联动客户信息
 function autoInput(){
 	$('#pt_teamName').bind('input propertychange', function() {
-		$(this).attr('data-id','');
+		 $('#pt_teamId').val("");
 		var theName = $(this).val();
 		 findAutoInfo(theName);
 		 $('.utoInfo').show();
@@ -127,7 +154,7 @@ function findAutoInfo(userName){
 		body.html('');
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-				   var html =createUserInfo();
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
 				   body.append(html);
 			};
 			autoLi();
@@ -141,14 +168,18 @@ function autoLi(){
 		  $('.utoInfo').hide();
 		  var name = $(this).text();
 		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
 		  $(this).parent().parent().find('input').val(name);
 		  $('#pt_teamId').val(id);
+		  $('#pt_linkman').val(linkman);
+		  $('#pt_telephone').val(phone);
 	});
-	$('#pt_teamId').hide();
+	$('#pt_teamId').parent().hide();
 }
 
-function createUserInfo(id,name,phone,realName,clientLevel,email){
-	var html = '<li data-email="'+email+'"  data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';
+function createUserInfo(id,name,linkman,phone){
+	var html = '<li data-id="'+id+'"  data-linkman="'+ linkman +'" data-phone="'+ phone +'">'+name+'</li>';
 	return html;
 }
 
@@ -200,7 +231,7 @@ var formFieldCreator = {
 	if (prop.writable === true) {
 		if(prop.id == "pt_teamName"){
 			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
-			result += "<ul class='utoInfo'><li data-id='0'>233</li></ul>";
+			result += "<ul class='utoInfo'></ul>";
 			return result;
 		}
 		if(isWhat == "file"){
@@ -254,11 +285,13 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	if (prop.writable === true) {
-		result += "<select id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
+		result += "<input readonly class='autoSelect' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
+		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
+		result += "<ul class='autoSelectUl'>";
 		$.each(datas[prop.id], function(k, v) {
-			result += "<option value='" + k + "'>" + v + "</option>";
+			result += "<li data-id='" + k + "'>" + v + "</li>";
 		});
-		result += "</select>";
+		result += "</ul>";
 	} else {
 		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
 	}

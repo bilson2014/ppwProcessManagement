@@ -1606,6 +1606,53 @@
                                 display: inline-block;
                                 vertical-align: top;
                             }
+                            .autoSelect {
+                                width: 240px;
+                                height: 36px;
+                                border: 1px solid $border-line;
+                                border-radius: 4px;
+                                line-height: 34px;
+                                font-size: $font-size-base;
+                                color: $gray;
+                                position: relative;
+                                background: white;
+                            }
+
+                            .autoSelectUl {
+                                position: absolute;
+                                width: 100%;
+                                top: 100%;
+                                left: 0;
+                                z-index: 3;
+                                display: none;
+                                background: white;
+                                cursor: pointer;
+                                border: 1px solid $gray-light;
+                                border-top: 1px solid #979797;
+                                max-height: 300px;
+                                border-radius: 4px;
+                                overflow: auto;
+                                li {
+                                    width: 100%;
+                                    height: 36px;
+                                    text-align: center;
+                                    line-height: 36px;
+                                    color: $gray;
+                                    font-size: $font-size-base;
+                                    &:hover {
+                                        background: $f0;
+                                    }
+                                }
+                            }
+
+                            .autoImg {
+                                width: 14px;
+                                height: 14px;
+                                position: absolute;
+                                right: 12px;
+                                top: 35px;
+                            }
+
                             .webuploader-pick {
                                 width: 120px;
                                 border: 1px solid $border-line;
@@ -1630,6 +1677,7 @@
                                 top: 100%;
                                 left: 0;
                                 z-index: 3;
+                                display: none;
                                 background: white;
                                 cursor: pointer;
                                 border: 1px solid $gray-light;
@@ -1698,7 +1746,8 @@
                         }
 
                         .btnInput {
-                            width: 100%;
+                            width: 120px;
+                            margin: 0 auto;
                             text-align: center;
                             margin-top: 30px;
                             input {
@@ -1707,13 +1756,12 @@
                                 color: white;
                                 line-height: 36px;
                                 font-size: $font-size-base;
-                                width: 120px;
+                                width: 100%;
                                 height: 36px;
                                 display: inline-block;
                                 vertical-align: top;
                                 text-align: center;
                                 border-radius: 4px;
-                                margin: 0 auto;
                             }
                         }
                     } //收款信息
