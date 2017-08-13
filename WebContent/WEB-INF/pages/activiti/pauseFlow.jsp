@@ -51,7 +51,7 @@
 	                    <div class="search btn-c-r">搜索</div>
 	                    <div class="createPro">
 	                        <div class="newAdd"></div>
-	                        <div>新建项目</div>
+	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
 	                    </div>
 	                </div>
 	           
@@ -67,11 +67,17 @@
 							     <div class="otherCard">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                 <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  <c:if test="${isPrincipal == 1}">
+		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  <c:if test="${isPrincipal == 0}">
+		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="lastTime">${staff.task.name} ${staff.task.assignee }</div>
+		                                      <div class="listName">${staff.task.name}</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

@@ -4,14 +4,17 @@
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
+<spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/js/activiti/textFlowI.js" var="textFlowIJs"/>
+<spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
 <%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -31,35 +34,24 @@
 <title></title>
 <link rel="stylesheet" href="${datepickerCss}">
 <link rel="stylesheet" href="${flowInfoCss}">
-
-<script type="text/javascript" src="${jqueryJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
-<script type="text/javascript" src="${commonJs}"></script>
-<script type="text/javascript" src="${dynamicJs}"></script>
-<script type="text/javascript" src="${textFlowIJs}"></script>
+<link rel="stylesheet" href="${webuploaderCss}">
 
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
 </head>
 <body>
 
-<input type="hidden" value="${taskState}" id="taskState"/>
-                                          <%-- <c:if test="${!empty gTasks}">                               	                                  
-			                                  <c:forEach var="item" items="${gTasks}"> 
-			                                        <input type="hidden" value="${item.id}" id="taskId"/>
-			                                         <input type="hidden" value="${item.name}" id="taskName"/>
-			                                  </c:forEach>
-		                                  </c:if> --%>
- <input type="hidden" value="${gTasks}" id="taskId"/>
+<input type="hidden" value="${taskStage}" id="taskStage"/>
+<input type="hidden" value="${gTasks}" id="taskId"/> 
+<input type="hidden" value="${taskId }" id="currentTaskId" />
+<input type="hidden" value="${taskName}" id="taskName" />
+
  
- <input type="hidden" value="${taskId }" id="currentTaskId" />
+<div id="formState"></div>
  
- <div id="formState">
- 	
- </div>
- 
+
 <div class="cusModel" id="cusModel">
+
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">完善客户信息</div>
@@ -123,6 +115,7 @@
 	                             </div>
             </div>
      </div>
+     
 </div>
 
 <!-- 报错 -->
@@ -548,7 +541,7 @@
 	</div>
 </div>
  <!-- 填写收款信息 -->
-<div class="cusModel" id="getPriceModel">
+<div class="cusModel" id="getPriceModel" >
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">填写收款信息</div>
@@ -927,6 +920,28 @@
 </div>
 </div>
 
+<!-- 动态加载信息信息修改 -->
+<div class="cusModel" id="autoSet">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">${taskName}<span id="errorInfo"></span> </div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="otherContent" id="setAutoInfo">
+                     
+          <!--            <div class="item">
+	                       <div class="title">客户约定付款时间</div>
+	                       <input>
+                     </div>
+                      <div class="item">
+	                       <div class="title">客户项目交付时间</div>
+	                       <input>
+                     </div> -->
+                                     
+            </div>
+</div>
+</div>
+
 <!-- 价格信息修改 -->
 <div class="cusModel" >
      <div class="modelCard">
@@ -1046,7 +1061,7 @@
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	    <div class="pages">
-	    <div id="showPrice">收款信息</div>
+<!-- 	    <div id="showPrice">收款信息</div>
 	    <div id="showBudget">客户预算</div>
 	    <div id="showRealPrice">实际金额</div>
 	    <div id="showPlot">策划</div>
@@ -1057,11 +1072,11 @@
 	    <div id="showUp">上传文件</div>
 	    <div id="showError">驳回</div>
 	    <div id="finishCus">完善客户信息</div>
-	    <div id="showshowExecutive">分配监制</div>
+	    <div id="showshowExecutive">分配监制</div> -->
 	    
-	           <div class="productInfo">
+	           <div class="productInfo" id="daiban">
 	                <div class="infoTitle">
-	                     <div class="titleName">${flow_info.projectName}</div>
+	                     <div class="titleName" >${flow_info.projectName}</div>
 	                     <div class="point hide">
                               <div class="showPoint">SA</div>
                               <div class="showDeil showDownDeil">
@@ -1069,63 +1084,48 @@
                                     <div class="cusPoint">客户评级<span>A</span></div>
                               </div>
 	                     </div>
-	                     <div class="proControl">项目操作
+	                     <div class="proControl hide">
 	                         <div class="newControl">
-	                              <div id="showWarn">暂停项目</div>
-	                              <div id="showWarn">取消项目</div>
+	                              <a href="/project/suspendProcess/${currentTaskId}"><div id="showWarn">暂停项目</div></a>
+	                              <a href="/project/activateProcess/${currentTaskId}"><div id="showWarn">取消项目</div></a>
 	                         </div>
 	                     </div>
 	                </div>
 	                <div class="infoLine"></div>
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
-	                            <div class="missinName">待办任务一 : </div>
-	                            <div class="missinInfo">完善客户信息</div>
-	                            <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
-	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div>
+	                            <div class="missinName">待办任务 : </div>
+	                            <div class="missinInfo" id="taskName">${taskName}</div>
+	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
+	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div> -->
 	                            <div class="contentDiv">
 	                               <div class="setContent">
-	                                    <div class="redContent">测试文字测试文字</div>
-	                                    <div class="simContent">测试文字测试文字</div>
+	                                    <div class="redContent hide"></div>
+	                                    <div class="simContent">${taskDescription}</div>
 	                                    <div class="setBtn">
-	                                         <div class="grayBtn btn-c-g" id="toFinish">立即完善</div>
-	                                         <div class="redBtn btn-c-r">确认完成</div>
+	                                         <div class="redBtn btn-c-r" id="toFinish">任务操作</div>
+	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
 	                                    </div>
 	                               </div>
 	                            </div>
 	                       </div>
-	                       <div class="missionTop">
-	                            <div class="missinName">待办任务二 : </div>
-	                            <div class="missinInfo">完善客户信息</div>
-	                            <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>2017</div></div>
-	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>2017</div></div>
-	                            <div class="contentDiv">
-	                               <div class="setContent">
-	                                    <div class="redContent">测试文字测试文字</div>
-	                                    <div class="simContent">测试文字测试文字</div>
-	                                    <div class="setBtn">
-	                                         <div class="grayBtn btn-c-g">立即上传</div>
-	                                         <div class="redBtn btn-c-r">确认完成</div>
-	                                    </div>
-	                               </div>
-	                            </div>
-	                       </div>
+	                     
 	                   </div>    
                      </div>
 	                   <div class="productInfo secondProduct">    
-	                       <div class="projectTitle">项目进度及历史</div>
+	                       <div class="projectTitle ">项目进度及历史</div>
 	                        <div class="timeFlow">
 	                            <img src="/resources/images/flow/demoG.png">
-	                            <div class="flowIcon step2">
+	                            <div class="flowIcon">
 	                                 <div>沟通</div>
 	                                 <div>方案</div>
 	                                 <div>商务</div>
 	                                 <div>制作</div>
 	                                 <div>交付</div>
-	                                 <img class="icons" src="/resources/images/flow/down.png">
+	                                 <img class="icons hide" src="/resources/images/flow/down.png">
 	                            </div>
 	                        </div>
-	                       <div class="setListDiv">
+	                       <div class="setListDiv hide">
 	                               <div class="ListTop">
 	                                     <div class="startTime">阶段起始时间:<span>2017.7.9</span></div>
 	                                     <div class="endTime">阶段计划完成时间<span>2017-07-09  14：00</span></div>
@@ -1408,11 +1408,11 @@
 	                            </div>
 	                       </div> -->
 	                                              
-	                   <div class="projectTitle">项目文件
+	                   <div class="projectTitle hide">项目文件
 	                        <div class="conMod hide btn-c-r">版本管理</div>
 	                        <div class="upFile btn-c-r">上传</div>
 	                   </div>
-	                       <div class="projectFilm">
+	                       <div class="projectFilm hide">
 	                             <div class="filmItem">
 	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
 	                                    <div class="filmName">文件名</div>
@@ -1454,14 +1454,14 @@
 	                             </div>
 	                       </div>
 	                       
-	                       <div class="projectTitle">留言评论区</div>
-	                       <div class="toSetArea">
+	                       <div class="projectTitle hide">留言评论区</div>
+	                       <div class="toSetArea hide">
 	                             <textarea></textarea>
 	                             <div class="upInfo">
 	                                 <div class="btn-c-r">提交</div>
 	                             </div>
 	                       </div>
-	                       <div class="setAreaDiv">
+	                       <div class="setAreaDiv hide">
 	                            <div class="areaItem">
 	                                 <div class="infoItem">
 	                                     <img src="/resources/images/flow/def.png">
@@ -1506,7 +1506,16 @@
 	                </div>
 	           </div>              
 	    </div>
-	<!-- video-->
+	<!-- js-->
+	
+<script type="text/javascript" src="${jqueryJs}"></script>
+<script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${dynamicJs}"></script>
+<script type="text/javascript" src="${datepickerJs}"></script>
+<script type="text/javascript" src="${datepickerZhJs}"></script>
+<script type="text/javascript" src="${webuploaderJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
+<script type="text/javascript" src="${textFlowIJs}"></script>
 </body>
 
 </html>

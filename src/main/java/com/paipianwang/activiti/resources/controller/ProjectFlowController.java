@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.lang3.StringUtils;
@@ -142,7 +143,12 @@ public class ProjectFlowController extends BaseController {
 
 			mv.addObject("gTasks", gTasks);
 		}
-
+		
+		
+		//当前登陆人信息
+		mv.addObject("realName", info.getRealName());
+		mv.addObject("photo", info.getPhoto());
+		
 		return mv;
 	}
 	
@@ -232,9 +238,16 @@ public class ProjectFlowController extends BaseController {
 				if (values != null) {
 					result.put(formProperty.getId(), values);
 				}
+				if(formProperty.getId().equals("schemeId")){
+					Map<String,String> scheme=projectWorkFlowService.getUserByRole(ProjectRoleType.scheme.getId());
+					result.put("schemeId", scheme);
+				}else if(formProperty.getId().equals("superviseId")){
+					Map<String,String> supervise=projectWorkFlowService.getUserByRole(ProjectRoleType.supervise.getId());
+					result.put("superviseId", supervise);
+				}
+				
 			}
 		}
-		
 		return result;
 	}
 	
@@ -251,6 +264,7 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
 		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
+		
 		// 获取当前节点所在阶段 以及 备注信息
 		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
@@ -270,10 +284,11 @@ public class ProjectFlowController extends BaseController {
 		// 协同人信息
 		mv.addObject("synergyList", synergyList);
 		// 当前任务所在阶段
-		mv.addObject("taskState", state.get("taskState"));
+		mv.addObject("taskStage", state.get("taskStage"));
 		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
+		mv.addObject("taskName", state.get("taskName"));
 		mv.addObject("taskId",taskId);
 		return mv;
 	}
@@ -307,7 +322,7 @@ public class ProjectFlowController extends BaseController {
 		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
-		return new ModelAndView("redirect:/project/activiti/textFlow");
+		return new ModelAndView("redirect:/project/running-doing");
 	}
 
 	/**
@@ -319,7 +334,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/finished/list")
 	public ModelAndView finished(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
 		mv.addObject("finishedTasks", list);
@@ -329,7 +344,7 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId);
@@ -344,7 +359,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/suspend-task")
 	public ModelAndView suspend(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<PmsProjectFlowResult> suspendTasks = null;
@@ -368,7 +383,7 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
+		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 激活
 			projectWorkFlowService.activateProcess(processInstanceId);

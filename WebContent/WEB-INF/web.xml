@@ -47,6 +47,13 @@
 		<session-timeout>720</session-timeout>
 	</session-config>
 	
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/mytaglib</taglib-uri>
+			<taglib-location>/WEB-INF/tags/security.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
 	<welcome-file-list>
 		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.html</welcome-file>

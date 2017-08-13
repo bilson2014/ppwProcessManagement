@@ -15,6 +15,10 @@ $().ready(function() {
 	$('#productList').show();
 	$('#myPro').addClass('open');
 	$('#nowDoing').addClass('checkLi');
+	$('#setRealName').text($('#realName').val());
+	var url = $('#photo').val();
+	if(url != null && url !=""  && url !=undefined)
+	$('#newMenuLogo').attr('src',getDfsHostName()+url )
 });
 
 function initMenuEven(){

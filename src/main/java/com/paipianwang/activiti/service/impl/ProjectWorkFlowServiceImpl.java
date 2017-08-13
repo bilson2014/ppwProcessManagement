@@ -282,18 +282,16 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setTaskStage(taskStage);
 				result.setTaskDescription(taskDescription);
 				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
-				if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
+/*				if(userId!=null && project!=null && userId.equals("employee_"+project.getPrincipal())){
 					//当前负责人
 					result.setIsPrincipal(1);
 				}else{
 					result.setIsPrincipal(0);
-				}
-				
+				}*/
 				list.add(result);
 			}
 			return list;
 		}
-
 		return null;
 	}
 
@@ -388,8 +386,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 			// 添加 最终日期
 			taskService.setDueDate(nextTask.getId(), getExpectDate(nextTask.getId()));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getId()).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getId()).getDescription());
+			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(nextTask.getTaskDefinitionKey()).getStage());
+			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(nextTask.getTaskDefinitionKey()).getDescription());
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
@@ -675,6 +673,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		String taskDescription = (String) taskService.getVariable(taskId, "task_description");
 		param.put("taskStage", taskStage);
 		param.put("taskDescription",taskDescription);
+		//TODO 暂时放这
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		param.put("taskName", task.getName());
+		return param;
+	}
+
+	@Override
+	public Map<String, String> getUserByRole(String roleType) {
+		Map<String , String> param = new HashMap<String, String>();
+		List<User> userList=identityService.createUserQuery().memberOfGroup(roleType).list();
+		for(User user:userList){
+			param.put(user.getId(), user.getFirstName());
+		}
 		return param;
 	}
 

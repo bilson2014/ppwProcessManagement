@@ -30,8 +30,8 @@
 <link rel="stylesheet" href="${datepickerCss}">
 <script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
+<%-- <script type="text/javascript" src="${datepickerJs}"></script>
+<script type="text/javascript" src="${datepickerZhJs}"></script> --%>
 <script type="text/javascript" src="${flowMenuJs}"></script>
 
 <!--[if lt IE 9]>
@@ -58,8 +58,8 @@
 	       
 	       <div id="mainMenu">
 	        <img class="toMin" id="toMin" src="${imgPath}/flow/close.png"> 
-	        <div class="logoDiv"><img class="logo" src="/resources/images/flow/def.png"></div>
-	        <div class="userName">用户名</div>
+	        <div class="logoDiv"><img class="logo" id="newMenuLogo" src="/resources/images/flow/def.png"></div>
+	        <div class="userName" id="setRealName">用户名</div>
 	        <div class="flowTree">
 	              <div class="treeitem" id="myPro">
 	                  <div class="myPro"></div>

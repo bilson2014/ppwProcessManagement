@@ -51,7 +51,7 @@
 	                    <div class="search btn-c-r">搜索</div>
 	                    <div class="createPro">
 	                        <div class="newAdd"></div>
-	                        <div>新建项目</div>
+	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
 	                    </div>
 	                </div>
 	           
@@ -63,10 +63,15 @@
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard">
-						       <a href="/project/task/${staff.task.id}">
+						       <a href="/project/task/${staff.task.id}?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-	                                 <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  <c:if test="${staff.isPrincipal == 1}">
+		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  <c:if test="${staff.isPrincipal == 0}">
+		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
 	                             </div>
 	                             <div class="cardContent">
 	                                  <img src="/resources/images/flow/demoG.png">
@@ -116,14 +121,33 @@
 							        <a href="/project/task/${staff.task.id}">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                 <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  <c:if test="${staff.isPrincipal == 1}">
+		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  <c:if test="${staff.isPrincipal == 0}">
+		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
 		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                  </div>
-		                                  <img src="/resources/images/flow/newFinish.png">
+		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
+		                                  <img src="/resources/images/flow/isTalk.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '方案阶段'}">
+		                                  <img src="/resources/images/flow/isFang.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '商务阶段'}">
+		                                  <img src="/resources/images/flow/isPrice.png">
+		                                  </c:if>
+		                                  <c:if test="${ staff.taskStage == '制作阶段'}">
+		                                  <img src="/resources/images/flow/isMake.png">
+		                                  </c:if>
+		                                  <c:if test="${staff.taskStage == '交付阶段'}">
+		                                  <img src="/resources/images/flow/isPay.png">
+		                                  </c:if>
 		                             </div>
 		                            </a> 
 		                        </div>

@@ -12,6 +12,9 @@ $().ready(function() {
 	}*/
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	getDate();
+	$('#toCreate').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('#toCreate').click();
+	});
 });
 
 function getDate(){
@@ -39,6 +42,18 @@ function getDate(){
 		   
 	    }		
 	}
+	
+	
+	var otherTime = $('.otherTime');
+	if(otherTime.length >= 0){
+        for (var i = 0; i < otherTime.length; i++) {
+		   var time =Date.parse($(otherTime[i]).text())/1000;
+		   var getTime = Date.parse($(otherTime[i]).text());
+		   var d = new Date(getTime);
+		   $(otherTime[i]).text('截止于'+formatDate(d));
+	    }		
+	}
+	
 	
 }
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.identity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.paipianwang.activiti.service.ProjectResourceService;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.common.web.file.FastDFSClient;
 import com.paipianwang.pat.workflow.entity.PmsProjectResource;
@@ -29,7 +31,7 @@ import com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade;
 
 @RestController
 @RequestMapping("/resource")
-public class ResourceController {
+public class ResourceController  extends BaseController{
 
 	@Autowired
 	private ProjectResourceService projectResourceService;
@@ -47,9 +49,9 @@ public class ResourceController {
 	 */
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
 	public String addResource(final HttpServletRequest request, final HttpServletResponse response,
-			@RequestParam final MultipartFile file, final PmsProjectResource pmsProjectResource) {
-		
-		return projectResourceService.addResource(pmsProjectResource, file,request.getSession()) + "";
+			final MultipartFile file,String resourceName,String taskId,String resourceType) {
+		SessionInfo info = getCurrentInfo(request);
+		return projectResourceService.addResource(resourceName,taskId,resourceType, file,info) + "";
 	}
 
 	/**

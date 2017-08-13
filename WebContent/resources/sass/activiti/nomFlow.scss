@@ -50,6 +50,7 @@
                 .name {
                     font-size: $font-size-sm;
                     color: $gray;
+                    margin-left: 20px;
                 }
                 .search {
                     width: 56px;
@@ -326,7 +327,7 @@ $ba:#bababa; */
                 }
                 .setCard {
                     .otherCard {
-                        padding-left: 20px;
+                        padding-left: 0px !important;
                         width: ($smallWidth - $noNeedpad*3)/3;
                         @media screen and (min-width: 761px) and (max-width: 1029px) {
                             width: ($areaMidWidth - $noNeedpad*3)/3;
@@ -359,7 +360,7 @@ $ba:#bababa; */
                                 margin-left: 15px;
                                 width: 50%;
                                 .listName {
-                                    font-size: $font-size-base;
+                                    font-size: $font-size-sm;
                                     color: $gray;
                                     margin-bottom: 10px;
                                     @include ellipsis;
@@ -368,8 +369,8 @@ $ba:#bababa; */
                                     font-size: $font-size-sm;
                                     color: $gray;
                                     line-height: 20px;
-                                    height: 40px;
                                     overflow: hidden;
+                                    @include ellipsis;
                                 }
                             }
                         }
