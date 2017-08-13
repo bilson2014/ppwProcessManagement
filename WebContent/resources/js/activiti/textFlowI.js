@@ -12,6 +12,7 @@ $().ready(function() {
 	// 加载动态表单
 	pageInit();
 	addForm();
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 });
 
 function pageInit(){
@@ -24,6 +25,23 @@ function pageInit(){
 	 if(taskName == null || taskName == "" || taskName == undefined )	{
   	   $('#daiban').hide();
      }
+	 var isStage = $('#taskStage').val();
+/*	 if(isStage == "沟通阶段"){
+ 
+	 }*/
+ if(isStage == "方案阶段"){
+		 $('.flowIcon').addClass('step2');
+	 }
+ if(isStage == "商务阶段"){
+	 $('.flowIcon').addClass('step3');
+ }
+ if(isStage == "制作阶段"){
+	 $('.flowIcon').addClass('step4');
+ }
+ if(isStage == "交付阶段"){
+	 $('.flowIcon').addClass('step5');
+ }
+	 
 }
 
 //表单验证
@@ -62,7 +80,7 @@ function UploadFile(){
 	upload_Video && upload_Video.destroy();
 	var picker =$('#picker'); 
 	upload_Video = WebUploader.create({
-		auto:true,
+		auto:false,
 		swf : '/resources/lib/webuploader/Uploader.swf',
 		server : '/resource/addResource',
 		pick : {
@@ -72,6 +90,12 @@ function UploadFile(){
 		timeout:0,
 		fileSingleSizeLimit : video_max_size,
 	});
+	uploader.option('formData', {
+		resourceName:$('#file').val(),
+		taskId : $('#taskId').val(),
+		resourceType:$('#file').attr('data-name')
+	});
+	
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
 	    $('.btnInput').off('click');
@@ -247,7 +271,7 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input readonly type='text' id='file' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input readonly type='text' id='file' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 			result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";
 			return result;

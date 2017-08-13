@@ -1076,7 +1076,7 @@
 	    
 	           <div class="productInfo" id="daiban">
 	                <div class="infoTitle">
-	                     <div class="titleName">${flow_info.projectName}</div>
+	                     <div class="titleName" >${flow_info.projectName}</div>
 	                     <div class="point hide">
                               <div class="showPoint">SA</div>
                               <div class="showDeil showDownDeil">
@@ -1095,7 +1095,7 @@
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
 	                            <div class="missinName">待办任务 : </div>
-	                            <div class="missinInfo">${taskName}</div>
+	                            <div class="missinInfo" id="taskName">${taskName}</div>
 	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
 	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div> -->
 	                            <div class="contentDiv">
@@ -1116,21 +1116,21 @@
 	                       <div class="projectTitle ">项目进度及历史</div>
 	                        <div class="timeFlow">
 	                            <img src="/resources/images/flow/demoG.png">
-	                            <div class="flowIcon step2">
+	                            <div class="flowIcon">
 	                                 <div>沟通</div>
 	                                 <div>方案</div>
 	                                 <div>商务</div>
 	                                 <div>制作</div>
 	                                 <div>交付</div>
-	                                 <img class="icons" src="/resources/images/flow/down.png">
+	                                 <img class="icons hide" src="/resources/images/flow/down.png">
 	                            </div>
 	                        </div>
-	                       <div class="setListDiv">
+	                       <div class="setListDiv hide">
 	                               <div class="ListTop">
 	                                     <div class="startTime">阶段起始时间:<span>2017.7.9</span></div>
 	                                     <div class="endTime">阶段计划完成时间<span>2017-07-09  14：00</span></div>
 	                               </div>
-	                               <div class="listContent hide">
+	                               <div class="listContent">
 	                                   <div class="listItem">
 	                                        <div class="lineStart"></div>
 	                                        <div class="time">预计：2017-07-09  14：00</div>

@@ -170,14 +170,14 @@
                     .icons {
                         left: 49px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 960px) and (max-width: 1212px) {
                         width: 985px !important;
                         background-size: 985px 151px !important;
                         .icons {
                             left: 69px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
                         width: 1070px !important;
                         background-size: 1070px 151px !important;
                         .icons {
@@ -196,12 +196,12 @@
                     .icons {
                         left: 200px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 960px) and (max-width: 1212px) {
                         .icons {
                             left: 270px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
                         .icons {
                             left: 295px !important;
                         }
@@ -212,12 +212,12 @@
                     .icons {
                         left: 347px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 960px) and (max-width: 1212px) {
                         .icons {
                             left: 465px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
                         .icons {
                             left: 510px !important;
                         }
@@ -228,12 +228,12 @@
                     .icons {
                         left: 500px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 965px) and (max-width: 1212px) {
                         .icons {
                             left: 665px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
                         .icons {
                             left: 720px !important;
                         }
@@ -244,12 +244,12 @@
                     .icons {
                         left: 650px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 965px) and (max-width: 1212px) {
                         .icons {
                             left: 860px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
                         .icons {
                             left: 935px !important;
                         }
@@ -262,6 +262,13 @@
                 .flowIcon {
                     display: inline-block;
                     vertical-align: middle;
+                       div:nth-child(1) {
+                        color: $border-line;
+                    }
+                    div {
+                        color: white;
+                    }
+
                 }
                 .step2 {
                     background-position-y: 121px !important;
@@ -275,12 +282,12 @@
                     .icons {
                         left: 155px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
                         .icons {
                             left: 235px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1230px) {
 
                         .icons {
                             left: 255px !important;
@@ -300,12 +307,12 @@
                     .icons {
                         left: 275px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
                         .icons {
                             left: 410px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1100px) {
                         .icons {
                             left: 440px !important;
                         }
@@ -325,12 +332,12 @@
                     .icons {
                         left: 390px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
                         .icons {
                             left: 580px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1100px) {
                         .icons {
                             left: 630px !important;
                         }
@@ -344,12 +351,12 @@
                     .icons {
                         left: 515px !important;
                     }
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
                         .icons {
                             left: 758px !important;
                         }
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1100px) {
                         .icons {
                             left: 815px !important;
                         }
@@ -363,11 +370,11 @@
                     font-size: 0;
                     line-height: 31px;
 
-                    @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
                         width: 870px;
                         background-size: 870px 151px;
                     }
-                    @media screen and (min-width: 1500px) {
+                    @media screen and (min-width: 1100px) {
                         width: 935px;
                         background-size: 935px 151px;
                     }
