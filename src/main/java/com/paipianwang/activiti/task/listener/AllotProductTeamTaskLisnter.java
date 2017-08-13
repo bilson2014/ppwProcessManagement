@@ -59,7 +59,7 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 				PmsProjectTeamFacade pmsProjectTeamFacade = (PmsProjectTeamFacade) context
 						.getBean("pmsProjectTeamFacade");
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
-				delegateTask.setVariable("teamProductId", param.get("teamId")); // 设置供应商唯一ID
+				delegateTask.setVariable("teamProductId", "team_" + param.get("teamId")); // 设置供应商唯一ID
 				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置策划供应商的唯一ID
 			}
 		}
