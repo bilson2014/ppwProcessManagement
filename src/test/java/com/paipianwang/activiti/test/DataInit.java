@@ -21,7 +21,7 @@ public class DataInit extends BaseTest {
 
 	@Test
 	public void deployee() {
-		repositoryService.createDeployment().addClasspathResource("activiti/procedure-workflow-version4.bpmn").deploy();
+		repositoryService.createDeployment().addClasspathResource("activiti/procedure-workflow.bpmn").deploy();
 		logger.info("Number of process definitions:" + repositoryService.createProcessDefinitionQuery().count());
 	}
 
