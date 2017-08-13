@@ -14,6 +14,7 @@
 <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
 <%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -1517,6 +1518,7 @@
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
 <script type="text/javascript" src="${webuploaderJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowIJs}"></script>
 </body>
 

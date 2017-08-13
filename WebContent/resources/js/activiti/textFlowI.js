@@ -132,9 +132,7 @@ function findAutoInfo(userName){
 			};
 			autoLi();
 		}
-	}, getContextPath() + '/team/listByName', $.toJSON({
-		userName : userName
-	}));
+	}, getContextPath() + '/team/listByName/'+userName,null);
 }
 
 function autoLi(){
