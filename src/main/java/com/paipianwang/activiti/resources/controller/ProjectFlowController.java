@@ -251,6 +251,7 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
 		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
+		
 		// 获取当前节点所在阶段 以及 备注信息
 		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
@@ -274,6 +275,7 @@ public class ProjectFlowController extends BaseController {
 		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
+		mv.addObject("taskName", state.get("taskName"));
 		mv.addObject("taskId",taskId);
 		return mv;
 	}
