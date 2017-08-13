@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.activiti.engine.identity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,7 +48,7 @@ public class ResourceController {
 	 */
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
 	public String addResource(final HttpServletRequest request, final HttpServletResponse response,
-			@RequestParam final MultipartFile file, final PmsProjectResource pmsProjectResource) {
+			@RequestParam final MultipartFile file,@RequestBody final PmsProjectResource pmsProjectResource) {
 		
 		return projectResourceService.addResource(pmsProjectResource, file,request.getSession()) + "";
 	}

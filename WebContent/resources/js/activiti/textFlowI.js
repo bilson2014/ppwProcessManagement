@@ -1,6 +1,9 @@
 var InterValObj; // timer变量，控制时间  
 var count = 120; // 间隔函数，1秒执行  
 var curCount; // 当前剩余秒数 
+var upload_Video;
+var video_max_size = 200*1024*1024; // 200MB
+var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
 	openInfoCard();
 	initEvenInfo();
@@ -34,7 +37,9 @@ function checkForm(){
 	}
 	
 	if(checkFlag){
-		$('#toSubmitForm').prop("type","submit");
+		//$('#toSubmitForm').prop("type","submit");
+		
+		alert(2);
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
@@ -47,6 +52,60 @@ function initFormEven(){
 	});
 	
 	dataEven();
+}
+
+//上传
+function UploadFile(){
+	upload_Video && upload_Video.destroy();
+	var picker =$('#picker'); 
+	upload_Video = WebUploader.create({
+		auto:true,
+		swf : '/resources/lib/webuploader/Uploader.swf',
+		server : '/resource/addResource',
+		pick : {
+			id:picker,
+			multiple :false//弹窗时不允许多选
+		},
+		timeout:0,
+		fileSingleSizeLimit : video_max_size,
+		accept :{
+		    title: 'video',
+		    extensions: 'mp4',
+		    mimeTypes: 'video/mp4'
+		}
+	});
+	upload_Video.on('fileQueued', function(file) {
+	    $('.uploadInput').val(file.name);
+	    $('.btnInput').off('click');
+	});
+/*	upload_Video.on('fileQueued', function(file) {
+		//跳转step2.添加信息
+		_this.addProductMsg();
+	});*/
+	// 文件上传过程中创建进度条实时显示。
+	/*upload_Video.on('uploadProgress',function(file, percentage) {
+		$(".progress-bar").css('width', percentage * 100 + '%');
+	});*/
+	upload_Video.on('uploadSuccess', function(file,response) {
+		alert('successs');
+		if(response.code == 1){
+			
+		}else{
+		
+		}
+	});
+	upload_Video.on('error', function(type) {
+		 if (type=="Q_TYPE_DENIED"){
+				$('#errorInfo').text('请上传mp4格式');
+	        }else if(type=="F_EXCEED_SIZE"){
+				$('#errorInfo').text(video_err_msg);
+	        }
+	});
+	
+	$("#uploadVideo").on('click', function() {
+		upload_Video.upload();
+		$('#errorInfo').text('上传中...');
+	});
 
 }
 
@@ -70,7 +129,10 @@ function addForm() {
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
 		initFormEven();
-		
+		var hasPicker = $('.picker');
+		if(hasPicker !=null && hasPicker !="" && hasPicker !=undefined){
+			UploadFile();
+		}
 	}, '/project/get-form/task/' + $('#currentTaskId').val(), null);
 }
 
@@ -90,8 +152,16 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
+	var isWhat = prop.id.split('_')[0];; 
 	if (prop.writable === true) {
-		result += "<<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='"+isCheck+"" + className + "' value='" + prop.value + "' />";
+		
+		if(isWhat == "file"){
+			result += "<input readonly type='text' id='file' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += " <div id='picker' class='upload picker'>选择文件</div>";
+			result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";
+			return result;
+		}
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 	} else {
 		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
 	}

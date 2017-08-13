@@ -4,12 +4,14 @@
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
+<spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/js/activiti/textFlowI.js" var="textFlowIJs"/>
+<spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
 <%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
 
@@ -31,8 +33,7 @@
 <title></title>
 <link rel="stylesheet" href="${datepickerCss}">
 <link rel="stylesheet" href="${flowInfoCss}">
-
-
+<link rel="stylesheet" href="${webuploaderCss}">
 
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
@@ -926,7 +927,7 @@
 <div class="cusModel" id="autoSet">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">其它信息修改<span id="errorInfo"></span> </div>
+                   <div class="title">${taskName}<span id="errorInfo"></span> </div>
                    <div class="closeModel"></div>
             </div>
             <div class="otherContent" id="setAutoInfo">
@@ -1509,11 +1510,13 @@
 	           </div>              
 	    </div>
 	<!-- js-->
+	
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${dynamicJs}"></script>
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
+<script type="text/javascript" src="${webuploaderJs}"></script>
 <script type="text/javascript" src="${textFlowIJs}"></script>
 </body>
 
