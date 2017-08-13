@@ -381,12 +381,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
 
-			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
-			// 添加 最终日期
-			String taskDefinitionKey = nextTask.getTaskDefinitionKey();
-			taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
+			List<Task> nextTasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
+			if(nextTasks != null && !nextTasks.isEmpty()) {
+				for (Task nextTask : nextTasks) {
+					// 添加 最终日期
+					String taskDefinitionKey = nextTask.getTaskDefinitionKey();
+					taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+					taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
+					taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
+				}
+			}
+			
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
