@@ -359,17 +359,17 @@ $ba:#bababa; */
                                 margin-left: 15px;
                                 width: 50%;
                                 .listName {
-                                    font-size: $font-size-base;
+                                    font-size: $font-size-sm;
                                     color: $gray;
-                                    margin-bottom: 10px;
+                                    margin-bottom: 20px;
                                     @include ellipsis;
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;
                                     color: $gray;
                                     line-height: 20px;
-                                    height: 40px;
                                     overflow: hidden;
+                                    @include ellipsis;
                                 }
                             }
                         }

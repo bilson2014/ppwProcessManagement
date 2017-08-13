@@ -282,13 +282,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setTaskStage(taskStage);
 				result.setTaskDescription(taskDescription);
 				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
-				if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
+				/*if(userId!=null && userId.equals("employee_"+project.getPrincipal())){
 					//当前负责人
 					result.setIsPrincipal(1);
 				}else{
 					result.setIsPrincipal(0);
-				}
-				
+				}*/
 				list.add(result);
 			}
 			return list;

@@ -20,8 +20,10 @@ function handle() {
 	var tname = $(this).attr('tname');
 
 	// 任务ID
-	var taskId = $(this).attr('tid');
-
+	var taskId = $('#taskId').val();
+	
+	readFormFields(taskId);
+/*
 	$('#handleTemplate').html('').dialog({
 		modal: true,
 		width: 400,
@@ -40,7 +42,7 @@ function handle() {
 				$(this).dialog('close');
 			}
 		}]
-	});
+	});*/
 }
 
 
@@ -50,7 +52,7 @@ function handle() {
 function readFormFields(taskId) {
 	var dialog = this;
 
-	// 清空对话框内容
+/*	// 清空对话框内容
 	$(dialog).html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
 	var $form = $('.dynamic-form');
 
@@ -64,10 +66,10 @@ function readFormFields(taskId) {
             'name': 'processType',
             'type': 'hidden'
         }).val(processType).appendTo($form);
-    }
+    }*/
 
 	// 读取启动时的表单
-	$.getJSON(ctx + '/form/project/get-form/task/' + '42633', function(datas) {
+	$.getJSON(getContextPath() + '/form/project/get-form/task/' + taskId, function(datas) {
 		var trs = "";
 		$.each(datas.taskFormData.formProperties, function() {
 			var className = this.required === true ? "required" : "";

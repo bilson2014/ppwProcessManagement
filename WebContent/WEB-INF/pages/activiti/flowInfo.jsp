@@ -45,13 +45,14 @@
 <body>
 
 <input type="hidden" value="${taskState}" id="taskState"/>
+<input type="hidden" value="${gTasks}" id="taskState"/>
                                           <c:if test="${!empty gTasks}">                               	                                  
 			                                  <c:forEach var="item" items="${gTasks}"> 
 			                                        <input type="hidden" value="${item.id}" id="taskId"/>
-			                                         <input type="hidden" value="${item.name}" id="taskName"/>
+			                                        <input type="hidden" value="${item.name}" id="taskName"/>
 			                                  </c:forEach>
 		                                  </c:if>
- <input type="hidden" value="${gTasks}" id="taskId"/>
+ <input type="hidden" value="${taskId}" id="taskId"/>
 <div class="cusModel" id="cusModel">
      <div class="modelCard">
             <div class="cardTop">
