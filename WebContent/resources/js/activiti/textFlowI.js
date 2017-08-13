@@ -52,6 +52,7 @@ function initFormEven(){
 	});
 	
 	dataEven();
+	autoInput();
 }
 
 //上传
@@ -68,11 +69,6 @@ function UploadFile(){
 		},
 		timeout:0,
 		fileSingleSizeLimit : video_max_size,
-		accept :{
-		    title: 'video',
-		    extensions: 'mp4',
-		    mimeTypes: 'video/mp4'
-		}
 	});
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
@@ -95,11 +91,11 @@ function UploadFile(){
 		}
 	});
 	upload_Video.on('error', function(type) {
-		 if (type=="Q_TYPE_DENIED"){
+		/* if (type=="Q_TYPE_DENIED"){
 				$('#errorInfo').text('请上传mp4格式');
 	        }else if(type=="F_EXCEED_SIZE"){
 				$('#errorInfo').text(video_err_msg);
-	        }
+	        }*/
 	});
 	
 	$("#uploadVideo").on('click', function() {
@@ -108,6 +104,56 @@ function UploadFile(){
 	});
 
 }
+
+//动态联动事件
+
+//自动联动客户信息
+function autoInput(){
+	$('#pt_teamName').bind('input propertychange', function() {
+		$(this).attr('data-id','');
+		var theName = $(this).val();
+		 findAutoInfo(theName);
+		 $('.utoInfo').show();
+		 if(theName == null || theName == ""){
+			 $('.utoInfo').hide();
+		 }
+	});
+}
+
+function findAutoInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.utoInfo');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo();
+				   body.append(html);
+			};
+			autoLi();
+		}
+	}, getContextPath() + '/user/search/info', $.toJSON({
+		userName : userName
+	}));
+}
+
+function autoLi(){
+	
+	$('.utoInfo li').off('click').on('click',function(){
+		  $('.utoInfo').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#pt_teamId').val(id);
+	});
+	$('#pt_teamId').hide();
+}
+
+function createUserInfo(id,name,phone,realName,clientLevel,email){
+	var html = '<li data-email="'+email+'"  data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';
+	return html;
+}
+
 
 //加载动态表单
 function addForm() {
@@ -154,7 +200,11 @@ var formFieldCreator = {
 	}
 	var isWhat = prop.id.split('_')[0];; 
 	if (prop.writable === true) {
-		
+		if(prop.id == "pt_teamName"){
+			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<ul class='utoInfo'><li data-id='0'>233</li></ul>";
+			return result;
+		}
 		if(isWhat == "file"){
 			result += "<input readonly type='text' id='file' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";

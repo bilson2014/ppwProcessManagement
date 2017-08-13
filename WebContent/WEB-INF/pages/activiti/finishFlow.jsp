@@ -51,7 +51,7 @@
 	                    <div class="search btn-c-r">搜索</div>
 	                    <div class="createPro">
 	                        <div class="newAdd"></div>
-	                        <div>新建项目</div>
+	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
 	                    </div>
 	                </div>
 	                
