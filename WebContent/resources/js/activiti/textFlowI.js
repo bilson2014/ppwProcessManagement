@@ -125,7 +125,7 @@ function autoSelectUl(){
 			var name = $(this).text();
 			var id = $(this).attr('data-id');
 		 $(this).parent().parent().find('input').val(name);
-		 $(this).parent().parent().find('input').attr('data-id',id);
+		 $(this).parent().parent().find('.hideInput').val(id);
 	});
 	
 }
@@ -285,7 +285,8 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	if (prop.writable === true) {
-		result += "<input readonly class='autoSelect' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
+		result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 		result += "<ul class='autoSelectUl'>";
 		$.each(datas[prop.id], function(k, v) {
