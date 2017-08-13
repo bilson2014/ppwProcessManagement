@@ -46,11 +46,14 @@
 <input type="hidden" value="${gTasks}" id="taskId"/>
  
 <input type="hidden" value="${taskId }" id="currentTaskId" />
+<input type="hidden" value="${taskName}" id="taskName" />
+
  
 <div id="formState"></div>
  
 
 <div class="cusModel" id="cusModel">
+
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">完善客户信息</div>
@@ -114,6 +117,7 @@
 	                             </div>
             </div>
      </div>
+     
 </div>
 
 <!-- 报错 -->
@@ -1059,7 +1063,7 @@
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	    <div class="pages">
-	    <div id="showPrice">收款信息</div>
+<!-- 	    <div id="showPrice">收款信息</div>
 	    <div id="showBudget">客户预算</div>
 	    <div id="showRealPrice">实际金额</div>
 	    <div id="showPlot">策划</div>
@@ -1070,9 +1074,9 @@
 	    <div id="showUp">上传文件</div>
 	    <div id="showError">驳回</div>
 	    <div id="finishCus">完善客户信息</div>
-	    <div id="showshowExecutive">分配监制</div>
+	    <div id="showshowExecutive">分配监制</div> -->
 	    
-	           <div class="productInfo">
+	           <div class="productInfo" id="daiban">
 	                <div class="infoTitle">
 	                     <div class="titleName">${flow_info.projectName}</div>
 	                     <div class="point hide">
@@ -1093,7 +1097,7 @@
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
 	                            <div class="missinName">待办任务 : </div>
-	                            <div class="missinInfo">完善客户信息</div>
+	                            <div class="missinInfo">${taskName}</div>
 	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>
 	                            <div class="missinTime"><img src="/resources/images/flow/lastTime.png"><div>进行中</div></div> -->
 	                            <div class="contentDiv">
@@ -1101,16 +1105,17 @@
 	                                    <div class="redContent">测试文字测试文字</div>
 	                                    <div class="simContent">测试文字测试文字</div>
 	                                    <div class="setBtn">
-	                                         <div class="grayBtn btn-c-g" id="toFinish">立即完善</div>
+	                                         <div class="redBtn btn-c-r" id="toFinish">立即完善</div>
 	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
 	                                    </div>
 	                               </div>
 	                            </div>
 	                       </div>
+	                     
 	                   </div>    
                      </div>
 	                   <div class="productInfo secondProduct">    
-	                       <div class="projectTitle">项目进度及历史</div>
+	                       <div class="projectTitle ">项目进度及历史</div>
 	                        <div class="timeFlow">
 	                            <img src="/resources/images/flow/demoG.png">
 	                            <div class="flowIcon step2">
@@ -1127,7 +1132,7 @@
 	                                     <div class="startTime">阶段起始时间:<span>2017.7.9</span></div>
 	                                     <div class="endTime">阶段计划完成时间<span>2017-07-09  14：00</span></div>
 	                               </div>
-	                               <div class="listContent">
+	                               <div class="listContent hide">
 	                                   <div class="listItem">
 	                                        <div class="lineStart"></div>
 	                                        <div class="time">预计：2017-07-09  14：00</div>
@@ -1405,11 +1410,11 @@
 	                            </div>
 	                       </div> -->
 	                                              
-	                   <div class="projectTitle">项目文件
+	                   <div class="projectTitle hide">项目文件
 	                        <div class="conMod hide btn-c-r">版本管理</div>
 	                        <div class="upFile btn-c-r">上传</div>
 	                   </div>
-	                       <div class="projectFilm">
+	                       <div class="projectFilm hide">
 	                             <div class="filmItem">
 	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
 	                                    <div class="filmName">文件名</div>
@@ -1451,14 +1456,14 @@
 	                             </div>
 	                       </div>
 	                       
-	                       <div class="projectTitle">留言评论区</div>
-	                       <div class="toSetArea">
+	                       <div class="projectTitle hide">留言评论区</div>
+	                       <div class="toSetArea hide">
 	                             <textarea></textarea>
 	                             <div class="upInfo">
 	                                 <div class="btn-c-r">提交</div>
 	                             </div>
 	                       </div>
-	                       <div class="setAreaDiv">
+	                       <div class="setAreaDiv hide">
 	                            <div class="areaItem">
 	                                 <div class="infoItem">
 	                                     <img src="/resources/images/flow/def.png">

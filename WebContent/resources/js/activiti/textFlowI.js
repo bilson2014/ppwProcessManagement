@@ -2,17 +2,24 @@ var InterValObj; // timer变量，控制时间
 var count = 120; // 间隔函数，1秒执行  
 var curCount; // 当前剩余秒数 
 $().ready(function() {
-	dataEven();
 	openInfoCard();
 	initEvenInfo();
 	initSelect();
 	flagEven();
 	// 加载动态表单
+	pageInit();
 	addForm();
+});
+
+function pageInit(){
 	$('#toFinish').off('click').on('click',function(){
 		$('#autoSet').show();
 	});
-});
+	var taskName = $('#taskName').val();
+	 if(taskName == null || taskName == "" || taskName == undefined )	{
+  	   $('#daiban').hide();
+     }
+}
 
 //表单验证
 function checkForm(){
@@ -27,7 +34,7 @@ function checkForm(){
 	}
 	
 	if(checkFlag){
-		alert('suucess');
+		$('#toSubmitForm').prop("type","submit");
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
