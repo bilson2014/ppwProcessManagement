@@ -13,7 +13,16 @@ $().ready(function() {
 	pageInit();
 	addForm();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+	checkState()
 });
+
+function checkState(){
+	var href = window.location.href;
+    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+    if(state.trim() != "task"){
+    	$('#daiban').hide();
+    }
+}
 
 function pageInit(){
 	$('#toFinish').off('click').on('click',function(){
@@ -53,12 +62,12 @@ function checkForm(){
 		var check = $(getCheckInfo[i]).val();
                if(check == null || check == "" || check == undefined )	{
             	   checkFlag = false;
+            	   initFormEven();
                }	
 	}
 	
 	if(checkFlag){
 		$('#toSubmitForm').prop("type","submit");
-
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
@@ -67,6 +76,7 @@ function checkForm(){
 
 function initFormEven(){
 	$('.btnInput').off('click').on('click',function(){
+		$('.btnInput').off('click');
 		checkForm();
 	});
 	

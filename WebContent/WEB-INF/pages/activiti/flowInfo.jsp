@@ -1084,7 +1084,7 @@
                                     <div class="cusPoint">客户评级<span>A</span></div>
                               </div>
 	                     </div>
-	                     <div class="proControl hide">项目操作
+	                     <div class="proControl hide">
 	                         <div class="newControl">
 	                              <a href="/project/suspendProcess/${currentTaskId}"><div id="showWarn">暂停项目</div></a>
 	                              <a href="/project/activateProcess/${currentTaskId}"><div id="showWarn">取消项目</div></a>
@@ -1103,7 +1103,7 @@
 	                                    <div class="redContent hide"></div>
 	                                    <div class="simContent">${taskDescription}</div>
 	                                    <div class="setBtn">
-	                                         <div class="redBtn btn-c-r" id="toFinish">任务完善</div>
+	                                         <div class="redBtn btn-c-r" id="toFinish">任务操作</div>
 	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
 	                                    </div>
 	                               </div>

@@ -76,8 +76,8 @@
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                      <div class="listName">${staff.task.name}</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

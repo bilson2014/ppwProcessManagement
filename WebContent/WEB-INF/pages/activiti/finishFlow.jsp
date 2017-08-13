@@ -77,8 +77,8 @@
 	                             <div class="cardContent">
 	                                  <img src="/resources/images/flow/isFinish.png">
 	                                  <div class="setContent">
-	                                          <div class="lastTime otherTime">${staff.task.dueDate}</div>
-		                                      <div class="listName">${staff.task.name}</div>
+	                                          <div class="listName">${staff.task.name}</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
 	                        </div>

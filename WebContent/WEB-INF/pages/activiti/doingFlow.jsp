@@ -63,7 +63,7 @@
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard">
-						       <a href="/project/task/${staff.task.id}">
+						       <a href="/project/task/${staff.task.id}?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -130,8 +130,8 @@
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                      <div class="listName">${staff.task.name}</div>
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                  </div>
 		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
 		                                  <img src="/resources/images/flow/isTalk.png">

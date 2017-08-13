@@ -10,6 +10,7 @@
 
             body {
                 background: #F0F2F5 !important;
+                height: auto !important;
             }
 
             input,
@@ -263,10 +264,10 @@
                     display: inline-block;
                     vertical-align: middle;
                        div:nth-child(1) {
-                        color: $border-line;
+                        color: white;
                     }
                     div {
-                        color: white;
+                        color: $border-line;
                     }
 
                 }

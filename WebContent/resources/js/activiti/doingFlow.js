@@ -50,7 +50,7 @@ function getDate(){
 		   var time =Date.parse($(otherTime[i]).text())/1000;
 		   var getTime = Date.parse($(otherTime[i]).text());
 		   var d = new Date(getTime);
-		   $(otherTime[i]).text('您于'+formatDate(d));
+		   $(otherTime[i]).text('截止于'+formatDate(d));
 	    }		
 	}
 	
