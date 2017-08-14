@@ -44,6 +44,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		// 首先判断info是否为空
 		if (info == null) {
 			// 未登录
+			System.err.println("info is null");
 			req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
 			req.getRequestDispatcher("/login").forward(req, resp);
 			return false;
@@ -57,6 +58,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 					return true;
 				} else {
 					// 没有权限组，则查询
+					System.err.println("没有权限组");
 					String sessionType = info.getSessionType(); // 身份验证
 					Long systermUserId = info.getReqiureId();
 					String userId = null;
