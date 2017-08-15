@@ -24,7 +24,7 @@ function getFileInfo(){
 		body.html('');*/
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-				   var html =createUserInfo(res[int].id,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
 				   body.append(html);
 			};
 			
@@ -210,7 +210,7 @@ function findAutoInfo(userName){
 		body.html('');
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-				   var html =createUserInfo(res[int].id,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
 				   body.append(html);
 			};
 			autoLi();
