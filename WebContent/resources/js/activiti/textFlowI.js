@@ -17,8 +17,7 @@ $().ready(function() {
 	getFileInfo();
 	//finishTalk();
 	
-	var body = createTalkInfo();
-	$('.setAreaDiv').append(body);
+	
 	initAddTalk();
 });
 
@@ -557,7 +556,7 @@ function initAddTalk(){
 	});
 }
 
-//初始化 留言板
+//初始化 留言板前3条
 function initTalk(){
 	loadData(function(res){
 		var res = res;
@@ -570,6 +569,20 @@ function initTalk(){
 			};			
 		}
 	}, getContextPath() + '/message/getDefaultMsg'+$('#projectId').val(),null);
+}
+
+function initAllTalk(){
+	loadData(function(res){
+		var res = res;
+		var body =$('.setAreaDiv');
+		body.html();
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res);
+				   body.append(html);
+			};			
+		}
+	}, getContextPath() + '/message/getProjectMsg'+$('#projectId').val(),null);
 }
 
 function createTalkInfo(res){
