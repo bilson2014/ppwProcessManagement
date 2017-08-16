@@ -456,6 +456,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId)
 				.singleResult();
 		String projectId = instance.getBusinessKey();
+		param.put("PROJECT_ID", projectId);
 
 		if (flowList != null) {
 			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
@@ -601,12 +602,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("userLevel", "客户评级");
 		
 		//客户评级值
-		Integer userLevel=(Integer) projectUser.get("userLevel");
-		for(UserLevel level:UserLevel.values()){
-			if(level.getId().equals(userLevel+"")){
-				projectUser.put("userLevel", level.getText());
-			}
-		}
+//		if(projectUser.get("userLevel")!=null){
+//			Integer userLevel=(Integer) projectUser.get("userLevel");
+//			for(UserLevel level:UserLevel.values()){
+//				if(level.getId().equals(userLevel+"")){
+//					projectUser.put("userLevel", level.getText());
+//				}
+//			}
+//		}
 		
 		Map<String,Object> result=new HashMap<>();
 		

@@ -290,6 +290,7 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("taskDescription", state.get("taskDescription"));
 		mv.addObject("taskName", state.get("taskName"));
 		mv.addObject("taskId",taskId);
+		mv.addObject("projectId",param.get("PROJECT_ID"));
 		return mv;
 	}
 
