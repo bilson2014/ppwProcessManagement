@@ -459,7 +459,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		param.put("PROJECT_ID", projectId);
 
 		if (flowList != null) {
-			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
+			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);	
+			//价格信息
+			Map<String,Object> priceFlow=new HashMap<>();
+			if(projectFlow.containsKey("estimatedPrice")){
+				priceFlow.put("estimatedPrice", projectFlow.get("estimatedPrice"));
+				projectFlow.remove("estimatedPrice");
+			}
+			if(projectFlow.containsKey("projectBudget")){
+				priceFlow.put("projectBudget", projectFlow.get("projectBudget"));
+				projectFlow.remove("projectBudget");
+			}
+			priceFlow=editFlowItem(priceFlow);
+			param.put("PROJECT_PRICE", priceFlow);			
+			
 			projectFlow=editFlowItem(projectFlow);
 			param.put("PROJECT_FLOW", projectFlow);
 		}
@@ -528,37 +541,42 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("projectBudget", "项目预算");
 		
 		//项目来源
-		String projectSource=(String) projectFlow.get("projectSource");
-		for(IndentSource source:IndentSource.values()){
-			if((source.getValue()+"").equals(projectSource)){
-				projectFlow.put("projectSource", source.getName());
+		if(projectFlow.get("projectSource")!=null){
+			String projectSource=(String) projectFlow.get("projectSource");
+			for(IndentSource source:IndentSource.values()){
+				if((source.getValue()+"").equals(projectSource)){
+					projectFlow.put("projectSource", source.getName());
+				}
 			}
 		}
+		
 		//项目评级
-		String projectGrade="";
-		switch ((String)projectFlow.get("projectGrade")) {
-		case "5":
-			projectGrade="S";
-			break;
-		case "4":
-			projectGrade="A";
-			break;
-		case "3":
-			projectGrade="B";
-			break;
-		case "2":
-			projectGrade="C";
-			break;
-		case "1":
-			projectGrade="D";
-			break;
-		case "0":
-			projectGrade="E";
-			break;
-		default:
-			break;
+		if(projectFlow.get("projectGrade")!=null){
+			String projectGrade="";
+			switch ((String)projectFlow.get("projectGrade")) {
+			case "5":
+				projectGrade="S";
+				break;
+			case "4":
+				projectGrade="A";
+				break;
+			case "3":
+				projectGrade="B";
+				break;
+			case "2":
+				projectGrade="C";
+				break;
+			case "1":
+				projectGrade="D";
+				break;
+			case "0":
+				projectGrade="E";
+				break;
+			default:
+				break;
+			}
+			projectFlow.put("projectGrade",projectGrade);
 		}
-		projectFlow.put("projectGrade",projectGrade);
 		
 		Map<String,Object> result=new HashMap<>();
 		

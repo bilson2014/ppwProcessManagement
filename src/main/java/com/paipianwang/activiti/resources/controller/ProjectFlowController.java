@@ -268,6 +268,7 @@ public class ProjectFlowController extends BaseController {
 		// 获取当前节点所在阶段 以及 备注信息
 		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
+		Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
 		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
 		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
@@ -285,6 +286,8 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("synergyList", synergyList);
 		// 当前任务所在阶段
 		mv.addObject("taskStage", state.get("taskStage"));
+		// 价格信息
+		mv.addObject("price_info",priceMap);
 		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
