@@ -42,9 +42,11 @@
 <body>
 
 <input type="hidden" value="${taskStage}" id="taskStage"/>
-<input type="hidden" value="${gTasks}" id="taskId"/> 
 <input type="hidden" value="${taskId }" id="currentTaskId" />
 <input type="hidden" value="${taskName}" id="taskName" />
+<input type="hidden" value="${projectId}" id="projectId" />
+
+
 
  
 <div id="formState"></div>
@@ -1454,14 +1456,14 @@
 	                             </div>
 	                       </div>
 	                       
-	                       <div class="projectTitle hide">留言评论区</div>
-	                       <div class="toSetArea hide">
-	                             <textarea></textarea>
+	                       <div class="projectTitle">留言评论区</div>
+	                       <div class="toSetArea">
+	                             <textarea id="talkInfo"></textarea>
 	                             <div class="upInfo">
-	                                 <div class="btn-c-r">提交</div>
+	                                 <div class="btn-c-r" id="submitTalkInfo">提交</div>
 	                             </div>
 	                       </div>
-	                       <div class="setAreaDiv hide">
+	                       <div class="setAreaDiv">
 	                            <div class="areaItem">
 	                                 <div class="infoItem">
 	                                     <img src="/resources/images/flow/def.png">

@@ -15,6 +15,9 @@ $().ready(function() {
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	checkState();
 	getFileInfo();
+	//finishTalk();
+	$('.setAreaDiv').append(createTalkInfo());
+	$('.setAreaDiv').append(createTalkInfo());
 });
 
 function getFileInfo(){
@@ -503,46 +506,6 @@ function dataEven(){
 	
 }
 
-//发票
-function openBill(){
-	$('#openBill').off('click').on('click',function(){
-		$('#getBillModel').show();
-	});
-}
-//收款信息
-function openPrice(){
-	$('#showPrice').off('click').on('click',function(){
-		$('#getPriceModel').show();
-		
-	});
-}
-//客户预算
-function budgetPrice(){
-	$('#showBudget').off('click').on('click',function(){
-		$('#budgetModel').show();
-		
-	});
-}
-//实际金额
-function realPrice(){
-	$('#showRealPrice').off('click').on('click',function(){
-		$('#priceModel').show();
-	});
-}
-//实际策划
-function showPlot(){
-	$('#showPlot').off('click').on('click',function(){
-		$('#plotModel').show();
-		$('#plotTitle').text('分配策划');
-	});
-}
-//分配监制
-function showExecutive(){
-	$('#showshowExecutive').off('click').on('click',function(){
-		$('#plotModel').show();
-		$('#plotTitle').text('分配监制');
-	});
-}
 //提示
 function showWarn(){
 	$('#showWarn').off('click').on('click',function(){
@@ -550,28 +513,6 @@ function showWarn(){
 	});
 }
 
-//发票信息
-function invoicePrice(){
-	$('#invoiceInfo').off('click').on('click',function(){
-		$('#invoiceModel').show();
-	});
-}
-
-//客户转账信息
-function cusInfo(){
-	$('#showCusPrice').off('click').on('click',function(){
-		$('#cusPriceModel').show();
-		$('#cusPriceModelTitle').text('客户转账信息');
-	});
-}
-
-//供应商转账信息
-function proInfo(){
-	$('#showProPrice').off('click').on('click',function(){
-		$('#cusPriceModel').show();
-		$('#cusPriceModelTitle').text('供应商转账信息');
-	});
-}
 
 //协同人清单
 function helper(){
@@ -613,6 +554,61 @@ function finishCus(){
 	});
 }
 
+
+//初始化添加留言
+function initAddTalk(){
+	
+	loadData(function(res){
+		var res = res;
+	
+	}, getContextPath() + '/message/addTopic',$.toJSON({
+		projectId：$('#projectId').val(),
+		taskName:$('#taskName').val(),
+		content:$('#talkInfo').val()
+	}));
+	
+}
+
+//初始化 留言板
+function initTalk(){
+	loadData(function(res){
+		var res = res;
+	/*	var body = $('.utoInfo');
+		body.html('');*/
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo();
+				   body.append(html);
+			};			
+		}
+	}, getContextPath() + '/message/getDefaultMsg'+$('#projectId').val(),null);
+}
+
+unction createTalkInfo(res){
+
+	var html = [
+	    '<div class="areaItem">',
+	    '   <div class="infoItem">',
+		'	  <img src="/resources/images/flow/def.png">',
+		'       <div class="info">策划人：完成 上传策划方案 任务</div>',
+		'       <div class="time">',
+		'       	<span>发布时间：22017-07-09  14：00</span>',
+		'     	    <div class="openTalk"></div>',
+		'       </div>',
+   		'   </div>',
+		'   <div class="infoContent">',
+		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
+		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
+		'      <input>',
+		'   </div>',
+		'   <div class="upInfo">',
+		'      <div class="btn-c-r">提交</div>',
+		'   </div>',
+		'</div>',
+
+	].join('');
+	return html;
+}
 
 
 
