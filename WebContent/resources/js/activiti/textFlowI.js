@@ -16,8 +16,10 @@ $().ready(function() {
 	checkState();
 	getFileInfo();
 	//finishTalk();
-	$('.setAreaDiv').append(createTalkInfo());
-	$('.setAreaDiv').append(createTalkInfo());
+	
+	var body = createTalkInfo();
+	$('.setAreaDiv').append(body);
+	initAddTalk();
 });
 
 function getFileInfo(){
@@ -423,22 +425,6 @@ function initEvenInfo(){
          $('.cusModel').hide();		
 	});
 	$('#myOrder').show();
-	openBill();
-	openPrice();
-	budgetPrice();
-	realPrice();
-	invoicePrice();
-	cusInfo();
-	helper();
-	controlModel();
-	showCusEdit();
-	upModel();
-	showError();
-	finishCus();
-	showPlot();
-	showExecutive();
-	showWarn();
-	proInfo();
 }
 
 function openInfoCard(){
@@ -557,16 +543,18 @@ function finishCus(){
 
 //初始化添加留言
 function initAddTalk(){
-	
-	loadData(function(res){
-		var res = res;
-	
-	}, getContextPath() + '/message/addTopic',$.toJSON({
-		projectId：$('#projectId').val(),
-		taskName:$('#taskName').val(),
-		content:$('#talkInfo').val()
-	}));
-	
+	$('.upInfo #submitTalkInfo').off('click').on('click',function(){
+		var projectId = $('#projectId').val();
+		var taskName = $('#taskName').val();
+		var talkInfo = $('#talkInfo').val();
+		loadData(function(res){
+			var res = res;
+		}, getContextPath() + '/message/addTopic',$.toJSON({
+			projectId:projectId,
+			taskName:taskName,
+			content:talkInfo
+		}));
+	});
 }
 
 //初始化 留言板
@@ -584,7 +572,7 @@ function initTalk(){
 	}, getContextPath() + '/message/getDefaultMsg'+$('#projectId').val(),null);
 }
 
-unction createTalkInfo(res){
+function createTalkInfo(res){
 
 	var html = [
 	    '<div class="areaItem">',

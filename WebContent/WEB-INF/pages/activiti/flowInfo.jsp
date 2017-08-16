@@ -1464,7 +1464,8 @@
 	                             </div>
 	                       </div>
 	                       <div class="setAreaDiv">
-	                            <div class="areaItem">
+	                        
+	                          <!--    <div class="areaItem">
 	                                 <div class="infoItem">
 	                                     <img src="/resources/images/flow/def.png">
 	                                     <div class="info">策划人：完成 上传策划方案 任务</div>
@@ -1481,25 +1482,7 @@
 	                                 <div class="upInfo">
 	                                            <div class="btn-c-r">提交</div>
 	                                 </div>
-	                            </div>
-	                             <div class="areaItem">
-	                                 <div class="infoItem">
-	                                     <img src="/resources/images/flow/def.png">
-	                                     <div class="info">策划人：完成 上传策划方案 任务</div>
-	                                     <div class="time">
-	                                        <span>发布时间：22017-07-09  14：00</span>
-	                                        <div class="openTalk"></div>
-	                                     </div>
-	                                 </div>
-	                                 <div class="infoContent">
-	                                       <div>负责人:<span>策划方案需要调整一下</span></div>
-	                                       <div>负责人:<span>策划方案需要调整一下</span></div>
-	                                       <input>
-	                                 </div>
-	                                 <div class="upInfo">
-	                                            <div class="btn-c-r">提交</div>
-	                                 </div>
-	                            </div>
+	                            </div> -->
 	                             <div class="getMore">
 	                                  <div>展开更多</div>
 	                                  <div></div>
