@@ -38,8 +38,10 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.enums.UserLevel;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.facade.indent.entity.IndentSource;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -49,6 +51,7 @@ import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
+import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
@@ -474,24 +477,24 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				if(teamGroup.contains(groupId)) {
 					// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
 					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectRoleType.teamPlan.getId());
+							projectId, ProjectTeamType.scheme.getCode());
 					projectTeamPlan=editTeamItem(projectTeamPlan);
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 					
 					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectRoleType.teamProduct.getId());
+							projectId, ProjectTeamType.produce.getCode());
 					projectTeamProduct=editTeamItem(projectTeamProduct);
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				} else if(teamPlanGroup.contains(groupId)) {
 					// 如果是 策划供应商可以看见 策划供应商信息
 					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectRoleType.teamPlan.getId());
+							projectId, ProjectTeamType.scheme.getCode());
 					projectTeamPlan=editTeamItem(projectTeamPlan);
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 				} else if(teamProudctGroup.contains(groupId)) {
 					// 如果是制作供应商可以看见制作供应商信息
 					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectRoleType.teamProduct.getId());
+							projectId, ProjectTeamType.produce.getCode());
 					projectTeamProduct=editTeamItem(projectTeamProduct);
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				}
@@ -522,6 +525,39 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("principalName", "其他");
 		projectMap.put("estimatedPrice", "预估价格");
 		projectMap.put("projectBudget", "项目预算");
+		
+		//项目来源
+		String projectSource=(String) projectFlow.get("projectSource");
+		for(IndentSource source:IndentSource.values()){
+			if((source.getValue()+"").equals(projectSource)){
+				projectFlow.put("projectSource", source.getName());
+			}
+		}
+		//项目评级
+		String projectGrade="";
+		switch ((String)projectFlow.get("projectGrade")) {
+		case "5":
+			projectGrade="S";
+			break;
+		case "4":
+			projectGrade="A";
+			break;
+		case "3":
+			projectGrade="B";
+			break;
+		case "2":
+			projectGrade="C";
+			break;
+		case "1":
+			projectGrade="D";
+			break;
+		case "0":
+			projectGrade="E";
+			break;
+		default:
+			break;
+		}
+		projectFlow.put("projectGrade",projectGrade);
 		
 		Map<String,Object> result=new HashMap<>();
 		
@@ -563,6 +599,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("linkman", "联系人");
 		projectMap.put("telephone", "联系人电话");
 		projectMap.put("userLevel", "客户评级");
+		
+		//客户评级值
+		Integer userLevel=(Integer) projectUser.get("userLevel");
+		for(UserLevel level:UserLevel.values()){
+			if(level.getId().equals(userLevel+"")){
+				projectUser.put("userLevel", level.getText());
+			}
+		}
 		
 		Map<String,Object> result=new HashMap<>();
 		
@@ -711,17 +755,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			Map<String, Object> variables = taskService.getVariables(taskId);
 			for (Entry<String,Object> entry : variables.entrySet()) {
 				String key = entry.getKey();
-				ProjectRoleType type = ProjectRoleType.getEnum(key + "Id");
-				if(type != null) {
-					String activitiUserId = entry.getValue().toString();
-					PmsEmployee employee = employeeFacade.findEmployeeById(Long.parseLong(activitiUserId.split("_")[1]));
-					PmsProjectSynergy synergy = new PmsProjectSynergy();
-					synergy.setEmployeeName(employee.getEmployeeRealName());
-					synergy.setImgUrl(employee.getEmployeeImg());
-					synergy.setTelephone(employee.getPhoneNumber());
-					synergy.setEmployeeGroup(type.getText());
-					list.add(synergy);
+				if(key.endsWith("Id") && entry.getValue().toString().startsWith("employee_")){//协同人
+					ProjectRoleType type = ProjectRoleType.getEnum(key.substring(0,key.indexOf("Id")));
+					if(type != null) {
+						String activitiUserId = entry.getValue().toString();
+						PmsEmployee employee = employeeFacade.findEmployeeById(Long.parseLong(activitiUserId.split("_")[1]));
+						PmsProjectSynergy synergy = new PmsProjectSynergy();
+						synergy.setEmployeeName(employee.getEmployeeRealName());
+						synergy.setImgUrl(employee.getEmployeeImg());
+						synergy.setTelephone(employee.getPhoneNumber());
+						synergy.setEmployeeGroup(type.getText());
+						list.add(synergy);
+					}
 				}
+				
 			}
 			return list;
 		}
