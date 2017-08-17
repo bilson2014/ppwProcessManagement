@@ -20,9 +20,12 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.NativeExecutionQuery;
@@ -472,6 +475,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				.singleResult();
 		String projectId = instance.getBusinessKey();
 		param.put("PROJECT_ID", projectId);
+		param.put("INSTANCE_ID",instanceId);
 
 		if (flowList != null) {
 			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);	
@@ -847,6 +851,59 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			param.put(user.getId(), user.getFirstName());
 		}
 		return param;
+	}
+
+	@Override
+	public Map<String,List> getProjectTaskList(String projectId) {
+		//已进行任务节点
+		List<HistoricTaskInstance> historyInstance=historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(projectId).list();//.finished()
+		
+		Map<String,ProjectCycleItem> cycles=workFlowFacade.getAllCycleTask();
+		if(cycles==null){
+			return null;
+		}
+		List<User> users = identityService.createUserQuery().list();
+		
+		Map<String,List> result=new HashMap<String,List>();
+		
+		for(HistoricTaskInstance history:historyInstance){
+			
+			ProjectCycleItem cycle=cycles.get(history.getTaskDefinitionKey());
+			if(!result.containsKey(cycle.getStage())){
+				List<Object> list=new ArrayList<Object>();
+				result.put(cycle.getStage(), list);
+			}
+			//操作人
+			Map<String,Object> item=new HashMap<>();
+			
+			item.put("startTime", history.getCreateTime()==null?"":DateUtils.getDateByFormatStr(history.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));//时间格式
+			item.put("assigneeId",history.getAssignee());
+			for(User user:users){
+				if(user.getId().equals(history.getAssignee())){
+					item.put("assignee",user.getFirstName());//人名
+					break;
+				}
+			}
+			item.put("taskName", history.getName());
+			item.put("taskId",history.getId());
+			item.put("taskStatus",history.getDeleteReason());
+			
+			result.get(cycle.getStage()).add(item);
+		}	
+		//未来任务节点
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getTaskInfo(String taskId) {
+		Task task=taskService.createTaskQuery().taskId(taskId).singleResult();
+		Map<String,Object> item=new HashMap<>();
+		item.put("taskId", task.getId());
+		
+		String taskDescription = (String) taskService.getVariable(task.getTaskDefinitionKey(), "task_description");
+		
+		item.put("taskDescription",taskDescription);
+		return item;
 	}
 
 }
