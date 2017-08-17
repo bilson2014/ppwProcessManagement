@@ -39,12 +39,9 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 	public String addResource(String resourceName, String taskId, String resourceType, MultipartFile file, SessionInfo sessionInfo) {
 
 		String fileId = FastDFSClient.uploadFile(file);
-		String name=file.getName();
+		String name=file.getOriginalFilename();
 		if (StringUtils.isNotBlank(fileId)) {
-			// 添加系统评论
-
 			// 添加流程文件资源
-			
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 			String processInstanceId = task.getProcessInstanceId();
 
@@ -53,7 +50,7 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			String projectId = processInstance.getBusinessKey();
 			
 			PmsProjectResource resource=new PmsProjectResource();
-			resource.setResourceName(file.getName());//resourceName);
+			resource.setResourceName(name);
 			resource.setProjectId(projectId);//pmsProjectResource.getProjectId());
 			resource.setResourcePath(fileId);
 			resource.setResourceType(resourceType.substring(resourceType.indexOf("_")+1));
@@ -67,7 +64,7 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			for(String gro:groups){
 				group=group+gro+",";
 			}
-			resource.setUploaderGroup(group);
+			resource.setUploaderGroup(group);//TODO 上传时身份
 			resource.setUploaderName(sessionInfo.getRealName());
 			
 //			resource.setPreviewPath("");

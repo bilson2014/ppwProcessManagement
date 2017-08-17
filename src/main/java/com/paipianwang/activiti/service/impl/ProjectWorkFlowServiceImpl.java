@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
+import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.enums.UserLevel;
 import com.paipianwang.pat.common.util.DateUtils;
@@ -46,6 +47,7 @@ import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
@@ -54,6 +56,7 @@ import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
@@ -104,7 +107,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	
 	@Autowired
 	private WorkFlowFacade workFlowFacade = null;
-
+	@Autowired
+	private PmsProjectMessageFacade pmsProjectMessageFacade;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public ProcessInstance startFormAndProcessInstance(String processDefinitionId, Map<String, String> formProperties,
@@ -345,7 +350,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId) {
+	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup) {
 		// 完成节点时，需要保存业务数据
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
@@ -381,6 +386,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			String activitiUserId = task.getAssignee();
 			Date date = new Date();
 			
+			PmsProjectMessage message=new PmsProjectMessage();
+			message.setFromId(userId);
+			message.setFromGroup(StringUtils.join(userGroup, ","));
+			message.setProjectId(projectId);
+			message.setTaskName(taskName);
+			message.setContent("我完成了\""+taskName+"\"任务");
+			pmsProjectMessageFacade.insert(message);
+			
+			
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
 
@@ -390,6 +404,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					// 添加 最终日期
 					String taskDefinitionKey = nextTask.getTaskDefinitionKey();
 					taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+					//TODO 异常处理、事务处理
 					taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
 					taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
 				}

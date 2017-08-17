@@ -59,9 +59,10 @@ public interface ProjectWorkFlowService {
 	 * 
 	 * @param taskId
 	 * @param formProperties
+	 * @param userGroup 
 	 * @param id
 	 */
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId);
+	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup);
 
 	/**
 	 * 生成项目ID
