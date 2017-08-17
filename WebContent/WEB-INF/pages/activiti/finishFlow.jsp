@@ -65,6 +65,7 @@
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
 						   <div class="waitCard">
+						       <a href="/project/task/${staff.task.id}?finish">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${isPrincipal == 1}">
@@ -81,6 +82,7 @@
 		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
+	                             </a>
 	                        </div>
 							</c:forEach>
 					</c:if>

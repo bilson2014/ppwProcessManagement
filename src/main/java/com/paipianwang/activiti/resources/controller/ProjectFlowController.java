@@ -268,6 +268,7 @@ public class ProjectFlowController extends BaseController {
 		// 获取当前节点所在阶段 以及 备注信息
 		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
+		Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
 		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
 		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
@@ -285,11 +286,15 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("synergyList", synergyList);
 		// 当前任务所在阶段
 		mv.addObject("taskStage", state.get("taskStage"));
+		// 价格信息
+		mv.addObject("price_info",priceMap);
 		
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
 		mv.addObject("taskName", state.get("taskName"));
 		mv.addObject("taskId",taskId);
+		mv.addObject("projectId",param.get("PROJECT_ID"));
+		mv.addObject("processInstanceId",param.get("INSTANCE_ID"));
 		return mv;
 	}
 
@@ -319,7 +324,7 @@ public class ProjectFlowController extends BaseController {
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
+		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),info.getActivitGroups());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/running-doing");
@@ -344,12 +349,13 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
+//		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId);
 		}
-		return mv;
+//		return mv;
+		return new ModelAndView("redirect:/project/running-doing");
 	}
 
 	/**
@@ -383,11 +389,22 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
+//		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 激活
 			projectWorkFlowService.activateProcess(processInstanceId);
 		}
-		return mv;
+//		return mv;
+		return new ModelAndView("redirect:/project/suspend-task");
+	}
+	@RequestMapping("/project-task/{projectId}")
+	public Map<String, List> getProjectTaskList(@PathVariable("projectId") final String projectId) {
+		Map<String,List> result=projectWorkFlowService.getProjectTaskList(projectId);
+		return result;
+	}
+	@RequestMapping("/task-detail/{taskId}")
+	public Map<String, Object> getTaskInfo(@PathVariable("taskId") final String taskId) {
+		Map<String,Object> result=projectWorkFlowService.getTaskInfo(taskId);
+		return result;
 	}
 }

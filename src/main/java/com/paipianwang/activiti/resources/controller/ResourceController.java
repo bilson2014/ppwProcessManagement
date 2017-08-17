@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.paipianwang.activiti.service.ProjectResourceService;
+import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.common.web.file.FastDFSClient;
@@ -100,13 +101,9 @@ public class ResourceController  extends BaseController{
 	@ResponseBody
 	public List<PmsProjectResource> getResourceList(@PathVariable String projectId,final HttpServletRequest request){
 		//获取当前登陆用户项目角色
-		List<Group> groupList =(List<Group>) request.getSession().getAttribute("groups");
+		List<String> groupList =((SessionInfo)request.getSession().getAttribute(PmsConstant.SESSION_INFO)).getActivitGroups();
 		if(ValidateUtil.isValid(groupList)){
-			List<String> roleTypes=new ArrayList<>();
-			for(Group group:groupList){
-				roleTypes.add(group.getType());
-			}
-			return projectResourceService.getResourceList(projectId,roleTypes);
+			return projectResourceService.getResourceList(projectId,groupList);
 		}
 		return new ArrayList<>();
 	}
@@ -121,13 +118,9 @@ public class ResourceController  extends BaseController{
 	@ResponseBody
 	public Map<String,List<PmsProjectResource>> getResourceForVersion(@PathVariable String projectId,final HttpServletRequest request){
 		//获取当前登陆用户项目角色
-		List<Group> groupList =(List<Group>) request.getSession().getAttribute("groups");
+		List<String> groupList =((SessionInfo)request.getSession().getAttribute(PmsConstant.SESSION_INFO)).getActivitGroups();
 		if(ValidateUtil.isValid(groupList)){
-			List<String> roleTypes=new ArrayList<>();
-			for(Group group:groupList){
-				roleTypes.add(group.getType());
-			}
-			return projectResourceService.getResourceListForVersion(projectId,roleTypes);
+			return projectResourceService.getResourceListForVersion(projectId,groupList);
 		}
 		List<String> roleTypes=new ArrayList<>();
 		roleTypes.add("sale");
