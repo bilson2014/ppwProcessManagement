@@ -349,12 +349,13 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
+//		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId);
 		}
-		return mv;
+//		return mv;
+		return new ModelAndView("redirect:/project/running-task");
 	}
 
 	/**
@@ -388,12 +389,13 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
+//		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 激活
 			projectWorkFlowService.activateProcess(processInstanceId);
 		}
-		return mv;
+//		return mv;
+		return new ModelAndView("redirect:/project/suspend-task");
 	}
 	@RequestMapping("/project-task/{projectId}")
 	public Map<String, List> getProjectTaskList(@PathVariable("projectId") final String projectId) {
