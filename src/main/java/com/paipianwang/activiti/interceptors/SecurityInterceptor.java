@@ -49,51 +49,48 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			req.getRequestDispatcher("/login").forward(req, resp);
 			return false;
 		} else {
-			// 判断是否为超级管理员
-			if (!info.isSuperAdmin()) {
-				// 如果是非管理员，判断是否有权限组
-				List<String> groupIds = info.getActivitGroups();
-				if (groupIds != null && !groupIds.isEmpty()) {
-					// 有权限，放行
-					return true;
+			// 判断是否有权限组
+			List<String> groupIds = info.getActivitGroups();
+			if (groupIds != null && !groupIds.isEmpty()) {
+				// 有权限，放行
+				return true;
+			} else {
+				// 没有权限组，则查询
+				System.err.println("没有权限组");
+				String sessionType = info.getSessionType(); // 身份验证
+				Long systermUserId = info.getReqiureId();
+				String userId = null;
+				if (PmsConstant.ROLE_EMPLOYEE.equals(sessionType)) {
+					// 内部员工
+					userId = "employee_" + systermUserId;
+				}
+
+				if (PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
+					// 供应商
+					userId = "team_" + systermUserId;
+				}
+
+				if (PmsConstant.ROLE_CUSTOMER.equals(sessionType)) {
+					// 客户
+					userId = "customer_" + systermUserId;
+				}
+
+				info.setActivitiUserId(userId);
+				List<Group> list = identityService.createGroupQuery().groupMember(userId).list();
+				if (list == null || list.size() == 0) {
+					req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
+					req.getRequestDispatcher("/login").forward(req, resp);
+					return false;
 				} else {
-					// 没有权限组，则查询
-					System.err.println("没有权限组");
-					String sessionType = info.getSessionType(); // 身份验证
-					Long systermUserId = info.getReqiureId();
-					String userId = null;
-					if (PmsConstant.ROLE_EMPLOYEE.equals(sessionType)) {
-						// 内部员工
-						userId = "employee_" + systermUserId;
+					List<String> groups = new ArrayList<String>();
+					for (final Group group : list) {
+						groups.add(group.getId());
 					}
 
-					if (PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
-						// 供应商
-						userId = "team_" + systermUserId;
-					}
-
-					if (PmsConstant.ROLE_CUSTOMER.equals(sessionType)) {
-						// 客户
-						userId = "customer_" + systermUserId;
-					}
-
-					info.setActivitiUserId(userId);
-					List<Group> list = identityService.createGroupQuery().groupMember(userId).list();
-					if (list == null || list.size() == 0) {
-						req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
-						req.getRequestDispatcher("/login").forward(req, resp);
-						return false;
-					} else {
-						List<String> groups = new ArrayList<String>();
-						for (final Group group : list) {
-							groups.add(group.getId());
-						}
-
-						// 放入session中
-						info.setActivitGroups(groups);
-						req.getSession().removeAttribute(PmsConstant.SESSION_INFO);
-						req.getSession().setAttribute(PmsConstant.SESSION_INFO, info);
-					}
+					// 放入session中
+					info.setActivitGroups(groups);
+					req.getSession().removeAttribute(PmsConstant.SESSION_INFO);
+					req.getSession().setAttribute(PmsConstant.SESSION_INFO, info);
 				}
 			}
 
