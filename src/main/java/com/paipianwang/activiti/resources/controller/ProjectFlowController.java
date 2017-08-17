@@ -294,6 +294,7 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("taskName", state.get("taskName"));
 		mv.addObject("taskId",taskId);
 		mv.addObject("projectId",param.get("PROJECT_ID"));
+		mv.addObject("processInstanceId",param.get("INSTANCE_ID"));
 		return mv;
 	}
 
@@ -323,7 +324,7 @@ public class ProjectFlowController extends BaseController {
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
+		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),info.getActivitGroups());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/running-doing");
@@ -393,5 +394,15 @@ public class ProjectFlowController extends BaseController {
 			projectWorkFlowService.activateProcess(processInstanceId);
 		}
 		return mv;
+	}
+	@RequestMapping("/project-task/{projectId}")
+	public Map<String, List> getProjectTaskList(@PathVariable("projectId") final String projectId) {
+		Map<String,List> result=projectWorkFlowService.getProjectTaskList(projectId);
+		return result;
+	}
+	@RequestMapping("/task-detail/{taskId}")
+	public Map<String, Object> getTaskInfo(@PathVariable("taskId") final String taskId) {
+		Map<String,Object> result=projectWorkFlowService.getTaskInfo(taskId);
+		return result;
 	}
 }

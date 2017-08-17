@@ -59,9 +59,10 @@ public interface ProjectWorkFlowService {
 	 * 
 	 * @param taskId
 	 * @param formProperties
+	 * @param userGroup 
 	 * @param id
 	 */
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId);
+	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup);
 
 	/**
 	 * 生成项目ID
@@ -126,5 +127,9 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public Map<String, String> getUserByRole(String roleType);
+
+	public Map<String, List> getProjectTaskList(String projectId);
+
+	public Map<String, Object> getTaskInfo(String taskId);
 
 }
