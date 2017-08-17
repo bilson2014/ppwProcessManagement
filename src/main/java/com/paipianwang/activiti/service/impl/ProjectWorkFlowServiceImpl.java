@@ -876,7 +876,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			//操作人
 			Map<String,Object> item=new HashMap<>();
 			
-			item.put("startTime", history.getCreateTime()==null?"":DateUtils.getDateByFormatStr(history.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));//时间格式
+			item.put("startTime", history.getCreateTime());//时间格式
 			item.put("assigneeId",history.getAssignee());
 			for(User user:users){
 				if(user.getId().equals(history.getAssignee())){
@@ -886,7 +886,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			}
 			item.put("taskName", history.getName());
 			item.put("taskId",history.getId());
-			item.put("taskStatus",history.getDeleteReason());
+			item.put("taskStatus",history.getDeleteReason());//状态
+			item.put("dueDate", history.getDueDate());
 			
 			result.get(cycle.getStage()).add(item);
 		}	
@@ -896,11 +897,16 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Override
 	public Map<String, Object> getTaskInfo(String taskId) {
-		Task task=taskService.createTaskQuery().taskId(taskId).singleResult();
+		HistoricTaskInstance task=historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
 		Map<String,Object> item=new HashMap<>();
 		item.put("taskId", task.getId());
+		item.put("startTime",task.getCreateTime());
+		item.put("endTime",task.getEndTime());
+		item.put("taskName", task.getName());
+		item.put("taskStatus",task.getDeleteReason());//状态
+		item.put("dueDate", task.getDueDate());
 		
-		String taskDescription = (String) taskService.getVariable(task.getTaskDefinitionKey(), "task_description");
+		String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
 		
 		item.put("taskDescription",taskDescription);
 		return item;
