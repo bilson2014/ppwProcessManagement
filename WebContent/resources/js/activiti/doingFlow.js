@@ -1,9 +1,10 @@
-var InterValObj; // timer变量，控制时间  
-var count = 120; // 间隔函数，1秒执行  
-var curCount; // 当前剩余秒数 
+
 $().ready(function() {
-	
-/*	var waitCard = $('.waitCard');
+	initPageEven();
+});
+
+function initPageEven(){
+	/*	var waitCard = $('.waitCard');
 	var cardNUm = waitCard.length;
 	if(waitCard.length == null || waitCard.length=="" ){
 		$(window.parent.parent.parent.document).find('#cardNum').hide();
@@ -15,34 +16,36 @@ $().ready(function() {
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
 	});
-});
-
+}
+//获取日期时间
 function getDate(){
 	
 	var setTime =  $('.setLastTime');
 	if(setTime.length >= 0){
-		var nowData = Date.parse(new Date())/1000;
+		var nowData = Date.parse(new Date());
         for (var i = 0; i < setTime.length; i++) {
-		   var time =Date.parse($(setTime[i]).text())/1000;
-		   var getTime = Date.parse($(setTime[i]).text());
-		   var isTime =(time - nowData)/3600;
-		   var d = new Date(getTime);
-		   if(isTime < 0){
+        	var test = $(setTime[i]).text();
+		   var time =Date.parse($(setTime[i]).text());
+		   var lastTime = (time - nowData);
+		   var lastHour =(time - nowData)/3600000;
+		   var passTime = (nowData - time);
+		   getTise(lastTime);
+		   var getTime =$(setTime[i]).text();
+		   if(lastTime < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 延误 '+formatDate(d));
+			   $(setTime[i]).text(' 已超时 '+getTise(passTime));  //3
 		   }
-		   if(isTime >= 3){
+		   if(lastTime >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');
-			   $(setTime[i]).text(' 正常 '+formatDate(d));
+			   $(setTime[i]).text('剩余 '+getTise(lastTime));
 		   }
-		   if(isTime <3 && isTime>=0){
+		   if(lastTime <3 && lastHour>=0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoY.png');
-			   $(setTime[i]).text(' 紧急 '+formatDate(d));
+			   $(setTime[i]).text('剩余'+getTise(lastTime));
 		   }
 		   
 	    }		
 	}
-	
 	
 	var otherTime = $('.otherTime');
 	if(otherTime.length >= 0){
@@ -53,18 +56,32 @@ function getDate(){
 		   $(otherTime[i]).text('截止于'+formatDate(d));
 	    }		
 	}
-	
-	
 }
 
-function   formatDate(now)   {     
+function formatDate(now)   {     
     var   year=now.getFullYear();     
     var   month=now.getMonth()+1;     
     var   date=now.getDate();     
     var   hour=now.getHours();     
     var   minute=now.getMinutes();     
     var   second=now.getSeconds();   
-    return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
-    }     
+    return year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
+ }     
+//时间戳
+function getTise(time) {
+    var oDate = new Date(time);
+    var year = oDate.getFullYear();
+    var hour = oDate.getHours();
+    var Minutes = oDate.getMinutes();
+    var second= oDate.getSeconds();
+    var setDay ="";
+    var date= oDate.getDate(); 
+    if(date > 0){
+    	setDay = date+" 天 ";
+    }
+    return setDay + hour + ' 时 ' + Minutes +" 分 ";
+}
+
+
 
 

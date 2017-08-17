@@ -5,21 +5,20 @@ var upload_Video;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
-	openInfoCard();
-	initEvenInfo();
-	initSelect();
-	flagEven();
+	
 	// 加载动态表单
 	pageInit();
-	addForm();
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	checkState();
-	getFileInfo();
-	//finishTalk();
-	
-	
-	initAddTalk();
+	test();
 });
+
+function test(){
+	
+	var map = {"沟通阶段":[{"startTime":"2017-08-17 13:09:46","taskName":"【销售】上传项目简报","assignee":"employee_36","assigneeId":"employee_36","taskId":"117577","taskStatus":"completed"},{"startTime":"2017-08-17 14:32:06","taskName":"【销售】项目排期","assignee":"employee_36","assigneeId":"employee_36","taskId":"120006","taskStatus":"completed"},{"startTime":"2017-08-17 14:42:09","taskName":"【销售总监】确认项目","assignee":"employee_35","assigneeId":"employee_35","taskId":"122505","taskStatus":null}]};
+	
+	
+}
+
 
 function getFileInfo(){
 	loadData(function(res){
@@ -43,6 +42,20 @@ function checkState(){
     if(state.trim() != "task"){
     	$('#daiban').hide();
     }
+    
+    if(state.trim() == "task" ||state.trim() == "doing"){
+    	$('#isBack').hide();
+    }
+    
+    if(state.trim() == "pause"){
+    	$('#isPause').hide();
+    }
+    
+    if(state.trim() == "finish"){
+    		 $('#isBack').hide();
+    		 $('#isPause').hide();
+    }
+    
 }
 
 function pageInit(){
@@ -71,6 +84,20 @@ function pageInit(){
  if(isStage == "交付阶段"){
 	 $('.flowIcon').addClass('step5');
  }
+ 
+    addForm();
+	openInfoCard();
+	initEvenInfo();
+	initSelect();
+	flagEven();
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+	checkState();
+	getFileInfo();
+	initAddTalk();
+	initAllTalk();
+	getFileInfo();
+	controlModel();
+	checkState();
 	 
 }
 
@@ -417,9 +444,9 @@ var formFieldCreator = {
 	};*/
 
 function initEvenInfo(){
-	$('#toFinish').off('click').on('click',function(){
+/*	$('#toFinish').off('click').on('click',function(){
          $('#cusModel').show();		
-	});
+	});*/
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
 	});
@@ -546,8 +573,15 @@ function initAddTalk(){
 		var projectId = $('#projectId').val();
 		var taskName = $('#taskName').val();
 		var talkInfo = $('#talkInfo').val();
+		$('.upInfo #submitTalkInfo').off('click');
 		loadData(function(res){
-			var res = res;
+			if(res.code == 200){
+				initAllTalk();
+				initAddTalk();
+				$('#talkInfo').val('');
+			}else{
+				initAddTalk();
+			}
 		}, getContextPath() + '/message/addTopic',$.toJSON({
 			projectId:projectId,
 			taskName:taskName,
@@ -571,39 +605,76 @@ function initTalk(){
 	}, getContextPath() + '/message/getDefaultMsg'+$('#projectId').val(),null);
 }
 
+//全部留言信息
 function initAllTalk(){
 	loadData(function(res){
 		var res = res;
 		var body =$('.setAreaDiv');
-		body.html();
+		body.html('');
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-				   var html =createUserInfo(res);
+				   var html =createTalkInfo(res[int]);
 				   body.append(html);
-			};			
+			}
+			rePickTalk();
 		}
-	}, getContextPath() + '/message/getProjectMsg'+$('#projectId').val(),null);
+	}, getContextPath() + '/message/getProjectMsg/'+$('#projectId').val(),null);
 }
-
+//留言回复
+function rePickTalk(){
+	
+   $('.upInfo .toArea').off('click').on('click',function(){
+	    var projectId = $(this).attr('data-id');
+	    var taskName = $(this).attr('data-name');
+	    var parentId = $(this).attr('data-parentId');
+	    var content = $(this).parent().parent().find('.infoContent').find('input').val();
+	    $('.upInfo .toArea').off('click');
+			loadData(function(res){
+				if(res.code == 200){
+					  initAllTalk();
+					  $('.upInfo .toArea').off('click');
+				}else{
+					  $('.upInfo .toArea').off('click');
+				}
+			}, getContextPath() + '/message/addReply',$.toJSON({
+				projectId:projectId,
+				taskName:taskName,
+				content:content,
+				parentId:parentId
+			}));
+   });
+		
+}
+//留言卡片
 function createTalkInfo(res){
-
+	var  children= res.children;
+	var body = '';
+	if(children != null && children != undefined && children !=""){
+		for (var int = 0; int < children.length; int++) {
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span></div>';
+		}
+	}
+	if(res.fromUrl == null){
+		var  imgUrl = "/resources/images/flow/def.png";
+	}else{
+		var  imgUrl = getContextPath()+res.fromUrl;
+	}
 	var html = [
 	    '<div class="areaItem">',
 	    '   <div class="infoItem">',
-		'	  <img src="/resources/images/flow/def.png">',
-		'       <div class="info">策划人：完成 上传策划方案 任务</div>',
+		'	  <img src="'+imgUrl+'">',
+		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
 		'       <div class="time">',
-		'       	<span>发布时间：22017-07-09  14：00</span>',
+		'       	<span>发布时间：'+res.createDate+'</span>',
 		'     	    <div class="openTalk"></div>',
 		'       </div>',
    		'   </div>',
 		'   <div class="infoContent">',
-		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
-		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
+		'     '+body+'',
 		'      <input>',
 		'   </div>',
 		'   <div class="upInfo">',
-		'      <div class="btn-c-r">提交</div>',
+		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
 		'   </div>',
 		'</div>',
 
@@ -611,28 +682,200 @@ function createTalkInfo(res){
 	return html;
 }
 
+//文件区域
+function getFileInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#projectFilm');
+		body.html('');
+		if(res != null && res != undefined){
+				for (var int = 0; int < res.length; int++) {
+					 var html =createFileInfo(res[int]);
+					 body.append(html);
+				}
+		}
+	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}
 
+/*//文件区域
+function getFileInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#projectFilm');
+		body.html('');
+		if(res != null && res != undefined){
+			for(var key in res) { 
+				var resKey = res[key];
+				for (var int = 0; int < resKey.length; int++) {
+					 var html =createFileInfo(res[key][int]);
+					 body.append(html);
+				}
+             }
+		}
+	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}*/
 
+//文件卡片
+function createFileInfo(res){
+	var name = res.resourceName;
+	var fileName = name.lastIndexOf(".");
+	var finalName = name.substring(fileName + 1);
+	var src = '/resources/images/flow/';
+	switch (finalName) {
+		case 'doc' :
+		case 'docx' :
+			src += 'doc.png';
+			break;
+		case 'xls' :
+		case 'xlsx' :
+			src += 'xls.png';
+			break;
+		case 'ppt' :
+		case 'pptx' :
+			src += 'ppt.png';
+			break;
+		case 'pdf' :
+			src += 'pdf.png';
+			break;
+		case 'txt' :
+			src += 'txt.png';
+			break;
+		case 'avi' :
+			src += 'avi.png';
+			break;
+		case 'esp' :
+			src += 'esp.png';
+			break;
+		case 'jpg' :
+			src += 'jpg.png';
+			break;
+		case 'mov' :
+			src += 'mov.png';
+			break;
+		case 'mp3' :
+			src += 'mp3.png';
+			break;
+		case 'mp4' :
+			src += 'mp4.png';
+			break;
+		case 'png' :
+			src += 'png.png';
+			break;
+		case 'rar' :
+			src += 'rar.png';
+			break;
+		case 'wav' :
+			src += 'wav.png';
+			break;
+		case 'zip' :
+			src += 'zip.png';
+			break;
+		default :
+			src += 'file.png';
+			break;
+	}
+	var fileName = name.lastIndexOf(".");
+	var checkName = name.substring(0,fileName);
+	var html = [
+		'<div class="filmItem">                                     ',
+        '<img class="filmImg" src="'+src+'"> ',
+        '<div class="filmName">'+checkName+'</div>                         ',
+        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+        '<div class="time"><div>'+res.createDate+'</div></div>        ',
+        '<div class="icon">                                         ',
+        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+        '</div>                                                     ',
+        '</div>                                                             ',
+	].join('');
+	return html;
+}
 
+function controlModel(){
+	$('.conMod').off('click').on('click',function(){
+		$('#controlModel').show();
+		getFileModelInfo();
+	});
+}
 
+function getFileModelInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#controlContent');
+		body.html('');
+		if(res != null && res != undefined){
+			for(var key in res) { 
+				var sethtml="";
+				var resKey = res[key];
+				if(resKey.length > 0){
+					var head =createNoHead(key);
+					sethtml += head;
+					
+					for (var int = 0; int < resKey.length; int++) {
+						 var html =createNoInfo(res[key][int]);
+						 sethtml +=html;
+					}
+					var end = "</div></div>";
+					sethtml +=end;
+					body.append(sethtml);
+				}
+             }
+			fileCheckNo();
+			openInfoCard();
+		}
+	}, getContextPath() + '/resource/version/'+$('#projectId').val(),null);	
+}
 
+//版本确认
 
+function fileCheckNo(){
+	
+	$('.icon .flag').off('click').on('click',function(){
+		var id = $(this).attr('data-id');
+		loadData(function(res){
+			if(res){
+				getFileInfo();
+				getFileModelInfo();
+			}
+		}, getContextPath() + '/resource/setValid/'+id,null);			
+	});
+	
+}
 
+//版本投头
+function createNoHead(name){
+	var html = [
+		'<div class="item">',
+        '<div class="itemTop">',
+        '     <div class="controlOpen openItem"></div>',
+        '     <div class="title">'+name+'</div>',
+        '</div>',
+        '<div class="getInfoItemContent">',
+	].join('');
+	return html;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//版本卡片
+function createNoInfo(res){
+	
+	var name = res.resourceName;
+	var fileName = name.lastIndexOf(".");
+	var checkName = name.substring(0,fileName);
+	var imgUrl = "/resources/images/flow/flag.png";
+	if(res.flag == 1){
+		imgUrl = "/resources/images/flow/flagRed.png";
+	}
+	var html = [
+		 ' <div class="InfoItem">                                                                ',
+		 '        <div class="fileName">'+checkName+'</div>                                             ',
+		 '        <div class="name">'+res.uploaderName+'</div>                                                 ',
+		 '        <div class="time">上传于:'+res.createDate+'</div>                                   ',
+		 '        <div class="icon">                                                             ',
+		 '                    <img class="flag" data-id="'+res.projectResourceId+'" src="'+imgUrl+'">           ',
+		 '                    <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" src="/resources/images/flow/download.png"></div></a>  ',
+		 '        </div>                                                                         ',
+	     '  </div>                     ',
+	].join('');
+	return html;
+}
 

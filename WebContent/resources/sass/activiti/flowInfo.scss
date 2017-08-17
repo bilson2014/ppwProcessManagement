@@ -55,6 +55,7 @@
                 height: 53px;
                 position: relative;
                 padding-left: 30px;
+                background: white;
                 .titleName {
                     font-size: $font-size;
                     color: $gray-dark;
@@ -151,6 +152,9 @@
                         border: 1px solid $gray-light;
                         border-radius: 4px;
                         display: none;
+                        a{
+                            color:$gray !important;
+                        }
                         div {
                             height: 30px;
                             width: 100%;
@@ -263,13 +267,12 @@
                 .flowIcon {
                     display: inline-block;
                     vertical-align: middle;
-                       div:nth-child(1) {
+                    div:nth-child(1) {
                         color: white;
                     }
                     div {
                         color: $border-line;
                     }
-
                 }
                 .step2 {
                     background-position-y: 121px !important;
@@ -964,8 +967,13 @@
                 }
             }
 
+            .margin-top{
+                margin-top: 10px;
+            }
+
             .projectFilm {
                 position: relative;
+                margin-bottom: 10px;
             }
 
             .getMore {
@@ -1254,6 +1262,8 @@
                     } //版本管理
                     .controlContent {
                         padding: 30px 20px 30px 20px;
+                        max-height: 500px;
+                        overflow: auto;
                         .item {
                             margin-bottom: 20px;
                             .itemTop {
@@ -1289,18 +1299,34 @@
                                         height: 16px;
                                         margin-left: 10px;
                                     }
+                                    .flag {
+                                        margin-left: 10px !important;
+                                        position: relative;
+                                        top: 2px;
+                                    }
+                                    .download {
+                                        width: 16px;
+                                        height: 16px;
+                                        background: url(/resources/images/flow/download.png) no-repeat;
+                                        background-size: 16px 32px;
+                                        margin-left: 20px;
+                                        margin-top: 5px;
+                                        &:hover {
+                                            background-position-y: -16px;
+                                        }
+                                    }
                                 }
                                 .fileName {
                                     font-size: $font-size-base;
                                     color: $gray;
-                                    width: 220px;
+                                    width: 200px;
                                     padding-left: 29px;
                                     @include ellipsis;
                                 }
                                 .name {
                                     font-size: $font-size-base;
                                     color: $gray;
-                                    width: 100px;
+                                    width: 160px;
                                     @include ellipsis;
                                 }
                                 .time {

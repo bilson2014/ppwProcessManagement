@@ -45,13 +45,9 @@
 <input type="hidden" value="${taskId }" id="currentTaskId" />
 <input type="hidden" value="${taskName}" id="taskName" />
 <input type="hidden" value="${projectId}" id="projectId" />
-
-
-
- 
+<input type="hidden" value="${processInstanceId}" id="processInstanceId" />
 <div id="formState"></div>
  
-
 <div class="cusModel" id="cusModel">
 
      <div class="modelCard">
@@ -208,90 +204,29 @@
                    <div class="title">版本管理</div>
                    <div class="closeModel"></div>
             </div>
-            <div class="controlContent">
+            <div class="controlContent" id="controlContent">
                       <div class="item">
-                             <div class="itemTop">
+                             <div class="itemTop hide">
                                   <div class="controlOpen"></div>
                                   <div class="title">需求文档</div>
                              </div>
                              <div class="getInfoItemContent">
-                                <div class="InfoItem">
-                                  <div class="fileName">文件名</div>
-                                  <div class="name">策划人</div>
-                                  <div class="time">上传于:2017 17:59:08</div>
-                                  <div class="icon">
-                                              <img class="flag" src="/resources/images/flow/flag.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
-	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
-	                              </div>
-	                            </div>
+                                
 	                            <div class="InfoItem">
                                   <div class="fileName">文件名</div>
                                   <div class="name">策划人</div>
                                   <div class="time">上传于:2017 17:59:08</div>
                                   <div class="icon">
                                               <img class="flag" src="/resources/images/flow/flag.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
+                                              <img class="download" src="/resources/images/flow/download.png">
+	                                         <!--  <img class="look" src="/resources/images/flow/look.png">
 	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
-	                              </div>
-	                            </div>  
-	                            <div class="InfoItem">
-                                  <div class="fileName">文件名</div>
-                                  <div class="name">策划人</div>
-                                  <div class="time">上传于:2017 17:59:08</div>
-                                  <div class="icon">
-                                              <img class="flag" src="/resources/images/flow/flag.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
-	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
+	                                          <img class="download" src="/resources/images/flow/download.png"> -->
 	                              </div>
 	                            </div>    
                              </div>
                       </div>
                       
-                         <div class="item">
-                             <div class="itemTop">
-                                  <div class="controlOpen"></div>
-                                  <div class="title">需求文档</div>
-                             </div>
-                             <div class="getInfoItemContent">
-                                <div class="InfoItem">
-                                  <div class="fileName">文件名</div>
-                                  <div class="name">策划人</div>
-                                  <div class="time">上传于:2017 17:59:08</div>
-                                  <div class="icon">
-                                              <img class="flag" src="/resources/images/flow/flag.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
-	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
-	                              </div>
-	                            </div>
-	                            <div class="InfoItem">
-                                  <div class="fileName">文件名</div>
-                                  <div class="name">策划人</div>
-                                  <div class="time">上传于:2017 17:59:08</div>
-                                  <div class="icon">
-                                              <img class="flag" src="/resources/images/flow/flagRed.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
-	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
-	                              </div>
-	                            </div>  
-	                            <div class="InfoItem">
-                                  <div class="fileName">文件名</div>
-                                  <div class="name">策划人</div>
-                                  <div class="time">上传于:2017 17:59:08</div>
-                                  <div class="icon">
-                                              <img class="flag" src="/resources/images/flow/flag.png">
-	                                          <img class="look" src="/resources/images/flow/look.png">
-	                                          <img class="share" src="/resources/images/flow/share.png">
-	                                          <img class="download" src="/resources/images/flow/download.png">
-	                              </div>
-	                            </div>    
-                             </div>
-                      </div>
             </div>
      </div>
 </div>
@@ -1076,8 +1011,7 @@
 	    <div id="finishCus">完善客户信息</div>
 	    <div id="showshowExecutive">分配监制</div> -->
 	    
-	           <div class="productInfo" id="daiban">
-	                <div class="infoTitle">
+	     <div class="infoTitle">
 	                     <div class="titleName" >${flow_info.projectName}</div>
 	                     <div class="point hide">
                               <div class="showPoint">SA</div>
@@ -1086,13 +1020,17 @@
                                     <div class="cusPoint">客户评级<span>A</span></div>
                               </div>
 	                     </div>
-	                     <div class="proControl hide">
+	                     <div class="proControl">
+	                                                   项目操作
 	                         <div class="newControl">
-	                              <a href="/project/suspendProcess/${currentTaskId}"><div id="showWarn">暂停项目</div></a>
-	                              <a href="/project/activateProcess/${currentTaskId}"><div id="showWarn">取消项目</div></a>
+	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}"><div>暂停项目</div></a>
+	                              <a id="isBack" href="/project/activateProcess/${processInstanceId}"><div>恢复项目</div></a>
 	                         </div>
 	                     </div>
-	                </div>
+	      </div>
+	    
+	           <div class="productInfo" id="daiban">
+	               
 	                <div class="infoLine"></div>
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
@@ -1241,7 +1179,7 @@
 	                       
 	                        </c:if> 
 	                      <c:if test="${!empty user_info}"> 
-		                       <div class="getInfoItem">
+		                      <div class="getInfoItem">
 		                            <div class="getInfoItemTop">
 		                                 <div class="controlOpen"></div>
 		                                 <div class="info">客户信息</div>
@@ -1260,6 +1198,8 @@
 		                            </div>
 		                       </div>
 	                        </c:if>
+	                        
+	                        <c:if test="${!empty teamProduct_info || !empty teamPlan_info}"> 
 	                        <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
@@ -1271,11 +1211,13 @@
 	                                  <div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                                  <div class="contentItem">
 	                                  <c:if test="${!empty teamPlan_info}">
-		                                  <c:forEach var="item" items="${teamPlan_info}"> 
-											   <div class="item">
-		                                          <div>${item.key}</div>
-		                                          <div>${item.value}</div>
-		                                       </div>
+		                                 <c:forEach var="item" items="${teamPlan_info}"> 
+												    <c:forEach var="map" items="${item}"> 
+													    <div class="item">
+				                                          <div>${map.key}</div>
+				                                          <div>${map.value}</div>
+				                                       </div>
+												    </c:forEach> 
 										  </c:forEach> 
 							          </c:if>
 	                                       <!-- <div class="item">
@@ -1292,14 +1234,16 @@
 	                                       </div> -->
 	                                  </div>
 	                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
-	                                  <div class="contentItem">
+	                                  <div class="contentItem" data-value="${teamProduct_info}">
 	                                  
 	                                  <c:if test="${!empty teamProduct_info}">
 		                                  <c:forEach var="item" items="${teamProduct_info}"> 
-											   <div class="item">
-		                                          <div>${item.key}</div>
-		                                          <div>${item.value}</div>
-		                                       </div>
+												    <c:forEach var="map" items="${item}"> 
+													    <div class="item">
+				                                          <div>${map.key}</div>
+				                                          <div>${map.value}</div>
+				                                       </div>
+												    </c:forEach> 
 										  </c:forEach> 
 							          </c:if>
 	                            <!--            <div class="item">
@@ -1317,7 +1261,8 @@
 	                                  </div>
 	                            </div>
 	                       </div>
-	                       <c:if test="${!empty flow_info}">
+	                      </c:if> 
+	                       <c:if test="${!empty price_info}">
 	                       <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
@@ -1325,47 +1270,13 @@
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">	                                  	                                  
-		                                  <c:forEach var="item" items="${flow_info}"> 
-		                                  	  	        
-		                                  	  <c:if test="${item.key == 'projectBudget' }">
+		                                  <c:forEach var="item" items="${price_info}"> 
 													<div class="item">
 			                                          <div>${item.key}</div>
 			                                          <div>${item.value}</div>
 			                                       </div>
-												</c:if>
-												
-												 <c:if test="${item.key == 'estimatedPrice'}">
-													<div class="item">
-			                                          <div>${item.key}</div>
-			                                          <div>${item.value}</div>
-			                                       </div>
-												</c:if>                               
-																		   
 										  </c:forEach> 
 							         </div>
-	                                    <!--    <div class="item">
-	                                          <div>预估价格</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>客户项目预算</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>策划供应商预算</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>制作供应商预算</div>
-	                                          <div>内容内容</div>
-	                                       </div> -->
-	                                  
-	                                <!--   <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>制作供应商结算</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                  </div> -->
 	                            </div>
 	                       </div>
 	                        </c:if>
@@ -1410,11 +1321,11 @@
 	                            </div>
 	                       </div> -->
 	                                              
-	                   <div class="projectTitle hide">项目文件
-	                        <div class="conMod hide btn-c-r">版本管理</div>
-	                        <div class="upFile btn-c-r">上传</div>
+	                   <div class="projectTitle margin-top">项目文件
+	                        <div class="conMod btn-c-r">版本管理</div>
+	                        <div class="upFile hide btn-c-r">上传</div>
 	                   </div>
-	                       <div class="projectFilm hide">
+	                       <div class="projectFilm" id="projectFilm">
 	                             <div class="filmItem">
 	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
 	                                    <div class="filmName">文件名</div>
