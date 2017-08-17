@@ -46,6 +46,7 @@
 <input type="hidden" value="${taskName}" id="taskName" />
 <input type="hidden" value="${projectId}" id="projectId" />
 <input type="hidden" value="${processInstanceId}" id="processInstanceId" />
+
 <div id="formState"></div>
  
 <div class="cusModel" id="cusModel">
@@ -986,6 +987,21 @@
      </div>       
 </div>
 
+ <!-- 提示信息 -->
+<div class="cusModel" id="infoModel">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">操作确认</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="warnInfo ">确认操作吗</div>
+		    <div class="btnMid margin-bottom">
+                      <div class="btn-c-g" id="cancle">取消</div>
+                      <div class="btn-c-r" id="checkSure">确认</div>
+            </div>
+      </div>    
+</div>
+
 <%--  <!-- 文件上传 -->
 <div class="cusModel" id="getBillModel" style="display:block">
      <div class="modelCard">
@@ -1023,8 +1039,8 @@
 	                     <div class="proControl">
 	                                                   项目操作
 	                         <div class="newControl">
-	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}"><div>暂停项目</div></a>
-	                              <a id="isBack" href="/project/activateProcess/${processInstanceId}"><div>恢复项目</div></a>
+	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}"><div id="isPause">暂停项目</div></a>
+	                              <a id="isBack" href="/project/activateProcess/${processInstanceId}"><div id="isBack">恢复项目</div></a>
 	                         </div>
 	                     </div>
 	      </div>
@@ -1065,12 +1081,12 @@
 	                                 <img class="icons hide" src="/resources/images/flow/down.png">
 	                            </div>
 	                        </div>
-	                       <div class="setListDiv hide">
+	                       <div class="setListDiv">
 	                               <div class="ListTop">
 	                                     <div class="startTime">阶段起始时间:<span>2017.7.9</span></div>
 	                                     <div class="endTime">阶段计划完成时间<span>2017-07-09  14：00</span></div>
 	                               </div>
-	                               <div class="listContent">
+	                               <div class="listContent" id="listContent">
 	                                   <div class="listItem">
 	                                        <div class="lineStart"></div>
 	                                        <div class="time">预计：2017-07-09  14：00</div>
@@ -1394,7 +1410,7 @@
 	                                            <div class="btn-c-r">提交</div>
 	                                 </div>
 	                            </div> -->
-	                             <div class="getMore">
+	                             <div class="getMore hide">
 	                                  <div>展开更多</div>
 	                                  <div></div>
 	                             </div>

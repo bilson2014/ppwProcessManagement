@@ -152,8 +152,8 @@
                         border: 1px solid $gray-light;
                         border-radius: 4px;
                         display: none;
-                        a{
-                            color:$gray !important;
+                        a {
+                            color: $gray !important;
                         }
                         div {
                             height: 30px;
@@ -967,7 +967,7 @@
                 }
             }
 
-            .margin-top{
+            .margin-top {
                 margin-top: 10px;
             }
 
@@ -1100,7 +1100,12 @@
                         line-height: 30px;
                     }
                 }
-            } //弹窗
+            } 
+
+             .margin-bottom{
+                margin-bottom: 30px;
+             }
+            //弹窗
             .cusModel {
                 width: 100%;
                 position: fixed;
@@ -1122,6 +1127,15 @@
                     left: 50%;
                     top: 100px;
                     margin-left: -332px;
+
+                    .warnInfo {
+                        color: $red-base;
+                        font-size: $font-size-lg;
+                        text-align: center;
+                        margin-top: 20px;
+                        margin-bottom: 30px !important;
+                    }
+
                     .cardTop {
                         height: 50px;
                         border-bottom: 1px solid $border-line;

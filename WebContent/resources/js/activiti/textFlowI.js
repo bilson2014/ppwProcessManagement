@@ -9,16 +9,73 @@ $().ready(function() {
 	// 加载动态表单
 	pageInit();
 	checkState();
+	pasueOrDoing();
 	test();
 });
 
 function test(){
 	
 	var map = {"沟通阶段":[{"startTime":"2017-08-17 13:09:46","taskName":"【销售】上传项目简报","assignee":"employee_36","assigneeId":"employee_36","taskId":"117577","taskStatus":"completed"},{"startTime":"2017-08-17 14:32:06","taskName":"【销售】项目排期","assignee":"employee_36","assigneeId":"employee_36","taskId":"120006","taskStatus":"completed"},{"startTime":"2017-08-17 14:42:09","taskName":"【销售总监】确认项目","assignee":"employee_35","assigneeId":"employee_35","taskId":"122505","taskStatus":null}]};
+	function getFileModelInfo(){
+		loadData(function(res){
+			var res = res;
+			var body =$('#controlContent');
+			body.html('');
+			if(res != null && res != undefined){
+				for(var key in res) { 
+					var sethtml="";
+					var resKey = res[key];
+					if(resKey.length > 0){
+						var head =createNoHead(key);
+						sethtml += head;
+						
+						for (var int = 0; int < resKey.length; int++) {
+							 var html =createNoInfo(res[key][int]);
+							 sethtml +=html;
+						}
+						var end = "</div></div>";
+						sethtml +=end;
+						body.append(sethtml);
+					}
+	             }
+				fileCheckNo();
+				openInfoCard();
+			}
+		}, getContextPath() + '/resource/version/'+$('#projectId').val(),null);	
+	}
 	
+}
+function pasueOrDoing(){
+	
+	$('#isPause').off('click').on('click',function(){
+		 $('#infoModel').show();
+		 toDoing();
+	});
+	
+	$('#isPause').off('click').on('click',function(){
+		 $('#isBack').show();
+		 toPause();
+	});
 	
 }
 
+function toDoing(){
+	$('#cancle').off('click').on('click',function(){
+		$('#infoModel').hide();
+	});
+	$('#checkSure').off('click').on('click',function(){
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+	});
+}
+
+function toPause(){
+	$('#cancle').off('click').on('click',function(){
+		$('#infoModel').hide();
+	});
+	$('#checkSure').off('click').on('click',function(){
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+	});
+}
 
 function getFileInfo(){
 	loadData(function(res){
