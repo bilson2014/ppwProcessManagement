@@ -355,7 +355,7 @@ public class ProjectFlowController extends BaseController {
 			projectWorkFlowService.suspendProcess(processInstanceId);
 		}
 //		return mv;
-		return new ModelAndView("redirect:/project/running-task");
+		return new ModelAndView("redirect:/project/running-doing");
 	}
 
 	/**
