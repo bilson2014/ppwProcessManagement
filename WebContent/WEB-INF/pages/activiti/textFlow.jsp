@@ -49,11 +49,11 @@
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <jsp:include flush="true" page="flowMenu.jsp"></jsp:include>  
 	    
-	    	<c:if test="${!empty gTasks}">
+	     	<c:if test="${!empty gTasks}">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
                                      <div class="cardNum hide"></div>
 							</c:forEach>
-			</c:if>
+			</c:if> 
 	
 	<div class="productListArea">
 	           <div class="waitWork">
