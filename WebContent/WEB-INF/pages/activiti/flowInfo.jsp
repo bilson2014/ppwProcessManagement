@@ -59,7 +59,7 @@
 
 <div id="formState"></div>
  
-<div class="cusModel" id="cusModel" style="display:none">
+<div class="cusModel" id="cusModel" >
 
      <div class="modelCard">
             <div class="cardTop">
@@ -77,13 +77,13 @@
 	             </div>
 	              <div class="contentItem">
 	                  <div class="title">开始时间 : </div>
-	                  <div class="content">2017-11-12</div>
+	                  <div class="content" id="infoStartTime">2017-11-12</div>
 	             </div>   
 	              <div class="contentItem">
-	                  <div class="title">截止说明 : </div>
-	                  <div class="content">2017-11-12</div>
+	                  <div class="title">截止时间 : </div>
+	                  <div class="content" id="infoEndTime">2017-11-12</div>
 	             </div>
-	             <div class="itemHeight">
+	             <div class="itemHeight" id="itemHeightInfo">
 	             <div class="infoItem">
 	                       <div  class="itemTop">
 	                             <img class="logo" src="">
@@ -97,27 +97,10 @@
 	                             <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>
 	                             <input>
 	                       </div>
+	                       <div class="backInfoTalk btn-c-r">回复</div>
 	             </div>
-	             
-	              <div class="infoItem">
-	                       <div  class="itemTop">
-	                             <img class="logo" src="">
-	                              <ul>
-	                                 <li>策划人<span>发布于201021</span></li>
-	                                 <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>
-	                              </ul>
-	                       </div>
-	                       <div class="itemArea">
-	                             <div><span>负责人 : </span><span>需要调整一下</span></div>
-	                             <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>
-	                             <input>
-	                       </div>
+	           
 	             </div>
-	             </div>
-	                             <div class="getMore">
-	                                  <div>展开更多</div>
-	                                  <div></div>
-	                             </div>
             </div>
      </div>
      

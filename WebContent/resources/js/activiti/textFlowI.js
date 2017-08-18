@@ -11,13 +11,12 @@ $().ready(function() {
 	checkState();
 	pasueOrDoing();
 	getStageInfo($('#taskStage').val());
-	initLastTime();
 	
 });
 //流程信息
-function initLastTime(){
-	var time = 86400 * 10 *1000;
-	var day =  Date.parse(new Date('2017-08-13 22:33:29.0'));
+function initLastTime(ctyle,createTime){
+	var time = 86400 * ctyle *1000;
+	var day =  Date.parse(new Date(createTime));
 	var totalTime = time + day;
 	var nowData = Date.parse(new Date());
 	var checkDay = nowData - totalTime;
@@ -26,7 +25,8 @@ function initLastTime(){
 		$('#imgFlow').addClass('imgRed');
 		$('#imgWord').text('延误');
 		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
-	}else{
+	}
+	else{
 		$('#imgFlow').addClass('imgFlow');
 		$('#imgWord').text('正常');
 		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
@@ -35,9 +35,11 @@ function initLastTime(){
 
 function stageTalkEven(){
 	$('.findTalk').off('click').on('click',function(){
+		var id = $(this).attr('data-id');
+		$('#cusModel').show();
 		loadData(function(res){
 			var ress = res;
-		}, getContextPath() + '/project/task-detail/'+$(this).attr('data-id'),null);
+		}, getContextPath() + '/project/task-detail/'+id,null);
 	});
 }
 
@@ -82,6 +84,7 @@ function createStageInfo(res,state){
 function getStageInfo(stage){	
 			var keys = stage;
 			loadData(function(res){
+				initLastTime(res.projectCycle,res.createDate);
 				if(res != null && res != undefined){
 						var sethtml="";
 						var resKey = res[keys];
@@ -791,7 +794,7 @@ function createTalkInfo(res){
 	if(res.fromUrl == null){
 		var  imgUrl = "/resources/images/flow/def.png";
 	}else{
-		var  imgUrl = getContextPath()+res.fromUrl;
+		var  imgUrl = getDfsHostName()+res.fromUrl;
 	}
 	var html = [
 	    '<div class="areaItem">',

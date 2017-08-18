@@ -24,7 +24,8 @@ function getDate(){
 	if(setTime.length >= 0){
 		var nowData = Date.parse(new Date());
         for (var i = 0; i < setTime.length; i++) {
-        	var test = $(setTime[i]).text();
+           var oDate = new Date();
+           var nowDate = formatDate($(setTime[i]).text());
 		   var time =Date.parse($(setTime[i]).text());
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;

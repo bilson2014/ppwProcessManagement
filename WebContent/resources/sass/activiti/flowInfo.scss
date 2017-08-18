@@ -194,6 +194,7 @@
                     }
                     div {
                         color: $border-line;
+                        cursor: pointer;
                     }
                 }
                 .step2 {
@@ -275,12 +276,13 @@
                     }
                 }
 
-                .imgRed{
-                     background: url(/resources/images/flow/setNorRed.png) no-repeat !important;
-                      background-size: 82px 82px !important;
+                .imgRed {
+                    background: url(/resources/images/flow/setNorRed.png) no-repeat !important;
+                    background-size: 82px 82px !important;
                 }
 
-                .imgFlow,.imgRed {
+                .imgFlow,
+                .imgRed {
                     width: 82px;
                     height: 82px;
                     background: url(/resources/images/flow/setNor.png) no-repeat;
@@ -2070,6 +2072,18 @@
                                         margin-left: 5px;
                                     }
                                 }
+                            }
+
+                            .backInfoTalk {
+                                width: 80px;
+                                height: 20px;
+                                font-size: 1.2rem;
+                                color: white;
+                                text-align: center;
+                                line-height: 20px;
+                                position: absolute;
+                                right: 0;
+                                border-radius: 4px;
                             }
 
                             .itemArea {
