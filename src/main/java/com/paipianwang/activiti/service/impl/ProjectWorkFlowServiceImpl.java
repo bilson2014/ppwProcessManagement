@@ -881,7 +881,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			
 			((List<Object>) result.get(cycle.getStage())).add(item);
 		}	
-		//未来任务节点
+		//未来任务节点 futher
 		
 		//流程周期与创建时间
 		List<String> flowList=new ArrayList<>();
@@ -904,7 +904,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		item.put("taskStatus",task.getDeleteReason());//状态
 		item.put("dueDate", task.getDueDate());
 		
-		String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
+		
+//		String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
+		String taskDescription=getCycleByTask(task.getTaskDefinitionKey()).getDescription();
 		
 		item.put("taskDescription",taskDescription);
 		return item;
