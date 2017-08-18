@@ -1064,22 +1064,21 @@ function formatDate(time)   {
     var   hour=now.getHours();     
     var   minute=now.getMinutes();     
     var   second=now.getSeconds();   
-    return year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
+    return " "+year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
  }     
 //时间戳
-function getTise(time) {
-	
-    var oDate = new Date(time);
-    var year = oDate.getFullYear();
-    var hour = oDate.getHours();
-    var Minutes = oDate.getMinutes();
-    var second= oDate.getSeconds();
-    var setDay ="";
-    var date= oDate.getDate(); 
-    if(date > 0){
-    	setDay = date+" 天 ";
-    }
-    return setDay + hour + ' 时 ' + Minutes +" 分 ";
+function getTimeString(time) {
+    var days=Math.floor(time/(24*3600*1000))
+    var dayTime=time%(24*3600*1000)    //计算天数后剩余的毫秒数
+    var hours=Math.floor(dayTime/(3600*1000))
+     //计算相差分钟数
+	var hourTime=dayTime%(3600*1000)        //计算小时数后剩余的毫秒数
+	var minutes=Math.floor(hourTime/(60*1000))
+/*	 //计算相差秒数
+	var leave3=hourTime%(60*1000)      //计算分钟数后剩余的毫秒数
+	var seconds=Math.round(leave3/1000)*/
+
+	return days +' 天 ' + hours +" 小时 " + minutes +" 分钟";
 }
 
 

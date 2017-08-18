@@ -24,25 +24,22 @@ function getDate(){
 	if(setTime.length >= 0){
 		var nowData = Date.parse(new Date());
         for (var i = 0; i < setTime.length; i++) {
-           var oDate = new Date();
-           var nowDate = formatDate($(setTime[i]).text());
-		   var time =Date.parse($(setTime[i]).text());
+		   var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;
 		   var passTime = (nowData - time);
-		   getTise(lastTime);
 		   var getTime =$(setTime[i]).text();
 		   if(lastTime < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 已超时 '+getTise(passTime));  //3
+			   $(setTime[i]).text(' 已超时 '+getTimeString(passTime));  //3
 		   }
 		   if(lastTime >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');
-			   $(setTime[i]).text('剩余 '+getTise(lastTime));
+			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
 		   if(lastTime <3 && lastHour>=0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoY.png');
-			   $(setTime[i]).text('剩余'+getTise(lastTime));
+			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
 		   
 	    }		

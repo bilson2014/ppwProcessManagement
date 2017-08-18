@@ -63,17 +63,17 @@
 
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">完善客户信息</div>
+                   <div class="title" id="infoNameTitle">完善客户信息</div>
                    <div class="state">
-	                   <img src="/resources/images/provider/toWait.png">
-	                   <div>进行中</div>
+	                   <img id="stateImg" src="/resources/images/provider/toWait.png">
+	                   <div id="stateWord"></div>
                    </div>
                    <div class="closeModel"></div>
             </div>
             <div class="cardContent">
                  <div class="contentItem">
 	                  <div class="title">事件说明 : </div>
-	                  <div class="content">打算打打三大所大所多</div>
+	                  <div class="content" id="stateContent">打算打打三大所大所多</div>
 	             </div>
 	              <div class="contentItem">
 	                  <div class="title">开始时间 : </div>

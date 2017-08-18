@@ -11,8 +11,13 @@ $().ready(function() {
 	checkState();
 	pasueOrDoing();
 	getStageInfo($('#taskStage').val());
+	getTimeString();
 	
 });
+
+
+
+
 //流程信息
 function initLastTime(ctyle,createTime){
 	var time = 86400 * ctyle *1000;
@@ -38,9 +43,56 @@ function stageTalkEven(){
 		var id = $(this).attr('data-id');
 		$('#cusModel').show();
 		loadData(function(res){
-			var ress = res;
+			
+			initStageInfoTop(res);
+			crearteInfoCard(res);
+			
 		}, getContextPath() + '/project/task-detail/'+id,null);
 	});
+}
+
+function initStageInfoTop(res){
+	$('#infoNameTitle').text(res.taskName);
+	$('#stateContent').text(res.taskDescription);
+	$('#infoStartTime').text(formatDate(res.startTime));
+	$('#infoEndTime').text(formatDate(res.dueDate));
+	var checkStatus = res.taskStatus;
+	if(checkStatus == "completed"){
+		$('#stateImg').attr('src',"/resources/images/flow/toComplet.png");
+		$('#stateWord').text('已完成');
+		$('#stateWord').attr('style','color:#79D01B')
+	}
+	if(checkStatus == "running"){
+		$('#stateImg').attr('src',"/resources/images/flow/toWati.png");
+		$('#stateWord').text('进行中');
+		$('#stateWord').attr('style','color:#fe5453')
+	}
+	if(checkStatus == "futher"){
+		$('#stateImg').attr('src',"/resources/images/flow/toStart.png");
+		$('#stateWord').text('未开始');
+		$('#stateWord').attr('style','color:#F5A623')
+	}
+}
+
+function crearteInfoCard(){		
+	var html = [
+				'<div class="infoItem">',
+				'    <div  class="itemTop">',
+				'          <img class="logo" src="">                                                                                ',
+				'           <ul>                                                                                                    ',
+				'              <li>策划人<span>发布于201021</span></li>                                                             ',
+				'              <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li',>
+				'           </ul>                                                                                                   ',
+				'    </div>                                                                                                         ',
+				'    <div class="itemArea">                                                                                         ',
+				'          <div><span>负责人 : </span><span>需要调整一下</span></div>                                               ',
+				'          <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>                                      ',
+				'          <input>                                                                                                  ',
+				'    </div>                                                                                                         ',
+				'    <div class="backInfoTalk btn-c-r">回复</div>                                                                   ',
+				'</div>                                                                                                       '
+			].join('');
+			return html;
 }
 
 
