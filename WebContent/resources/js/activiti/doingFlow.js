@@ -52,35 +52,12 @@ function getDate(){
         for (var i = 0; i < otherTime.length; i++) {
 		   var time =Date.parse($(otherTime[i]).text())/1000;
 		   var getTime = Date.parse($(otherTime[i]).text());
-		   var d = new Date(getTime);
-		   $(otherTime[i]).text('截止于'+formatDate(d));
+		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
 	}
 }
 
-function formatDate(now)   {     
-    var   year=now.getFullYear();     
-    var   month=now.getMonth()+1;     
-    var   date=now.getDate();     
-    var   hour=now.getHours();     
-    var   minute=now.getMinutes();     
-    var   second=now.getSeconds();   
-    return year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
- }     
-//时间戳
-function getTise(time) {
-    var oDate = new Date(time);
-    var year = oDate.getFullYear();
-    var hour = oDate.getHours();
-    var Minutes = oDate.getMinutes();
-    var second= oDate.getSeconds();
-    var setDay ="";
-    var date= oDate.getDate(); 
-    if(date > 0){
-    	setDay = date+" 天 ";
-    }
-    return setDay + hour + ' 时 ' + Minutes +" 分 ";
-}
+
 
 
 

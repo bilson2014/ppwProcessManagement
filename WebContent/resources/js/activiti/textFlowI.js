@@ -10,41 +10,108 @@ $().ready(function() {
 	pageInit();
 	checkState();
 	pasueOrDoing();
-	test();
-});
-
-function test(){
+	getStageInfo($('#taskStage').val());
+	initLastTime();
 	
-	var map = {"沟通阶段":[{"startTime":"2017-08-17 13:09:46","taskName":"【销售】上传项目简报","assignee":"employee_36","assigneeId":"employee_36","taskId":"117577","taskStatus":"completed"},{"startTime":"2017-08-17 14:32:06","taskName":"【销售】项目排期","assignee":"employee_36","assigneeId":"employee_36","taskId":"120006","taskStatus":"completed"},{"startTime":"2017-08-17 14:42:09","taskName":"【销售总监】确认项目","assignee":"employee_35","assigneeId":"employee_35","taskId":"122505","taskStatus":null}]};
-	function getFileModelInfo(){
+});
+//流程信息
+function initLastTime(){
+	var time = 86400 * 10 *1000;
+	var day =  Date.parse(new Date('2017-08-13 22:33:29.0'));
+	var totalTime = time + day;
+	var nowData = Date.parse(new Date());
+	var checkDay = nowData - totalTime;
+	
+	if(checkDay >= 0){
+		$('#imgFlow').addClass('imgRed');
+		$('#imgWord').text('延误');
+		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
+	}else{
+		$('#imgFlow').addClass('imgFlow');
+		$('#imgWord').text('正常');
+		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
+	}	
+}
+
+function stageTalkEven(){
+	$('.findTalk').off('click').on('click',function(){
 		loadData(function(res){
-			var res = res;
-			var body =$('#controlContent');
-			body.html('');
-			if(res != null && res != undefined){
-				for(var key in res) { 
-					var sethtml="";
-					var resKey = res[key];
-					if(resKey.length > 0){
-						var head =createNoHead(key);
-						sethtml += head;
-						
-						for (var int = 0; int < resKey.length; int++) {
-							 var html =createNoInfo(res[key][int]);
-							 sethtml +=html;
-						}
-						var end = "</div></div>";
-						sethtml +=end;
-						body.append(sethtml);
-					}
-	             }
-				fileCheckNo();
-				openInfoCard();
-			}
-		}, getContextPath() + '/resource/version/'+$('#projectId').val(),null);	
+			var ress = res;
+		}, getContextPath() + '/project/task-detail/'+$(this).attr('data-id'),null);
+	});
+}
+
+
+function createStageInfo(res,state){
+	var whatLine = "lineOne";
+	if(state == "s"){
+		whatLine = "lineStart";
+	}
+	if(state == "e"){
+		whatLine = "lineEnd";
 	}
 	
+	var checkStatus = res.taskStatus;
+	
+	if(checkStatus == "completed"){
+		var time = '<div class="time">'+formatDate(res.startTime)+'</div>';
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toComplet.png"><div class="green">已完成</div></div>';
+	}
+	if(checkStatus == "running"){
+		var time = '<div class="time">始于'+formatDate(res.startTime)+'</div>'; 
+		var imgUrl = '<div class="yellow"><img src="/resources/images/flow/toWati.png"><div class="green">进行中</div></div>';
+	}
+	if(checkStatus == "futher"){
+		var time = '<div class="time">预计'+formatDate(res.startTime)+'</div>';   
+		var imgUrl = '<div class="redWord"><img src="/resources/images/flow/toStart.png"><div class="green">未开始</div></div>';
+	}
+    
+	var html = [
+   '<div class="listItem">                                                                                          ',
+   '     <div class="'+whatLine+'"></div>                                                                              ',
+   '     '+time+'                                                          ',
+   '     <div class="user">'+res.taskName+'</div>                                                                          ',
+   '     <div class="info hide"></div>                                                                           ',
+   '     '+imgUrl+' ',
+   '     <div class="find findTalk" data-id="'+res.taskId+'">查看</div>                                                                               ',
+   '</div>                                                                                                          ',
+	].join('');
+	return html;
 }
+
+function getStageInfo(stage){	
+			var keys = stage;
+			loadData(function(res){
+				if(res != null && res != undefined){
+						var sethtml="";
+						var resKey = res[keys];
+						var Stage = $('#taskStage').val();
+						if(resKey.length > 0){
+							var body =$('#listContent');
+							body.html('');
+							var setBody = "";
+							for (var int = 0; int < resKey.length; int++) {
+								 if(int == 0){
+									 var html =createStageInfo(resKey[int],"s"); 
+									 $('#startTime').text(formatDate(resKey[int].startTime));
+								 }if(int == resKey.length - 1){
+									 var html =createStageInfo(resKey[int],"e"); 
+								 }
+								 if(int > 0 && int != resKey.length - 1)
+								 {
+									 var html =createStageInfo(resKey[int],'u');
+								 }
+								 setBody =html;
+								 body.append(setBody);
+							}
+							stageTalkEven();
+						}
+				}
+			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
+}
+
+//流程信息end
+
 function pasueOrDoing(){
 	
 	$('#isPause').off('click').on('click',function(){
@@ -115,6 +182,14 @@ function checkState(){
     
 }
 
+function stageEven(){
+	
+	$('.stageTask').off('click').on('click',function(){
+		getStageInfo($(this).attr('data-id'));
+	});
+	
+}
+
 function pageInit(){
 	$('#toFinish').off('click').on('click',function(){
 		$('#autoSet').show();
@@ -142,6 +217,8 @@ function pageInit(){
 	 $('.flowIcon').addClass('step5');
  }
  
+ 
+    stageEven();
     addForm();
 	openInfoCard();
 	initEvenInfo();
@@ -839,7 +916,7 @@ function createFileInfo(res){
         '<div class="filmName">'+checkName+'</div>                         ',
         '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
         '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
-        '<div class="time"><div>'+res.createDate+'</div></div>        ',
+        '<div class="time"><div>'+formatDate(res.createDate)+'</div></div>        ',
         '<div class="icon">                                         ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
@@ -867,7 +944,6 @@ function getFileModelInfo(){
 				if(resKey.length > 0){
 					var head =createNoHead(key);
 					sethtml += head;
-					
 					for (var int = 0; int < resKey.length; int++) {
 						 var html =createNoInfo(res[key][int]);
 						 sethtml +=html;
@@ -926,7 +1002,7 @@ function createNoInfo(res){
 		 ' <div class="InfoItem">                                                                ',
 		 '        <div class="fileName">'+checkName+'</div>                                             ',
 		 '        <div class="name">'+res.uploaderName+'</div>                                                 ',
-		 '        <div class="time">上传于:'+res.createDate+'</div>                                   ',
+		 '        <div class="time">上传于:'+formatDate(res.createDate)+'</div>                                   ',
 		 '        <div class="icon">                                                             ',
 		 '                    <img class="flag" data-id="'+res.projectResourceId+'" src="'+imgUrl+'">           ',
 		 '                    <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" src="/resources/images/flow/download.png"></div></a>  ',

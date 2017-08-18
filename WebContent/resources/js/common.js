@@ -1056,3 +1056,30 @@ function initSelect(){
 }
 
 
+function formatDate(time)   {
+	var now = new Date(time);
+    var   year=now.getFullYear();     
+    var   month=now.getMonth()+1;     
+    var   date=now.getDate();     
+    var   hour=now.getHours();     
+    var   minute=now.getMinutes();     
+    var   second=now.getSeconds();   
+    return year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
+ }     
+//时间戳
+function getTise(time) {
+	
+    var oDate = new Date(time);
+    var year = oDate.getFullYear();
+    var hour = oDate.getHours();
+    var Minutes = oDate.getMinutes();
+    var second= oDate.getSeconds();
+    var setDay ="";
+    var date= oDate.getDate(); 
+    if(date > 0){
+    	setDay = date+" 天 ";
+    }
+    return setDay + hour + ' 时 ' + Minutes +" 分 ";
+}
+
+

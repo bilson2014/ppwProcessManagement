@@ -159,9 +159,9 @@ $ba:#bababa; */
                         width: 80px;
                         height: 20px;
                         border-radius: 4px;
-                        background: $red-base;
-                        color: white;
-                        line-height: 20px;
+                        border:1px solid $red-base;
+                        color: $red-base;
+                        line-height: 18px;
                         text-align: center;
                         font-size: $font-size-sm;
                         position: absolute;
