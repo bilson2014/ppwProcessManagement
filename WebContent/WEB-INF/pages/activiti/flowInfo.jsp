@@ -65,7 +65,7 @@
             <div class="cardTop">
                    <div class="title" id="infoNameTitle">完善客户信息</div>
                    <div class="state">
-	                   <img id="stateImg" src="/resources/images/provider/toWait.png">
+	                   <img id="stateImg" src="/resources/images/flow/toStart.png">
 	                   <div id="stateWord"></div>
                    </div>
                    <div class="closeModel"></div>

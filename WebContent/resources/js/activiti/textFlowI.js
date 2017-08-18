@@ -41,21 +41,41 @@ function initLastTime(ctyle,createTime){
 function stageTalkEven(){
 	$('.findTalk').off('click').on('click',function(){
 		var id = $(this).attr('data-id');
+		var name = $(this).attr('data-name');
+		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
-		loadData(function(res){
-			
-			initStageInfoTop(res);
-			crearteInfoCard(res);
-			
+		loadData(function(res){		
+			initStageInfoTop(res);	
+			loadStageInfoEven();
 		}, getContextPath() + '/project/task-detail/'+id,null);
+		
 	});
+}
+
+function loadStageInfoEven(name){
+	loadData(function(res){	
+		
+		var body =$('#itemHeightInfo');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =crearteInfoCard(res[int]);
+				   body.append(html);
+			}
+			openInfoCard();
+			infoAddReplyEven();
+		}
+	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
+		projectId:$('#projectId').val(),
+		taskName:$('#infoNameTitle').attr('data-name')
+	}));
 }
 
 function initStageInfoTop(res){
 	$('#infoNameTitle').text(res.taskName);
 	$('#stateContent').text(res.taskDescription);
 	$('#infoStartTime').text(formatDate(res.startTime));
-	$('#infoEndTime').text(formatDate(res.dueDate));
+	$('#infoEndTime').text(formatDate(res.endTime));
 	var checkStatus = res.taskStatus;
 	if(checkStatus == "completed"){
 		$('#stateImg').attr('src',"/resources/images/flow/toComplet.png");
@@ -74,25 +94,61 @@ function initStageInfoTop(res){
 	}
 }
 
-function crearteInfoCard(){		
+function crearteInfoCard(res){		
+	var  children= res.children;
+	var body = '';
+	if(children != null && children != undefined && children !=""){
+		for (var int = 0; int < children.length; int++) {
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span></div>';
+		}
+	}
+	if(res.fromUrl == null){
+		var  imgUrl = "/resources/images/flow/def.png";
+	}else{
+		var  imgUrl = getDfsHostName()+res.fromUrl;
+	}
+
 	var html = [
 				'<div class="infoItem">',
 				'    <div  class="itemTop">',
-				'          <img class="logo" src="">                                                                                ',
+				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li>策划人<span>发布于201021</span></li>                                                             ',
-				'              <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>',
+				'              <li>'+res.fromName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
+				'              <li><span>'+res.taskName+'</span> <img class="modelOpen openItem" src="/resources/images/flow/areaMore.png"></li>',
 				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
-				'          <div><span>负责人 : </span><span>需要调整一下</span></div>                                               ',
-				'          <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>                                      ',
+				'              '+body+'                                       ',
 				'          <input>                                                                                                  ',
 				'    </div>                                                                                                         ',
-				'    <div class="backInfoTalk btn-c-r">回复</div>                                                                   ',
+				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>                                                                   ',
 				'</div>                                                                                                       '
 			].join('');
 			return html;
+}
+
+function infoAddReplyEven(){
+	
+	 $('.backInfoTalk').off('click').on('click',function(){
+		    var projectId = $(this).attr('data-projectId');
+		    var name = $(this).attr('data-name');
+		    var parentId = $(this).attr('data-parentId');
+		    var content = $(this).parent().find('.itemArea').find('input').val();
+		    if(content != ""){
+				loadData(function(res){	
+		           if(res.code == 200){
+		            loadStageInfoEven();
+		            initAllTalk();
+		           }
+				}, getContextPath() + '/message/addReply',$.toJSON({
+					projectId:projectId,
+					taskName:name,
+					parentId:parentId,
+					content:content
+				}));
+		    }
+	 });
+	
 }
 
 
@@ -113,11 +169,11 @@ function createStageInfo(res,state){
 	}
 	if(checkStatus == "running"){
 		var time = '<div class="time">始于'+formatDate(res.startTime)+'</div>'; 
-		var imgUrl = '<div class="yellow"><img src="/resources/images/flow/toWati.png"><div class="green">进行中</div></div>';
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toWati.png"><div class="yellow">进行中</div></div>';
 	}
 	if(checkStatus == "futher"){
 		var time = '<div class="time">预计'+formatDate(res.startTime)+'</div>';   
-		var imgUrl = '<div class="redWord"><img src="/resources/images/flow/toStart.png"><div class="green">未开始</div></div>';
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toStart.png"><div class="redWord">未开始</div></div>';
 	}
     
 	var html = [
@@ -127,7 +183,7 @@ function createStageInfo(res,state){
    '     <div class="user">'+res.taskName+'</div>                                                                          ',
    '     <div class="info hide"></div>                                                                           ',
    '     '+imgUrl+' ',
-   '     <div class="find findTalk" data-id="'+res.taskId+'">查看</div>                                                                               ',
+   '     <div class="find findTalk" data-id="'+res.taskId+'"  data-name="'+res.taskName+'">查看</div>                                                                               ',
    '</div>                                                                                                          ',
 	].join('');
 	return html;
@@ -169,15 +225,15 @@ function getStageInfo(stage){
 
 function pasueOrDoing(){
 	
-	$('#isPause').off('click').on('click',function(){
+/*	$('#isPause').off('click').on('click',function(){
 		 $('#infoModel').show();
 		 toDoing();
 	});
 	
 	$('#isPause').off('click').on('click',function(){
-		 $('#isBack').show();
+		 $('#infoModel').show();
 		 toPause();
-	});
+	});*/
 	
 }
 
