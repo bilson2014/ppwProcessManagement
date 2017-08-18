@@ -20,12 +20,9 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.persistence.entity.TaskEntity;
-import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.NativeExecutionQuery;
@@ -40,9 +37,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
-import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
-import com.paipianwang.pat.common.enums.UserLevel;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.indent.entity.IndentSource;
@@ -382,13 +377,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		try {
-			// TODO 需要完成系统留言
-			// 节点名称
+			// 需要完成系统留言
 			String taskName = task.getName();
-			// 办理人 employee_36
-			String activitiUserId = task.getAssignee();
-			Date date = new Date();
-			
 			PmsProjectMessage message=new PmsProjectMessage();
 			message.setFromId(userId);
 			message.setFromGroup(StringUtils.join(userGroup, ","));
@@ -854,7 +844,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public Map<String,List> getProjectTaskList(String projectId) {
+	public Map<String,Object> getProjectTaskList(String projectId) {
 		//已进行任务节点
 		List<HistoricTaskInstance> historyInstance=historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(projectId).list();//.finished()
 		
@@ -864,7 +854,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 		List<User> users = identityService.createUserQuery().list();
 		
-		Map<String,List> result=new HashMap<String,List>();
+		Map<String,Object> result=new HashMap<String,Object>();
 		
 		for(HistoricTaskInstance history:historyInstance){
 			
@@ -876,7 +866,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			//操作人
 			Map<String,Object> item=new HashMap<>();
 			
-			item.put("startTime", history.getCreateTime()==null?"":DateUtils.getDateByFormatStr(history.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));//时间格式
+			item.put("startTime", history.getCreateTime());//时间格式
 			item.put("assigneeId",history.getAssignee());
 			for(User user:users){
 				if(user.getId().equals(history.getAssignee())){
@@ -886,21 +876,35 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			}
 			item.put("taskName", history.getName());
 			item.put("taskId",history.getId());
-			item.put("taskStatus",history.getDeleteReason());
+			item.put("taskStatus",history.getDeleteReason()==null?"running":history.getDeleteReason());//状态
+			item.put("dueDate", history.getDueDate());
 			
-			result.get(cycle.getStage()).add(item);
+			((List<Object>) result.get(cycle.getStage())).add(item);
 		}	
 		//未来任务节点
+		
+		//流程周期与创建时间
+		List<String> flowList=new ArrayList<>();
+		flowList.add("projectCycle");
+		flowList.add("createDate");
+		Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
+		result.put("projectCycle",projectFlow.get("projectCycle"));
+		result.put("createDate",projectFlow.get("createDate"));
 		return result;
 	}
 
 	@Override
 	public Map<String, Object> getTaskInfo(String taskId) {
-		Task task=taskService.createTaskQuery().taskId(taskId).singleResult();
+		HistoricTaskInstance task=historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
 		Map<String,Object> item=new HashMap<>();
 		item.put("taskId", task.getId());
+		item.put("startTime",task.getCreateTime());
+		item.put("endTime",task.getEndTime());
+		item.put("taskName", task.getName());
+		item.put("taskStatus",task.getDeleteReason());//状态
+		item.put("dueDate", task.getDueDate());
 		
-		String taskDescription = (String) taskService.getVariable(task.getTaskDefinitionKey(), "task_description");
+		String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
 		
 		item.put("taskDescription",taskDescription);
 		return item;
