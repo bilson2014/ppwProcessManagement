@@ -1068,8 +1068,9 @@ function formatDate(time)   {
  }     
 //时间戳
 function getTimeString(time) {
-    var days=Math.floor(time/(24*3600*1000))
-    var dayTime=time%(24*3600*1000)    //计算天数后剩余的毫秒数
+	var timeAbs = Math.abs(time);
+    var days=Math.floor(timeAbs/(24*3600*1000))
+    var dayTime=timeAbs%(24*3600*1000)    //计算天数后剩余的毫秒数
     var hours=Math.floor(dayTime/(3600*1000))
      //计算相差分钟数
 	var hourTime=dayTime%(3600*1000)        //计算小时数后剩余的毫秒数
@@ -1078,7 +1079,7 @@ function getTimeString(time) {
 	var leave3=hourTime%(60*1000)      //计算分钟数后剩余的毫秒数
 	var seconds=Math.round(leave3/1000)*/
 
-	return days +' 天 ' + hours +" 小时 " + minutes +" 分钟";
+	return " " + days +' 天 ' + hours +" 小时 " + minutes +" 分钟";
 }
 
 

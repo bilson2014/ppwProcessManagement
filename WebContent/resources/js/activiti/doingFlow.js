@@ -27,11 +27,10 @@ function getDate(){
 		   var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;
-		   var passTime = (nowData - time);
 		   var getTime =$(setTime[i]).text();
 		   if(lastTime < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 已超时 '+getTimeString(passTime));  //3
+			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime));  //3
 		   }
 		   if(lastTime >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');

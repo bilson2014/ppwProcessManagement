@@ -1075,11 +1075,11 @@
 	                        </div>
 	                       <div class="setListDiv">
 	                               <div class="ListTop">
-	                                     <div class="startTime" >阶段起始时间 : <span id="startTime">2017.7.9</span></div>
-	                                     <div class="endTime hide">阶段计划完成时间<span>2017-07-09  14：00</span></div>
+	                                     <div class="startTime" >阶段起始时间 : <span id="startTime"></span></div>
+	                                     <div class="endTime hide">阶段计划完成时间<span></span></div>
 	                               </div>
 	                               <div class="listContent" id="listContent">
-	                                   <div class="listItem">
+	                                  <!--  <div class="listItem">
 	                                        <div class="lineStart"></div>
 	                                        <div class="time">预计：2017-07-09  14：00</div>
 	                                        <div class="user">策划人AAA</div>
@@ -1118,7 +1118,7 @@
 	                                        <div class="info">各种信息</div>
 	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="gray">未开始</div></div>
 	                                        <div class="find">查看</div>
-	                                   </div>
+	                                   </div> -->
 	                               </div>
 	                       </div>
 	                       <c:if test="${!empty synergyList}"> 

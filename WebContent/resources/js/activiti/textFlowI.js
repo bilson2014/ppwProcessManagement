@@ -81,7 +81,7 @@ function crearteInfoCard(){
 				'          <img class="logo" src="">                                                                                ',
 				'           <ul>                                                                                                    ',
 				'              <li>策划人<span>发布于201021</span></li>                                                             ',
-				'              <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li',>
+				'              <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>',
 				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
