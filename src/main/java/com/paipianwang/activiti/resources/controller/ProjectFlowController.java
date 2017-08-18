@@ -398,8 +398,8 @@ public class ProjectFlowController extends BaseController {
 		return new ModelAndView("redirect:/project/suspend-task");
 	}
 	@RequestMapping("/project-task/{projectId}")
-	public Map<String, List> getProjectTaskList(@PathVariable("projectId") final String projectId) {
-		Map<String,List> result=projectWorkFlowService.getProjectTaskList(projectId);
+	public Map<String, Object> getProjectTaskList(@PathVariable("projectId") final String projectId) {
+		Map<String,Object> result=projectWorkFlowService.getProjectTaskList(projectId);
 		return result;
 	}
 	@RequestMapping("/task-detail/{taskId}")
