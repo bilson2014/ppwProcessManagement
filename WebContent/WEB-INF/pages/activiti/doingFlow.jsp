@@ -49,13 +49,19 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                    <div class="createPro">
+	                    <div class="createPro" id="toCreate">
 	                        <div class="newAdd"></div>
-	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
+	                        <div data-value="/project/start/project">新建项目</div>
 	                    </div>
 	                </div>
 	           
 	                <div class="lineTop"></div>
+	                
+	                 <c:if test="${empty gTasks}">
+	                 </c:if>
+	                 
+	                 <div class="nodaiban">当前没有待办任务</div>
+	                
 	                <c:if test="${!empty gTasks}">
 	                <div class="title">
 	                     <div class="titleName" id="upName">待办任务</div>

@@ -80,16 +80,16 @@
 	                  <div class="content" id="infoStartTime">2017-11-12</div>
 	             </div>   
 	              <div class="contentItem">
-	                  <div class="title">截止时间 : </div>
+	                  <div class="title" id="infoEndTitle">截止时间 : </div>
 	                  <div class="content" id="infoEndTime">2017-11-12</div>
 	             </div>
 	             <div class="itemHeight" id="itemHeightInfo">
-	             <div class="infoItem">
+	             <!-- <div class="infoItem">
 	                       <div  class="itemTop">
 	                             <img class="logo" src="">
 	                              <ul>
-	                                 <li>策划人<span>发布于201021</span></li>
-	                                 <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>
+	                                 <li><span></span></li>
+	                                 <li><span></span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>
 	                              </ul>
 	                       </div>
 	                       <div class="itemArea">
@@ -98,7 +98,7 @@
 	                             <input>
 	                       </div>
 	                       <div class="backInfoTalk btn-c-r">回复</div>
-	             </div>
+	             </div> -->
 	           
 	             </div>
             </div>
@@ -1126,12 +1126,16 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">团队信息</div>
-
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                            <c:forEach var="item" items="${synergyList}"> 
 											  <div class="imgItem">
-	                                      <img src="${file_locate_storage_path }${item.imgUrl}">
+										  <c:if test="${!empty item.imgUrl}"> 
+	                                          <img src="${file_locate_storage_path }${item.imgUrl}">
+	                                      </c:if>
+	                                       <c:if test="${empty item.imgUrl}"> 
+	                                          <img src="/resources/images/flow/def.png">
+	                                      </c:if>
 	                                      <ul>
 	                                          <li>${item.employeeName}</li>
 	                                          <li>${item.employeeGroup}</li>
@@ -1195,10 +1199,6 @@
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
-		                                  <div class="item">
-			                                          <div>${item.key}</div>
-			                                          <div>${item.value}</div>
-			                               </div>
 			                                  <c:forEach var="item" items="${user_info}"> 
 												   <div class="item">
 			                                          <div>${item.key}</div>
@@ -1381,7 +1381,7 @@
 	                       <div class="projectTitle">留言评论区</div>
 	                       <div class="toSetArea">
 	                             <textarea id="talkInfo"></textarea>
-	                             <div class="upInfo">
+	                             <div class="upInfo" style="display:block">
 	                                 <div class="btn-c-r" id="submitTalkInfo">提交</div>
 	                             </div>
 	                       </div>
