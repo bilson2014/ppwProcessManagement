@@ -27,16 +27,28 @@ function initLastTime(ctyle,createTime){
 	var nowData = Date.parse(new Date());
 	var checkDay = nowData - totalTime;
 	
-	if(checkDay >= 0){
-		$('#imgFlow').addClass('imgRed');
-		$('#imgWord').text('延误');
-		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
-	}
-	else{
-		$('#imgFlow').addClass('imgFlow');
-		$('#imgWord').text('正常');
-		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
-	}	
+	
+	var href = window.location.href;
+    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+   
+    if(state.trim() == "pause"){
+    	$('#imgFlow').addClass('imgRed');
+		$('#imgWord').text('暂停');
+		$('#lastTimeWord').text("");
+    }else{
+    	if(checkDay >= 0){
+    		$('#imgFlow').addClass('imgRed');
+    		$('#imgWord').text('延误');
+    		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
+    	}
+    	else{
+    		$('#imgFlow').addClass('imgFlow');
+    		$('#imgWord').text('正常');
+    		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
+    	}	
+    }
+	
+
 }
 
 function stageTalkEven(){

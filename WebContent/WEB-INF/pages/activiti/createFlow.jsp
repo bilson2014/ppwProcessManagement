@@ -134,7 +134,7 @@
 	                       <input readonly class="noborder" id="pf_createDate" name="pf_createDate"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
-	                       <div class="itemTitle">项目周期(天数)<span>*</span></div>
+	                       <div class="itemTitle">项目周期 (天数)<span>*</span></div>
 	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
@@ -302,7 +302,7 @@
 		      </div>
 		      
 		      <div class="btnMid">
-		          <div class="btn-c-g">取消</div>
+		          <a href="http://newlogic.apaipian.com"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>

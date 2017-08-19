@@ -58,7 +58,7 @@
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">
-	                     <div class="titleName" id="upName">暂停任务</div>
+	                     <div class="titleName" id="upName">暂停任务(<span id="otherNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="setCard">
 	                
@@ -78,7 +78,7 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="lastTime pauseTime">${staff.task.dueDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

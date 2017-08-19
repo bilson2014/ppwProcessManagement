@@ -20,6 +20,9 @@ function initPageEven(){
 //获取日期时间
 function getDate(){
 	
+	$('#daiNum').text($('.waitCard').length);
+	$('#otherNum').text($('.otherCard').length);
+	
 	var setTime =  $('.setLastTime');
 	if(setTime.length >= 0){
 		var nowData = Date.parse(new Date());
@@ -49,9 +52,29 @@ function getDate(){
         for (var i = 0; i < otherTime.length; i++) {
 		   var time =Date.parse($(otherTime[i]).text())/1000;
 		   var getTime = Date.parse($(otherTime[i]).text());
-		   $(otherTime[i]).text('截止于'+formatDate(getTime));
+		   $(otherTime[i]).text('更新于'+formatDate(getTime));
 	    }		
 	}
+	
+	var pauseTime = $('.pauseTime');
+	if(pauseTime.length >= 0){
+        for (var i = 0; i < pauseTime.length; i++) {
+		   var time =Date.parse($(pauseTime[i]).text())/1000;
+		   var getTime = Date.parse($(pauseTime[i]).text());
+		   $(pauseTime[i]).text('暂停于'+formatDate(getTime));
+	    }		
+	}
+	
+	var finishTime = $('.finishTime');
+	if(finishTime.length >= 0){
+        for (var i = 0; i < finishTime.length; i++) {
+		   var time =Date.parse($(finishTime[i]).text())/1000;
+		   var getTime = Date.parse($(finishTime[i]).text());
+		   $(finishTime[i]).text('结束于'+formatDate(getTime));
+	    }		
+	}
+	
+	
 }
 
 

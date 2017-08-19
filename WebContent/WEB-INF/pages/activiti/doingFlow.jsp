@@ -58,13 +58,14 @@
 	                <div class="lineTop"></div>
 	                
 	                 <c:if test="${empty gTasks}">
+	                     <div class="nodaiban">当前没有待办任务</div>
 	                 </c:if>
 	                 
-	                 <div class="nodaiban">当前没有待办任务</div>
+	                 
 	                
 	                <c:if test="${!empty gTasks}">
 	                <div class="title">
-	                     <div class="titleName" id="upName">待办任务</div>
+	                     <div class="titleName" id="upName">待办任务(<span id="daiNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
@@ -117,7 +118,7 @@
 	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName">其它任务</div>
+	                     <div class="titleName" id="downName">其它任务(<span id="otherNum"></span>)</div>
 	                </div>
 	           <div class="setCard" id="otherCard">
 	           

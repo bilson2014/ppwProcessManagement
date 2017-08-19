@@ -58,7 +58,7 @@
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">
-	                     <div class="titleName" id="upName">完成任务</div>
+	                     <div class="titleName" id="upName">完成任务(<span id="otherNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="setCard">
 	                
@@ -79,7 +79,7 @@
 	                                  <img src="/resources/images/flow/isFinish.png">
 	                                  <div class="setContent">
 	                                          <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="lastTime finishTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
 	                             </a>

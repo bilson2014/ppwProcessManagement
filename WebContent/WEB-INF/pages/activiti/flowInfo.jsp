@@ -1017,12 +1017,12 @@
 	    <div id="showshowExecutive">分配监制</div> -->
 	    
 	     <div class="infoTitle">
-	                     <div class="titleName" >${flow_info.projectName}</div>
+	                     <div class="titleName" >${projectName}</div>
 	                     <div class="point hide">
-                              <div class="showPoint">SA</div>
+                              <div class="showPoint">${projectGrade}${userLevel}</div>
                               <div class="showDeil showDownDeil">
-                                    <div class="proPoint">项目评级<span>S</span></div>
-                                    <div class="cusPoint">客户评级<span>A</span></div>
+                                    <div class="proPoint">项目评级<span>${projectGrade}</span></div>
+                                    <div class="cusPoint">客户评级<span>${userLevel}</span></div>
                               </div>
 	                     </div>
 	                     <div class="proControl">
