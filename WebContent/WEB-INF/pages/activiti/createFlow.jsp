@@ -49,7 +49,7 @@
 	           <div class="projectInfo">
 	                 <div class="smallItem errorItem" id="projectNoError">
 	                       <div class="itemTitle">项目编号<span>*</span></div>
-	                       <input readonly id="projectNo" name="pf_projectId" value="${pf_projectId }"/>
+	                       <input readonly class="noborder" id="projectNo" name="pf_projectId" value="${pf_projectId }"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectNameError">
 	                       <div class="itemTitle">项目名称<span>*</span></div>
@@ -131,7 +131,7 @@
 	                 
 	                  <div class="smallItem errorItem" id="createDateError">
 	                       <div class="itemTitle">立项时间<span>*</span></div>
-	                       <input readonly id="pf_createDate" name="pf_createDate"/>
+	                       <input readonly class="noborder" id="pf_createDate" name="pf_createDate"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
 	                       <div class="itemTitle">项目周期<span>*</span></div>

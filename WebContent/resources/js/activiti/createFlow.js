@@ -483,7 +483,7 @@ function initProductEven(){
 		   	$(this).parent().slideUp();
 		   	totalPrice = $(this).attr('data-price');
 		   	$('.orderSelect').removeClass('selectColor');
-		   	if($(this).text()=="非标"){
+		   	if($(this).text()=="非标准化产品"){
 		   		$('.noclick').off('click');
 		   	}else{
 		   		productConfigLengthEven();
@@ -536,7 +536,7 @@ function getProduct(){
 	loadData(function (res){
 		var body = $('#setProduct');
 		body.html('');
-		var html = createOption('0','非标','0');
+		var html = createOption('0','非标准化产品','0');
 		var rows = res.result.chanpin;
 		body.append(html);
 		if(res != null && res != undefined){

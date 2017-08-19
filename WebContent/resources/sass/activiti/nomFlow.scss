@@ -136,6 +136,16 @@ $ba:#bababa; */
                 border: 1px solid $e;
             }
 
+            .nodaiban{
+                height: 36px;
+                width: 100%;
+                color:$border-line;
+                font-size: $font-size-sm;
+                border:1px solid $border-line;
+                padding-left: 10px;
+                line-height: 34px;
+            }
+
             @mixin cardhead {
                 .cardH {
                     height: 39px;

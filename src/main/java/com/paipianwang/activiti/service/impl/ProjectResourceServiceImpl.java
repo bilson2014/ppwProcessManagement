@@ -40,6 +40,7 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 
 		String fileId = FastDFSClient.uploadFile(file);
 		String name=file.getOriginalFilename();
+		
 		if (StringUtils.isNotBlank(fileId)) {
 			// 添加流程文件资源
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -50,7 +51,7 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			String projectId = processInstance.getBusinessKey();
 			
 			PmsProjectResource resource=new PmsProjectResource();
-			resource.setResourceName(name);
+			resource.setResourceName(resourceName+name.substring(name.lastIndexOf(".")));
 			resource.setProjectId(projectId);//pmsProjectResource.getProjectId());
 			resource.setResourcePath(fileId);
 			resource.setResourceType(resourceType.substring(resourceType.indexOf("_")+1));
@@ -70,7 +71,10 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 //			resource.setPreviewPath("");
 //			resource.setVersion();
 
-			pmsProjectResourceFacade.insert(resource);
+			long result=pmsProjectResourceFacade.insert(resource);
+			if(result==-1){
+				return false+"";
+			}
 			// 转换文件
 //			onlineDocService.convertFile(resource);
 		}

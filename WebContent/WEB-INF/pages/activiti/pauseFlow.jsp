@@ -49,9 +49,9 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                    <div class="createPro">
+	                    <div class="createPro" id="toCreate">
 	                        <div class="newAdd"></div>
-	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
+	                        <div data-value="/project/start/project">新建项目</div>
 	                    </div>
 	                </div>
 	           
