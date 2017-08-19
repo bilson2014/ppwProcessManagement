@@ -52,7 +52,7 @@
 	                <div class="menuItem"><div class="myPro" id="minMyPro"></div></div>
 	                <div class="menuItem"><div class="orderList"></div></div>
 	                <div class="menuItem"><div class="save"></div></div>
-	                <div class="menuItem"><div class="safe"></div></div>
+	                <!-- <div class="menuItem"><div class="safe"></div></div> -->
 	                <div class="bottom"><div class="loginOut"></div></div>
 	        </div>
 	       
