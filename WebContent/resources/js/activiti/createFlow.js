@@ -201,7 +201,7 @@ function checkInfo(){
 		$('#financeError').attr('data-content','财务出纳未选择');
 		return false;
 	}else{
-		$('#ps_finance').val(teamPurchase);
+		$('#ps_finance').val(finance);
 	}
 	//客户信息
 	var userName = $('#pu_userName').attr('data-id');//客户名称
