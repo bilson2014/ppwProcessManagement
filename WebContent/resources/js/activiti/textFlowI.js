@@ -10,7 +10,8 @@ $().ready(function() {
 	pageInit();
 	checkState();
 	pasueOrDoing();
-	getStageInfo($('#taskStage').val());
+	//getStageInfo($('#taskStage').val());
+	getStageInfo('沟通阶段');
 	getTimeString();
 	
 });
@@ -44,6 +45,7 @@ function stageTalkEven(){
 		var name = $(this).attr('data-name');
 		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
+		scrollTo(0,0);
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
@@ -80,17 +82,23 @@ function initStageInfoTop(res){
 	if(checkStatus == "completed"){
 		$('#stateImg').attr('src',"/resources/images/flow/toComplet.png");
 		$('#stateWord').text('已完成');
-		$('#stateWord').attr('style','color:#79D01B')
+		$('#stateWord').attr('style','color:#79D01B');
+		$('#infoEndTitle').text('完成时间');
+		$('#infoEndTime').text(formatDate(res.endTime));
 	}
 	if(checkStatus == "running"){
 		$('#stateImg').attr('src',"/resources/images/flow/toWati.png");
 		$('#stateWord').text('进行中');
-		$('#stateWord').attr('style','color:#fe5453')
+		$('#stateWord').attr('style','color:#fe5453');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueTime));
 	}
 	if(checkStatus == "futher"){
 		$('#stateImg').attr('src',"/resources/images/flow/toStart.png");
 		$('#stateWord').text('未开始');
-		$('#stateWord').attr('style','color:#F5A623')
+		$('#stateWord').attr('style','color:#F5A623');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueTime));
 	}
 }
 
@@ -99,10 +107,10 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span></div>';
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
 		}
 	}
-	if(res.fromUrl == null){
+	if(res.fromUrl == null || res.fromUrl == "" ){
 		var  imgUrl = "/resources/images/flow/def.png";
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
@@ -114,7 +122,7 @@ function crearteInfoCard(res){
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
 				'              <li>'+res.fromName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
-				'              <li><span>'+res.taskName+'</span> <img class="modelOpen openItem" src="/resources/images/flow/areaMore.png"></li>',
+				'              <li><span>'+res.taskName+'</span> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
 				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
@@ -704,21 +712,24 @@ function openInfoCard(){
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
             	nowItem.parent().parent().find('.getInfoItemContent').slideUp();
+            	
             }else{
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().find('.getInfoItemContent').slideDown();
+           
             }		     
 	});
 	
 	$('.openTalk').off('click').on('click',function(){
 		var nowItem = $(this);
-		nowItem.parent().parent().parent().find('.infoContent').find('input').focus();
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	/*nowItem.parent().parent().parent().find('.infoContent').find('input').hide();*/
+            	nowItem.parent().parent().parent().find('.infoContent').hide();
+            	nowItem.parent().parent().parent().find('.upInfo').hide();
             }else{
             	nowItem.addClass('openItem');
-            	/*nowItem.parent().parent().parent().find('.infoContent').find('input').show();*/
+            	nowItem.parent().parent().parent().find('.infoContent').show();
+            	nowItem.parent().parent().parent().find('.upInfo').show();     
             }		     
 	});
 	
@@ -727,9 +738,11 @@ function openInfoCard(){
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
             	nowItem.parent().parent().parent().parent().find('.itemArea').slideUp();
+            	nowItem.parent().parent().parent().parent().find('.backInfoTalk').hide();
             }else{
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().parent().parent().find('.itemArea').slideDown();
+             	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
             }		     
 	});
 	
@@ -777,12 +790,7 @@ function helper(){
 		$('#helperModel').show();
 	});
 }
-//版本管理
-function controlModel(){
-	$('#showControl').off('click').on('click',function(){
-		$('#controlModel').show();
-	});
-}
+
 
 //客户信息修改
 function showCusEdit(){
@@ -862,6 +870,7 @@ function initAllTalk(){
 				   body.append(html);
 			}
 			rePickTalk();
+			openInfoCard();
 		}
 	}, getContextPath() + '/message/getProjectMsg/'+$('#projectId').val(),null);
 }
@@ -896,10 +905,10 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span></div>';
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
 		}
 	}
-	if(res.fromUrl == null){
+	if(res.fromUrl == null || res.fromUrl == ""){
 		var  imgUrl = "/resources/images/flow/def.png";
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
@@ -910,7 +919,7 @@ function createTalkInfo(res){
 		'	  <img src="'+imgUrl+'">',
 		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
 		'       <div class="time">',
-		'       	<span>发布时间：'+res.createDate+'</span>',
+		'       	<span>发布时间：'+formatDate(res.createDate)+'</span>',
 		'     	    <div class="openTalk"></div>',
 		'       </div>',
    		'   </div>',
@@ -1039,6 +1048,7 @@ function createFileInfo(res){
 function controlModel(){
 	$('.conMod').off('click').on('click',function(){
 		$('#controlModel').show();
+		scrollTo(0,0);
 		getFileModelInfo();
 	});
 }
@@ -1091,7 +1101,7 @@ function createNoHead(name){
 	var html = [
 		'<div class="item">',
         '<div class="itemTop">',
-        '     <div class="controlOpen openItem"></div>',
+        '     <div class="controlOpen"></div>',
         '     <div class="title">'+name+'</div>',
         '</div>',
         '<div class="getInfoItemContent">',

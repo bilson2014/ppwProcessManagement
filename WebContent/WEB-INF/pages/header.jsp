@@ -102,7 +102,7 @@
 				</r:identity>
 				<r:identity role="employee">
 					<a href="<spring:url value="/mgr/index" />" class="header-item login-item" target="_self" title="<r:outName />"><r:outName /></a>
-					<a href="<spring:url value="/login/loginout" />" class="header-item login-item" target="_self">退出</a>
+					<a href="<spring:url value="/login/loginout" class="hide" />" class="header-item login-item" target="_self">退出</a>
 					<div class="showInfo">
 				       <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>

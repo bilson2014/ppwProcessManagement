@@ -71,30 +71,36 @@
 	                  <li id="pause">暂停</li>
 	                  <li id="finish">完成/取消</li>
 	              </ul>
-	              <div class="treeitem" id="myOrder">
-	                  <div class="orderList"></div>
-	                  <a href="http://www.apaipian.com/order/myOrder"><div class="title">订单列表</div></a>
-	                <%--   <img src="${imgPath}/flow/more.png"> --%>
-	             </div>
+	              
+	              <a href="http://www.apaipian.com/order/myOrder">
+		              <div class="treeitem" id="myOrder">
+		                <div class="orderList"></div>
+		                <div class="title">我的订单</div>
+		                <%--   <img src="${imgPath}/flow/more.png"> --%>
+		             </div>
+	              </a>
 <!-- 	              <ul class="productList" id="orderList">
 	                  <li>处理中</li>
 	                  <li>已提交</li>
 	                  <li>无效订单</li>
 	              </ul> -->
-	              <div class="treeitem">
-	                  <div class="save"></div>
-	                 <a href="http://www.apaipian.com/mgr/favourites"> <div class="title">收藏列表</div></a>
-	             </div>
+	              <a class="treeA" href="http://www.apaipian.com/mgr/favourites">
+		              <div class="treeitem">
+		                  <div class="save"></div>
+		                  <div class="title">收藏列表</div>
+		             </div>
+	             </a>
 	              <div class="treeitem hide">
 	                  <div class="safe"></div>
 	                  <div class="title">安全设置</div>
 	             </div>
-	             
+	              <a href="http://www.apaipian.com/login/loginout">
 	             <div class="treeitem">
 	                  <div class="line"></div>
 	                  <div class="loginOut"></div>
-	                 <a href="http://www.apaipian.com/login/loginout"> <div class="title">退出登录</div></a>
+	                 <div class="title">退出登录</div>
 	             </div>
+	             </a>
 	        </div>
 	   </div>
 	</div> 
