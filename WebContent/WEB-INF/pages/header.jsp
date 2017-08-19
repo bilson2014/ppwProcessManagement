@@ -80,7 +80,7 @@
 					         <a href="<spring:url value="/user/info" />"><li class="toSet">个人信息</li></a>
 					         <a href="<spring:url value="/user/info?safeInfo" />"><li class="toSafe">安全设置</li></a>
 					         <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
-					          <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					          <a href="<spring:url value="http://newlogic.apaipian.com" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					   </div>
 					</div>

@@ -134,12 +134,12 @@
 	                       <input readonly class="noborder" id="pf_createDate" name="pf_createDate"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
-	                       <div class="itemTitle">项目周期<span>*</span></div>
+	                       <div class="itemTitle">项目周期(天数)<span>*</span></div>
 	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
 	                       <div class="itemTitle">对标影片<span>*</span></div>
-	                       <input id="pf_filmDestPath" name="pf_filmDestPath"/>
+	                       <input id="pf_filmDestPath" placeholder="http://example.com" name="pf_filmDestPath"/>
 	                 </div>
 	           </div>
 	    </div>

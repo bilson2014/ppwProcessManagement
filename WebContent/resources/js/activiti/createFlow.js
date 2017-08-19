@@ -133,6 +133,11 @@ function checkInfo(){
 		$('#filmDestPath').focus();
 		return false;
 	}
+	if(!IsUrl(filmDestPath)){
+		$('#filmDestPathError').attr('data-content','对标影片地址不对');
+		$('#filmDestPath').focus();
+		return false;
+	}
 	
 	//协同人信息
 	var customerDirector = $('#customerDirector').attr('data-id');//客服总监
@@ -595,7 +600,7 @@ function getTime(id){
 		var rows = res.result.dimension;
 		if(res != null && res != undefined){
 			for (var int = 0; int < rows.length; int++) {
-					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
+					var html =createOption(rows[int].id,rows[int].text,rows[int].price,res.result.basePrice);
 				body.append(html);
 			};
 			initAllSelectEven();
@@ -614,8 +619,16 @@ function getTime(id){
 }
 
 
-function createOption(value,text,price){
-		var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
+function createOption(value,text,price,base){
+	    
+	if(base != undefined){
+		var total = price + base;
+	}else{
+		var total = price;
+	}
+	    
+	
+		var html = '<li data-price="'+ total +'" data-id="'+ value +'">'+text+'</li>';
 		return html;
 }
 
@@ -627,6 +640,17 @@ function createUserInfo(id,name,phone,realName,clientLevel,email){
 function createMultOption(value,text,price){
 	var html = ' <li><input type="checkbox" data-id="'+ value +'" data-price="'+ price +'"><div>'+text+'</div></li>';
 	return html;
+}
+
+function IsUrl(str){   
+	var Url=str;
+	var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+	var objExp=new RegExp(Expression);
+	if(objExp.test(Url)==true){
+	return true;
+	}else{
+	return false;
+	}	 
 }
 
 
