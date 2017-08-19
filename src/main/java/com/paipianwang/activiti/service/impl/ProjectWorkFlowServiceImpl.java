@@ -1,5 +1,6 @@
 package com.paipianwang.activiti.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -468,7 +469,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		param.put("INSTANCE_ID",instanceId);
 
 		if (flowList != null) {
-			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);	
+			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);//TODO 后期整改，不使用map	
 			//价格信息
 			Map<String,Object> priceFlow=new HashMap<>();
 			if(projectFlow.containsKey("estimatedPrice")){
@@ -545,9 +546,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("filmDestPath", "对标影片");
 		projectMap.put("createDate", "创建时间");
 		projectMap.put("projectCycle","项目周期");
-		projectMap.put("principalName", "其他");
+//		projectMap.put("principalName", "其他");//TODO 待确定
 		projectMap.put("estimatedPrice", "预估价格");
 		projectMap.put("projectBudget", "项目预算");
+		
+		if(projectFlow.containsKey("principalName")){
+			projectFlow.remove("principalName");
+		}
 		
 		//项目来源
 		if(projectFlow.get("projectSource")!=null){
@@ -592,7 +597,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		Iterator<String> i=projectFlow.keySet().iterator();
 		while(i.hasNext()){
 			String key=i.next();
-			result.put(projectMap.get(key), projectFlow.get(key));
+			//处理时间格式
+			Object value=projectFlow.get(key);
+			if(value instanceof Date){
+				value=DateUtils.getDateByFormatStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+			}
+			result.put(projectMap.get(key), value);
 		}
 		return result;
 	}
@@ -901,7 +911,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		item.put("startTime",task.getCreateTime());
 		item.put("endTime",task.getEndTime());
 		item.put("taskName", task.getName());
-		item.put("taskStatus",task.getDeleteReason());//状态
+		item.put("taskStatus",task.getDeleteReason()==null?"running":task.getDeleteReason());//状态
 		item.put("dueDate", task.getDueDate());
 		
 		
