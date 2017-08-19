@@ -24,24 +24,21 @@ function getDate(){
 	if(setTime.length >= 0){
 		var nowData = Date.parse(new Date());
         for (var i = 0; i < setTime.length; i++) {
-        	var test = $(setTime[i]).text();
-		   var time =Date.parse($(setTime[i]).text());
+		   var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;
-		   var passTime = (nowData - time);
-		   getTise(lastTime);
 		   var getTime =$(setTime[i]).text();
 		   if(lastTime < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 已超时 '+getTise(passTime));  //3
+			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime));  //3
 		   }
 		   if(lastTime >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');
-			   $(setTime[i]).text('剩余 '+getTise(lastTime));
+			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
 		   if(lastTime <3 && lastHour>=0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoY.png');
-			   $(setTime[i]).text('剩余'+getTise(lastTime));
+			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
 		   
 	    }		
@@ -52,35 +49,12 @@ function getDate(){
         for (var i = 0; i < otherTime.length; i++) {
 		   var time =Date.parse($(otherTime[i]).text())/1000;
 		   var getTime = Date.parse($(otherTime[i]).text());
-		   var d = new Date(getTime);
-		   $(otherTime[i]).text('截止于'+formatDate(d));
+		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
 	}
 }
 
-function formatDate(now)   {     
-    var   year=now.getFullYear();     
-    var   month=now.getMonth()+1;     
-    var   date=now.getDate();     
-    var   hour=now.getHours();     
-    var   minute=now.getMinutes();     
-    var   second=now.getSeconds();   
-    return year+"年"+month+"月"+date+"日"+hour+"时"+minute+"分"; 
- }     
-//时间戳
-function getTise(time) {
-    var oDate = new Date(time);
-    var year = oDate.getFullYear();
-    var hour = oDate.getHours();
-    var Minutes = oDate.getMinutes();
-    var second= oDate.getSeconds();
-    var setDay ="";
-    var date= oDate.getDate(); 
-    if(date > 0){
-    	setDay = date+" 天 ";
-    }
-    return setDay + hour + ' 时 ' + Minutes +" 分 ";
-}
+
 
 
 

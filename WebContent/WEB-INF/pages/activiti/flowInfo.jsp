@@ -15,6 +15,8 @@
 <%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
+<spring:url value="/resources/lib/json/ezmorph.jar" var="ezmorphJs" />
+
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -47,37 +49,41 @@
 <input type="hidden" value="${projectId}" id="projectId" />
 <input type="hidden" value="${processInstanceId}" id="processInstanceId" />
 
+<%-- <input type="hidden" value="${user_info}" id="user_info" />
+<input type="hidden" value="${price_info}" id="price_info" />
+<!-- 制作供应商 -->
+<input type="hidden" value="${teamProduct_info}" id="teamProduct_info" />
+<!-- 策划供应商 -->
+<input type="hidden" value="${teamPlan_info}" id="teamPlan_info" /> --%>
+
+
 <div id="formState"></div>
  
-<div class="cusModel" id="cusModel">
+<div class="cusModel" id="cusModel" >
 
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">完善客户信息</div>
+                   <div class="title" id="infoNameTitle">完善客户信息</div>
                    <div class="state">
-	                   <img src="/resources/images/provider/toWait.png">
-	                   <div>进行中</div>
+	                   <img id="stateImg" src="/resources/images/flow/toStart.png">
+	                   <div id="stateWord"></div>
                    </div>
                    <div class="closeModel"></div>
             </div>
             <div class="cardContent">
                  <div class="contentItem">
 	                  <div class="title">事件说明 : </div>
-	                  <div class="content">打算打打三大所大所多</div>
+	                  <div class="content" id="stateContent">打算打打三大所大所多</div>
 	             </div>
 	              <div class="contentItem">
 	                  <div class="title">开始时间 : </div>
-	                  <div class="content">2017-11-12</div>
+	                  <div class="content" id="infoStartTime">2017-11-12</div>
 	             </div>   
 	              <div class="contentItem">
-	                  <div class="title">截止说明 : </div>
-	                  <div class="content">2017-11-12</div>
+	                  <div class="title">截止时间 : </div>
+	                  <div class="content" id="infoEndTime">2017-11-12</div>
 	             </div>
-	             <div class="contentItem">
-	                  <div class="title">实际周期 : </div>
-	                  <div class="content">2周</div>
-	             </div>
-	             <div class="itemHeight">
+	             <div class="itemHeight" id="itemHeightInfo">
 	             <div class="infoItem">
 	                       <div  class="itemTop">
 	                             <img class="logo" src="">
@@ -91,27 +97,10 @@
 	                             <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>
 	                             <input>
 	                       </div>
+	                       <div class="backInfoTalk btn-c-r">回复</div>
 	             </div>
-	             
-	              <div class="infoItem">
-	                       <div  class="itemTop">
-	                             <img class="logo" src="">
-	                              <ul>
-	                                 <li>策划人<span>发布于201021</span></li>
-	                                 <li>上传了<span>策划方案</span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>
-	                              </ul>
-	                       </div>
-	                       <div class="itemArea">
-	                             <div><span>负责人 : </span><span>需要调整一下</span></div>
-	                             <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>
-	                             <input>
-	                       </div>
+	           
 	             </div>
-	             </div>
-	                             <div class="getMore">
-	                                  <div>展开更多</div>
-	                                  <div></div>
-	                             </div>
             </div>
      </div>
      
@@ -1071,23 +1060,26 @@
 	                   <div class="productInfo secondProduct">    
 	                       <div class="projectTitle ">项目进度及历史</div>
 	                        <div class="timeFlow">
-	                            <img src="/resources/images/flow/demoG.png">
+	                            <div class="imgFlow" id="imgFlow">
+	                                  <div id="imgWord"></div>
+	                                  <div id="lastTimeWord"></div>
+	                            </div>
 	                            <div class="flowIcon">
-	                                 <div>沟通</div>
-	                                 <div>方案</div>
-	                                 <div>商务</div>
-	                                 <div>制作</div>
-	                                 <div>交付</div>
-	                                 <img class="icons hide" src="/resources/images/flow/down.png">
+	                                 <div class="stageTask" data-id="沟通阶段">沟通</div>
+	                                 <div class="stageTask" data-id="方案阶段">方案</div>
+	                                 <div class="stageTask" data-id="商务阶段">商务</div>
+	                                 <div class="stageTask" data-id="制作阶段">制作</div>
+	                                 <div class="stageTask" data-id="交付阶段">交付</div>
+	                                 <img class="icons" src="/resources/images/flow/down.png">
 	                            </div>
 	                        </div>
 	                       <div class="setListDiv">
 	                               <div class="ListTop">
-	                                     <div class="startTime">阶段起始时间:<span>2017.7.9</span></div>
-	                                     <div class="endTime">阶段计划完成时间<span>2017-07-09  14：00</span></div>
+	                                     <div class="startTime" >阶段起始时间 : <span id="startTime"></span></div>
+	                                     <div class="endTime hide">阶段计划完成时间<span></span></div>
 	                               </div>
 	                               <div class="listContent" id="listContent">
-	                                   <div class="listItem">
+	                                  <!--  <div class="listItem">
 	                                        <div class="lineStart"></div>
 	                                        <div class="time">预计：2017-07-09  14：00</div>
 	                                        <div class="user">策划人AAA</div>
@@ -1126,7 +1118,7 @@
 	                                        <div class="info">各种信息</div>
 	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="gray">未开始</div></div>
 	                                        <div class="find">查看</div>
-	                                   </div>
+	                                   </div> -->
 	                               </div>
 	                       </div>
 	                       <c:if test="${!empty synergyList}"> 
@@ -1203,7 +1195,10 @@
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
-		                                  
+		                                  <div class="item">
+			                                          <div>${item.key}</div>
+			                                          <div>${item.value}</div>
+			                               </div>
 			                                  <c:forEach var="item" items="${user_info}"> 
 												   <div class="item">
 			                                          <div>${item.key}</div>

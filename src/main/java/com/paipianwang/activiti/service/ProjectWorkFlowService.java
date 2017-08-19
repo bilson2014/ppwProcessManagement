@@ -128,7 +128,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public Map<String, String> getUserByRole(String roleType);
 
-	public Map<String, List> getProjectTaskList(String projectId);
+	public Map<String, Object> getProjectTaskList(String projectId);
 
 	public Map<String, Object> getTaskInfo(String taskId);
 
