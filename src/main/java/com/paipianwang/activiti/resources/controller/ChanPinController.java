@@ -169,7 +169,7 @@ public class ChanPinController {
 			
 		//产品配置项
 		PmsChanPinConfiguration defConfig=pmsChanPinConfigurationFacade.getChanPinConfigurationInfo(configId);
-		result.put("basePrice", defConfig.computePrice());
+//		result.put("basePrice", defConfig.computePrice());
 		//配置附加包
 		List<ChanpinSelection> modules=new ArrayList<>();
 		result.put("modules",modules);
