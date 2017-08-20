@@ -286,7 +286,7 @@ $ba:#bababa; */
                             vertical-align: top;
                             margin-top: 25px;
                             margin-left: 15px;
-                            width: 50%;
+                            width: 56%;
                             .listName {
                                 font-size: $font-size-base;
                                 color: $gray;
@@ -296,7 +296,7 @@ $ba:#bababa; */
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
-                                @include ellipsis;
+
                             }
                         }
                     }
@@ -375,7 +375,7 @@ $ba:#bababa; */
                                 vertical-align: top;
                                 margin-top: 25px;
                                 margin-left: 15px;
-                                width: 50%;
+                                width: 56%;
                                 .listName {
                                     font-size: $font-size-sm;
                                     color: $gray;
@@ -387,7 +387,7 @@ $ba:#bababa; */
                                     color: $gray;
                                     line-height: 20px;
                                     overflow: hidden;
-                                    @include ellipsis;
+
                                 }
                             }
                         }

@@ -283,7 +283,7 @@ function initMultSelect(){
 				   }
 			 }
 		}
-		 realPrice = parseInt(realPrice) +  parseInt(totalPrice) +  parseInt(timePrice);
+		 realPrice = parseInt(realPrice) + parseInt(timePrice);
 		 $('#estimatedPrice').val(realPrice);
 		 $('#productConfigAdditionalPackageIds').text(multInfo);
 		 $('#pf_productConfigAdditonalPackageName').val(multInfo);
@@ -600,7 +600,7 @@ function getTime(id){
 		var rows = res.result.dimension;
 		if(res != null && res != undefined){
 			for (var int = 0; int < rows.length; int++) {
-					var html =createOption(rows[int].id,rows[int].text,rows[int].price,res.result.basePrice);
+					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
 				body.append(html);
 			};
 			initAllSelectEven();
@@ -619,16 +619,9 @@ function getTime(id){
 }
 
 
-function createOption(value,text,price,base){
-	    
-	if(base != undefined){
-		var total = price + base;
-	}else{
-		var total = price;
-	}
-	    
-	
-		var html = '<li data-price="'+ total +'" data-id="'+ value +'">'+text+'</li>';
+function createOption(value,text,price){
+	    	
+		var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 		return html;
 }
 

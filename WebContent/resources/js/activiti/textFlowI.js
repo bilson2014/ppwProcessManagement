@@ -105,14 +105,14 @@ function initStageInfoTop(res){
 		$('#stateWord').text('进行中');
 		$('#stateWord').attr('style','color:#fe5453');
 		$('#infoEndTitle').text('预计时间');
-		$('#infoEndTime').text(formatDate(res.dueTime));
+		$('#infoEndTime').text(formatDate(res.dueDate));
 	}
 	if(checkStatus == "futher"){
 		$('#stateImg').attr('src',"/resources/images/flow/toStart.png");
 		$('#stateWord').text('未开始');
 		$('#stateWord').attr('style','color:#F5A623');
 		$('#infoEndTitle').text('预计时间');
-		$('#infoEndTime').text(formatDate(res.dueTime));
+		$('#infoEndTime').text(formatDate(res.dueDate));
 	}
 }
 
@@ -136,13 +136,14 @@ function crearteInfoCard(res){
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
 				'              <li>'+res.fromName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
-				'              <li><span>'+res.taskName+'</span> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
+				'              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
 				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
 				'          <input>                                                                                                  ',
-				'    </div>                                                                                                         ',
+				'    </div> ',
+				'<div class="errorSpan"></div>',
 				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>                                                                   ',
 				'</div>                                                                                                       '
 			].join('');
@@ -156,7 +157,10 @@ function infoAddReplyEven(){
 		    var name = $(this).attr('data-name');
 		    var parentId = $(this).attr('data-parentId');
 		    var content = $(this).parent().find('.itemArea').find('input').val();
-		    if(content != ""){
+		    
+		    if(content == null || content == "" || content == undefined){
+		    	$(this).parent().find('.errorSpan').text('回复不能为空');
+		    }else{
 				loadData(function(res){	
 		           if(res.code == 200){
 		            loadStageInfoEven();
@@ -739,6 +743,7 @@ function initEvenInfo(){
 	});*/
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
+         $('#errorInfo').text('');
 	});
 	$('#myOrder').show();
 }
@@ -761,11 +766,11 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').hide();
+            	nowItem.parent().parent().parent().find('.infoContent').find('input').hide();
             	nowItem.parent().parent().parent().find('.upInfo').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').show();
+            	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
             	nowItem.parent().parent().parent().find('.upInfo').show();     
             }		     
 	});
@@ -774,11 +779,11 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').slideUp();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideUp();
             	nowItem.parent().parent().parent().parent().find('.backInfoTalk').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').slideDown();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideDown();
              	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
             }		     
 	});
@@ -864,6 +869,10 @@ function initAddTalk(){
 		var taskName = $('#taskName').val();
 		var talkInfo = $('#talkInfo').val();
 		$('.upInfo #submitTalkInfo').off('click');
+		$('#areaError').text('');
+		if(talkInfo == "" || talkInfo == null || talkInfo == undefined){
+			$('#areaError').text('留言不能为空');
+		}else{
 		loadData(function(res){
 			if(res.code == 200){
 				initAllTalk();
@@ -877,6 +886,7 @@ function initAddTalk(){
 			taskName:taskName,
 			content:talkInfo
 		}));
+		}
 	});
 }
 
@@ -919,6 +929,11 @@ function rePickTalk(){
 	    var taskName = $(this).attr('data-name');
 	    var parentId = $(this).attr('data-parentId');
 	    var content = $(this).parent().parent().find('.infoContent').find('input').val();
+	    
+	    if(content == null || content == "" || content == undefined){
+	    	$(this).parent().parent().find('.errorSpan').text('回复不能为空');
+	    }else{
+	    
 	    $('.upInfo .toArea').off('click');
 			loadData(function(res){
 				if(res.code == 200){
@@ -933,6 +948,7 @@ function rePickTalk(){
 				content:content,
 				parentId:parentId
 			}));
+	    }
    });
 		
 }
@@ -964,6 +980,7 @@ function createTalkInfo(res){
 		'     '+body+'',
 		'      <input>',
 		'   </div>',
+		'<span class="errorSpan"></span>',
 		'   <div class="upInfo">',
 		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
 		'   </div>',
@@ -1095,6 +1112,7 @@ function getFileModelInfo(){
 		var res = res;
 		var body =$('#controlContent');
 		body.html('');
+		$('#errorSpan').text('');
 		if(res != null && res != undefined){
 			for(var key in res) { 
 				var sethtml="";
@@ -1113,6 +1131,8 @@ function getFileModelInfo(){
              }
 			fileCheckNo();
 			openInfoCard();
+		}else{
+			$('#errorSpan').text('暂无文件');
 		}
 	}, getContextPath() + '/resource/version/'+$('#projectId').val(),null);	
 }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="/mytaglib" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
@@ -191,7 +192,7 @@
 <div class="cusModel" id="controlModel">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">版本管理</div>
+                   <div class="title">版本管理<span class="errorSpan" id="errorSpan"></span></div>
                    <div class="closeModel"></div>
             </div>
             <div class="controlContent" id="controlContent">
@@ -1020,10 +1021,16 @@
 	                     <div class="titleName" >${projectName}</div>
 	                     <div class="point">
                               <div class="showPoint">${projectGrade}${userLevel}</div>
+                              <c:if test="${!empty projectGrade || !empty userLevel}">
                               <div class="showDeil showDownDeil">
+                               <c:if test="${!empty projectGrade}">
                                     <div class="proPoint">项目评级<span>${projectGrade}</span></div>
+                                    </c:if>
+                                     <c:if test="${!empty userLevel}">
                                     <div class="cusPoint">客户评级<span>${userLevel}</span></div>
+                                    </c:if>
                               </div>
+                              </c:if>
 	                     </div>
 	                     <div class="proControl">
 	                                                   项目操作
@@ -1337,30 +1344,8 @@
 	                        <div class="upFile hide btn-c-r">上传</div>
 	                   </div>
 	                       <div class="projectFilm" id="projectFilm">
-	                             <div class="filmItem">
-	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
-	                                    <div class="filmName">文件名</div>
-	                                    <div class="fileType"><div>策划方案</div></div>
-	                                    <div class="fileTypeName"><div>测试文件</div></div>
-	                                    <div class="icon">
-	                                          <div class="look"></div>
-	                                          <div class="share"></div>
-	                                          <div class="download"></div>
-	                                    </div>
-	                             </div>
-	                             <div class="filmItem">
-	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
-	                                    <div class="filmName">文件名</div>
-	                                    <div class="fileType"><div>策划方案</div></div>
-	                                    <div class="fileTypeName"><div>测试文件</div></div>
-	                                    <div class="time"><div>上传于：2017-07-09  14：00</div></div>
-	                                    <div class="icon">
-	                                          <div class="look"></div>
-	                                          <div class="share"></div>
-	                                          <div class="download"></div>
-	                                    </div>
-	                             </div>
-	                             <div class="filmItem">
+	                            
+	                           <!--   <div class="filmItem">
 	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
 	                                    <div class="filmName">文件名</div>
 	                                    <div class="fileType"><div>策划方案</div></div>
@@ -1375,7 +1360,7 @@
 	                             <div class="getMore">
 	                                  <div>展开更多</div>
 	                                  <div></div>
-	                             </div>
+	                             </div> -->
 	                       </div>
 	                       
 	                       <div class="projectTitle">留言评论区</div>
@@ -1384,6 +1369,7 @@
 	                             <div class="upInfo" style="display:block">
 	                                 <div class="btn-c-r" id="submitTalkInfo">提交</div>
 	                             </div>
+	                             <div class="errorSpan errorSpans" id="areaError"></div>
 	                       </div>
 	                       <div class="setAreaDiv">
 	                        
