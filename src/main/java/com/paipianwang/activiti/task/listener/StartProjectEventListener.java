@@ -3,18 +3,14 @@ package com.paipianwang.activiti.task.listener;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.identity.User;
-import org.activiti.engine.identity.UserQuery;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
-import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 
 /**

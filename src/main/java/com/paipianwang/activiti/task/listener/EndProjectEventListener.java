@@ -30,8 +30,7 @@ public class EndProjectEventListener implements JavaDelegate,Serializable {
 		
 		// 获取 上下文环境
 		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		PmsProjectFlowFacade flowFacade = (PmsProjectFlowFacade) context
-				.getBean("pmsProjectFlowFacade");
+		PmsProjectFlowFacade flowFacade = (PmsProjectFlowFacade) context.getBean("pmsProjectFlowFacade");
 		
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", "finished");

@@ -352,7 +352,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		// 完成节点时，需要保存业务数据
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
-
+		
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 				.processInstanceId(processInstanceId).singleResult();
 		String projectId = processInstance.getBusinessKey();
