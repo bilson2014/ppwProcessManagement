@@ -34,6 +34,7 @@ public class SendProjectStartEmailToTeam implements JavaDelegate, Serializable {
 				PmsProjectMessageFacade pmsProjectMessageFacade = (PmsProjectMessageFacade) context.getBean("pmsProjectMessageFacade");
 				PmsProjectMessage message=new PmsProjectMessage();
 				message.setFromId("system");
+				message.setFromGroup("system");
 				message.setProjectId(projectId);
 				
 				
