@@ -34,7 +34,7 @@ public class EndProjectEventListener implements JavaDelegate,Serializable {
 				.getBean("pmsProjectFlowFacade");
 		
 		Map<String, Object> metaData = new HashMap<String, Object>();
-		metaData.put("project_status", "finished");
+		metaData.put("projectStatus", "finished");
 		flowFacade.update(metaData, projectId, processInstanceId);
 	}
 

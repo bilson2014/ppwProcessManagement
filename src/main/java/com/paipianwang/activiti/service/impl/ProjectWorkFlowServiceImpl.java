@@ -1,6 +1,5 @@
 package com.paipianwang.activiti.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -238,12 +237,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		NativeExecutionQuery nativeExecutionQuery = runtimeService.createNativeExecutionQuery();
 		String sql = "";
-		if (StringUtils.isNotBlank(userId)) {
+		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
-			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
 		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
-					+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+					+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
 		}
 		List<Execution> executionList = nativeExecutionQuery.sql(sql).list();
 		if (executionList != null && !executionList.isEmpty()) {
