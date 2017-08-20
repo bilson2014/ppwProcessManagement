@@ -1018,7 +1018,7 @@
 	    
 	     <div class="infoTitle">
 	                     <div class="titleName" >${projectName}</div>
-	                     <div class="point hide">
+	                     <div class="point">
                               <div class="showPoint">${projectGrade}${userLevel}</div>
                               <div class="showDeil showDownDeil">
                                     <div class="proPoint">项目评级<span>${projectGrade}</span></div>

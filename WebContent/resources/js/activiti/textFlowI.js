@@ -11,7 +11,7 @@ $().ready(function() {
 	checkState();
 	pasueOrDoing();
 	//getStageInfo($('#taskStage').val());
-	getStageInfo('沟通阶段');
+	getStageInfo($('#taskStage').val());
 	getTimeString();
 	
 });
@@ -34,11 +34,13 @@ function initLastTime(ctyle,createTime){
     if(state.trim() == "pause"){
     	$('#imgFlow').addClass('imgRed');
 		$('#imgWord').text('暂停');
+		$('#imgWord').attr('style','color:#fe5453');
 		$('#lastTimeWord').text("");
     }else{
     	if(checkDay >= 0){
     		$('#imgFlow').addClass('imgRed');
     		$('#imgWord').text('延误');
+    		$('#imgWord').attr('style','color:#fe5453');
     		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
     	}
     	else{
@@ -218,6 +220,26 @@ function getStageInfo(stage){
 						var resKey = res[keys];
 						var Stage = $('#taskStage').val();
 						if(resKey.length > 0){
+							 if(keys == "沟通阶段"){
+								 $('.icons').attr('class','icons');
+								 $('.icons').addClass('stepIcon');
+							 }
+						 if(keys == "方案阶段"){
+							 $('.icons').attr('class','icons');
+								 $('.icons').addClass('step2Icon');
+							 }
+						 if(keys == "商务阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step3Icon');
+						 }
+						 if(keys == "制作阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step4Icon');
+						 }
+						 if(keys == "交付阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step5Icon');
+						 }
 							var body =$('#listContent');
 							body.html('');
 							var setBody = "";
@@ -332,22 +354,25 @@ function pageInit(){
   	   $('#daiban').hide();
      }
 	 var isStage = $('#taskStage').val();
-/*	 if(isStage == "沟通阶段"){
- 
-	 }*/
+	 if(isStage == "沟通阶段"){
+		 $('.icons').addClass('stepIcon');
+	 }
  if(isStage == "方案阶段"){
 		 $('.flowIcon').addClass('step2');
+		 $('.icons').addClass('step2Icon');
 	 }
  if(isStage == "商务阶段"){
 	 $('.flowIcon').addClass('step3');
+	 $('.icons').addClass('step3Icon');
  }
  if(isStage == "制作阶段"){
 	 $('.flowIcon').addClass('step4');
+	 $('.icons').addClass('step4Icon');
  }
  if(isStage == "交付阶段"){
 	 $('.flowIcon').addClass('step5');
+	 $('.icons').addClass('step5Icon');
  }
- 
  
     stageEven();
     addForm();
