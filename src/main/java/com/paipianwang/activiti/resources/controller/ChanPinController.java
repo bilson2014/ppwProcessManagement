@@ -158,9 +158,9 @@ public class ChanPinController {
 		if(chanpinId!=null){
 			List<ChanpinSelection> chanpinConfig=new ArrayList<>();
 			result.put("config",chanpinConfig);
-			List<PmsChanPinConfiguration> allConfig = pmsChanPinConfigurationFacade.getSimpleChanPinConfigurationByChanPinId(chanpinId);		
+			List<PmsChanPinConfiguration> allConfig = pmsChanPinConfigurationFacade.getChanPinConfigurationByChanPinId(chanpinId);		
 			for(PmsChanPinConfiguration config:allConfig){
-				chanpinConfig.add(new ChanpinSelection(config.getChanpinconfigurationId()+"", config.getChanpinconfigurationName()));	
+				chanpinConfig.add(new ChanpinSelection(config.getChanpinconfigurationId()+"", config.getChanpinconfigurationName(),"",config.getBasePrice()));	
 			}
 //			configId=allConfig.get(0).getChanpinconfigurationId();//第一条产品配置
 			return ;

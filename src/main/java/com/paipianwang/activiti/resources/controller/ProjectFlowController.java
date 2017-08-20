@@ -294,9 +294,13 @@ public class ProjectFlowController extends BaseController {
 		mv.addObject("taskId",taskId);
 		mv.addObject("projectId",param.get("PROJECT_ID"));
 		mv.addObject("processInstanceId",param.get("INSTANCE_ID"));
-		mv.addObject("projectName", flowMap.get("项目名称"));
-		mv.addObject("projectGrade", flowMap.get("项目评级"));
-		mv.addObject("userLevel", userMap.get("客户评级"));
+		if(flowMap!=null){
+			mv.addObject("projectName", flowMap.get("项目名称"));
+			mv.addObject("projectGrade", flowMap.get("项目评级"));
+		}
+		if(userMap!=null){
+			mv.addObject("userLevel", userMap.get("客户评级"));
+		}
 		return mv;
 	}
 

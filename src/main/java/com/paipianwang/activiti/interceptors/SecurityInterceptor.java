@@ -2,6 +2,7 @@ package com.paipianwang.activiti.interceptors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paipianwang.activiti.dao.StorageLocateDao;
+import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.common.web.file.FastDFSClient;
 
 /**
  * 登录拦截器
@@ -25,6 +30,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private IdentityService identityService = null;
+	@Autowired
+	private final StorageLocateDao storageDao = null;
 
 	private List<String> excludeUrls;
 
@@ -102,7 +109,30 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv)
 			throws Exception {
-
+		if(mv != null) {
+			// 如果不为空，则说明进入视图解析器
+			final Map<String, String> nodeMap = storageDao.getStorageFromRedis(PmsConstant.STORAGE_NODE_RELATIONSHIP);
+			// 获取最优Storage节点
+			final String serviceIP = FastDFSClient.locateSource();
+			String ip = "";
+			final StringBuffer sbf = new StringBuffer();
+			sbf.append("http://");
+			
+			if(ValidateUtil.isValid(serviceIP)) {
+				ip = nodeMap.get(serviceIP);
+				if(ValidateUtil.isValid(ip)) {
+					sbf.append(ip);
+					sbf.append(":8888/");
+				} else {
+					sbf.append(PublicConfig.FDFS_BACKUP_SERVER_PATH);
+				}
+			} else {
+				sbf.append(PublicConfig.FDFS_BACKUP_SERVER_PATH);
+			}
+			
+			mv.addObject(PmsConstant.FILE_LOCATE_STORAGE_PATH, sbf.toString());
+		}
+		
 	}
 
 	@Override
