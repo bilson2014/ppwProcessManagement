@@ -1,4 +1,4 @@
-/*package com.paipianwang.activiti.dao.impl;
+package com.paipianwang.activiti.dao.impl;
 
 import java.util.Map;
 
@@ -64,4 +64,3 @@ public class StorageLocateDaoImpl implements StorageLocateDao {
 	}
 
 }
-*/
