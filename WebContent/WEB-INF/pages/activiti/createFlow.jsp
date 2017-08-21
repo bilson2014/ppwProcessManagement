@@ -148,7 +148,7 @@
 		    <div class="outSide">
 		           <div class="projectInfo">
 		                <div class="smallItem errorItem" id="customerDirectorError">
-	                       <div class="itemTitle">客服总监<span>*</span></div>
+	                       <div class="itemTitle">项目助理<span>*</span></div>
 	                       <input type="hidden" id="ps_customerDirector" name="ps_customerDirector"/>
 	                       <div class="orderSelect" >
 				                <div id="customerDirector"></div>
