@@ -61,10 +61,6 @@ public class StartProjectEventListener implements JavaDelegate, Serializable {
 		String superviseDirectorId = suffix + synergyMap.get(ProjectRoleType.superviseDirector.getId()).getEmployeeId();
 		execution.setVariable("superviseDirectorId", superviseDirectorId);
 
-		// 供应商采购
-		String teamPurchaseId = suffix + synergyMap.get(ProjectRoleType.teamPurchase.getId()).getEmployeeId();
-		execution.setVariable("teamPurchaseId", teamPurchaseId);
-
 		// 供应商总监
 		String teamDirectorId = suffix + synergyMap.get(ProjectRoleType.teamDirector.getId()).getEmployeeId();
 		execution.setVariable("teamDirectorId", teamDirectorId);

@@ -191,7 +191,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-D6AF2CCA-EDB0-4D5A-95AD-6BC1E2BF201E" sourceRef="sid-76853896-9D0A-4855-90E0-9E2CA1891DB3" targetRef="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB"></sequenceFlow>
-    <userTask id="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" name="【供应商采购】填写供应商结算信息 " activiti:assignee="${teamPurchaseId}">
+    <userTask id="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" name="【供应商管家】填写供应商结算信息 " activiti:assignee="${teamProviderId}">
       <extensionElements>
         <activiti:formProperty id="pt_actualPrice" name="供应商实际价格" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_invoiceHead" name="发票抬头" type="enum" required="true">

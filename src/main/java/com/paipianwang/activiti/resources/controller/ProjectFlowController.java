@@ -355,12 +355,10 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-//		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		if (StringUtils.isNotBlank(processInstanceId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId);
 		}
-//		return mv;
 		return new ModelAndView("redirect:/project/running-doing");
 	}
 

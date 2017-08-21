@@ -162,10 +162,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					} else if (ProjectRoleType.teamProvider.getId().equals(activitiRole)) {
 						// 供应商管家
 						synergy.setEmployeeGroup(ProjectRoleType.teamProvider.getId());
-					} else if (ProjectRoleType.teamPurchase.getId().equals(activitiRole)) {
+					} /*else if (ProjectRoleType.teamPurchase.getId().equals(activitiRole)) {
 						// 供应商采购
 						synergy.setEmployeeGroup(ProjectRoleType.teamPurchase.getId());
-					} else if (ProjectRoleType.financeDirector.getId().equals(activitiRole)) {
+					} */else if (ProjectRoleType.financeDirector.getId().equals(activitiRole)) {
 						// 财务主管
 						synergy.setEmployeeGroup(ProjectRoleType.financeDirector.getId());
 					} else if (ProjectRoleType.finance.getId().equals(activitiRole)) {
@@ -306,8 +306,21 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (list != null && !list.isEmpty()) {
 			List<PmsProjectFlowResult> resultList = new ArrayList<PmsProjectFlowResult>();
 			for (final HistoricProcessInstance historicProcessInstance : list) {
-				String processInstanceId = historicProcessInstance.getId();
-				List<HistoricTaskInstance> hisTaskList = historyService.createHistoricTaskInstanceQuery()
+				final String projectId = historicProcessInstance.getBusinessKey();
+				
+				if (StringUtils.isNotBlank(projectId)) {
+					// 查询流程ID
+					PmsProjectFlowResult result = new PmsProjectFlowResult();
+					PmsProjectFlow flow = flowFacade.getProjectFlowByProjectId(projectId);
+					if(flow != null && flow.getPrincipal() != null) {
+						PmsEmployee employee = employeeFacade.findEmployeeById(flow.getPrincipal());
+						flow.setPrincipalName(employee.getEmployeeRealName());
+						result.setPmsProjectFlow(flow);
+					}
+					
+					resultList.add(result);
+				}
+				/*List<HistoricTaskInstance> hisTaskList = historyService.createHistoricTaskInstanceQuery()
 						.processInstanceId(processInstanceId).taskAssignee(userId).finished().list();
 				if (hisTaskList != null && !hisTaskList.isEmpty()) {
 					for (final HistoricTaskInstance historicTaskInstance : hisTaskList) {
@@ -315,20 +328,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 						final String projectId = historyService.createHistoricProcessInstanceQuery()
 								.processInstanceId(pinstId).singleResult().getBusinessKey();
-						if (StringUtils.isNotBlank(projectId)) {
-							// 查询流程ID
-							PmsProjectFlowResult result = new PmsProjectFlowResult();
-							PmsProjectFlow flow = flowFacade.getProjectFlowByProjectId(projectId);
-							if(flow != null && flow.getPrincipal() != null) {
-								PmsEmployee employee = employeeFacade.findEmployeeById(flow.getPrincipal());
-								flow.setPrincipalName(employee.getEmployeeRealName());
-								result.setPmsProjectFlow(flow);
-							}
-							
-							resultList.add(result);
-						}
+						
 					}
-				}
+				}*/
 			}
 			return resultList;
 		}
@@ -489,7 +491,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (teamList != null) {
 			
 			// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
-			List<String> teamGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamDirector.getId(),ProjectRoleType.teamPurchase.getId(), ProjectRoleType.teamProvider.getId()));
+			List<String> teamGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamDirector.getId(),/*ProjectRoleType.teamPurchase.getId(),*/ ProjectRoleType.teamProvider.getId()));
 			// 如果是 策划供应商可以看见 策划供应商信息
 			List<String> teamPlanGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamPlan.getId()));
 			// 如果是制作供应商可以看见制作供应商信息
