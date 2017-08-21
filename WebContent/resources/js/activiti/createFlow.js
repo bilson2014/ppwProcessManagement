@@ -412,7 +412,7 @@ function getSynInfo(){
 			
 		}
 		
-		//供应商采购
+		/*//供应商采购
 		var teamPurchases = res.result.teamPurchase;
 		var body = $('#teamPurchases');
 		body.html('');
@@ -422,13 +422,14 @@ function getSynInfo(){
 				   body.append(html);
 			};
 			
-		}
+		}*/
 		
 		//财务总监
 		var financeDirectors = res.result.financeDirector;
 		var body = $('#financeDirectors');
 		body.html('');
 		if(financeDirectors != null && financeDirectors != undefined){
+			
 			for (var int = 0; int < financeDirectors.length; int++) {
 					var html =createOption(financeDirectors[int].id,financeDirectors[int].firstName);
 				   body.append(html);
