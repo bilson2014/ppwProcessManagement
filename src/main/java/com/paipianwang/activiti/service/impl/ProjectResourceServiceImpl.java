@@ -21,6 +21,7 @@ import com.paipianwang.activiti.service.ProjectResourceService;
 import com.paipianwang.activiti.utils.UserUtil;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.enums.FileType;
+import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.web.file.FastDFSClient;
 import com.paipianwang.pat.workflow.entity.PmsProjectResource;
 import com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade;
@@ -97,6 +98,10 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 					resource.setResourceType(type.getText());
 				}
 			}
+			//时间格式
+			if(resource.getCreateDate()!=null){
+				resource.setCreateDate(DateUtils.getDateByFormat(resource.getCreateDate(), "yyyy-MM-dd HH:mm:ss").toString());
+			}
 		}
 		return resources;
 	}
@@ -113,6 +118,12 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 				if(type.getId().equals(key)){
 					result.put(type.getText(), resources.get(key));
 					break;
+				}
+			}
+			//时间格式
+			for(PmsProjectResource resource:resources.get(key)){
+				if(resource.getCreateDate()!=null){
+					resource.setCreateDate(DateUtils.getDateByFormat(resource.getCreateDate(), "yyyy-MM-dd HH:mm:ss").toString());
 				}
 			}
 		}
