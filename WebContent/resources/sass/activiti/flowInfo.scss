@@ -2161,12 +2161,12 @@
                                     width: 530px;
                                 }
                                 li:nth-child(1) {
-                                    font-size: $font-size;
+                                    font-size: $font-size-base;
                                     color: $gray-dark;
                                     margin-bottom: 10px;
                                     span {
                                         margin-left: 20px;
-                                        font-size: $font-size-sm;
+                                        font-size: $font-size-base;
                                         color: $gray-light;
                                     }
                                 }
@@ -2215,12 +2215,12 @@
                                     position: relative;
                                     line-height: 24px;
                                     span:nth-child(1) {
-                                        font-size: $font-size;
+                                        font-size: $font-size-base;
                                         color: $gray-dark;
                                     }
                                     span:nth-child(2) {
                                         margin-left: 5px;
-                                        font-size: $font-size-sm;
+                                        font-size: $font-size-base;
                                         color: $gray-light;
                                         position: absolute;
                                         right: 65px;

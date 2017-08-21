@@ -55,13 +55,13 @@ function getDate(){
 		   
 	    }		
 	}
-	
+
 	var otherTime = $('.otherTime');
 	if(otherTime.length >= 0){
         for (var i = 0; i < otherTime.length; i++) {
 		   var time =Date.parse($(otherTime[i]).text())/1000;
 		   var getTime = Date.parse($(otherTime[i]).text());
-		   $(otherTime[i]).text('更新于'+formatDate(getTime));
+		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
 	}
 	

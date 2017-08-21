@@ -213,7 +213,7 @@
 				                </ul>    
 					      </div>
 	                 </div>
-	                  <div class="smallItem errorItem" id="teamPurchaseError">
+	                 <%--  <div class="smallItem errorItem" id="teamPurchaseError">
 	                       <div class="itemTitle">供应商采购<span>*</span></div>
 	                       <input type="hidden" id="ps_teamPurchase" name="ps_teamPurchase"/>
 	                       <div class="orderSelect" >
@@ -223,7 +223,7 @@
 				                    <li data-id="1">gg</li>
 				                </ul>    
 					      </div>
-	                 </div>
+	                 </div> --%>
 	                  <div class="smallItem errorItem" id="financeDirectorError">
 	                       <div class="itemTitle">财务主管<span>*</span></div>
 	                       <input type="hidden" id="ps_financeDirector" name="ps_financeDirector"/>
@@ -302,7 +302,7 @@
 		      </div>
 		      
 		      <div class="btnMid">
-		          <a href="http://newlogic.apaipian.com"><div class="btn-c-g">取消</div></a>
+		          <a href="http://www.apaipian.com:8087/project/running-task"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>

@@ -185,12 +185,6 @@ function checkInfo(){
 	}else{
 		$('#ps_teamProvider').val(teamProvider);
 	}
-	if(teamPurchase == undefined || teamPurchase == "" || teamPurchase ==null ){
-		$('#teamPurchaseError').attr('data-content','供应商采购未选择');
-		return false;
-	}else{
-		$('#ps_teamPurchase').val(teamPurchase);
-	}
 	if(financeDirector == undefined || financeDirector == "" || financeDirector ==null ){
 		$('#financeDirectorError').attr('data-content','财务主管未选择');
 		return false;

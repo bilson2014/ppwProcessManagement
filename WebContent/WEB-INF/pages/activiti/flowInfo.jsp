@@ -1019,19 +1019,19 @@
 	    
 	     <div class="infoTitle">
 	                     <div class="titleName" >${projectName}</div>
-	                     <div class="point">
-                              <div class="showPoint">${projectGrade}${userLevel}</div>
-                              <c:if test="${!empty projectGrade || !empty userLevel}">
-                              <div class="showDeil showDownDeil">
-                               <c:if test="${!empty projectGrade}">
-                                    <div class="proPoint">项目评级<span>${projectGrade}</span></div>
-                                    </c:if>
-                                     <c:if test="${!empty userLevel}">
-                                    <div class="cusPoint">客户评级<span>${userLevel}</span></div>
-                                    </c:if>
-                              </div>
-                              </c:if>
-	                     </div>
+	                     <c:if test="${!empty projectGrade || !empty userLevel}">
+		                     <div class="point">
+	                              <div class="showPoint">${projectGrade}${userLevel}</div>
+	                              <div class="showDeil showDownDeil">
+	                               <c:if test="${!empty projectGrade}">
+	                                    <div class="proPoint">项目评级<span>${projectGrade}</span></div>
+	                                    </c:if>
+	                                     <c:if test="${!empty userLevel}">
+	                                    <div class="cusPoint">客户评级<span>${userLevel}</span></div>
+	                                    </c:if>
+	                              </div>
+		                     </div>
+	                     </c:if>
 	                     <div class="proControl">
 	                                                   项目操作
 	                         <div class="newControl">
