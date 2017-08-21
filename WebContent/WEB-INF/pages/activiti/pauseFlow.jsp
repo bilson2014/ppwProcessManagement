@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="/mytaglib" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/nomFlow.css" var="textCss"/>
 <%-- import JS --%>
@@ -49,10 +50,12 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
+	                     <r:identity role="employee">
 	                    <div class="createPro" id="toCreate">
 	                        <div class="newAdd"></div>
 	                        <div data-value="/project/start/project">新建项目</div>
 	                    </div>
+	                    </r:identity>
 	                </div>
 	           
 	                <div class="lineTop"></div>
@@ -78,7 +81,7 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime pauseTime">${staff.task.dueDate}</div>
+		                                      <div class="lastTime pauseTime">${staff.pmsProjectFlow.updateDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>
