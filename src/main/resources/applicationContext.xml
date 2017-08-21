@@ -34,7 +34,8 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="uploadTempDir" value="${upload.path}" />
 	</bean>
-<!-- redis 配置 -->
+	
+	<!-- redis 配置 -->
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<!-- 最大连接数 -->
 		<property name="maxTotal" value="${redis.maxTotal}" />
