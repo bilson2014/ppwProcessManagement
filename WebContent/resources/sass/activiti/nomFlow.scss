@@ -136,6 +136,20 @@ $ba:#bababa; */
                 border: 1px solid $e;
             }
 
+            .nodaiban {
+                height: 36px;
+                width: 95%;
+                margin: 0 auto;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+                color: $border-line;
+                font-size: $font-size-sm;
+                border: 1px solid $border-line;
+                padding-left: 10px;
+                line-height: 34px;
+            }
+
             @mixin cardhead {
                 .cardH {
                     height: 39px;
@@ -159,9 +173,9 @@ $ba:#bababa; */
                         width: 80px;
                         height: 20px;
                         border-radius: 4px;
-                        background: $red-base;
-                        color: white;
-                        line-height: 20px;
+                        border: 1px solid $red-base;
+                        color: $red-base;
+                        line-height: 18px;
                         text-align: center;
                         font-size: $font-size-sm;
                         position: absolute;
@@ -272,7 +286,7 @@ $ba:#bababa; */
                             vertical-align: top;
                             margin-top: 25px;
                             margin-left: 15px;
-                            width: 50%;
+                            width: 56%;
                             .listName {
                                 font-size: $font-size-base;
                                 color: $gray;
@@ -282,7 +296,7 @@ $ba:#bababa; */
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
-                                @include ellipsis;
+
                             }
                         }
                     }
@@ -361,7 +375,7 @@ $ba:#bababa; */
                                 vertical-align: top;
                                 margin-top: 25px;
                                 margin-left: 15px;
-                                width: 50%;
+                                width: 56%;
                                 .listName {
                                     font-size: $font-size-sm;
                                     color: $gray;
@@ -373,7 +387,7 @@ $ba:#bababa; */
                                     color: $gray;
                                     line-height: 20px;
                                     overflow: hidden;
-                                    @include ellipsis;
+
                                 }
                             }
                         }

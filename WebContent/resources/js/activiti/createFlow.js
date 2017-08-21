@@ -133,6 +133,11 @@ function checkInfo(){
 		$('#filmDestPath').focus();
 		return false;
 	}
+	if(!IsUrl(filmDestPath)){
+		$('#filmDestPathError').attr('data-content','对标影片地址不对');
+		$('#filmDestPath').focus();
+		return false;
+	}
 	
 	//协同人信息
 	var customerDirector = $('#customerDirector').attr('data-id');//客服总监
@@ -196,7 +201,7 @@ function checkInfo(){
 		$('#financeError').attr('data-content','财务出纳未选择');
 		return false;
 	}else{
-		$('#ps_finance').val(teamPurchase);
+		$('#ps_finance').val(finance);
 	}
 	//客户信息
 	var userName = $('#pu_userName').attr('data-id');//客户名称
@@ -278,7 +283,7 @@ function initMultSelect(){
 				   }
 			 }
 		}
-		 realPrice = parseInt(realPrice) +  parseInt(totalPrice) +  parseInt(timePrice);
+		 realPrice = parseInt(realPrice) + parseInt(timePrice);
 		 $('#estimatedPrice').val(realPrice);
 		 $('#productConfigAdditionalPackageIds').text(multInfo);
 		 $('#pf_productConfigAdditonalPackageName').val(multInfo);
@@ -483,7 +488,7 @@ function initProductEven(){
 		   	$(this).parent().slideUp();
 		   	totalPrice = $(this).attr('data-price');
 		   	$('.orderSelect').removeClass('selectColor');
-		   	if($(this).text()=="非标"){
+		   	if($(this).text()=="非标准化产品"){
 		   		$('.noclick').off('click');
 		   	}else{
 		   		productConfigLengthEven();
@@ -536,7 +541,7 @@ function getProduct(){
 	loadData(function (res){
 		var body = $('#setProduct');
 		body.html('');
-		var html = createOption('0','非标','0');
+		var html = createOption('0','非标准化产品','0');
 		var rows = res.result.chanpin;
 		body.append(html);
 		if(res != null && res != undefined){
@@ -615,6 +620,7 @@ function getTime(id){
 
 
 function createOption(value,text,price){
+	    	
 		var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 		return html;
 }
@@ -627,6 +633,17 @@ function createUserInfo(id,name,phone,realName,clientLevel,email){
 function createMultOption(value,text,price){
 	var html = ' <li><input type="checkbox" data-id="'+ value +'" data-price="'+ price +'"><div>'+text+'</div></li>';
 	return html;
+}
+
+function IsUrl(str){   
+	var Url=str;
+	var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+	var objExp=new RegExp(Expression);
+	if(objExp.test(Url)==true){
+	return true;
+	}else{
+	return false;
+	}	 
 }
 
 

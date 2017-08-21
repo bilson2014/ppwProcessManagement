@@ -234,7 +234,7 @@ public class ProjectController extends BaseController{
 		logger.debug("start form parameters: {}", formProperties);
 		
 		SessionInfo info = getCurrentInfo(request);
-		prjectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId());
+		prjectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),info.getActivitGroups());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/form/project/task/list?processType=" + processType);

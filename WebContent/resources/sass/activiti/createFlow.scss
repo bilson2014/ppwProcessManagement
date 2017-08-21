@@ -152,10 +152,19 @@
 
             .orderSelect {
                 width: 160px;
+                div{
+                	@include ellipsis
+                }
+                
                 @media screen and (min-width: 1276px) {
                     width: 220px;
                 }
             }
+        }
+
+        .noborder{
+        	border:none !important;
+        	background: transparent !important; 
         }
 
         .sMidItem {
@@ -185,6 +194,10 @@
             }
 
             .orderSelect {
+
+            	div{
+
+            	}
                 width: 200px;
                 @media screen and (min-width: 1276px) and (max-width: 1500px) {
                     width: 260px;

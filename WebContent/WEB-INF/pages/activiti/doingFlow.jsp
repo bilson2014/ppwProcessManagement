@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="r" uri="/mytaglib" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/nomFlow.css" var="textCss"/>
 <%-- import JS --%>
@@ -49,20 +50,29 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                    <div class="createPro">
+	                    <r:identity role="employee">
+	                    <div class="createPro" id="toCreate">
 	                        <div class="newAdd"></div>
-	                        <div id="toCreate" data-value="/project/start/project">新建项目</div>
+	                        <div data-value="/project/start/project">新建项目</div>
 	                    </div>
+	                    </r:identity>
 	                </div>
 	           
 	                <div class="lineTop"></div>
+	                
+	                 <c:if test="${empty gTasks}">
+	                     <div class="nodaiban">当前没有待办任务</div>
+	                 </c:if>
+	                 
+	                 
+	                
 	                <c:if test="${!empty gTasks}">
 	                <div class="title">
-	                     <div class="titleName" id="upName">待办任务</div>
+	                     <div class="titleName" id="upName">待办任务(<span id="daiNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
-						   <div class="waitCard">
+						   <div class="waitCard cardNum">
 						       <a href="/project/task/${staff.task.id}?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
@@ -111,14 +121,14 @@
 	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName">其它任务</div>
+	                     <div class="titleName" id="downName">其它任务(<span id="otherNum"></span>)</div>
 	                </div>
 	           <div class="setCard" id="otherCard">
 	           
 	            <c:if test="${!empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard">
-							        <a href="/project/task/${staff.task.id}">
+							        <a href="/project/task/${staff.task.id}?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -131,7 +141,7 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
+		                                      <div class="lastTime otherTime">${staff.task.createTime}</div>
 		                                  </div>
 		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
 		                                  <img src="/resources/images/flow/isTalk.png">

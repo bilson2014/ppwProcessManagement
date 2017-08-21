@@ -38,7 +38,6 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
-import com.paipianwang.pat.common.enums.UserLevel;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.indent.entity.IndentSource;
@@ -46,6 +45,7 @@ import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
@@ -54,6 +54,7 @@ import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
@@ -104,7 +105,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	
 	@Autowired
 	private WorkFlowFacade workFlowFacade = null;
-
+	@Autowired
+	private PmsProjectMessageFacade pmsProjectMessageFacade;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public ProcessInstance startFormAndProcessInstance(String processDefinitionId, Map<String, String> formProperties,
@@ -234,12 +237,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		NativeExecutionQuery nativeExecutionQuery = runtimeService.createNativeExecutionQuery();
 		String sql = "";
-		if (StringUtils.isNotBlank(userId)) {
+		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
-			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
 		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
-					+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 ORDER BY START_TIME_ DESC";
+					+ userId + "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
 		}
 		List<Execution> executionList = nativeExecutionQuery.sql(sql).list();
 		if (executionList != null && !executionList.isEmpty()) {
@@ -345,11 +348,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId) {
+	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup) {
 		// 完成节点时，需要保存业务数据
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
-
+		
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 				.processInstanceId(processInstanceId).singleResult();
 		String projectId = processInstance.getBusinessKey();
@@ -374,12 +377,16 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		try {
-			// TODO 需要完成系统留言
-			// 节点名称
+			// 需要完成系统留言
 			String taskName = task.getName();
-			// 办理人 employee_36
-			String activitiUserId = task.getAssignee();
-			Date date = new Date();
+			PmsProjectMessage message=new PmsProjectMessage();
+			message.setFromId(userId);
+			message.setFromGroup(StringUtils.join(userGroup, ","));
+			message.setProjectId(projectId);
+			message.setTaskName(taskName);
+			message.setContent("我完成了\""+taskName+"\"任务");
+			pmsProjectMessageFacade.insert(message);
+			
 			
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
@@ -390,6 +397,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					// 添加 最终日期
 					String taskDefinitionKey = nextTask.getTaskDefinitionKey();
 					taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+					//TODO 异常处理、事务处理
 					taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
 					taskService.setVariable(nextTask.getId(), "task_description", getCycleByTask(taskDefinitionKey).getDescription());
 				}
@@ -457,9 +465,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				.singleResult();
 		String projectId = instance.getBusinessKey();
 		param.put("PROJECT_ID", projectId);
+		param.put("INSTANCE_ID",instanceId);
 
 		if (flowList != null) {
-			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);	
+			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);//TODO 后期整改，不使用map	
 			//价格信息
 			Map<String,Object> priceFlow=new HashMap<>();
 			if(projectFlow.containsKey("estimatedPrice")){
@@ -536,9 +545,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		projectMap.put("filmDestPath", "对标影片");
 		projectMap.put("createDate", "创建时间");
 		projectMap.put("projectCycle","项目周期");
-		projectMap.put("principalName", "其他");
+//		projectMap.put("principalName", "其他");//TODO 待确定
 		projectMap.put("estimatedPrice", "预估价格");
 		projectMap.put("projectBudget", "项目预算");
+		
+		if(projectFlow.containsKey("principalName")){
+			projectFlow.remove("principalName");
+		}
 		
 		//项目来源
 		if(projectFlow.get("projectSource")!=null){
@@ -583,7 +596,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		Iterator<String> i=projectFlow.keySet().iterator();
 		while(i.hasNext()){
 			String key=i.next();
-			result.put(projectMap.get(key), projectFlow.get(key));
+			//处理时间格式
+			Object value=projectFlow.get(key);
+			if(value instanceof Date){
+				value=DateUtils.getDateByFormatStr((Date)value, "yyyy-MM-dd HH:mm:ss");
+			}
+			result.put(projectMap.get(key), value);
 		}
 		return result;
 	}
@@ -832,6 +850,75 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			param.put(user.getId(), user.getFirstName());
 		}
 		return param;
+	}
+
+	@Override
+	public Map<String,Object> getProjectTaskList(String projectId) {
+		//已进行任务节点
+		List<HistoricTaskInstance> historyInstance=historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(projectId).list();//.finished()
+		
+		Map<String,ProjectCycleItem> cycles=workFlowFacade.getAllCycleTask();
+		if(cycles==null){
+			return null;
+		}
+		List<User> users = identityService.createUserQuery().list();
+		
+		Map<String,Object> result=new HashMap<String,Object>();
+		
+		for(HistoricTaskInstance history:historyInstance){
+			
+			ProjectCycleItem cycle=cycles.get(history.getTaskDefinitionKey());
+			if(!result.containsKey(cycle.getStage())){
+				List<Object> list=new ArrayList<Object>();
+				result.put(cycle.getStage(), list);
+			}
+			//操作人
+			Map<String,Object> item=new HashMap<>();
+			
+			item.put("startTime", history.getCreateTime());//时间格式
+			item.put("assigneeId",history.getAssignee());
+			for(User user:users){
+				if(user.getId().equals(history.getAssignee())){
+					item.put("assignee",user.getFirstName());//人名
+					break;
+				}
+			}
+			item.put("taskName", history.getName());
+			item.put("taskId",history.getId());
+			item.put("taskStatus",history.getDeleteReason()==null?"running":history.getDeleteReason());//状态
+			item.put("dueDate", history.getDueDate());
+			
+			((List<Object>) result.get(cycle.getStage())).add(item);
+		}	
+		//未来任务节点 futher
+		
+		//流程周期与创建时间
+		List<String> flowList=new ArrayList<>();
+		flowList.add("projectCycle");
+		flowList.add("createDate");
+		Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
+		result.put("projectCycle",projectFlow.get("projectCycle"));
+		result.put("createDate",projectFlow.get("createDate"));
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getTaskInfo(String taskId) {
+		HistoricTaskInstance task=historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+		Map<String,Object> item=new HashMap<>();
+		item.put("taskId", task.getId());
+		item.put("startTime",task.getCreateTime());
+		item.put("endTime",task.getEndTime());
+		item.put("taskName", task.getName());
+		item.put("taskStatus",task.getDeleteReason()==null?"running":task.getDeleteReason());//状态
+		item.put("dueDate", task.getDueDate());
+		
+		
+//		String taskDescription = (String) taskService.getVariable(task.getId(), "task_description");
+		String taskDescription=getCycleByTask(task.getTaskDefinitionKey()).getDescription();
+		
+		item.put("taskDescription",taskDescription);
+		return item;
 	}
 
 }

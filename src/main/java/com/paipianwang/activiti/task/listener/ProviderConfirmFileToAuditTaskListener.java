@@ -9,7 +9,14 @@ import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ContextLoader;
+
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.enums.ProjectRoleType;
+import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 
 /**
  * 供应商上传水印样片监听
@@ -24,17 +31,22 @@ public class ProviderConfirmFileToAuditTaskListener implements TaskListener {
 
 	@Override
 	public void notify(DelegateTask delegateTask) {
-		IdentityService identityService = delegateTask.getExecution().getEngineServices().getIdentityService();
-		UserQuery userQuery = identityService.createUserQuery();
+		final String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		final List<String> users = new ArrayList<String>();
+		
+		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
+		PmsProjectSynergyFacade pmsProjectSynergyFacade = (PmsProjectSynergyFacade) context
+				.getBean("pmsProjectSynergyFacade");
+		
 		// 销售总监
-		User saleDirector = userQuery.memberOfGroup("saleDirector").singleResult();
-		if(saleDirector != null)
-			users.add(saleDirector.getId());
+		List<PmsProjectSynergy> saleDirectors = pmsProjectSynergyFacade.getSynergys(projectId, ProjectRoleType.saleDirector.getId());
+		if(saleDirectors != null && !saleDirectors.isEmpty())
+			users.add("employee_" + saleDirectors.get(0).getEmployeeId());
+		
 		// 监制总监
-		User superviseDirector = userQuery.memberOfGroup("superviseDirector").singleResult(); 
-		if(superviseDirector != null)
-			users.add(superviseDirector.getId());
+		List<PmsProjectSynergy> superviseDirectors = pmsProjectSynergyFacade.getSynergys(projectId, ProjectRoleType.superviseDirector.getId());
+		if(superviseDirectors != null && !superviseDirectors.isEmpty())
+			users.add("employee_" + superviseDirectors.get(0).getEmployeeId());
 		
 		// 项目负责人
 		String applyUserId = (String) delegateTask.getVariable("applyUserId");

@@ -49,7 +49,7 @@
 	           <div class="projectInfo">
 	                 <div class="smallItem errorItem" id="projectNoError">
 	                       <div class="itemTitle">项目编号<span>*</span></div>
-	                       <input readonly id="projectNo" name="pf_projectId" value="${pf_projectId }"/>
+	                       <input readonly class="noborder" id="projectNo" name="pf_projectId" value="${pf_projectId }"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectNameError">
 	                       <div class="itemTitle">项目名称<span>*</span></div>
@@ -131,15 +131,15 @@
 	                 
 	                  <div class="smallItem errorItem" id="createDateError">
 	                       <div class="itemTitle">立项时间<span>*</span></div>
-	                       <input readonly id="pf_createDate" name="pf_createDate"/>
+	                       <input readonly class="noborder" id="pf_createDate" name="pf_createDate"/>
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
-	                       <div class="itemTitle">项目周期<span>*</span></div>
+	                       <div class="itemTitle">项目周期 (天数)<span>*</span></div>
 	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
 	                       <div class="itemTitle">对标影片<span>*</span></div>
-	                       <input id="pf_filmDestPath" name="pf_filmDestPath"/>
+	                       <input id="pf_filmDestPath" placeholder="http://example.com" name="pf_filmDestPath"/>
 	                 </div>
 	           </div>
 	    </div>
@@ -302,7 +302,7 @@
 		      </div>
 		      
 		      <div class="btnMid">
-		          <div class="btn-c-g">取消</div>
+		          <a href="http://newlogic.apaipian.com"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>

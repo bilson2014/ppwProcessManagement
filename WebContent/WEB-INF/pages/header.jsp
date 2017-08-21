@@ -20,7 +20,7 @@
  		<input type="hidden" id="csrftoken" name="csrftoken" value="${csrftoken}"/>
         <div class="menu-bar nav">
             <div class="left-part">
-                <a href="<spring:url value='/'/>" class="logo" id="logo"></a>
+                <a href="<spring:url value='http://www.apaipian.com'/>" class="logo" id="logo"></a>
 				<r:identity role="customer">
 					<a href="<spring:url value='/mgr/index'/>" class="header-item" >我的项目<span></span></a>
 					<a href="<spring:url value='/cost/cal'/>" class="header-item">估算成本<span></span></a>
@@ -102,7 +102,7 @@
 				</r:identity>
 				<r:identity role="employee">
 					<a href="<spring:url value="/mgr/index" />" class="header-item login-item" target="_self" title="<r:outName />"><r:outName /></a>
-					<a href="<spring:url value="/login/loginout" />" class="header-item login-item" target="_self">退出</a>
+					<a href="<spring:url value='/login/loginout' />" class="header-item login-item" target="_self">退出</a>
 					<div class="showInfo">
 				       <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>

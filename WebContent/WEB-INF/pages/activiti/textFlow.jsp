@@ -43,17 +43,17 @@
      
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<input type="hidden" id="realName" value="${realName}" />
-	<input type="hidden" id="phone" value="${photo}" />
+	<input type="hidden" id="photo" value="${photo}" />
 	
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
 	    <jsp:include flush="true" page="flowMenu.jsp"></jsp:include>  
 	    
-	    	<c:if test="${!empty gTasks}">
+	     	<c:if test="${!empty gTasks}">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
                                      <div class="cardNum hide"></div>
 							</c:forEach>
-			</c:if>
+			</c:if> 
 	
 	<div class="productListArea">
 	           <div class="waitWork">

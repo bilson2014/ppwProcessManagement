@@ -5,21 +5,301 @@ var upload_Video;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
-	openInfoCard();
-	initEvenInfo();
-	initSelect();
-	flagEven();
+	
 	// 加载动态表单
 	pageInit();
-	addForm();
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	checkState();
-	getFileInfo();
-	//finishTalk();
+	pasueOrDoing();
+	//getStageInfo($('#taskStage').val());
+	getStageInfo($('#taskStage').val());
+	getTimeString();
 	
-	
-	initAddTalk();
 });
+
+
+
+
+//流程信息
+function initLastTime(ctyle,createTime){
+	var time = 86400 * ctyle *1000;
+	var day =  Date.parse(new Date(createTime));
+	var totalTime = time + day;
+	var nowData = Date.parse(new Date());
+	var checkDay = nowData - totalTime;
+	
+	
+	var href = window.location.href;
+    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+   
+    if(state.trim() == "pause"){
+    	$('#imgFlow').addClass('imgRed');
+		$('#imgWord').text('暂停');
+		$('#imgWord').attr('style','color:#fe5453');
+		$('#lastTimeWord').text("");
+    }else{
+    	if(checkDay >= 0){
+    		$('#imgFlow').addClass('imgRed');
+    		$('#imgWord').text('延误');
+    		$('#imgWord').attr('style','color:#fe5453');
+    		$('#lastTimeWord').text('超过'+parseInt((checkDay/86400000))+"天");
+    	}
+    	else{
+    		$('#imgFlow').addClass('imgFlow');
+    		$('#imgWord').text('正常');
+    		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
+    	}	
+    }
+	
+
+}
+
+function stageTalkEven(){
+	$('.findTalk').off('click').on('click',function(){
+		var id = $(this).attr('data-id');
+		var name = $(this).attr('data-name');
+		$('#infoNameTitle').attr('data-name',name);
+		$('#cusModel').show();
+		scrollTo(0,0);
+		loadData(function(res){		
+			initStageInfoTop(res);	
+			loadStageInfoEven();
+		}, getContextPath() + '/project/task-detail/'+id,null);
+		
+	});
+}
+
+function loadStageInfoEven(name){
+	loadData(function(res){	
+		
+		var body =$('#itemHeightInfo');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =crearteInfoCard(res[int]);
+				   body.append(html);
+			}
+			openInfoCard();
+			infoAddReplyEven();
+		}
+	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
+		projectId:$('#projectId').val(),
+		taskName:$('#infoNameTitle').attr('data-name')
+	}));
+}
+
+function initStageInfoTop(res){
+	$('#infoNameTitle').text(res.taskName);
+	$('#stateContent').text(res.taskDescription);
+	$('#infoStartTime').text(formatDate(res.startTime));
+	$('#infoEndTime').text(formatDate(res.endTime));
+	var checkStatus = res.taskStatus;
+	if(checkStatus == "completed"){
+		$('#stateImg').attr('src',"/resources/images/flow/toComplet.png");
+		$('#stateWord').text('已完成');
+		$('#stateWord').attr('style','color:#79D01B');
+		$('#infoEndTitle').text('完成时间');
+		$('#infoEndTime').text(formatDate(res.endTime));
+	}
+	if(checkStatus == "running"){
+		$('#stateImg').attr('src',"/resources/images/flow/toWati.png");
+		$('#stateWord').text('进行中');
+		$('#stateWord').attr('style','color:#fe5453');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueDate));
+	}
+	if(checkStatus == "futher"){
+		$('#stateImg').attr('src',"/resources/images/flow/toStart.png");
+		$('#stateWord').text('未开始');
+		$('#stateWord').attr('style','color:#F5A623');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueDate));
+	}
+}
+
+function crearteInfoCard(res){		
+	var  children= res.children;
+	var body = '';
+	if(children != null && children != undefined && children !=""){
+		for (var int = 0; int < children.length; int++) {
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+		}
+	}
+	if(res.fromUrl == null || res.fromUrl == "" ){
+		var  imgUrl = "/resources/images/flow/def.png";
+	}else{
+		var  imgUrl = getDfsHostName()+res.fromUrl;
+	}
+
+	var html = [
+				'<div class="infoItem">',
+				'    <div  class="itemTop">',
+				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
+				'           <ul>                                                                                                    ',
+				'              <li>'+res.fromName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
+				'              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
+				'           </ul>                                                                                                   ',
+				'    </div>                                                                                                         ',
+				'    <div class="itemArea">                                                                                         ',
+				'              '+body+'                                       ',
+				'          <input>                                                                                                  ',
+				'    </div> ',
+				'<div class="errorSpan"></div>',
+				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>                                                                   ',
+				'</div>                                                                                                       '
+			].join('');
+			return html;
+}
+
+function infoAddReplyEven(){
+	
+	 $('.backInfoTalk').off('click').on('click',function(){
+		    var projectId = $(this).attr('data-projectId');
+		    var name = $(this).attr('data-name');
+		    var parentId = $(this).attr('data-parentId');
+		    var content = $(this).parent().find('.itemArea').find('input').val();
+		    
+		    if(content == null || content == "" || content == undefined){
+		    	$(this).parent().find('.errorSpan').text('回复不能为空');
+		    }else{
+				loadData(function(res){	
+		           if(res.code == 200){
+		            loadStageInfoEven();
+		            initAllTalk();
+		           }
+				}, getContextPath() + '/message/addReply',$.toJSON({
+					projectId:projectId,
+					taskName:name,
+					parentId:parentId,
+					content:content
+				}));
+		    }
+	 });
+	
+}
+
+
+function createStageInfo(res,state){
+	var whatLine = "lineOne";
+	if(state == "s"){
+		whatLine = "lineStart";
+	}
+	if(state == "e"){
+		whatLine = "lineEnd";
+	}
+	
+	var checkStatus = res.taskStatus;
+	
+	if(checkStatus == "completed"){
+		var time = '<div class="time">'+formatDate(res.startTime)+'</div>';
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toComplet.png"><div class="green">已完成</div></div>';
+	}
+	if(checkStatus == "running"){
+		var time = '<div class="time">始于'+formatDate(res.startTime)+'</div>'; 
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toWati.png"><div class="yellow">进行中</div></div>';
+	}
+	if(checkStatus == "futher"){
+		var time = '<div class="time">预计'+formatDate(res.startTime)+'</div>';   
+		var imgUrl = '<div class="state"><img src="/resources/images/flow/toStart.png"><div class="redWord">未开始</div></div>';
+	}
+    
+	var html = [
+   '<div class="listItem">                                                                                          ',
+   '     <div class="'+whatLine+'"></div>                                                                              ',
+   '     '+time+'                                                          ',
+   '     <div class="user">'+res.taskName+'</div>                                                                          ',
+   '     <div class="info hide"></div>                                                                           ',
+   '     '+imgUrl+' ',
+   '     <div class="find findTalk" data-id="'+res.taskId+'"  data-name="'+res.taskName+'">查看</div>                                                                               ',
+   '</div>                                                                                                          ',
+	].join('');
+	return html;
+}
+
+function getStageInfo(stage){	
+			var keys = stage;
+			loadData(function(res){
+				initLastTime(res.projectCycle,res.createDate);
+				if(res != null && res != undefined){
+						var sethtml="";
+						var resKey = res[keys];
+						var Stage = $('#taskStage').val();
+						if(resKey.length > 0){
+							 if(keys == "沟通阶段"){
+								 $('.icons').attr('class','icons');
+								 $('.icons').addClass('stepIcon');
+							 }
+						 if(keys == "方案阶段"){
+							 $('.icons').attr('class','icons');
+								 $('.icons').addClass('step2Icon');
+							 }
+						 if(keys == "商务阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step3Icon');
+						 }
+						 if(keys == "制作阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step4Icon');
+						 }
+						 if(keys == "交付阶段"){
+							 $('.icons').attr('class','icons');
+							 $('.icons').addClass('step5Icon');
+						 }
+							var body =$('#listContent');
+							body.html('');
+							var setBody = "";
+							for (var int = 0; int < resKey.length; int++) {
+								 if(int == 0){
+									 var html =createStageInfo(resKey[int],"s"); 
+									 $('#startTime').text(formatDate(resKey[int].startTime));
+								 }if(int == resKey.length - 1){
+									 var html =createStageInfo(resKey[int],"e"); 
+								 }
+								 if(int > 0 && int != resKey.length - 1)
+								 {
+									 var html =createStageInfo(resKey[int],'u');
+								 }
+								 setBody =html;
+								 body.append(setBody);
+							}
+							stageTalkEven();
+						}
+				}
+			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
+}
+
+//流程信息end
+
+function pasueOrDoing(){
+	
+/*	$('#isPause').off('click').on('click',function(){
+		 $('#infoModel').show();
+		 toDoing();
+	});
+	
+	$('#isPause').off('click').on('click',function(){
+		 $('#infoModel').show();
+		 toPause();
+	});*/
+	
+}
+
+function toDoing(){
+	$('#cancle').off('click').on('click',function(){
+		$('#infoModel').hide();
+	});
+	$('#checkSure').off('click').on('click',function(){
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+	});
+}
+
+function toPause(){
+	$('#cancle').off('click').on('click',function(){
+		$('#infoModel').hide();
+	});
+	$('#checkSure').off('click').on('click',function(){
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+	});
+}
 
 function getFileInfo(){
 	loadData(function(res){
@@ -43,6 +323,28 @@ function checkState(){
     if(state.trim() != "task"){
     	$('#daiban').hide();
     }
+    
+    if(state.trim() == "task" ||state.trim() == "doing"){
+    	$('#isBack').hide();
+    }
+    
+    if(state.trim() == "pause"){
+    	$('#isPause').hide();
+    }
+    
+    if(state.trim() == "finish"){
+    		 $('#isBack').hide();
+    		 $('#isPause').hide();
+    }
+    
+}
+
+function stageEven(){
+	
+	$('.stageTask').off('click').on('click',function(){
+		getStageInfo($(this).attr('data-id'));
+	});
+	
 }
 
 function pageInit(){
@@ -56,21 +358,40 @@ function pageInit(){
   	   $('#daiban').hide();
      }
 	 var isStage = $('#taskStage').val();
-/*	 if(isStage == "沟通阶段"){
- 
-	 }*/
+	 if(isStage == "沟通阶段"){
+		 $('.icons').addClass('stepIcon');
+	 }
  if(isStage == "方案阶段"){
 		 $('.flowIcon').addClass('step2');
+		 $('.icons').addClass('step2Icon');
 	 }
  if(isStage == "商务阶段"){
 	 $('.flowIcon').addClass('step3');
+	 $('.icons').addClass('step3Icon');
  }
  if(isStage == "制作阶段"){
 	 $('.flowIcon').addClass('step4');
+	 $('.icons').addClass('step4Icon');
  }
  if(isStage == "交付阶段"){
 	 $('.flowIcon').addClass('step5');
+	 $('.icons').addClass('step5Icon');
  }
+ 
+    stageEven();
+    addForm();
+	openInfoCard();
+	initEvenInfo();
+	initSelect();
+	flagEven();
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+	checkState();
+	getFileInfo();
+	initAddTalk();
+	initAllTalk();
+	getFileInfo();
+	controlModel();
+	checkState();
 	 
 }
 
@@ -417,11 +738,12 @@ var formFieldCreator = {
 	};*/
 
 function initEvenInfo(){
-	$('#toFinish').off('click').on('click',function(){
+/*	$('#toFinish').off('click').on('click',function(){
          $('#cusModel').show();		
-	});
+	});*/
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
+         $('#errorInfo').text('');
 	});
 	$('#myOrder').show();
 }
@@ -432,21 +754,24 @@ function openInfoCard(){
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
             	nowItem.parent().parent().find('.getInfoItemContent').slideUp();
+            	
             }else{
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().find('.getInfoItemContent').slideDown();
+           
             }		     
 	});
 	
 	$('.openTalk').off('click').on('click',function(){
 		var nowItem = $(this);
-		nowItem.parent().parent().parent().find('.infoContent').find('input').focus();
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	/*nowItem.parent().parent().parent().find('.infoContent').find('input').hide();*/
+            	nowItem.parent().parent().parent().find('.infoContent').find('input').hide();
+            	nowItem.parent().parent().parent().find('.upInfo').hide();
             }else{
             	nowItem.addClass('openItem');
-            	/*nowItem.parent().parent().parent().find('.infoContent').find('input').show();*/
+            	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
+            	nowItem.parent().parent().parent().find('.upInfo').show();     
             }		     
 	});
 	
@@ -454,10 +779,12 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').slideUp();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideUp();
+            	nowItem.parent().parent().parent().parent().find('.backInfoTalk').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').slideDown();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideDown();
+             	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
             }		     
 	});
 	
@@ -505,12 +832,7 @@ function helper(){
 		$('#helperModel').show();
 	});
 }
-//版本管理
-function controlModel(){
-	$('#showControl').off('click').on('click',function(){
-		$('#controlModel').show();
-	});
-}
+
 
 //客户信息修改
 function showCusEdit(){
@@ -546,13 +868,25 @@ function initAddTalk(){
 		var projectId = $('#projectId').val();
 		var taskName = $('#taskName').val();
 		var talkInfo = $('#talkInfo').val();
+		$('.upInfo #submitTalkInfo').off('click');
+		$('#areaError').text('');
+		if(talkInfo == "" || talkInfo == null || talkInfo == undefined){
+			$('#areaError').text('留言不能为空');
+		}else{
 		loadData(function(res){
-			var res = res;
+			if(res.code == 200){
+				initAllTalk();
+				initAddTalk();
+				$('#talkInfo').val('');
+			}else{
+				initAddTalk();
+			}
 		}, getContextPath() + '/message/addTopic',$.toJSON({
 			projectId:projectId,
 			taskName:taskName,
 			content:talkInfo
 		}));
+		}
 	});
 }
 
@@ -571,39 +905,84 @@ function initTalk(){
 	}, getContextPath() + '/message/getDefaultMsg'+$('#projectId').val(),null);
 }
 
+//全部留言信息
 function initAllTalk(){
 	loadData(function(res){
 		var res = res;
 		var body =$('.setAreaDiv');
-		body.html();
+		body.html('');
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
-				   var html =createUserInfo(res);
+				   var html =createTalkInfo(res[int]);
 				   body.append(html);
-			};			
+			}
+			rePickTalk();
+			openInfoCard();
 		}
-	}, getContextPath() + '/message/getProjectMsg'+$('#projectId').val(),null);
+	}, getContextPath() + '/message/getProjectMsg/'+$('#projectId').val(),null);
 }
-
+//留言回复
+function rePickTalk(){
+	
+   $('.upInfo .toArea').off('click').on('click',function(){
+	    var projectId = $(this).attr('data-id');
+	    var taskName = $(this).attr('data-name');
+	    var parentId = $(this).attr('data-parentId');
+	    var content = $(this).parent().parent().find('.infoContent').find('input').val();
+	    
+	    if(content == null || content == "" || content == undefined){
+	    	$(this).parent().parent().find('.errorSpan').text('回复不能为空');
+	    }else{
+	    
+	    $('.upInfo .toArea').off('click');
+			loadData(function(res){
+				if(res.code == 200){
+					  initAllTalk();
+					  $('.upInfo .toArea').off('click');
+				}else{
+					  $('.upInfo .toArea').off('click');
+				}
+			}, getContextPath() + '/message/addReply',$.toJSON({
+				projectId:projectId,
+				taskName:taskName,
+				content:content,
+				parentId:parentId
+			}));
+	    }
+   });
+		
+}
+//留言卡片
 function createTalkInfo(res){
-
+	var  children= res.children;
+	var body = '';
+	if(children != null && children != undefined && children !=""){
+		for (var int = 0; int < children.length; int++) {
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+		}
+	}
+	if(res.fromUrl == null || res.fromUrl == ""){
+		var  imgUrl = "/resources/images/flow/def.png";
+	}else{
+		var  imgUrl = getDfsHostName()+res.fromUrl;
+	}
 	var html = [
 	    '<div class="areaItem">',
 	    '   <div class="infoItem">',
-		'	  <img src="/resources/images/flow/def.png">',
-		'       <div class="info">策划人：完成 上传策划方案 任务</div>',
+		'	  <img src="'+imgUrl+'">',
+		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
 		'       <div class="time">',
-		'       	<span>发布时间：22017-07-09  14：00</span>',
+		'       	<span>发布时间：'+formatDate(res.createDate)+'</span>',
 		'     	    <div class="openTalk"></div>',
 		'       </div>',
    		'   </div>',
 		'   <div class="infoContent">',
-		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
-		'      <div>负责人:<span>策划方案需要调整一下</span></div>',
+		'     '+body+'',
 		'      <input>',
 		'   </div>',
+		'<span class="errorSpan"></span>',
 		'   <div class="upInfo">',
-		'      <div class="btn-c-r">提交</div>',
+		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
 		'   </div>',
 		'</div>',
 
@@ -611,28 +990,203 @@ function createTalkInfo(res){
 	return html;
 }
 
+//文件区域
+function getFileInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#projectFilm');
+		body.html('');
+		if(res != null && res != undefined){
+				for (var int = 0; int < res.length; int++) {
+					 var html =createFileInfo(res[int]);
+					 body.append(html);
+				}
+		}
+	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}
 
+/*//文件区域
+function getFileInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#projectFilm');
+		body.html('');
+		if(res != null && res != undefined){
+			for(var key in res) { 
+				var resKey = res[key];
+				for (var int = 0; int < resKey.length; int++) {
+					 var html =createFileInfo(res[key][int]);
+					 body.append(html);
+				}
+             }
+		}
+	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}*/
 
+//文件卡片
+function createFileInfo(res){
+	var name = res.resourceName;
+	var fileName = name.lastIndexOf(".");
+	var finalName = name.substring(fileName + 1);
+	var src = '/resources/images/flow/';
+	switch (finalName) {
+		case 'doc' :
+		case 'docx' :
+			src += 'doc.png';
+			break;
+		case 'xls' :
+		case 'xlsx' :
+			src += 'xls.png';
+			break;
+		case 'ppt' :
+		case 'pptx' :
+			src += 'ppt.png';
+			break;
+		case 'pdf' :
+			src += 'pdf.png';
+			break;
+		case 'txt' :
+			src += 'txt.png';
+			break;
+		case 'avi' :
+			src += 'avi.png';
+			break;
+		case 'esp' :
+			src += 'esp.png';
+			break;
+		case 'jpg' :
+			src += 'jpg.png';
+			break;
+		case 'mov' :
+			src += 'mov.png';
+			break;
+		case 'mp3' :
+			src += 'mp3.png';
+			break;
+		case 'mp4' :
+			src += 'mp4.png';
+			break;
+		case 'png' :
+			src += 'png.png';
+			break;
+		case 'rar' :
+			src += 'rar.png';
+			break;
+		case 'wav' :
+			src += 'wav.png';
+			break;
+		case 'zip' :
+			src += 'zip.png';
+			break;
+		default :
+			src += 'file.png';
+			break;
+	}
+	var fileName = name.lastIndexOf(".");
+	var checkName = name.substring(0,fileName);
+	var html = [
+		'<div class="filmItem">                                     ',
+        '<img class="filmImg" src="'+src+'"> ',
+        '<div class="filmName">'+checkName+'</div>                         ',
+        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+        '<div class="time"><div>'+formatDate(res.createDate)+'</div></div>        ',
+        '<div class="icon">                                         ',
+        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+        '</div>                                                     ',
+        '</div>                                                             ',
+	].join('');
+	return html;
+}
 
+function controlModel(){
+	$('.conMod').off('click').on('click',function(){
+		$('#controlModel').show();
+		scrollTo(0,0);
+		getFileModelInfo();
+	});
+}
 
+function getFileModelInfo(){
+	loadData(function(res){
+		var res = res;
+		var body =$('#controlContent');
+		body.html('');
+		$('#errorSpan').text('');
+		if(res != null && res != undefined){
+			for(var key in res) { 
+				var sethtml="";
+				var resKey = res[key];
+				if(resKey.length > 0){
+					var head =createNoHead(key);
+					sethtml += head;
+					for (var int = 0; int < resKey.length; int++) {
+						 var html =createNoInfo(res[key][int]);
+						 sethtml +=html;
+					}
+					var end = "</div></div>";
+					sethtml +=end;
+					body.append(sethtml);
+				}
+             }
+			fileCheckNo();
+			openInfoCard();
+		}else{
+			$('#errorSpan').text('暂无文件');
+		}
+	}, getContextPath() + '/resource/version/'+$('#projectId').val(),null);	
+}
 
+//版本确认
 
+function fileCheckNo(){
+	
+	$('.icon .flag').off('click').on('click',function(){
+		var id = $(this).attr('data-id');
+		loadData(function(res){
+			if(res){
+				getFileInfo();
+				getFileModelInfo();
+			}
+		}, getContextPath() + '/resource/setValid/'+id,null);			
+	});
+	
+}
 
+//版本投头
+function createNoHead(name){
+	var html = [
+		'<div class="item">',
+        '<div class="itemTop">',
+        '     <div class="controlOpen"></div>',
+        '     <div class="title">'+name+'</div>',
+        '</div>',
+        '<div class="getInfoItemContent">',
+	].join('');
+	return html;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//版本卡片
+function createNoInfo(res){
+	
+	var name = res.resourceName;
+	var fileName = name.lastIndexOf(".");
+	var checkName = name.substring(0,fileName);
+	var imgUrl = "/resources/images/flow/flag.png";
+	if(res.flag == 1){
+		imgUrl = "/resources/images/flow/flagRed.png";
+	}
+	var html = [
+		 ' <div class="InfoItem">                                                                ',
+		 '        <div class="fileName">'+checkName+'</div>                                             ',
+		 '        <div class="name">'+res.uploaderName+'</div>                                                 ',
+		 '        <div class="time">上传于:'+formatDate(res.createDate)+'</div>                                   ',
+		 '        <div class="icon">                                                             ',
+		 '                    <img class="flag" data-id="'+res.projectResourceId+'" src="'+imgUrl+'">           ',
+		 '                    <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" src="/resources/images/flow/download.png"></div></a>  ',
+		 '        </div>                                                                         ',
+	     '  </div>                     ',
+	].join('');
+	return html;
+}
 
