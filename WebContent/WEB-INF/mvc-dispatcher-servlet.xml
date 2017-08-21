@@ -16,6 +16,9 @@
 	<mvc:view-controller path="/textI" view-name="/activiti/flowInfo" />
 	
 	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
+	<!-- xcc此处添加安全页的名字 -->
+	<mvc:view-controller path='save' view-name='/activiti/saveInfo'/>
+
 
 	<context:annotation-config />
 
@@ -30,5 +33,4 @@
 			<bean class="com.paipianwang.activiti.interceptors.SecurityInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-
 </beans>
