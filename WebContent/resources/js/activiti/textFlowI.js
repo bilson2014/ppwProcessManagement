@@ -7,17 +7,21 @@ var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
 	
 	// 加载动态表单
-	pageInit();
+	
 	checkState();
 	pasueOrDoing();
-	//getStageInfo($('#taskStage').val());
 	getStageInfo($('#taskStage').val());
 	getTimeString();
+	pageInit();
+	
+	
 	
 });
 
-
-
+function getHeight(){
+	var height = $('.pages').height() + 300;
+	$(window.parent.document).find('.frame').css('height',height);
+}
 
 //流程信息
 function initLastTime(ctyle,createTime){
@@ -26,8 +30,6 @@ function initLastTime(ctyle,createTime){
 	var totalTime = time + day;
 	var nowData = Date.parse(new Date());
 	var checkDay = nowData - totalTime;
-	
-	
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
    
@@ -121,7 +123,7 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</span></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == "" ){
@@ -135,9 +137,9 @@ function crearteInfoCard(res){
 				'    <div  class="itemTop">',
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li>'+res.fromName+' : '+res.content+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
-				/*'              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',*/
-				'           </ul>                                                                                                   ',
+				'              <li><div>'+res.fromName+' : '+res.content+'</div><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
+				/*              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
+*/				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
@@ -262,6 +264,7 @@ function getStageInfo(stage){
 								 body.append(setBody);
 							}
 							stageTalkEven();
+							getHeight();
 						}
 				}
 			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
@@ -384,7 +387,6 @@ function pageInit(){
 	initEvenInfo();
 	initSelect();
 	flagEven();
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	checkState();
 	getFileInfo();
 	initAddTalk();
@@ -392,7 +394,10 @@ function pageInit(){
 	getFileInfo();
 	controlModel();
 	checkState();
-	 
+	getHeight();
+	$('#projectCtyle').text($('#projectCtyle').text()+"天");
+	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
+    $('#projectTime').text(formatDate($('#projectTime').text()));
 }
 
 //表单验证
@@ -751,15 +756,15 @@ function initEvenInfo(){
 function openInfoCard(){
 	$('.controlOpen').off('click').on('click',function(){
 		var nowItem = $(this);
-            if(nowItem.hasClass('openItem')){
-            	nowItem.removeClass('openItem');
+            if(nowItem.hasClass('openItems')){
+            	nowItem.removeClass('openItems');
             	nowItem.parent().parent().find('.getInfoItemContent').slideUp();
             	
             }else{
-            	nowItem.addClass('openItem');
+            	nowItem.addClass('openItems');
             	nowItem.parent().parent().find('.getInfoItemContent').slideDown();
-           
-            }		     
+            }	
+            getHeight();
 	});
 	
 	$('.openTalk').off('click').on('click',function(){
@@ -772,7 +777,8 @@ function openInfoCard(){
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
             	nowItem.parent().parent().parent().find('.upInfo').show();     
-            }		     
+            }	
+            getHeight();
 	});
 	
 	$('.modelOpen').off('click').on('click',function(){
@@ -785,7 +791,8 @@ function openInfoCard(){
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideDown();
              	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
-            }		     
+            }	
+            getHeight();
 	});
 	
 }
@@ -918,6 +925,7 @@ function initAllTalk(){
 			}
 			rePickTalk();
 			openInfoCard();
+			getHeight();
 		}
 	}, getContextPath() + '/message/getProjectMsg/'+$('#projectId').val(),null);
 }
@@ -958,7 +966,7 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate(children[int].createDate)+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == ""){
@@ -972,7 +980,7 @@ function createTalkInfo(res){
 		'	  <img src="'+imgUrl+'">',
 		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
 		'       <div class="time">',
-		'       	<span>发布时间：'+formatDate(res.createDate)+'</span>',
+		'       	<span>发布时间：'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</span>',
 		'     	    <div class="openTalk"></div>',
 		'       </div>',
    		'   </div>',
@@ -997,12 +1005,30 @@ function getFileInfo(){
 		var body =$('#projectFilm');
 		body.html('');
 		if(res != null && res != undefined){
-				for (var int = 0; int < res.length; int++) {
-					 var html =createFileInfo(res[int]);
+			var newList = bulidFileList(res);
+				for (var int = 0; int < newList.length; int++) {
+					 var html =createFileInfo(newList[int]);
 					 body.append(html);
 				}
+				getHeight();
 		}
 	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}
+
+function bulidFileList(arr) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = 0; j < len - 1 - i; j++) {
+        	var fileOne = new Date((arr[j].createDate).replace("CST","GMT+0800"));
+        	var fileTwo =  new Date((arr[j+1].createDate).replace("CST","GMT+0800"));
+            if (fileOne < fileTwo) {        // 相邻元素两两对比
+                var temp = arr[j+1];        // 元素交换
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
 }
 
 /*//文件区域
@@ -1090,7 +1116,7 @@ function createFileInfo(res){
         '<div class="filmName">'+checkName+'</div>                         ',
         '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
         '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
-        '<div class="time"><div>'+formatDate(res.createDate)+'</div></div>        ',
+        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
@@ -1180,7 +1206,7 @@ function createNoInfo(res){
 		 ' <div class="InfoItem">                                                                ',
 		 '        <div class="fileName">'+checkName+'</div>                                             ',
 		 '        <div class="name">'+res.uploaderName+'</div>                                                 ',
-		 '        <div class="time">上传于:'+formatDate(res.createDate)+'</div>                                   ',
+		 '        <div class="time">上传于:'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div>                                   ',
 		 '        <div class="icon">                                                             ',
 		 '                    <img class="flag" data-id="'+res.projectResourceId+'" src="'+imgUrl+'">           ',
 		 '                    <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" src="/resources/images/flow/download.png"></div></a>  ',

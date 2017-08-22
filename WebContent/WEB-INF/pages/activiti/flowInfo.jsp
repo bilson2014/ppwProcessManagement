@@ -49,6 +49,8 @@
 <input type="hidden" value="${taskName}" id="taskName" />
 <input type="hidden" value="${projectId}" id="projectId" />
 <input type="hidden" value="${processInstanceId}" id="processInstanceId" />
+<input type="hidden" value="${price_info}" id="price_info" />
+
 
 <%-- <input type="hidden" value="${user_info}" id="user_info" />
 <input type="hidden" value="${price_info}" id="price_info" />
@@ -1171,28 +1173,54 @@
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
-	                                 
-		                                  <c:forEach var="item" items="${flow_info}"> 
-											   <div class="item">
-		                                          <div>${item.key}</div>
-		                                          <div>${item.value}</div>
-		                                       </div>
-										  </c:forEach> 
-	                                       
+	                                         <div class="contentItem">
+			                                  <div class="item">
+			                                          <div>项目编号</div>
+			                                          <div>${flow_info["项目编号"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>项目名称</div>
+			                                          <div>${flow_info["项目名称"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>项目评级</div>
+			                                          <div>${flow_info["项目评级"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>项目来源</div>
+			                                          <div>${flow_info["项目来源"]}</div>
+			                                  </div>
+		                                  </div>
 	                                  </div>
-	                            <!--      
+	                                   <div class="contentItem">
+	                                         <div class="contentItem">
+			                                  <div class="item">
+			                                          <div>产品线</div>
+			                                          <div>${flow_info["产品线"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>项目周期</div>
+			                                          <div id="projectCtyle">${flow_info["项目周期"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>立项时间</div>
+			                                          <div id="projectTime">${flow_info["立项时间"]}</div>
+			                                  </div>
+		                                  </div>
+	                                  </div>
 	                                  <div class="longItem">
-	                                      <div>项目配置</div>
-	                                      <div>内容内容</div>
-	                                  </div>
-	                                   <div class="longItem">
-	                                      <div>对标影片</div>
-	                                      <div>内容内容</div>
-	                                  </div>
-	                                   <div class="longItem">
-	                                      <div>项目描述</div>
-	                                      <div>内容内容</div>
-	                                  </div> -->
+			                                          <div>项目配置</div>
+			                                          <div>${flow_info["项目配置"]}</div>
+			                           </div>
+			                           <div class="longItem">
+			                                          <div>对标影片</div>
+			                                          <div><a href="${flow_info['对标影片']}">${flow_info["对标影片"]}</a></div>
+			                           </div>
+			                           <div class="longItem">
+			                                          <div>项目描述</div>
+			                                          <div>${flow_info["项目描述"]}</div>
+			                           </div>
+	                
 	                            </div>
 	                       </div>
 	                       
@@ -1206,12 +1234,22 @@
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
-			                                  <c:forEach var="item" items="${user_info}"> 
-												   <div class="item">
-			                                          <div>${item.key}</div>
-			                                          <div>${item.value}</div>
-			                                       </div>
-											  </c:forEach> 
+			                                  <div class="item">
+			                                          <div>客户名称</div>
+			                                          <div>${user_info["客户名称"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>客户评级</div>
+			                                          <div>${user_info["客户评级"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>客户联系人</div>
+			                                          <div>${user_info["客户联系人"]}</div>
+			                                  </div>
+			                                  <div class="item">
+			                                          <div>客户电话</div>
+			                                          <div>${user_info["客户电话"]}</div>
+			                                  </div>
 		                                  </div>
 		                            </div>
 		                       </div>
@@ -1228,54 +1266,40 @@
 	                            <div class="getInfoItemContent">
 	                                  <div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                                  <div class="contentItem">
-	                                  <c:if test="${!empty teamPlan_info}">
-		                                 <c:forEach var="item" items="${teamPlan_info}"> 
-												    <c:forEach var="map" items="${item}"> 
-													    <div class="item">
-				                                          <div>${map.key}</div>
-				                                          <div>${map.value}</div>
-				                                       </div>
-												    </c:forEach> 
-										  </c:forEach> 
-							          </c:if>
-	                                       <!-- <div class="item">
-	                                          <div>供应商名称</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>供应商联系人</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>供应商联系电话</div>
-	                                          <div>内容内容</div>
-	                                       </div> -->
-	                                  </div>
+				                                     <div class="item">
+						                                          <div>供应商名称</div>
+						                                          <div>${teamProduct_info["预估价格"]}</div>
+						                             </div>
+						                             <div class="item">
+						                                          <div>供应商联系人</div>
+						                                          <div>${teamProduct_info["供应商联系人"]}</div>
+						                             </div>
+						                             <div class="item">
+						                                          <div>供应商联系电话</div>
+						                                          <div>${teamProduct_info["供应商联系电话"]}</div>
+						                             </div>
+									 </div>
+	                               
 	                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 	                                  <div class="contentItem" data-value="${teamProduct_info}">
 	                                  
 	                                  <c:if test="${!empty teamProduct_info}">
-		                                  <c:forEach var="item" items="${teamProduct_info}"> 
-												    <c:forEach var="map" items="${item}"> 
-													    <div class="item">
-				                                          <div>${map.key}</div>
-				                                          <div>${map.value}</div>
-				                                       </div>
-												    </c:forEach> 
-										  </c:forEach> 
+					                             <div class="contentItem">	      
+				                                     <div class="item">
+						                                          <div>供应商名称</div>
+						                                          <div>${teamProduct_info["预估价格"]}</div>
+						                             </div>
+						                             <div class="item">
+						                                          <div>供应商联系人</div>
+						                                          <div>${teamProduct_info["供应商联系人"]}</div>
+						                             </div>
+						                             <div class="item">
+						                                          <div>供应商联系电话</div>
+						                                          <div>${teamProduct_info["供应商联系电话"]}</div>
+						                             </div>
+										         </div>
 							          </c:if>
-	                            <!--            <div class="item">
-	                                          <div>供应商名称</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>供应商联系人</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>供应商联系电话</div>
-	                                          <div>内容内容</div>
-	                                       </div> -->
+	       
 	                                  </div>
 	                            </div>
 	                       </div>
@@ -1287,81 +1311,59 @@
 	                                 <div class="info">价格信息</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
-	                                  <div class="contentItem">	                                  	                                  
-		                                  <c:forEach var="item" items="${price_info}"> 
+	                                  <div class="contentItem">	      
+	                                     <div class="item">
+			                                          <div>预估价格</div>
+			                                          <div>${price_info["预估价格"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>客户项目预算</div>
+			                                          <div>${price_info["客户项目预算"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>策划供应商预算</div>
+			                                          <div>${price_info["策划供应商预算"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>项目来源</div>
+			                                          <div>${price_info["项目来源"]}</div>
+			                             </div>
+	                                                           	                                  
+		                        <%--           <c:forEach var="item" items="${price_info}"> 
 													<div class="item">
 			                                          <div>${item.key}</div>
 			                                          <div>${item.value}</div>
 			                                       </div>
-										  </c:forEach> 
+										  </c:forEach>  --%>
+										 
+							         </div>
+							          <div class="contentItem">	      
+	                                     <div class="item">
+			                                          <div>产品线</div>
+			                                          <div>${price_info["产品线"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>项目周期</div>
+			                                          <div>${price_info["项目周期"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>立项时间</div>
+			                                          <div>${price_info["立项时间"]}</div>
+			                             </div>
+			                             <div class="item">
+			                                          <div>负责人</div>
+			                                          <div>${price_info["负责人"]}</div>
+			                             </div>
 							         </div>
 	                            </div>
 	                       </div>
 	                        </c:if>
-	                     <!--   <div class="getInfoItem lastItem">
-	                            <div class="getInfoItemTop ">
-	                                 <div class="controlOpen"></div>
-	                                 <div class="info">其它信息</div>
-	                            </div>
-	                            <div class="getInfoItemContent">
-	                                  <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>客户约定付款时间</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>客户项目交付时间</div>
-	                                          <div>内容内容</div>
-	                                       </div>
-	                                  </div>
-	                                   <div class="longItem">
-	                                      <div>策划供应商启动函备注信息</div>
-	                                      <div>内容内容</div>
-	                                  </div>
-	                                   <div class="longItem">
-	                                      <div>制作供应商启动函备注信息</div>
-	                                      <div>内容内容</div>
-	                                  </div>
-	                                   <div class="contentItem">
-	                                       <div class="item">
-	                                          <div>发票信息</div>
-	                                          <div class="under" id="openBill">内容内容</div>
-	                                       </div>
-	                                       <div class="item">
-	                                          <div>客户转账信息</div>
-	                                          <div class="under" id="showCusPrice">内容内容</div>
-	                                       </div>
-	                                        <div class="item">
-	                                          <div>供应商转账信息</div>
-	                                          <div class="under" id="showProPrice">内容内容</div>
-	                                       </div>
-	                                  </div>
-	                            </div>
-	                       </div> -->
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
 	                        <div class="conMod btn-c-r">版本管理</div>
 	                        <div class="upFile hide btn-c-r">上传</div>
 	                   </div>
-	                       <div class="projectFilm" id="projectFilm">
-	                            
-	                           <!--   <div class="filmItem">
-	                                    <img class="filmImg" src="/resources/images/flow/ppt.png">
-	                                    <div class="filmName">文件名</div>
-	                                    <div class="fileType"><div>策划方案</div></div>
-	                                    <div class="fileTypeName"><div>测试文件</div></div>
-	                                    <div class="time"><div>上传于：2017-07-09  14：00</div></div>
-	                                    <div class="icon">
-	                                          <div class="look"></div>
-	                                          <div class="share"></div>
-	                                          <div class="download"></div>
-	                                    </div>
-	                             </div>
-	                             <div class="getMore">
-	                                  <div>展开更多</div>
-	                                  <div></div>
-	                             </div> -->
-	                       </div>
+	                   <div class="projectFilm" id="projectFilm"></div>
 	                       
 	                       <div class="projectTitle">留言评论区</div>
 	                       <div class="toSetArea">

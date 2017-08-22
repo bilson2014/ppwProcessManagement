@@ -40,15 +40,15 @@ function getDate(){
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;
 		   var getTime =$(setTime[i]).text();
-		   if(lastTime < 0){
+		   if(lastHour < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
 			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime));  //3
 		   }
-		   if(lastTime >= 3){
+		   if(lastHour >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');
 			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
-		   if(lastTime <3 && lastHour>=0){
+		   if(lastHour <3 && lastHour>=0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoY.png');
 			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
