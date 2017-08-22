@@ -16,7 +16,7 @@
             input,
             textarea {
                 outline: none;
-                padding-left: 5px;
+                padding-left: 10px;
             }
 
             textarea {
@@ -599,7 +599,7 @@
                             margin-bottom: 10px;
                         }
                         .simContent {
-                            font-size: $font-size-sm;
+                            font-size: $font-size-base;
                             color: $gray-dark;
                             display: block;
                             line-height: 20px;

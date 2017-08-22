@@ -168,6 +168,7 @@ $ba:#bababa; */
                         color: $gray-dark;
                         width: 40%;
                         @include ellipsis;
+                        font-weight: bold;
                     }
                     .your {
                         width: 80px;
@@ -288,7 +289,7 @@ $ba:#bababa; */
                             margin-left: 15px;
                             width: 56%;
                             .listName {
-                                font-size: $font-size-base;
+                                font-size: $font-size-sm;
                                 color: $gray;
                                 margin-bottom: 10px;
                                 @include ellipsis;

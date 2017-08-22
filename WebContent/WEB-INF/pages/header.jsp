@@ -22,30 +22,30 @@
             <div class="left-part">
                 <a href="<spring:url value='http://www.apaipian.com'/>" class="logo" id="logo"></a>
 				<r:identity role="customer">
-					<a href="<spring:url value='/mgr/index'/>" class="header-item" >我的项目<span></span></a>
-					<a href="<spring:url value='/cost/cal'/>" class="header-item">估算成本<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/mgr/index'/>" class="header-item" >我的项目<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/cost/cal'/>" class="header-item">估算成本<span></span></a>
 				</r:identity>
 				<r:identity role="provider">
-					<a href="<spring:url value='/provider/portal'/>" class="header-item" >信息管理<span></span></a>
-					<a href="<spring:url value='/mgr/index'/>" class="header-item" >所有项目<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/provider/portal'/>" class="header-item" >信息管理<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/mgr/index'/>" class="header-item" >所有项目<span></span></a>
 				</r:identity>
 				<r:identity role="employee">
-					<a href="<spring:url value='/mgr/index'/>" class="header-item" >办公<span></span></a>
-					<a href="<spring:url value='/product/EnterprisePromotionalVideo/main'/>" class="header-item" >产品<span></span></a>
-					<a href="<spring:url value='/cost/cal'/>" class="header-item">估算成本<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/mgr/index'/>" class="header-item" >办公<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/product/EnterprisePromotionalVideo/main'/>" class="header-item" >产品<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/cost/cal'/>" class="header-item">估算成本<span></span></a>
 				</r:identity>
 				<r:noLogin>
 					<a class="header-item" target="_parent" id="wantOrder">我要拍片<span></span></a>
-					<a href="<spring:url value='/cost/cal'/>" class="header-item">估算成本<span></span></a>
+					<a href="<spring:url value='http://www.apaipian.com/cost/cal'/>" class="header-item">估算成本<span></span></a>
 				</r:noLogin>
-                <a href="<spring:url value='/list.html'/>" class="header-item" target="_parent">精品案例<span></span></a>
-                <a href="/order-flow.html" class="header-item" target="_parent">服务流程<span></span></a>
+                <a href="<spring:url value='http://www.apaipian.com/list.html'/>" class="header-item" target="_parent">精品案例<span></span></a>
+                <a href="http://www.apaipian.com/order-flow.html" class="header-item" target="_parent">服务流程<span></span></a>
                 <a class="header-item header-item-last" id="showVideo" target="_parent">
                     <div class="showVideo"></div>
                     	拍片网介绍
                     <span></span>
                 </a>
-                 <a href="/news-list.html" class="header-item" target="_parent">新闻资讯<span></span></a>
+                 <a href="http://www.apaipian.com/news-list.html" class="header-item" target="_parent">新闻资讯<span></span></a>
             </div>
             <input type="hidden" id="commonToken" name="token" value="${token}"/>
             <div class="middle-part">
@@ -60,8 +60,8 @@
             </div>
             <div class="right-part">
             	<r:noLogin>
-					<a href="<spring:url value="/login" />" class="header-item login-item" target="_self">登录</a>
-					<a href="<spring:url value="/register" />" class="header-item login-item" target="_self">注册</a>
+					<a href="<spring:url value="http://www.apaipian.com/login" />" class="header-item login-item" target="_self">登录</a>
+					<a href="<spring:url value="http://www.apaipian.com/register" />" class="header-item login-item" target="_self">注册</a>
 					<%-- <div class="showInfo">
 				       <div class="showInfoList">
 					         <a href="<spring:url value="/" />"><li class="toSumbit">处理中</li></a>
@@ -72,45 +72,45 @@
 					</div> --%>
 				</r:noLogin>
 				<r:identity role="customer">
-					<a href="<spring:url value="/user/info" />" class="header-item login-item" target="_self" title="<r:outName />"><img id="getImgUrl" data-value="<r:outImg />" src="/resources/images/provider/default-user.jpg"></a>
+					<a href="<spring:url value="http://www.apaipian.com/user/info" />" class="header-item login-item" target="_self" title="<r:outName />"><img id="getImgUrl" data-value="<r:outImg />" src="/resources/images/provider/default-user.jpg"></a>
 					<a class="header-item login-item widthHear" target="_self"><r:outName /></a>
 					<div class="showInfo">
 				       <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>
-					         <a href="<spring:url value="/user/info" />"><li class="toSet">个人信息</li></a>
-					         <a href="<spring:url value="/user/info?safeInfo" />"><li class="toSafe">安全设置</li></a>
-					         <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
-					          <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/user/info" />"><li class="toSet">个人信息</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/user/info?safeInfo" />"><li class="toSafe">安全设置</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					   </div>
 					</div>
 				</r:identity>
 				<r:identity role="provider">
-					<a href="<spring:url value="/provider/portal" />" class="header-item login-item" target="_self"><img id="getImgUrl" data-value="<r:outImg />" src="/resources/images/provider/initLogo.png"></a>
+					<a href="<spring:url value="http://www.apaipian.com/provider/portal" />" class="header-item login-item" target="_self"><img id="getImgUrl" data-value="<r:outImg />" src="/resources/images/provider/initLogo.png"></a>
 					<a class="header-item login-item widthHear" target="_self"><r:outName /></a>
 					<div class="showInfo">
 				           <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>
-					         <a href="<spring:url value="/provider/portal?company-info" />"><li class="toSet">团队信息</li></a>
-					         <a href="<spring:url value="/provider/portal?safe-info" />"><li class="toSafe">安全设置</li></a>
-					         <a href="<spring:url value="/provider/portal" />"><li class="toList">作品列表</li></a>
-					         <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
-					          <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/provider/portal?company-info" />"><li class="toSet">团队信息</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/provider/portal?safe-info" />"><li class="toSafe">安全设置</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/provider/portal" />"><li class="toList">作品列表</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
+					         <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					       </div>
 					</div>
 				</r:identity>
 				<r:identity role="employee">
-					<a href="<spring:url value="/mgr/index" />" class="header-item login-item" target="_self" title="<r:outName />"><r:outName /></a>
-					<a href="<spring:url value='/login/loginout' />" class="header-item login-item" target="_self">退出</a>
+					<a href="<spring:url value="http://www.apaipian.com/mgr/index" />" class="header-item login-item" target="_self" title="<r:outName />"><r:outName /></a>
+					<a href="<spring:url value='http://www.apaipian.com/login/loginout' />" class="header-item login-item" target="_self">退出</a>
 					<div class="showInfo">
 				       <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>
 					         <r:permission uri="/order/myOrder">
-					                <a href="<spring:url value="/order/myOrder" />"><li class="toCancle">我的订单</li></a>
+					                <a href="<spring:url value="http://www.apaipian.com/order/myOrder" />"><li class="toCancle">我的订单</li></a>
 					         </r:permission>
 					          <r:permission uri="/mgr/index">
-					                  <a href="<spring:url value="/mgr/index" />"><li class="toMy">我的项目</li></a>
+					                  <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
 					                   <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         </r:permission>
 					         <a href="<spring:url value="/mgr/favourites" />"><li class="toCollect">收藏列表</li></a>

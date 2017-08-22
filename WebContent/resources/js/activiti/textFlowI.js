@@ -89,7 +89,7 @@ function loadStageInfoEven(name){
 
 function initStageInfoTop(res){
 	$('#infoNameTitle').text(res.taskName);
-	$('#stateContent').text(res.taskDescription);
+	$('#stateContent').html(res.taskDescription);
 	$('#infoStartTime').text(formatDate(res.startTime));
 	$('#infoEndTime').text(formatDate(res.endTime));
 	var checkStatus = res.taskStatus;
@@ -135,7 +135,7 @@ function crearteInfoCard(res){
 				'    <div  class="itemTop">',
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li>'+res.fromName+''+res.taskName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
+				'              <li>'+res.fromName+' : '+res.content+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
 				/*'              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',*/
 				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',

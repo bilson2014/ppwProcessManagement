@@ -82,7 +82,7 @@
 	                                  <img src="/resources/images/flow/isFinish.png">
 	                                  <div class="setContent">
 	                                          <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime finishTime">${historicProcessInstance.endTime}</div>
+		                                      <div class="lastTime finishTime">${staff.task.updateDate}</div>
 	                                  </div>
 	                             </div>
 	                             </a>
