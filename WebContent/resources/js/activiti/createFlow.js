@@ -289,7 +289,7 @@ function initMultSelect(){
 		 $('#estimatedPrice').val(realPrice);
 		 $('#productConfigAdditionalPackageIds').text(multInfo);
 		 $('#pf_productConfigAdditonalPackageName').val(multInfo);
-		 $('#pf_productConfigAdditionalPackageIds').attr('data-id',multID);
+		 $('#pf_productConfigAdditionalPackageIds').val(multID);
 		 var id = $(this).attr('data-id');
 		 var multInfo = $('#multInfo').text();
 	});
