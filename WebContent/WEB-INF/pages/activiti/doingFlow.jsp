@@ -60,16 +60,16 @@
 	           
 	                <div class="lineTop"></div>
 	                
-	                 <c:if test="${empty gTasks}">
-	                     <div class="nodaiban">当前没有待办任务</div>
-	                 </c:if>
-	                 
-	                 
-	                
-	                <c:if test="${!empty gTasks}">
 	                <div class="title">
 	                     <div class="titleName" id="upName">待办任务(<span id="daiNum"></span>)</div>
 	                </div>
+	                
+	                 <c:if test="${empty gTasks}">
+	                     <div class="nodaiban">当前没有待办任务</div>
+	                 </c:if>
+	                
+	                <c:if test="${!empty gTasks}">
+	               
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard cardNum">

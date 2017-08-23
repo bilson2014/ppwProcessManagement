@@ -6,6 +6,8 @@
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
 <spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
+<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css"
+	var="bootstrapCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -38,6 +40,8 @@
 <link rel="stylesheet" href="${datepickerCss}">
 <link rel="stylesheet" href="${flowInfoCss}">
 <link rel="stylesheet" href="${webuploaderCss}">
+<link rel="stylesheet" href="${bootstrapCss}">
+
 
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
@@ -236,19 +240,19 @@
 	                                         <div class="contentItem">
 			                                  <div class="item">
 			                                          <div>项目编号</div>
-			                                          <div>${flow_info["项目编号"]}</div>
+			                                          <div>${flow_info["projectId"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>项目名称</div>
-			                                          <div>${flow_info["项目名称"]}</div>
+			                                          <div>${flow_info["projectName"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>项目评级</div>
-			                                          <div>${flow_info["项目评级"]}</div>
+			                                          <div>${flow_info["projectGrade"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>项目来源</div>
-			                                          <div>${flow_info["项目来源"]}</div>
+			                                          <div>${flow_info["projectSource"]}</div>
 			                                  </div>
 		                                  </div>
 	                                  </div>
@@ -256,29 +260,29 @@
 	                                         <div class="contentItem">
 			                                  <div class="item">
 			                                          <div>产品线</div>
-			                                          <div>${flow_info["产品线"]}</div>
+			                                          <div>${flow_info["productName"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>项目周期</div>
-			                                          <div id="projectCtyle">${flow_info["项目周期"]}</div>
+			                                          <div id="projectCtyle">${flow_info["projectCycle"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>立项时间</div>
-			                                          <div id="projectTime">${flow_info["立项时间"]}</div>
+			                                          <div id="projectTime">${flow_info["createDate"]}</div>
 			                                  </div>
 		                                  </div>
 	                                  </div>
 	                                  <div class="longItem">
 			                                          <div>项目配置</div>
-			                                          <div>${flow_info["项目配置"]}</div>
+			                                          <div>${flow_info["productConfigLevelName"]}</div>
 			                           </div>
 			                           <div class="longItem">
 			                                          <div>对标影片</div>
-			                                          <div><a href="${flow_info['对标影片']}">${flow_info["对标影片"]}</a></div>
+			                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
 			                           </div>
 			                           <div class="longItem">
 			                                          <div>项目描述</div>
-			                                          <div>${flow_info["项目描述"]}</div>
+			                                          <div>${flow_info["projectDescription"]}</div>
 			                           </div>
 	                
 	                            </div>
@@ -296,19 +300,19 @@
 		                                  <div class="contentItem">
 			                                  <div class="item">
 			                                          <div>客户名称</div>
-			                                          <div>${user_info["客户名称"]}</div>
+			                                          <div>${user_info["userName"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>客户评级</div>
-			                                          <div>${user_info["客户评级"]}</div>
+			                                          <div>${user_info["userLevel"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>客户联系人</div>
-			                                          <div>${user_info["客户联系人"]}</div>
+			                                          <div>${user_info["linkman"]}</div>
 			                                  </div>
 			                                  <div class="item">
 			                                          <div>客户电话</div>
-			                                          <div>${user_info["客户电话"]}</div>
+			                                          <div>${user_info["telephone"]}</div>
 			                                  </div>
 		                                  </div>
 		                            </div>
@@ -328,15 +332,15 @@
 	                                  <div class="contentItem">
 				                                     <div class="item">
 						                                          <div>供应商名称</div>
-						                                          <div>${teamProduct_info["预估价格"]}</div>
+						                                          <div>${teamProduct_info["teamName"]}</div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系人</div>
-						                                          <div>${teamProduct_info["供应商联系人"]}</div>
+						                                          <div>${teamProduct_info["linkman"]}</div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系电话</div>
-						                                          <div>${teamProduct_info["供应商联系电话"]}</div>
+						                                          <div>${teamProduct_info["telephone"]}</div>
 						                             </div>
 									 </div>
 	                               
@@ -347,15 +351,15 @@
 					                             <div class="contentItem">	      
 				                                     <div class="item">
 						                                          <div>供应商名称</div>
-						                                          <div>${teamProduct_info["预估价格"]}</div>
+						                                          <div>${teamProduct_info["teamName"]}</div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系人</div>
-						                                          <div>${teamProduct_info["供应商联系人"]}</div>
+						                                          <div>${teamProduct_info["linkman"]}</div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系电话</div>
-						                                          <div>${teamProduct_info["供应商联系电话"]}</div>
+						                                          <div>${teamProduct_info["telephone"]}</div>
 						                             </div>
 										         </div>
 							          </c:if>
@@ -374,19 +378,19 @@
 	                                  <div class="contentItem">	      
 	                                     <div class="item">
 			                                          <div>预估价格</div>
-			                                          <div>${price_info["预估价格"]}</div>
+			                                          <div>${price_info["estimatedPrice"]}</div>
 			                             </div>
 			                             <div class="item">
 			                                          <div>客户项目预算</div>
-			                                          <div>${price_info["客户项目预算"]}</div>
+			                                          <div>${price_info["projectBudget"]}</div>
 			                             </div>
 			                             <div class="item">
 			                                          <div>策划供应商预算</div>
-			                                          <div>${price_info["策划供应商预算"]}</div>
+			                                          <div>${teamProduct_info["budget"]}</div>
 			                             </div>
 			                             <div class="item">
 			                                          <div>项目来源</div>
-			                                          <div>${price_info["项目来源"]}</div>
+			                                          <div>${flow_info["projectSource"]}</div>
 			                             </div>
 	                                                           	                                  
 		                        <%--           <c:forEach var="item" items="${price_info}"> 
@@ -1258,8 +1262,23 @@
                    <div class="title">${taskName}<span id="errorInfo"></span> </div>
                    <div class="closeModel"></div>
             </div>
+			                 <div class="upProgress">
+								<div class="proTitle" id="proTitle">上传进度</div>
+								<div  class="progress progress-striped active">
+									<div id="setWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 0;"></div>
+								</div>
+								<div class="upIng">上传中...</div>
+								<div class="upSuccess hide">
+									<img src="/resources/images/provider/sure.png">上传成功
+								</div>
+								<div class="upError hide">
+									<img src="/resources/images/provider/error.png">上传失败请重新上传
+								</div>
+							</div>
             <div class="otherContent" id="setAutoInfo">
-                     
+                    
           <!--            <div class="item">
 	                       <div class="title">客户约定付款时间</div>
 	                       <input>

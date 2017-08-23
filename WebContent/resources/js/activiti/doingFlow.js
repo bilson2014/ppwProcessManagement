@@ -21,7 +21,6 @@ function initPageEven(){
 function getDate(){
 	
 	$('#daiNum').text($('.waitCard').length);
-	
 	if($('div').hasClass("waitCard")){
 	if($('.waitCard').length == 0){
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();

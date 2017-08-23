@@ -1460,8 +1460,8 @@
                                 background: url(/resources/images/flow/openClose.png);
                                 background-size: 14px 28px;
                             }
-                            .openItems{
-                                background-position-y:14px !important;
+                            .openItems {
+                                background-position-y: 14px !important;
                             }
                             .title {
                                 font-size: $font-size-base;
@@ -2355,4 +2355,59 @@
         .errorSpans {
 
             left: 0px !important;
+        } //进度条
+        .upProgress {
+            padding-left: 50px;
+            font-size: $font-size-sm;
+            color: $gray;
+            position: relative;
+            width: 85%;
+            padding-top: 30px;
+            display: none;
+        }
+
+        .progress {
+            height: 16px;
+            border-radius: 90px !important;
+            margin-top: 8px;
+            margin-bottom: 0px !important;
+        }
+
+        .progress-bar {
+            /*     background-color: #337ab7;
+background-image: none !important; */
+        }
+
+        .upIng {
+            position: absolute;
+            font-size: $font-size-sm;
+            color: $gray;
+            right: 0px;
+            top: 30px;
+        }
+
+        .upSuccess {
+            position: absolute;
+            font-size: $font-size-sm;
+            color: $gray;
+            right: 0px;
+            top: 30px;
+            img {
+                position: relative;
+                top: -2px;
+                margin-right: 10px;
+            }
+        }
+
+        .upError {
+            position: absolute;
+            font-size: $font-size-sm;
+            color: $gray;
+            right: 0px;
+            top: 30px;
+            img {
+                position: relative;
+                top:-2px;
+                margin-right: 10px;
+            }
         }

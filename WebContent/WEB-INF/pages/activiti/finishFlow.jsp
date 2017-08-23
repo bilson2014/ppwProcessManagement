@@ -67,7 +67,7 @@
 	                
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
-						   <div class="waitCard">
+						   <div class="otherCard">
 						       <a href="/project/task/${staff.task.id}?finish">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>

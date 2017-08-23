@@ -234,55 +234,68 @@ function createStageInfo(res,state){
 
 function getStageInfo(stage){	
 			var keys = stage;
+			var resMap = "";
+			
+			if(resMap == ""){
+			
 			loadData(function(res){
 				initLastTime(res.projectCycle,res.createDate);
 				if(res != null && res != undefined){
+					    resMap = res;
 						var sethtml="";
 						var resKey = res[keys];
-						var Stage = $('#taskStage').val();
-						if(resKey.length > 0){
-							 if(keys == "沟通阶段"){
-								 $('.icons').attr('class','icons');
-								 $('.icons').addClass('stepIcon');
-							 }
-						 if(keys == "方案阶段"){
-							 $('.icons').attr('class','icons');
-								 $('.icons').addClass('step2Icon');
-							 }
-						 if(keys == "商务阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step3Icon');
-						 }
-						 if(keys == "制作阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step4Icon');
-						 }
-						 if(keys == "交付阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step5Icon');
-						 }
-							var body =$('#listContent');
-							body.html('');
-							var setBody = "";
-							for (var int = 0; int < resKey.length; int++) {
-								 if(int == 0){
-									 var html =createStageInfo(resKey[int],"s"); 
-									 $('#startTime').text(formatDate(resKey[int].startTime));
-								 }if(int == resKey.length - 1){
-									 var html =createStageInfo(resKey[int],"e"); 
-								 }
-								 if(int > 0 && int != resKey.length - 1)
-								 {
-									 var html =createStageInfo(resKey[int],'u');
-								 }
-								 setBody =html;
-								 body.append(setBody);
-							}
-							stageTalkEven();
-							getHeight();
-						}
+						getStageCard(keys,resKey);
 				}
 			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
+			}else{
+				var resKey = resMap[keys];
+				getStageCard(keys,resKey);
+			}
+}
+
+function getStageCard(keys,resKey){
+	var Stage = $('#taskStage').val();
+	if(resKey.length > 0){
+		 if(keys == "沟通阶段"){
+			 $('.icons').attr('class','icons');
+			 $('.icons').addClass('stepIcon');
+		 }
+	 if(keys == "方案阶段"){
+		 $('.icons').attr('class','icons');
+			 $('.icons').addClass('step2Icon');
+		 }
+	 if(keys == "商务阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step3Icon');
+	 }
+	 if(keys == "制作阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step4Icon');
+	 }
+	 if(keys == "交付阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step5Icon');
+	 }
+		var body =$('#listContent');
+		body.html('');
+		var setBody = "";
+		for (var int = 0; int < resKey.length; int++) {
+			 if(int == 0){
+				 var html =createStageInfo(resKey[int],"s"); 
+				 $('#startTime').text(formatDate(resKey[int].startTime));
+			 }if(int == resKey.length - 1){
+				 var html =createStageInfo(resKey[int],"e"); 
+			 }
+			 if(int > 0 && int != resKey.length - 1)
+			 {
+				 var html =createStageInfo(resKey[int],'u');
+			 }
+			 setBody =html;
+			 body.append(setBody);
+		}
+		stageTalkEven();
+		getHeight();
+	}
 }
 
 //流程信息end
@@ -338,6 +351,10 @@ function getFileInfo(){
 function checkState(){
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
+    
+    
+    
+    
     if(state.trim() != "task"){
     	$('#daiban').hide();
     }
@@ -353,6 +370,9 @@ function checkState(){
     if(state.trim() == "finish"){
     		 $('#isBack').hide();
     		 $('#isPause').hide();
+    }
+    if(state.trim() == "task"){
+    	addForm();
     }
     
 }
@@ -397,7 +417,6 @@ function pageInit(){
  }
  
     stageEven();
-    addForm();
 	openInfoCard();
 	initEvenInfo();
 	initSelect();
@@ -471,23 +490,36 @@ function UploadFile(){
 	
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
-	   $('.btnInput').off('click');
+	    $('.proTitle').text(file.name);
+	    $('.upProgress').show();
+	    upload_Video.upload();
+		$('.dynamic-form-table .item').hide();
 	});
 /*	upload_Video.on('fileQueued', function(file) {
 		//跳转step2.添加信息
 		_this.addProductMsg();
 	});*/
 	// 文件上传过程中创建进度条实时显示。
-	/*upload_Video.on('uploadProgress',function(file, percentage) {
-		$(".progress-bar").css('width', percentage * 100 + '%');
-	});*/
+	upload_Video.on('uploadProgress',function(file, percentage) {
+		$("#setWidth").css('width', percentage * 100 + '%');
+		$('.upIng').show();
+		$('.upSuccess').hide();
+		$('.upError').hide();
+		$('#btnInput').off('click');
+		$('#errorInfo').text('上传中...');
+	});
 	upload_Video.on('uploadSuccess', function(file,response) {
-		
 		if(response){
 			$('#errorInfo').text('上传成功');
+			$('.upIng').hide();
+			$('.upSuccess').show();
+			$('.upError').hide();
 			initFormEven();
 		}else{
 			$('#errorInfo').text('上传失败');
+			$('.upIng').hide();
+			$('.upSuccess').hide();
+			$('.upError').show();
 		}
 	});
 	upload_Video.on('error', function(type) {
@@ -498,7 +530,7 @@ function UploadFile(){
 	        }*/
 	});
 	
-	$("#uploadVideo").on('click', function() {
+	/*$("#uploadVideo").on('click', function() {
 		upload_Video.option('formData', {
     		resourceName:$('#file').attr('data-title'),
     		taskId : $('#currentTaskId').val(),
@@ -506,7 +538,7 @@ function UploadFile(){
     	});
 		upload_Video.upload();
 		$('#errorInfo').text('上传中...');
-	});
+	});*/
 }
 
 //动态下拉框
@@ -651,7 +683,7 @@ var formFieldCreator = {
 		if(isWhat == "file"){
 			result += "<input readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
-			result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";
+		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
@@ -764,6 +796,8 @@ function initEvenInfo(){
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
          $('#errorInfo').text('');
+         $('.upProgress').hide();
+         $('#setAutoInfo .item').show();
 	});
 	$('#myOrder').show();
 }
