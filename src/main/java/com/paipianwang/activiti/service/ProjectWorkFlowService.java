@@ -83,13 +83,13 @@ public interface ProjectWorkFlowService {
 	 * 挂起
 	 * @param processInstanceId 流程ID
 	 */
-	public void suspendProcess(String processInstanceId);
+	public void suspendProcess(String processInstanceId, String projectId);
 
 	/**
 	 * 激活
 	 * @param processInstanceId 流程ID
 	 */
-	public void activateProcess(String processInstanceId);
+	public void activateProcess(String processInstanceId, String projectId);
 
 	/**
 	 * 查询挂起流程
@@ -112,7 +112,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public Date getExpectDate(String taskId);
 
-	public List<PmsProjectSynergy> getSynergy(String activitiUserId, String taskId);
+	public List<PmsProjectSynergy> getSynergy(String activitiUserId, String taskId, SessionInfo info);
 
 	/**
 	 * 获取当前节点所在阶段 以及 备注信息
@@ -128,7 +128,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public Map<String, String> getUserByRole(String roleType);
 
-	public Map<String, Object> getProjectTaskList(String projectId);
+	public Map<String, Object> getProjectTaskList(String projectId, String taskStage);
 
 	public Map<String, Object> getTaskInfo(String taskId);
 

@@ -1035,8 +1035,8 @@
 	                     <div class="proControl">
 	                                                   项目操作
 	                         <div class="newControl">
-	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}"><div id="isPause">暂停项目</div></a>
-	                              <a id="isBack" href="/project/activateProcess/${processInstanceId}"><div id="isBack">恢复项目</div></a>
+	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}/${projectId}"><div id="isPause">暂停项目</div></a>
+	                              <a id="isBack" href="/project/activateProcess/${processInstanceId}/${projectId}"><div id="isBack">恢复项目</div></a>
 	                         </div>
 	                     </div>
 	      </div>

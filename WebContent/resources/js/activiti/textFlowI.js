@@ -264,7 +264,8 @@ function getStageInfo(stage){
 							stageTalkEven();
 						}
 				}
-			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
+			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
+			
 }
 
 //流程信息end
@@ -288,7 +289,7 @@ function toDoing(){
 		$('#infoModel').hide();
 	});
 	$('#checkSure').off('click').on('click',function(){
-		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val() + '/' + $('#projectId').val();
 	});
 }
 
@@ -297,7 +298,7 @@ function toPause(){
 		$('#infoModel').hide();
 	});
 	$('#checkSure').off('click').on('click',function(){
-		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val() + '/' + $('#projectId').val();
 	});
 }
 
