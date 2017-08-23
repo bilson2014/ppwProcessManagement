@@ -13,14 +13,29 @@ $().ready(function() {
 	getStageInfo($('#taskStage').val());
 	getTimeString();
 	pageInit();
-	
-	
-	
+	initDaibanTime();
 });
 
 function getHeight(){
 	var height = $('.pages').height() + 300;
 	$(window.parent.document).find('.frame').css('height',height);
+}
+
+function initDaibanTime(){
+	   var nowData = Date.parse(new Date());
+	   var time =Date.parse($('#missinTime').text().replace("CST","GMT+0800"));
+	   var lastTime = (time - nowData);
+	   var lastHour =(time - nowData)/3600000;
+	   var getTime =$('#missinTime').text();
+	   if(lastHour < 0){
+		 $('#missinTime').text(' 已超时 '+getTimeString(lastTime)); 
+	   }
+	   if(lastHour >= 3){
+		   $('#missinTime').text('剩余'+getTimeString(lastTime));
+	   }
+	   if(lastHour <3 && lastHour>=0){
+		   $('#missinTime').text('剩余'+getTimeString(lastTime));
+	   }
 }
 
 //流程信息
