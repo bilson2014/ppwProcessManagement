@@ -42,7 +42,7 @@ function getDate(){
 		   var getTime =$(setTime[i]).text();
 		   if(lastHour < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime));  //3
+			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime)); 
 		   }
 		   if(lastHour >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');

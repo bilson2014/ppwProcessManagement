@@ -32,7 +32,7 @@ function initLastTime(ctyle,createTime){
 	var checkDay = nowData - totalTime;
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
-   
+    
     if(state.trim() == "pause"){
     	$('#imgFlow').addClass('imgRed');
 		$('#imgWord').text('暂停');
