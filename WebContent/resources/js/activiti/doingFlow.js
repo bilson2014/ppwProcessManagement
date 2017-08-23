@@ -58,8 +58,8 @@ function getDate(){
 	var otherTime = $('.otherTime');
 	if(otherTime.length >= 0){
         for (var i = 0; i < otherTime.length; i++) {
-		   var time =Date.parse($(otherTime[i]).text())/1000;
-		   var getTime = Date.parse($(otherTime[i]).text());
+		 
+		   var getTime = Date.parse($(otherTime[i]).text().replace("CST","GMT+0800"));
 		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
 	}
@@ -67,8 +67,8 @@ function getDate(){
 	var pauseTime = $('.pauseTime');
 	if(pauseTime.length >= 0){
         for (var i = 0; i < pauseTime.length; i++) {
-		   var time =Date.parse($(pauseTime[i]).text())/1000;
-		   var getTime = Date.parse($(pauseTime[i]).text());
+		  
+		   var getTime = Date.parse($(pauseTime[i]).text().replace("CST","GMT+0800"));
 		   $(pauseTime[i]).text('暂停于'+formatDate(getTime));
 	    }		
 	}
@@ -76,13 +76,11 @@ function getDate(){
 	var finishTime = $('.finishTime');
 	if(finishTime.length >= 0){
         for (var i = 0; i < finishTime.length; i++) {
-		   var time =Date.parse($(finishTime[i]).text())/1000;
-		   var getTime = Date.parse($(finishTime[i]).text());
+		  
+		   var getTime = Date.parse($(finishTime[i]).text().replace("CST","GMT+0800"));
 		   $(finishTime[i]).text('结束于'+formatDate(getTime));
 	    }		
 	}
-	
-	
 }
 
 
