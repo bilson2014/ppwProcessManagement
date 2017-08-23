@@ -7,17 +7,36 @@ var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
 	
 	// 加载动态表单
-	pageInit();
+	
 	checkState();
 	pasueOrDoing();
-	//getStageInfo($('#taskStage').val());
 	getStageInfo($('#taskStage').val());
 	getTimeString();
-	
+	pageInit();
+	initDaibanTime();
 });
 
+function getHeight(){
+	var height = $('.pages').height() + 300;
+	$(window.parent.document).find('.frame').css('height',height);
+}
 
-
+function initDaibanTime(){
+	   var nowData = Date.parse(new Date());
+	   var time =Date.parse($('#missinTime').text().replace("CST","GMT+0800"));
+	   var lastTime = (time - nowData);
+	   var lastHour =(time - nowData)/3600000;
+	   var getTime =$('#missinTime').text();
+	   if(lastHour < 0){
+		 $('#missinTime').text(' 已超时 '+getTimeString(lastTime)); 
+	   }
+	   if(lastHour >= 3){
+		   $('#missinTime').text('剩余'+getTimeString(lastTime));
+	   }
+	   if(lastHour <3 && lastHour>=0){
+		   $('#missinTime').text('剩余'+getTimeString(lastTime));
+	   }
+}
 
 //流程信息
 function initLastTime(ctyle,createTime){
@@ -26,11 +45,9 @@ function initLastTime(ctyle,createTime){
 	var totalTime = time + day;
 	var nowData = Date.parse(new Date());
 	var checkDay = nowData - totalTime;
-	
-	
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
-   
+    
     if(state.trim() == "pause"){
     	$('#imgFlow').addClass('imgRed');
 		$('#imgWord').text('暂停');
@@ -89,7 +106,7 @@ function loadStageInfoEven(name){
 
 function initStageInfoTop(res){
 	$('#infoNameTitle').text(res.taskName);
-	$('#stateContent').text(res.taskDescription);
+	$('#stateContent').html(res.taskDescription);
 	$('#infoStartTime').text(formatDate(res.startTime));
 	$('#infoEndTime').text(formatDate(res.endTime));
 	var checkStatus = res.taskStatus;
@@ -121,7 +138,7 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</span></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == "" ){
@@ -135,9 +152,9 @@ function crearteInfoCard(res){
 				'    <div  class="itemTop">',
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li>'+res.fromName+''+res.taskName+'<span>'+formatDate(res.createDate)+'</span></li>                                                             ',
-				/*'              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',*/
-				'           </ul>                                                                                                   ',
+				'              <li><div>'+res.fromName+' : '+res.content+'</div><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
+				/*              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
+*/				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
@@ -217,55 +234,67 @@ function createStageInfo(res,state){
 
 function getStageInfo(stage){	
 			var keys = stage;
-			loadData(function(res){
-				initLastTime(res.projectCycle,res.createDate);
-				if(res != null && res != undefined){
+			var resMap = "";
+			
+			if(resMap == ""){
+				loadData(function(res){
+					initLastTime(res.projectCycle,res.createDate);
+					if(res != null && res != undefined){
+					    resMap = res;
 						var sethtml="";
 						var resKey = res[keys];
-						var Stage = $('#taskStage').val();
-						if(resKey.length > 0){
-							 if(keys == "沟通阶段"){
-								 $('.icons').attr('class','icons');
-								 $('.icons').addClass('stepIcon');
-							 }
-						 if(keys == "方案阶段"){
-							 $('.icons').attr('class','icons');
-								 $('.icons').addClass('step2Icon');
-							 }
-						 if(keys == "商务阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step3Icon');
-						 }
-						 if(keys == "制作阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step4Icon');
-						 }
-						 if(keys == "交付阶段"){
-							 $('.icons').attr('class','icons');
-							 $('.icons').addClass('step5Icon');
-						 }
-							var body =$('#listContent');
-							body.html('');
-							var setBody = "";
-							for (var int = 0; int < resKey.length; int++) {
-								 if(int == 0){
-									 var html =createStageInfo(resKey[int],"s"); 
-									 $('#startTime').text(formatDate(resKey[int].startTime));
-								 }if(int == resKey.length - 1){
-									 var html =createStageInfo(resKey[int],"e"); 
-								 }
-								 if(int > 0 && int != resKey.length - 1)
-								 {
-									 var html =createStageInfo(resKey[int],'u');
-								 }
-								 setBody =html;
-								 body.append(setBody);
-							}
-							stageTalkEven();
-						}
-				}
-			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
-			
+						getStageCard(keys,resKey);
+					}
+				}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
+			}else{
+				var resKey = resMap[keys];
+				getStageCard(keys,resKey);
+			}
+}
+
+function getStageCard(keys,resKey){
+	var Stage = $('#taskStage').val();
+	if(resKey.length > 0){
+		 if(keys == "沟通阶段"){
+			 $('.icons').attr('class','icons');
+			 $('.icons').addClass('stepIcon');
+		 }
+	 if(keys == "方案阶段"){
+		 $('.icons').attr('class','icons');
+			 $('.icons').addClass('step2Icon');
+		 }
+	 if(keys == "商务阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step3Icon');
+	 }
+	 if(keys == "制作阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step4Icon');
+	 }
+	 if(keys == "交付阶段"){
+		 $('.icons').attr('class','icons');
+		 $('.icons').addClass('step5Icon');
+	 }
+		var body =$('#listContent');
+		body.html('');
+		var setBody = "";
+		for (var int = 0; int < resKey.length; int++) {
+			 if(int == 0){
+				 var html =createStageInfo(resKey[int],"s"); 
+				 $('#startTime').text(formatDate(resKey[int].startTime));
+			 }if(int == resKey.length - 1){
+				 var html =createStageInfo(resKey[int],"e"); 
+			 }
+			 if(int > 0 && int != resKey.length - 1)
+			 {
+				 var html =createStageInfo(resKey[int],'u');
+			 }
+			 setBody =html;
+			 body.append(setBody);
+		}
+		stageTalkEven();
+		getHeight();
+	}
 }
 
 //流程信息end
@@ -321,6 +350,10 @@ function getFileInfo(){
 function checkState(){
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
+    
+    
+    
+    
     if(state.trim() != "task"){
     	$('#daiban').hide();
     }
@@ -336,6 +369,9 @@ function checkState(){
     if(state.trim() == "finish"){
     		 $('#isBack').hide();
     		 $('#isPause').hide();
+    }
+    if(state.trim() == "task"){
+    	addForm();
     }
     
 }
@@ -380,12 +416,10 @@ function pageInit(){
  }
  
     stageEven();
-    addForm();
 	openInfoCard();
 	initEvenInfo();
 	initSelect();
 	flagEven();
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 	checkState();
 	getFileInfo();
 	initAddTalk();
@@ -393,7 +427,10 @@ function pageInit(){
 	getFileInfo();
 	controlModel();
 	checkState();
-	 
+	getHeight();
+	$('#projectCtyle').text($('#projectCtyle').text()+"天");
+	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
+    $('#projectTime').text(formatDate($('#projectTime').text()));
 }
 
 //表单验证
@@ -452,23 +489,36 @@ function UploadFile(){
 	
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
-	   $('.btnInput').off('click');
+	    $('.proTitle').text(file.name);
+	    $('.upProgress').show();
+	    upload_Video.upload();
+		$('.dynamic-form-table .item').hide();
 	});
 /*	upload_Video.on('fileQueued', function(file) {
 		//跳转step2.添加信息
 		_this.addProductMsg();
 	});*/
 	// 文件上传过程中创建进度条实时显示。
-	/*upload_Video.on('uploadProgress',function(file, percentage) {
-		$(".progress-bar").css('width', percentage * 100 + '%');
-	});*/
+	upload_Video.on('uploadProgress',function(file, percentage) {
+		$("#setWidth").css('width', percentage * 100 + '%');
+		$('.upIng').show();
+		$('.upSuccess').hide();
+		$('.upError').hide();
+		$('#btnInput').off('click');
+		$('#errorInfo').text('上传中...');
+	});
 	upload_Video.on('uploadSuccess', function(file,response) {
-		
 		if(response){
 			$('#errorInfo').text('上传成功');
+			$('.upIng').hide();
+			$('.upSuccess').show();
+			$('.upError').hide();
 			initFormEven();
 		}else{
 			$('#errorInfo').text('上传失败');
+			$('.upIng').hide();
+			$('.upSuccess').hide();
+			$('.upError').show();
 		}
 	});
 	upload_Video.on('error', function(type) {
@@ -479,7 +529,7 @@ function UploadFile(){
 	        }*/
 	});
 	
-	$("#uploadVideo").on('click', function() {
+	/*$("#uploadVideo").on('click', function() {
 		upload_Video.option('formData', {
     		resourceName:$('#file').attr('data-title'),
     		taskId : $('#currentTaskId').val(),
@@ -487,7 +537,7 @@ function UploadFile(){
     	});
 		upload_Video.upload();
 		$('#errorInfo').text('上传中...');
-	});
+	});*/
 }
 
 //动态下拉框
@@ -577,7 +627,6 @@ function addForm() {
 			trs += "<div class='item'>" + createFieldHtml(this, datas, className);
 			trs += "</div>";
 		});
-		//$('#formState').html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
 		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
 		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
@@ -632,7 +681,7 @@ var formFieldCreator = {
 		if(isWhat == "file"){
 			result += "<input readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
-			result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";
+		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
@@ -745,6 +794,8 @@ function initEvenInfo(){
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
          $('#errorInfo').text('');
+         $('.upProgress').hide();
+         $('#setAutoInfo .item').show();
 	});
 	$('#myOrder').show();
 }
@@ -752,15 +803,15 @@ function initEvenInfo(){
 function openInfoCard(){
 	$('.controlOpen').off('click').on('click',function(){
 		var nowItem = $(this);
-            if(nowItem.hasClass('openItem')){
-            	nowItem.removeClass('openItem');
+            if(nowItem.hasClass('openItems')){
+            	nowItem.removeClass('openItems');
             	nowItem.parent().parent().find('.getInfoItemContent').slideUp();
             	
             }else{
-            	nowItem.addClass('openItem');
+            	nowItem.addClass('openItems');
             	nowItem.parent().parent().find('.getInfoItemContent').slideDown();
-           
-            }		     
+            }	
+            getHeight();
 	});
 	
 	$('.openTalk').off('click').on('click',function(){
@@ -773,7 +824,8 @@ function openInfoCard(){
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
             	nowItem.parent().parent().parent().find('.upInfo').show();     
-            }		     
+            }	
+            getHeight();
 	});
 	
 	$('.modelOpen').off('click').on('click',function(){
@@ -786,7 +838,8 @@ function openInfoCard(){
             	nowItem.addClass('openItem');
             	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideDown();
              	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
-            }		     
+            }	
+            getHeight();
 	});
 	
 }
@@ -919,6 +972,7 @@ function initAllTalk(){
 			}
 			rePickTalk();
 			openInfoCard();
+			getHeight();
 		}
 	}, getContextPath() + '/message/getProjectMsg/'+$('#projectId').val(),null);
 }
@@ -959,7 +1013,7 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 : <span>'+children[int].content+'</span><span>'+formatDate(children[int].createDate)+'</span></div>';
+			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate(children[int].createDate)+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == ""){
@@ -973,7 +1027,7 @@ function createTalkInfo(res){
 		'	  <img src="'+imgUrl+'">',
 		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
 		'       <div class="time">',
-		'       	<span>发布时间：'+formatDate(res.createDate)+'</span>',
+		'       	<span>发布时间：'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</span>',
 		'     	    <div class="openTalk"></div>',
 		'       </div>',
    		'   </div>',
@@ -998,12 +1052,30 @@ function getFileInfo(){
 		var body =$('#projectFilm');
 		body.html('');
 		if(res != null && res != undefined){
-				for (var int = 0; int < res.length; int++) {
-					 var html =createFileInfo(res[int]);
+			var newList = bulidFileList(res);
+				for (var int = 0; int < newList.length; int++) {
+					 var html =createFileInfo(newList[int]);
 					 body.append(html);
 				}
+				getHeight();
 		}
 	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
+}
+
+function bulidFileList(arr) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = 0; j < len - 1 - i; j++) {
+        	var fileOne = new Date((arr[j].createDate).replace("CST","GMT+0800"));
+        	var fileTwo =  new Date((arr[j+1].createDate).replace("CST","GMT+0800"));
+            if (fileOne < fileTwo) {        // 相邻元素两两对比
+                var temp = arr[j+1];        // 元素交换
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
 }
 
 /*//文件区域
@@ -1091,7 +1163,7 @@ function createFileInfo(res){
         '<div class="filmName">'+checkName+'</div>                         ',
         '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
         '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
-        '<div class="time"><div>'+formatDate(res.createDate)+'</div></div>        ',
+        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
@@ -1181,7 +1253,7 @@ function createNoInfo(res){
 		 ' <div class="InfoItem">                                                                ',
 		 '        <div class="fileName">'+checkName+'</div>                                             ',
 		 '        <div class="name">'+res.uploaderName+'</div>                                                 ',
-		 '        <div class="time">上传于:'+formatDate(res.createDate)+'</div>                                   ',
+		 '        <div class="time">上传于:'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div>                                   ',
 		 '        <div class="icon">                                                             ',
 		 '                    <img class="flag" data-id="'+res.projectResourceId+'" src="'+imgUrl+'">           ',
 		 '                    <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" src="/resources/images/flow/download.png"></div></a>  ',

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,7 +39,6 @@ import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
-import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.indent.entity.IndentSource;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
@@ -441,24 +439,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
 					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
 							projectId, ProjectTeamType.scheme.getCode());
-					projectTeamPlan=editTeamItem(projectTeamPlan);
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 					
 					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
 							projectId, ProjectTeamType.produce.getCode());
-					projectTeamProduct=editTeamItem(projectTeamProduct);
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				} else if(teamPlanGroup.contains(groupId)) {
 					// 如果是 策划供应商可以看见 策划供应商信息
 					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
 							projectId, ProjectTeamType.scheme.getCode());
-					projectTeamPlan=editTeamItem(projectTeamPlan);
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 				} else if(teamProudctGroup.contains(groupId)) {
 					// 如果是制作供应商可以看见制作供应商信息
 					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
 							projectId, ProjectTeamType.produce.getCode());
-					projectTeamProduct=editTeamItem(projectTeamProduct);
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				}
 			}
@@ -466,7 +460,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		if (userList != null) {
 			Map<String, Object> projectUser = projectUserFacade.getProjectUserColumnByProjectId(userList, projectId);
-			projectUser=editUserItem(projectUser);
 			param.put("PROJECT_USER", projectUser);
 		}
 
@@ -474,24 +467,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 	
 	private Map<String,Object> editFlowItem(Map<String, Object> projectFlow){		
-		Map<String,String> projectMap=new HashMap<>();
-		projectMap.put("projectId", "项目编号");
-		projectMap.put("projectName", "项目名称");
-		projectMap.put("projectSource", "项目来源");
-		projectMap.put("projectGrade", "项目评级");
-		projectMap.put("projectDescription", "项目描述");
-		projectMap.put("productName", "产品线名称");
-		projectMap.put("productConfigLevelName", "产品线配置等级");
-		projectMap.put("filmDestPath", "对标影片");
-		projectMap.put("createDate", "创建时间");
-		projectMap.put("projectCycle","项目周期");
-//		projectMap.put("principalName", "其他");//TODO 待确定
-		projectMap.put("estimatedPrice", "预估价格");
-		projectMap.put("projectBudget", "项目预算");
-		
-		if(projectFlow.containsKey("principalName")){
-			projectFlow.remove("principalName");
-		}
 		
 		//项目来源
 		if(projectFlow.get("projectSource")!=null){
@@ -530,61 +505,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			}
 			projectFlow.put("projectGrade",projectGrade);
 		}
-		
-		Map<String,Object> result=new HashMap<>();
-		
-		Iterator<String> i=projectFlow.keySet().iterator();
-		while(i.hasNext()){
-			String key=i.next();
-			//处理时间格式
-			Object value=projectFlow.get(key);
-			if(value instanceof Date){
-				value=DateUtils.getDateByFormatStr((Date)value, "yyyy-MM-dd HH:mm:ss");
-			}
-			result.put(projectMap.get(key), value);
+		if(projectFlow.get("createDate")!=null){
+			projectFlow.put("createDate",DateUtils.getDateByFormatStr((Date)(projectFlow.get("createDate")), "yyyy-MM-dd HH:mm:ss"));
 		}
-		return result;
-	}
-	
-	private List<Map<String,Object>> editTeamItem(List<Map<String, Object>> projectTeam){		
-		Map<String,String> projectMap=new HashMap<>();
-		projectMap.put("teamName","供应商名称");
-		projectMap.put("linkman","供应商联系人");
-		projectMap.put("telephone","联系人电话");
-		projectMap.put("budget","预算价格");
-		projectMap.put("actualPrice","支付价格");
 		
-		List<Map<String,Object>> result=new ArrayList<>();
-		if(ValidateUtil.isValid(projectTeam)){
-			for(Map<String,Object> team:projectTeam){
-				Map<String,Object> dest=new HashMap<>();
-				
-				Iterator<String> i=team.keySet().iterator();
-				while(i.hasNext()){
-					String key=i.next();
-					dest.put(projectMap.get(key), team.get(key));
-				}
-				result.add(dest);
-			}
-		}
-		return result;
-	}
-	
-	private Map<String,Object> editUserItem(Map<String, Object> projectUser){		
-		Map<String,String> projectMap=new HashMap<>();
-		projectMap.put("userName", "客户名称");
-		projectMap.put("linkman", "联系人");
-		projectMap.put("telephone", "联系人电话");
-		projectMap.put("userLevel", "客户评级");
-		
-		Map<String,Object> result=new HashMap<>();
-		
-		Iterator<String> i=projectUser.keySet().iterator();
-		while(i.hasNext()){
-			String key=i.next();
-			result.put(projectMap.get(key), projectUser.get(key));
-		}
-		return result;
+		return projectFlow;
 	}
 
 	// 获取登陆人当前待办的任务
@@ -759,6 +684,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		//TODO 暂时放这
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		param.put("taskName", task.getName());
+		param.put("dueDate", task.getDueDate().toString());
 		return param;
 	}
 

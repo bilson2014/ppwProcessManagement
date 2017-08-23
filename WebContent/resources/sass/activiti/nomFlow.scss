@@ -125,8 +125,8 @@ $ba:#bababa; */
             $smallMinWidth:900px;
             $ba:#bababa;
             $smallWidth:780px;
-            $areaMinMidWidth:1100px;
-            $areaMinWidth:1260px;
+            $areaMinMidWidth:1080px;
+            $areaMinWidth:1220px;
 
             .lineTop {
                 width: 100%;
@@ -168,6 +168,7 @@ $ba:#bababa; */
                         color: $gray-dark;
                         width: 40%;
                         @include ellipsis;
+                        font-weight: bold;
                     }
                     .your {
                         width: 80px;
@@ -256,7 +257,7 @@ $ba:#bababa; */
                 height: auto;
                 padding-left: 20px;
                 .waitCard {
-                    width: ($smallWidth - $noNeedpad*3)/3;
+                    width: ($smallWidth - $noNeedpad*2)/2;
                     @media screen and (min-width: 761px) and (max-width: 1029px) {
                         width: ($areaMidWidth - $noNeedpad*3)/3;
                     }
@@ -288,7 +289,7 @@ $ba:#bababa; */
                             margin-left: 15px;
                             width: 56%;
                             .listName {
-                                font-size: $font-size-base;
+                                font-size: $font-size-sm;
                                 color: $gray;
                                 margin-bottom: 10px;
                                 @include ellipsis;
@@ -309,7 +310,7 @@ $ba:#bababa; */
 
 
 
-            .toMinLeft .setCard {
+            .toMinLeft .frame .setCard {
                 .waitCard,
                 .otherCard {
                     cursor: pointer;

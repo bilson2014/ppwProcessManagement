@@ -67,26 +67,26 @@
 	                
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
-						   <div class="waitCard">
-						       <a href="/project/task/${staff.historicProcessInstance.id}?finish">
-	                             <div class="cardH">
-	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                  <c:if test="${isPrincipal == 1}">
-		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                  <c:if test="${isPrincipal == 0}">
-		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-	                             </div>
-	                             <div class="cardContent">
-	                                  <img src="/resources/images/flow/isFinish.png">
-	                                  <div class="setContent">
-	                                          <div class="listName">${staff.historicProcessInstance.name}</div>
-		                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
-	                                  </div>
-	                             </div>
-	                             </a>
-	                        </div>
+						   		<div class="otherCard">
+							      	<a href="/project/task/${staff.historicProcessInstance.id}?finish">
+			                             <div class="cardH">
+			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
+				                                  <c:if test="${isPrincipal == 1}">
+				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
+				                                  <c:if test="${isPrincipal == 0}">
+				                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
+			                             </div>
+			                             <div class="cardContent">
+			                                  <img src="/resources/images/flow/isFinish.png">
+			                                  <div class="setContent">
+			                                          <div class="listName">${staff.historicProcessInstance.name}</div>
+				                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
+			                                  </div>
+			                             </div>
+		                             </a>
+	                        	</div>
 							</c:forEach>
 					</c:if>
 	                       <!--  <div class="waitCard">

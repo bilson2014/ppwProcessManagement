@@ -21,7 +21,6 @@ function initPageEven(){
 function getDate(){
 	
 	$('#daiNum').text($('.waitCard').length);
-	
 	if($('div').hasClass("waitCard")){
 	if($('.waitCard').length == 0){
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();
@@ -40,15 +39,15 @@ function getDate(){
 		   var lastTime = (time - nowData);
 		   var lastHour =(time - nowData)/3600000;
 		   var getTime =$(setTime[i]).text();
-		   if(lastTime < 0){
+		   if(lastHour < 0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoR.png');
-			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime));  //3
+			   $(setTime[i]).text(' 已超时 '+getTimeString(lastTime)); 
 		   }
-		   if(lastTime >= 3){
+		   if(lastHour >= 3){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoG.png');
 			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
-		   if(lastTime <3 && lastHour>=0){
+		   if(lastHour <3 && lastHour>=0){
 			   $(setTime[i]).parent().parent().find('img').attr('src','/resources/images/flow/demoY.png');
 			   $(setTime[i]).text('剩余'+getTimeString(lastTime));
 		   }
@@ -59,8 +58,8 @@ function getDate(){
 	var otherTime = $('.otherTime');
 	if(otherTime.length >= 0){
         for (var i = 0; i < otherTime.length; i++) {
-		   var time =Date.parse($(otherTime[i]).text())/1000;
-		   var getTime = Date.parse($(otherTime[i]).text());
+		 
+		   var getTime = Date.parse($(otherTime[i]).text().replace("CST","GMT+0800"));
 		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
 	}
@@ -68,8 +67,8 @@ function getDate(){
 	var pauseTime = $('.pauseTime');
 	if(pauseTime.length >= 0){
         for (var i = 0; i < pauseTime.length; i++) {
-		   var time =Date.parse($(pauseTime[i]).text())/1000;
-		   var getTime = Date.parse($(pauseTime[i]).text());
+		  
+		   var getTime = Date.parse($(pauseTime[i]).text().replace("CST","GMT+0800"));
 		   $(pauseTime[i]).text('暂停于'+formatDate(getTime));
 	    }		
 	}
@@ -77,13 +76,11 @@ function getDate(){
 	var finishTime = $('.finishTime');
 	if(finishTime.length >= 0){
         for (var i = 0; i < finishTime.length; i++) {
-		   var time =Date.parse($(finishTime[i]).text())/1000;
-		   var getTime = Date.parse($(finishTime[i]).text());
+		  
+		   var getTime = Date.parse($(finishTime[i]).text().replace("CST","GMT+0800"));
 		   $(finishTime[i]).text('结束于'+formatDate(getTime));
 	    }		
 	}
-	
-	
 }
 
 

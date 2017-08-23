@@ -297,11 +297,11 @@
 		                       <div class="yuan">元</div>
 		      </div>
 		      <div class="infoTitle">项目描述</div>
-		      <div class="outSide">
+		      <div class="outSide errorItemDis" id="outSide" >
 		           <textarea id="projectDescription" name="pf_projectDescription"></textarea>         
 		      </div>
 		      
-		      <div class="btnMid">
+		      <div class="btnMid " >
 		          <a href="http://www.apaipian.com:8087/project/running-task"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>

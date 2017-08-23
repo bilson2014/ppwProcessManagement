@@ -81,7 +81,7 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime pauseTime">${staff.pmsProjectFlow.updateDate}</div>
+		                                      <div class="lastTime pauseTime">${staff.pmsProjectFlow.suspendDate}</div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

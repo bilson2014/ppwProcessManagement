@@ -293,15 +293,16 @@ public class ProjectFlowController extends BaseController {
 		// 当前任务的描述信息
 		mv.addObject("taskDescription", state.get("taskDescription"));
 		mv.addObject("taskName", state.get("taskName"));
+		mv.addObject("dueDate",state.get("dueDate"));
 		mv.addObject("taskId",taskId);
 		mv.addObject("projectId",param.get("PROJECT_ID"));
 		mv.addObject("processInstanceId",param.get("INSTANCE_ID"));
 		if(flowMap!=null){
-			mv.addObject("projectName", flowMap.get("项目名称"));
-			mv.addObject("projectGrade", flowMap.get("项目评级"));
+			mv.addObject("projectName", flowMap.get("projectName"));
+			mv.addObject("projectGrade", flowMap.get("projectGrade"));
 		}
 		if(userMap!=null){
-			mv.addObject("userLevel", userMap.get("客户评级"));
+			mv.addObject("userLevel", userMap.get("userLevel"));
 		}
 		return mv;
 	}

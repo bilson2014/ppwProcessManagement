@@ -355,3 +355,13 @@
                     }
                 }
             }
+
+            .treeitemRed {
+
+                .title {
+                    color: $red-base;
+                }
+                &:hover {
+                    background: transparent!important;
+                }
+            }
