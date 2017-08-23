@@ -121,7 +121,7 @@
 	                  <div class="sMidItem noMargin errorItem" id="productConfigAdditionalPackageIdsError">
 	                       <div class="itemTitle">附加包</div>
 	                        <input type="hidden" id="pf_productConfigAdditionalPackageIds" name="pf_productConfigAdditionalPackageIds"/>
-	                        <input type="hidden" id="pf_productConfigAdditonalPackageName" name="pf_productConfigAdditonalPackageName"/>
+	                        <input type="hidden" id="pf_productConfigAdditonalPackageName" name="pf_productConfigAdditionalPackageName"/>
 	                       <div class="orderSelect orderMultSelect noclick"> 
 	                            <div id="productConfigAdditionalPackageIds"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">

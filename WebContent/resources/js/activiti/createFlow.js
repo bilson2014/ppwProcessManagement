@@ -64,7 +64,7 @@ function checkInfo(){
 	var productId = $('#productId').attr('data-id');//产品线
 	var productConfigLevelId = $('#productConfigLevelId').attr('data-id');//等级
 	var productConfigLength = $('#productConfigLength').attr('data-id');//时长
-	var productConfigAdditionalPackageIds = $('#productConfigAdditionalPackageIds').attr('data-id');//附加包
+	var productConfigAdditionalPackageIds = $('#pf_productConfigAdditionalPackageIds').attr('data-id');//附加包
 	var createDate = $('#pf_createDate').val();//立项时间
 	var projectSql = $('#pf_projectSql').val();//项目周期
 	var filmDestPath = $('#pf_filmDestPath').val();//对标影片
@@ -108,7 +108,7 @@ function checkInfo(){
 			$('#productConfigLengthError').attr('data-content','时长未填写');
 			return false;
 		}
-		if(productConfigAdditionalPackageIds != undefined && productConfigAdditionalPackageIds != "" && productConfigAdditionalPackageIds ==null ){
+		if(productConfigAdditionalPackageIds != undefined && productConfigAdditionalPackageIds != "" && productConfigAdditionalPackageIds != null ){
 			$('#pf_productConfigAdditionalPackageIds').val(productConfigAdditionalPackageIds);
 		}
 	}
