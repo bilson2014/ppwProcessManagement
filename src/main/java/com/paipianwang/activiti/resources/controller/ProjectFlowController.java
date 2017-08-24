@@ -31,6 +31,7 @@ import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 /**
@@ -258,50 +259,56 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping("/task/{taskId}")
-	public ModelAndView TaskFormView(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
-		// 获取可见数据
-		SessionInfo info = getCurrentInfo(request);
-		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
-		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId, info);
-		
-		// 获取当前节点所在阶段 以及 备注信息
-		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
-		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
-		Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
-		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
-		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
-		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-		
+	@RequestMapping("/task/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView TaskFormView(@PathVariable("taskId") final String taskId, @PathVariable("projectId") final String projectId, 
+									 @PathVariable("processInstanceId") final String processInstanceId, final String status, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
-		// 项目信息
-		mv.addObject("flow_info", flowMap);
-		// 策划供应商信息
-		mv.addObject("teamPlan_info", teamPlanMap);
-		// 制作供应商信息
-		mv.addObject("teamProduct_info", teamProductMap);
-		// 客户信息
-		mv.addObject("user_info", userMap);
-		// 协同人信息
-		mv.addObject("synergyList", synergyList);
-		// 当前任务所在阶段
-		mv.addObject("taskStage", state.get("taskStage"));
-		// 价格信息
-		mv.addObject("price_info",priceMap);
-		
-		// 当前任务的描述信息
-		mv.addObject("taskDescription", state.get("taskDescription"));
-		mv.addObject("taskName", state.get("taskName"));
-		mv.addObject("dueDate",state.get("dueDate"));
-		mv.addObject("taskId",taskId);
-		mv.addObject("projectId",param.get("PROJECT_ID"));
-		mv.addObject("processInstanceId",param.get("INSTANCE_ID"));
-		if(flowMap!=null){
-			mv.addObject("projectName", flowMap.get("projectName"));
-			mv.addObject("projectGrade", flowMap.get("projectGrade"));
-		}
-		if(userMap!=null){
-			mv.addObject("userLevel", userMap.get("userLevel"));
+		if(StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
+			// 获取可见数据
+			SessionInfo info = getCurrentInfo(request);
+			Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId, projectId);
+			List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), projectId, info);
+			
+			// 获取当前节点所在阶段 以及 备注信息
+			Map<String, String> state = null;
+			if(ProjectFlowStatus.finished.getId().equals(status)) {
+				state = projectWorkFlowService.getTaskStateAndDescription(taskId);
+			}
+			Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
+			Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
+			List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
+			List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
+			Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
+			
+			// 项目信息
+			mv.addObject("flow_info", flowMap);
+			// 策划供应商信息
+			mv.addObject("teamPlan_info", teamPlanMap);
+			// 制作供应商信息
+			mv.addObject("teamProduct_info", teamProductMap);
+			// 客户信息
+			mv.addObject("user_info", userMap);
+			// 协同人信息
+			mv.addObject("synergyList", synergyList);
+			// 当前任务所在阶段
+			mv.addObject("taskStage", state != null ? state.get("taskStage") : null);
+			// 价格信息
+			mv.addObject("price_info",priceMap);
+			
+			// 当前任务的描述信息
+			mv.addObject("taskDescription", state != null ? state.get("taskDescription") : null);
+			mv.addObject("taskName", state != null ? state.get("taskName") : null);
+			mv.addObject("dueDate", state != null ? state.get("dueDate") : null);
+			mv.addObject("taskId",taskId);
+			mv.addObject("projectId",projectId);
+			mv.addObject("processInstanceId",processInstanceId);
+			if(flowMap!=null){
+				mv.addObject("projectName", flowMap.get("projectName"));
+				mv.addObject("projectGrade", flowMap.get("projectGrade"));
+			}
+			if(userMap!=null){
+				mv.addObject("userLevel", userMap.get("userLevel"));
+			}
 		}
 		return mv;
 	}

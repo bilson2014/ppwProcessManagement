@@ -23,7 +23,6 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.NativeExecutionQuery;
@@ -391,7 +390,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public Map<String, Object> getReadableColumns(String userId, String taskId) {
+	public Map<String, Object> getReadableColumns(String userId, String taskId, String projectId) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
 		Map<String, List<String>> columns = shipFacade.getColumns(groups);
@@ -399,13 +398,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> teamList = columns.get("PROJECT_TEAM");
 		List<String> userList = columns.get("PROJECT_USER");
 
-		Task task = (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
+		/*Task task = (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
 		String instanceId = task.getProcessInstanceId();
 		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId)
 				.singleResult();
-		String projectId = instance.getBusinessKey();
 		param.put("PROJECT_ID", projectId);
-		param.put("INSTANCE_ID",instanceId);
+		param.put("INSTANCE_ID",instanceId);*/
 
 		if (flowList != null) {
 			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);//TODO 后期整改，不使用map	
@@ -622,12 +620,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public List<PmsProjectSynergy> getSynergy(String userId, String taskId, SessionInfo info) {
-		if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(taskId)) {
-			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+	public List<PmsProjectSynergy> getSynergy(String userId, String projectId, SessionInfo info) {
+		if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(projectId)) {
+			/*Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 			String processInstanceId = task.getProcessInstanceId();
 			ProcessInstance pIst = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-			final String projectId = pIst.getBusinessKey();
+			final String projectId = pIst.getBusinessKey();*/
 			
 			Map<String, PmsProjectSynergy> synergyMap = synergyFacade.getSynergysByProjectId(projectId);
 			List<PmsProjectSynergy> result = new ArrayList<PmsProjectSynergy>();
@@ -637,10 +635,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 如果是非供应商，那么添加 主负责人
 			if(!PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
 				// 查找主负责人
-				String assigneeId = (String) runtimeService.getVariable(processInstanceId, "applyUserId");
-				if(StringUtils.isNotBlank(assigneeId)) {
+				PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+				Integer assigneeId = projectFlow.getPrincipal();
+				if(assigneeId != null) {
 					PmsProjectSynergy synergy = new PmsProjectSynergy();
-					PmsEmployee assignee = employeeFacade.findEmployeeById(Integer.parseInt(assigneeId.split("_")[1]));
+					PmsEmployee assignee = employeeFacade.findEmployeeById(assigneeId);
 					if(assignee != null) {
 						synergy.setEmployeeName(assignee.getEmployeeRealName());
 						synergy.setImgUrl(assignee.getEmployeeImg());

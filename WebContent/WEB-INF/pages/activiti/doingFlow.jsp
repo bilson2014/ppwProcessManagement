@@ -73,7 +73,7 @@
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard cardNum">
-						       <a href="/project/task/${staff.task.id}?task">
+						       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -128,7 +128,7 @@
 	            <c:if test="${!empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard">
-							        <a href="/project/task/${staff.task.id}?doing">
+							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
