@@ -71,10 +71,10 @@
 							      	<a href="/project/task/${staff.historicProcessInstance.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?status=finished">
 			                             <div class="cardH">
 			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-				                                  <c:if test="${isPrincipal == 1}">
+				                                  <c:if test="${staff.isPrincipal == 1}">
 				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 				                                  </c:if>
-				                                  <c:if test="${isPrincipal == 0}">
+				                                  <c:if test="${staff.isPrincipal == 0}">
 				                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
 				                                  </c:if>
 			                             </div>

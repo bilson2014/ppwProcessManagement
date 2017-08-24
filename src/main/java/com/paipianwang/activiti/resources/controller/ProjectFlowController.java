@@ -225,8 +225,8 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "get-form/task/{taskId}", method = RequestMethod.POST)
-	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId) {
+	@RequestMapping(value = "get-form/task/{taskId}/{projectId}", method = RequestMethod.POST)
+	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId, @PathVariable("projectId") final String projectId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -271,7 +271,7 @@ public class ProjectFlowController extends BaseController {
 			
 			// 获取当前节点所在阶段 以及 备注信息
 			Map<String, String> state = null;
-			if(ProjectFlowStatus.finished.getId().equals(status)) {
+			if(!ProjectFlowStatus.finished.getId().equals(status)) {
 				state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 			}
 			Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");

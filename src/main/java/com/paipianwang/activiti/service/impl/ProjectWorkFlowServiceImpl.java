@@ -263,6 +263,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					result.setHistoricProcessInstance(historicProcessInstance);
 					PmsProjectFlow flow = flowFacade.getProjectFlowByProjectId(projectId);
 					if(flow != null && flow.getPrincipal() != null) {
+						
+						if(flow.getPrincipal() == Integer.parseInt(userId.split("_")[1])) {
+							result.setIsPrincipal(1);
+						}else {
+							result.setIsPrincipal(0);
+						}
 						result.setPmsProjectFlow(flow);
 					}
 					
