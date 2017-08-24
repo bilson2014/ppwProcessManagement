@@ -492,6 +492,11 @@ function UploadFile(){
 	    $('.uploadInput').val(file.name);
 	    $('.proTitle').text(file.name);
 	    $('.upProgress').show();
+	    upload_Video.option('formData', {
+    		resourceName:$('#file').attr('data-title'),
+    		taskId : $('#currentTaskId').val(),
+    		resourceType:$('#file').attr('data-name')
+    	});
 	    upload_Video.upload();
 		$('.dynamic-form-table .item').hide();
 	});
