@@ -258,23 +258,25 @@
 	                                  </div>
 	                                   <div class="contentItem">
 	                                         <div class="contentItem">
-			                                  <div class="item">
-			                                          <div>产品线</div>
-			                                          <div>${flow_info["productName"]}</div>
+	                                         <div class="item">
+			                                          <div>立项时间</div>
+			                                          <div id="projectTime">${flow_info["createDate"]}</div>
 			                                  </div>
+			                                 
 			                                  <div class="item">
 			                                          <div>项目周期</div>
 			                                          <div id="projectCtyle">${flow_info["projectCycle"]}</div>
 			                                  </div>
-			                                  <div class="item">
-			                                          <div>立项时间</div>
-			                                          <div id="projectTime">${flow_info["createDate"]}</div>
+			                                   <div class="item">
+			                                          <div>产品线</div>
+			                                          <div>${flow_info["productName"]}</div>
 			                                  </div>
+			                                  
 		                                  </div>
 	                                  </div>
 	                                  <div class="longItem">
 			                                          <div>项目配置</div>
-			                                          <div>${flow_info["productConfigLevelName"]}</div>
+			                                          <div>${flow_info["productConfigLevelName"]}${flow_info["productConfigLength"]}${flow_info["productConfigAdditionalPackageName"]}</div>
 			                           </div>
 			                           <div class="longItem">
 			                                          <div>对标影片</div>
@@ -362,8 +364,7 @@
 						                                          <div>${teamProduct_info["telephone"]}</div>
 						                             </div>
 										         </div>
-							          </c:if>
-	       
+							              </c:if>
 	                                  </div>
 	                            </div>
 	                       </div>
@@ -384,15 +385,6 @@
 			                                          <div>客户项目预算</div>
 			                                          <div>${price_info["projectBudget"]}</div>
 			                             </div>
-			                             <div class="item">
-			                                          <div>策划供应商预算</div>
-			                                          <div>${teamProduct_info["budget"]}</div>
-			                             </div>
-			                             <div class="item">
-			                                          <div>项目来源</div>
-			                                          <div>${flow_info["projectSource"]}</div>
-			                             </div>
-	                                                           	                                  
 		                        <%--           <c:forEach var="item" items="${price_info}"> 
 													<div class="item">
 			                                          <div>${item.key}</div>
@@ -400,24 +392,6 @@
 			                                       </div>
 										  </c:forEach>  --%>
 										 
-							         </div>
-							          <div class="contentItem">	      
-	                                     <div class="item">
-			                                          <div>产品线</div>
-			                                          <div>${price_info["产品线"]}</div>
-			                             </div>
-			                             <div class="item">
-			                                          <div>项目周期</div>
-			                                          <div>${price_info["项目周期"]}</div>
-			                             </div>
-			                             <div class="item">
-			                                          <div>立项时间</div>
-			                                          <div>${price_info["立项时间"]}</div>
-			                             </div>
-			                             <div class="item">
-			                                          <div>负责人</div>
-			                                          <div>${price_info["负责人"]}</div>
-			                             </div>
 							         </div>
 	                            </div>
 	                       </div>

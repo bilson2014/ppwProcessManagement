@@ -257,8 +257,8 @@ $ba:#bababa; */
                 height: auto;
                 padding-left: 20px;
                 .waitCard {
-                    width: ($smallWidth - $noNeedpad*2)/2;
-                    @media screen and (min-width: 761px) and (max-width: 1029px) {
+                    width: ($smallWidth - $noNeedpad*3)/3;
+                    @media screen and (min-width: 780px) and (max-width: 1029px) {
                         width: ($areaMidWidth - $noNeedpad*3)/3;
                     }
                     @media screen and (min-width: 1030px) {
@@ -308,14 +308,12 @@ $ba:#bababa; */
                 }
             }
 
-
-
-            .toMinLeft .frame .setCard {
+            .toChange .setCard {
                 .waitCard,
                 .otherCard {
                     cursor: pointer;
                     width: ($smallMinWidth - $noNeedpad*3)/3 !important;
-                    @media screen and (min-width: 761px) and (max-width: 1000px) {
+                    @media screen and (min-width: 780px) and (max-width: 1000px) {
                         width: ($areaMinMidWidth - $noNeedpad*3)/3 !important;
                     }
                     @media screen and (min-width: 1005px) {
@@ -347,7 +345,7 @@ $ba:#bababa; */
                     .otherCard {
                         padding-left: 0px !important;
                         width: ($smallWidth - $noNeedpad*3)/3;
-                        @media screen and (min-width: 761px) and (max-width: 1029px) {
+                        @media screen and (min-width: 780px) and (max-width: 1029px) {
                             width: ($areaMidWidth - $noNeedpad*3)/3;
                         }
                         @media screen and (min-width: 1030px) {
