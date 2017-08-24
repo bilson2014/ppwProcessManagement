@@ -14,7 +14,7 @@
 	<dubbo:registry protocol="zookeeper" address="123.59.75.93:2181" />
  		
 	<!-- Activiti接口 -->
-	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.WorkFlowFacade" id="pmsWorkFlowFacade" retries="1" check="false" timeout="1000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.WorkFlowFacade" id="pmsWorkFlowFacade" retries="1" check="false" timeout="5000" />
 	
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade" id="pmsProjectFlowFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade" id="pmsProjectResourceFacade" retries="1" check="false" timeout="5000" />
