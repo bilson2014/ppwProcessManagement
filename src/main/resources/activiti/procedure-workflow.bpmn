@@ -18,7 +18,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71" sourceRef="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" targetRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715"></sequenceFlow>
-    <userTask id="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225" name="【销售总监】确认项目（通过/驳回）" activiti:assignee="${saleDirectorId}">
+    <userTask id="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225" name="【销售总监】确认项目信息（通过/驳回）" activiti:assignee="${saleDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_projectmarketPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="确认"></activiti:value>
@@ -28,7 +28,7 @@
     </userTask>
     <sequenceFlow id="sid-F09FAB69-E29A-46D0-B1AD-EF01BE0DE0DF" sourceRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715" targetRef="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225"></sequenceFlow>
     <exclusiveGateway id="sid-0EC05FB2-76D3-4042-A0D5-FC3CB41F4833"></exclusiveGateway>
-    <userTask id="sid-75B324FE-95AC-492E-B78A-BD82DDB83E74" name="【创意总监】确认项目（通过/驳回）" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-75B324FE-95AC-492E-B78A-BD82DDB83E74" name="【创意总监】确认项目信息（通过/驳回）" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_projectplanPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="确认"></activiti:value>
@@ -37,7 +37,7 @@
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-8706AD6D-C469-4063-A8C0-4B2C6AAC2C1B"></exclusiveGateway>
-    <userTask id="sid-4B31062A-177E-4B9A-824D-A6B7E8E5DDBB" name="【创意总监】分配策划（内部策划/外部策划）" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-4B31062A-177E-4B9A-824D-A6B7E8E5DDBB" name="【创意总监】分配策划（内部/外部）" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_planoutsidePass" name="策划分配" type="enum" required="true">
           <activiti:value id="inner" name="内部"></activiti:value>
@@ -47,7 +47,7 @@
     </userTask>
     <exclusiveGateway id="sid-C481F0F9-816C-4BEB-8B9A-21770190CDA9"></exclusiveGateway>
     <sequenceFlow id="sid-D646C67E-D92C-47D3-832C-71EB0C7E27CB" sourceRef="sid-4B31062A-177E-4B9A-824D-A6B7E8E5DDBB" targetRef="sid-C481F0F9-816C-4BEB-8B9A-21770190CDA9"></sequenceFlow>
-    <userTask id="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" name="【创意总监】分配内部策划" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" name="【创意总监】分配内部策划人员" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="schemeId" name="策划" type="string" required="true"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${allotSchemeTaskListener}"></activiti:taskListener>
@@ -74,12 +74,12 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-0DCBEA80-0586-4F37-9F56-51BD1B092652" sourceRef="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" targetRef="sid-E04DE940-F8C8-4FD8-A22E-5232BD03D585"></sequenceFlow>
-    <userTask id="sid-E896C9F5-422D-4931-A087-7E98BCFFDBCF" name="【供应商】上传策划方案" activiti:assignee="${teamPlanId}">
+    <userTask id="sid-E896C9F5-422D-4931-A087-7E98BCFFDBCF" name="【策划供应商】上传策划方案" activiti:assignee="${teamPlanId}">
       <extensionElements>
         <activiti:formProperty id="file_planning" name="策划方案" type="string" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <userTask id="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" name="【创意总监】方案确认（通过/驳回）" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" name="【创意总监】确认策划方案（通过/驳回）" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_planconfirmPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -91,7 +91,7 @@
     <sequenceFlow id="sid-2B94CBE2-E298-4202-876A-E0F8C410A27C" sourceRef="sid-E896C9F5-422D-4931-A087-7E98BCFFDBCF" targetRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0"></sequenceFlow>
     <exclusiveGateway id="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></exclusiveGateway>
     <sequenceFlow id="sid-610D05BC-659A-4E42-8355-066C4CD0721D" sourceRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" targetRef="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></sequenceFlow>
-    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】让客户确提案信息（通过/驳回）" activiti:assignee="${applyUserId}">
+    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】与客户确提案信息（通过/驳回）" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="condition_cutomerconfirmPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -164,7 +164,7 @@
     <sequenceFlow id="sid-57EAD5DB-0716-4AD2-A6BA-F01773319D27" sourceRef="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7" targetRef="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6"></sequenceFlow>
     <exclusiveGateway id="sid-A7189870-2822-487F-9C23-EF6F4042C8FA"></exclusiveGateway>
     <sequenceFlow id="sid-D47A606B-FF7E-4B8D-962D-DF653EB671F6" sourceRef="sid-81DA45E2-D57C-4505-892B-740065949278" targetRef="sid-A7189870-2822-487F-9C23-EF6F4042C8FA"></sequenceFlow>
-    <userTask id="sid-F1A0E47B-28F8-441A-BBE1-BCA17BF2BE83" name="【销售】上传审核后修改表" activiti:assignee="${applyUserId}">
+    <userTask id="sid-F1A0E47B-28F8-441A-BBE1-BCA17BF2BE83" name="【销售】上传修改表" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="file_vedioRevise" name="影片修改表" type="string" required="true"></activiti:formProperty>
       </extensionElements>
@@ -188,13 +188,13 @@
       </extensionElements>
     </endEvent>
     <sequenceFlow id="sid-13257F2C-4CBF-4F30-8247-5B7AABF64A09" sourceRef="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A" targetRef="sid-1C13175F-35F8-41AC-92A1-4E14A4DA5353"></sequenceFlow>
-    <userTask id="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" name="【销售】上传验收函回复确认截图" activiti:assignee="${applyUserId}">
+    <userTask id="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" name="【销售】上传客户确认验收函截图" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="file_customerReply" name="客户验收函回复截图" type="string" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-D6AF2CCA-EDB0-4D5A-95AD-6BC1E2BF201E" sourceRef="sid-76853896-9D0A-4855-90E0-9E2CA1891DB3" targetRef="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB"></sequenceFlow>
-    <userTask id="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" name="【供应商管家】填写供应商结算信息 " activiti:assignee="${teamProviderId}">
+    <userTask id="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" name="【供应商管家】填写制作供应商结算信息" activiti:assignee="${teamProviderId}">
       <extensionElements>
         <activiti:formProperty id="pt_actualPrice" name="供应商实际价格" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_invoiceHead" name="发票抬头" type="enum" required="true">
@@ -298,7 +298,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_procedure-workflow">
     <bpmndi:BPMNPlane bpmnElement="procedure-workflow" id="BPMNPlane_procedure-workflow">
       <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
-        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="282.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="281.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" id="BPMNShape_sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB">
         <omgdc:Bounds height="80.0" width="100.0" x="105.0" y="255.0"></omgdc:Bounds>
@@ -430,7 +430,7 @@
         <omgdc:Bounds height="79.0" width="105.0" x="3724.0" y="462.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7" id="BPMNEdge_sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7">
-        <omgdi:waypoint x="55.0" y="299.0"></omgdi:waypoint>
+        <omgdi:waypoint x="45.0" y="298.0"></omgdi:waypoint>
         <omgdi:waypoint x="105.0" y="295.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71" id="BPMNEdge_sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71">
