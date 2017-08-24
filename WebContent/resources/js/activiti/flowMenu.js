@@ -47,12 +47,14 @@ function initMenuEven(){
 		}else{
 			$('#minMyPro').removeClass('open');
 		}
+		$($('.frame').prop('contentWindow').document).find('.pages').addClass('toChange');
 	});
 	
 	//切换回大菜单
 	$('#menuHead').off('click').on('click',function(){
 		$('.flowMenu').removeClass('changeMenu');
 		$('.page').removeClass('toMinLeft');
+		$($('.frame').prop('contentWindow').document).find('.pages').removeClass('toChange');
 	});
 	
 	

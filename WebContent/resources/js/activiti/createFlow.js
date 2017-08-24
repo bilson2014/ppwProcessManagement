@@ -420,17 +420,6 @@ function getSynInfo(){
 			
 		}
 		
-		/*//供应商采购
-		var teamPurchases = res.result.teamPurchase;
-		var body = $('#teamPurchases');
-		body.html('');
-		if(teamPurchases != null && teamPurchases != undefined){
-			for (var int = 0; int < teamPurchases.length; int++) {
-					var html =createOption(teamPurchases[int].id,teamPurchases[int].firstName);
-				   body.append(html);
-			};
-			
-		}*/
 		
 		//财务总监
 		var financeDirectors = res.result.financeDirector;
@@ -546,7 +535,6 @@ function getProduct(){
 		body.html('');
 		var html = createOption('0','非标准化产品','0');
 		var rows = res.result.chanpin;
-		body.append(html);
 		if(res != null && res != undefined){
 			for (var int = 0; int < rows.length; int++) {
 					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
@@ -554,6 +542,7 @@ function getProduct(){
 			};
 			initProductEven();
 		}
+		
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -569,7 +558,6 @@ function getProduct(){
 		var body = $('#cusLevel');
 		body.html('');
 		var rowsC = res.result.clientLevel;
-		body.append(html);
 		if(rowsC != null && rowsC != undefined){
 			for (var int = 0; int < rowsC.length; int++) {
 					var html =createOption(rowsC[int].id,rowsC[int].text);
