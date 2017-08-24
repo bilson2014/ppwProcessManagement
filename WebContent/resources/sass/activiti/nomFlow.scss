@@ -125,8 +125,8 @@ $ba:#bababa; */
             $smallMinWidth:900px;
             $ba:#bababa;
             $smallWidth:780px;
-            $areaMinMidWidth:1080px;
-            $areaMinWidth:1220px;
+            $areaMinMidWidth:1140px;
+            $areaMinWidth:1240px;
 
             .lineTop {
                 width: 100%;
@@ -313,10 +313,10 @@ $ba:#bababa; */
                 .otherCard {
                     cursor: pointer;
                     width: ($smallMinWidth - $noNeedpad*3)/3 !important;
-                    @media screen and (min-width: 780px) and (max-width: 1000px) {
+                    @media screen and (min-width: 905px) and (max-width: 1229px) {
                         width: ($areaMinMidWidth - $noNeedpad*3)/3 !important;
                     }
-                    @media screen and (min-width: 1005px) {
+                    @media screen and (min-width: 1230px) {
                         width: ($areaMinWidth - $noNeedpad*3)/3 !important;
                     }
                 }

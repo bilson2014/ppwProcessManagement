@@ -522,6 +522,7 @@ function timePriceEven(){
 		   	$(this).parent().parent().find('div').attr('data-id',id);
 		   	$(this).parent().slideUp();
 		   	$('#pf_productConfigLength').val(id);
+			$('#pf_productConfigLengthName').val($(this).text());
 		   	$('.orderSelect').removeClass('selectColor');
 		   	timePrice = parseInt(totalPrice) + parseInt($(this).attr('data-price'));
 		   	$('#estimatedPrice').val(timePrice);	   
