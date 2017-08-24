@@ -467,7 +467,7 @@ function initFormEven(){
 
 //上传
 function UploadFile(){
-	upload_Video && upload_Video.destroy();
+	//upload_Video && upload_Video.destroy();
 	var picker =$('#picker'); 
 	upload_Video = WebUploader.create({
 		auto:false,
@@ -1052,8 +1052,10 @@ function getFileInfo(){
 		var body =$('#projectFilm');
 		body.html('');
 		$('.noFile').show();
+		$('.conMod').hide();
 		if(res != null && res != undefined){
 			$('.noFile').hide();
+			$('.conMod').show();
 			var newList = bulidFileList(res);
 				for (var int = 0; int < newList.length; int++) {
 					 var html =createFileInfo(newList[int]);
