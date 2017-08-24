@@ -430,7 +430,7 @@ function pageInit(){
 	getHeight();
 	$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
-    $('#projectTime').text(formatDate($('#projectTime').text()));
+    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
 }
 
 //表单验证
@@ -463,11 +463,12 @@ function initFormEven(){
 	dataEven();
 	autoInput();
 	autoSelect();
+	
 }
 
 //上传
 function UploadFile(){
-	upload_Video && upload_Video.destroy();
+	//upload_Video && upload_Video.destroy();
 	var picker =$('#picker'); 
 	upload_Video = WebUploader.create({
 		auto:false,
@@ -679,7 +680,7 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
@@ -1052,8 +1053,10 @@ function getFileInfo(){
 		var body =$('#projectFilm');
 		body.html('');
 		$('.noFile').show();
+		$('.conMod').hide();
 		if(res != null && res != undefined){
 			$('.noFile').hide();
+			$('.conMod').show();
 			var newList = bulidFileList(res);
 				for (var int = 0; int < newList.length; int++) {
 					 var html =createFileInfo(newList[int]);

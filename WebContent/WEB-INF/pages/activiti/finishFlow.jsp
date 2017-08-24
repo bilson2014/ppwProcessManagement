@@ -44,7 +44,7 @@
 	<div class="pages">
 	
 	<div class="productListAreas">
-	           <div class="waitWork">
+	           <div class="otherWork">
 	           
 	                <div class="titleNameWork">
 	                    <div class="name">项目名称</div>
@@ -57,13 +57,13 @@
 	                    </div>
 	                    </r:identity>
 	                </div>
-	                
 	                <div class="lineTop"></div>
-	               
 	                <div class="title">
 	                     <div class="titleName" id="upName">完成任务(<span id="otherNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="setCard">
+	         
+		                
 	                
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
