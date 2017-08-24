@@ -430,7 +430,7 @@ function pageInit(){
 	getHeight();
 	$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
-    $('#projectTime').text(formatDate($('#projectTime').text()));
+    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
 }
 
 //表单验证
