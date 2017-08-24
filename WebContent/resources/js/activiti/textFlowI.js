@@ -463,6 +463,7 @@ function initFormEven(){
 	dataEven();
 	autoInput();
 	autoSelect();
+	
 }
 
 //上传
