@@ -547,7 +547,6 @@ function getProduct(){
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
-		body.append(html);
 		if(rowsR != null && rowsR != undefined){
 			for (var int = 0; int < rowsR.length; int++) {
 					var html =createOption(rowsR[int].id,rowsR[int].text);
