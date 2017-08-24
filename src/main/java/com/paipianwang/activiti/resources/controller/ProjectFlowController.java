@@ -18,8 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -262,7 +264,7 @@ public class ProjectFlowController extends BaseController {
 		// 获取可见数据
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
-		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId);
+		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), taskId, info);
 		
 		// 获取当前节点所在阶段 以及 备注信息
 		Map<String, String> state = projectWorkFlowService.getTaskStateAndDescription(taskId);
@@ -354,11 +356,12 @@ public class ProjectFlowController extends BaseController {
 	}
 
 	// 挂起
-	@RequestMapping("/suspendProcess/{processInstandeId}")
-	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-		if (StringUtils.isNotBlank(processInstanceId)) {
+	@RequestMapping("/suspendProcess/{processInstandeId}/{projectId}")
+	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId,
+									   @PathVariable("projectId") final String projectId) {
+		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.suspendProcess(processInstanceId);
+			projectWorkFlowService.suspendProcess(processInstanceId, projectId);
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -369,7 +372,7 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/suspend-task")
-	public ModelAndView suspend(HttpServletRequest request) {
+	public ModelAndView suspendList(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/pauseFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
@@ -380,8 +383,9 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
 			suspendTasks = projectWorkFlowService.getSuspendTasks(null);
+		} else {
+			suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
 		}
-		suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
 		mv.addObject("suspendTasks", suspendTasks);
 		return mv;
 	}
@@ -392,21 +396,23 @@ public class ProjectFlowController extends BaseController {
 	 *            流程实例ID
 	 * @return
 	 */
-	@RequestMapping("/activateProcess/{processInstandeId}")
-	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId) {
-//		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
-		if (StringUtils.isNotBlank(processInstanceId)) {
+	@RequestMapping("/activateProcess/{processInstandeId}/{projectId}")
+	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId,
+										@PathVariable("projectId") final String projectId) {
+		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 激活
-			projectWorkFlowService.activateProcess(processInstanceId);
+			projectWorkFlowService.activateProcess(processInstanceId, projectId);
 		}
-//		return mv;
 		return new ModelAndView("redirect:/project/suspend-task");
 	}
-	@RequestMapping("/project-task/{projectId}")
-	public Map<String, Object> getProjectTaskList(@PathVariable("projectId") final String projectId) {
-		Map<String,Object> result=projectWorkFlowService.getProjectTaskList(projectId);
+	
+	@RequestMapping(value = "/project-task/{projectId}", method = RequestMethod.POST)
+	public Map<String, Object> getProjectTaskList(@PathVariable("projectId") final String projectId, @RequestBody PmsProjectFlow flow) {
+		System.err.println();
+		Map<String,Object> result=projectWorkFlowService.getProjectTaskList(projectId, flow.getProjectName());
 		return result;
 	}
+	
 	@RequestMapping("/task-detail/{taskId}")
 	public Map<String, Object> getTaskInfo(@PathVariable("taskId") final String taskId) {
 		Map<String,Object> result=projectWorkFlowService.getTaskInfo(taskId);

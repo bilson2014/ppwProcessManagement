@@ -84,11 +84,23 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
 				info.setActivitiUserId(userId);
 				List<Group> list = identityService.createGroupQuery().groupMember(userId).list();
-				if (list == null || list.size() == 0) {
+				/*if (list == null || list.size() == 0) {
 					req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
 					req.getRequestDispatcher("/login").forward(req, resp);
 					return false;
 				} else {
+					List<String> groups = new ArrayList<String>();
+					for (final Group group : list) {
+						groups.add(group.getId());
+					}
+
+					// 放入session中
+					info.setActivitGroups(groups);
+					req.getSession().removeAttribute(PmsConstant.SESSION_INFO);
+					req.getSession().setAttribute(PmsConstant.SESSION_INFO, info);
+				}*/
+				
+				if(list != null && !list.isEmpty()) {
 					List<String> groups = new ArrayList<String>();
 					for (final Group group : list) {
 						groups.add(group.getId());

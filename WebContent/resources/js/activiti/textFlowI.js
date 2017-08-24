@@ -237,16 +237,15 @@ function getStageInfo(stage){
 			var resMap = "";
 			
 			if(resMap == ""){
-			
-			loadData(function(res){
-				initLastTime(res.projectCycle,res.createDate);
-				if(res != null && res != undefined){
+				loadData(function(res){
+					initLastTime(res.projectCycle,res.createDate);
+					if(res != null && res != undefined){
 					    resMap = res;
 						var sethtml="";
 						var resKey = res[keys];
 						getStageCard(keys,resKey);
-				}
-			}, getContextPath() + '/project/project-task/'+$('#projectId').val(),null);
+					}
+				}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
 			}else{
 				var resKey = resMap[keys];
 				getStageCard(keys,resKey);
@@ -319,7 +318,7 @@ function toDoing(){
 		$('#infoModel').hide();
 	});
 	$('#checkSure').off('click').on('click',function(){
-		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val() + '/' + $('#projectId').val();
 	});
 }
 
@@ -328,7 +327,7 @@ function toPause(){
 		$('#infoModel').hide();
 	});
 	$('#checkSure').off('click').on('click',function(){
-		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val();
+		window.location.href = "/project/suspendProcess/"+$('#processInstanceId').val() + '/' + $('#projectId').val();
 	});
 }
 
@@ -628,7 +627,6 @@ function addForm() {
 			trs += "<div class='item'>" + createFieldHtml(this, datas, className);
 			trs += "</div>";
 		});
-		//$('#formState').html("<form class='dynamic-form' method='post'><table class='dynamic-form-table'></table></form>");
 		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
 		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
