@@ -1,5 +1,7 @@
 package com.paipianwang.activiti.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -420,7 +422,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			priceFlow=editFlowItem(priceFlow);
 			param.put("PROJECT_PRICE", priceFlow);			
 			
+			// 遍历时间
+			Object createDate = projectFlow.get("createDate");
+			if(createDate != null) {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+				try {
+					Date date = format.parse(createDate.toString());
+					projectFlow.put("createDate", date);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			projectFlow=editFlowItem(projectFlow);
+			
 			param.put("PROJECT_FLOW", projectFlow);
 		}
 
