@@ -645,7 +645,7 @@ function addForm() {
 		if(hasPicker !=null && hasPicker !="" && hasPicker !=undefined){
 			UploadFile();
 		}
-	}, '/project/get-form/task/' + $('#currentTaskId').val(), null);
+	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
 /**
