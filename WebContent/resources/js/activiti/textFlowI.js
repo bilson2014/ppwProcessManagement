@@ -1051,7 +1051,9 @@ function getFileInfo(){
 		var res = res;
 		var body =$('#projectFilm');
 		body.html('');
+		$('.noFile').show();
 		if(res != null && res != undefined){
+			$('.noFile').hide();
 			var newList = bulidFileList(res);
 				for (var int = 0; int < newList.length; int++) {
 					 var html =createFileInfo(newList[int]);

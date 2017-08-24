@@ -276,7 +276,14 @@
 	                                  </div>
 	                                  <div class="longItem">
 			                                          <div>项目配置</div>
-			                                          <div>${flow_info["productConfigLevelName"]}${flow_info["productConfigLength"]}${flow_info["productConfigAdditionalPackageName"]}</div>
+			                                          <div>${flow_info["productConfigLevelName"]}
+			                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
+			                                              + ${flow_info['productConfigLengthName']}
+			                                          </c:if>
+			                                          <c:if test="${flow_info['productConfigAdditionalPackageName']}"> 
+			                                              + ${flow_info['productConfigAdditionalPackageName']}
+			                                          </c:if>
+			                                          </div>
 			                           </div>
 			                           <div class="longItem">
 			                                          <div>对标影片</div>
@@ -401,6 +408,7 @@
 	                        <div class="conMod btn-c-r">版本管理</div>
 	                        <div class="upFile hide btn-c-r">上传</div>
 	                   </div>
+	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
 	                       
 	                       <div class="projectTitle">留言评论区</div>

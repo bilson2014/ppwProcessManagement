@@ -2411,3 +2411,10 @@ background-image: none !important; */
                 margin-right: 10px;
             }
         }
+
+        .noFile{
+            color:$gray-light;
+            font-size: $font-size-sm;
+            margin-left: 40px;
+            display: none;
+        }
