@@ -308,6 +308,9 @@
 
             .orderSelect {
                 width: 400px;
+                div{
+                	@include ellipsis;
+                }
                 @media screen and (min-width: 1276px) {
                     width: 560px;
                 }
