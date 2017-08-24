@@ -110,6 +110,7 @@
 	                  <div class="smallItem errorItem " id="productConfigLengthError">
 	                       <div class="itemTitle">时长<span>*</span></div>
 	                       <input type="hidden" id="pf_productConfigLength" name="pf_productConfigLength"/>
+	                       <input type="hidden" id="pf_productConfigLengthName" name="pf_productConfigLengthName"/>
 	                       <div class="orderSelect noclick" >
 				                <div id="productConfigLength"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
