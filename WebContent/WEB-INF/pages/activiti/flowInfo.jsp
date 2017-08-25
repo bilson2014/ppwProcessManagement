@@ -290,26 +290,34 @@
 			                                 </c:if>
 		                                  </div>
 	                                  </div>
-	                                  <div class="longItem">
-			                                          <div>项目配置</div>
-			                                          <div>${flow_info["productConfigLevelName"]}
-				                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
-				                                              +  ${flow_info['productConfigLengthName']}
-				                                          </c:if>
-				                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
-				                                              +  ${flow_info['productConfigAdditionalPackageName']}
-				                                          </c:if>
-			                                          </div>
+	                                  
+	                                  <c:if test="${not empty flow_info['productConfigLevelName']}">
+		                                  	<div class="longItem">
+	                                          <div>项目配置</div>
+	                                          <div>${flow_info["productConfigLevelName"]}
+		                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
+		                                              +  ${flow_info['productConfigLengthName']}
+		                                          </c:if>
+		                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
+		                                              +  ${flow_info['productConfigAdditionalPackageName']}
+		                                          </c:if>
+	                                          </div>
 			                           </div>
-			                           <div class="longItem">
-			                                          <div>对标影片</div>
-			                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
-			                           </div>
-			                           <div class="longItem">
-			                                          <div>项目描述</div>
-			                                          <div>${flow_info["projectDescription"]}</div>
-			                           </div>
-	                
+	                                  </c:if>
+	                                  
+	                                  <c:if test="${not empty flow_info['filmDestPath']}">
+		                                  	<div class="longItem">
+	                                          <div>对标影片</div>
+	                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
+				                            </div>
+	                                  </c:if>
+			                           
+			                           <c:if test="${not empty flow_info['projectDescription']}">
+			                           		<div class="longItem">
+	                                          <div>项目描述</div>
+	                                          <div>${flow_info["projectDescription"]}</div>
+				                           </div>
+			                           </c:if>
 	                            </div>
 	                       </div>
 	                       
@@ -323,22 +331,33 @@
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
-			                                  <div class="item">
+		                                  		<c:if test="${not empty user_info['userName']}">
+				                                  <div class="item">
 			                                          <div>客户名称</div>
 			                                          <div>${user_info["userName"]}</div>
-			                                  </div>
-			                                  <div class="item">
+				                                  </div>
+		                                  		</c:if>
+		                                  		
+		                                  		<c:if test="${not empty user_info['userLevel']}">
+		                                  			<div class="item">
 			                                          <div>客户评级</div>
 			                                          <div>${user_info["userLevel"]}</div>
-			                                  </div>
-			                                  <div class="item">
+				                                    </div>
+		                                  		</c:if>
+			                                  
+			                                  <c:if test="${not empty user_info['linkman']}">
+			                                  	  <div class="item">
 			                                          <div>客户联系人</div>
 			                                          <div>${user_info["linkman"]}</div>
-			                                  </div>
-			                                  <div class="item">
-			                                          <div>客户电话</div>
-			                                          <div>${user_info["telephone"]}</div>
-			                                  </div>
+				                                  </div>
+			                                  </c:if>
+			                                  
+			                                  <c:if test="${not empty user_info['telephone']}">
+			                                  	<div class="item">
+		                                          <div>客户电话</div>
+		                                          <div>${user_info["telephone"]}</div>
+			                                    </div>
+			                                  </c:if>
 		                                  </div>
 		                            </div>
 		                       </div>
@@ -357,24 +376,32 @@
 	                            		<div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                            			<c:forEach items="${teamPlan_info }" var="plan">
 			                                  <div class="contentItem">
-				                                     <div class="item">
-				                                          <div>供应商名称</div>
-				                                          <div>
-					                                         ${plan["teamName"]}
-				                                           </div>
-						                             </div>
-						                             <div class="item">
-				                                          <div>供应商联系人</div>
-				                                          <div>
-				                                          	${plan["linkman"]}
-				                                          </div>
-						                             </div>
-						                             <div class="item">
-				                                          <div>供应商联系电话</div>
-				                                          <div>
-					                                          ${plan["telephone"]}
-				                                          </div>
-						                             </div>
+			                                  		<c:if test="${not empty plan['teamName']}">
+					                                     <div class="item">
+					                                          <div>供应商名称</div>
+					                                          <div>
+						                                         ${plan["teamName"]}
+					                                           </div>
+							                             </div>
+						                             </c:if>
+						                             
+						                             <c:if test="${not empty plan['linkman']}">
+							                             <div class="item">
+					                                          <div>供应商联系人</div>
+					                                          <div>
+					                                          	${plan["linkman"]}
+					                                          </div>
+							                             </div>
+						                             </c:if>
+						                             
+						                             <c:if test="${not empty plan['telephone']}">
+							                             <div class="item">
+					                                          <div>供应商联系电话</div>
+					                                          <div>
+						                                          ${plan["telephone"]}
+					                                          </div>
+							                             </div>
+						                             </c:if>
 												</div>
 	                            			</c:forEach>
 	                            	</c:if>
@@ -383,19 +410,28 @@
 		                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 		                                  <c:forEach items="${teamProduct_info }" var="product">
 			                                  	<div class="contentItem" >
-						                             <div class="contentItem">	      
-					                                     <div class="item">
+						                             <div class="contentItem">
+						                             	<c:if test="${not empty product['teamName']}">
+						                             		<div class="item">
 					                                          <div>供应商名称</div>
 					                                          <div>${product["teamName"]}</div>
-							                             </div>
-							                             <div class="item">
+							                             	</div>
+						                             	</c:if>
+					                                     
+					                                     <c:if test="${not empty product['linkman']}">
+					                                     	<div class="item">
 					                                          <div>供应商联系人</div>
 					                                          <div>${product["linkman"]}</div>
-							                             </div>
-							                             <div class="item">
+							                             	</div>
+					                                     </c:if>
+							                             
+							                             <c:if test="${not empty product['telephone']}">
+							                             	<div class="item">
 					                                          <div>供应商联系电话</div>
 					                                          <div>${product["telephone"]}</div>
-							                             </div>
+							                             	</div>
+							                             </c:if>
+							                             
 											         </div>
 											    </div>
 			                                  </c:forEach>
@@ -413,14 +449,19 @@
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">	      
-	                                     <div class="item">
-			                                          <div>预估价格</div>
-			                                          <div>${price_info["estimatedPrice"]}</div>
-			                             </div>
-			                             <div class="item">
+	                                     	<c:if test="${not empty price_info['estimatedPrice']}">
+			                                     <div class="item">
+			                                     		<div>预估价格</div>
+			                                          	<div>${price_info["estimatedPrice"]}</div>
+					                             </div>
+	                                     	</c:if>
+	                                     	
+	                                     	<c:if test="${not empty price_info['projectBudget']}">
+	                                     		<div class="item">
 			                                          <div>客户项目预算</div>
 			                                          <div>${price_info["projectBudget"]}</div>
-			                             </div>
+					                             </div>
+	                                     	</c:if>
 							         </div>
 	                            </div>
 	                       </div>
