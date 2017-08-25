@@ -2251,9 +2251,7 @@
                             padding: 20px;
                             margin-left: 48px;
                             position: relative;
-                            div {
-                                position: relative;
-                                line-height: 24px;
+
                                 div:nth-child(1) {
                                     font-size: $font-size-base;
                                     color: $gray-dark;
@@ -2266,7 +2264,7 @@
                                     right: 5px;
                                     top: 19px;
                                 }
-                            }
+                            
                         }
                         input {
                             border: none;

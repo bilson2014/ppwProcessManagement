@@ -515,13 +515,13 @@ function UploadFile(){
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
-			$('#errorInfo').text('上传成功');
+			
 			$('.upIng').hide();
 			$('.upSuccess').show();
 			$('.upError').hide();
 			initFormEven();
 		}else{
-			$('#errorInfo').text('上传失败');
+		
 			$('.upIng').hide();
 			$('.upSuccess').hide();
 			$('.upError').show();
