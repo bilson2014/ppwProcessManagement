@@ -511,7 +511,6 @@ function UploadFile(){
 		$('.upSuccess').hide();
 		$('.upError').hide();
 		$('#btnInput').off('click');
-		$('#errorInfo').text('上传中...');
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
@@ -685,7 +684,7 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;

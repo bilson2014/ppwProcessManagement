@@ -282,6 +282,7 @@
 			                                 <c:if test="${not empty flow_info['productName']}">
 			                                 	<div class="item">
 			                                          <div>项目周期</div>
+			                                          <div>${flow_info["projectCycle"]}</div>
 				                                </div>
 				                                <div class="item">
 				                                          <div>产品线</div>
