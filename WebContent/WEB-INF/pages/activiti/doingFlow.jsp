@@ -50,12 +50,12 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                    <r:identity role="employee">
-	                    <div class="createPro" id="toCreate">
-	                        <div class="newAdd"></div>
-	                        <div data-value="/project/start/project">新建项目</div>
-	                    </div>
-	                    </r:identity>
+	                    <r:group role="sale" >
+		                    <div class="createPro" id="toCreate">
+		                        <div class="newAdd"></div>
+		                        <div data-value="/project/start/project">新建项目</div>
+		                    </div>
+	                    </r:group>
 	                </div>
 	           
 	                <div class="lineTop"></div>
