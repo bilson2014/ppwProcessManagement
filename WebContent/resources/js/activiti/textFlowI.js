@@ -490,6 +490,7 @@ function UploadFile(){
 	
 	upload_Video.on('fileQueued', function(file) {
 	    $('.uploadInput').val(file.name);
+	    $('.longInput').val(file.name);
 	    $('.proTitle').text(file.name);
 	    $('.upProgress').show();
 	    upload_Video.option('formData', {
