@@ -281,10 +281,10 @@
 			                                          <div>项目配置</div>
 			                                          <div>${flow_info["productConfigLevelName"]}
 				                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
-				                                              + ${flow_info['productConfigLengthName']}
+				                                              +  ${flow_info['productConfigLengthName']}
 				                                          </c:if>
 				                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
-				                                              + ${flow_info['productConfigAdditionalPackageName']}
+				                                              +  ${flow_info['productConfigAdditionalPackageName']}
 				                                          </c:if>
 			                                          </div>
 			                           </div>

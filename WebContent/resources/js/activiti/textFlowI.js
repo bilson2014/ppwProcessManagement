@@ -8,7 +8,6 @@ $().ready(function() {
 	
 	// 加载动态表单
 	
-	checkState();
 	pasueOrDoing();
 	getStageInfo($('#taskStage').val());
 	getTimeString();
@@ -81,6 +80,7 @@ function stageTalkEven(){
 		$('#stateContent').html("");
 		$('#infoStartTime').text("");
 		$('#infoEndTime').text("");
+		$('#itemHeightInfo').html('');
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
@@ -421,7 +421,6 @@ function pageInit(){
 	initEvenInfo();
 	initSelect();
 	flagEven();
-	checkState();
 	getFileInfo();
 	initAddTalk();
 	initAllTalk();
@@ -429,9 +428,9 @@ function pageInit(){
 	controlModel();
 	checkState();
 	getHeight();
-	/*$('#projectCtyle').text($('#projectCtyle').text()+"天");
+	$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
-    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));*/
+    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
 }
 
 //表单验证
