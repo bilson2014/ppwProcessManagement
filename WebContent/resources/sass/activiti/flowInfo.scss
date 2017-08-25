@@ -1500,20 +1500,20 @@
                             .fileName {
                                 font-size: $font-size-base;
                                 color: $gray;
-                                width: 200px;
+                                width: 210px;
                                 padding-left: 29px;
                                 @include ellipsis;
                             }
                             .name {
                                 font-size: $font-size-base;
                                 color: $gray;
-                                width: 160px;
+                                width: 140px;
                                 @include ellipsis;
                             }
                             .time {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
-                                width: 165px;
+                                width: 180px;
                                 @include ellipsis;
                             }
                             .InfoItem {
@@ -2254,16 +2254,18 @@
                             div {
                                 position: relative;
                                 line-height: 24px;
-                                span:nth-child(1) {
+                                div:nth-child(1) {
                                     font-size: $font-size-base;
                                     color: $gray-dark;
+                                    padding-right: 11px;
                                 }
-                                span:nth-child(2) {
+                                div:nth-child(2) {
                                     margin-left: 5px;
                                     font-size: $font-size-base;
                                     color: $gray-light;
                                     position: absolute;
-                                    right: 65px;
+                                    right: 0px;
+                                    top:0px;
                                 }
                             }
                             input {
