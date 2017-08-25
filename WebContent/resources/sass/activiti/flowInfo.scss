@@ -906,7 +906,7 @@
                         width: 200px;
                         line-height: 36px;
                         @include ellipsis;
-                        @media screen and (min-width: 1276px) {
+                        @media screen and (min-width: 1022px) {
                             width: 250px;
                         }
                     }
@@ -914,15 +914,15 @@
                         width: 200px;
                         line-height: 36px;
                         @include ellipsis;
-                        @media screen and (min-width: 1276px) {
-                            width: 300px;
+                        @media screen and (min-width: 1022px) {
+                            width: 400px;
                         }
                     }
                     .info {
                         width: 150px;
                         line-height: 36px;
                         @include ellipsis;
-                        @media screen and (min-width: 1276px) {
+                        @media screen and (min-width: 1022px) {
                             width: 200px;
                         }
                     }
