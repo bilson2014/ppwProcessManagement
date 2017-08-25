@@ -135,7 +135,7 @@
     <sequenceFlow id="sid-C2C19BE4-6CAE-44EE-9AF1-6B2AF733B771" sourceRef="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" targetRef="sid-F14FA24E-C36B-4E3F-AFB9-435EDCE3A6D2"></sequenceFlow>
     <userTask id="sid-71F2FB2E-D883-43B1-942E-17197259FDCF" name="【销售】填写客户预算信息" activiti:assignee="${applyUserId}">
       <extensionElements>
-        <activiti:formProperty id="pf_projectBudget" name="项目预算（客户）" type="long" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pf_projectBudget" name="客户项目预算（元）" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pu_appointedTime" name="客户启动函约定付款时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pu_deliveryTime" name="客户启动函项目交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
       </extensionElements>
