@@ -1282,11 +1282,11 @@
 										style="width: 0;"></div>
 								</div>
 								<div class="upIng">上传中...</div>
-								<div class="upSuccess hide">
+								<div class="upSuccess">
 									<img src="/resources/images/provider/sure.png">上传成功
 								</div>
-								<div class="upError hide">
-									<img src="/resources/images/provider/error.png">上传失败请重新上传
+								<div class="upError">
+									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
 								</div>
 							</div>
             <div class="otherContent" id="setAutoInfo">

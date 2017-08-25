@@ -2361,13 +2361,13 @@
             font-size: $font-size-sm;
             color: $gray;
             position: relative;
-            width: 85%;
+            width: 92%;
             padding-top: 30px;
             display: none;
         }
 
         .progress {
-            height: 16px;
+            height: 12px;
             border-radius: 90px !important;
             margin-top: 8px;
             margin-bottom: 0px !important;
@@ -2392,10 +2392,12 @@ background-image: none !important; */
             color: $gray;
             right: 0px;
             top: 30px;
+            display: none;
             img {
                 position: relative;
                 top: -2px;
                 margin-right: 10px;
+                width: 14px;
             }
         }
 
@@ -2405,10 +2407,12 @@ background-image: none !important; */
             color: $gray;
             right: 0px;
             top: 30px;
+            display: none;
             img {
                 position: relative;
                 top:-2px;
                 margin-right: 10px;
+                 width: 14px;
             }
         }
 
