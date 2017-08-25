@@ -274,6 +274,7 @@ public class ProjectFlowController extends BaseController {
 			if(!ProjectFlowStatus.finished.getId().equals(status)) {
 				state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 			}
+			
 			Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 			Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
 			List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");

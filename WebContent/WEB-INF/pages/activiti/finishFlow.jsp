@@ -88,7 +88,7 @@
 		                             </a>
 	                        	</div>
 							</c:forEach>
-					</c:if>
+						 </c:if>
 	                       <!--  <div class="waitCard">
 	                             <div class="cardH">
 	                                 <div class="title">这里是卡片的标题啊啊啊啊</div>

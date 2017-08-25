@@ -280,12 +280,12 @@
 	                                  <div class="longItem">
 			                                          <div>项目配置</div>
 			                                          <div>${flow_info["productConfigLevelName"]}
-			                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
-			                                              + ${flow_info['productConfigLengthName']}
-			                                          </c:if>
-			                                          <c:if test="${flow_info['productConfigAdditionalPackageName']}"> 
-			                                              + ${flow_info['productConfigAdditionalPackageName']}
-			                                          </c:if>
+				                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
+				                                              + ${flow_info['productConfigLengthName']}
+				                                          </c:if>
+				                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
+				                                              + ${flow_info['productConfigAdditionalPackageName']}
+				                                          </c:if>
 			                                          </div>
 			                           </div>
 			                           <div class="longItem">
@@ -344,15 +344,27 @@
 	                                  <div class="contentItem">
 				                                     <div class="item">
 						                                          <div>供应商名称</div>
-						                                          <div>${teamProduct_info["teamName"]}</div>
+						                                          <div>
+							                                          <c:if test="${not empty teamProduct_info}">
+							                                          	${teamProduct_info["teamName"]}
+							                                          </c:if>
+						                                          </div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系人</div>
-						                                          <div>${teamProduct_info["linkman"]}</div>
+						                                          <div>
+						                                          	<c:if test="${not empty teamProduct_info}">
+						                                          		${teamProduct_info["linkman"]}
+						                                          	</c:if>
+						                                          </div>
 						                             </div>
 						                             <div class="item">
 						                                          <div>供应商联系电话</div>
-						                                          <div>${teamProduct_info["telephone"]}</div>
+						                                          <div>
+						                                          	<c:if test="${not empty teamProduct_info}">
+							                                          	${teamProduct_info["telephone"]}
+						                                          	</c:if>
+						                                          </div>
 						                             </div>
 									 </div>
 	                               
@@ -395,13 +407,6 @@
 			                                          <div>客户项目预算</div>
 			                                          <div>${price_info["projectBudget"]}</div>
 			                             </div>
-		                        <%--           <c:forEach var="item" items="${price_info}"> 
-													<div class="item">
-			                                          <div>${item.key}</div>
-			                                          <div>${item.value}</div>
-			                                       </div>
-										  </c:forEach>  --%>
-										 
 							         </div>
 	                            </div>
 	                       </div>

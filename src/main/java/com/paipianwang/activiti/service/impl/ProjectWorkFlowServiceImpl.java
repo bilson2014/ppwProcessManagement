@@ -628,10 +628,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public List<PmsProjectSynergy> getSynergy(String userId, String projectId, SessionInfo info) {
 		if(StringUtils.isNotBlank(userId) && StringUtils.isNotBlank(projectId)) {
-			/*Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-			String processInstanceId = task.getProcessInstanceId();
-			ProcessInstance pIst = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-			final String projectId = pIst.getBusinessKey();*/
 			
 			Map<String, PmsProjectSynergy> synergyMap = synergyFacade.getSynergysByProjectId(projectId);
 			List<PmsProjectSynergy> result = new ArrayList<PmsProjectSynergy>();
@@ -651,7 +647,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						synergy.setImgUrl(assignee.getEmployeeImg());
 						synergy.setTelephone(assignee.getPhoneNumber());
 					}
-					synergy.setEmployeeGroup(ProjectRoleType.assignee.getId());
+					synergy.setEmployeeGroup(ProjectRoleType.assignee.getText());
 					synergy.setProjectId(projectId);
 					result.add(synergy);
 				}
@@ -659,10 +655,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			
 			if(synergyMap != null && !synergyMap.isEmpty()) {
 				for (Entry<String,PmsProjectSynergy> entry : synergyMap.entrySet()) {
+					String projectRole = entry.getKey();
 					PmsProjectSynergy synergy = entry.getValue();
+					synergy.setEmployeeGroup(ProjectRoleType.getEnum(projectRole).getText());
 					// 如果是供应商，那么只加载供应商管家和监制
 					if(PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
-						String projectRole = entry.getKey();
 						if(ProjectRoleType.teamProvider.getId().equals(projectRole)) {
 							result.add(synergy);
 						} else if(ProjectRoleType.teamProvider.getId().equals(projectRole)) {
