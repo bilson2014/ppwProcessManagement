@@ -142,7 +142,7 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div></div>';
+			body +='<div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == "" ){
@@ -1019,7 +1019,7 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate((children[int].createDate.replace("CST","GMT+0800")))+'</div></div>';
+			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate(children[int].createDate)+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == ""){
