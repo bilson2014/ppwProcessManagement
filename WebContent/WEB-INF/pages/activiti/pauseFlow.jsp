@@ -68,7 +68,7 @@
 	                	 <c:if test="${!empty suspendTasks}">
 							<c:forEach items="${suspendTasks}" var="staff" varStatus="status">
 							     <div class="otherCard">
-							     <a href="/project/task/${staff.task.id}?pause">
+							     <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?pause">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -81,7 +81,9 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime pauseTime">${staff.pmsProjectFlow.suspendDate}</div>
+		                                      <div class="lastTime pauseTime">
+		                                      	${staff.pmsProjectFlow.suspendDate}
+		                                      </div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

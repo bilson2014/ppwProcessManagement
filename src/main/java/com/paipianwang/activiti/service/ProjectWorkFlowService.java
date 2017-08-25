@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 
@@ -12,7 +11,6 @@ import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
-import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 
 public interface ProjectWorkFlowService {
 
@@ -70,7 +68,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public String generateProjectId();
 
-	public Map<String, Object> getReadableColumns(String userId, String taskId);
+	public Map<String, Object> getReadableColumns(String userId, String taskId, String projectId);
 
 	/**
 	 * 获取登陆人当前待办的任务

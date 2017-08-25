@@ -142,8 +142,8 @@ public class ProjectController extends BaseController{
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping("get-form/task/{taskId}")
-	public Map<String, Object> findTaskForm(@PathVariable("taskId") final String taskId, HttpServletRequest request) {
+	@RequestMapping("get-form/task/{taskId}/{projectId}")
+	public Map<String, Object> findTaskForm(@PathVariable("taskId") final String taskId, @PathVariable("projectId") final String projectId, HttpServletRequest request) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = prjectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -160,7 +160,7 @@ public class ProjectController extends BaseController{
 
 		// TODO 获取可见数据
 		SessionInfo info = getCurrentInfo(request);
-		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId);
+		Map<String, Object> param = prjectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId, projectId);
 		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 		List<Map<String, Object>> teamMap = (List<Map<String, Object>>) param.get("PROJECT_TEAM");
 		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");

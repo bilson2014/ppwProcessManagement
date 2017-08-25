@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="r" uri="/mytaglib" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
@@ -260,7 +261,9 @@
 	                                         <div class="contentItem">
 	                                         <div class="item">
 			                                          <div>立项时间</div>
-			                                          <div id="projectTime">${flow_info["createDate"]}</div>
+			                                          <div id="projectTime">
+			                                          	${flow_info["createDate"]}
+			                                          </div>
 			                                  </div>
 			                                 
 			                                  <div class="item">
