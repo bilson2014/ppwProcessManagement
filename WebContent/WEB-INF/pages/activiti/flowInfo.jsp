@@ -439,7 +439,7 @@
 							              </c:if>
 	                                  </div>
 	                            </div>
-	                       </div>
+	                      
 	                      </c:if> 
 	                      
 	                       <c:if test="${!empty price_info}">
@@ -578,6 +578,7 @@
             </div>
      </div>
 </div>
+
 <!-- 上传文件 -->
 <div class="cusModel" id="upModel">
      <div class="modelCard">
