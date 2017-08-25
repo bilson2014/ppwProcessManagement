@@ -303,7 +303,7 @@
 		      </div>
 		      
 		      <div class="btnMid " >
-		          <a href="http://www.apaipian.com:8087/project/running-task"><div class="btn-c-g">取消</div></a>
+		          <a href="JavaScript :history.back(-1)"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>
