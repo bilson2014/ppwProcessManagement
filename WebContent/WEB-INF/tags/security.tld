@@ -55,6 +55,30 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		
+		<attribute>
+			<name>role2</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<!-- 当前角色 -->
+	<tag>
+		<name>group</name>
+		<tag-class>com.paipianwang.activiti.taglib.ActivitiIdentityTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>role</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>role2</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	
 	<!-- 没有登陆 -->

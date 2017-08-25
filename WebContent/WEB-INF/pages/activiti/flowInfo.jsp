@@ -43,7 +43,6 @@
 <link rel="stylesheet" href="${webuploaderCss}">
 <link rel="stylesheet" href="${bootstrapCss}">
 
-
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
 </head>
@@ -56,34 +55,8 @@
 <input type="hidden" value="${processInstanceId}" id="processInstanceId" />
 <input type="hidden" value="${price_info}" id="price_info" />
 
-
-<%-- <input type="hidden" value="${user_info}" id="user_info" />
-<input type="hidden" value="${price_info}" id="price_info" />
-<!-- 制作供应商 -->
-<input type="hidden" value="${teamProduct_info}" id="teamProduct_info" />
-<!-- 策划供应商 -->
-<input type="hidden" value="${teamPlan_info}" id="teamPlan_info" /> --%>
-
-
-
- 
-
-
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	    <div class="pages">
-<!-- 	    <div id="showPrice">收款信息</div>
-	    <div id="showBudget">客户预算</div>
-	    <div id="showRealPrice">实际金额</div>
-	    <div id="showPlot">策划</div>
-	    <div id="invoiceInfo">发票信息</div>
-	    <div id="showHelper">协同人清单</div>
-	    <div id="showControl">版本管理</div>
-	    <div id="showCusEdit">用户信息修改</div>
-	    <div id="showUp">上传文件</div>
-	    <div id="showError">驳回</div>
-	    <div id="finishCus">完善客户信息</div>
-	    <div id="showshowExecutive">分配监制</div> -->
-	    
 	     <div class="infoTitle">
 	                     <div class="titleName" >${projectName}</div>
 	                     <c:if test="${!empty projectGrade || !empty userLevel}">
@@ -99,13 +72,16 @@
 	                              </div>
 		                     </div>
 	                     </c:if>
-	                     <div class="proControl">
-	                                                   项目操作
-	                         <div class="newControl">
-	                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}/${projectId}"><div id="isPause">暂停项目</div></a>
-	                              <a id="isBack"  href="/project/activateProcess/${processInstanceId}/${projectId}"><div id="isBack">恢复项目</div></a>
-	                         </div>
-	                     </div>
+	                     
+	                     <r:group role="sale" role2="saleDirector">
+	                     	<div class="proControl">
+	                                                        	项目操作
+		                         <div class="newControl">
+		                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}/${projectId}"><div id="isPause">暂停项目</div></a>
+		                              <a id="isBack"  href="/project/activateProcess/${processInstanceId}/${projectId}"><div id="isBack">恢复项目</div></a>
+		                         </div>
+	                     	</div>
+	                     </r:group>
 	      </div>
 	    
 	           <div class="productInfo" id="daiban">
