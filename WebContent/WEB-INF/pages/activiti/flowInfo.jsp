@@ -290,34 +290,26 @@
 			                                 </c:if>
 		                                  </div>
 	                                  </div>
-	                                  
-	                                  <c:if test="${not empty flow_info['productConfigLevelName'] }">
-		                                  	<div class="longItem">
-	                                          <div>项目配置</div>
-	                                          <div>${flow_info["productConfigLevelName"]}
-		                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
-		                                              + ${flow_info['productConfigLengthName']}
-		                                          </c:if>
-		                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
-		                                              + ${flow_info['productConfigAdditionalPackageName']}
-		                                          </c:if>
-	                                          </div>
-				                            </div>
-	                                  </c:if>
-	                                  
-	                                  <c:if test="${not empty flow_info['filmDestPath'] }">
-		                                  	<div class="longItem">
-	                                          <div>对标影片</div>
-	                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
-				                            </div>
-	                                  </c:if>
-			                           
-			                           <c:if test="${not empty flow_info['projectDescription']}">
-			                           		<div class="longItem">
-	                                          <div>项目描述</div>
-	                                          <div>${flow_info["projectDescription"]}</div>
-			                           		</div>
-			                           </c:if>
+	                                  <div class="longItem">
+			                                          <div>项目配置</div>
+			                                          <div>${flow_info["productConfigLevelName"]}
+				                                          <c:if test="${!empty flow_info['productConfigLengthName']}"> 
+				                                              +  ${flow_info['productConfigLengthName']}
+				                                          </c:if>
+				                                          <c:if test="${not empty flow_info['productConfigAdditionalPackageName']}"> 
+				                                              +  ${flow_info['productConfigAdditionalPackageName']}
+				                                          </c:if>
+			                                          </div>
+			                           </div>
+			                           <div class="longItem">
+			                                          <div>对标影片</div>
+			                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
+			                           </div>
+			                           <div class="longItem">
+			                                          <div>项目描述</div>
+			                                          <div>${flow_info["projectDescription"]}</div>
+			                           </div>
+	                
 	                            </div>
 	                       </div>
 	                       
