@@ -77,6 +77,10 @@ function stageTalkEven(){
 		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
 		scrollTo(0,0);
+		$('#infoNameTitle').text("");
+		$('#stateContent').html("");
+		$('#infoStartTime').text("");
+		$('#infoEndTime').text("");
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
@@ -425,9 +429,9 @@ function pageInit(){
 	controlModel();
 	checkState();
 	getHeight();
-	$('#projectCtyle').text($('#projectCtyle').text()+"天");
+	/*$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
-    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
+    $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));*/
 }
 
 //表单验证
