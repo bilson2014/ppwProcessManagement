@@ -404,13 +404,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> teamList = columns.get("PROJECT_TEAM");
 		List<String> userList = columns.get("PROJECT_USER");
 
-		/*Task task = (TaskEntity) taskService.createTaskQuery().taskId(taskId).singleResult();
-		String instanceId = task.getProcessInstanceId();
-		ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(instanceId)
-				.singleResult();
-		param.put("PROJECT_ID", projectId);
-		param.put("INSTANCE_ID",instanceId);*/
-
 		if (flowList != null) {
 			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);//TODO 后期整改，不使用map	
 			//价格信息
@@ -523,9 +516,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				break;
 			}
 			projectFlow.put("projectGrade",projectGrade);
-		}
-		if(projectFlow.get("createDate")!=null){
-			projectFlow.put("createDate",DateUtils.getDateByFormatStr((Date)(projectFlow.get("createDate")), "yyyy-MM-dd HH:mm:ss"));
 		}
 		
 		return projectFlow;
