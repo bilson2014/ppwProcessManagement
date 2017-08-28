@@ -302,8 +302,8 @@
 		           <textarea id="projectDescription" name="pf_projectDescription"></textarea>         
 		      </div>
 		      
-		      <div class="btnMid " >
-		          <a href="JavaScript :history.back(-1)"><div class="btn-c-g">取消</div></a>
+		      <div class="btnMid" >
+		          <a href="javascript:void(0);" onClick="javascript :history.back(-1);"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>

@@ -91,7 +91,7 @@
     <sequenceFlow id="sid-2B94CBE2-E298-4202-876A-E0F8C410A27C" sourceRef="sid-E896C9F5-422D-4931-A087-7E98BCFFDBCF" targetRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0"></sequenceFlow>
     <exclusiveGateway id="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></exclusiveGateway>
     <sequenceFlow id="sid-610D05BC-659A-4E42-8355-066C4CD0721D" sourceRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" targetRef="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></sequenceFlow>
-    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】与客户确提案信息（通过/驳回）" activiti:assignee="${applyUserId}">
+    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】与客户确认提案信息（通过/驳回）" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="condition_cutomerconfirmPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -207,7 +207,7 @@
     <sequenceFlow id="sid-E1D6E3D2-F661-4C5B-8F92-2C06F3E07B03" sourceRef="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" targetRef="sid-BD751F20-4015-4B78-BD57-132E9B4344FB"></sequenceFlow>
     <sequenceFlow id="sid-651F5A8A-9A6E-46FE-9FB6-76777095E86D" sourceRef="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" targetRef="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26"></sequenceFlow>
     <sequenceFlow id="sid-8FC0298D-713E-4A96-BF5F-9C2541CC74FE" sourceRef="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225" targetRef="sid-0EC05FB2-76D3-4042-A0D5-FC3CB41F4833"></sequenceFlow>
-    <serviceTask id="sid-93052D9F-D76E-41BB-99CD-EF3F332F4330" name="向客户发送项目确认函" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendProjectStartEmailToUser"></serviceTask>
+    <serviceTask id="sid-93052D9F-D76E-41BB-99CD-EF3F332F4330" name="向客户发送项目确认函" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendProjectEmailToUser"></serviceTask>
     <sequenceFlow id="sid-394F0A81-AB5C-49BC-A1D6-4925728CD235" sourceRef="sid-3891F78C-418D-42E8-BB3E-7D2952A69618" targetRef="sid-72D50ABE-9A93-4126-9FCB-A281620B23B8"></sequenceFlow>
     <serviceTask id="sid-72D50ABE-9A93-4126-9FCB-A281620B23B8" name="向供应商发送项目启动函" activiti:class="com.paipianwang.activiti.task.java.service.delegate.SendProjectStartEmailToTeam"></serviceTask>
     <sequenceFlow id="sid-8AC20903-0821-4FA9-9B94-2E787ED8E5AE" sourceRef="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8" targetRef="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD">

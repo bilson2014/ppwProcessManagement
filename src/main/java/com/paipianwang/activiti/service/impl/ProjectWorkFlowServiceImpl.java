@@ -654,7 +654,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					if(PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
 						if(ProjectRoleType.teamProvider.getId().equals(projectRole)) {
 							result.add(synergy);
-						} else if(ProjectRoleType.teamProvider.getId().equals(projectRole)) {
+						} else if(ProjectRoleType.supervise.getId().equals(projectRole)) {
 							result.add(synergy);
 						}
 					} else {
