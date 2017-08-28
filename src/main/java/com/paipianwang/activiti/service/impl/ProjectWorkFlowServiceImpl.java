@@ -439,11 +439,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (teamList != null) {
 			
 			// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商信息
-			List<String> teamGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamDirector.getId(),/*ProjectRoleType.teamPurchase.getId(),*/ ProjectRoleType.teamProvider.getId()));
+			List<String> teamGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamDirector.getId(), ProjectRoleType.teamProvider.getId()));
 			// 如果是 策划供应商可以看见 策划供应商信息
 			List<String> teamPlanGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamPlan.getId()));
 			// 如果是制作供应商可以看见制作供应商信息
 			List<String> teamProudctGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamProduct.getId()));
+			
+			Integer teamId = Integer.parseInt(userId.split("_")[1]);
 			
 			for (final Group group : groups) {
 				String groupId = group.getId();
@@ -458,13 +460,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				} else if(teamPlanGroup.contains(groupId)) {
 					// 如果是 策划供应商可以看见 策划供应商信息
-					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectTeamType.scheme.getCode());
+					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectTeamColumnByProjectId(teamList,
+							projectId, teamId, ProjectTeamType.scheme.getCode());
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 				} else if(teamProudctGroup.contains(groupId)) {
 					// 如果是制作供应商可以看见制作供应商信息
-					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList,
-							projectId, ProjectTeamType.produce.getCode());
+					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectTeamColumnByProjectId(teamList,
+							projectId, teamId, ProjectTeamType.produce.getCode());
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				}
 			}
