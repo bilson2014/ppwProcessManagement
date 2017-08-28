@@ -102,7 +102,6 @@
 				</r:identity>
 				<r:identity role="employee">
 					<a href="<spring:url value="http://www.apaipian.com/mgr/index" />" class="header-item login-item" target="_self" title="<r:outName />"><r:outName /></a>
-					<a href="<spring:url value='http://www.apaipian.com/login/loginout' />" class="header-item login-item" target="_self">退出</a>
 					<div class="showInfo">
 				       <div class="showInfoList">
 					         <li class="showName"><r:outName /></li>

@@ -7,13 +7,28 @@ var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
 	
 	// 加载动态表单
+	 var href = window.location.href;
+	    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+	    if(state.trim() == "status=finished"){
+	    	$('#imgWord').text('完成');
+			$('#lastTimeWord').hide();
+	    	$('#taskStage').val('交付阶段');
+	    	getStageInfo($('#taskStage').val());
+	    }
 	
 	pasueOrDoing();
-	getStageInfo($('#taskStage').val());
 	getTimeString();
 	pageInit();
 	initDaibanTime();
 });
+
+
+function initStage(){
+	
+	
+	
+	
+}
 
 function getHeight(){
 	var height = $('.pages').height() + 300;
@@ -65,7 +80,11 @@ function initLastTime(ctyle,createTime){
     		$('#lastTimeWord').text('剩余'+parseInt(((totalTime - nowData)/86400000))+"天");
     	}	
     }
-	
+    if(state.trim() == "status=finished"){
+    	$('#imgWord').text('完成');
+    }
+    
+
 
 }
 
@@ -374,7 +393,6 @@ function checkState(){
     if(state.trim() == "task"){
     	addForm();
     }
-    
 }
 
 function stageEven(){
@@ -1019,7 +1037,7 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate(children[int].createDate)+'</div></div>';
+			body +='<div><div>'+children[int].fromName+' 回复 :</div> <div>'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == ""){
@@ -1241,7 +1259,7 @@ function createNoHead(name){
 	var html = [
 		'<div class="item">',
         '<div class="itemTop">',
-        '     <div class="controlOpen"></div>',
+        '     <div class="controlOpen openItems"></div>',
         '     <div class="title">'+name+'</div>',
         '</div>',
         '<div class="getInfoItemContent">',
