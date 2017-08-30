@@ -9,6 +9,8 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -28,8 +30,8 @@
 <link rel="stylesheet" href="${textCss}">
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
-
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
@@ -60,7 +62,7 @@
 	                <div class="lineTop"></div>
 	                
 	                <div class="title">
-	                     <div class="titleName" id="upName">待办任务(<span id="daiNum"></span>)</div>
+	                     <div class="titleName" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
 	                </div>
 	                
 	                 <c:if test="${empty gTasks}">
@@ -125,12 +127,11 @@
 				                <div id="projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="orderCome">
-				                   <li data-id="5">S</li>
-				                   <li data-id="4">A</li>
-				                   <li data-id="3">B</li>
-				                   <li data-id="2">C</li>
-				                   <li data-id="1">D</li>
-				                   <li data-id="0">E</li>
+				                   <li data-id="1">沟通阶段</li>
+				                   <li data-id="2">方案阶段</li>
+				                   <li data-id="3">商务阶段</li>
+				                   <li data-id="4">制作阶段</li>
+				                   <li data-id="5">支付阶段</li>
 				                </ul>    
 					      </div>
 	                </div>

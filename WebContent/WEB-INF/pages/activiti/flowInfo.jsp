@@ -736,67 +736,44 @@
                    <div class="title">项目信息修改</div>
                    <div class="closeModel"></div>
             </div>
-            <input type="hidden" value="${flow_info['projectId']}">
+            <input type="hidden" id="proId" name="pf_projectId"" value="${flow_info['projectId']}">
             <div class="getPriceContent">
-                    <div class="item">
+                    <div class="item errorItem">
                          <div class="title">项目名称</div>
-                         <input value="${flow_info['projectName']}">
+                         <input id="proName" name="pf_projectName" value="">
                     </div>
-                    <div class="itemTime">
+                    <div class="itemTime errorItem">
                          <div class="title">项目评级</div>
+                         <input id="pf_projectGradeInput" name="pf_projectGrade" value="">
                          <div class="orderSelect so" >
-				                <div id="sIndentSource">${flow_info["projectGrade"]}</div>
+				                <div id="pf_projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
+					                   <li data-id="5">S</li>
+					                   <li data-id="4">A</li>
+					                   <li data-id="3">B</li>
+					                   <li data-id="2">C</li>
+					                   <li data-id="1">D</li>
+					                   <li data-id="0">E</li>
 				                </ul>    
 					      </div>
                     </div>
-                    <div class="itemTime">
+                    <div class="itemTime errorItem">
                          <div class="title">项目周期</div>
-                         <input value="${flow_info['projectCycle']}">
+                         <input id="proCycle" name="pf_projectCycle">
                          <div class="yuan">天</div>
                     </div>
-                     <div class="itemTime hide">
-                         <div class="title">等级</div>
-                         <div class="orderSelect so" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
-				                </ul>    
-					      </div>
-                    </div>
-                    <div class="itemTime hide">
-                         <div class="title">时长</div>
-                         <input id="orderTime">
-                    </div>
+                     
                    
-                    <div class="itemTime bBigSlow hied">
-                         <div class="title">附加包</div>
-                         <div class="orderSelect" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda </li>
-				                </ul>    
-					      </div>
-                    </div>
                     
-                    <div class="itemTime bBigSlow">
+                    <div class="itemTime bBigSlow errorItem">
                          <div class="title">对标影片</div>
-                         <input value="${flow_info['filmDestPath']}">
+                         <input id="proFdp"  name="pf_filmDestPath" value="">
                     </div>
                     
-                    <div class="item">
+                    <div class="item errorItem">
                          <div class="title areaTitle">项目描述</div>
-                         <textarea value="${flow_info['projectDescription']}"></textarea>
+                         <textarea id="projectDes"  name="pf_projectDescription" value="${flow_info['projectDescription']}"></textarea>
                     </div>
                     
                     <div class="btnMid">
@@ -815,31 +792,15 @@
                    <div class="closeModel"></div>
             </div>
             <div class="getPriceContent">
-                    <div class="itemTime hide">
-                         <div class="title">客户名称</div>
-                         <input>
-                    </div>
                     <div class="itemTime">
                          <div class="title">客户联系人</div>
-                        <input value='${user_info["linkman"]}'>
+                        <input id="cusLinkman" name="pu_linkman" value=''>
                     </div>
                     <div class="itemTime">
                          <div class="title">客户电话</div>
-                         <input value='${user_info["telephone"]}'>
+                         <input id="cusTelephone" name="pu_telephone" value=''>
                     </div>
-                    <div class="itemTime hide">
-                         <div class="title">客户评级</div>
-                         <div class="orderSelect so" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
-				                </ul>    
-					      </div>
-                    </div>
-                    
+                                     
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
 		                      <div class="btn-c-r">确认</div>

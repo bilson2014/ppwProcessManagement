@@ -23,39 +23,58 @@ function initPageEven(){
 function toSearch(){
 	$('.search').off('click').on('click',function(){
 		 var search = $('.titleNameWork input').val();
+		 $('.productList li').removeClass('checkLi');
 		 getAllSearchInfo(search);
 	});
 	initSelect();
 	$('.orderSelect li').off('click').on('click',function(e){    
-	    var id = $(this).attr('data-id');
+	    var name = $(this).attr('data-id');
 	   	$(this).parent().parent().find('div').text($(this).text());
-	   	$(this).parent().parent().find('div').attr('data-id',id);
 	   	$('.productList li').removeClass('checkLi');
+	   	getState(name);
     });
 	
 }
 
 function getAllSearchInfo(search){
-	
-	loadData(function(res){
-
+	loadData(function(res){     
 		var setCard = $('#setCard');
 		var otherCard = $('#otherCard');
 		setCard.html('');
 		otherCard.html('');
 		if(res != null && res != undefined){
+				$('#daibanName').addClass('hide');
 			for (var int = 0; int < res.length; int++) {
-				 if(res[i].agent == 1){
-					 var html = createWaitCard(res[i]);
+				 if(res[int].agent == 1){
+					 var html = createWaitCard(res[int]);
 					 setCard.append(html);
+					 $('#daibanName').removeClass('hide');
 				 }else{
-					 var html = createOtherCard(res[i]);
+					 var html = createOtherCard(res[int]);
 					 otherCard.append(html);
 				 }
-			};
+			}
+			$('#daiNum').text($('.waitCard').length);
+			$('#otherNum').text($('.otherCard').length);
 		}
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
+	}));
+}
+
+function getState(name){
+	var otherCard = $('#otherCard');
+	otherCard.html('');
+	loadData(function(res){     
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+					 var html = createOtherCard(res[int]);
+					 otherCard.append(html);
+				 }
+			$('#otherNum').text($('.otherCard').length);
+			}	
+	}, getContextPath() + '/project/agent/search', $.toJSON({
+		taskStage : name
 	}));
 }
 
@@ -63,15 +82,15 @@ function getAllSearchInfo(search){
 function getDate(){
 	
 	$('#daiNum').text($('.waitCard').length);
+	$('#otherNum').text($('.otherCard').length);
 	if($('div').hasClass("waitCard")){
 	if($('.waitCard').length == 0){
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();
 	}else{
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
+	  }
 	}
-	}
-	$('#otherNum').text($('.otherCard').length);
 	
 	var setTime =  $('.setLastTime');
 	if(setTime.length >= 0){
@@ -134,7 +153,7 @@ function createWaitCard(res){
 	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
 	}
 	   var nowData = Date.parse(new Date());
-	   var time =Date.parse(res.dueDate.replace("CST","GMT+0800"));
+	   var time =res.dueDate;
 	   var lastTime = (time - nowData);
 	   var lastHour =(time - nowData)/3600000;
 	   if(lastHour < 0){
@@ -147,7 +166,7 @@ function createWaitCard(res){
 	   }
 	   if(lastHour <3 && lastHour>=0){
 		   timeImg = '<img src="/resources/images/flow/demoY.png">';
-		   time='剩余'+getTimeString(lastTime); );
+		   time='剩余'+getTimeString(lastTime);
 	   }
 
 	
@@ -172,22 +191,6 @@ function createWaitCard(res){
 }
 
 function createOtherCard(res){
-	
-/*	<c:if test="${staff.taskStage == '沟通阶段'}">
-    <img src="/resources/images/flow/isTalk.png">
-    </c:if>
-    <c:if test="${ staff.taskStage == '方案阶段'}">
-    <img src="/resources/images/flow/isFang.png">
-    </c:if>
-    <c:if test="${ staff.taskStage == '商务阶段'}">
-    <img src="/resources/images/flow/isPrice.png">
-    </c:if>
-    <c:if test="${ staff.taskStage == '制作阶段'}">
-    <img src="/resources/images/flow/isMake.png">
-    </c:if>
-    <c:if test="${staff.taskStage == '交付阶段'}">
-    <img src="/resources/images/flow/isPay.png">
-    </c:if>*/
 	var isWho = "";
 	var taskStatus = res.taskStatus;
 	var taskStage = res.taskStage;
@@ -199,9 +202,8 @@ function createOtherCard(res){
 	}else{
 	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
 	}
-	if(taskStatus == "进行中"){
-		 var getTime = Date.parse(res.createTime.replace("CST","GMT+0800"));
-		 time ="截止于"+timeformatDate(getTime);
+	if(taskStatus == "running" || taskStatus == null){
+		 time ="截止于"+formatDate(res.createTime);
 		if(taskStage == '沟通阶段'){
 			 img= '<img src="/resources/images/flow/isTalk.png"> ';
 		}
@@ -220,23 +222,22 @@ function createOtherCard(res){
 		
 	}
 	
-	if(taskStatus == "暂停"){
+	if(taskStatus == "suspend"){
 		  img= '<img src="/resources/images/flow/suspendDate.png"> ';
 		  var getTime = Date.parse(res.pauseTime.replace("CST","GMT+0800"));
-		  time ="暂停于"+timeformatDate(getTime);
+		  time ="暂停于"+formatDate(getTime);
 	}
-	if(taskStatus == "完成"){
+	if(taskStatus == "completed"){
 		  img= '<img src="/resources/images/flow/isPay.png"> ';
 		  var getTime = Date.parse(res.finishedDate.replace("CST","GMT+0800"));
-		  time = "结束于"+timeformatDate(getTime);
+		  time = "结束于"+formatDate(getTime);
 	}
-	
 	            var html = [
 				' <div class="otherCard">',
 				'	        '+aTag+' ',
 				'           <div class="cardH">                                                                                                           ',
 				'               <div class="title">'+res.projectName+'</div>                                                              ',
-				'                '+isWho+'                                                                                 ',                                                                                                                 ',
+				'                '+isWho+'                                                                                 ',
 				'           </div>                                                                                                                        ',
 				'           <div class="cardContent">                                                                                                     ',
 				'                <div class="setContent">                                                                                                 ',

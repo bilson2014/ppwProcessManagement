@@ -9,6 +9,7 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -28,6 +29,7 @@
 <link rel="stylesheet" href="${textCss}">
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
 
 <!--[if lt IE 9]>
@@ -57,13 +59,19 @@
 		                    </div>
 	                    </r:group>
 	                </div>
+	                
+	                  <div class="title">
+	                     <div class="titleName hide" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
+	                </div>
+
+	                <div class="setCard" id="setCard"></div>
 	           
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">
-	                     <div class="titleName" id="upName">暂停任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName">暂停任务(<span id="otherNum"></span>)</div>
 	                </div>
-	                <div class="setCard" id="setCard">
+	                <div class="setCard" id="otherCard">
 	                
 	                	 <c:if test="${!empty suspendTasks}">
 							<c:forEach items="${suspendTasks}" var="staff" varStatus="status">

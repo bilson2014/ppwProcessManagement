@@ -453,13 +453,56 @@ function initWindow(){
 function openProjectInfo(){
 	$('#openProjectInfo').off('click').on('click',function(){
 		$('#showProjectInfo').show();
+		proInfoClear();
+		loadData(function(res){
+			  $('#proName').val(res.pf_projectName);
+			  var Grade = res.pf_projectGrade;
+				if(Grade == '5'){
+					Grade = 'S';	  
+				}
+				if(Grade == '4'){
+					Grade = 'A';			  
+				}
+				if(Grade == '3'){
+					Grade = 'B';  
+				}
+				if(Grade == '2'){
+					Grade = 'C';  
+				}
+				if(Grade == '1'){
+					Grade = 'D';  
+				}
+				if(Grade == '0'){
+					Grade = 'E';  
+				}
+			  $('#pf_projectGrade').text(Grade);
+			  $('#proCycle').val(res.pf_projectCycle);
+			  $('#proFdp').val(res.pf_filmDestPath);
+		}, getContextPath() + '/task/edit/parameter/'${#currentTaskId}'/'${#projectId}'/pf',null);
 	});
 }
+
+function proInfoClear(){
+  $('#proName').val('');
+  $('#pf_projectGrade').text('');
+  $('#proCycle').val('');
+  $('#proFdp').val('');
+}
+
+
+//用户信息修改
 function openCusInfo(){
 	$('#openCusInfo').off('click').on('click',function(){
 		$('#showCusInfo').show();
 	});
 }
+
+function cusClear(){
+	
+}
+
+
+//价格信息修改
 function openPriceInfo(){
 	$('#openPriceInfo').off('click').on('click',function(){
 		$('#showPriceInfo').show();
