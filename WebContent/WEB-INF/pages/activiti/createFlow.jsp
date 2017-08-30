@@ -136,7 +136,7 @@
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
 	                       <div class="itemTitle">项目周期 (天数)<span>*</span></div>
-	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
+	                       <input id="pf_projectSql" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
 	                       <div class="itemTitle">对标影片<span>*</span></div>
@@ -294,7 +294,7 @@
 		      <div class="infoTitle">价格信息</div>
 		      <div class="singleItem">
 		                       <div class="itemTitle">项目预算</div>
-		                       <input id="estimatedPrice" name="pf_estimatedPrice" value="0"/>
+		                       <input id="estimatedPrice" name="pf_estimatedPrice" value="0" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"/>
 		                       <div class="yuan">元</div>
 		      </div>
 		      <div class="infoTitle">项目描述</div>

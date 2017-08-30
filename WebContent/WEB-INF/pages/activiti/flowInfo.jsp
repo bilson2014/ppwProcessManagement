@@ -128,48 +128,7 @@
 	                                     <div class="startTime" >阶段起始时间 : <span id="startTime"></span></div>
 	                                     <div class="endTime hide">阶段计划完成时间<span></span></div>
 	                               </div>
-	                               <div class="listContent" id="listContent">
-	                                  <!--  <div class="listItem">
-	                                        <div class="lineStart"></div>
-	                                        <div class="time">预计：2017-07-09  14：00</div>
-	                                        <div class="user">策划人AAA</div>
-	                                        <div class="info">各种信息</div>
-	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="green">已完成</div></div>
-	                                        <div class="find">查看</div>
-	                                   </div>
-	                                    <div class="listItem">
-	                                        <div class="lineOne"></div>
-	                                        <div class="time">预计：2017-07-09  14：00</div>
-	                                        <div class="user">策划人AAA</div>
-	                                        <div class="info">各种信息</div>
-	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="redWord">已报错</div></div>
-	                                        <div class="find">查看</div>
-	                                   </div>
-	                                    <div class="listItem">
-	                                        <div class="lineOne"></div>
-	                                        <div class="time">预计：2017-07-09  14：00</div>
-	                                        <div class="user">策划人AAA</div>
-	                                        <div class="info">各种信息</div>
-	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="yellow">进行中</div></div>
-	                                        <div class="find">查看</div>
-	                                   </div>
-	                                    <div class="listItem">
-	                                        <div class="lineOne"></div>
-	                                        <div class="time">预计：2017-07-09  14：00</div>
-	                                        <div class="user">策划人AAA</div>
-	                                        <div class="info">各种信息</div>
-	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="dark">延误</div></div>
-	                                        <div class="find">查看</div>
-	                                   </div>
-	                                    <div class="listItem">
-	                                        <div class="lineEnd"></div>
-	                                        <div class="time">预计：2017-07-09  14：00</div>
-	                                        <div class="user">策划人AAA</div>
-	                                        <div class="info">各种信息</div>
-	                                        <div class="state"><img src="/resources/images/provider/toWait.png"><div class="gray">未开始</div></div>
-	                                        <div class="find">查看</div>
-	                                   </div> -->
-	                               </div>
+	                               <div class="listContent" id="listContent"></div>
 	                       </div>
 	                       <c:if test="${!empty synergyList}"> 
 	                         <div class="getInfoItem">
@@ -210,7 +169,7 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">项目信息</div>
-	                                 <div class="time"></div>
+	                                 <div class="update btn-c-r" id="openProjectInfo">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
@@ -304,7 +263,7 @@
 		                            <div class="getInfoItemTop">
 		                                 <div class="controlOpen"></div>
 		                                 <div class="info">客户信息</div>
-		                                
+		                                 <div class="update btn-c-r" id="openCusInfo">更新</div>
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
@@ -346,7 +305,7 @@
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
-	                                 <div class="update hide btn-c-r">更新</div>
+	                                 <div class="update btn-c-r">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                            	<c:if test="${not empty teamPlan_info}">
@@ -423,6 +382,7 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">价格信息</div>
+	                                 <div class="update btn-c-r" id="openPriceInfo">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">	      
@@ -513,27 +473,9 @@
 	                  <div class="title" id="infoEndTitle">截止时间 : </div>
 	                  <div class="content" id="infoEndTime">2017-11-12</div>
 	             </div>
-	             <div class="itemHeight" id="itemHeightInfo">
-	             <!-- <div class="infoItem">
-	                       <div  class="itemTop">
-	                             <img class="logo" src="">
-	                              <ul>
-	                                 <li><span></span></li>
-	                                 <li><span></span> <img class="modelOpen" src="/resources/images/flow/areaMore.png"></li>
-	                              </ul>
-	                       </div>
-	                       <div class="itemArea">
-	                             <div><span>负责人 : </span><span>需要调整一下</span></div>
-	                             <div><span>负责人回复负责人 :</span><span>需要调整一下</span></div>
-	                             <input>
-	                       </div>
-	                       <div class="backInfoTalk btn-c-r">回复</div>
-	             </div> -->
-	           
-	             </div>
+	             <div class="itemHeight" id="itemHeightInfo"></div>
             </div>
      </div>
-     
 </div>
 
 <!-- 报错 -->
@@ -586,37 +528,7 @@
      </div>
 </div>
 
-<!-- 客户信息修改 -->
-<div class="cusModel" id="cusInfoModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">客户信息修改</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="cusInfoContent">
-                 <div class="item">
-                       <div class="title">客户名称</div>
-                       <input>
-                 </div>
-                  <div class="item">
-                       <div class="title">客户联系人</div>
-                       <input>
-                 </div>
-                  <div class="item">
-                       <div class="title">客户联系电话</div>
-                       <input>
-                 </div>
-                  <div class="item">
-                       <div class="title">客户评分</div>
-                       <div class="point">客户评分</div>
-                 </div>
-	             <div class="btnMid">
-	                      <div class="btn-c-g">取消</div>
-	                      <div class="btn-c-r">确认</div>
-	             </div>
-            </div>
-     </div>
-</div>
+
 
 <!-- 版本管理 -->
 <div class="cusModel" id="controlModel">
@@ -652,150 +564,6 @@
      </div>
 </div>
 
-<!-- 协同人清单 -->
-<div class="cusModel" id="helperModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">协同人清单</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="helperContent">
-                   <div class="helpItem">
-                       <div class="title">客服总监</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">销售总监</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">创意总监</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">策划</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">供应商总监</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">供应商管家</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">供应商采购</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">监制总监</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">监制</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">财务出纳</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="helpItem">
-                       <div class="title">财务主管</div>
-                       <div class="name">人名</div>     
-                   </div>
-            </div>
-     </div>
-</div>
-
-<!-- 客户转账信息 -->
-<div class="cusModel" id="cusPriceModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title" id="cusPriceModelTitle">客户转账信息</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="cusPriceContent">
-                   <div class="cusPriceItem">
-                       <div class="title">交易流水号</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">交易方式</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">交易时间</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">订单编号</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">交易方式</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">交易金额</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="cusPriceItem">
-                       <div class="title">描述</div>
-                       <div class="name">人名</div>     
-                   </div>
-            </div>
-     </div>
-</div>
-
-<!-- 发票信息 -->
-<div class="cusModel" id="invoiceModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">发票信息</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="invoiceContent">
-                   <div class="invoiceItem">
-                       <div class="title">发票类型</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">发票编号</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">发票内容</div>
-                       <div class="name">人名</div>     
-                   </div>
-                    <div class="invoiceItem">
-                       <div class="title">价税合计</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">发票税率</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">开票时间</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">付款时间</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">提供人</div>
-                       <div class="name">人名</div>     
-                   </div>
-                   <div class="invoiceItem">
-                       <div class="title">描述</div>
-                       <div class="name">人名</div>     
-                   </div>
-            </div>
-     </div>
-</div>
-
  <!-- 提示 -->
 <div class="cusModel" id="warnModel">
      <div class="modelCard smallModel">
@@ -814,126 +582,12 @@
      </div>
 </div>
 
- <!-- 分配策划 -->
-<div class="cusModel" id="plotModel" >
-     <div class="modelCard smallModel">
-            <div class="cardTop">
-                   <div class="title" id="plotTitle">分配策划</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="plotContent">
-	                      <div class="title">策划人</div>
-				          <div class="orderSelect" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
-				                </ul>    
-					      </div>
-			     <div class="btnMid">
-                      <div class="btn-c-g">取消</div>
-                      <div class="btn-c-r">确认</div>
-                 </div>
-	     </div>
-	</div>
-</div>
 
- <!-- 填写供应商实际金额 -->
-<div class="cusModel" id="priceModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">填写供应商实际金额</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="priceContent">
-	                      <div class="title">实际金额</div>
-				          <input>
-				          <div class="yuan">元</div>
-				          <div class="title" style="margin-top:20px;">发票抬头</div>
-				          <div class="orderSelect" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
-				                </ul>    
-					      </div>
-				          
-						  <div class="btnMid">
-			                      <div class="btn-c-g">取消</div>
-			                      <div class="btn-c-r">确认</div>
-			              </div>
-	         </div>
-	</div>
-</div>
 
- <!-- 填写客户预算信息 -->
-<div class="cusModel" id="budgetModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">填写客户预算信息</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="budgetContent">
-                    <div class="item">
-                         <div class="title">项目预算</div>
-                         <input>
-                         <div class="yuan">元</div>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">项目交付时间</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">约定付款时间</div>
-                         <input>
-                    </div>
-                    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		                </div>
-            </div>
-	</div>
-</div>
- <!-- 填写收款信息 -->
-<div class="cusModel" id="getPriceModel" >
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">填写收款信息</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="getPriceContent">
-                    <div class="item">
-                         <div class="title">交易流水号</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">交易时间</div>
-                         <input id="orderTime">
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">交易金额</div>
-                         <input>
-                         <div class="yuan">元</div>
-                    </div>
-                    <div class="item">
-                         <div class="title">交易流水号</div>
-                         <input>
-                    </div>
-                    <div class="item">
-                         <div class="title areaTitle">描述</div>
-                         <textarea></textarea>
-                    </div>
-                    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		            </div>
-            </div>
-</div>
-</div>
+
+
+
+ 
 
 <!-- 分配策划供应商 -->
 <div class="cusModel" id="">
@@ -1076,21 +730,22 @@
 </div>
 
 <!-- 项目信息修改 -->
-<div class="cusModel">
+<div class="cusModel" id="showProjectInfo">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">项目信息修改</div>
                    <div class="closeModel"></div>
             </div>
+            <input type="hidden" value="${flow_info['projectId']}">
             <div class="getPriceContent">
                     <div class="item">
                          <div class="title">项目名称</div>
-                         <input>
+                         <input value="${flow_info['projectName']}">
                     </div>
                     <div class="itemTime">
                          <div class="title">项目评级</div>
                          <div class="orderSelect so" >
-				                <div id="sIndentSource"></div>
+				                <div id="sIndentSource">${flow_info["projectGrade"]}</div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="orderCome">
 				                     <li>adasda</li>
@@ -1101,10 +756,10 @@
                     </div>
                     <div class="itemTime">
                          <div class="title">项目周期</div>
-                         <input>
+                         <input value="${flow_info['projectCycle']}">
                          <div class="yuan">天</div>
                     </div>
-                     <div class="itemTime">
+                     <div class="itemTime hide">
                          <div class="title">等级</div>
                          <div class="orderSelect so" >
 				                <div id="sIndentSource"></div>
@@ -1116,12 +771,12 @@
 				                </ul>    
 					      </div>
                     </div>
-                    <div class="itemTime">
+                    <div class="itemTime hide">
                          <div class="title">时长</div>
                          <input id="orderTime">
                     </div>
                    
-                    <div class="itemTime bBigSlow">
+                    <div class="itemTime bBigSlow hied">
                          <div class="title">附加包</div>
                          <div class="orderSelect" >
 				                <div id="sIndentSource"></div>
@@ -1136,12 +791,12 @@
                     
                     <div class="itemTime bBigSlow">
                          <div class="title">对标影片</div>
-                         <input >
+                         <input value="${flow_info['filmDestPath']}">
                     </div>
                     
                     <div class="item">
-                         <div class="title areaTitle">制作内容</div>
-                         <textarea></textarea>
+                         <div class="title areaTitle">项目描述</div>
+                         <textarea value="${flow_info['projectDescription']}"></textarea>
                     </div>
                     
                     <div class="btnMid">
@@ -1153,26 +808,26 @@
 </div>
 
 <!-- 客户信息修改 -->
-<div class="cusModel">
+<div class="cusModel" id="showCusInfo">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">客户信息修改</div>
                    <div class="closeModel"></div>
             </div>
             <div class="getPriceContent">
-                    <div class="itemTime">
+                    <div class="itemTime hide">
                          <div class="title">客户名称</div>
                          <input>
                     </div>
                     <div class="itemTime">
                          <div class="title">客户联系人</div>
-                         <input>
+                        <input value='${user_info["linkman"]}'>
                     </div>
                     <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                         <input>
+                         <div class="title">客户电话</div>
+                         <input value='${user_info["telephone"]}'>
                     </div>
-                    <div class="itemTime">
+                    <div class="itemTime hide">
                          <div class="title">客户评级</div>
                          <div class="orderSelect so" >
 				                <div id="sIndentSource"></div>
@@ -1301,22 +956,12 @@
 								</div>
 							</div>
             <div class="otherContent" id="setAutoInfo">
-                    
-          <!--            <div class="item">
-	                       <div class="title">客户约定付款时间</div>
-	                       <input>
-                     </div>
-                      <div class="item">
-	                       <div class="title">客户项目交付时间</div>
-	                       <input>
-                     </div> -->
-                                     
-            </div>
+           </div>
 </div>
 </div>
 
 <!-- 价格信息修改 -->
-<div class="cusModel" >
+<div class="cusModel" id="showPriceInfo">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">价格信息修改 </div>
@@ -1325,37 +970,15 @@
             <div class="getPriceContent">
                     <div class="itemTime">
                          <div class="title">预估价格</div>
-                         <input>
+                         <input value='${price_info["estimatedPrice"]}'>
                          <div class="yuan syuan">元</div>
                     </div>
                     <div class="itemTime">
                          <div class="title">客户项目预算</div>
-                         <input>
+                         <input value="${price_info['projectBudget']}">
                          <div class="yuan syuan">元</div>
                     </div>
-                    <div class="itemTime">
-                         <div class="title">策划供应商预算</div>
-                         <input>
-                         <div class="yuan syuan">元</div>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">制作供应商预算</div>
-                         <div class="orderSelect so" >
-				                <div id="sIndentSource"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="orderCome">
-				                     <li>adasda</li>
-				                     <li>dasdas</li>
-				                     <li>dasda</li>
-				                </ul>    
-					      </div>
-					      <div class="yuan syuan">元</div>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">制作供应商结算</div>
-                         <input>
-                         <div class="yuan syuan">元</div>
-                    </div>
+
                     
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
@@ -1366,61 +989,7 @@
 </div>
 
 
- <!-- 填写供应商发票信息 -->
-<div class="cusModel" id="getBillModel">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">填写供应商发票信息</div>
-                   <div class="closeModel"></div>
-            </div>
-            <div class="getBillContent">
-                    <div class="item">
-                      <div class="title">发票类型</div>
-                      <div class="orderSelect" >
-			                <div id="sIndentSource"></div>
-			                <img src="${imgPath}/flow/selectOrder.png">
-			                <ul class="oSelect searchSelect" id="orderCome">
-			                    <li data-id="">全部</li>
-			                </ul>    
-				      </div>
-				   </div>
-				   
-				   <div class="item">
-                      <div class="title">发票税率</div>
-                      <input>
-				   </div>
-				    <div class="item">
-                      <div class="title">发票编号</div>
-                      <input>
-				   </div>
-				    <div class="item">
-                      <div class="title">开票时间</div>
-                      <input name="findTime" id="findTime">
-				   </div>
-				    <div class="item">
-                      <div class="title">发票内容</div>
-                      <input>
-				   </div>
-				    <div class="item">
-                      <div class="title">付款时间</div>
-                      <input id="payTime">
-				   </div>
-				    <div class="item">
-                      <div class="title">税价合计</div>
-                      <input name="payTime">
-				   </div>
-	               <div class="itemArea">
-                      <div class="title">备注</div>
-                      <textarea></textarea>
-				   </div>
-				   
-				    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		            </div>
-            </div>
-     </div>       
-</div>
+ 
 
  <!-- 提示信息 -->
 <div class="cusModel" id="infoModel">

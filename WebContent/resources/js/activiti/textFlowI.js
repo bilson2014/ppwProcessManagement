@@ -5,7 +5,7 @@ var upload_Video;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
-	
+
 	// 加载动态表单
 	 var href = window.location.href;
 	    var state = href.substr(href.lastIndexOf("?")+1,href.length);
@@ -22,13 +22,6 @@ $().ready(function() {
 	initDaibanTime();
 });
 
-
-function initStage(){
-	
-	
-	
-	
-}
 
 function getHeight(){
 	var height = $('.pages').height() + 300;
@@ -84,8 +77,6 @@ function initLastTime(ctyle,createTime){
     	$('#imgWord').text('完成');
     }
     
-
-
 }
 
 function stageTalkEven(){
@@ -446,9 +437,33 @@ function pageInit(){
 	controlModel();
 	checkState();
 	getHeight();
+	initWindow();
 	$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
     $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
+}
+
+//弹窗初始化
+function initWindow(){
+	openProjectInfo();
+	openCusInfo();
+	openPriceInfo();
+}
+//项目信息修改
+function openProjectInfo(){
+	$('#openProjectInfo').off('click').on('click',function(){
+		$('#showProjectInfo').show();
+	});
+}
+function openCusInfo(){
+	$('#openCusInfo').off('click').on('click',function(){
+		$('#showCusInfo').show();
+	});
+}
+function openPriceInfo(){
+	$('#openPriceInfo').off('click').on('click',function(){
+		$('#showPriceInfo').show();
+	});
 }
 
 //表单验证

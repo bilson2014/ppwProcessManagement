@@ -26,7 +26,6 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
@@ -41,11 +40,11 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
+	<input type="hidden" id="num" value="0" />
 	<div class="pages">
-	
 	<div class="productListAreas">
 	           <div class="waitWork">
-	           
 	                 <div class="titleNameWork">
 	                    <div class="name">项目名称</div>
 	                    <input>
@@ -122,6 +121,18 @@
 	           <div class="otherWork">
 	                <div class="title">
 	                     <div class="titleName" id="downName">其它任务(<span id="otherNum"></span>)</div>
+	                     <div class="orderSelect" >
+				                <div id="projectGrade"></div>
+				                <img src="${imgPath}/flow/selectOrder.png">
+				                <ul class="oSelect" id="orderCome">
+				                   <li data-id="5">S</li>
+				                   <li data-id="4">A</li>
+				                   <li data-id="3">B</li>
+				                   <li data-id="2">C</li>
+				                   <li data-id="1">D</li>
+				                   <li data-id="0">E</li>
+				                </ul>    
+					      </div>
 	                </div>
 	           <div class="setCard" id="otherCard">
 	           

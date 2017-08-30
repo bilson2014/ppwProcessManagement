@@ -26,7 +26,6 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
@@ -41,6 +40,7 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
 	<div class="pages">
 	
 	<div class="productListAreas">

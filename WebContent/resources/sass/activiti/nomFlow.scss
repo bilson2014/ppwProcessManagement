@@ -1,6 +1,7 @@
             @import "common";
             @import "buttons";
             @import "video";
+            @import "orderSelect";
             @import "compass/typography/text/ellipsis";
 
             body {
@@ -102,6 +103,7 @@
                     color: $gray-dark;
                     margin-left: 10px;
                     margin-right: 10px;
+                    outline: none;
                 }
                 div,
                 img,
@@ -297,7 +299,6 @@ $ba:#bababa; */
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
-
                             }
                         }
                     }
@@ -340,6 +341,13 @@ $ba:#bababa; */
                     height: 65px;
                     line-height: 65px;
                     padding-left: 20px;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                .orderSelect {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 50px;
                 }
                 .setCard {
                     .otherCard {
@@ -386,7 +394,6 @@ $ba:#bababa; */
                                     color: $gray;
                                     line-height: 20px;
                                     overflow: hidden;
-
                                 }
                             }
                         }
