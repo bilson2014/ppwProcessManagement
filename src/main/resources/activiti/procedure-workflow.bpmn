@@ -103,7 +103,7 @@
     <userTask id="sid-E08726E1-EF7C-4743-A198-C4F837ED2A8D" name="【财务】填写收款信息" activiti:assignee="${financeId}">
       <extensionElements>
         <activiti:formProperty id="dl_billNo" name="交易流水号" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="dl_payTime" name="付款时间" type="date" datePattern="yyyy-MM-dd hh:mm:ss" required="true"></activiti:formProperty>
+        <activiti:formProperty id="dl_payTime" name="付款时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_payPrice" name="交易金额" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_description" name="描述" type="string" required="true"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${inputCustomerDealLogTaskLisnter}"></activiti:taskListener>

@@ -89,8 +89,8 @@ public class ProjectFlowController extends BaseController {
 		logger.debug("start form parameters: {}", properties);
 		SessionInfo info = getCurrentInfo(request);
 
-		ProcessInstance processInstance = projectWorkFlowService.startFormAndProcessInstance(null, formProperties,
-				info, properties);
+		ProcessInstance processInstance = projectWorkFlowService.startFormAndProcessInstance(null, formProperties, info,
+				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
 		return new ModelAndView("redirect:/project/running-task");
@@ -146,14 +146,12 @@ public class ProjectFlowController extends BaseController {
 			mv.addObject("gTasks", gTasks);
 		}
 
-		//当前登陆人信息
 		mv.addObject("realName", info.getRealName());
 		mv.addObject("photo", info.getPhoto());
-		
+
 		return mv;
 	}
-	
-	
+
 	@RequestMapping("/running-doing")
 	public ModelAndView taskLists(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
@@ -221,12 +219,14 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 查询当前task的表单数据
+	 * 
 	 * @param taskId
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "get-form/task/{taskId}/{projectId}", method = RequestMethod.POST)
-	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId, @PathVariable("projectId") final String projectId) {
+	public Map<String, Object> getTaskForm(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
 		result.put("taskFormData", taskFormData);
@@ -239,48 +239,54 @@ public class ProjectFlowController extends BaseController {
 				if (values != null) {
 					result.put(formProperty.getId(), values);
 				}
-				if(formProperty.getId().equals("schemeId")){
-					Map<String,String> scheme=projectWorkFlowService.getUserByRole(ProjectRoleType.scheme.getId());
+				if (formProperty.getId().equals("schemeId")) {
+					Map<String, String> scheme = projectWorkFlowService.getUserByRole(ProjectRoleType.scheme.getId());
 					result.put("schemeId", scheme);
-				}else if(formProperty.getId().equals("superviseId")){
-					Map<String,String> supervise=projectWorkFlowService.getUserByRole(ProjectRoleType.supervise.getId());
+				} else if (formProperty.getId().equals("superviseId")) {
+					Map<String, String> supervise = projectWorkFlowService
+							.getUserByRole(ProjectRoleType.supervise.getId());
 					result.put("superviseId", supervise);
 				}
-				
+
 			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 详情页面
+	 * 
 	 * @param taskId
 	 * @param session
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/task/{taskId}/{projectId}/{processInstanceId}")
-	public ModelAndView TaskFormView(@PathVariable("taskId") final String taskId, @PathVariable("projectId") final String projectId, 
-									 @PathVariable("processInstanceId") final String processInstanceId, final String status, HttpServletRequest request) {
+	public ModelAndView TaskFormView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId, final String status,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/flowInfo");
-		if(StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
+		if (StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
 			// 获取可见数据
 			SessionInfo info = getCurrentInfo(request);
-			Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId, projectId);
-			List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), projectId, info);
-			
+			Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId,
+					projectId);
+			List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), projectId,
+					info);
+
 			// 获取当前节点所在阶段 以及 备注信息
 			Map<String, String> state = null;
-			if(!ProjectFlowStatus.finished.getId().equals(status)) {
+			if (!ProjectFlowStatus.finished.getId().equals(status)) {
 				state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 			}
-			
+
 			Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
 			Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
 			List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
 			List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
 			Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
-			
+
 			// 项目信息
 			mv.addObject("flow_info", flowMap);
 			// 策划供应商信息
@@ -294,20 +300,20 @@ public class ProjectFlowController extends BaseController {
 			// 当前任务所在阶段
 			mv.addObject("taskStage", state != null ? state.get("taskStage") : null);
 			// 价格信息
-			mv.addObject("price_info",priceMap);
-			
+			mv.addObject("price_info", priceMap);
+
 			// 当前任务的描述信息
 			mv.addObject("taskDescription", state != null ? state.get("taskDescription") : null);
 			mv.addObject("taskName", state != null ? state.get("taskName") : null);
 			mv.addObject("dueDate", state != null ? state.get("dueDate") : null);
-			mv.addObject("taskId",taskId);
-			mv.addObject("projectId",projectId);
-			mv.addObject("processInstanceId",processInstanceId);
-			if(flowMap!=null){
+			mv.addObject("taskId", taskId);
+			mv.addObject("projectId", projectId);
+			mv.addObject("processInstanceId", processInstanceId);
+			if (flowMap != null) {
 				mv.addObject("projectName", flowMap.get("projectName"));
 				mv.addObject("projectGrade", flowMap.get("projectGrade"));
 			}
-			if(userMap!=null){
+			if (userMap != null) {
 				mv.addObject("userLevel", userMap.get("userLevel"));
 			}
 		}
@@ -333,14 +339,14 @@ public class ProjectFlowController extends BaseController {
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
 		for (Entry<String, String[]> entry : entrySet) {
 			String key = entry.getKey();
-
 			formProperties.put(key, entry.getValue()[0]);
 		}
 
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),info.getActivitGroups());
+		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
+				info.getActivitGroups());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/running-doing");
@@ -365,7 +371,7 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}/{projectId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId,
-									   @PathVariable("projectId") final String projectId) {
+			@PathVariable("projectId") final String projectId) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
 			projectWorkFlowService.suspendProcess(processInstanceId, projectId);
@@ -375,6 +381,7 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 查询挂起列表
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -399,31 +406,99 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * 激活
+	 * 
 	 * @param processInstanceId
 	 *            流程实例ID
 	 * @return
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}/{projectId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId,
-										@PathVariable("projectId") final String projectId) {
+			@PathVariable("projectId") final String projectId) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 激活
 			projectWorkFlowService.activateProcess(processInstanceId, projectId);
 		}
 		return new ModelAndView("redirect:/project/suspend-task");
 	}
-	
+
+	/**
+	 * task集合
+	 * 
+	 * @param projectId
+	 * @param flow
+	 * @return
+	 */
 	@RequestMapping(value = "/project-task/{projectId}", method = RequestMethod.POST)
-	public Map<String, Object> getProjectTaskList(@PathVariable("projectId") final String projectId, @RequestBody PmsProjectFlow flow) {
+	public Map<String, Object> getProjectTaskList(@PathVariable("projectId") final String projectId,
+			@RequestBody PmsProjectFlow flow) {
 		System.err.println();
-		Map<String,Object> result=projectWorkFlowService.getProjectTaskList(projectId, flow.getProjectName());
+		Map<String, Object> result = projectWorkFlowService.getProjectTaskList(projectId, flow.getProjectName());
 		return result;
 	}
-	
+
 	@RequestMapping("/task-detail/{taskId}")
 	public Map<String, Object> getTaskInfo(@PathVariable("taskId") final String taskId) {
-		Map<String,Object> result=projectWorkFlowService.getTaskInfo(taskId);
+		Map<String, Object> result = projectWorkFlowService.getTaskInfo(taskId);
 		return result;
+	}
+
+	@RequestMapping("/task/edit/parameter/{taskId}/{projectId}/{infoType}")
+	public Map<String, Object> editParameter(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId, @PathVariable("infoType") final String infoType,
+			HttpServletRequest request) {
+
+		SessionInfo info = getCurrentInfo(request);
+		Map<String, Object> result = projectWorkFlowService.getEditParameter(taskId, projectId, infoType, info);
+		return result;
+	}
+
+	@RequestMapping(value = "/edit/information", method = RequestMethod.POST)
+	public ModelAndView updateInformation(final HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("redirect:/project/running-doing");
+		// 从request中读取参数然后转换
+		Map<String, String[]> paramMap = request.getParameterMap();
+		if (paramMap != null && !paramMap.isEmpty()) {
+			Map<String, String> formProperties = new HashMap<String, String>();
+			for (Entry<String, String[]> entry : paramMap.entrySet()) {
+				String key = entry.getKey();
+				formProperties.put(key, entry.getValue()[0]);
+			}
+			projectWorkFlowService.updateInformation(formProperties);
+		}
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
+	public ModelAndView updateTeamInformation(final HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("redirect:/project/running-doing");
+
+		// 从request中读取参数然后转换
+		Map<String, String[]> paramMap = request.getParameterMap();
+		String[] teamIds = request.getParameterValues("pf_projectTeamId");
+		if(teamIds != null) {
+			List<Map<String, Object>> teamList = new ArrayList<Map<String, Object>>(teamIds.length);
+			for(int i = 0;i < teamIds.length;i ++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				teamList.add(map);
+			}
+			
+			for (Entry<String, String[]> entry : paramMap.entrySet()) {
+				String key = entry.getKey();
+				String[] valueArr = entry.getValue();
+				if(key.startsWith("pt_")) {
+					if(valueArr != null) {
+						for (int index = 0;index < valueArr.length; index ++) {
+							teamList.get(index).put(key.split("_")[1], valueArr[index]);
+						}
+					}
+				}
+			}
+			
+			projectWorkFlowService.updateTeamInformation(teamList);
+		}
+			
+		return mv;
 	}
 	
 	//根据项目名称全局检索
@@ -458,9 +533,9 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), null);
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),1);
 		} else {
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId());
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),0);
 		}
 		return suspendTasks;
 	}

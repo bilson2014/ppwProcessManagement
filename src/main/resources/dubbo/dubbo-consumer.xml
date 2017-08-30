@@ -15,19 +15,17 @@
  		
 	<!-- Activiti接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.WorkFlowFacade" id="pmsWorkFlowFacade" retries="1" check="false" timeout="5000" />
-	
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade" id="pmsProjectFlowFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade" id="pmsProjectResourceFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade" id="pmsProjectSynergyFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade" id="pmsProjectTeamFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectUserFacade" id="pmsProjectUserFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade" id="pmsProjectColumnShipFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnUpdateShipFacade" id="pmsProjectGroupColumnUpdateShipFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade" id="pmsEmployeeSynergyFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade" id="pmsProjectMessageFacade" retries="1" check="false" timeout="5000" />
-	
 	<!-- 人员接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.facade.right.service.PmsEmployeeFacade" id="pmsEmployeeFacade" retries="1" check="false" timeout="5000" />
-	
 	<!-- 财务接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.facade.finance.service.PmsFinanceFacade" id="pmsFinanceFacade" retries="1" check="false" timeout="5000" />
 	<!--作品服务接口 -->

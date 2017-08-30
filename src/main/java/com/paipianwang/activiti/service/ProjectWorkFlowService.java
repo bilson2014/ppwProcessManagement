@@ -131,8 +131,27 @@ public interface ProjectWorkFlowService {
 
 	public Map<String, Object> getTaskInfo(String taskId);
 
+	/**
+	 * 获取可编辑的字段
+	 * @param taskId
+	 * @param projectId
+	 * @param info
+	 * @return
+	 */
+	public Map<String, Object> getEditParameter(String taskId, String projectId, String infoType, SessionInfo info);
+
+	/**
+	 * 修改项目信息、客户信息
+	 * @param formProperties
+	 */
+	public void updateInformation(Map<String, String> formProperties);
+
+	/**
+	 * 修改供应商信息
+	 * @param teamList
+	 */
+	public void updateTeamInformation(List<Map<String, Object>> teamList);
+	
 	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId);
-
-	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId);
-
+	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag);
 }
