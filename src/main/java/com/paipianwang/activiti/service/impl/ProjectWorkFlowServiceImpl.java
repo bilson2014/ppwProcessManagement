@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
+import org.activiti.engine.impl.persistence.entity.SuspensionState;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.NativeExecutionQuery;
@@ -37,10 +39,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
+import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.finance.service.PmsFinanceFacade;
 import com.paipianwang.pat.facade.indent.entity.IndentSource;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
@@ -67,7 +71,7 @@ import com.paipianwang.pat.workflow.facade.WorkFlowFacade;
 @Service
 public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
-	private final Logger logger = LoggerFactory.getLogger(ActivitiFormServiceImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(ProjectWorkFlowServiceImpl.class);
 
 	final String processDefintionKey = "procedure-workflow";
 
@@ -873,7 +877,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	/**
-	 * 获取可编辑的字段
+	 * <<<<<<< HEAD 获取可编辑的字段
 	 * 
 	 * @param taskId
 	 * @param projectId
@@ -1055,7 +1059,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			if (flowMap != null && !flowMap.isEmpty()) {
 				// 更新项目信息
 				final String projectId = (String) flowMap.get("projectId");
-				if(StringUtils.isNotBlank(projectId)) {
+				if (StringUtils.isNotBlank(projectId)) {
 					flowMap.remove("projectId");
 					flowFacade.update(flowMap, projectId);
 				}
@@ -1064,7 +1068,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			if (userMap != null && !userMap.isEmpty()) {
 				// 更新客户信息
 				final String projectUserId = (String) userMap.get("projectUserId");
-				if(StringUtils.isNotBlank(projectUserId)) {
+				if (StringUtils.isNotBlank(projectUserId)) {
 					userMap.remove("projectUserId");
 					projectUserFacade.update(userMap, null, Long.parseLong(projectUserId));
 				}
@@ -1084,6 +1088,237 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				}
 			}
 		}
+	}
+
+	/**
+	 * 根据项目名检索任务
+	 */
+	@Override
+	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId) {
+		List<TaskVO> result = new ArrayList<>();
+		// 根据名称模糊匹配flow
+		Map<String, Object> params = new HashMap<>();
+		params.put("projectName", flowName);
+		List<PmsProjectFlow> flowList = flowFacade.getProjectFlowByCondition(params);
+
+		if (!ValidateUtil.isValid(flowList)) {
+			return result;
+		}
+
+		// 获取所有节点
+		Map<String, ProjectCycleItem> cycles = workFlowFacade.getAllCycleTask();
+		if (cycles == null) {
+			cycles = new HashMap<>();
+		}
+
+		String executionIds = "";
+		// 筛选流程(后期在此控制分页)
+		StringBuilder procSql = new StringBuilder();
+		procSql.append("select DISTINCT pro.* from ACT_HI_PROCINST pro ");
+		if (!StringUtils.isBlank(activitiUserId)) {
+			procSql.append("LEFT JOIN ACT_HI_TASKINST tas on pro.PROC_INST_ID_=tas.PROC_INST_ID_  where ");
+			procSql.append(" tas.ASSIGNEE_='" + activitiUserId + "' ");
+		} else {
+			procSql.append("where 1=1 ");
+		}
+		if (!StringUtils.isBlank(flowName)) {
+			for (PmsProjectFlow flow : flowList) {
+				executionIds = executionIds + ",'" + flow.getProcessInstanceId() + "'";
+			}
+			procSql.append("and pro.PROC_INST_ID_ in(" + executionIds.substring(1) + ") ");
+		}
+
+		procSql.append("ORDER BY START_TIME_ DESC ");
+		List<HistoricProcessInstance> procInstIdList = historyService.createNativeHistoricProcessInstanceQuery()
+				.sql(procSql.toString()).list();
+		if (!ValidateUtil.isValid(procInstIdList)) {
+			return result;
+		}
+
+		List<String> processInstanceIds = new ArrayList<>();
+		for (HistoricProcessInstance htask : procInstIdList) {
+			processInstanceIds.add(htask.getId());
+		}
+		// 获取进行中任务
+		List<Task> runningList = taskService.createTaskQuery().active().processInstanceIdIn(processInstanceIds).list();
+		// 获取挂起任务
+		List<Task> suspendList = taskService.createTaskQuery().suspended().processInstanceIdIn(processInstanceIds)
+				.list();
+
+		// 处理已完成任务
+		for (PmsProjectFlow flow : flowList) {
+			if ("finished".equals(flow.getProjectStatus())) {
+				for (HistoricProcessInstance hitask : procInstIdList) {
+					if (hitask.getId().equals(flow.getProcessInstanceId())) {
+						TaskVO each = new TaskVO();
+						each.setProcessInstanceId(hitask.getId());
+						each.setTaskStatus("completed");
+						if (ValidateUtil.isValid(activitiUserId)
+								&& ("employee_" + flow.getPrincipal()).equals(activitiUserId)) {
+							each.setIsPrincipal(1);
+						} else {
+							each.setIsPrincipal(0);
+						}
+						each.setProjectId(flow.getProjectId());
+						each.setProjectName(flow.getProjectName());
+						each.setPrincipalName(flow.getPrincipalName());
+						each.setFinishedDate(flow.getFinishedDate());
+					}
+				}
+			}
+		}
+
+		// 处理进行中任务
+		for (Task task : runningList) {
+			TaskVO each = new TaskVO();
+			taskToVO(task, each, flowList, activitiUserId, cycles);
+			each.setTaskStatus("running");
+			result.add(each);
+		}
+		// 处理挂起任务
+		for (Task task : suspendList) {
+			TaskVO each = new TaskVO();
+			taskToVO(task, each, flowList, activitiUserId, cycles);
+			each.setTaskStatus("suspend");
+			result.add(each);
+		}
+
+		// 排序
+		result.sort(new Comparator<TaskVO>() {
+			@Override
+			public int compare(TaskVO o1, TaskVO o2) {
+				Date o1Date = o1.getCreateTime() == null ? o1.getFinishedDate() : o1.getCreateTime();
+				Date o2Date = o2.getCreateTime() == null ? o2.getFinishedDate() : o2.getCreateTime();
+				return o2Date.compareTo(o1Date);
+			}
+		});
+
+		return result;
+	}
+
+	private void taskToVO(Task task, TaskVO each, List<PmsProjectFlow> flowList, String activitiUserId,
+			Map<String, ProjectCycleItem> cycles) {
+		each.setTaskId(task.getId());
+		each.setTaskName(task.getName());
+		each.setAssignee(task.getAssignee());
+		each.setDueDate(task.getDueDate());
+		each.setCreateTime(task.getCreateTime());
+		each.setProcessDefinitionId(task.getProcessDefinitionId());
+		each.setProcessInstanceId(task.getProcessInstanceId());
+
+		for (PmsProjectFlow flow : flowList) {
+			if (task.getProcessInstanceId().equals(flow.getProcessInstanceId())) {
+				// 是否是负责人
+				if (ValidateUtil.isValid(activitiUserId)
+						&& ("employee_" + flow.getPrincipal()).equals(activitiUserId)) {
+					each.setIsPrincipal(1);
+				} else {
+					each.setIsPrincipal(0);
+				}
+				each.setProjectId(flow.getProjectId());
+				each.setProjectName(flow.getProjectName());
+				each.setPrincipalName(flow.getPrincipalName());
+				each.setSuspendDate(flow.getSuspendDate());
+				break;
+			}
+		}
+		each.setTaskStage(cycles.get(task.getTaskDefinitionKey()).getStage());
+		each.setTaskDescription(cycles.get(task.getTaskDefinitionKey()).getDescription());
+
+		// 代办任务
+		if (task.getAssignee().equals(activitiUserId)) {
+			each.setAgent("1");
+		} else {
+			each.setAgent("0");// 其他任务
+		}
+	}
+
+	/**
+	 * 根据项目阶段筛选其他任务
+	 */
+	@Override
+	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag) {
+		StringBuilder sql=new StringBuilder();
+		sql.append("SELECT DISTINCT rt.* FROM ACT_RU_TASK rt ");
 		
+		//当前人参与
+		if(flag==0){
+			//筛选参与项目
+			sql.append("LEFT JOIN ACT_HI_TASKINST ART  ON rt.PROC_INST_ID_ = ART.PROC_INST_ID_  ");
+			sql.append("where ART.ASSIGNEE_='"+activitiUserId+"' ");
+		}else{
+			//所有项目
+			sql.append("where 1=1 ");
+		}	
+		sql.append("and rt.SUSPENSION_STATE_ = "+SuspensionState.ACTIVE.getStateCode()+" ");
+		sql.append("and rt.ASSIGNEE_!='"+activitiUserId+"' ");
+		//筛选阶段
+		if(!StringUtils.isBlank(stage)){
+			Map<String,ProjectCycleItem> cycles = workFlowFacade.getAllCycleTask();
+			if(cycles==null){
+				return null;
+			}
+			String taskKeys="";
+			for(ProjectCycleItem item:cycles.values()){
+				if(item.getStageId().equals(stage)){
+					taskKeys+=",'"+item.getTaskId()+"'";
+				}
+			}
+			sql.append("and rt.TASK_DEF_KEY_ in("+taskKeys.substring(1)+") ");
+		}
+		sql.append("ORDER BY rt.CREATE_TIME_ DESC ");
+		
+		
+		List<Task> taskList=taskService.createNativeTaskQuery().sql(sql.toString()).list();
+		//组装页面数据
+		if(ValidateUtil.isValid(taskList)){
+			Map<String, TaskVO> resultMap = new HashMap<String, TaskVO>();
+			for(final Task task:taskList){
+				TaskVO result = new TaskVO();
+				result.setTaskId(task.getId());
+				result.setTaskName(task.getName());
+				result.setAssignee(task.getAssignee());
+				result.setDueDate(task.getDueDate());
+				result.setCreateTime(task.getCreateTime());
+				
+				String processInstanceId = task.getProcessInstanceId();
+				String processDefinitionId = task.getProcessDefinitionId();
+				
+				ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+						.processInstanceId(processInstanceId).singleResult();
+				
+				result.setProcessDefinitionId(processDefinitionId);
+				result.setProcessInstanceId(processInstanceId);
+				
+				final String projectId = processInstance.getBusinessKey();
+
+				// 获取 流程业务数据
+				PmsProjectFlow pmsProjectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+				if (pmsProjectFlow != null && pmsProjectFlow.getPrincipal() != null) {
+					PmsEmployee employee = employeeFacade.findEmployeeById(pmsProjectFlow.getPrincipal());
+					pmsProjectFlow.setPrincipalName(employee.getEmployeeRealName());
+					result.setProjectId(pmsProjectFlow.getProjectId());
+					result.setProjectName(pmsProjectFlow.getProjectName());
+					result.setPrincipalName(pmsProjectFlow.getPrincipalName());
+				}
+			
+				String taskStage = (String) taskService.getVariable(result.getTaskId(), "task_stage");
+				String taskDescription = (String) taskService.getVariable(result.getTaskId(), "task_description");
+				result.setTaskStage(taskStage);
+				result.setTaskDescription(taskDescription);
+				if(StringUtils.isNotBlank(activitiUserId) && pmsProjectFlow != null && ("employee_" + pmsProjectFlow.getPrincipal()).equals(activitiUserId)){
+					//当前负责人
+					result.setIsPrincipal(1);
+				}else{
+					result.setIsPrincipal(0);
+				}
+				resultMap.put(processInstanceId, result);
+			}
+			List<TaskVO> list = new ArrayList<TaskVO>(resultMap.values());
+			
+			
+			return list;
+		}
+		return null;
 	}
 }

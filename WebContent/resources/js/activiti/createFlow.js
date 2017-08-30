@@ -536,9 +536,10 @@ function getProduct(){
 		body.html('');
 		var html = createOption('0','非标准化产品','0');
 		var rows = res.result.chanpin;
+		body.append(html);
 		if(res != null && res != undefined){
 			for (var int = 0; int < rows.length; int++) {
-					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
+				var html =createOption(rows[int].id,rows[int].text,rows[int].price);
 				body.append(html);
 			};
 			initProductEven();

@@ -1,6 +1,7 @@
 
 $().ready(function() {
 	initPageEven();
+	toSearch();
 });
 
 function initPageEven(){
@@ -17,19 +18,79 @@ function initPageEven(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
 	});
 }
+
+//全局搜索
+function toSearch(){
+	$('.search').off('click').on('click',function(){
+		 var search = $('.titleNameWork input').val();
+		 $('.productList li').removeClass('checkLi');
+		 getAllSearchInfo(search);
+	});
+	initSelect();
+	$('.orderSelect li').off('click').on('click',function(e){    
+	    var name = $(this).attr('data-id');
+	   	$(this).parent().parent().find('div').text($(this).text());
+	   	$('.productList li').removeClass('checkLi');
+	   	getState(name);
+    });
+	
+}
+
+function getAllSearchInfo(search){
+	loadData(function(res){     
+		var setCard = $('#setCard');
+		var otherCard = $('#otherCard');
+		setCard.html('');
+		otherCard.html('');
+		if(res != null && res != undefined){
+				$('#daibanName').addClass('hide');
+			for (var int = 0; int < res.length; int++) {
+				 if(res[int].agent == 1){
+					 var html = createWaitCard(res[int]);
+					 setCard.append(html);
+					 $('#daibanName').removeClass('hide');
+				 }else{
+					 var html = createOtherCard(res[int]);
+					 otherCard.append(html);
+				 }
+			}
+			$('#daiNum').text($('.waitCard').length);
+			$('#otherNum').text($('.otherCard').length);
+		}
+	}, getContextPath() + '/project/search', $.toJSON({
+		projectName : search
+	}));
+}
+
+function getState(name){
+	var otherCard = $('#otherCard');
+	otherCard.html('');
+	loadData(function(res){     
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+					 var html = createOtherCard(res[int]);
+					 otherCard.append(html);
+				 }
+			$('#otherNum').text($('.otherCard').length);
+			}	
+	}, getContextPath() + '/project/agent/search', $.toJSON({
+		taskStage : name
+	}));
+}
+
 //获取日期时间
 function getDate(){
 	
 	$('#daiNum').text($('.waitCard').length);
+	$('#otherNum').text($('.otherCard').length);
 	if($('div').hasClass("waitCard")){
 	if($('.waitCard').length == 0){
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();
 	}else{
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
+	  }
 	}
-	}
-	$('#otherNum').text($('.otherCard').length);
 	
 	var setTime =  $('.setLastTime');
 	if(setTime.length >= 0){
@@ -76,13 +137,121 @@ function getDate(){
 	var finishTime = $('.finishTime');
 	if(finishTime.length >= 0){
         for (var i = 0; i < finishTime.length; i++) {
-		  
 		   var getTime = Date.parse($(finishTime[i]).text().replace("CST","GMT+0800"));
 		   $(finishTime[i]).text('结束于'+formatDate(getTime));
 	    }		
 	}
 }
 
+function createWaitCard(res){
+	var isWho = "";
+	var timeImg = "";
+	var time = ""
+	if(res.isPrincipal == 1){
+		isWho = '<div class="your">'+res.principalName+'</div>';  
+	}else{
+	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
+	}
+	   var nowData = Date.parse(new Date());
+	   var time =res.dueDate;
+	   var lastTime = (time - nowData);
+	   var lastHour =(time - nowData)/3600000;
+	   if(lastHour < 0){
+		   timeImg = '<img src="/resources/images/flow/demoR.png">'; 
+		   time='已超时'+getTimeString(lastTime); 
+	   }
+	   if(lastHour >= 3){
+		   timeImg = '<img src="/resources/images/flow/demoG.png">';
+		   time='剩余'+getTimeString(lastTime); 
+	   }
+	   if(lastHour <3 && lastHour>=0){
+		   timeImg = '<img src="/resources/images/flow/demoY.png">';
+		   time='剩余'+getTimeString(lastTime);
+	   }
+
+	
+  var html = [
+	  '<div class="waitCard cardNum">',
+	  '   <a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?task">',
+	  '     <div class="cardH">                                                                                                       ',
+	  '         <div class="title">'+res.projectName+'</div>                                                          ',
+	  '              '+isWho+' ',
+	  '     </div>                                                                                                                    ',
+	  '     <div class="cardContent">                                                                                                 ',
+	  '          '+timeImg+'                                                                        ',
+	  '          <div class="setContent">                                                                                             ',
+	  '              <div class="listName">'+res.taskName+'</div>                                                                   ',
+	  '              <div class="lastTime setLastTime">'+time+'</div>                                                    ',
+	  '          </div>                                                                                                               ',
+	  '     </div>                                                                                                                    ',
+	  '    </a>                                                                                                                       ',
+	  '</div>          ',                                                                                                             
+	].join('');                                                                                                                       
+	return html;
+}
+
+function createOtherCard(res){
+	var isWho = "";
+	var taskStatus = res.taskStatus;
+	var taskStage = res.taskStage;
+	var time = "";
+	var img = "";
+	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?task">';
+	if(res.isPrincipal == 1){
+		isWho = '<div class="your">'+res.principalName+'</div>';  
+	}else{
+	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
+	}
+	if(taskStatus == "running" || taskStatus == null){
+		 time ="截止于"+formatDate(res.createTime);
+		if(taskStage == '沟通阶段'){
+			 img= '<img src="/resources/images/flow/isTalk.png"> ';
+		}
+		if(taskStage == '方案阶段'){
+			img= '<img src="/resources/images/flow/isFang.png"> ';
+				}
+		if(taskStage == '商务阶段'){
+			img= '<img src="/resources/images/flow/isPrice.png"> ';
+		}
+		if(taskStage == '制作阶段'){
+			img= '<img src="/resources/images/flow/isMake.png"> ';
+		}
+        if(taskStage == '交付阶段'){
+        	img= '<img src="/resources/images/flow/isPay.png"> ';
+		}
+		
+	}
+	
+	if(taskStatus == "suspend"){
+		  img= '<img src="/resources/images/flow/suspendDate.png"> ';
+		  var getTime = Date.parse(res.pauseTime.replace("CST","GMT+0800"));
+		  time ="暂停于"+formatDate(getTime);
+	}
+	if(taskStatus == "completed"){
+		  img= '<img src="/resources/images/flow/isPay.png"> ';
+		  var getTime = Date.parse(res.finishedDate.replace("CST","GMT+0800"));
+		  time = "结束于"+formatDate(getTime);
+	}
+	            var html = [
+				' <div class="otherCard">',
+				'	        '+aTag+' ',
+				'           <div class="cardH">                                                                                                           ',
+				'               <div class="title">'+res.projectName+'</div>                                                              ',
+				'                '+isWho+'                                                                                 ',
+				'           </div>                                                                                                                        ',
+				'           <div class="cardContent">                                                                                                     ',
+				'                <div class="setContent">                                                                                                 ',
+				'                    <div class="listName">'+res.taskName+'</div>                                                                       ',
+				'                    <div class="lastTime otherTime">'+time+'</div>                                                       ',
+				'                </div>                                                                                                                   ',
+				'                '+img+'                                                                          ',
+				'           </div>                                                                                                                        ',
+				'          </a>                                                                                                                           ',
+				'      </div>                                                                                                                             ',
+				'</div>                                                                                                                                 ',
+		].join('');                                                                                                                       
+		return html;
+	}
 
 
 

@@ -9,6 +9,7 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -26,9 +27,9 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
 
 <!--[if lt IE 9]>
@@ -41,8 +42,8 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
 	<div class="pages">
-	
 	<div class="productListAreas">
 	           <div class="otherWork">
 	           
@@ -57,14 +58,16 @@
 		                    </div>
 	                    </r:group>
 	                </div>
+	                <div class="title">
+	                     <div class="titleName hide" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
+	                </div>
+
+	                <div class="setCard" id="setCard"></div>
 	                <div class="lineTop"></div>
 	                <div class="title">
-	                     <div class="titleName" id="upName">完成任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName">完成任务(<span id="otherNum"></span>)</div>
 	                </div>
-	                <div class="setCard" id="setCard">
-	         
-		                
-	                
+	                <div class="setCard" id="otherCard">
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
 						   		<div class="otherCard">

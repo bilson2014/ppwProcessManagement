@@ -7,6 +7,7 @@ import java.util.Map;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 
+import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
@@ -150,4 +151,7 @@ public interface ProjectWorkFlowService {
 	 * @param teamList
 	 */
 	public void updateTeamInformation(List<Map<String, Object>> teamList);
+	
+	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId);
+	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag);
 }

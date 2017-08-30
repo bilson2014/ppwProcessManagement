@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.SessionInfo;
@@ -145,7 +146,6 @@ public class ProjectFlowController extends BaseController {
 			mv.addObject("gTasks", gTasks);
 		}
 
-		// 当前登陆人信息
 		mv.addObject("realName", info.getRealName());
 		mv.addObject("photo", info.getPhoto());
 
@@ -339,7 +339,6 @@ public class ProjectFlowController extends BaseController {
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
 		for (Entry<String, String[]> entry : entrySet) {
 			String key = entry.getKey();
-
 			formProperties.put(key, entry.getValue()[0]);
 		}
 
@@ -501,4 +500,44 @@ public class ProjectFlowController extends BaseController {
 			
 		return mv;
 	}
+	
+	//根据项目名称全局检索
+	@RequestMapping("/search")
+	public List<TaskVO> searchList(HttpServletRequest request,@RequestBody final TaskVO taskVO) {
+		SessionInfo info = getCurrentInfo(request);
+		List<String> groups = info.getActivitGroups();
+		List<TaskVO> tasks = null;
+		// 判断身份
+		if (groups.contains(ProjectRoleType.teamDirector.getId())
+				|| groups.contains(ProjectRoleType.financeDirector.getId())
+				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+			// 供应商总监、财务总监、客服总监 应该看见所有项目
+			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(),null);
+		} else {
+			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(),info.getActivitiUserId());
+		}
+		
+		return tasks;
+	}
+	
+	//根据项目阶段筛选其他任务
+	@RequestMapping("/agent/search")
+	public List<TaskVO> agentListByStage(HttpServletRequest request,
+			@RequestBody final TaskVO taskVO) {
+		SessionInfo info = getCurrentInfo(request);
+		List<String> groups = info.getActivitGroups();
+		List<TaskVO> suspendTasks = null;
+
+		// 判断身份
+		if (groups.contains(ProjectRoleType.teamDirector.getId())
+				|| groups.contains(ProjectRoleType.financeDirector.getId())
+				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+			// 供应商总监、财务总监、客服总监 应该看见所有项目
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),1);
+		} else {
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),0);
+		}
+		return suspendTasks;
+	}
+	
 }
