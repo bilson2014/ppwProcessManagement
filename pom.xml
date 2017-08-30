@@ -326,7 +326,7 @@
 		<finalName>Activiti-Spring</finalName>
 		<resources>
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/test/resources</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
