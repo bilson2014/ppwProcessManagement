@@ -7,8 +7,7 @@
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
 <spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
-<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css"
-	var="bootstrapCss" />
+<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -152,15 +151,6 @@
 	                                      </ul>
 	                                 </div>
 								 </c:forEach> 
-	                              <!--     <div class="imgItem">
-	                                      <img src>
-	                                      <ul>
-	                                          <li>三维</li>
-	                                          <li>负责人</li>
-	                                          <li>线上-网站</li>
-	                                      </ul>
-	                                 </div> -->
-	                              
 	                            </div>
 	                         </div>   
 	                       </c:if>
@@ -305,7 +295,7 @@
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
-	                                 <div class="update btn-c-r">更新</div>
+	                                 <div class="update btn-c-r" id="openProvider">更新</div>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                            	<c:if test="${not empty teamPlan_info}">
@@ -736,6 +726,7 @@
                    <div class="title">项目信息修改</div>
                    <div class="closeModel"></div>
             </div>
+           <form method="post" action="/project/edit/information" id="toProjectForm"> 
             <input type="hidden" id="proId" name="pf_projectId"" value="${flow_info['projectId']}">
             <div class="getPriceContent">
                     <div class="item errorItem">
@@ -744,7 +735,7 @@
                     </div>
                     <div class="itemTime errorItem">
                          <div class="title">项目评级</div>
-                         <input id="pf_projectGradeInput" name="pf_projectGrade" value="">
+                         <input type="hidden" id="pf_projectGradeInput" name="pf_projectGrade" value="">
                          <div class="orderSelect so" >
 				                <div id="pf_projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -781,6 +772,7 @@
 		                      <div class="btn-c-r">确认</div>
 		            </div>
             </div>
+           </form>   
 </div>
 </div>
 
@@ -791,26 +783,27 @@
                    <div class="title">客户信息修改</div>
                    <div class="closeModel"></div>
             </div>
-            <div class="getPriceContent">
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                        <input id="cusLinkman" name="pu_linkman" value=''>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户电话</div>
-                         <input id="cusTelephone" name="pu_telephone" value=''>
-                    </div>
-                                     
-                    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		            </div>
-            </div>
+            <form method="post" action="/project/edit/information" id="toCusForm">
+	            <div class="getPriceContent">
+	                    <div class="itemTime">
+	                         <div class="title">客户联系人</div>
+	                        <input id="cusLinkman" name="pu_linkman" value=''>
+	                    </div>
+	                    <div class="itemTime">
+	                         <div class="title">客户电话</div>
+	                         <input id="cusTelephone" name="pu_telephone" value=''>
+	                    </div>
+	                    <div class="btnMid">
+			                      <div class="btn-c-g">取消</div>
+			                      <div class="btn-c-r">确认</div>
+			            </div>
+	            </div>
+	        </form>      
 </div>
 </div>
 
 <!-- 供应商信息修改 -->
-<div class="cusModel">
+<div class="cusModel" id="showProvider">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">供应商信息修改 </div>
@@ -847,8 +840,6 @@
                          <div class="title">客户联系人</div>
                          <input>
                     </div>
-                    
-                    
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
 		                      <div class="btn-c-r">确认</div>
@@ -884,7 +875,6 @@
 	                       <div class="title">策划供应商启动函备注信息</div>
 	                       <textarea></textarea>
                      </div>
-                    
                     
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>

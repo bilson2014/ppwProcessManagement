@@ -478,7 +478,7 @@ function openProjectInfo(){
 			  $('#pf_projectGrade').text(Grade);
 			  $('#proCycle').val(res.pf_projectCycle);
 			  $('#proFdp').val(res.pf_filmDestPath);
-		}, getContextPath() + '/task/edit/parameter/'${#currentTaskId}'/'${#projectId}'/pf',null);
+		}, getContextPath() + '/task/edit/parameter/'${"#currentTaskId"}'/'${'#projectId'}'/pf',null);
 	});
 }
 
@@ -494,18 +494,30 @@ function proInfoClear(){
 function openCusInfo(){
 	$('#openCusInfo').off('click').on('click',function(){
 		$('#showCusInfo').show();
+		cusClear();
+		loadData(function(res){
+			  $('#cusLinkman').val(res.pu_linkman);
+			  $('#cusTelephone').val(res.pu_telephone);
+		}, getContextPath() + '/task/edit/parameter/'${#currentTaskId}'/'${#projectId}'/pu',null);
 	});
 }
 
 function cusClear(){
-	
+	$('#cusLinkman').val('');
+	$('#cusTelephone').val('');
 }
-
 
 //价格信息修改
 function openPriceInfo(){
 	$('#openPriceInfo').off('click').on('click',function(){
 		$('#showPriceInfo').show();
+	});
+}
+
+//供应商信息修改
+function openPriceInfo(){
+	$('#openProvider').off('click').on('click',function(){
+		$('#showProvider').show();
 	});
 }
 
@@ -826,53 +838,8 @@ var formFieldCreator = {
 }
 };
 
-/*var formFieldCreator = {
-		'string': function(prop, datas, className) {
-			var result = "<td width='120'>" + prop.name + "：</td>";
-			if (prop.writable === true) {
-				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "' value='" + prop.value + "' />";
-			} else {
-				result += "<td>" + prop.value;
-			}
-			return result;
-		},
-		'date': function(prop, datas, className) {
-			var result = "<td width='120'>" + prop.name + "：</td>";
-			if (prop.writable === true) {
-				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date " + className + "' value='" + prop.value + "'/>";
-			} else {
-				result += "<td>" + prop.value;
-			}
-			return result;
-		},
-		'long': function(prop, datas, className) {
-			var result = "<td width='120'>" + prop.name + "：</td>";
-			if (prop.writable === true) {
-				result += "<td><input type='text' id='" + prop.id + "' name='" + prop.id + "' class='" + className + "' value='" + prop.value + "'/>";
-			} else {
-				result += "<td>" + prop.value;
-			}
-			return result;
-		},
-		'enum': function(prop, datas, className) {
-			var result = "<td width='120'>" + prop.name + "：</td>";
-			if (prop.writable === true) {
-				result += "<td><select id='" + prop.id + "' name='" + prop.id + "' class='" + className + "'>";
-				$.each(datas[prop.id], function(k, v) {
-					result += "<option value='" + k + "'>" + v + "</option>";
-				});
-				result += "</select>";
-			} else {
-				result += "<td>" + prop.value;
-			}
-			return result;
-		}
-	};*/
 
 function initEvenInfo(){
-/*	$('#toFinish').off('click').on('click',function(){
-         $('#cusModel').show();		
-	});*/
 	$('.closeModel').off('click').on('click',function(){
          $('.cusModel').hide();		
          $('#errorInfo').text('');
@@ -1030,8 +997,6 @@ function initAddTalk(){
 function initTalk(){
 	loadData(function(res){
 		var res = res;
-	/*	var body = $('.utoInfo');
-		body.html('');*/
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
 				   var html =createUserInfo();
@@ -1163,24 +1128,6 @@ function bulidFileList(arr) {
     }
     return arr;
 }
-
-/*//文件区域
-function getFileInfo(){
-	loadData(function(res){
-		var res = res;
-		var body =$('#projectFilm');
-		body.html('');
-		if(res != null && res != undefined){
-			for(var key in res) { 
-				var resKey = res[key];
-				for (var int = 0; int < resKey.length; int++) {
-					 var html =createFileInfo(res[key][int]);
-					 body.append(html);
-				}
-             }
-		}
-	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
-}*/
 
 //文件卡片
 function createFileInfo(res){
