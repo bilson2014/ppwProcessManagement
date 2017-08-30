@@ -26,7 +26,7 @@ public class TaskVO implements Serializable{
 	private Date dueDate;//预期完成时间
 	private Date createTime;
 		
-	//父流程
+	//流程
 	private String projectId;
 	private String projectName;
 	private String principalName;//负责人名称

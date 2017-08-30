@@ -458,9 +458,9 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), null);
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),1);
 		} else {
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId());
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),0);
 		}
 		return suspendTasks;
 	}

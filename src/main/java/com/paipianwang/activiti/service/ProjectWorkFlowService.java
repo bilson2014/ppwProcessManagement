@@ -133,6 +133,6 @@ public interface ProjectWorkFlowService {
 
 	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId);
 
-	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId);
+	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag);
 
 }
