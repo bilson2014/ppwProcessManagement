@@ -553,7 +553,6 @@ function getProduct(){
 					var html =createOption(rowsR[int].id,rowsR[int].text);
 				body.append(html);
 			};
-			
 		}
 		
 		var body = $('#cusLevel');
@@ -611,11 +610,7 @@ function getTime(id){
 }
 
 
-function createOption(value,text,price){
-	    	
-		var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
-		return html;
-}
+
 
 function createUserInfo(id,name,phone,realName,clientLevel,email){
 	var html = '<li data-email="'+email+'"  data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';

@@ -757,6 +757,16 @@
 				                </ul>    
 					      </div>
                     </div>
+                    <div class="itemTime errorItem" id="pf_ResourInputError">
+                         <div class="title">项目来源</div>
+                         <input type="hidden" id="pf_ResourInput" name="pf_projectSource" value="">
+                         <div class="orderSelect " >
+				                <div id="pf_Resour"></div>
+				                <img src="${imgPath}/flow/selectOrder.png">
+				                <ul class="oSelect" id="pResour">
+				                </ul>    
+					      </div>
+                    </div>
                     <div class="itemTime errorItem" id="proCycleError">
                          <div class="title">项目周期</div>
                          <input id="proCycle" name="pf_projectCycle">

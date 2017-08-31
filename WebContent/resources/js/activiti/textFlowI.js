@@ -20,7 +20,27 @@ $().ready(function() {
 	getTimeString();
 	pageInit();
 	initDaibanTime();
+	initResouces();
 });
+
+
+//初始化来源
+function initResouces(){
+
+	loadData(function (res){
+
+		var body = $('#pResour');
+		body.html('');
+		var rowsR = res.result.resource;
+		if(rowsR != null && rowsR != undefined){
+			for (var int = 0; int < rowsR.length; int++) {
+					var html =createOption(rowsR[int].id,rowsR[int].text);
+				body.append(html);
+			}
+			initSelect();
+		}	
+	}, getContextPath() + '/product/productSelection',null);
+}
 
 
 function getHeight(){
@@ -480,6 +500,16 @@ function openProjectInfo(){
 				if(Grade == '0'){
 					Grade = 'E';  
 				}
+			  $('#pf_ResourInput').val(res.projectFlow.pf_projectSource);
+			  
+			  var resour = $('#pResour li');
+			  for (var i = 0; i < resour.length; i++) {
+                     	if($(resour[i]).attr('data-id') == res.projectFlow.pf_projectSource){
+                     		$('#pf_Resour').text($(resour[i]).text());
+                     		$('#pf_Resour').attr('data-id',($(resour[i]).attr('data-id')))
+                     	}			
+			  }
+				
 			  $('#pf_projectGrade').text(Grade);
 			  $('#proCycle').val(res.projectFlow.pf_projectCycle);
 			  $('#proFdp').val(res.projectFlow.pf_filmDestPath);
@@ -497,6 +527,7 @@ function openProjectInfo(){
 function checkProviderInfo(){
            var proName = $('#proName').val();
            var pf_projectGrade = $('#pf_projectGrade').attr('data-id');
+           var pf_Resour = $('#pf_Resour').attr('data-id');
            var proCycle = $('#proCycle').val();
            var proFdp = $('#proFdp').val();
            var projectDes = $('#projectDes').val();
@@ -508,9 +539,15 @@ function checkProviderInfo(){
        	}
         if(pf_projectGrade == undefined || pf_projectGrade == "" || pf_projectGrade ==null ){
        		$('#pf_projectGradeError').attr('data-content','项目评级未填写');
-       		$('#pf_projectGradeInput').val(pf_projectGrade);
+       		
        		return false;
        	}
+        $('#pf_projectGradeInput').val(pf_projectGrade);
+        if(pf_Resour == undefined || pf_Resour == "" || pf_Resour ==null ){
+       		$('#pf_ResourInputError').attr('data-content','项目来源未填写');
+       		return false;
+       	}
+        $('#pf_ResourInput').val(pf_Resour);
         if(proCycle == undefined || proCycle == "" || proCycle ==null ){
        		$('#proCycleError').attr('data-content','项目周期未填写');
        		return false;
@@ -1460,3 +1497,8 @@ function createNoInfo(res){
 	return html;
 }
 
+function createOption(value,text,price){
+	
+	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
+	return html;
+}
