@@ -508,6 +508,7 @@ function checkProviderInfo(){
        	}
         if(pf_projectGrade == undefined || pf_projectGrade == "" || pf_projectGrade ==null ){
        		$('#pf_projectGradeError').attr('data-content','项目评级未填写');
+       		$('#pf_projectGradeInput').val(pf_projectGrade);
        		return false;
        	}
         if(proCycle == undefined || proCycle == "" || proCycle ==null ){
