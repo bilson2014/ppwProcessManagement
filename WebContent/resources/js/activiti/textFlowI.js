@@ -624,6 +624,7 @@ function openPriceInfo(){
 		$('#showPriceInfo').show();
 		priceClear();
 		loadData(function(res){
+			$('#priceId').val(res.projectFlow.pf_projectId)
 			$('#est').val(res.projectFlow.pf_estimatedPrice);
 			$('#pjs').val(res.projectFlow.pf_projectBudget);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
