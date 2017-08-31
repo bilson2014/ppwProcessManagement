@@ -209,10 +209,10 @@
 			                                 <c:if test="${not empty flow_info['productName']}">
 			                                 	<div class="item">
 			                                          <div>项目周期</div>
-			                                          <c:if test="${price_info['projectCycle'] == 0}">
+			                                          <c:if test="${flow_info['projectCycle'] == 0}">
 			                                     		     <div>待定</div>
 			                                     	  </c:if>
-			                                     	   <c:if test="${price_info['projectCycle'] > 0}">
+			                                     	   <c:if test="${flow_info['projectCycle'] > 0}">
 			                                     		     <div>${flow_info["projectCycle"]}</div>
 			                                     	  </c:if>
 			                                          
