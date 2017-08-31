@@ -53,6 +53,12 @@ function getAllSearchInfo(search){
 			}
 			$('#daiNum').text($('.waitCard').length);
 			$('#otherNum').text($('.otherCard').length);
+			if($('.waitCard').length == 0){
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();
+			}else{
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
+			  }
 		}
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
