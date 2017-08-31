@@ -209,7 +209,13 @@
 			                                 <c:if test="${not empty flow_info['productName']}">
 			                                 	<div class="item">
 			                                          <div>项目周期</div>
-			                                          <div>${flow_info["projectCycle"]}</div>
+			                                          <c:if test="${price_info['projectCycle'] == 0}">
+			                                     		     <div>待定</div>
+			                                     	  </c:if>
+			                                     	   <c:if test="${price_info['projectCycle'] > 0}">
+			                                     		     <div>${flow_info["projectCycle"]}</div>
+			                                     	  </c:if>
+			                                          
 				                                </div>
 				                                <div class="item">
 				                                          <div>产品线</div>
@@ -387,14 +393,25 @@
 	                                     	<c:if test="${not empty price_info['estimatedPrice']}">
 			                                     <div class="item">
 			                                     		<div>预估价格</div>
-			                                          	<div>${price_info["estimatedPrice"]}</div>
+			                                     		<c:if test="${price_info['estimatedPrice'] == 0}">
+			                                     		     <div>待定</div>
+			                                     		</c:if>
+			                                     		<c:if test="${price_info['estimatedPrice'] > 0}">
+			                                     		   <div>${price_info["estimatedPrice"]}</div>
+			                                     		</c:if>
+			                                          	
 					                             </div>
 	                                     	</c:if>
 	                                     	
 	                                     	<c:if test="${not empty price_info['projectBudget']}">
 	                                     		<div class="item">
 			                                          <div>客户项目预算</div>
-			                                          <div>${price_info["projectBudget"]}</div>
+			                                          <c:if test="${price_info['projectBudget'] == 0}">
+			                                             <div>待定</div>
+			                                          </c:if> 
+			                                          <c:if test="${price_info['projectBudget'] > 0}">
+			                                             <div>${price_info['projectBudget']}</div>
+			                                          </c:if>  
 					                             </div>
 	                                     	</c:if>
 							         </div>
@@ -579,13 +596,6 @@
             </div>
      </div>
 </div>
-
-
-
-
-
-
- 
 
 <!-- 分配策划供应商 -->
 <div class="cusModel" id="">

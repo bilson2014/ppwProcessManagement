@@ -531,8 +531,7 @@ function checkProviderInfo(){
            var proCycle = $('#proCycle').val();
            var proFdp = $('#proFdp').val();
            var projectDes = $('#projectDes').val();
-           $('.errorItem').attr('data-content','');
-           
+       
         if(proName == undefined || proName == "" || proName ==null ){
        		$('#proNameError').attr('data-content','项目名称未填写未填写');
        		return false;
@@ -570,6 +569,7 @@ function proInfoClear(){
   $('#pf_projectGrade').attr('data-id','');
   $('#proCycle').val('');
   $('#proFdp').val('');
+  $('.errorItem').attr('data-content','');
 }
 
 //用户信息修改
@@ -595,6 +595,7 @@ function openCusInfo(){
 function cusClear(){
 	$('#cusLinkman').val('');
 	$('#cusTelephone').val('');
+	$('.errorItem').attr('data-content','');
 }
 
 function checkCusInfo(){
@@ -623,8 +624,8 @@ function openPriceInfo(){
 		$('#showPriceInfo').show();
 		priceClear();
 		loadData(function(res){
-			$('#est').val(res.projectFlow.estimatedPrice);
-			$('#pjs').val(res.projectFlow.projectBudget);
+			$('#est').val(res.projectFlow.pf_estimatedPrice);
+			$('#pjs').val(res.projectFlow.pf_projectBudget);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	$('#sumbitPrice').off('click').on('click',function(){
@@ -637,6 +638,7 @@ function openPriceInfo(){
 function priceClear(){
 	$('#est').val('');
 	$('#pjs').val('');
+	$('.errorItem').attr('data-content','');
 }
 
 
@@ -698,6 +700,7 @@ function openProviderInfo(){
 function clearProvi(){
 	$('.checkError').val('');
     $('.checkErrorP').val('');
+    $('.errorItem').attr('data-content','');
 }
 
 function checkProvider(){
