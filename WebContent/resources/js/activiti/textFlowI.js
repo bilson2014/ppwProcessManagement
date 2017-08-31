@@ -587,8 +587,8 @@ function openPriceInfo(){
 		$('#showPriceInfo').show();
 		priceClear();
 		loadData(function(res){
-			$('#est').val(res.estimatedPrice);
-			$('#pjs').val(res.projectBudget);
+			$('#est').val(res.projectFlow.estimatedPrice);
+			$('#pjs').val(res.projectFlow.projectBudget);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	$('#sumbitPrice').off('click').on('click',function(){
