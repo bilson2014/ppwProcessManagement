@@ -909,14 +909,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					if ("PROJECT_FLOW".equals(tableName)) {
 
 						Map<String, Object> flow = flowFacade.getProjectFlowColumnByProjectId(metaData, projectId);
-						result.put("projectFlow", assembleData(variablesMap, metaData, flow, "PROJECT_FLOW")
-								.put("pf_projectId", flow.get("projectId")));
+						Map<String, Object> flowMap = assembleData(variablesMap, metaData, flow, "PROJECT_FLOW");
+						flowMap.put("pf_projectId", projectId);
+						result.put("projectFlow", flowMap);
 					} else if ("PROJECT_USER".equals(tableName)) {
 
-						Map<String, Object> user = projectUserFacade.getProjectUserColumnByProjectId(metaData,
-								projectId);
-						result.put("projectUser", assembleData(variablesMap, metaData, user, "PROJECT_USER")
-								.put("pu_projectUserId", user.get("projectUserId")));
+						Map<String, Object> user = projectUserFacade.getProjectUserColumnByProjectId(metaData, projectId);
+						Map<String, Object> userMap = assembleData(variablesMap, metaData, user, "PROJECT_USER");
+						userMap.put("pu_projectUserId", user.get("projectUserId"));
+						result.put("projectUser", userMap);
 					} else if ("PROJECT_TEAM".equals(tableName)) {
 
 						List<Map<String, Object>> tList = projectTeamFacade.getProjectsTeamColumnByProjectId(metaData,
@@ -1180,6 +1181,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			TaskVO each = new TaskVO();
 			taskToVO(task, each, flowList, activitiUserId, cycles);
 			each.setTaskStatus("suspend");
+			each.setAgent("0");
 			result.add(each);
 		}
 

@@ -122,11 +122,12 @@
 	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName">其它任务(<span id="otherNum"></span>)</div>
-	                     <div class="orderSelect" >
+	                     <div class="titleName" id="downName"><label id="otherWord">其它任务</label>(<span id="otherNum"></span>)</div>
+	                     <div class="orderSelect" id='isOther'>
 				                <div id="projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="orderCome">
+				                   <li data-id="0">全部</li>
 				                   <li data-id="1">沟通阶段</li>
 				                   <li data-id="2">方案阶段</li>
 				                   <li data-id="3">商务阶段</li>

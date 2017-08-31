@@ -634,7 +634,7 @@
         left: 66px;
         top: 13px;
     }
-    
+
     .lastItem {
         margin-bottom: 35px !important;
     }
@@ -2427,4 +2427,29 @@ background-image: none !important; */
 
     .longInput {
         width: 420px !important;
+    }
+
+
+
+    .errorItem,
+    .errorItemArea {
+        position: relative;
+    }
+
+    .errorItem:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 140px;
+        top: 40px;
+    }
+
+    .errorItemArea:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 140px;
+        top: 85px;
     }

@@ -69,7 +69,7 @@
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">
-	                     <div class="titleName" id="downName">暂停任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName"><label id="otherWord">暂停任务</label>(<span id="otherNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="otherCard">
 	                

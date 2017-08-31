@@ -65,7 +65,7 @@
 	                <div class="setCard" id="setCard"></div>
 	                <div class="lineTop"></div>
 	                <div class="title">
-	                     <div class="titleName" id="downName">完成任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName"><label id="otherWord">完成任务</label>(<span id="otherNum"></span>)</div>
 	                </div>
 	                <div class="setCard" id="otherCard">
 	                	 <c:if test="${!empty finishedTasks}">

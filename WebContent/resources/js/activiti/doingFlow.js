@@ -42,6 +42,8 @@ function getAllSearchInfo(search){
 		var otherCard = $('#otherCard');
 		setCard.html('');
 		otherCard.html('');
+		$('#otherWord').text('其它任务');
+		$('#isOther').hide();
 		if(res != null && res != undefined){
 				$('#daibanName').addClass('hide');
 			for (var int = 0; int < res.length; int++) {
