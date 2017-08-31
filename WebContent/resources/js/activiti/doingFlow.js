@@ -225,13 +225,13 @@ function createOtherCard(res){
 	}
 	
 	if(taskStatus == "suspend"){
-		  img= '<img src="/resources/images/flow/suspendDate.png"> ';
-		  var getTime = Date.parse(res.pauseTime.replace("CST","GMT+0800"));
+		  img= '<img src="/resources/images/flow/isPause.png"> ';
+		  var getTime = res.pauseTime;
 		  time ="暂停于"+formatDate(getTime);
 	}
 	if(taskStatus == "completed"){
-		  img= '<img src="/resources/images/flow/isPay.png"> ';
-		  var getTime = Date.parse(res.finishedDate.replace("CST","GMT+0800"));
+		  img= '<img src="/resources/images/flow/isFinish.png"> ';
+		  var getTime = res.finishedDate
 		  time = "结束于"+formatDate(getTime);
 	}
 	            var html = [
