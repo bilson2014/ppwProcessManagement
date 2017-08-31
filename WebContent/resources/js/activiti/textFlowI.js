@@ -483,6 +483,7 @@ function openProjectInfo(){
 			  $('#pf_projectGrade').text(Grade);
 			  $('#proCycle').val(res.projectFlow.pf_projectCycle);
 			  $('#proFdp').val(res.projectFlow.pf_filmDestPath);
+			  $('#projectDes').val(res.projectFlow.pf_projectDescription);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	

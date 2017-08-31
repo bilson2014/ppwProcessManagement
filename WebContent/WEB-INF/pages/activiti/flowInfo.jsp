@@ -770,7 +770,7 @@
                     
                     <div class="item errorItemArea" id="projectDesError">
                          <div class="title areaTitle">项目描述</div>
-                         <textarea id="projectDes"  name="pf_projectDescription" value="${flow_info['projectDescription']}"></textarea>
+                         <textarea id="projectDes"  name="pf_projectDescription"></textarea>
                     </div>
                     
                     <div class="btnMid">
