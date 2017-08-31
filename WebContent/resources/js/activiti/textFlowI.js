@@ -488,11 +488,9 @@ function openProjectInfo(){
 	});
 	
 	$('#submitProject').off('click').on('click',function(){
-		checkProviderInfo();
-/*		if(checkProviderInfo()){
+		if(checkProviderInfo()){
 			$('#toProjectForm').submit();
-		}*/
-		
+		}
 	});
 }
 
