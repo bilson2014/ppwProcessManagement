@@ -5,9 +5,9 @@ var upload_Video;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
-
+	document.domain = getUrl();
 	// 加载动态表单
-	 var href = window.location.href;
+	    var href = window.location.href;
 	    var state = href.substr(href.lastIndexOf("?")+1,href.length);
 	    if(state.trim() == "status=finished"){
 	    	$('#imgWord').text('完成');

@@ -932,7 +932,7 @@
             </div>
             <form method="post" action="/project/edit/information" id="toPriceForm">
 	            <div class="getPriceContent">
-	                    <input id="priceId" name="pf_projectId">
+	                    <input type="hidden" id="priceId" name="pf_projectId">
 	                    <div class="itemTime errorItem" id="estError">
 	                         <div class="title">预估价格</div>
 	                         <input id="est" name="pf_estimatedPrice">

@@ -7,7 +7,7 @@ var multPrice =0;
 $().ready(function() {
 	//getProduct();
 	//checkInfo();
-	
+	document.domain = getUrl();
 	getSynInfo();
 	initAllSelectEven();
 	initAutoChoose();

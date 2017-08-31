@@ -1,18 +1,13 @@
 
 $().ready(function() {
+	document.domain = getUrl();	
 	initPageEven();
 	toSearch();
 });
 
 function initPageEven(){
-	/*	var waitCard = $('.waitCard');
-	var cardNUm = waitCard.length;
-	if(waitCard.length == null || waitCard.length=="" ){
-		$(window.parent.parent.parent.document).find('#cardNum').hide();
-	}else{
-		$(window.parent.document).find('#cardNum').text(cardNUm);
-	}*/
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+	console.info($('.pages').height() + 300);
 	getDate();
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
@@ -220,13 +215,12 @@ function createOtherCard(res){
 		}
         if(taskStage == '交付阶段'){
         	img= '<img src="/resources/images/flow/isPay.png"> ';
-		}
-		
+		}	
 	}
 	
 	if(taskStatus == "suspend"){
 		  img= '<img src="/resources/images/flow/isPause.png"> ';
-		  var getTime = res.pauseTime;
+		  var getTime = res.suspendDate;
 		  time ="暂停于"+formatDate(getTime);
 	}
 	if(taskStatus == "completed"){
