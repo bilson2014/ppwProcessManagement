@@ -420,7 +420,7 @@
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
 	                        <div class="conMod btn-c-r">版本管理</div>
-	                        <div class="upFile btn-c-r">上传</div>
+	                        <div class="upFile btn-c-r">文件更新</div>
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
@@ -536,12 +536,12 @@
 		   </div>
             
             <div class="upContent" id="upContent">
-                 <div class="item">
+                 <div class="item errorItem" id="errorType">
                       <div class="title">选择分类</div>
                       <div class="orderSelect" >
 			                <div id="hasFile"></div>
 			                <img src="${imgPath}/flow/selectOrder.png">
-			                <ul class="oSelect searchSelect" id="orderCome">
+			                <ul class="oSelect searchSelect" id="orderType">
 			                   <li data-id="需求文档">需求文档</li>
 			                   <li data-id="Q&amp;A文档">Q&amp;A文档</li>
 			                   <li data-id="排期表">排期表</li>
@@ -561,7 +561,7 @@
                  </div>
                  <div class="btnMid">
                       <div class="btn-c-g" id="singleCacnle">取消</div>
-                      <div class="btn-c-r" id="singleUpEv">上传</div>
+                      <div class="btn-c-r hide" id="singleUpEv">上传</div>
                  </div>
             </div>
      </div>

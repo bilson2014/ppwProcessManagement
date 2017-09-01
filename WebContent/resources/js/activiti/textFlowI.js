@@ -757,13 +757,17 @@ function initFileUpload(){
 		 $('#upModel').show();
 		 UploadSingleFile();
 		 getFileType();
+		 $('#errorType').attr('data-content','');
 	});	
 }
 
 function getFileType(){
 	loadData(function(res){    
+		         var body = $('#orderType');
+		         body.html('');
 		    	 for (var i = 0; i < res.length; i++) {
-		    		      createOption(res.key.res.value); 
+		    		      var html = createOption(res[i].key,res[i].value); 
+		    		      body.append(html);
 				   }   
 		    	 initSelect();
 		}, getContextPath() + '/project/edit/resource/'+$("#currentTaskId").val()+"/"+$('#projectId').val(),null);
@@ -787,37 +791,42 @@ function UploadSingleFile(){
 	
 	upload_VideoFile.on('fileQueued', function(file) {
 	    $('#getFileName').val(file.name);
-	    $('.singleProgress').show();
-	    $('#upContent').hide();
+	   
 	    upload_VideoFile.option('formData', {
     		resourceName:$('#getFileName').val(),
     		taskId : $('#currentTaskId').val(),
     		resourceType:$('#hasFile').attr('data-id'),
     		flag : 1
     	});
-	   
+	    
+	    var file= $('#hasFile').text();
+	    if(file == null || file == "" || file == undefined){
+	    	 $('#errorType').attr('data-content','请选择类型')
+	    }else{
+	    	$('.singleProgress').show();
+	 	    $('#upContent').hide();
+	    	$('.upIng').show();
+	  	    upload_VideoFile.upload();
+	    }
+	  
 	});
-/*	upload_Video.on('fileQueued', function(file) {
-		//跳转step2.添加信息
-		_this.addProductMsg();
-	});*/
-	// 文件上传过程中创建进度条实时显示。
-	upload_Video.on('uploadProgress',function(file, percentage) {
+
+	upload_VideoFile.on('uploadProgress',function(file, percentage) {
 		$("#singleSetWidth").css('width', percentage * 100 + '%');
 	});
-	upload_Video.on('uploadSuccess', function(file,response) {
+	upload_VideoFile.on('uploadSuccess', function(file,response) {
 		if(response){
 			clearFile();
 			$('.upIng').hide();
 			$('.upSuccess').show();
 			getFileInfo();
+			initAllTalk();
 		}		
 	});
 	
-	$('#singleUpEv').off('click').on('click',function(){
-		 upload_VideoFile.upload();
-		 $('.upIng').show();
-	});
+	/*$('#singleUpEv').off('click').on('click',function(){
+		 upload_VideoFile.upload();	
+	});*/
 	
 	$('#singleCacnle').off('click').on('click',function(){		
 		clearFile();
