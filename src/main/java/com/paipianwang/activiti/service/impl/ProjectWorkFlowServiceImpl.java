@@ -1387,7 +1387,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			for (String fileType : fileList) {
 				if(variables.containsKey("file_" + fileType)) {
 					KeyValue kv = new KeyValue();
-					kv.setKey(fileType);
+					kv.setKey("file_" + fileType);
 					kv.setValue(FileType.getEnum(fileType).getText());
 					param.add(kv);
 				}
