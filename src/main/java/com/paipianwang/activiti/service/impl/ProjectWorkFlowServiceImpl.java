@@ -1192,7 +1192,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<Task> suspendList = taskService.createTaskQuery().suspended().processInstanceIdIn(new ArrayList<>(processInstanceIds)).list();
 
 		// 处理已完成任务
-		for (PmsProjectFlow flow : flowList) {
+		flowCheck:for (PmsProjectFlow flow : flowList) {
 			if ("finished".equals(flow.getProjectStatus())) {
 				for (HistoricTaskInstance hitask : allTasks) {
 					if (hitask.getId().equals(flow.getProcessInstanceId())) {
@@ -1211,24 +1211,32 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setFinishedDate(flow.getFinishedDate());
 					}
 				}
+			}else{
+				// 处理进行中任务
+				for (Task task : runningList) {
+					if (task.getProcessInstanceId().equals(flow.getProcessInstanceId())) {
+						TaskVO each = new TaskVO();
+						taskToVO(task, each, flow, activitiUserId, cycles);
+						each.setTaskStatus("running");
+						result.add(each);
+						continue flowCheck;
+					}
+				}
+				// 处理挂起任务
+				for (Task task : suspendList) {
+					if (task.getProcessInstanceId().equals(flow.getProcessInstanceId())) {
+						TaskVO each = new TaskVO();
+						taskToVO(task, each, flow, activitiUserId, cycles);
+						each.setTaskStatus("suspend");
+						each.setAgent("0");
+						result.add(each);
+						continue flowCheck;
+					}
+				}
 			}
 		}
 
-		// 处理进行中任务
-		for (Task task : runningList) {
-			TaskVO each = new TaskVO();
-			taskToVO(task, each, flowList, activitiUserId, cycles);
-			each.setTaskStatus("running");
-			result.add(each);
-		}
-		// 处理挂起任务
-		for (Task task : suspendList) {
-			TaskVO each = new TaskVO();
-			taskToVO(task, each, flowList, activitiUserId, cycles);
-			each.setTaskStatus("suspend");
-			each.setAgent("0");
-			result.add(each);
-		}
+		
 
 		// 排序
 		result.sort(new Comparator<TaskVO>() {
@@ -1243,7 +1251,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		return result;
 	}
 
-	private void taskToVO(Task task, TaskVO each, List<PmsProjectFlow> flowList, String activitiUserId,
+	private void taskToVO(Task task, TaskVO each, PmsProjectFlow flow, String activitiUserId,
 			Map<String, ProjectCycleItem> cycles) {
 		each.setTaskId(task.getId());
 		each.setTaskName(task.getName());
@@ -1253,8 +1261,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		each.setProcessDefinitionId(task.getProcessDefinitionId());
 		each.setProcessInstanceId(task.getProcessInstanceId());
 
-		for (PmsProjectFlow flow : flowList) {
-			if (task.getProcessInstanceId().equals(flow.getProcessInstanceId())) {
+//		for (PmsProjectFlow flow : flowList) {
+//			if (task.getProcessInstanceId().equals(flow.getProcessInstanceId())) {
 				// 是否是负责人
 				if (ValidateUtil.isValid(activitiUserId)
 						&& ("employee_" + flow.getPrincipal()).equals(activitiUserId)) {
@@ -1266,9 +1274,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				each.setProjectName(flow.getProjectName());
 				each.setPrincipalName(flow.getPrincipalName());
 				each.setSuspendDate(flow.getSuspendDate());
-				break;
-			}
-		}
+//				break;
+//			}
+//		}
 		each.setTaskStage(cycles.get(task.getTaskDefinitionKey()).getStage());
 		each.setTaskDescription(cycles.get(task.getTaskDefinitionKey()).getDescription());
 
