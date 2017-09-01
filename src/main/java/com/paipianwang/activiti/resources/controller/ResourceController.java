@@ -47,9 +47,9 @@ public class ResourceController  extends BaseController{
 	 */
 	@RequestMapping(value = "/addResource", method = RequestMethod.POST)
 	public String addResource(final HttpServletRequest request, final HttpServletResponse response,
-			final MultipartFile file,String resourceName,String taskId,String resourceType) {
+			final MultipartFile file,String resourceName,String taskId,String resourceType, Integer flag) {
 		SessionInfo info = getCurrentInfo(request);
-		return projectResourceService.addResource(resourceName,taskId,resourceType, file,info) + "";
+		return projectResourceService.addResource(resourceName,taskId,resourceType, file,info, flag) + "";
 	}
 
 	/**
