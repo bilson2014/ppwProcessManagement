@@ -2,6 +2,7 @@ var InterValObj; // timer变量，控制时间
 var count = 120; // 间隔函数，1秒执行  
 var curCount; // 当前剩余秒数 
 var upload_Video;
+var upload_VideoFile;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 $().ready(function() {
@@ -20,8 +21,6 @@ $().ready(function() {
 	    	$('#lastTimeWord').show();
 	    }
 	
-	pasueOrDoing();
-	getTimeString();
 	pageInit();
 	initDaibanTime();
 	initResouces();
@@ -30,9 +29,7 @@ $().ready(function() {
 
 //初始化来源
 function initResouces(){
-
 	loadData(function (res){
-
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -51,7 +48,7 @@ function getHeight(){
 	var height = $('.pages').height() + 300;
 	$(window.parent.document).find('.frame').css('height',height);
 }
-
+//待办任务时间
 function initDaibanTime(){
 	   var nowData = Date.parse(new Date());
 	   var time =Date.parse($('#missinTime').text().replace("CST","GMT+0800"));
@@ -68,6 +65,7 @@ function initDaibanTime(){
 		   $('#missinTime').text('剩余'+getTimeString(lastTime));
 	   }
 }
+
 
 //流程信息
 function initLastTime(ctyle,createTime){
@@ -335,21 +333,7 @@ function getStageCard(keys,resKey){
 	}
 }
 
-//流程信息end
 
-function pasueOrDoing(){
-	
-/*	$('#isPause').off('click').on('click',function(){
-		 $('#infoModel').show();
-		 toDoing();
-	});
-	
-	$('#isPause').off('click').on('click',function(){
-		 $('#infoModel').show();
-		 toPause();
-	});*/
-	
-}
 
 function toDoing(){
 	$('#cancle').off('click').on('click',function(){
@@ -462,6 +446,7 @@ function pageInit(){
 	checkState();
 	getHeight();
 	initWindow();
+	initFileUpload();
 	$('#projectCtyle').text($('#projectCtyle').text()+"天");
 	if($('#projectTime').text()!=null && $('#projectTime').text()!="" && $('#projectTime').text()!=undefined )
     $('#projectTime').text(formatDate($('#projectTime').text().replace("CST","GMT+0800")));
@@ -767,7 +752,97 @@ function initFormEven(){
 	
 }
 
-//上传
+function initFileUpload(){	
+	$('.upFile').off('click').on('click',function(){
+		 $('#upModel').show();
+		 UploadSingleFile();
+		 getFileType();
+	});	
+}
+
+function getFileType(){
+	loadData(function(res){    
+		    	 for (var i = 0; i < res.length; i++) {
+		    		      createOption(res.key.res.value); 
+				   }   
+		    	 initSelect();
+		}, getContextPath() + '/project/edit/resource/'+$("#currentTaskId").val()+"/"+$('#projectId').val(),null);
+}
+
+//文件上传
+function UploadSingleFile(){
+	upload_VideoFile && upload_VideoFile.destroy();
+	var picker =$('#findFile'); 
+	upload_VideoFile = WebUploader.create({
+		auto:false,
+		swf : '/resources/lib/webuploader/Uploader.swf',
+		server : '/resource/addResource',
+		pick : {
+			id:picker,
+			multiple :false//弹窗时不允许多选,
+		},
+		timeout:0,
+		fileSingleSizeLimit : video_max_size,
+	});
+	
+	upload_VideoFile.on('fileQueued', function(file) {
+	    $('#getFileName').val(file.name);
+	    $('.singleProgress').show();
+	    $('#upContent').hide();
+	    upload_VideoFile.option('formData', {
+    		resourceName:$('#getFileName').val(),
+    		taskId : $('#currentTaskId').val(),
+    		resourceType:$('#hasFile').attr('data-id'),
+    		flag : 1
+    	});
+	   
+	});
+/*	upload_Video.on('fileQueued', function(file) {
+		//跳转step2.添加信息
+		_this.addProductMsg();
+	});*/
+	// 文件上传过程中创建进度条实时显示。
+	upload_Video.on('uploadProgress',function(file, percentage) {
+		$("#singleSetWidth").css('width', percentage * 100 + '%');
+	});
+	upload_Video.on('uploadSuccess', function(file,response) {
+		if(response){
+			clearFile();
+			$('.upIng').hide();
+			$('.upSuccess').show();
+			getFileInfo();
+		}		
+	});
+	
+	$('#singleUpEv').off('click').on('click',function(){
+		 upload_VideoFile.upload();
+		 $('.upIng').show();
+	});
+	
+	$('#singleCacnle').off('click').on('click',function(){		
+		clearFile();
+	});
+	
+	$('#singleCacnleEven').off('click').on('click',function(){
+		clearFile();
+	});
+	
+}
+
+function clearFile(){
+	$('.cusModel').hide(); 
+	 $('.upProgress').hide();
+	 $('#upContent').show();
+	 $("#singleSetWidth").css('width', 0);
+	 $('#getFileName').val('');
+	 $('#hasFile').text('');
+	 $('#hasFile').attr('data-id','');
+	 $('.upIng').hide();
+	 $('.upSuccess').hide();
+}
+
+
+//动态上传
 function UploadFile(){
 	//upload_Video && upload_Video.destroy();
 	var picker =$('#picker'); 
@@ -1517,3 +1592,5 @@ function createOption(value,text,price){
 	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 	return html;
 }
+
+

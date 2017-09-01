@@ -59,6 +59,7 @@ function getAllSearchInfo(search){
 				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
 				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
 			  }
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		}
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
@@ -68,6 +69,7 @@ function getAllSearchInfo(search){
 function getState(name){
 	var otherCard = $('#otherCard');
 	otherCard.html('');
+	$('#otherWord').text('其它任务');
 	loadData(function(res){     
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
@@ -75,7 +77,8 @@ function getState(name){
 					 otherCard.append(html);
 				 }
 			$('#otherNum').text($('.otherCard').length);
-			}	
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+		 }	
 	}, getContextPath() + '/project/agent/search', $.toJSON({
 		taskStage : name
 	}));
@@ -254,8 +257,3 @@ function createOtherCard(res){
 		].join('');                                                                                                                       
 		return html;
 	}
-
-
-
-
-

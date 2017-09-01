@@ -421,7 +421,7 @@
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
 	                        <div class="conMod btn-c-r">版本管理</div>
-	                        <div class="upFile hide btn-c-r">上传</div>
+	                        <div class="upFile btn-c-r">上传</div>
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
@@ -517,33 +517,56 @@
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">文件上传</div>
-                   <div class="closeModel"></div>
+                   <div class="closeModel" id="singleCacnleEven"></div>
             </div>
-            <div class="upContent">
+            
+            <div class="upProgress singleProgress" style="margin-bottom:40px;" id="singleUp">
+								<div class="proTitle" id="proTitle">上传进度</div>
+								<div  class="progress progress-striped active">
+									<div id="singleSetWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 0;"></div>
+								</div>
+								<div class="upIng">上传中...</div>
+								<div class="upSuccess">
+									<img src="/resources/images/provider/sure.png">上传成功
+								</div>
+								<div class="upError">
+									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
+								</div>
+		   </div>
+            
+            <div class="upContent" id="upContent">
                  <div class="item">
                       <div class="title">选择分类</div>
                       <div class="orderSelect" >
-			                <div id="sIndentSource"></div>
+			                <div id="hasFile"></div>
 			                <img src="${imgPath}/flow/selectOrder.png">
 			                <ul class="oSelect searchSelect" id="orderCome">
-			                    <li data-id="">全部</li>	
+			                   <li data-id="需求文档">需求文档</li>
+			                   <li data-id="Q&amp;A文档">Q&amp;A文档</li>
+			                   <li data-id="排期表">排期表</li>
+			                   <li data-id="策划方案">策划方案</li>
+			                   <li data-id="报价单">报价单</li>
+			                   <li data-id="制作导演信息">制作导演信息</li>
+			                   <li data-id="分镜头脚本">分镜头脚本</li>
+			                   <li data-id="花絮">花絮</li>
+			                   <li data-id="成片">成片</li>
 			                </ul>    
 				        </div>
                  </div>
                   <div class="item">
                       <div class="title">选择文件</div>
-                      <input>
-                      <div class="find">浏览</div>
+                      <input id="getFileName">
+                      <div class="findFile" id="findFile">浏览</div>
                  </div>
                  <div class="btnMid">
-                      <div class="btn-c-g">取消</div>
-                      <div class="btn-c-r">确认</div>
+                      <div class="btn-c-g" id="singleCacnle">取消</div>
+                      <div class="btn-c-r" id="singleUpEv">上传</div>
                  </div>
             </div>
      </div>
 </div>
-
-
 
 <!-- 版本管理 -->
 <div class="cusModel" id="controlModel">
@@ -559,7 +582,6 @@
                                   <div class="title">需求文档</div>
                              </div>
                              <div class="getInfoItemContent">
-                                
 	                            <div class="InfoItem">
                                   <div class="fileName">文件名</div>
                                   <div class="name">策划人</div>
@@ -810,6 +832,7 @@
                    <div class="closeModel"></div>
             </div>
             <form method="post" action="/project/edit/information" id="toCusForm">
+             <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
 	            <div class="getPriceContent">
 	                    <input type="hidden" id="cusId" name="pu_projectUserId">
 	                    <div class="itemTime errorItem" id="cusLinkmanError">
@@ -838,6 +861,7 @@
             </div>
             <div class="getPriceContent">
              <form method="post" action="/project/edit/teamInformation" id="toProForm">
+             <input type="hidden" id="proId" name="projectId"" value="${flow_info['projectId']}">
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
