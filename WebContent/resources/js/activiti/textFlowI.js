@@ -14,6 +14,10 @@ $().ready(function() {
 			$('#lastTimeWord').hide();
 	    	$('#taskStage').val('交付阶段');
 	    	getStageInfo($('#taskStage').val());
+	    }else{
+	    	var task = $('#taskStage').val();
+	    	getStageInfo(task);
+	    	$('#lastTimeWord').show();
 	    }
 	
 	pasueOrDoing();
@@ -850,6 +854,9 @@ function autoSelect(){
 	$('.autoSelect').off('click').on('click',function(){
 		 $(this).parent().find('ul').show();
 	});
+	$('.autoImg').off('click').on('click',function(){
+		 $(this).parent().find('ul').show();
+	});
 	autoSelectUl();
 }
 
@@ -857,8 +864,8 @@ function autoSelectUl(){
 	
 	$('.autoSelectUl li').off('click').on('click',function(){
 		$('.autoSelectUl').hide();
-			var name = $(this).text();
-			var id = $(this).attr('data-id');
+		 var name = $(this).text();
+		 var id = $(this).attr('data-id');
 		 $(this).parent().parent().find('input').val(name);
 		 $(this).parent().parent().find('.hideInput').val(id);
 	});
