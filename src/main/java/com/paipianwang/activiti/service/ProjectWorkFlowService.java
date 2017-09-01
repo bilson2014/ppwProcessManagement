@@ -8,6 +8,7 @@ import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 
 import com.paipianwang.activiti.domin.TaskVO;
+import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
@@ -144,7 +145,7 @@ public interface ProjectWorkFlowService {
 	 * 修改项目信息、客户信息
 	 * @param formProperties
 	 */
-	public void updateInformation(Map<String, String> formProperties);
+	public void updateInformation(Map<String, String> formProperties, SessionInfo info);
 
 	/**
 	 * 修改供应商信息
@@ -154,4 +155,13 @@ public interface ProjectWorkFlowService {
 	
 	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId);
 	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag);
+
+	/**
+	 * 获取可修改的文件列表
+	 * @param info 身份验证
+	 * @param taskId 当前taskId
+	 * @param projectId 项目编号
+	 * @return
+	 */
+	public List<KeyValue> getEditResourceList(SessionInfo info, String taskId, String projectId);
 }

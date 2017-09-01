@@ -42,7 +42,9 @@ import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.constant.PmsConstant;
+import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.enums.FileType;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.finance.service.PmsFinanceFacade;
@@ -62,6 +64,7 @@ import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnUpdateShipFacade;
+import com.paipianwang.pat.workflow.facade.PmsProjectGroupResourceUpdateFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
@@ -122,6 +125,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsFinanceFacade financeFacade = null;
+	
+	@Autowired
+	private PmsProjectGroupResourceUpdateFacade resourceUpdateFacade = null;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -877,13 +883,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	/**
-	 * <<<<<<< HEAD 获取可编辑的字段
+	 * 获取可编辑的字段
 	 * 
 	 * @param taskId
 	 * @param projectId
 	 * @param info
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> getEditParameter(final String taskId, final String projectId, final String infoType,
 			final SessionInfo info) {
@@ -989,6 +996,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		return null;
 	}
 
+	// 拆分业务数据
 	public Map<String, List<String>> divideVariables(final Map<String, Object> varMap) {
 		Map<String, List<String>> result = new HashMap<String, List<String>>();
 
@@ -1026,6 +1034,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		return null;
 	}
 
+	// 组装业务数据
 	public Map<String, Object> assembleData(Map<String, List<String>> variablesMap, List<String> metaData,
 			Map<String, Object> param, String type) {
 		List<String> userVariables = variablesMap.get(type);
@@ -1048,20 +1057,34 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void updateInformation(Map<String, String> formProperties) {
+	public void updateInformation(Map<String, String> formProperties, SessionInfo info) {
 		// 将数据分组
 		Map<String, Map<String, Object>> dataMap = groupDataIntoMap(formProperties);
 
 		if (dataMap != null && !dataMap.isEmpty()) {
 			Map<String, Object> flowMap = dataMap.get(ProjectFlowConstant.PROJECT_FLOW); // 项目信息数据集
 			Map<String, Object> userMap = dataMap.get(ProjectFlowConstant.PROJECT_USER); // 用户数据集
-
+			
+			// 日志内容
+			StringBuffer content = new StringBuffer();
+			String activitiGroup = StringUtils.join(info.getActivitGroups(), ",");
+			content.append("【").append(activitiGroup).append("】").append(info.getRealName())
+					.append("更新了 ");
+			
 			if (flowMap != null && !flowMap.isEmpty()) {
 				// 更新项目信息
 				final String projectId = (String) flowMap.get("projectId");
 				if (StringUtils.isNotBlank(projectId)) {
 					flowMap.remove("projectId");
 					flowFacade.update(flowMap, projectId);
+					
+					// 写入日志
+					PmsProjectMessage message = new PmsProjectMessage();
+					message.setContent(content.append(" 项目信息").toString());
+					message.setFromGroup(activitiGroup);
+					message.setFromId(info.getActivitiUserId());
+					message.setProjectId(projectId);
+					pmsProjectMessageFacade.insert(message);
 				}
 			}
 
@@ -1071,6 +1094,16 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				if (StringUtils.isNotBlank(projectUserId)) {
 					userMap.remove("projectUserId");
 					projectUserFacade.update(userMap, null, Long.parseLong(projectUserId));
+					
+					// 写入日志
+					final String projectId = formProperties.get("projectId");
+					PmsProjectMessage message = new PmsProjectMessage();
+					
+					message.setContent(content.append(" 客户信息").toString());
+					message.setFromGroup(activitiGroup);
+					message.setFromId(info.getActivitiUserId());
+					message.setProjectId(projectId);
+					pmsProjectMessageFacade.insert(message);
 				}
 			}
 
@@ -1318,6 +1351,37 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			
 			
 			return list;
+		}
+		return null;
+	}
+
+	@Override
+	public List<KeyValue> getEditResourceList(SessionInfo info, String taskId, String projectId) {
+		List<String> groupStrs = info.getActivitGroups();
+		if(groupStrs != null && !groupStrs.isEmpty() && StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
+			List<Group> groups = new ArrayList<Group>();
+			for (String groupId : groupStrs) {
+				if(StringUtils.isNotBlank(groupId)) {
+					Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+					groups.add(group);
+				}
+			}
+			// 获取可以上传的文件
+			List<String> fileList = resourceUpdateFacade.getResources(groups);
+			// 获取已经存在的文件
+			Map<String, Object> variables = taskService.getVariables(taskId);
+			
+			List<KeyValue> param = new ArrayList<KeyValue>();
+			for (String fileType : fileList) {
+				if(variables.containsKey("file_" + fileType)) {
+					KeyValue kv = new KeyValue();
+					kv.setKey(fileType);
+					kv.setValue(FileType.getEnum(fileType).getText());
+					param.add(kv);
+				}
+			}
+			System.err.println(param);
+			return param;
 		}
 		return null;
 	}

@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
+import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
@@ -458,12 +459,13 @@ public class ProjectFlowController extends BaseController {
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
 		if (paramMap != null && !paramMap.isEmpty()) {
+			SessionInfo info = getCurrentInfo(request);
 			Map<String, String> formProperties = new HashMap<String, String>();
 			for (Entry<String, String[]> entry : paramMap.entrySet()) {
 				String key = entry.getKey();
 				formProperties.put(key, entry.getValue()[0]);
 			}
-			projectWorkFlowService.updateInformation(formProperties);
+			projectWorkFlowService.updateInformation(formProperties, info);
 		}
 
 		return mv;
@@ -540,4 +542,11 @@ public class ProjectFlowController extends BaseController {
 		return suspendTasks;
 	}
 	
+	@RequestMapping("/edit/resource/{taskId}/{projectId}")
+	public List<KeyValue> editResourceList(final HttpServletRequest request, 
+										 @PathVariable("taskId") final String taskId, 
+										 @PathVariable("taskId") final String projectId) {
+		SessionInfo info = getCurrentInfo(request);
+		return projectWorkFlowService.getEditResourceList(info, taskId, projectId);
+	}
 }
