@@ -557,10 +557,10 @@
                   <div class="item">
                       <div class="title">选择文件</div>
                       <input id="getFileName">
-                      <div class="findFile" id="findFile">浏览</div>
+                      <div class="findFile" id="findFile">上传</div>
                  </div>
                  <div class="btnMid">
-                      <div class="btn-c-g" id="singleCacnle">取消</div>
+                      <div class="btn-c-g" style="position: relative;left: 59px;" id="singleCacnle">取消</div>
                       <div class="btn-c-r hide" id="singleUpEv">上传</div>
                  </div>
             </div>
@@ -864,10 +864,7 @@
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
-	                    <div class="item errorItem" id="scCusNameError">
-	                         <div class="title" >供应商名称</div>
-	                         <input class="checkError" id="scCusName" name="pt_teamName">
-	                    </div>
+
 	                    <div class="itemTime errorItem" id="scLinkError">
 	                         <div class="title">供应商联系人</div>
 	                         <input class="checkError" id="scLink" name="pt_linkman">
@@ -881,10 +878,6 @@
                   <div id="isHideBot"> 
 	                    <div class="bigTitle">制作供应商</div>
 	                    <input type="hidden" id="prId" name="pt_projectTeamId">
-	                    <div class="item errorItem" id="prCusNameError">
-	                         <div class="title">供应商名称</div>
-	                         <input class="checkError" id="prCusName" name="pt_teamName">
-	                    </div>
 	                    <div class="itemTime errorItem" id="prLinkError">
 	                         <div class="title">供应商联系人</div>
 	                         <input class="checkError" id="prLink" name="pt_linkman">
