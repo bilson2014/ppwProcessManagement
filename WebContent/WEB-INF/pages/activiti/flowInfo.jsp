@@ -420,7 +420,7 @@
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
 	                        <div class="conMod btn-c-r">版本管理</div>
-	                        <div class="upFile btn-c-r">上传</div>
+	                        <div class="upFile btn-c-r">文件更新</div>
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
