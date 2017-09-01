@@ -132,7 +132,7 @@
 				                   <li data-id="2">方案阶段</li>
 				                   <li data-id="3">商务阶段</li>
 				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">支付阶段</li>
+				                   <li data-id="5">交付阶段</li>
 				                </ul>    
 					      </div>
 	                </div>

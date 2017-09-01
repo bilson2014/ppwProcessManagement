@@ -618,7 +618,11 @@ function openPriceInfo(){
 		loadData(function(res){
 			$('#priceId').val(res.projectFlow.pf_projectId)
 			$('#est').val(res.projectFlow.pf_estimatedPrice);
-			$('#pjs').val(res.projectFlow.pf_projectBudget);
+			if(res.projectFlow.pf_projectBudget == null || res.projectFlow.pf_projectBudget == undefined || res.projectFlow.pf_projectBudget == ""){
+				$('#pjsError').remove();
+			}else{
+				$('#pjs').val(res.projectFlow.pf_projectBudget);
+			}
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	$('#sumbitPrice').off('click').on('click',function(){
@@ -643,10 +647,14 @@ function checkPrice(){
 		 return false;
 	 }
 	 
-     if(pjs == undefined || pjs == "" || pjs ==null ){
-    	 $('#pjsError').attr('data-content','客户项目预算未填写');
-		 return false;
+	 var pjsName = $('#pjsError'); 
+	 if(pjsName != undefined && pjsName != "" && pjsName !=null ){
+		 if(pjs == undefined || pjs == "" || pjs ==null ){
+	    	 $('#pjsError').attr('data-content','客户项目预算未填写');
+			 return false;
+		 }
 	 }
+     
      return true;
 }
 
@@ -757,6 +765,7 @@ function initFileUpload(){
 		 $('#upModel').show();
 		 UploadSingleFile();
 		 getFileType();
+		 scrollTo(0,0);
 		 $('#errorType').attr('data-content','');
 	});	
 }
@@ -791,9 +800,9 @@ function UploadSingleFile(){
 	
 	upload_VideoFile.on('fileQueued', function(file) {
 	    $('#getFileName').val(file.name);
-	   
+	    
 	    upload_VideoFile.option('formData', {
-    		resourceName:$('#getFileName').val(),
+    		resourceName:$('#hasFile').text(),
     		taskId : $('#currentTaskId').val(),
     		resourceType:$('#hasFile').attr('data-id'),
     		flag : 1
@@ -802,8 +811,6 @@ function UploadSingleFile(){
 	    var file= $('#hasFile').text();
 	    if(file == null || file == "" || file == undefined){
 	    	 $('#errorType').attr('data-content','请选择类型');
-	    	 var file =  $('#getFileName').val(file.name);
-		     $('#getFileName').val('');
 	    }else{
 	    	
 	    	$('.singleProgress').show();
