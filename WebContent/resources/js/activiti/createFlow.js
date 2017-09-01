@@ -634,6 +634,12 @@ function IsUrl(str){
 }
 
 
+function createOption(value,text,price){
+	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
+	return html;
+}
+
+
 
 
 

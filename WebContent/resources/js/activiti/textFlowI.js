@@ -477,6 +477,7 @@ function initWindow(){
 function openProjectInfo(){
 	$('#openProjectInfo').off('click').on('click',function(){
 		$('#showProjectInfo').show();
+		scrollTo(0,0);
 		proInfoClear();
 		loadData(function(res){
 			  $('#proName').val(res.projectFlow.pf_projectName);
@@ -576,6 +577,7 @@ function proInfoClear(){
 function openCusInfo(){
 	$('#openCusInfo').off('click').on('click',function(){
 		$('#showCusInfo').show();
+		scrollTo(0,0);
 		cusClear();
 		loadData(function(res){
 			  $('#cusId').val(res.projectUser.pu_projectUserId);
@@ -622,6 +624,7 @@ function checkCusInfo(){
 function openPriceInfo(){
 	$('#openPriceInfo').off('click').on('click',function(){
 		$('#showPriceInfo').show();
+		scrollTo(0,0);
 		priceClear();
 		loadData(function(res){
 			$('#priceId').val(res.projectFlow.pf_projectId)
@@ -662,6 +665,7 @@ function checkPrice(){
 function openProviderInfo(){
 	$('#openProvider').off('click').on('click',function(){
 		$('#showProvider').show();
+		scrollTo(0,0);
 		clearProvi();
 		loadData(function(res){
 	          var scheme = res.project_team_scheme;
