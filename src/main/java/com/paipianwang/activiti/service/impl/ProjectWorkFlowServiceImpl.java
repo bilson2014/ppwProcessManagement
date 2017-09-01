@@ -1180,24 +1180,28 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			query=query.processInstanceIdIn(nn);
 		}
 		List<HistoricTaskInstance> allTasks=query.list();
+		if(!ValidateUtil.isValid(allTasks)){
+			return result;
+		}
 
 		Set<String> processInstanceIds = new HashSet<>();
 		for(HistoricTaskInstance ht:allTasks){
 			processInstanceIds.add(ht.getProcessInstanceId());
 		}
+		List<String> instanceIdList=new ArrayList<>(processInstanceIds);
 
 		// 获取进行中任务
-		List<Task> runningList = taskService.createTaskQuery().active().processInstanceIdIn(new ArrayList<>(processInstanceIds)).list();
+		List<Task> runningList = taskService.createTaskQuery().active().processInstanceIdIn(instanceIdList).list();
 		// 获取挂起任务
-		List<Task> suspendList = taskService.createTaskQuery().suspended().processInstanceIdIn(new ArrayList<>(processInstanceIds)).list();
+		List<Task> suspendList = taskService.createTaskQuery().suspended().processInstanceIdIn(instanceIdList).list();
 
 		// 处理已完成任务
 		flowCheck:for (PmsProjectFlow flow : flowList) {
 			if ("finished".equals(flow.getProjectStatus())) {
-				for (HistoricTaskInstance hitask : allTasks) {
-					if (hitask.getId().equals(flow.getProcessInstanceId())) {
+				for (String hitask : instanceIdList) {
+					if (hitask.equals(flow.getProcessInstanceId())) {
 						TaskVO each = new TaskVO();
-						each.setProcessInstanceId(hitask.getProcessInstanceId());
+						each.setProcessInstanceId(hitask);
 						each.setTaskStatus("completed");
 						if (ValidateUtil.isValid(activitiUserId)
 								&& ("employee_" + flow.getPrincipal()).equals(activitiUserId)) {
@@ -1209,6 +1213,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setProjectName(flow.getProjectName());
 						each.setPrincipalName(flow.getPrincipalName());
 						each.setFinishedDate(flow.getFinishedDate());
+						result.add(each);
 					}
 				}
 			}else{
@@ -1234,10 +1239,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					}
 				}
 			}
-		}
-
-		
-
+		}	
 		// 排序
 		result.sort(new Comparator<TaskVO>() {
 			@Override
