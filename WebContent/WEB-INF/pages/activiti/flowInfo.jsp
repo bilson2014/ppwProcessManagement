@@ -542,7 +542,7 @@
                       <div class="orderSelect" >
 			                <div id="hasFile"></div>
 			                <img src="${imgPath}/flow/selectOrder.png">
-			                <ul class="oSelect searchSelect" id="orderCome">
+			                <ul class="oSelect searchSelect" id="orderType">
 			                   <li data-id="需求文档">需求文档</li>
 			                   <li data-id="Q&amp;A文档">Q&amp;A文档</li>
 			                   <li data-id="排期表">排期表</li>

@@ -762,8 +762,11 @@ function initFileUpload(){
 
 function getFileType(){
 	loadData(function(res){    
+		         var body = $('#orderType');
+		         body.html('');
 		    	 for (var i = 0; i < res.length; i++) {
-		    		      createOption(res.key.res.value); 
+		    		      var html = createOption(res.key.res.value); 
+		    		      body.append(html);
 				   }   
 		    	 initSelect();
 		}, getContextPath() + '/project/edit/resource/'+$("#currentTaskId").val()+"/"+$('#projectId').val(),null);
