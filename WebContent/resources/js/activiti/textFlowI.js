@@ -801,8 +801,11 @@ function UploadSingleFile(){
 	    
 	    var file= $('#hasFile').text();
 	    if(file == null || file == "" || file == undefined){
-	    	 $('#errorType').attr('data-content','请选择类型')
+	    	 $('#errorType').attr('data-content','请选择类型');
+	    	 var file =  $('#getFileName').val(file.name);
+		     $('#getFileName').val('');
 	    }else{
+	    	
 	    	$('.singleProgress').show();
 	 	    $('#upContent').hide();
 	    	$('.upIng').show();
