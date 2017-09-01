@@ -7,8 +7,7 @@
 <spring:url value="/resources/css/activiti/flowInfo.css" var="flowInfoCss"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
 <spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
-<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css"
-	var="bootstrapCss" />
+<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -151,15 +150,6 @@
 	                                      </ul>
 	                                 </div>
 								 </c:forEach> 
-	                              <!--     <div class="imgItem">
-	                                      <img src>
-	                                      <ul>
-	                                          <li>三维</li>
-	                                          <li>负责人</li>
-	                                          <li>线上-网站</li>
-	                                      </ul>
-	                                 </div> -->
-	                              
 	                            </div>
 	                         </div>   
 	                       </c:if>
@@ -168,7 +158,9 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">项目信息</div>
+	                                 <r:group role="sale" role2="saleDirector">
 	                                 <div class="update btn-c-r" id="openProjectInfo">更新</div>
+	                                 </r:group>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">
@@ -216,7 +208,13 @@
 			                                 <c:if test="${not empty flow_info['productName']}">
 			                                 	<div class="item">
 			                                          <div>项目周期</div>
-			                                          <div>${flow_info["projectCycle"]}</div>
+			                                          <c:if test="${flow_info['projectCycle'] == 0}">
+			                                     		     <div>待定</div>
+			                                     	  </c:if>
+			                                     	   <c:if test="${flow_info['projectCycle'] > 0}">
+			                                     		     <div>${flow_info["projectCycle"]}</div>
+			                                     	  </c:if>
+			                                          
 				                                </div>
 				                                <div class="item">
 				                                          <div>产品线</div>
@@ -262,7 +260,9 @@
 		                            <div class="getInfoItemTop">
 		                                 <div class="controlOpen"></div>
 		                                 <div class="info">客户信息</div>
+		                                 <r:group role="sale" role2="saleDirector">
 		                                 <div class="update btn-c-r" id="openCusInfo">更新</div>
+		                                 </r:group>
 		                            </div>
 		                            <div class="getInfoItemContent">
 		                                  <div class="contentItem">
@@ -304,7 +304,9 @@
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
-	                                 <div class="update btn-c-r">更新</div>
+	                                 <r:group role="teamProvider" role2="teamDirector">
+	                                 <div class="update btn-c-r" id="openProvider">更新</div>
+	                                 </r:group>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                            	<c:if test="${not empty teamPlan_info}">
@@ -381,21 +383,34 @@
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">价格信息</div>
+	                                 <r:group role="sale" role2="saleDirector">
 	                                 <div class="update btn-c-r" id="openPriceInfo">更新</div>
+	                                 </r:group>
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                                  <div class="contentItem">	      
 	                                     	<c:if test="${not empty price_info['estimatedPrice']}">
 			                                     <div class="item">
 			                                     		<div>预估价格</div>
-			                                          	<div>${price_info["estimatedPrice"]}</div>
+			                                     		<c:if test="${price_info['estimatedPrice'] == 0}">
+			                                     		     <div>待定</div>
+			                                     		</c:if>
+			                                     		<c:if test="${price_info['estimatedPrice'] > 0}">
+			                                     		   <div>${price_info["estimatedPrice"]}</div>
+			                                     		</c:if>
+			                                          	
 					                             </div>
 	                                     	</c:if>
 	                                     	
 	                                     	<c:if test="${not empty price_info['projectBudget']}">
 	                                     		<div class="item">
 			                                          <div>客户项目预算</div>
-			                                          <div>${price_info["projectBudget"]}</div>
+			                                          <c:if test="${price_info['projectBudget'] == 0}">
+			                                             <div>待定</div>
+			                                          </c:if> 
+			                                          <c:if test="${price_info['projectBudget'] > 0}">
+			                                             <div>${price_info['projectBudget']}</div>
+			                                          </c:if>  
 					                             </div>
 	                                     	</c:if>
 							         </div>
@@ -405,7 +420,7 @@
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
 	                        <div class="conMod btn-c-r">版本管理</div>
-	                        <div class="upFile hide btn-c-r">上传</div>
+	                        <div class="upFile btn-c-r">上传</div>
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
@@ -501,33 +516,56 @@
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">文件上传</div>
-                   <div class="closeModel"></div>
+                   <div class="closeModel" id="singleCacnleEven"></div>
             </div>
-            <div class="upContent">
+            
+            <div class="upProgress singleProgress" style="margin-bottom:40px;" id="singleUp">
+								<div class="proTitle" id="proTitle">上传进度</div>
+								<div  class="progress progress-striped active">
+									<div id="singleSetWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 0;"></div>
+								</div>
+								<div class="upIng">上传中...</div>
+								<div class="upSuccess">
+									<img src="/resources/images/provider/sure.png">上传成功
+								</div>
+								<div class="upError">
+									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
+								</div>
+		   </div>
+            
+            <div class="upContent" id="upContent">
                  <div class="item">
                       <div class="title">选择分类</div>
                       <div class="orderSelect" >
-			                <div id="sIndentSource"></div>
+			                <div id="hasFile"></div>
 			                <img src="${imgPath}/flow/selectOrder.png">
 			                <ul class="oSelect searchSelect" id="orderCome">
-			                    <li data-id="">全部</li>	
+			                   <li data-id="需求文档">需求文档</li>
+			                   <li data-id="Q&amp;A文档">Q&amp;A文档</li>
+			                   <li data-id="排期表">排期表</li>
+			                   <li data-id="策划方案">策划方案</li>
+			                   <li data-id="报价单">报价单</li>
+			                   <li data-id="制作导演信息">制作导演信息</li>
+			                   <li data-id="分镜头脚本">分镜头脚本</li>
+			                   <li data-id="花絮">花絮</li>
+			                   <li data-id="成片">成片</li>
 			                </ul>    
 				        </div>
                  </div>
                   <div class="item">
                       <div class="title">选择文件</div>
-                      <input>
-                      <div class="find">浏览</div>
+                      <input id="getFileName">
+                      <div class="findFile" id="findFile">浏览</div>
                  </div>
                  <div class="btnMid">
-                      <div class="btn-c-g">取消</div>
-                      <div class="btn-c-r">确认</div>
+                      <div class="btn-c-g" id="singleCacnle">取消</div>
+                      <div class="btn-c-r" id="singleUpEv">上传</div>
                  </div>
             </div>
      </div>
 </div>
-
-
 
 <!-- 版本管理 -->
 <div class="cusModel" id="controlModel">
@@ -543,7 +581,6 @@
                                   <div class="title">需求文档</div>
                              </div>
                              <div class="getInfoItemContent">
-                                
 	                            <div class="InfoItem">
                                   <div class="fileName">文件名</div>
                                   <div class="name">策划人</div>
@@ -580,13 +617,6 @@
             </div>
      </div>
 </div>
-
-
-
-
-
-
- 
 
 <!-- 分配策划供应商 -->
 <div class="cusModel" id="">
@@ -735,15 +765,16 @@
                    <div class="title">项目信息修改</div>
                    <div class="closeModel"></div>
             </div>
+           <form method="post" action="/project/edit/information" id="toProjectForm"> 
             <input type="hidden" id="proId" name="pf_projectId"" value="${flow_info['projectId']}">
             <div class="getPriceContent">
-                    <div class="item errorItem">
+                    <div class="item errorItem" id="proNameError">
                          <div class="title">项目名称</div>
                          <input id="proName" name="pf_projectName" value="">
                     </div>
-                    <div class="itemTime errorItem">
+                    <div class="itemTime errorItem" id="pf_projectGradeError">
                          <div class="title">项目评级</div>
-                         <input id="pf_projectGradeInput" name="pf_projectGrade" value="">
+                         <input type="hidden" id="pf_projectGradeInput" name="pf_projectGrade" value="">
                          <div class="orderSelect so" >
 				                <div id="pf_projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -757,29 +788,38 @@
 				                </ul>    
 					      </div>
                     </div>
-                    <div class="itemTime errorItem">
+                    <div class="itemTime errorItem" id="pf_ResourInputError">
+                         <div class="title">项目来源</div>
+                         <input type="hidden" id="pf_ResourInput" name="pf_projectSource" value="">
+                         <div class="orderSelect " >
+				                <div id="pf_Resour"></div>
+				                <img src="${imgPath}/flow/selectOrder.png">
+				                <ul class="oSelect" id="pResour">
+				                </ul>    
+					      </div>
+                    </div>
+                    <div class="itemTime errorItem" id="proCycleError">
                          <div class="title">项目周期</div>
                          <input id="proCycle" name="pf_projectCycle">
                          <div class="yuan">天</div>
                     </div>
-                     
-                   
-                    
-                    <div class="itemTime bBigSlow errorItem">
+     
+                    <div class="itemTime bBigSlow errorItem" id="proFdpError">
                          <div class="title">对标影片</div>
                          <input id="proFdp"  name="pf_filmDestPath" value="">
                     </div>
                     
-                    <div class="item errorItem">
+                    <div class="item errorItemArea" id="projectDesError">
                          <div class="title areaTitle">项目描述</div>
-                         <textarea id="projectDes"  name="pf_projectDescription" value="${flow_info['projectDescription']}"></textarea>
+                         <textarea id="projectDes"  name="pf_projectDescription"></textarea>
                     </div>
                     
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
+		                      <div class="btn-c-r" id="submitProject">确认</div>
 		            </div>
             </div>
+           </form>   
 </div>
 </div>
 
@@ -790,67 +830,74 @@
                    <div class="title">客户信息修改</div>
                    <div class="closeModel"></div>
             </div>
-            <div class="getPriceContent">
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                        <input id="cusLinkman" name="pu_linkman" value=''>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户电话</div>
-                         <input id="cusTelephone" name="pu_telephone" value=''>
-                    </div>
-                                     
-                    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		            </div>
-            </div>
+            <form method="post" action="/project/edit/information" id="toCusForm">
+             <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
+	            <div class="getPriceContent">
+	                    <input type="hidden" id="cusId" name="pu_projectUserId">
+	                    <div class="itemTime errorItem" id="cusLinkmanError">
+	                         <div class="title">客户联系人</div>
+	                        <input id="cusLinkman" name="pu_linkman" value=''>
+	                    </div>
+	                    <div class="itemTime errorItem" id="cusTelephoneError">
+	                         <div class="title">客户电话</div>
+	                         <input id="cusTelephone" name="pu_telephone" value=''>
+	                    </div>
+	                    <div class="btnMid">
+			                      <div class="btn-c-g">取消</div>
+			                      <div class="btn-c-r" id="submitCus">确认</div>
+			            </div>
+	            </div>
+	        </form>      
 </div>
 </div>
 
 <!-- 供应商信息修改 -->
-<div class="cusModel">
+<div class="cusModel" id="showProvider">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">供应商信息修改 </div>
                    <div class="closeModel"></div>
             </div>
             <div class="getPriceContent">
-                    
-                    <div class="bigTitle">策划供应商</div>
-            
-                    <div class="item">
-                         <div class="title">客户名称</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                         <input>
-                    </div>
-                    
-                    <div class="bigTitle">策划供应商</div>
-            
-                    <div class="item">
-                         <div class="title">客户名称</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                         <input>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户联系人</div>
-                         <input>
-                    </div>
-                    
-                    
+             <form method="post" action="/project/edit/teamInformation" id="toProForm">
+             <input type="hidden" id="proId" name="projectId"" value="${flow_info['projectId']}">
+                    <div id="isHideTop">
+	                    <div class="bigTitle">策划供应商</div>
+	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
+	                    <div class="item errorItem" id="scCusNameError">
+	                         <div class="title" >供应商名称</div>
+	                         <input class="checkError" id="scCusName" name="pt_teamName">
+	                    </div>
+	                    <div class="itemTime errorItem" id="scLinkError">
+	                         <div class="title">供应商联系人</div>
+	                         <input class="checkError" id="scLink" name="pt_linkman">
+	                    </div>
+	                    <div class="itemTime errorItem" id="scTelError">
+	                         <div class="title">供应商联系电话</div>
+	                         <input class="checkErrorP" id="scTel" name="pt_telephone">
+	                    </div>
+                   </div> 
+                   
+                  <div id="isHideBot"> 
+	                    <div class="bigTitle">制作供应商</div>
+	                    <input type="hidden" id="prId" name="pt_projectTeamId">
+	                    <div class="item errorItem" id="prCusNameError">
+	                         <div class="title">供应商名称</div>
+	                         <input class="checkError" id="prCusName" name="pt_teamName">
+	                    </div>
+	                    <div class="itemTime errorItem" id="prLinkError">
+	                         <div class="title">供应商联系人</div>
+	                         <input class="checkError" id="prLink" name="pt_linkman">
+	                    </div>
+	                    <div class="itemTime errorItem" id="prTelError">
+	                         <div class="title">供应商联系电话</div>
+	                         <input class="checkErrorP" id="prTel" name="pt_telephone">
+	                    </div>
+                   </div> 
+                 </form>  
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
+		                      <div class="btn-c-r" id="submitProvide">确认</div>
 		            </div>
             </div>
 </div>
@@ -883,7 +930,6 @@
 	                       <div class="title">策划供应商启动函备注信息</div>
 	                       <textarea></textarea>
                      </div>
-                    
                     
                     <div class="btnMid">
 		                      <div class="btn-c-g">取消</div>
@@ -927,24 +973,25 @@
                    <div class="title">价格信息修改 </div>
                    <div class="closeModel"></div>
             </div>
-            <div class="getPriceContent">
-                    <div class="itemTime">
-                         <div class="title">预估价格</div>
-                         <input value='${price_info["estimatedPrice"]}'>
-                         <div class="yuan syuan">元</div>
-                    </div>
-                    <div class="itemTime">
-                         <div class="title">客户项目预算</div>
-                         <input value="${price_info['projectBudget']}">
-                         <div class="yuan syuan">元</div>
-                    </div>
-
-                    
-                    <div class="btnMid">
-		                      <div class="btn-c-g">取消</div>
-		                      <div class="btn-c-r">确认</div>
-		            </div>
-            </div>
+            <form method="post" action="/project/edit/information" id="toPriceForm">
+	            <div class="getPriceContent">
+	                    <input type="hidden" id="priceId" name="pf_projectId">
+	                    <div class="itemTime errorItem" id="estError">
+	                         <div class="title">预估价格</div>
+	                         <input id="est" name="pf_estimatedPrice">
+	                         <div class="yuan syuan">元</div>
+	                    </div>
+	                    <div class="itemTime errorItem" id="pjsError">
+	                         <div class="title">客户项目预算</div>
+	                         <input id="pjs" name="pf_projectBudget">
+	                         <div class="yuan syuan">元</div>
+	                    </div>
+	                    <div class="btnMid">
+			                      <div class="btn-c-g">取消</div>
+			                      <div class="btn-c-r" id="sumbitPrice">确认</div>
+			            </div>
+	            </div>
+            </form>
 </div>
 </div>
 

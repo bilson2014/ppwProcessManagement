@@ -1,18 +1,13 @@
 
 $().ready(function() {
+	document.domain = getUrl();	
 	initPageEven();
 	toSearch();
 });
 
 function initPageEven(){
-	/*	var waitCard = $('.waitCard');
-	var cardNUm = waitCard.length;
-	if(waitCard.length == null || waitCard.length=="" ){
-		$(window.parent.parent.parent.document).find('#cardNum').hide();
-	}else{
-		$(window.parent.document).find('#cardNum').text(cardNUm);
-	}*/
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+	console.info($('.pages').height() + 300);
 	getDate();
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
@@ -42,6 +37,8 @@ function getAllSearchInfo(search){
 		var otherCard = $('#otherCard');
 		setCard.html('');
 		otherCard.html('');
+		$('#otherWord').text('其它任务');
+		$('#isOther').hide();
 		if(res != null && res != undefined){
 				$('#daibanName').addClass('hide');
 			for (var int = 0; int < res.length; int++) {
@@ -56,6 +53,13 @@ function getAllSearchInfo(search){
 			}
 			$('#daiNum').text($('.waitCard').length);
 			$('#otherNum').text($('.otherCard').length);
+			if($('.waitCard').length == 0){
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').hide();
+			}else{
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
+				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
+			  }
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		}
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
@@ -65,6 +69,7 @@ function getAllSearchInfo(search){
 function getState(name){
 	var otherCard = $('#otherCard');
 	otherCard.html('');
+	$('#otherWord').text('其它任务');
 	loadData(function(res){     
 		if(res != null && res != undefined){
 			for (var int = 0; int < res.length; int++) {
@@ -72,7 +77,8 @@ function getState(name){
 					 otherCard.append(html);
 				 }
 			$('#otherNum').text($('.otherCard').length);
-			}	
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+		 }	
 	}, getContextPath() + '/project/agent/search', $.toJSON({
 		taskStage : name
 	}));
@@ -196,7 +202,7 @@ function createOtherCard(res){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?task">';
+	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{
@@ -218,18 +224,17 @@ function createOtherCard(res){
 		}
         if(taskStage == '交付阶段'){
         	img= '<img src="/resources/images/flow/isPay.png"> ';
-		}
-		
+		}	
 	}
 	
 	if(taskStatus == "suspend"){
-		  img= '<img src="/resources/images/flow/suspendDate.png"> ';
-		  var getTime = Date.parse(res.pauseTime.replace("CST","GMT+0800"));
+		  img= '<img src="/resources/images/flow/isPause.png"> ';
+		  var getTime = res.suspendDate;
 		  time ="暂停于"+formatDate(getTime);
 	}
 	if(taskStatus == "completed"){
-		  img= '<img src="/resources/images/flow/isPay.png"> ';
-		  var getTime = Date.parse(res.finishedDate.replace("CST","GMT+0800"));
+		  img= '<img src="/resources/images/flow/isFinish.png"> ';
+		  var getTime = res.finishedDate
 		  time = "结束于"+formatDate(getTime);
 	}
 	            var html = [
@@ -252,8 +257,3 @@ function createOtherCard(res){
 		].join('');                                                                                                                       
 		return html;
 	}
-
-
-
-
-

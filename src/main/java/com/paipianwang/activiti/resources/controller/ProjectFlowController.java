@@ -477,7 +477,7 @@ public class ProjectFlowController extends BaseController {
 
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
-		String[] teamIds = request.getParameterValues("pf_projectTeamId");
+		String[] teamIds = request.getParameterValues("pt_projectTeamId");
 		if(teamIds != null) {
 			List<Map<String, Object>> teamList = new ArrayList<Map<String, Object>>(teamIds.length);
 			for(int i = 0;i < teamIds.length;i ++) {

@@ -634,7 +634,7 @@
         left: 66px;
         top: 13px;
     }
-    
+
     .lastItem {
         margin-bottom: 35px !important;
     }
@@ -1006,7 +1006,7 @@
             line-height: 20px;
             text-align: center;
             position: absolute;
-            right: 0px;
+            right: 80px;
             cursor: pointer;
             top: -3px;
         }
@@ -1403,7 +1403,7 @@
                     margin-bottom: 20px;
                     .title,
                     .orderSelect,
-                    .find {
+                    .findFile {
                         display: inline-block;
                         vertical-align: middle;
                     }
@@ -1426,18 +1426,23 @@
                         padding-left: 5px;
                         line-height: 36px;
                     }
-                    .find {
-                        width: 120px;
-                        height: 36px;
-                        border: 1px solid #bababa;
-                        border-radius: 4px;
-                        text-align: center;
-                        line-height: 34px;
-                        font-size: $font-size-base;
-                        color: $gray-dark;
-                        margin-left: 15px;
-                        position: relative;
-                        top: -1px;
+                    .findFile {
+
+                        .webuploader-pick {
+                            width: 120px;
+                            height: 36px;
+                            border: 1px solid #bababa !important;
+                            border-radius: 4px;
+                            text-align: center;
+                            line-height: 34px;
+                            font-size: $font-size-base;
+                            color: $gray-dark;
+                            margin-left: 15px;
+                            position: relative;
+                            top: 0px;
+                            background: transparent !important;
+                            padding: 0 !important;
+                        }
                     }
                 }
             } //版本管理
@@ -1867,7 +1872,7 @@
                         height: 14px;
                         position: absolute;
                         right: 12px;
-                        top: 35px;
+                        top: 40px;
                     }
 
                     .webuploader-pick {
@@ -2427,4 +2432,29 @@ background-image: none !important; */
 
     .longInput {
         width: 420px !important;
+    }
+
+
+
+    .errorItem,
+    .errorItemArea {
+        position: relative;
+    }
+
+    .errorItem:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 140px;
+        top: 40px;
+    }
+
+    .errorItemArea:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: 1.2rem;
+        position: absolute;
+        left: 140px;
+        top: 85px;
     }
