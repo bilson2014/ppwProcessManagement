@@ -51,6 +51,7 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
+	                    <div class="errorItem errorTr">搜索不能为空</div>
 	                    <r:group role="sale" >
 		                    <div class="createPro" id="toCreate">
 		                        <div class="newAdd"></div>

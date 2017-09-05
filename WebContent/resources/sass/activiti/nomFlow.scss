@@ -400,3 +400,11 @@ $ba:#bababa; */
                     }
                 }
             }
+
+            .errorTr{
+                color:transparent !important; 
+            }
+            .errorItem{
+            	color:$red-base;
+            	margin-left: 10px;
+            }
