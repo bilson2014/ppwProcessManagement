@@ -1235,6 +1235,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setTaskStatus("suspend");
 						each.setAgent("0");
 						result.add(each);
+						
+						//取消任务
+						if("cancel".equals(flow.getProjectStatus())){
+							each.setTaskStatus("cancel");
+							each.setCancelDate(DateUtils.getDateByFormat(flow.getUpdateDate(), "yyyy-MM-dd HH:mm:ss"));
+						}
+						
 						continue flowCheck;
 					}
 				}

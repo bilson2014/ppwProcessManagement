@@ -32,6 +32,7 @@ public class TaskVO implements Serializable{
 	private String principalName;//负责人名称
 	private Date suspendDate;//暂停日期
 	private Date finishedDate;//完成日期
+	private Date cancelDate;//取消日期
 	
 	public String getProcessInstanceId() {
 		return processInstanceId;
@@ -135,4 +136,11 @@ public class TaskVO implements Serializable{
 	public void setFinishedDate(Date finishedDate) {
 		this.finishedDate = finishedDate;
 	}
+	public Date getCancelDate() {
+		return cancelDate;
+	}
+	public void setCancelDate(Date cancelDate) {
+		this.cancelDate = cancelDate;
+	}
+	
 }
