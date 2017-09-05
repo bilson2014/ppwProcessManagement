@@ -383,12 +383,15 @@ function checkState(){
     
     if(state.trim() == "pause"){
     	$('#isPause').hide();
+    	$('#isCancle').hide();
     }
     
     if(state.trim() == "finish"){
     		 $('#isBack').hide();
     		 $('#isPause').hide();
+    		 $('#isCancle').hide();
     }
+    
     if(state.trim() == "task"){
     	addForm();
     }
@@ -647,8 +650,8 @@ function checkPrice(){
 		 return false;
 	 }
 	 
-	 var pjsName = $('#pjsError'); 
-	 if(pjsName != undefined && pjsName != "" && pjsName !=null ){
+	 var pjsName = $('#pjsError').hasClass('item'); 
+	 if(pjsName){
 		 if(pjs == undefined || pjs == "" || pjs ==null ){
 	    	 $('#pjsError').attr('data-content','客户项目预算未填写');
 			 return false;

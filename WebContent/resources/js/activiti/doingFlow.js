@@ -7,7 +7,6 @@ $().ready(function() {
 
 function initPageEven(){
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
-	console.info($('.pages').height() + 300);
 	getDate();
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
@@ -18,8 +17,14 @@ function initPageEven(){
 function toSearch(){
 	$('.search').off('click').on('click',function(){
 		 var search = $('.titleNameWork input').val();
-		 $('.productList li').removeClass('checkLi');
-		 getAllSearchInfo(search);
+		 
+		 if(search == "" || search == null || search ==undefined){
+			 $('.errorItem').removeClass('errorTr');
+		 }else{
+			 $('.errorItem').addClass('errorTr');
+			 $('.productList li').removeClass('checkLi');
+			 getAllSearchInfo(search);
+		 }
 	});
 	initSelect();
 	$('.orderSelect li').off('click').on('click',function(e){    
@@ -227,6 +232,8 @@ function createOtherCard(res){
 		}	
 	}
 	
+	var taskname = res.taskName;
+	
 	if(taskStatus == "suspend"){
 		  img= '<img src="/resources/images/flow/isPause.png"> ';
 		  var getTime = res.suspendDate;
@@ -236,7 +243,16 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isFinish.png"> ';
 		  var getTime = res.finishedDate
 		  time = "结束于"+formatDate(getTime);
+		  taskname = "";
 	}
+	
+	if(taskStatus == "cancel"){
+		  img= '<img src="/resources/images/flow/isCancle.png"> ';
+		  var getTime = res.cancelDate
+		  time = "取消于"+formatDate(getTime);
+	}
+	
+	
 	            var html = [
 				' <div class="otherCard">',
 				'	        '+aTag+' ',
@@ -246,7 +262,7 @@ function createOtherCard(res){
 				'           </div>                                                                                                                        ',
 				'           <div class="cardContent">                                                                                                     ',
 				'                <div class="setContent">                                                                                                 ',
-				'                    <div class="listName">'+res.taskName+'</div>                                                                       ',
+				'                    <div class="listName">'+taskname+'</div>                                                                       ',
 				'                    <div class="lastTime otherTime">'+time+'</div>                                                       ',
 				'                </div>                                                                                                                   ',
 				'                '+img+'                                                                          ',
