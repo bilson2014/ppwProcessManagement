@@ -108,43 +108,46 @@ public class ProjectFlowController extends BaseController {
 		ModelAndView mv = new ModelAndView("/activiti/textFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
-		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
-			mv.addObject("runningTasks", runnintTasks);
-		} else {
-			// 查询代办任务
-			List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
+		if (groups != null && !groups.isEmpty()) {
+			// 判断身份
+			if (groups.contains(ProjectRoleType.teamDirector.getId())
+					|| groups.contains(ProjectRoleType.financeDirector.getId())
+					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+				// 供应商总监、财务总监、客服总监 应该看见所有项目
+				// 查询参与的正在进行中的任务
+				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
+				mv.addObject("runningTasks", runnintTasks);
+			} else {
+				// 查询代办任务
+				List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
 
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+				// 查询参与的正在进行中的任务
+				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService
+						.getRunningTasks(info.getActivitiUserId());
 
-			// 去除代办任务
-			if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
+				// 去除代办任务
+				if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
 
-				List<String> todoProjectList = new ArrayList<String>();
-				for (final PmsProjectFlowResult result : gTasks) {
-					todoProjectList.add(result.getPmsProjectFlow().getProjectId());
-				}
-				List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
-				for (PmsProjectFlowResult result : runnintTasks) {
-					PmsProjectFlow flow = result.getPmsProjectFlow();
-					if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
-						if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-							runningList.add(result);
+					List<String> todoProjectList = new ArrayList<String>();
+					for (final PmsProjectFlowResult result : gTasks) {
+						todoProjectList.add(result.getPmsProjectFlow().getProjectId());
+					}
+					List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
+					for (PmsProjectFlowResult result : runnintTasks) {
+						PmsProjectFlow flow = result.getPmsProjectFlow();
+						if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
+							if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
+								runningList.add(result);
+							}
 						}
 					}
+					mv.addObject("runningTasks", runningList);
+				} else {
+					mv.addObject("runningTasks", runnintTasks);
 				}
-				mv.addObject("runningTasks", runningList);
-			} else {
-				mv.addObject("runningTasks", runnintTasks);
-			}
 
-			mv.addObject("gTasks", gTasks);
+				mv.addObject("gTasks", gTasks);
+			}
 		}
 
 		mv.addObject("realName", info.getRealName());
@@ -158,45 +161,49 @@ public class ProjectFlowController extends BaseController {
 		ModelAndView mv = new ModelAndView("/activiti/doingFlow");
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
-		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
-			mv.addObject("runningTasks", runnintTasks);
-		} else {
-			// 查询代办任务
-			List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
 
-			// 查询参与的正在进行中的任务
-			List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(info.getActivitiUserId());
+		if (groups != null && !groups.isEmpty()) {
 
-			// 去除代办任务
-			if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
+			// 判断身份
+			if (groups.contains(ProjectRoleType.teamDirector.getId())
+					|| groups.contains(ProjectRoleType.financeDirector.getId())
+					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+				// 供应商总监、财务总监、客服总监 应该看见所有项目
+				// 查询参与的正在进行中的任务
+				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
+				mv.addObject("runningTasks", runnintTasks);
+			} else {
+				// 查询代办任务
+				List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
 
-				List<String> todoProjectList = new ArrayList<String>();
-				for (final PmsProjectFlowResult result : gTasks) {
-					todoProjectList.add(result.getPmsProjectFlow().getProjectId());
-				}
-				List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
-				for (PmsProjectFlowResult result : runnintTasks) {
-					PmsProjectFlow flow = result.getPmsProjectFlow();
-					if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
-						if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-							runningList.add(result);
+				// 查询参与的正在进行中的任务
+				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService
+						.getRunningTasks(info.getActivitiUserId());
+
+				// 去除代办任务
+				if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
+
+					List<String> todoProjectList = new ArrayList<String>();
+					for (final PmsProjectFlowResult result : gTasks) {
+						todoProjectList.add(result.getPmsProjectFlow().getProjectId());
+					}
+					List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
+					for (PmsProjectFlowResult result : runnintTasks) {
+						PmsProjectFlow flow = result.getPmsProjectFlow();
+						if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
+							if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
+								runningList.add(result);
+							}
 						}
 					}
+					mv.addObject("runningTasks", runningList);
+				} else {
+					mv.addObject("runningTasks", runnintTasks);
 				}
-				mv.addObject("runningTasks", runningList);
-			} else {
-				mv.addObject("runningTasks", runnintTasks);
+
+				mv.addObject("gTasks", gTasks);
 			}
-
-			mv.addObject("gTasks", gTasks);
 		}
-
 		return mv;
 	}
 
@@ -364,7 +371,14 @@ public class ProjectFlowController extends BaseController {
 	public ModelAndView finished(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
 		SessionInfo info = getCurrentInfo(request);
+		// 查询已完成的项目
 		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
+		// 查询已取消的项目
+		List<PmsProjectFlowResult> cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
+		// 混合数据
+		if(cancelList != null && !cancelList.isEmpty())
+			list.addAll(cancelList);
+		
 		mv.addObject("finishedTasks", list);
 		return mv;
 	}
@@ -392,14 +406,16 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<PmsProjectFlowResult> suspendTasks = null;
-		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			suspendTasks = projectWorkFlowService.getSuspendTasks(null);
-		} else {
-			suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
+		if (groups != null && !groups.isEmpty()) {
+			// 判断身份
+			if (groups.contains(ProjectRoleType.teamDirector.getId())
+					|| groups.contains(ProjectRoleType.financeDirector.getId())
+					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+				// 供应商总监、财务总监、客服总监 应该看见所有项目
+				suspendTasks = projectWorkFlowService.getSuspendTasks(null);
+			} else {
+				suspendTasks = projectWorkFlowService.getSuspendTasks(info.getActivitiUserId());
+			}
 		}
 		mv.addObject("suspendTasks", suspendTasks);
 		return mv;
@@ -478,34 +494,34 @@ public class ProjectFlowController extends BaseController {
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
 		String[] teamIds = request.getParameterValues("pt_projectTeamId");
-		if(teamIds != null) {
+		if (teamIds != null) {
 			List<Map<String, Object>> teamList = new ArrayList<Map<String, Object>>(teamIds.length);
-			for(int i = 0;i < teamIds.length;i ++) {
+			for (int i = 0; i < teamIds.length; i++) {
 				Map<String, Object> map = new HashMap<String, Object>();
 				teamList.add(map);
 			}
-			
+
 			for (Entry<String, String[]> entry : paramMap.entrySet()) {
 				String key = entry.getKey();
 				String[] valueArr = entry.getValue();
-				if(key.startsWith("pt_")) {
-					if(valueArr != null) {
-						for (int index = 0;index < valueArr.length; index ++) {
+				if (key.startsWith("pt_")) {
+					if (valueArr != null) {
+						for (int index = 0; index < valueArr.length; index++) {
 							teamList.get(index).put(key.split("_")[1], valueArr[index]);
 						}
 					}
 				}
 			}
-			
+
 			projectWorkFlowService.updateTeamInformation(teamList);
 		}
-			
+
 		return mv;
 	}
-	
-	//根据项目名称全局检索
+
+	// 根据项目名称全局检索
 	@RequestMapping("/search")
-	public List<TaskVO> searchList(HttpServletRequest request,@RequestBody final TaskVO taskVO) {
+	public List<TaskVO> searchList(HttpServletRequest request, @RequestBody final TaskVO taskVO) {
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<TaskVO> tasks = null;
@@ -514,18 +530,17 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(),null);
+			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(), null);
 		} else {
-			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(),info.getActivitiUserId());
+			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(), info.getActivitiUserId());
 		}
-		
+
 		return tasks;
 	}
-	
-	//根据项目阶段筛选其他任务
+
+	// 根据项目阶段筛选其他任务
 	@RequestMapping("/agent/search")
-	public List<TaskVO> agentListByStage(HttpServletRequest request,
-			@RequestBody final TaskVO taskVO) {
+	public List<TaskVO> agentListByStage(HttpServletRequest request, @RequestBody final TaskVO taskVO) {
 		SessionInfo info = getCurrentInfo(request);
 		List<String> groups = info.getActivitGroups();
 		List<TaskVO> suspendTasks = null;
@@ -535,18 +550,30 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),1);
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
+					1);
 		} else {
-			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),0);
+			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
+					0);
 		}
 		return suspendTasks;
 	}
-	
+
 	@RequestMapping("/edit/resource/{taskId}/{projectId}")
-	public List<KeyValue> editResourceList(final HttpServletRequest request, 
-										 @PathVariable("taskId") final String taskId, 
-										 @PathVariable("taskId") final String projectId) {
+	public List<KeyValue> editResourceList(final HttpServletRequest request,
+			@PathVariable("taskId") final String taskId, @PathVariable("taskId") final String projectId) {
 		SessionInfo info = getCurrentInfo(request);
 		return projectWorkFlowService.getEditResourceList(info, taskId, projectId);
+	}
+
+	// 取消
+	@RequestMapping("/cancelProcess/{processInstandeId}/{projectId}")
+	public ModelAndView cancelProcess(@PathVariable("processInstandeId") final String processInstanceId,
+			@PathVariable("projectId") final String projectId) {
+		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
+			// 挂起
+			projectWorkFlowService.cancelProcess(processInstanceId, projectId);
+		}
+		return new ModelAndView("redirect:/project/running-doing");
 	}
 }
