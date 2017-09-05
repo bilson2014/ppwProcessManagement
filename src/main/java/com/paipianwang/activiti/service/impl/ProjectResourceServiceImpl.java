@@ -78,12 +78,19 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			// resource.setVersion();
 
 			long result = pmsProjectResourceFacade.insert(resource);
+			// 根据ID查找 文件实体
+			PmsProjectResource res = pmsProjectResourceFacade.getProjectResourceById(result);
 
 			// 写入日志
 			PmsProjectMessage message = new PmsProjectMessage();
 			StringBuffer content = new StringBuffer();
-			content.append("【").append(StringUtils.join(groups, ",")).append("】").append(sessionInfo.getRealName())
-					.append("上传了 《").append(resource.getResourceName()).append("》 文件");
+			content.append(sessionInfo.getRealName()).append("上传了 《");
+			if(res != null) {
+				content.append(res.getResourceName());
+			} else {
+				content.append(taskName + "-").append(resource.getResourceName());
+			}
+			content.append("》 文件");
 			
 			message.setContent(content.toString());
 			message.setFromGroup(StringUtils.join(groups, ","));

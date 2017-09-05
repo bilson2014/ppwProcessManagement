@@ -33,6 +33,7 @@ public class ResourceController  extends BaseController{
 
 	@Autowired
 	private ProjectResourceService projectResourceService;
+	
 	@Autowired
 	private PmsProjectResourceFacade pmsProjectResourceFacade;
 
