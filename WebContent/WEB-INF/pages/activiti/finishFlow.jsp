@@ -36,7 +36,6 @@
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
 
-
 </head>
 
 <body>
@@ -82,10 +81,19 @@
 				                                  </c:if>
 			                             </div>
 			                             <div class="cardContent">
+			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
+			                                  <img src="/resources/images/flow/isCancle.png">
+			                             	</c:if>
+			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
 			                                  <img src="/resources/images/flow/isFinish.png">
+			                             	</c:if>
 			                                  <div class="setContent">
-			                                          <div class="listName">${staff.historicProcessInstance.name}</div>
+			                                  		<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
+				                                      <div class="lastTime finishTime">${staff.pmsProjectFlow.finishedDate}</div>
+				                                    </c:if>
+				                                    <c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
 				                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
+				                                    </c:if>
 			                                  </div>
 			                             </div>
 		                             </a>

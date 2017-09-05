@@ -164,4 +164,18 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public List<KeyValue> getEditResourceList(SessionInfo info, String taskId, String projectId);
+
+	/**
+	 * 取消流程
+	 * @param processInstanceId 实例ID
+	 * @param projectId 项目流程ID
+	 */
+	public void cancelProcess(String processInstanceId, String projectId);
+
+	/**
+	 * 查询已取消的task
+	 * @param activitiUserId 当前登陆人身份ID
+	 * @return
+	 */
+	public List<PmsProjectFlowResult> getCancelTask(String activitiUserId);
 }
