@@ -50,7 +50,7 @@
             <input type="hidden" id="commonToken" name="token" value="${token}"/>
             <div class="middle-part">
                 <div class="search-box">
-                    <form method="get" action="/search" id="s-form">
+                    <form method="get" action="http://www.apaipian.com/search" id="s-form">
                         <div class="bannerSearchFind"></div>
                         <input type="text" size="16" autocomplete="off" id="search-q" name="q" placeholder="作品名称，类型，风格，公司信息" class="i-lucency" />
                         <a href="javascript:void(0);" class="go bk_white" onclick="return false;" id="s-btn"></a>
@@ -80,7 +80,7 @@
 					         <a href="<spring:url value="http://www.apaipian.com/user/info" />"><li class="toSet">个人信息</li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/user/info?safeInfo" />"><li class="toSafe">安全设置</li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
-					         <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/project/running" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					   </div>
 					</div>
@@ -95,7 +95,7 @@
 					         <a href="<spring:url value="http://www.apaipian.com/provider/portal?safe-info" />"><li class="toSafe">安全设置</li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/provider/portal" />"><li class="toList">作品列表</li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
-					         <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					         <a href="<spring:url value="http://www.apaipian.com/project/running" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>
 					       </div>
 					</div>
@@ -110,7 +110,7 @@
 					         </r:permission>
 					          <r:permission uri="/mgr/index">
 					                  <a href="<spring:url value="http://www.apaipian.com/mgr/index" />"><li class="toMy">我的项目</li></a>
-					                   <a href="<spring:url value="http://www.apaipian.com:8087/project/running-task" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
+					                   <a href="<spring:url value="http://www.apaipian.com/project/running" />"><li class="toMy">我的项目<span style="font-size:12px;color:#fe5453">Beta</span></li></a>
 					         </r:permission>
 					         <a href="<spring:url value="http://www.apaipian.com/mgr/favourites" />"><li class="toCollect">收藏列表</li></a>
 					         <a href="<spring:url value="http://www.apaipian.com/login/loginout" />"><li class="loginOut">退出登录</li></a>

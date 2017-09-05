@@ -40,9 +40,10 @@
 </head>
 
 <body>
+    <jsp:include flush="true" page="../header.jsp"></jsp:include>
     <form method="post" action="/project/start-process" id="toListForm">
 	<div class="page">
-	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
+	   
 	    <div class="title">新建项目</div> 
 	    <div class="infoTitle">项目信息</div> 
 	    <div class="outSide">
