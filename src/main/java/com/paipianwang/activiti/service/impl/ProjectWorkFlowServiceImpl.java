@@ -1349,6 +1349,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setAssignee(task.getAssignee());
 				result.setDueDate(task.getDueDate());
 				result.setCreateTime(task.getCreateTime());
+				if(task.getAssignee().equals(activitiUserId)){
+					result.setAgent("1");
+				}else{
+					result.setAgent("0");
+				}
 
 				String processInstanceId = task.getProcessInstanceId();
 				String processDefinitionId = task.getProcessDefinitionId();
