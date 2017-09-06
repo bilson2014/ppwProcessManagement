@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
@@ -192,6 +193,7 @@ public class ProjectFlowController extends BaseController {
 					for (PmsProjectFlowResult pmsProjectFlowResult : flowResult) {
 						Task task = pmsProjectFlowResult.getTask();
 						ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
+						ProcessDefinition pd = pmsProjectFlowResult.getProcessDefinition();
 						if (task != null) {
 							pmsProjectFlowResult.setTaskId(task.getId());
 							pmsProjectFlowResult.setTaskName(task.getName());
@@ -200,6 +202,9 @@ public class ProjectFlowController extends BaseController {
 						if(pIs != null) {
 							pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
 							pmsProjectFlowResult.setProcessInstance(null);
+						}
+						if(pd != null) {
+							pmsProjectFlowResult.setProcessDefinition(null);
 						}
 					}
 				}
