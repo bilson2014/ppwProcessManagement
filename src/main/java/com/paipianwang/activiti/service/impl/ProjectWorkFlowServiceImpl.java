@@ -1302,6 +1302,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	 */
 	@Override
 	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId, int flag) {
+		return getTasksByStage(stage, activitiUserId, flag, true);
+	}
+	public List<TaskVO> getTasksByStage(String stage, String activitiUserId, int flag,boolean forAgent) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT DISTINCT rt.* FROM ACT_RU_TASK rt ");
 
@@ -1315,7 +1318,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			sql.append("where 1=1 ");
 		}
 		sql.append("and rt.SUSPENSION_STATE_ = " + SuspensionState.ACTIVE.getStateCode() + " ");
-		sql.append("and rt.ASSIGNEE_!='" + activitiUserId + "' ");
+		if(forAgent){
+			sql.append("and rt.ASSIGNEE_!='" + activitiUserId + "' ");
+		}
+	
 		// 筛选阶段
 		if (!StringUtils.isBlank(stage) && !"0".equals(stage)) {
 			Map<String, ProjectCycleItem> cycles = workFlowFacade.getAllCycleTask();
@@ -1343,6 +1349,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setAssignee(task.getAssignee());
 				result.setDueDate(task.getDueDate());
 				result.setCreateTime(task.getCreateTime());
+				if(task.getAssignee().equals(activitiUserId)){
+					result.setAgent("1");
+				}else{
+					result.setAgent("0");
+				}
 
 				String processInstanceId = task.getProcessInstanceId();
 				String processDefinitionId = task.getProcessDefinitionId();
@@ -1383,6 +1394,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 		return null;
 	}
+
 
 	@Override
 	public List<KeyValue> getEditResourceList(SessionInfo info, String taskId, String projectId) {
@@ -1437,5 +1449,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		return getRuningTaskBySql(sql, userId);
+	}
+
+	@Override
+	public List<TaskVO> getTasksByStage(String stage, String activitiUserId, int flag) {
+		return getTasksByStage(stage, activitiUserId, flag, false);
 	}
 }
