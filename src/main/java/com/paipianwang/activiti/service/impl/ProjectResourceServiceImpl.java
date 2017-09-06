@@ -86,7 +86,8 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			StringBuffer content = new StringBuffer();
 			content.append(sessionInfo.getRealName()).append("上传了 《");
 			if(res != null) {
-				content.append(res.getResourceName());
+				String resName = res.getResourceName();
+				content.append(resName.substring(0, resName.lastIndexOf(".")));
 			} else {
 				content.append(taskName + "-").append(resource.getResourceName());
 			}
