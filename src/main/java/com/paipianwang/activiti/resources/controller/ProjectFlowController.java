@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.form.FormProperty;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -190,10 +191,15 @@ public class ProjectFlowController extends BaseController {
 				if (ValidateUtil.isValid(flowResult)) {
 					for (PmsProjectFlowResult pmsProjectFlowResult : flowResult) {
 						Task task = pmsProjectFlowResult.getTask();
+						ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
 						if (task != null) {
 							pmsProjectFlowResult.setTaskId(task.getId());
 							pmsProjectFlowResult.setTaskName(task.getName());
 							pmsProjectFlowResult.setTask(null);
+						}
+						if(pIs != null) {
+							pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
+							pmsProjectFlowResult.setProcessInstance(null);
 						}
 					}
 				}
@@ -503,7 +509,27 @@ public class ProjectFlowController extends BaseController {
 	public List<PmsProjectFlowResult> loadFinishedProjectByAjax(HttpServletRequest request) {
 		SessionInfo info = getCurrentInfo(request);
 		// 加载数据
-		return loadFinishedProjectList(info);
+		List<PmsProjectFlowResult> list = loadFinishedProjectList(info);
+		
+		// 
+		if(ValidateUtil.isValid(list)) {
+			for (PmsProjectFlowResult pmsProjectFlowResult : list) {
+				HistoricProcessInstance hPs = pmsProjectFlowResult.getHistoricProcessInstance();
+				ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
+				if(hPs != null) {
+					pmsProjectFlowResult.setEndTime(hPs.getEndTime());
+					pmsProjectFlowResult.setProcessInstanceId(hPs.getId());
+					pmsProjectFlowResult.setHistoricProcessInstance(null);
+				}
+				
+				if(pIs != null) {
+					pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
+					pmsProjectFlowResult.setProcessInstance(null);
+				}
+				
+			}
+		}
+		return list;
 	}
 
 	// 获取 完成/取消 项目列表
@@ -561,10 +587,15 @@ public class ProjectFlowController extends BaseController {
 		if (ValidateUtil.isValid(result)) {
 			for (PmsProjectFlowResult pmsProjectFlowResult : result) {
 				Task task = pmsProjectFlowResult.getTask();
+				ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
 				if (task != null) {
 					pmsProjectFlowResult.setTaskId(task.getId());
 					pmsProjectFlowResult.setTaskName(task.getName());
 					pmsProjectFlowResult.setTask(null);
+				}
+				if(pIs != null) {
+					pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
+					pmsProjectFlowResult.setProcessInstance(null);
 				}
 			}
 		}
