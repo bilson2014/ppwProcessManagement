@@ -694,6 +694,26 @@ public class ProjectFlowController extends BaseController {
 		}
 		return suspendTasks;
 	}
+	// 根据项目阶段筛选其他任务
+	@RequestMapping("/search/stage")
+	public List<TaskVO> listByStage(HttpServletRequest request, @RequestBody final TaskVO taskVO) {
+		SessionInfo info = getCurrentInfo(request);
+		List<String> groups = info.getActivitGroups();
+		List<TaskVO> suspendTasks = null;
+
+		// 判断身份
+		if (groups.contains(ProjectRoleType.teamDirector.getId())
+				|| groups.contains(ProjectRoleType.financeDirector.getId())
+				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+			// 供应商总监、财务总监、客服总监 应该看见所有项目
+			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
+					1);
+		} else {
+			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
+					0);
+		}
+		return suspendTasks;
+	}
 
 	// 查找可以修改的文件
 	@RequestMapping("/edit/resource/{taskId}/{projectId}")
