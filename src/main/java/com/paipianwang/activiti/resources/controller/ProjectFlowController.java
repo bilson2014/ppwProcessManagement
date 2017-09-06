@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ctc.wstx.util.DataUtil;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
@@ -171,6 +174,7 @@ public class ProjectFlowController extends BaseController {
 
 	/**
 	 * ajax 专属 获取 正在进行中的项目列表（代办、参与过的正在进行中的项目）
+	 * 
 	 * @param request
 	 * @return
 	 */
@@ -178,6 +182,23 @@ public class ProjectFlowController extends BaseController {
 	public Map<String, List<PmsProjectFlowResult>> loadRunningDoingTasksByAjax(final HttpServletRequest request) {
 		SessionInfo info = getCurrentInfo(request);
 		Map<String, List<PmsProjectFlowResult>> result = loadRunningDoingTasks(info);
+
+		// 将task 设置为null
+		if (ValidateUtil.isValid(result)) {
+			for (Entry<String, List<PmsProjectFlowResult>> entry : result.entrySet()) {
+				List<PmsProjectFlowResult> flowResult = entry.getValue();
+				if (ValidateUtil.isValid(flowResult)) {
+					for (PmsProjectFlowResult pmsProjectFlowResult : flowResult) {
+						Task task = pmsProjectFlowResult.getTask();
+						if (task != null) {
+							pmsProjectFlowResult.setTaskId(task.getId());
+							pmsProjectFlowResult.setTaskName(task.getName());
+							pmsProjectFlowResult.setTask(null);
+						}
+					}
+				}
+			}
+		}
 		return result;
 	}
 
@@ -534,7 +555,20 @@ public class ProjectFlowController extends BaseController {
 	public List<PmsProjectFlowResult> loadSuspendListByAjax(HttpServletRequest request) {
 
 		SessionInfo info = getCurrentInfo(request);
-		return loadSuspendList(info);
+
+		List<PmsProjectFlowResult> result = loadSuspendList(info);
+		// 将task 设置为null
+		if (ValidateUtil.isValid(result)) {
+			for (PmsProjectFlowResult pmsProjectFlowResult : result) {
+				Task task = pmsProjectFlowResult.getTask();
+				if (task != null) {
+					pmsProjectFlowResult.setTaskId(task.getId());
+					pmsProjectFlowResult.setTaskName(task.getName());
+					pmsProjectFlowResult.setTask(null);
+				}
+			}
+		}
+		return result;
 	}
 
 	// 获取 挂起列表
@@ -694,6 +728,7 @@ public class ProjectFlowController extends BaseController {
 		}
 		return suspendTasks;
 	}
+
 	// 根据项目阶段筛选其他任务
 	@RequestMapping("/search/stage")
 	public List<TaskVO> listByStage(HttpServletRequest request, @RequestBody final TaskVO taskVO) {
@@ -706,11 +741,9 @@ public class ProjectFlowController extends BaseController {
 				|| groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
-					1);
+			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(), 1);
 		} else {
-			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
-					0);
+			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(), 0);
 		}
 		return suspendTasks;
 	}
