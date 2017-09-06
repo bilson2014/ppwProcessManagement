@@ -12,6 +12,8 @@
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
 	
 	<mvc:view-controller path="/pf" view-name="/phoneActiviti/pFlowList" />
+	
+	<mvc:view-controller path="/pit" view-name="/phoneActiviti/pFlowInfoTask" />
 
 	<context:annotation-config />
 

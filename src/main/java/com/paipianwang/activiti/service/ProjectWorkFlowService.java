@@ -153,7 +153,20 @@ public interface ProjectWorkFlowService {
 	 */
 	public void updateTeamInformation(List<Map<String, Object>> teamList);
 	
+	/**
+	 * 根据项目名称筛选
+	 * @param flowName
+	 * @param activitiUserId
+	 * @return
+	 */
 	public List<TaskVO> getSearchTasks(String flowName, String activitiUserId);
+	/**
+	 * 根据阶段筛选进行中其他任务
+	 * @param stage
+	 * @param activitiUserId
+	 * @param flag
+	 * @return
+	 */
 	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId,int flag);
 
 	/**
@@ -178,4 +191,13 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public List<PmsProjectFlowResult> getCancelTask(String activitiUserId);
+
+	/**
+	 * 根据阶段筛选进行中任务
+	 * @param stage
+	 * @param activitiUserId
+	 * @param flag
+	 * @return
+	 */
+	public List<TaskVO> getTasksByStage(String stage, String activitiUserId,int flag);
 }

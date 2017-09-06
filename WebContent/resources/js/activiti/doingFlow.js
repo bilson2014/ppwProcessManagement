@@ -251,8 +251,7 @@ function createOtherCard(res){
 		  var getTime = res.cancelDate
 		  time = "取消于"+formatDate(getTime);
 	}
-	
-	
+		
 	            var html = [
 				' <div class="otherCard">',
 				'	        '+aTag+' ',
