@@ -98,6 +98,7 @@ function checkInfo(){
 	}else{
 		$('#pf_productId').val(productId);
 		$('#pf_productName').val($('#productId').text());
+		$('#pf_productConfigLevelId').val(0);
 	}
 	if(productId != '0'){
 		if(productConfigLevelId == undefined || productConfigLevelId == "" || productConfigLevelId ==null ){
@@ -450,16 +451,22 @@ function getSynInfo(){
 }
 
 function getValue(id){	
-	 var hasLi = $('#cusLevel li');
-	 for (var int = 0; int < hasLi.length; int++) {
-			var hasId = $(hasLi[int]).attr('data-id');
-			if(hasId == id){
-				$('#userLevel').text($(hasLi[int]).text());
-				$('#userLevel').attr('data-id',hasId);
-				$('#pu_userLevel').val($(hasLi[int]).text());
-				$('#pu_userLevel').attr('data-id',hasId);
-			}
-	};
+	var levelName = '';
+	if(id == 0)
+		levelName = 'S';
+	else if(id == 1)
+		levelName = 'A';
+	else if(id == 2)
+		levelName = 'B';
+	else if(id == 3)
+		levelName = 'C';
+	else if(id == 4)
+		levelName = 'D';
+	
+	$('#userLevel').text(levelName);
+	$('#userLevel').attr('data-id',id);
+	$('#pu_userLevel').val(levelName);
+	$('#pu_userLevel').attr('data-id',id);
 }
 
 //产品事件
