@@ -7,7 +7,7 @@ var multPrice =0;
 $().ready(function() {
 	//getProduct();
 	//checkInfo();
-	
+	document.domain = getUrl();
 	getSynInfo();
 	initAllSelectEven();
 	initAutoChoose();
@@ -64,7 +64,7 @@ function checkInfo(){
 	var productId = $('#productId').attr('data-id');//产品线
 	var productConfigLevelId = $('#productConfigLevelId').attr('data-id');//等级
 	var productConfigLength = $('#productConfigLength').attr('data-id');//时长
-	var productConfigAdditionalPackageIds = $('#productConfigAdditionalPackageIds').attr('data-id');//附加包
+	var productConfigAdditionalPackageIds = $('#pf_productConfigAdditionalPackageIds').attr('data-id');//附加包
 	var createDate = $('#pf_createDate').val();//立项时间
 	var projectSql = $('#pf_projectSql').val();//项目周期
 	var filmDestPath = $('#pf_filmDestPath').val();//对标影片
@@ -98,6 +98,7 @@ function checkInfo(){
 	}else{
 		$('#pf_productId').val(productId);
 		$('#pf_productName').val($('#productId').text());
+		$('#pf_productConfigLevelId').val(0);
 	}
 	if(productId != '0'){
 		if(productConfigLevelId == undefined || productConfigLevelId == "" || productConfigLevelId ==null ){
@@ -108,7 +109,7 @@ function checkInfo(){
 			$('#productConfigLengthError').attr('data-content','时长未填写');
 			return false;
 		}
-		if(productConfigAdditionalPackageIds != undefined && productConfigAdditionalPackageIds != "" && productConfigAdditionalPackageIds ==null ){
+		if(productConfigAdditionalPackageIds != undefined && productConfigAdditionalPackageIds != "" && productConfigAdditionalPackageIds != null ){
 			$('#pf_productConfigAdditionalPackageIds').val(productConfigAdditionalPackageIds);
 		}
 	}
@@ -185,12 +186,6 @@ function checkInfo(){
 	}else{
 		$('#ps_teamProvider').val(teamProvider);
 	}
-	if(teamPurchase == undefined || teamPurchase == "" || teamPurchase ==null ){
-		$('#teamPurchaseError').attr('data-content','供应商采购未选择');
-		return false;
-	}else{
-		$('#ps_teamPurchase').val(teamPurchase);
-	}
 	if(financeDirector == undefined || financeDirector == "" || financeDirector ==null ){
 		$('#financeDirectorError').attr('data-content','财务主管未选择');
 		return false;
@@ -248,6 +243,14 @@ function checkInfo(){
 	if (!checkEmail(email)) {
 		$('#emailError').attr('data-content','邮箱格式不正确');
 		$('#pu_email').focus();
+		return false;
+	}
+	
+	var projectDescription = $('#projectDescription').val();
+	// 验证邮箱正确性
+	if (projectDescription.length > 255) {
+		$('#outSide').attr('data-content','备注信息过长');
+		$('#projectDescription').focus();
 		return false;
 	}
 	
@@ -418,23 +421,13 @@ function getSynInfo(){
 			
 		}
 		
-		//供应商采购
-		var teamPurchases = res.result.teamPurchase;
-		var body = $('#teamPurchases');
-		body.html('');
-		if(teamPurchases != null && teamPurchases != undefined){
-			for (var int = 0; int < teamPurchases.length; int++) {
-					var html =createOption(teamPurchases[int].id,teamPurchases[int].firstName);
-				   body.append(html);
-			};
-			
-		}
 		
 		//财务总监
 		var financeDirectors = res.result.financeDirector;
 		var body = $('#financeDirectors');
 		body.html('');
 		if(financeDirectors != null && financeDirectors != undefined){
+			
 			for (var int = 0; int < financeDirectors.length; int++) {
 					var html =createOption(financeDirectors[int].id,financeDirectors[int].firstName);
 				   body.append(html);
@@ -458,16 +451,22 @@ function getSynInfo(){
 }
 
 function getValue(id){	
-	 var hasLi = $('#cusLevel li');
-	 for (var int = 0; int < hasLi.length; int++) {
-			var hasId = $(hasLi[int]).attr('data-id');
-			if(hasId == id){
-				$('#userLevel').text($(hasLi[int]).text());
-				$('#userLevel').attr('data-id',hasId);
-				$('#pu_userLevel').val($(hasLi[int]).text());
-				$('#pu_userLevel').attr('data-id',hasId);
-			}
-	};
+	var levelName = '';
+	if(id == 0)
+		levelName = 'S';
+	else if(id == 1)
+		levelName = 'A';
+	else if(id == 2)
+		levelName = 'B';
+	else if(id == 3)
+		levelName = 'C';
+	else if(id == 4)
+		levelName = 'D';
+	
+	$('#userLevel').text(levelName);
+	$('#userLevel').attr('data-id',id);
+	$('#pu_userLevel').val(levelName);
+	$('#pu_userLevel').attr('data-id',id);
 }
 
 //产品事件
@@ -530,6 +529,7 @@ function timePriceEven(){
 		   	$(this).parent().parent().find('div').attr('data-id',id);
 		   	$(this).parent().slideUp();
 		   	$('#pf_productConfigLength').val(id);
+			$('#pf_productConfigLengthName').val($(this).text());
 		   	$('.orderSelect').removeClass('selectColor');
 		   	timePrice = parseInt(totalPrice) + parseInt($(this).attr('data-price'));
 		   	$('#estimatedPrice').val(timePrice);	   
@@ -546,27 +546,25 @@ function getProduct(){
 		body.append(html);
 		if(res != null && res != undefined){
 			for (var int = 0; int < rows.length; int++) {
-					var html =createOption(rows[int].id,rows[int].text,rows[int].price);
+				var html =createOption(rows[int].id,rows[int].text,rows[int].price);
 				body.append(html);
 			};
 			initProductEven();
 		}
+		
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
-		body.append(html);
 		if(rowsR != null && rowsR != undefined){
 			for (var int = 0; int < rowsR.length; int++) {
 					var html =createOption(rowsR[int].id,rowsR[int].text);
 				body.append(html);
 			};
-			
 		}
 		
 		var body = $('#cusLevel');
 		body.html('');
 		var rowsC = res.result.clientLevel;
-		body.append(html);
 		if(rowsC != null && rowsC != undefined){
 			for (var int = 0; int < rowsC.length; int++) {
 					var html =createOption(rowsC[int].id,rowsC[int].text);
@@ -619,11 +617,7 @@ function getTime(id){
 }
 
 
-function createOption(value,text,price){
-	    	
-		var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
-		return html;
-}
+
 
 function createUserInfo(id,name,phone,realName,clientLevel,email){
 	var html = '<li data-email="'+email+'"  data-clientLevel="'+ clientLevel +'" data-realName="'+ realName +'" data-phone="'+ phone +'" data-id="'+ id +'">'+name+'</li>';
@@ -644,6 +638,12 @@ function IsUrl(str){
 	}else{
 	return false;
 	}	 
+}
+
+
+function createOption(value,text,price){
+	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
+	return html;
 }
 
 

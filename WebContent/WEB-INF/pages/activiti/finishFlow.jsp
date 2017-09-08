@@ -9,6 +9,7 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -26,69 +27,79 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
 
-
 </head>
 
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
 	<div class="pages">
-	
 	<div class="productListAreas">
-	           <div class="waitWork">
+	           <div class="otherWork">
 	           
 	                <div class="titleNameWork">
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                      <r:identity role="employee">
-	                    <div class="createPro" id="toCreate">
-	                        <div class="newAdd"></div>
-	                        <div data-value="/project/start/project">新建项目</div>
-	                    </div>
-	                    </r:identity>
+	                      <r:group role="sale">
+		                    <div class="createPro" id="toCreate">
+		                        <div class="newAdd"></div>
+		                        <div data-value="/project/start/project">新建项目</div>
+		                    </div>
+	                    </r:group>
 	                </div>
-	                
-	                <div class="lineTop"></div>
-	               
 	                <div class="title">
-	                     <div class="titleName" id="upName">完成任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName hide" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
 	                </div>
-	                <div class="setCard" id="setCard">
-	                
+
+	                <div class="setCard" id="setCard"></div>
+	                <div class="lineTop"></div>
+	                <div class="title">
+	                     <div class="titleName" id="downName"><label id="otherWord">完成任务</label>(<span id="otherNum"></span>)</div>
+	                </div>
+	                <div class="setCard" id="otherCard">
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
-						   <div class="waitCard">
-						       <a href="/project/task/${staff.task.id}?finish">
-	                             <div class="cardH">
-	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                  <c:if test="${isPrincipal == 1}">
-		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                  <c:if test="${isPrincipal == 0}">
-		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-	                             </div>
-	                             <div class="cardContent">
-	                                  <img src="/resources/images/flow/isFinish.png">
-	                                  <div class="setContent">
-	                                          <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime finishTime">${historicProcessInstance.endTime}</div>
-	                                  </div>
-	                             </div>
-	                             </a>
-	                        </div>
+						   		<div class="otherCard">
+							      	<a href="/project/task/${staff.historicProcessInstance.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?status=finished">
+			                             <div class="cardH">
+			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
+				                                  <c:if test="${staff.isPrincipal == 1}">
+				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
+				                                  <c:if test="${staff.isPrincipal == 0}">
+				                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
+			                             </div>
+			                             <div class="cardContent">
+			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
+			                                  <img src="/resources/images/flow/isCancle.png">
+			                             	</c:if>
+			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
+			                                  <img src="/resources/images/flow/isFinish.png">
+			                             	</c:if>
+			                                  <div class="setContent">
+			                                  		<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
+				                                      <div class="lastTime finishTime">${staff.pmsProjectFlow.finishedDate}</div>
+				                                    </c:if>
+				                                    <c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
+				                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
+				                                    </c:if>
+			                                  </div>
+			                             </div>
+		                             </a>
+	                        	</div>
 							</c:forEach>
-					</c:if>
+						 </c:if>
 	                       <!--  <div class="waitCard">
 	                             <div class="cardH">
 	                                 <div class="title">这里是卡片的标题啊啊啊啊</div>

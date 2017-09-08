@@ -9,6 +9,7 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -26,9 +27,9 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
 
 <!--[if lt IE 9]>
@@ -41,6 +42,7 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
 	<div class="pages">
 	
 	<div class="productListAreas">
@@ -50,25 +52,31 @@
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                     <r:identity role="employee">
-	                    <div class="createPro" id="toCreate">
-	                        <div class="newAdd"></div>
-	                        <div data-value="/project/start/project">新建项目</div>
-	                    </div>
-	                    </r:identity>
+	                     <r:group role="sale">
+		                    <div class="createPro" id="toCreate">
+		                        <div class="newAdd"></div>
+		                        <div data-value="/project/start/project">新建项目</div>
+		                    </div>
+	                    </r:group>
 	                </div>
+	                
+	                  <div class="title">
+	                     <div class="titleName hide" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
+	                </div>
+
+	                <div class="setCard" id="setCard"></div>
 	           
 	                <div class="lineTop"></div>
 	               
 	                <div class="title">
-	                     <div class="titleName" id="upName">暂停任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName"><label id="otherWord">暂停任务</label>(<span id="otherNum"></span>)</div>
 	                </div>
-	                <div class="setCard" id="setCard">
+	                <div class="setCard" id="otherCard">
 	                
 	                	 <c:if test="${!empty suspendTasks}">
 							<c:forEach items="${suspendTasks}" var="staff" varStatus="status">
 							     <div class="otherCard">
-							     <a href="/project/task/${staff.task.id}?pause">
+							     <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?pause">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -81,7 +89,9 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime pauseTime">${staff.task.dueDate}</div>
+		                                      <div class="lastTime pauseTime">
+		                                      	${staff.pmsProjectFlow.suspendDate}
+		                                      </div>
 		                                  </div>
 		                                  <img src="/resources/images/flow/isPause.png">
 		                             </div>

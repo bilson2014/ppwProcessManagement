@@ -9,6 +9,8 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/doingFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -26,11 +28,10 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
-
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
@@ -41,39 +42,40 @@
 <body>
 
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
+	<input type="hidden" id="height" value="" />
+	<input type="hidden" id="num" value="0" />
 	<div class="pages">
-	
 	<div class="productListAreas">
 	           <div class="waitWork">
-	           
 	                 <div class="titleNameWork">
 	                    <div class="name">项目名称</div>
 	                    <input>
 	                    <div class="search btn-c-r">搜索</div>
-	                    <r:identity role="employee">
-	                    <div class="createPro" id="toCreate">
-	                        <div class="newAdd"></div>
-	                        <div data-value="/project/start/project">新建项目</div>
-	                    </div>
-	                    </r:identity>
+	                    <div class="errorItem errorTr">搜索不能为空</div>
+	                    <r:group role="sale" >
+		                    <div class="createPro" id="toCreate">
+		                        <div class="newAdd"></div>
+		                        <div data-value="/project/start/project">新建项目</div>
+		                    </div>
+	                    </r:group>
 	                </div>
 	           
 	                <div class="lineTop"></div>
 	                
+	                <div class="title">
+	                     <div class="titleName" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
+	                </div>
+	                
 	                 <c:if test="${empty gTasks}">
 	                     <div class="nodaiban">当前没有待办任务</div>
 	                 </c:if>
-	                 
-	                 
 	                
 	                <c:if test="${!empty gTasks}">
-	                <div class="title">
-	                     <div class="titleName" id="upName">待办任务(<span id="daiNum"></span>)</div>
-	                </div>
+	               
 	                <div class="setCard" id="setCard">
 							<c:forEach items="${gTasks }" var="staff" varStatus="status">
 						   <div class="waitCard cardNum">
-						       <a href="/project/task/${staff.task.id}?task">
+						       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">
@@ -121,14 +123,26 @@
 	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName">其它任务(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName"><label id="otherWord">其它任务</label>(<span id="otherNum"></span>)</div>
+	                     <div class="orderSelect" id='isOther'>
+				                <div id="projectGrade"></div>
+				                <img src="${imgPath}/flow/selectOrder.png">
+				                <ul class="oSelect" id="orderCome">
+				                   <li data-id="0">全部</li>
+				                   <li data-id="1">沟通阶段</li>
+				                   <li data-id="2">方案阶段</li>
+				                   <li data-id="3">商务阶段</li>
+				                   <li data-id="4">制作阶段</li>
+				                   <li data-id="5">交付阶段</li>
+				                </ul>    
+					      </div>
 	                </div>
 	           <div class="setCard" id="otherCard">
 	           
 	            <c:if test="${!empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard">
-							        <a href="/project/task/${staff.task.id}?doing">
+							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 		                                  <c:if test="${staff.isPrincipal == 1}">

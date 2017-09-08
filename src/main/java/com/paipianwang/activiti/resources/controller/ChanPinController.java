@@ -90,12 +90,8 @@ public class ChanPinController {
 		for(PmsChanPin pmsChanpin:allScene.getRows()){
 			chanpin.add(new ChanpinSelection(pmsChanpin.getChanpinId()+"", pmsChanpin.getChanpinName()));
 		}
-		chanpin.add(new ChanpinSelection("-1","自主"));
 		result.put("chanpin", chanpin);
-		//产品配置-第一条产品下
-//		setConfigByChanpinAndConfig(result,allScene.getRows().get(0).getChanpinId(),null);
 		
-		//暂时
 		//项目来源
 		List<Map<String,Object>> emlist=new ArrayList<Map<String,Object>>();
 		for(IndentSource source:IndentSource.values()){

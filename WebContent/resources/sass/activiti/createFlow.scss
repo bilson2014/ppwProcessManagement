@@ -5,7 +5,7 @@
         @import "compass/typography/text/ellipsis";
 
         body {
-            background:#F0F2F5 !important;
+            background: #F0F2F5 !important;
         }
 
         input,
@@ -83,6 +83,20 @@
             top: 65px
         }
 
+
+        .errorItemDis {
+            position: relative;
+        }
+
+        .errorItemDis:after {
+            content: attr(data-content);
+            color: $red-base;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 35px;
+            top: 134px;
+        }
+
         @mixin itemTitle {
             font-size: $font-size-base;
             color: $gray-light;
@@ -125,6 +139,9 @@
 
             .orderSelect {
                 width: 220px;
+                div {
+                    @include ellipsis;
+                }
             }
         }
 
@@ -152,19 +169,19 @@
 
             .orderSelect {
                 width: 160px;
-                div{
-                	@include ellipsis
+                div {
+                    @include ellipsis
                 }
-                
+
                 @media screen and (min-width: 1276px) {
                     width: 220px;
                 }
             }
         }
 
-        .noborder{
-        	border:none !important;
-        	background: transparent !important; 
+        .noborder {
+            border: none !important;
+            background: transparent !important;
         }
 
         .sMidItem {
@@ -195,9 +212,9 @@
 
             .orderSelect {
 
-            	div{
-
-            	}
+                div {
+                    @include ellipsis;
+                }
                 width: 200px;
                 @media screen and (min-width: 1276px) and (max-width: 1500px) {
                     width: 260px;
@@ -261,6 +278,9 @@
             }
 
             .orderSelect {
+                div {
+                    @include ellipsis;
+                }
                 width: 200px;
                 @media screen and (min-width: 1276px) and (max-width: 1500px) {
                     width: 260px;
@@ -296,11 +316,24 @@
 
             .orderSelect {
                 width: 400px;
+                div {
+                    @include ellipsis;
+                }
                 @media screen and (min-width: 1276px) {
                     width: 560px;
                 }
             }
         }
+
+
+        .orderSelect {
+            div {
+                padding-right: 20px !important;
+                @include ellipsis;
+            }
+        }
+
+
 
         .multSelect {
             display: none;

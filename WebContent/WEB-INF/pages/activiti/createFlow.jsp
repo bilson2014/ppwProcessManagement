@@ -40,9 +40,10 @@
 </head>
 
 <body>
+    <jsp:include flush="true" page="../header.jsp"></jsp:include>
     <form method="post" action="/project/start-process" id="toListForm">
 	<div class="page">
-	    <jsp:include flush="true" page="../header.jsp"></jsp:include>
+	   
 	    <div class="title">新建项目</div> 
 	    <div class="infoTitle">项目信息</div> 
 	    <div class="outSide">
@@ -110,6 +111,7 @@
 	                  <div class="smallItem errorItem " id="productConfigLengthError">
 	                       <div class="itemTitle">时长<span>*</span></div>
 	                       <input type="hidden" id="pf_productConfigLength" name="pf_productConfigLength"/>
+	                       <input type="hidden" id="pf_productConfigLengthName" name="pf_productConfigLengthName"/>
 	                       <div class="orderSelect noclick" >
 				                <div id="productConfigLength"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -121,7 +123,7 @@
 	                  <div class="sMidItem noMargin errorItem" id="productConfigAdditionalPackageIdsError">
 	                       <div class="itemTitle">附加包</div>
 	                        <input type="hidden" id="pf_productConfigAdditionalPackageIds" name="pf_productConfigAdditionalPackageIds"/>
-	                        <input type="hidden" id="pf_productConfigAdditonalPackageName" name="pf_productConfigAdditonalPackageName"/>
+	                        <input type="hidden" id="pf_productConfigAdditonalPackageName" name="pf_productConfigAdditionalPackageName"/>
 	                       <div class="orderSelect orderMultSelect noclick"> 
 	                            <div id="productConfigAdditionalPackageIds"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
@@ -135,7 +137,7 @@
 	                 </div>
 	                 <div class="midItem errorItem" id="projectSqlError">
 	                       <div class="itemTitle">项目周期 (天数)<span>*</span></div>
-	                       <input id="pf_projectSql" name="pf_projectCycle"/> 
+	                       <input id="pf_projectSql" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" name="pf_projectCycle"/> 
 	                 </div>
 	                  <div class="bigItem noMargin errorItem" id="filmDestPathError">
 	                       <div class="itemTitle">对标影片<span>*</span></div>
@@ -148,7 +150,7 @@
 		    <div class="outSide">
 		           <div class="projectInfo">
 		                <div class="smallItem errorItem" id="customerDirectorError">
-	                       <div class="itemTitle">客服总监<span>*</span></div>
+	                       <div class="itemTitle">项目助理<span>*</span></div>
 	                       <input type="hidden" id="ps_customerDirector" name="ps_customerDirector"/>
 	                       <div class="orderSelect" >
 				                <div id="customerDirector"></div>
@@ -213,7 +215,7 @@
 				                </ul>    
 					      </div>
 	                 </div>
-	                  <div class="smallItem errorItem" id="teamPurchaseError">
+	                 <%--  <div class="smallItem errorItem" id="teamPurchaseError">
 	                       <div class="itemTitle">供应商采购<span>*</span></div>
 	                       <input type="hidden" id="ps_teamPurchase" name="ps_teamPurchase"/>
 	                       <div class="orderSelect" >
@@ -223,7 +225,7 @@
 				                    <li data-id="1">gg</li>
 				                </ul>    
 					      </div>
-	                 </div>
+	                 </div> --%>
 	                  <div class="smallItem errorItem" id="financeDirectorError">
 	                       <div class="itemTitle">财务主管<span>*</span></div>
 	                       <input type="hidden" id="ps_financeDirector" name="ps_financeDirector"/>
@@ -293,16 +295,16 @@
 		      <div class="infoTitle">价格信息</div>
 		      <div class="singleItem">
 		                       <div class="itemTitle">项目预算</div>
-		                       <input id="estimatedPrice" name="pf_estimatedPrice" value="0"/>
+		                       <input id="estimatedPrice" name="pf_estimatedPrice" value="0" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/"/>
 		                       <div class="yuan">元</div>
 		      </div>
 		      <div class="infoTitle">项目描述</div>
-		      <div class="outSide">
+		      <div class="outSide errorItemDis" id="outSide" >
 		           <textarea id="projectDescription" name="pf_projectDescription"></textarea>         
 		      </div>
 		      
-		      <div class="btnMid">
-		          <a href="http://newlogic.apaipian.com"><div class="btn-c-g">取消</div></a>
+		      <div class="btnMid" >
+		          <a href="javascript:void(0);" onClick="javascript :history.back(-1);"><div class="btn-c-g">取消</div></a>
 		          <div class="btn-c-r" id="toSubmit">确认</div>
 		      </div>
 	</div>

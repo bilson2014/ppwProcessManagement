@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paipianwang.activiti.service.MessageService;
+import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
@@ -80,11 +81,13 @@ public class MessageServiceImpl implements MessageService {
 				
 				//处理角色+名称
 				setFromName(groups, users, message);
+				editDate(message);
 				
 				List<PmsProjectMessage> children=message.getChildren();
 				if(ValidateUtil.isValid(children)){
 					children.stream().forEach(child->{
 						setFromName(groups, users, child);
+						editDate(child);
 					});
 				}
 			}
@@ -122,5 +125,11 @@ public class MessageServiceImpl implements MessageService {
 			}
 		}
 		message.setFromName(userName);
-	}	
+	}
+	
+	private void editDate(PmsProjectMessage message){
+		if(message.getCreateDate()!=null){
+			message.setCreateDate(DateUtils.getDateByFormat(message.getCreateDate(), "yyyy-MM-dd HH:mm:ss").toString());	
+		}
+	}
 }

@@ -4,6 +4,7 @@
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
 <spring:url value="/resources/css/activiti/aa.css" var="aaCss"/>
+
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -59,6 +60,8 @@
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<input type="hidden" id="realName" value="${realName}" />
 	<input type="hidden" id="photo" value="${photo}" />
+	<input type="hidden" id="photo" value="${status}" />
+	
 	
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>

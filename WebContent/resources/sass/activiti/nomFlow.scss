@@ -1,6 +1,7 @@
             @import "common";
             @import "buttons";
             @import "video";
+            @import "orderSelect";
             @import "compass/typography/text/ellipsis";
 
             body {
@@ -102,6 +103,7 @@
                     color: $gray-dark;
                     margin-left: 10px;
                     margin-right: 10px;
+                    outline: none;
                 }
                 div,
                 img,
@@ -125,8 +127,8 @@ $ba:#bababa; */
             $smallMinWidth:900px;
             $ba:#bababa;
             $smallWidth:780px;
-            $areaMinMidWidth:1100px;
-            $areaMinWidth:1260px;
+            $areaMinMidWidth:1140px;
+            $areaMinWidth:1240px;
 
             .lineTop {
                 width: 100%;
@@ -168,6 +170,7 @@ $ba:#bababa; */
                         color: $gray-dark;
                         width: 40%;
                         @include ellipsis;
+                        font-weight: bold;
                     }
                     .your {
                         width: 80px;
@@ -257,7 +260,7 @@ $ba:#bababa; */
                 padding-left: 20px;
                 .waitCard {
                     width: ($smallWidth - $noNeedpad*3)/3;
-                    @media screen and (min-width: 761px) and (max-width: 1029px) {
+                    @media screen and (min-width: 780px) and (max-width: 1029px) {
                         width: ($areaMidWidth - $noNeedpad*3)/3;
                     }
                     @media screen and (min-width: 1030px) {
@@ -288,7 +291,7 @@ $ba:#bababa; */
                             margin-left: 15px;
                             width: 56%;
                             .listName {
-                                font-size: $font-size-base;
+                                font-size: $font-size-sm;
                                 color: $gray;
                                 margin-bottom: 10px;
                                 @include ellipsis;
@@ -296,7 +299,6 @@ $ba:#bababa; */
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
-
                             }
                         }
                     }
@@ -307,17 +309,15 @@ $ba:#bababa; */
                 }
             }
 
-
-
-            .toMinLeft .setCard {
+            .toChange .setCard {
                 .waitCard,
                 .otherCard {
                     cursor: pointer;
                     width: ($smallMinWidth - $noNeedpad*3)/3 !important;
-                    @media screen and (min-width: 761px) and (max-width: 1000px) {
+                    @media screen and (min-width: 905px) and (max-width: 1229px) {
                         width: ($areaMinMidWidth - $noNeedpad*3)/3 !important;
                     }
-                    @media screen and (min-width: 1005px) {
+                    @media screen and (min-width: 1230px) {
                         width: ($areaMinWidth - $noNeedpad*3)/3 !important;
                     }
                 }
@@ -341,12 +341,19 @@ $ba:#bababa; */
                     height: 65px;
                     line-height: 65px;
                     padding-left: 20px;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                .orderSelect {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 50px;
                 }
                 .setCard {
                     .otherCard {
                         padding-left: 0px !important;
                         width: ($smallWidth - $noNeedpad*3)/3;
-                        @media screen and (min-width: 761px) and (max-width: 1029px) {
+                        @media screen and (min-width: 780px) and (max-width: 1029px) {
                             width: ($areaMidWidth - $noNeedpad*3)/3;
                         }
                         @media screen and (min-width: 1030px) {
@@ -387,10 +394,17 @@ $ba:#bababa; */
                                     color: $gray;
                                     line-height: 20px;
                                     overflow: hidden;
-
                                 }
                             }
                         }
                     }
                 }
+            }
+
+            .errorTr{
+                color:transparent !important; 
+            }
+            .errorItem{
+            	color:$red-base;
+            	margin-left: 10px;
             }

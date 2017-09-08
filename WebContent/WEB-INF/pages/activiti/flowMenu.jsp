@@ -9,6 +9,8 @@
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/activiti/flowMenu.js" var="flowMenuJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="http://localhost:8081/" var="url" />
+<%-- <spring:url value="http://www.apaipian.com:8087/" var="url" /> --%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -42,10 +44,10 @@
 	    <div class="flowMenu">
 	        <div id="shortMenu">
 	                <div class="head" id="menuHead"><img src="${imgPath}/flow/open.png"></div>
-	                <div class="menuItem"><div class="createIcon"></div></div>
+	                 <a href="${url}mgr/favourites"><div class="menuItem"><div class="createIcon"></div></div></a>
 	                <div class="menuItem"><div class="myPro" id="minMyPro"></div></div>
-	                <div class="menuItem"><div class="orderList"></div></div>
-	                <div class="menuItem"><div class="save"></div></div>
+	                <div class="menuItem hide"><div class="orderList"></div></div>
+	                <a href="${url}mgr/favourites"><div class="menuItem"><div class="save"></div></div></a>
 	                <!-- <div class="menuItem"><div class="safe"></div></div> -->
 	                <div class="bottom"><div class="loginOut"></div></div>
 	        </div>
@@ -65,7 +67,6 @@
 	                  <li id="pause">暂停</li>
 	                  <li id="finish">完成/取消</li>
 	              </ul>
-	              
 	              <a href="http://www.apaipian.com/order/myOrder">
 		              <div class="treeitem" id="myOrder">
 		                <div class="orderList"></div>
@@ -79,9 +80,10 @@
 	                  <li>无效订单</li>
 	              </ul> -->
 
-	              <div class="treeitem">
 
-	              <a class="treeA" href="http://www.apaipian.com/mgr/favourites">
+	              <div class="treeitem">
+	              <a class="treeA" href="${url}running?save">
+
 		              <div class="treeitem">
 		                  <div class="save"></div>
 		                  <div class="title">收藏列表</div>
@@ -92,8 +94,8 @@
 	                  <div class="safe"></div>
 	                  <a href='http://www.apaipian.com/activiti/saveInfo'><div class="title">安全设置</div></a>
 	             </div>
-	              <a href="http://www.apaipian.com/login/loginout">
-	             <div class="treeitem">
+	              <a href="${url}login/loginout">
+	             <div class="treeitem treeitemRed">
 	                  <div class="line"></div>
 	                  <div class="loginOut"></div>
 	                 <div class="title">退出登录</div>

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
 import com.alibaba.fastjson.JSON;
+import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.facade.finance.entity.PmsDealLog;
 import com.paipianwang.pat.facade.finance.service.PmsFinanceFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -73,7 +74,7 @@ public class InputTeamDealLogTaskLisnter implements TaskListener {
 				// 预置信息
 				dealLog.setDealStatus(1);
 				dealLog.setPayChannel("线下转账");
-				dealLog.setUserType("role_customer");
+				dealLog.setUserType(PmsConstant.ROLE_PROVIDER);
 				dealLog.setDealLogSource(1);
 				dealLog.setLogType(1); // 出账
 				

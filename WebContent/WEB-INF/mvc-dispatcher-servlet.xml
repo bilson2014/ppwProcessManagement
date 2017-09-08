@@ -10,14 +10,19 @@
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
-
-	<mvc:view-controller path="/text" view-name="/activiti/textFlow" />
-
-	<mvc:view-controller path="/textI" view-name="/activiti/flowInfo" />
 	
+
 	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
 	<!-- xcc此处添加安全页的名字 -->
 	<mvc:view-controller path='save' view-name='/activiti/saveInfo'/>
+
+	<mvc:view-controller path="/pf" view-name="/phoneActiviti/pFlowList" />
+	
+	<mvc:view-controller path="/pit" view-name="/phoneActiviti/pFlowInfoTask" />
+	
+	<mvc:view-controller path="/pif" view-name="/phoneActiviti/pFlowFile" />
+	
+	<mvc:view-controller path="/pim" view-name="/phoneActiviti/pFlowMessage" />
 
 
 	<context:annotation-config />

@@ -1,6 +1,7 @@
 package com.paipianwang.activiti.task.listener;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
 /**
@@ -33,7 +35,8 @@ public class EndProjectEventListener implements JavaDelegate,Serializable {
 		PmsProjectFlowFacade flowFacade = (PmsProjectFlowFacade) context.getBean("pmsProjectFlowFacade");
 		
 		Map<String, Object> metaData = new HashMap<String, Object>();
-		metaData.put("projectStatus", "finished");
+		metaData.put("projectStatus", ProjectFlowStatus.finished.getId());
+		metaData.put("finishedDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
 	}
 
