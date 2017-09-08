@@ -1,0 +1,111 @@
+    @import "common";
+    @import "buttons";
+    @import "video";
+    @import "bootstrap-grid";
+    @import "companyCommon";
+    @import "compass/typography/text/ellipsis";
+    @import "pflow";
+
+
+    .title {
+        position: relative;
+        width: 100%;
+        padding: 0.6rem 06rem 0 0.6rem;
+        height: 1.5rem;
+        img:nth-child(1) {
+            width: 0.35rem;
+            height: 0.35rem;
+            display: inline-block;
+            vertical-align: top;
+        }
+        img:nth-child(2) {
+            width: 0.5rem;
+            height: 0.5rem;
+            position: absolute;
+            right: 0.6rem;
+        }
+        div {
+            font-size: $size40;
+            color: white;
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+
+    .setMessage {
+        width: 100%;
+        padding-right: 0.6rem;
+        padding-left: 0.6rem;
+        font-size: 0px;
+        display: none;
+        textarea {
+            width: 100%;
+            height: 1.8rem;
+            border-radius: 0.1rem;
+            border: 1px solid $border-line;
+            color: $border-line;
+            font-size: $size36;
+            resize: none;
+            padding: 10px;
+            background: transparent;
+            outline: none;
+        }
+        div {
+            width: 8rem;
+            height: 1rem;
+            text-align: center;
+            line-height: 1rem;
+            font-size: $size36;
+            color: white;
+            border-radius: 1rem;
+            margin: 0 auto;
+            margin-top: 0.8rem;
+        }
+    }
+
+    .item {
+        width: 100%;
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+        position: relative;
+        margin-top: 0.5rem;
+        font-size: 0;
+        img {
+            width: 0.5rem;
+            height: 0.5rem;
+            position: absolute;
+            right: 0.6rem;
+            top: -0.15rem;
+        }
+        .content {
+            width: 100%;
+            height: auto;
+            .contentItem {
+                width: 100%;
+                .name {
+                    font-size: $size36;
+                    color: $e3;
+                }
+                .itemContent {
+                    font-size: $size36;
+                    color: $e3;
+                    line-height: 0.5rem;
+                    margin-top: 0.3rem;
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+        input {
+            width: 100%;
+            height: 0.9rem;
+            border: 1px solid $border-line;
+            padding-left: 10px;
+            border-radius: 0.1rem;
+            outline: none;
+            background: transparent;
+            margin-top: 0.3rem;
+            font-size: $size36;
+            color: $e3;
+            display: none;
+        }
+    }
