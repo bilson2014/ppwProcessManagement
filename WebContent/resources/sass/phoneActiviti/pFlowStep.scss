@@ -1,0 +1,17 @@
+@import "common";
+@import "buttons";
+@import "video";
+@import "bootstrap-grid";
+@import "companyCommon";
+@import "compass/typography/text/ellipsis";
+@import "pflow";
+
+
+.title {
+    position: relative;
+    width: 100%;
+    padding: 0.6rem 06rem 0 0.6rem;
+    height: 1.5rem;
+    font-size: $size40;
+    color: white;
+}

@@ -23,6 +23,8 @@
 	<mvc:view-controller path="/pif" view-name="/phoneActiviti/pFlowFile" />
 	
 	<mvc:view-controller path="/pim" view-name="/phoneActiviti/pFlowMessage" />
+	
+	<mvc:view-controller path="/pis" view-name="/phoneActiviti/pFlowStep" />
 
 
 	<context:annotation-config />

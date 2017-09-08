@@ -1,0 +1,85 @@
+    @import "common";
+    @import "buttons";
+    @import "video";
+    @import "bootstrap-grid";
+    @import "companyCommon";
+    @import "compass/typography/text/ellipsis";
+    @import "pflow";
+
+
+    .setContent {
+        width: 10rem;
+        height: auto;
+        margin: 0 auto;
+
+        .contentTitle {
+            position: relative;
+            width: 100%;
+            margin-top: 0.6rem;
+            .name {
+                font-size: $size40;
+                color: white;
+                position: absolute;
+                left: 0;
+            }
+            .time {
+                font-size: $size30;
+                color: $gray-light;
+                position: absolute;
+                right: 0;
+            }
+        }
+
+        .content {
+            padding-top: 1rem;
+            .item {
+                font-size: 0;
+                margin-bottom: 0.4rem;
+                .name {
+                    width: 1.7rem;
+                    font-size: $size34;
+                    color: $border-line;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                input {
+                    width: 7.3rem;
+                    height: .9rem;
+                    background: transparent;
+                    font-size: $size34;
+                    border: 1px solid $border-line;
+                    border-radius: 0.08rem;
+                    padding-left: 10px;
+                    font-size: $size34;
+                    color: $border-line;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+                .orderSelect {
+                    width: 7.3rem;
+                    height: .9rem;
+                    background: transparent;
+                    display: inline-block;
+                    vertical-align: middle;
+                    position: relative;
+                    input {
+                        width: 100%;
+                        height: 100%;
+                        font-size: $size34;
+                        border: 1px solid $border-line;
+                        border-radius: 0.08rem;
+                    }
+                    div {
+                        height: 100%;
+                        width: 0.9rem;
+                        border-left: 1px solid $border-line;
+                        background: url(/resources/images/pFlow/select.png) no-repeat center;
+                        background-size: 0.5rem 0.5rem;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }

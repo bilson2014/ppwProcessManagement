@@ -1,0 +1,328 @@
+@import "common";
+@import "buttons";
+@import "video";
+@import "bootstrap-grid";
+@import "companyCommon";
+@import "compass/typography/text/ellipsis";
+
+
+
+body {
+    height: auto;
+    background: black;
+}
+
+.pagePhone {
+    height: auto;
+    padding-top: 3rem;
+}
+
+.tagOne {
+
+    div:nth-child(1) {
+        color: $red-base !important;
+    }
+    .checkLine {
+        left: 0 !important;
+    }
+}
+
+.tagTwo {
+
+    div:nth-child(2) {
+        color: $red-base !important;
+    }
+    .checkLine {
+        left: 33.33% !important;
+    }
+}
+
+
+.tagThree {
+
+    div:nth-child(3) {
+        color: $red-base !important;
+    }
+    .checkLine {
+        left: 66.6% !important;
+    }
+}
+
+.menuTag {
+    height: 1.25rem;
+    border-top: 1px solid $s97;
+    border-bottom: 1px solid $s97;
+    font-size: 0;
+    position: fixed;
+    width: 100%;
+    top: 1.5rem;
+    background: $gray-dark;
+    z-index: 50;
+    div {
+        height: 100%;
+        width: 33.33%;
+        font-size: $size40;
+        color: white;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        line-height: 1.23rem;
+        position: relative;
+    }
+
+    .checkLine {
+        height: 1px !important;
+        width: 33.33%;
+        position: absolute !important;
+        bottom: -1px;
+        left: 0;
+        background: $red-base;
+        -webkit-transition: transform .4s, all .8s;
+        -moz-transition: transform .4s, all .8s;
+        -o-transition: transform .4s, all .8s;
+        transition: transform .4s, all .8s;
+    }
+
+    div:nth-child(2) {
+        &:before {
+            content: '';
+            height: 100%;
+            width: 1px;
+            background: $s97;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        &:after {
+            content: '';
+            height: 100%;
+            width: 1px;
+            background: $s97;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .checkTag {
+        color: $red-base;
+    }
+}
+
+
+.search {
+    white-space: nowrap;
+    font-size: 0;
+    padding-left: 0.4rem;
+    width: 100%;
+    overflow: auto;
+    margin-top: 0.3rem;
+    margin-bottom: 0.35rem;
+    li {
+        width: 1.8rem;
+        height: 0.8rem;
+        background: $red-base;
+        font-size: $size36;
+        color: $border-line;
+        line-height: 0.8rem;
+        background: $gray;
+        display: inline-block;
+        vertical-align: top;
+        border-radius: 1rem;
+        text-align: center;
+        margin-right: 0.2rem;
+    }
+    .checkSearch {
+        color: white !important;
+        background: $red-base;
+    }
+}
+
+.search::-webkit-scrollbar {
+    width: 0px;
+}
+
+.search::-webkit-scrollbar {
+    display: none
+}
+
+
+.otherCard {
+    width: 10rem;
+    height: auto;
+    margin: 0 auto;
+    background: $gray;
+    border-radius: 0.16rem;
+    margin-top: 0.1rem;
+    .cardTop {
+        height: 1.31rem;
+        width: 100%;
+        border-bottom: 1px solid $border-line;
+        position: relative;
+        padding-right: 0.4rem;
+        padding-left: 0.4rem;
+
+        .cardName {
+            width: 3rem;
+            line-height: 1.3rem;
+            @include ellipsis;
+            display: inline-block;
+            vertical-align: top;
+            font-size: $size40;
+            color: $e3;
+        }
+        .cardG {
+            width: 1rem;
+            height: 0.5rem;
+            display: inline-block;
+            vertical-align: top;
+            font-size: $size36;
+            border: 1px solid $gray-light;
+            border-radius: 0.68rem;
+            text-align: center;
+            line-height: 0.5rem;
+            position: relative;
+            top: 0.35rem;
+            color: $gray-light;
+            font-weight: bold;
+        }
+        .user,
+        .your {
+            position: absolute;
+            right: 0.4rem;
+            top: 0.4rem;
+            font-size: $size36;
+            color: $gray-light;
+        }
+        .your {
+            color: $red-base !important;
+        }
+    }
+
+    .cardBot {
+        height: 2.33rem;
+        width: 100%;
+        position: relative;
+        padding-right: 0.4rem;
+        padding-left: 0.4rem;
+        div {
+            color: $gray-light;
+            font-size: $size34;
+            width: 6rem;
+            @include ellipsis;
+        }
+        .taskName {
+            position: relative;
+            top: 0.6rem;
+        }
+        .taskTime {
+            position: relative;
+            top: 0.9rem;
+        }
+        .taskImg {
+            width: 2.15rem;
+            height: 1.46rem;
+            position: absolute;
+            right: 0.5rem;
+            top: 0.4rem;
+        }
+    }
+}
+
+
+
+.MissionCard {
+    width: 10rem;
+    height: auto;
+    margin: 0 auto;
+    background: $gray;
+    border-radius: 0.16rem;
+    margin-top: 0.1rem;
+    .cardTop {
+        height: 1.31rem;
+        width: 100%;
+        border-bottom: 1px solid $border-line;
+        position: relative;
+        padding-right: 0.4rem;
+        padding-left: 0.4rem;
+        .cardState {
+            width: 1.2rem;
+            height: 0.5rem;
+            color: white;
+            font-size: $size30;
+            text-align: center;
+            line-height: 0.5rem;
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            top: 0.35rem;
+            background: $red-base;
+            border-radius: 0.68rem;
+        }
+        .cardName {
+            width: 3rem;
+            line-height: 1.3rem;
+            @include ellipsis;
+            display: inline-block;
+            vertical-align: top;
+            font-size: $size40;
+            color: $e3;
+        }
+        .cardG {
+            width: 1rem;
+            height: 0.5rem;
+            display: inline-block;
+            vertical-align: top;
+            font-size: $size36;
+            border: 1px solid $gray-light;
+            border-radius: 0.68rem;
+            text-align: center;
+            line-height: 0.5rem;
+            position: relative;
+            top: 0.35rem;
+            color: $gray-light;
+            font-weight: bold;
+        }
+        .user,
+        .your {
+            position: absolute;
+            right: 0.4rem;
+            top: 0.4rem;
+            font-size: $size36;
+            color: $gray-light;
+        }
+        .your {
+            color: $red-base !important;
+        }
+    }
+
+    .cardBot {
+        height: 2.33rem;
+        width: 100%;
+        position: relative;
+        padding-right: 0.4rem;
+        padding-left: 0.4rem;
+        div {
+            color: $gray-light;
+            font-size: $size34;
+            width: 6rem;
+            @include ellipsis;
+        }
+
+        .taskName {
+            position: relative;
+            top: 0.6rem;
+        }
+        .taskTime {
+            position: relative;
+            top: 0.9rem;
+        }
+        .taskImg {
+            width: 1.4rem;
+            height: 1.4rem;
+            position: absolute;
+            right: 0.5rem;
+            top: 0.5rem;
+        }
+    }
+}
