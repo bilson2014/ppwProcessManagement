@@ -7,8 +7,22 @@
                 z-index: 9999 !important;
             }
 
+
+ .rightsize {
+    width:292px;
+    background-color: yellow;
+     @media screen and (max-width: 775px) {
+    width: 260px;
+   
+    }
+    @media screen and (min-width: 775px) and (max-width: 1025px) {
+    width: 238px;
+      
+    }
+    }
             body {
                 background: #F0F2F5 !important;
+                height:1300px;
             }
 
             @mixin anmotion {

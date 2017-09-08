@@ -3,11 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- import CSS --%>
 <spring:url value="/resources/css/activiti/textFlow.css" var="textCss"/>
+<spring:url value="/resources/css/activiti/aa.css" var="aaCss"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/textFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
+
+  <spring:url value="/resources/js/activiti/saveInfo.js" var="saveInfoJs"/>
+  <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploader"/>
+
+
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -25,10 +33,17 @@
 <meta name="baidu-site-verification" content="dMz6jZpIwd" />
 <title></title>
 <link rel="stylesheet" href="${textCss}">
+<link rel="stylesheet" href="${aaCss}">
+
+
 <script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
+  <script type="text/javascript" src="${saveInfoJs}"></script>
+  <script type="text/javascript" src="${webuploader}"></script>
+
+
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -59,7 +74,7 @@
 	           <div class="waitWork">
 	               
 	                <iframe class="frame" id="content-frame" class="iframe" src="<spring:url value='/save'/>"></iframe>
-<!-- 	                <div class="lineTop"></div>
+<!-- 	<div class="lineTop"></div>
 	                <div id="hideDiv">
 	                <div class="title">
 	                     <div class="titleName" id="upName">待办任务</div>
