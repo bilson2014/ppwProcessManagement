@@ -197,6 +197,7 @@ public class ProjectFlowController extends BaseController {
 						if (task != null) {
 							pmsProjectFlowResult.setTaskId(task.getId());
 							pmsProjectFlowResult.setTaskName(task.getName());
+							pmsProjectFlowResult.setDueDate(task.getDueDate());
 							pmsProjectFlowResult.setTask(null);
 						}
 						if(pIs != null) {
