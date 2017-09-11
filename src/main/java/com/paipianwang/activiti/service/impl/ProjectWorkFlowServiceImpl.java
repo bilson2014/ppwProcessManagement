@@ -1496,4 +1496,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	public List<TaskVO> getTasksByStage(String stage, String activitiUserId, int flag) {
 		return getTasksByStage(stage, activitiUserId, flag, false);
 	}
+
+	@Override
+	public Task getCurrentTaskName(final String taskId) {
+		if(StringUtils.isNotBlank(taskId)) {
+			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			return task;
+		}
+		return null;
+	}
 }
