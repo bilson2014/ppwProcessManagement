@@ -140,11 +140,11 @@ public class ProjectFlowController extends BaseController {
 							pmsProjectFlowResult.setDueDate(task.getDueDate());
 							pmsProjectFlowResult.setTask(null);
 						}
-						if(pIs != null) {
+						if (pIs != null) {
 							pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
 							pmsProjectFlowResult.setProcessInstance(null);
 						}
-						if(pd != null) {
+						if (pd != null) {
 							pmsProjectFlowResult.setProcessDefinition(null);
 						}
 					}
@@ -456,28 +456,28 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 		// 加载数据
 		List<PmsProjectFlowResult> list = loadFinishedProjectList(info);
-		
-		if(ValidateUtil.isValid(list)) {
+
+		if (ValidateUtil.isValid(list)) {
 			for (PmsProjectFlowResult pmsProjectFlowResult : list) {
 				Task task = pmsProjectFlowResult.getTask();
 				HistoricProcessInstance hPs = pmsProjectFlowResult.getHistoricProcessInstance();
 				ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
-				if(task != null) {
+				if (task != null) {
 					pmsProjectFlowResult.setTaskId(task.getId());
 					pmsProjectFlowResult.setTaskName(task.getName());
 					pmsProjectFlowResult.setTask(null);
 				}
-				if(hPs != null) {
+				if (hPs != null) {
 					pmsProjectFlowResult.setEndTime(hPs.getEndTime());
 					pmsProjectFlowResult.setProcessInstanceId(hPs.getId());
 					pmsProjectFlowResult.setHistoricProcessInstance(null);
 				}
-				
-				if(pIs != null) {
+
+				if (pIs != null) {
 					pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
 					pmsProjectFlowResult.setProcessInstance(null);
 				}
-				
+
 			}
 		}
 		return list;
@@ -485,10 +485,26 @@ public class ProjectFlowController extends BaseController {
 
 	// 获取 完成/取消 项目列表
 	private List<PmsProjectFlowResult> loadFinishedProjectList(final SessionInfo info) {
-		// 查询已完成的项目
-		List<PmsProjectFlowResult> list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
-		// 查询已取消的项目
-		List<PmsProjectFlowResult> cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
+
+		List<String> groups = info.getActivitGroups();
+		List<PmsProjectFlowResult> list = new ArrayList<PmsProjectFlowResult>();
+		List<PmsProjectFlowResult> cancelList = new ArrayList<PmsProjectFlowResult>();
+		// 判断身份
+		if (groups.contains(ProjectRoleType.teamDirector.getId())
+				|| groups.contains(ProjectRoleType.financeDirector.getId())
+				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+			// 供应商总监、财务总监、客服总监 应该看见所有项目
+			
+			// 查询已完成的项目
+			list = projectWorkFlowService.getFinishedTask(null);
+			// 查询已取消的项目
+			cancelList = projectWorkFlowService.getCancelTask(null);
+		} else {
+			// 查询已完成的项目
+			list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
+			// 查询已取消的项目
+			cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
+		}
 		// 混合数据
 		if (cancelList != null && !cancelList.isEmpty())
 			list.addAll(cancelList);
@@ -544,7 +560,7 @@ public class ProjectFlowController extends BaseController {
 					pmsProjectFlowResult.setTaskName(task.getName());
 					pmsProjectFlowResult.setTask(null);
 				}
-				if(pIs != null) {
+				if (pIs != null) {
 					pmsProjectFlowResult.setProcessInstanceId(pIs.getId());
 					pmsProjectFlowResult.setProcessInstance(null);
 				}
@@ -748,5 +764,5 @@ public class ProjectFlowController extends BaseController {
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
-	
+
 }
