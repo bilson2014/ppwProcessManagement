@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author jacky
  *
  */
+@RestController
 @RequestMapping("/project/phone")
 public class ProjectFlowPhoneController extends BaseController {
 
@@ -22,17 +24,9 @@ public class ProjectFlowPhoneController extends BaseController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/projectFlow/{taskId}/{projectId}/{processInstanceId}/{taskName}")
-	public ModelAndView projectView(@PathVariable("taskId") final String taskId,
-			@PathVariable("projectId") final String projectId,
-			@PathVariable("processInstanceId") final String processInstanceId,
-			@PathVariable("taskName") final String taskName) {
+	@RequestMapping("/projectFlow")
+	public ModelAndView projectView() {
 		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowList");
-		mv.addObject("taskId", taskId);
-		mv.addObject("projectId", projectId);
-		mv.addObject("processInstanceId", processInstanceId);
-		mv.addObject("taskName", taskName);
-
 		return mv;
 	}
 

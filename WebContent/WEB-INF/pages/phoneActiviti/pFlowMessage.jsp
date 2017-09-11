@@ -45,7 +45,7 @@
 	       </div>
 	       <div class="setMessage">
 	            <textarea></textarea>
-	            <div class="btn-c-r">确认</div>
+	            <div class="btn-c-r" id="submitTalkInfo">确认</div>
 	       </div>
 	       <div class="setMessageContent">
 	              <div class="item">

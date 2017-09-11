@@ -134,7 +134,8 @@ function getState(name){
 function createWaitCard(res){
 	var isWho = "";
 	var timeImg = "";
-	var time = ""
+	var time = "";
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -158,6 +159,7 @@ function createWaitCard(res){
 	   }
 
   var html = [
+	    ' '+aTag+' ',
 	    '<div class="MissionCard">',
 	    ' <div class="cardTop">                                                      ',
 	    '<div class="cardState">待办</div>',
@@ -169,7 +171,8 @@ function createWaitCard(res){
 	    '        <div class="taskTime">'+time+'</div>                     ',
 	    '        '+timeImg+'     ',
 	    ' </div>                                                                     ',
-	    ' </div>',                                                                                                        
+	    ' </div>',  
+	    '</a>',
 	].join('');                                                                                                                       
 	return html;
 }
@@ -180,7 +183,7 @@ function createStateOtherCard(res,stage){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'">';
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -240,6 +243,7 @@ function createStateOtherCard(res,stage){
 		  time = "取消于"+formatDate(getTime);
 	}
 	            var html = [
+	            	' '+aTag+' ',
 	            	' <div class="otherCard">                                                    ',
 	                ' <div class="cardTop">                                                      ',
 	                '     <div class="cardName">'+res.pmsProjectFlow.projectName+'</div>                                   ',
@@ -251,6 +255,7 @@ function createStateOtherCard(res,stage){
                     '        '+img+'     ',
 	                ' </div>                                                                     ',
 	                ' </div>',
+	                '</a>',
 		].join('');                                                                                                                       
 		return html;
 	}
@@ -264,7 +269,7 @@ function createOtherCard(res){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'">';
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{
@@ -309,6 +314,7 @@ function createOtherCard(res){
 		  time = "取消于"+formatDate(getTime);
 	}
 	            var html = [
+	            	' '+aTag+' ',
 	            	' <div class="otherCard">                                                    ',
 	                ' <div class="cardTop">                                                      ',
 	                '     <div class="cardName">'+res.projectName+'</div>                                   ',
@@ -320,6 +326,7 @@ function createOtherCard(res){
                     '        '+img+'     ',
 	                ' </div>                                                                     ',
 	                ' </div>',
+	                ' </a>',
 		].join('');                                                                                                                       
 		return html;
 	}
