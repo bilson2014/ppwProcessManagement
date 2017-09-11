@@ -98,65 +98,6 @@ public class ProjectFlowController extends BaseController {
 	}
 
 	/**
-	 * 查询正在进行的任务列表
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("/running-task")
-	public ModelAndView taskList(HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("/activiti/textFlow");
-		SessionInfo info = getCurrentInfo(request);
-		List<String> groups = info.getActivitGroups();
-		if (groups != null && !groups.isEmpty()) {
-			// 判断身份
-			if (groups.contains(ProjectRoleType.teamDirector.getId())
-					|| groups.contains(ProjectRoleType.financeDirector.getId())
-					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-				// 供应商总监、财务总监、客服总监 应该看见所有项目
-				// 查询参与的正在进行中的任务
-				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService.getRunningTasks(null);
-				mv.addObject("runningTasks", runnintTasks);
-			} else {
-				// 查询代办任务
-				List<PmsProjectFlowResult> gTasks = projectWorkFlowService.getTodoTasks(info.getActivitiUserId());
-
-				// 查询参与的正在进行中的任务
-				List<PmsProjectFlowResult> runnintTasks = projectWorkFlowService
-						.getRunningTasks(info.getActivitiUserId());
-
-				// 去除代办任务
-				if (gTasks != null && !gTasks.isEmpty() && runnintTasks != null && !runnintTasks.isEmpty()) {
-
-					List<String> todoProjectList = new ArrayList<String>();
-					for (final PmsProjectFlowResult result : gTasks) {
-						todoProjectList.add(result.getPmsProjectFlow().getProjectId());
-					}
-					List<PmsProjectFlowResult> runningList = new ArrayList<PmsProjectFlowResult>();
-					for (PmsProjectFlowResult result : runnintTasks) {
-						PmsProjectFlow flow = result.getPmsProjectFlow();
-						if (flow != null && StringUtils.isNotBlank(flow.getProjectId())) {
-							if (!todoProjectList.contains(result.getPmsProjectFlow().getProjectId())) {
-								runningList.add(result);
-							}
-						}
-					}
-					mv.addObject("runningTasks", runningList);
-				} else {
-					mv.addObject("runningTasks", runnintTasks);
-				}
-
-				mv.addObject("gTasks", gTasks);
-			}
-		}
-
-		mv.addObject("realName", info.getRealName());
-		mv.addObject("photo", info.getPhoto());
-
-		return mv;
-	}
-
-	/**
 	 * 查询正在进行中的项目列表（包含代办、参与过的正在进行中项目）
 	 * 
 	 * @param request
@@ -807,4 +748,5 @@ public class ProjectFlowController extends BaseController {
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
+	
 }
