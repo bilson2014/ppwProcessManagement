@@ -165,8 +165,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					synergy.setProjectId(projectId);
 
 					// 查询员工电话
-					PmsEmployee employee = employeeFacade
-							.findEmployeeById(Integer.parseInt(entry.getValue().toString().split("_")[1]));
+					PmsEmployee employee = employeeFacade.findEmployeeById(Integer.parseInt(entry.getValue().toString().split("_")[1]));
 					if (employee != null) {
 						synergy.setImgUrl(employee.getEmployeeImg());
 						synergy.setTelephone(employee.getPhoneNumber());
@@ -201,7 +200,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 					synergyFacade.insert(synergy);
 				}
-
+				
+				// 保存销售信息
+				if(info.getActivitGroups().contains(ProjectRoleType.sale.getId())) {
+					PmsProjectSynergy synergy = new PmsProjectSynergy();
+					synergy.setEmployeeId(Integer.parseInt(info.getReqiureId().toString()));
+					synergy.setProjectId(projectId);
+					synergy.setImgUrl(info.getPhoto());
+					synergy.setTelephone(info.getTelephone());
+					synergy.setEmployeeName(info.getRealName());
+					synergy.setEmployeeGroup(ProjectRoleType.sale.getId());
+					synergyFacade.insert(synergy);
+				}
+				
 			}
 
 			if (userMap != null && !userMap.isEmpty()) {
@@ -374,12 +385,23 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				for (Task nextTask : nextTasks) {
 					// 添加 最终日期
 					String taskDefinitionKey = nextTask.getTaskDefinitionKey();
-					taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
+					String nextTaskId = nextTask.getId();
+					ProjectCycleItem item = getCycleByTask(taskDefinitionKey);
+					taskService.setDueDate(nextTaskId, getExpectDate(taskDefinitionKey));
 					// TODO 异常处理、事务处理
-					taskService.setVariable(nextTask.getId(), "task_stage",
-							getCycleByTask(taskDefinitionKey).getStage());
-					taskService.setVariable(nextTask.getId(), "task_description",
-							getCycleByTask(taskDefinitionKey).getDescription());
+					taskService.setVariable(nextTaskId, "task_stage", item.getStage());
+					taskService.setVariable(nextTaskId, "task_description", item.getDescription());
+					
+					// 分配下一阶段的办理人
+					String groups = item.getGroups();
+					if(StringUtils.isNotBlank(groups)) {
+						// 查找协同人
+						List<PmsProjectSynergy> synergys = synergyFacade.getSynergys(projectId, groups);
+						if(ValidateUtil.isValid(synergys)) {
+							final PmsProjectSynergy synergy = synergys.get(0);
+							taskService.setAssignee(nextTaskId, "employee_" + synergy.getEmployeeId());
+						}
+					}
 				}
 			}
 
@@ -740,7 +762,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		param.put("taskName", task.getName());
-		param.put("dueDate", task.getDueDate().toString());
+		if(task.getDueDate() != null)
+			param.put("dueDate", task.getDueDate().toString());
 		return param;
 	}
 
