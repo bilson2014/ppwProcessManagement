@@ -1,15 +1,19 @@
 $().ready(function(){
-	getFileMore();
+	getStepMore();
 });
 
-function getFileMore(){
-    $('.fileMore').off('click').on('click',function(){
+function getStepMore(){
+ 
+    $('.itemTop').off('click').on('click',function(){
+    	
     	if($(this).hasClass('open')){
-    		$(this).removeClass('open');
-    		$(this).parent().find('.fileContentMore').slideUp();
-    	}else{
-    		$(this).addClass('open');
-    		$(this).parent().find('.fileContentMore').slideDown();
-    	}
-    });
+			$(this).removeClass('open');
+			$(this).parent().find('.itemInfo').slideUp();
+		}else{
+			$(this).addClass('open');
+			$(this).parent().find('.itemInfo').slideDown();
+		}
+    })
+    
+    
 }
