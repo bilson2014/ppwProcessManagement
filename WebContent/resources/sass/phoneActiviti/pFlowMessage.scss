@@ -10,7 +10,7 @@
     .title {
         position: relative;
         width: 100%;
-        padding: 0.6rem 06rem 0 0.6rem;
+        padding: 0.6rem 0.6rem 0 0.6rem;
         height: 1.5rem;
         img:nth-child(1) {
             width: 0.35rem;
@@ -80,6 +80,7 @@
         .content {
             width: 100%;
             height: auto;
+
             .contentItem {
                 width: 100%;
                 .name {
@@ -106,6 +107,12 @@
             margin-top: 0.3rem;
             font-size: $size36;
             color: $e3;
+            margin-bottom: 0.5rem;
             display: none;
+        }
+          .itemLine{
+            width: 100%;
+            height:1px; 
+             border-bottom: 1px dashed $border-line;
         }
     }

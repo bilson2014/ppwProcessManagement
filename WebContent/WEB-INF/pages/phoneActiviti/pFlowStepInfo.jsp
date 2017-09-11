@@ -2,13 +2,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%-- import CSS --%>
-<spring:url value="/resources/css/phoneActiviti/pFlowMessage.css" var="pFlowMessageCss"/>
+<spring:url value="/resources/css/phoneActiviti/pFlowStepInfo.css" var="pFlowStepInfoCss"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs"/>
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
-<spring:url value="/resources/js/phoneActiviti/pFlowMessage.js" var="pFlowMessageJs"/>
+<spring:url value="/resources/js/phoneActiviti/pFlowStepInfo.js" var="pFlowStepInfoJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 
 
@@ -26,7 +26,7 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <title></title>
-<link rel="stylesheet" href="${pFlowMessageCss}">
+<link rel="stylesheet" href="${pFlowStepInfoCss}">
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
 <![endif]-->
@@ -35,16 +35,37 @@
 
 <body>  
 	<div class="pagePhone">
-	       <div class="title">
-	            <img src="/resources/images/pFlow/message.png">
-	            <img class="showMessage" src="/resources/images/pFlow/edit.png">
-	            <div >留言</div>
-	       </div>
-	       <div class="setMessage">
-	            <textarea></textarea>
-	            <div class="btn-c-r">确认</div>
-	       </div>
-	       <div class="setMessageContent">
+          	     <div class="title">
+          	         <img src="/resources/images/pFlow/infoState.png">
+          	         <div>事件状态</div>
+          	         <img src="/resources/images/pFlow/sDeil.png">
+          	         <div>已完成</div>
+          	     </div>
+          	     <div class="itemWord">
+          	           <div class="itemTitle">策划人</div>
+          	           <div class="itemContent">描述</div>
+          	     </div>
+          	     <div class="itemWord">
+          	           <div class="itemTextAreaTitle">时间描述</div>
+          	           <div class="itemTextArea">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+          	     </div>
+          	     <div class="itemWord">
+          	           <div class="itemTitle">开始时间</div>
+          	           <div class="itemContent">20170809</div>
+          	     </div>
+          	     <div class="itemWord">
+          	           <div class="itemTitle">结束时间</div>
+          	           <div class="itemContent">20170809</div>
+          	     </div>
+
+          	     <div class="itemWord">
+          	           <div class="itemTitle">实际执行周期</div>
+          	           <div class="itemContent">20170809</div>
+          	     </div>
+          	     
+          	     <div class="line"></div>
+          	     
+          	     <div class="setMessageContent">
 	              <div class="item">
                         <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">
 	                    <div class="content">
@@ -59,7 +80,8 @@
 	                            </div>
 	                    </div>
 	                    <input />
-	                     <div class="itemLine"></div>
+	                    
+	                    <div class="itemLine"></div>
 	              </div>
 	              <div class="item">
                         <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">
@@ -79,7 +101,6 @@
 	              </div>
 	       </div>
 	</div>
-	
  <jsp:include flush="true" page="pHead.jsp"></jsp:include> 
 </body>
 
@@ -87,6 +108,6 @@
 <script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${commonPhoneJs}"></script>
-<script type="text/javascript" src="${pFlowMessageJs}"></script>
+<script type="text/javascript" src="${pFlowStepInfoJs}"></script>
 
 </html>
