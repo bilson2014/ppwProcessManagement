@@ -516,11 +516,16 @@ public class ProjectFlowController extends BaseController {
 		// 加载数据
 		List<PmsProjectFlowResult> list = loadFinishedProjectList(info);
 		
-		// 
 		if(ValidateUtil.isValid(list)) {
 			for (PmsProjectFlowResult pmsProjectFlowResult : list) {
+				Task task = pmsProjectFlowResult.getTask();
 				HistoricProcessInstance hPs = pmsProjectFlowResult.getHistoricProcessInstance();
 				ProcessInstance pIs = pmsProjectFlowResult.getProcessInstance();
+				if(task != null) {
+					pmsProjectFlowResult.setTaskId(task.getId());
+					pmsProjectFlowResult.setTaskName(task.getName());
+					pmsProjectFlowResult.setTask(null);
+				}
 				if(hPs != null) {
 					pmsProjectFlowResult.setEndTime(hPs.getEndTime());
 					pmsProjectFlowResult.setProcessInstanceId(hPs.getId());
