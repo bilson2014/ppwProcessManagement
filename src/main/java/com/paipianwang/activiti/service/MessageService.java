@@ -10,6 +10,8 @@ public interface MessageService {
 
 	List<PmsProjectMessage> getAllProjectMessage(String projectId);
 
-	List<PmsProjectMessage> getProjectTaskMessage(String projectId, String taskName);
+	List<PmsProjectMessage> getProjectTaskMessage(String taskId);
+	
+	void insertSystemMessage(String projectId,String content);
 
 }

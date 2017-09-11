@@ -423,7 +423,7 @@ public class ProjectFlowController extends BaseController {
 
 		SessionInfo info = getCurrentInfo(request);
 		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
-				info.getActivitGroups());
+				info.getActivitGroups(),info.getRealName());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/running-doing");
