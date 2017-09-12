@@ -25,7 +25,8 @@
 	<mvc:view-controller path="/pim" view-name="/phoneActiviti/pFlowMessage" />
 	
 	<mvc:view-controller path="/pis" view-name="/phoneActiviti/pFlowStep" />
-
+	
+	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
 
 	<context:annotation-config />
 
