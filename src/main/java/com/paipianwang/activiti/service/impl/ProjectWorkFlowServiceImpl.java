@@ -1207,9 +1207,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		// 查询所有参与过的任务-流程
 		List<String> nn = new ArrayList<>();
 		HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
-		if (ValidateUtil.isValid(activitiUserId)) {
-			query = query.taskAssignee(activitiUserId);
-		}
+//		if (ValidateUtil.isValid(activitiUserId)) {
+//			query = query.taskAssignee(activitiUserId);
+//		}
 //		if (!StringUtils.isBlank(flowName)) {
 			for (PmsProjectFlow flow : flowList) {
 				if (flow.getProcessInstanceId() != null) {
