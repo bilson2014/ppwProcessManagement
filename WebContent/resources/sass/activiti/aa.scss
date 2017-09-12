@@ -1,0 +1,1441 @@
+            @import "common";
+            @import "buttons";
+            @import "mixins/indexScreen";
+            @import "normalize";
+            .hide {
+                display: none;
+            }
+            
+            .show {
+                display: block;
+            }
+            
+            html {
+                background-color: #fff;
+            }
+            body{
+            height:1000px;
+            }
+            
+            //弹框信息
+            /* 手机端-作者页 */
+            
+            @import "compass/css3";
+            @import "common";
+            .tooltip-check {
+                z-index: 999999 !important;
+            }
+            
+            .tooltip-check .checkCard {
+                height: 235px;
+                width: 500px;
+                top: 50%;
+                left: 50%;
+                margin-left: -250px;
+                margin-top: -130px;
+                position: relative;
+                background: white;
+                border-radius: 6px;
+                img {
+                    margin-top: 20px;
+                }
+                .closeCheck {
+                    width: 14px;
+                    height: 14px;
+                    font-size: $font-size-base;
+                    color: $gray;
+                    text-align: center;
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    cursor: pointer;
+                    background: url(/resources/images/icons/close.png);
+                    &:hover {
+                        background-position: 0 -14px;
+                    }
+                }
+                .checkInfo {
+                    font-size: $font-size-base;
+                    color: $red-base;
+                    text-align: center;
+                    margin-top: 30px;
+                    margin-bottom: 30px;
+                    padding-top: 80px;
+                    width: 350px;
+                    margin: 0 auto;
+                    line-height: 20px;
+                }
+                .hint {
+                    position: absolute;
+                    top: 23px;
+                    left: 32px;
+                    font-size: 16px;
+                }
+                .line {
+                    position: absolute;
+                    top: 50px;
+                    width: 100%;
+                    height: 2px;
+                    background-color: #ccc;
+                }
+                .checkBottom {
+                    width: 160px;
+                    margin: 0 auto;
+                    margin-top: 50px;
+                    .sureCheck {
+                        width: 70px;
+                        height: 30px;
+                        color: white;
+                        background: $red-base;
+                        font-size: $font-size-base;
+                        display: inline-block;
+                        vertical-align: top;
+                        margin-right: 10px;
+                        line-height: 30px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    .falseCheck {
+                        width: 70px;
+                        height: 30px;
+                        color: white;
+                        background: $gray;
+                        font-size: $font-size-base;
+                        display: inline-block;
+                        vertical-align: top;
+                        line-height: 30px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            
+            .tooltip-wati,
+            .tooltip-check,
+            .tooltip-warn-up {
+                background: rgba(0, 0, 0, 0.8);
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                top: 0px;
+                overflow: hidden;
+                z-index: 80;
+                display: none;
+                .infoCard {
+                    height: 424px;
+                    width: 600px;
+                    position: absolute;
+                    background: white;
+                    border-radius: 4px;
+                    top: 160px;
+                    left: 50%;
+                    margin-left: -300px;
+                    text-align: left;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    .closeX {
+                        position: absolute;
+                        right: 30px;
+                        color: $gray-light;
+                        font-size: $font-size-lg;
+                        text-align: left;
+                        top: 20px;
+                        cursor: pointer;
+                        height: 14px;
+                        width: 14px;
+                        background: url(/resources/images/icons/close.png);
+                        &:hover {
+                            background-position: 0px -14px;
+                        }
+                    }
+                    .title {
+                        color: $red-base;
+                        font-size: $font-size-base;
+                        font-weight: bold;
+                        margin-top: 44px;
+                        margin-bottom: 16px;
+                    }
+                    .botWord {
+                        color: $red-base;
+                        font-size: $font-size-sm;
+                        margin-top: 14px;
+                        margin-bottom: 34px;
+                    }
+                    .midWord {
+                        color: $gray;
+                        font-size: $font-size-sm;
+                        margin-top: 4px;
+                        margin-bottom: 12px;
+                        line-height: 18px;
+                    }
+                    .bottom {
+                        text-align: center;
+                        width: 170px;
+                        margin: 0 auto;
+                        div {
+                            border-radius: 4px;
+                            color: $gray-dark;
+                            text-align: center;
+                            width: 70px;
+                            height: 36px;
+                            line-height: 34px;
+                            font-size: $font-size-base;
+                            margin-left: 10px;
+                            cursor: pointer;
+                            display: inline-block;
+                            vertical-align: top;
+                            color: white;
+                            background: $red-base;
+                            &:hover {
+                                color: white;
+                                background: darken($red-base, 10%);
+                            }
+                        }
+                        div:nth-child(2) {
+                            color: white;
+                            background: $gray-light !important;
+                            &:hover {
+                                color: white;
+                                background: darken($gray-light, 10%) !important;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            .header {
+                width: 100%;
+                height: 50px;
+                background-color: #fff;
+            }
+            
+            .nav {
+                margin: 0 auto;
+                height: 50px;
+                background: #fff;
+                width: 890px;
+                @media screen and (max-width: 1275px) {
+                    width: 690px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 760px;
+                }
+                @include media_screen_width_beta3();
+            }
+            
+            .pic {
+                display: block;
+                background: url(../images/index/bannerLogoR.png) no-repeat;
+                width: 92px;
+                height: 28.9px;
+                float: left;
+                background-size: 92px 30px !important;
+                margin: 15px 0;
+                margin-right: 102px;
+                @media screen and (max-width: 1275px) {
+                    margin-right: 30px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    margin-right: 50px;
+                }
+            }
+            
+            a {
+                display: inline-block;
+                line-height: 50px;
+                text-align: center;
+                color: black;
+                font-family: PingFang-SC-Regular;
+                font-size: 14px;
+                color: #333333;
+                font-weight: 500;
+                margin-right: 30px;
+                @media screen and (max-width: 1275px) {
+                    margin-right: 5px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    margin-right: 8px;
+                }
+            }
+            
+            .search-box {
+                display: inline-block;
+                margin-left: 220px;
+                position: relative;
+            }
+            
+            .search-box input {
+                border: 1px solid #666;
+                color: #999999;
+                border-radius: 4px;
+                padding-left: 18px;
+                height: 30px;
+                width: 300px;
+                font-family: PingFang-SC-Light;
+                font-size: 12px;
+                color: #999999;
+                letter-spacing: 0;
+                @media screen and (max-width: 1275px) {
+                    width: 115px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 300px;
+                }
+            }
+            
+            .search-box .fang {
+                background: url(../images/index/bannnerSearch.png) no-repeat;
+                background-size: 16px 32px;
+                background-position-y: -16px;
+                width: 15px;
+                height: 15px;
+                background-color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                font-family: PingFang-SC-Light;
+                font-size: 12px;
+                color: #999999;
+                letter-spacing: 0;
+                position: absolute;
+                right: 0px;
+                top: 8px;
+                margin-right: 10px;
+            }
+            
+            .nav .user {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background: url(../images/user/icon1.jpg) no-repeat;
+                background-size: 30px 30px;
+                border-radius: 50%;
+                position: absolute;
+                top: 0;
+                right: -80px;
+            }
+            
+            // main部分
+            .main {
+                height: 100%;
+                margin: 0 auto;
+                position: relative;
+            }
+            
+            // 右边主要内容
+            .main .right {
+                height: 100%;
+                background: #fff;
+                border-radius: 4px;
+            }
+            
+            .main .rightsize {
+                width: 1230px;
+                @media screen and (max-width: 1275px) {
+                    width: 890px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    width: 1140px;
+                }
+            }
+            
+            // 信息模块
+            .main .right .infos {
+             
+                margin: 0 auto;
+                // display: none;
+            }
+            
+            .main .right .infos .first {
+                margin-left: 90px;
+                padding-top: 53px;
+                margin-bottom: 39px;
+                .text {
+                    display: inline-block;
+                    // font-family: '微软雅黑';
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #333333;
+                    position: absolute;
+                }
+                .user-icon {
+                    margin-left: 91px;
+                }
+                .upload-btn {
+                    border: 1px solid #000;
+                    width: 120px;
+                    height: 36px;
+                    margin-left: 91px;
+                    margin-top: 21px;
+                    border-radius: 4px;
+                    text-align: center;
+                    line-height: 36px;
+                    &:hover {
+                        color: #FE5453;
+                        border: 1px solid #FE5453;
+                    }
+                }
+            }
+            
+            .main .right .infos .first p {
+                font-family: MicrosoftYaHei;
+                font-size: 12px;
+                color: #999999;
+                margin-left: 91px;
+                margin-top: 20px;
+            }
+            
+            .main .right .infos .first .btn {
+                width: 120px;
+                height: 36px;
+                font-size: 14px;
+                text-align: center;
+                border: 1px solid #999999;
+                border-radius: 4px;
+                margin-top: 20px;
+                margin-left: 91px;
+                &:hover span {
+                    color: #FE5453;
+                }
+                &:hover {
+                    border: 1px solid #FE5453;
+                }
+            }
+            
+            .main .right .infos .first .btn span {
+                position: absolute;
+                display: inline-block;
+                top: 240px;
+                left: 260px;
+                @media screen and (max-width: 1275px) {
+                    top: 240px;
+                    left: 165px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    top: 240px;
+                    left: 215px;
+                }
+            }
+            
+            .main .right .infos .first .name span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                font-weight: 500;
+                display: inline-block;
+                margin-top: 38px;
+            }
+            
+            .main .right .infos .first .name span:nth-child(2) {
+                margin-left: 50px;
+            }
+            
+            .main .right .infos .second {
+                width: 90%;
+                margin:0 auto;
+                height: 131px;
+                border-top: 1px solid #EEEEEE;
+                padding-left: 40px;
+            }
+            
+            .main .right .infos .second .password {
+                margin-top: 37px;
+            }
+            
+            .main .right .infos .second .password span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+            }
+            
+            .main .right .infos .second .password span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+            }
+            
+            .main .right .infos .second .username {
+                margin-top: 26px;
+            }
+            
+            .main .right .infos .second .username span:nth-child(2) {
+                color: #999999;
+                margin-left: 44px;
+            }
+            
+            .main .right .infos .second .but {
+                position: absolute;
+                width: 80px;
+                line-height: 35.9px;
+                background: #FE5453;
+                border-radius: 4px;
+                text-align: center;
+                right: 550px;
+                top: 380px;
+                color: #fff;
+                cursor: pointer;
+                @media screen and (max-width: 1275px) {
+                    right: 90px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    right: 130px;
+                }
+            }
+            
+            .main .right .infos .third {
+                width: 90%;
+                margin: 0 auto;
+                height: 131px;
+                border-top: 1px solid #EEEEEE;
+                padding-left: 40px;
+            }
+            
+            .main .right .infos .third .phone {
+                margin-top: 37px;
+            }
+            
+            .main .right .infos .third .phone span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+            }
+            
+            .main .right .infos .third .phone span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+            }
+            
+            .main .right .infos .third .oldphone {
+                margin-top: 26px;
+            }
+            
+            .main .right .infos .third .oldphone span:nth-child(2) {
+                margin-left: 27px;
+            }
+            
+            .main .right .infos .third .but {
+                position: absolute;
+                width: 80px;
+                line-height: 35.9px;
+                background: #FE5453;
+                border-radius: 4px;
+                text-align: center;
+                right: 550px;
+                top: 505px;
+                color: #fff;
+                cursor: pointer;
+                @media screen and (max-width: 1275px) {
+                    right: 90px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    right: 130px;
+                }
+            }
+            
+            .main .right .infos .four {
+                width: 90%;
+                margin:0 auto;
+                height: 131px;
+                border-top: 1px solid #EEEEEE;
+                padding-left: 40px;
+            }
+            
+            .main .right .infos .four .mail {
+                margin-top: 37px;
+            }
+            
+            .main .right .infos .four .mail span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+            }
+            
+            .main .right .infos .four .mail span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+            }
+            
+            .main .right .infos .four .oldmail {
+                margin-top: 26px;
+            }
+            
+            .main .right .infos .four .oldmail span:nth-child(2) {
+                margin-left: 27px;
+            }
+            
+            .main .right .infos .four .but {
+                position: absolute;
+                width: 80px;
+                line-height: 35.9px;
+                background: #FE5453;
+                border-radius: 4px;
+                text-align: center;
+                right: 550px;
+                top: 640px;
+                color: #fff;
+                cursor: pointer;
+                @media screen and (max-width: 1275px) {
+                    right: 90px;
+                }
+                @media screen and (min-width: 1276px) and (max-width: 1500px) {
+                    right: 130px;
+                }
+            }
+            
+            // 密码模块
+            .main .right .pas {
+                
+                margin: 0 auto;
+                display: none;
+               
+            }
+
+            
+            .main .right .pas .login span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+                position: absolute;
+                left: 120px;
+                top: 49px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pas .login span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+                position: absolute;
+                left: 180px;
+                top: 49px;
+               @media screen and (max-width: 775px) {
+                    left: 100px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 150px;
+                }
+            }
+            
+            .main .right .pas .newpas {
+             
+                span {
+                    display: inline-block;
+                    font-family: MicrosoftYaHei;
+                    font-size: 14px;
+                    color: #333333;
+                    position: absolute;
+                    left: 120px;
+                    top: 126px;
+                    @media screen and (max-width: 775px) {
+                        left: 40px;
+                    }
+                     @media screen and (min-width: 775px) and (max-width: 1025px) {
+                        left: 80px;
+                    }
+                }
+                input {
+                    background: #FFFFFF;
+                    border: 1px solid #D1D1D1;
+                    border-radius: 4px;
+                    width: 540px;
+                    height: 36px;
+                    position: absolute;
+                    left: 208px;
+                    top: 118px;
+                    padding-left: 10px;
+                    outline: none;
+                    &:hover {
+                        border-color: #FE5453;
+                    }
+                    @media screen and (max-width: 775px) {
+                        width: 300px;
+                        left: 128px;
+                    }
+                      @media screen and (min-width: 775px) and (max-width: 1025px) {
+                        width: 480px;
+                        left: 180px;
+                    }
+                }
+                p {
+                    color: #FE5453;
+                    position: absolute;
+                    top: 161px;
+                    left: 208px;
+                    @media screen and (max-width: 775px) {
+                        left: 128px;
+                    }
+                    @media screen and (min-width: 775px) and (max-width: 1025px) {
+                        left: 180px;
+                    }
+                }
+            }
+            
+            .main .right .pas .newpas #correct {
+                background: #7ED321;
+                display: none;
+            }
+            
+            .main .right .pas .newpas #mistake {
+                background: #FE5453;
+                display: none;
+            }
+            
+            .main .right .pas .reppas div {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                color: #FFFFFF;
+                text-align: center;
+                line-height: 16px;
+                position: absolute;
+                left:771px;
+                top: 194px;
+               @media screen and (max-width: 775px) {
+                    left: 440px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 679px;
+                }
+            }
+            
+            .main .right .pas .reppas #correctagn {
+                background: #7ED321;
+                display: none;
+            }
+            
+            .main .right .pas .reppas #mistakeagn {
+                background: #FE5453;
+                display: none;
+            }
+            
+            .main .right .pas .reppas span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 191px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pas .reppas input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 540px;
+                height: 36px;
+                position: absolute;
+                left: 208px;
+                top: 184px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    width: 300px;
+                    left: 128px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    width: 480px;
+                    left: 180px;
+                }
+            }
+            
+            .main .right .pas .verify span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 258px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pas .verify input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 410px;
+                height: 36px;
+                position: absolute;
+                left: 206px;
+                top: 250px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    width: 200px;
+                    left: 100px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    width: 360px;
+                    left: 150px;
+                }
+            }
+            
+            .main .right .pas .verify span:nth-child(3) {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 120px;
+                height: 36px;
+                position: absolute;
+                left: 626px;
+                top: 249px;
+                text-align: center;
+                line-height: 36px;
+                display: inline-block;
+                cursor: pointer;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                    color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    width: 80px;
+                    left: 320px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    width: 100px;
+                    left: 530px;
+                }
+            }
+            
+            .main .right .pas .verify p {
+                color: #FE5453;
+                position: absolute;
+                left: 205px;
+                top: 298px;
+                display: none;
+                @media screen and (max-width: 775px) {
+                    left: 102px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 148px;
+                }
+            }
+            
+            .main .right .pas .btn span {
+                width: 120px;
+                height: 36px;
+                background: #999999;
+                border-radius: 4px;
+                color: #fff;
+                position: absolute;
+                top: 260px;
+                left: 208px;
+                line-height: 36px;
+                @media screen and (max-width: 775px) {
+                    left: 128px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }
+            
+            .main .right .pas .btn span:nth-child(2) {
+                background: #999999;
+                position: absolute;
+                top: 260px;
+                left: 340px;
+                @media screen and (max-width: 775px) {
+                    left: 265px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 330px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }
+            
+            //手机模块
+            .main .right .pho {
+              
+                margin: 0 auto;
+                display: none;
+            }
+            
+            .main .right .pho .login span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+                position: absolute;
+                left: 120px;
+                top: 49px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pho .login span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+                position: absolute;
+                left: 180px;
+                top: 49px;
+                @media screen and (max-width: 775px) {
+                    left: 110px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 160px;
+                }
+            }
+          
+            .main .right .pho .phone span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 130px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pho .phone span:nth-child(2) {
+                position: absolute;
+                left: 229px;
+                top: 131px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .pho .verifyphone span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 195px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pho .verifyphone input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 410px;
+                height: 36px;
+                position: absolute;
+                left: 206px;
+                top: 187px;
+                padding-left: 10px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                    width: 310px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                    width: 380px;
+                }
+            }
+            
+            .main .right .pho .verifyphone span:nth-child(3) {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 120px;
+                height: 36px;
+                position: absolute;
+                left: 626px;
+                top: 186px;
+                line-height: 36px;
+                text-align: center;
+                cursor: pointer;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                    color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 450px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 570px;
+                }
+            }
+            
+            .main .right .pho .verifyphone p {
+                color: #FE5453;
+                position: absolute;
+                top: 230px;
+                left: 206px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+               @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .pho .newphone p {
+                color: #FE5453;
+                position: absolute;
+                top: 230px;
+                left: 206px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .pho .newphone span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 195px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pho .newphone input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 540px;
+                height: 36px;
+                position: absolute;
+                left: 206px;
+                top: 187px;
+                padding-left: 10px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                    width: 440px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                    width: 510px;
+                }
+            }
+            
+            .main .right .pho .verifynewphone span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 261px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .pho .verifynewphone input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 410px;
+                height: 36px;
+                position: absolute;
+                left: 206px;
+                top: 253px;
+                padding-left: 10px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                    width: 310px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                    width: 380px;
+                }
+            }
+            
+            .main .right .pho .verifynewphone span:nth-child(3) {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 120px;
+                height: 36px;
+                position: absolute;
+                left: 626px;
+                top: 253px;
+                line-height: 36px;
+                text-align: center;
+                cursor: pointer;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                    color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 450px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 570px;
+                }
+            }
+            
+            .main .right .pho .verifynewphone p {
+                color: #FE5453;
+                position: absolute;
+                left: 206px;
+                top: 298px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .pho .btn span {
+                width: 120px;
+                height: 36px;
+                background: #999999;
+                border-radius: 4px;
+                color: #fff;
+                position: absolute;
+                top: 340px;
+                left: 206px;
+                line-height: 36px;
+                @media screen and (max-width: 775px) {
+                    left: 124px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }
+            
+            .main .right .pho .btn span:nth-child(2) {
+                background: #999999;
+                position: absolute;
+                top: 340px;
+                left: 346px;
+                @media screen and (max-width: 775px) {
+                    left: 264px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 320px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }
+            
+            //邮箱模块
+            .main .right .emil {
+            
+                margin: 0 auto;
+                display: none;
+            }
+            
+            .main .right .emil .login span {
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #FE5453;
+                display: inline-block;
+                position: absolute;
+                left: 120px;
+                top: 50px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+               @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .emil .login span:nth-child(2) {
+                color: #999999;
+                margin-left: 30px;
+                position: absolute;
+                left: 206px;
+                top: 51px;
+                @media screen and (max-width: 775px) {
+                    left: 100px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .emil .oldemil span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 130px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .emil .oldemil span:nth-child(2) {
+                position: absolute;
+                left: 226px;
+                top: 131px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .emil .newemil span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 188px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                  @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .emil .newemil p {
+                position: absolute;
+                left: 208px;
+                top: 225px;
+                color: #FE5453;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .emil .verifyemil p {
+                position: absolute;
+                left: 208px;
+                top: 295px;
+                color: #FE5453;
+               @media screen and (max-width: 753px) {
+                    left: 130px;
+                }
+                  @media screen and (min-width: 753px) and (max-width: 1022px) {
+                    left: 180px;
+                }
+            }
+            
+            .main .right .emil .newemil input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 540px;
+                padding-left: 10px;
+                height: 36px;
+                display: inline-block;
+                position: absolute;
+                left: 206px;
+                top: 180px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 753px) {
+                    left: 130px;
+                    width: 390px;
+                }
+                 @media screen and (min-width: 753px) and (max-width: 1022px) {
+                    left: 180px;
+                    width: 440px;
+                }
+            }
+            
+            .main .right .emil .newemil span:nth-child(3) {
+                position: absolute;
+                left: 790px;
+                top: 184px;
+                line-height: 36px;
+                text-align: center;
+                @media screen and (max-width: 775px) {
+                    left: 540px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 650px;
+                }
+            }
+            
+            .main .right .emil .verifyemil span {
+                display: inline-block;
+                font-family: MicrosoftYaHei;
+                font-size: 14px;
+                color: #333333;
+                position: absolute;
+                left: 120px;
+                top: 255px;
+                @media screen and (max-width: 775px) {
+                    left: 40px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 80px;
+                }
+            }
+            
+            .main .right .emil .verifyemil input {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 410px;
+                height: 36px;
+                padding-left: 10px;
+                position: absolute;
+                left: 206px;
+                top: 247px;
+                padding-left: 10px;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                    width: 210px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                    width: 310px;
+                }
+            }
+            
+            .main .right .emil .verifyemil span:nth-child(3) {
+                background: #FFFFFF;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                width: 120px;
+                height: 36px;
+                position: absolute;
+                left: 626px;
+                top: 246px;
+                line-height: 36px;
+                text-align: center;
+                cursor: pointer;
+                outline: none;
+                &:hover {
+                    border-color: #FE5453;
+                    color: #FE5453;
+                }
+                @media screen and (max-width: 775px) {
+                    left: 370px;
+                    width: 90px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 510px;
+                    width: 110px;
+                }
+            }
+            
+            .main .right .emil .btn span {
+                width: 120px;
+                height: 36px;
+                background: #999999;
+                border-radius: 4px;
+                color: #fff;
+                position: absolute;
+                top: 258px;
+                left: 208px;
+                line-height: 36px;
+                @media screen and (max-width: 775px) {
+                    left: 130px;
+                }
+                @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 180px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }
+            
+            .main .right .emil .btn span:nth-child(2) {
+                background: #999999;
+                position: absolute;
+                top: 258px;
+                left: 348px;
+                @media screen and (max-width: 775px) {
+                    left: 275px;
+                }
+                 @media screen and (min-width: 775px) and (max-width: 1025px) {
+                    left: 320px;
+                }
+                &:hover {
+                    background: #FE5453;
+                }
+            }

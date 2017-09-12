@@ -21,6 +21,7 @@ import com.paipianwang.pat.facade.user.entity.PmsUser;
 import com.paipianwang.pat.facade.user.service.PmsUserFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
+
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
 	private final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
