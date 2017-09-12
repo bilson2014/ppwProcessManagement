@@ -450,6 +450,7 @@ function getSynInfo(){
 	}, getContextPath() + '/synergy/memberGroup',null);	
 }
 
+// 获取客户评级
 function getValue(id){	
 	var levelName = '';
 	if(id == 0)

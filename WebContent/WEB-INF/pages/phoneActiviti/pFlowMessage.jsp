@@ -34,18 +34,27 @@
 </head>
 
 <body>  
+
+   <input type="hidden" id="projectId" value="${projectId}">
+   <input type="hidden" id="taskName" value="${taskName}">
+   <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+   <input type="hidden" id="projectName" value="${projectName}">
+   <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+   
+   
 	<div class="pagePhone">
 	       <div class="title">
 	            <img src="/resources/images/pFlow/message.png">
 	            <img class="showMessage" src="/resources/images/pFlow/edit.png">
 	            <div >留言</div>
 	       </div>
-	       <div class="setMessage">
-	            <textarea></textarea>
-	            <div class="btn-c-r">确认</div>
+	       <div class="setMessage" data-content="">
+	            <textarea id="addmessage"></textarea>
+	            <div class="btn-c-r" id="submitTalkInfo">确认</div>
 	       </div>
+	       
 	       <div class="setMessageContent">
-	              <div class="item">
+	             <!--  <div class="item">
                         <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">
 	                    <div class="content">
 	                            <div class="contentItem">
@@ -58,8 +67,12 @@
 	                                                                         内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>               
 	                            </div>
 	                    </div>
-	                    <input />
-	              </div>
+	                    <div class="reTalkItem" data-content="error">
+		                    <textarea></textarea>
+		                    <div class="btn-c-r reTalk">回复</div>
+		                </div>    
+	                    <div class="itemLine"></div>
+	              </div> -->
 	       </div>
 	</div>
 	

@@ -98,6 +98,8 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			message.setFromId(sessionInfo.getActivitiUserId());
 			message.setProjectId(projectId);
 			message.setTaskName(taskName);
+			message.setMessageType(PmsProjectMessage.TYPE_LOG);
+			message.setFromName(sessionInfo.getRealName());
 			pmsProjectMessageFacade.insert(message);
 			
 			if (result == -1) {

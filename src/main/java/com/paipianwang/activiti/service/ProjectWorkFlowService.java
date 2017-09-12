@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.pat.common.entity.KeyValue;
@@ -60,9 +61,10 @@ public interface ProjectWorkFlowService {
 	 * @param taskId
 	 * @param formProperties
 	 * @param userGroup 
+	 * @param realName 
 	 * @param id
 	 */
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup);
+	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup, String realName);
 
 	/**
 	 * 生成项目ID
@@ -200,4 +202,10 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public List<TaskVO> getTasksByStage(String stage, String activitiUserId,int flag);
+
+	/**
+	 * 获取当前 task
+	 * @return
+	 */
+	public Task getCurrentTaskName(final String taskId);
 }

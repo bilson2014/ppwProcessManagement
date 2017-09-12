@@ -43,6 +43,8 @@ public class MessageController {
 		if(ValidateUtil.isValid(info.getActivitGroups())){
 			message.setFromGroup(StringUtils.join(info.getActivitGroups(), ","));
 		}
+		message.setMessageType(PmsProjectMessage.TYPE_HANDLE);
+		message.setFromName(info.getRealName());
 		pmsProjectMessageFacade.insert(message);
 		BaseMsg result=new BaseMsg();
 		result.setCode(BaseMsg.NORMAL);
@@ -67,6 +69,8 @@ public class MessageController {
 		if(ValidateUtil.isValid(info.getActivitGroups())){
 			pmsProjectMessage.setFromGroup(StringUtils.join(info.getActivitGroups(), ","));
 		}
+		pmsProjectMessage.setMessageType(PmsProjectMessage.TYPE_HANDLE);
+		pmsProjectMessage.setFromName(info.getRealName());
 		pmsProjectMessageFacade.insert(pmsProjectMessage);
 		
 		result.setCode(BaseMsg.NORMAL);
@@ -100,7 +104,7 @@ public class MessageController {
 	 */
 	@RequestMapping("/getTaskMsg")
 	public List<PmsProjectMessage> getTaskMessage(@RequestBody final PmsProjectMessage message){
-		return msMessageService.getProjectTaskMessage(message.getProjectId(), message.getTaskName());
+		return msMessageService.getProjectTaskMessage(message.getTaskId());
 	}
 
 }
