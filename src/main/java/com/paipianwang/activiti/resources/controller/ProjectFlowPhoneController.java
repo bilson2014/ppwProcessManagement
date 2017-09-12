@@ -120,6 +120,8 @@ public class ProjectFlowPhoneController extends BaseController {
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
+			mv.addObject("projectStage", flow.getProjectStage());
+			mv.addObject("projectStatus",flow.getProjectStatus());
 		}
 
 		return mv;

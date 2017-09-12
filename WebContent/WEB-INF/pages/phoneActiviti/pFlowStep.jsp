@@ -37,7 +37,7 @@
 
 
    <input type="hidden" id="projectId" value="${projectId}">
-   <input type="hidden" id="taskName" value="${taskName}">
+   <input type="hidden" id="taskStage" value="沟通阶段">
    <input type="hidden" id="processInstanceId" value="${processInstanceId}">
    <input type="hidden" id="projectName" value="${projectName}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
@@ -74,7 +74,7 @@
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop yellowItem" id="step2">
+          	                 <div class="itemTop" id="step2">
           	                      <div class="icon"></div> 
           	                      <div class="name">方案阶段</div> 
           	                      <div class="openIcon"></div> 
@@ -84,7 +84,7 @@
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop greenItem" id="step3">
+          	                 <div class="itemTop" id="step3">
           	                      <div class="icon"></div> 
           	                      <div class="name">商务阶段</div> 
           	                      <div class="openIcon"></div> 
@@ -94,7 +94,7 @@
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop pauseItem" id="step4">
+          	                 <div class="itemTop" id="step4">
           	                      <div class="icon"></div> 
           	                      <div class="name">制作阶段</div> 
           	                      <div class="openIcon"></div> 
@@ -104,7 +104,7 @@
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop cancleItem" id="step5">
+          	                 <div class="itemTop" id="step5">
           	                      <div class="icon"></div> 
           	                      <div class="name">交付阶段</div> 
           	                      <div class="openIcon"></div> 

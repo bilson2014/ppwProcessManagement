@@ -14,3 +14,7 @@ function windowChange(){
 		
 	};
 }
+
+function getHeight(){
+	(window.parent.document).find('.frame').css('height',$('body').height());
+}
