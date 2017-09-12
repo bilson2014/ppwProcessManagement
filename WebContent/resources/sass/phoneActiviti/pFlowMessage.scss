@@ -38,6 +38,15 @@
         padding-left: 0.6rem;
         font-size: 0px;
         display: none;
+        position: relative;
+        &:after {
+            content: attr(data-content);
+            color: $red-base;
+            font-size: $size30;
+            position: absolute;
+            left: 0.8rem;
+            top: 2rem;
+        }
         textarea {
             width: 100%;
             height: 1.8rem;
@@ -96,9 +105,9 @@
                 }
             }
         }
-        input {
+        textarea {
             width: 100%;
-            height: 0.9rem;
+            height: 1.8rem;
             border: 1px solid $border-line;
             padding-left: 10px;
             border-radius: 0.1rem;
@@ -108,11 +117,41 @@
             font-size: $size36;
             color: $e3;
             margin-bottom: 0.5rem;
-            display: none;
+            resize: none;
+            padding: 10px;
+            outline: none;
         }
-          .itemLine{
+
+        .reTalkItem {
             width: 100%;
-            height:1px; 
-             border-bottom: 1px dashed $border-line;
+            position: relative;
+            display: none;
+            &:after {
+                content: attr(data-content);
+                color: $red-base;
+                font-size: $size30;
+                position: absolute;
+                left: 0.3rem;
+                top: 2.2rem;
+            }
+        }
+
+        .reTalk {
+            width: 8rem;
+            height: 1rem;
+            text-align: center;
+            line-height: 1rem;
+            font-size: .36rem;
+            color: white;
+            border-radius: 1rem;
+            margin: 0 auto;
+            margin-top: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .itemLine {
+            width: 100%;
+            height: 1px;
+            border-bottom: 1px dashed $border-line;
         }
     }

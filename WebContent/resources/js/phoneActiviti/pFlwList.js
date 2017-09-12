@@ -135,7 +135,7 @@ function createWaitCard(res){
 	var isWho = "";
 	var timeImg = "";
 	var time = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -183,7 +183,7 @@ function createStateOtherCard(res,stage){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -269,7 +269,7 @@ function createOtherCard(res){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'/'+res.taskName+' ">';
+	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{

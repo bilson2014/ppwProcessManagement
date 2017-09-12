@@ -35,9 +35,19 @@
 
 <body>
   
+   <input type="hidden" id="projectId" value="${projectId}">
+   <input type="hidden" id="taskName" value="${taskName}">
+   <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+   <input type="hidden" id="projectName" value="${projectName}">
+   <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+  
 	<div class="pagePhone">
 	      <div class="title">项目文件</div>
-	      <div class="item">
+	      
+	      <div class="setFile">
+	      
+	      </div>
+	     <%--  <div class="item">
 		         <img class="file" src="${imgPath}/pFlow/avi.png">
 		         <img class="fileMore" src="${imgPath}/pFlow/fileMore.png">
 		         <div class="fileContent">
@@ -54,26 +64,23 @@
 			              <div>分享</div>
 		              </div>
 		         </div>
-	      </div>
-	      <div class="item">
-		         <img class="file" src="${imgPath}/pFlow/avi.png">
-		         <img class="fileMore" src="${imgPath}/pFlow/fileMore.png">
-		         <div class="fileContent">
-		               <div>文件名</div>
-		               <div>2017上传人</div>
-		         </div>
-		         <div class="fileContentMore">
-		              <div class="moreItem">
-			              <img src="${imgPath}/pFlow/download.png">
-			              <div>下载</div>
-		              </div>
-		              <div class="moreItem">
-			              <img src="${imgPath}/pFlow/share.png">
-			              <div>分享</div>
-		              </div>
-		         </div>
-	      </div>
+	      </div> --%>
+	    
 	</div>
+	
+		<!-- webshare -->
+	<div class="-mob-share-ui-button -mob-share-open" id="share-open" style="visibility: hidden;"></div>
+	<div class="-mob-share-ui" style="display: none">
+		<ul class="-mob-share-list">
+			<li class="-mob-share-weixin share"><p>微信</p></li>
+			<li class="-mob-share-qq"><p>QQ</p></li>
+			<li class="-mob-share-weibo share"><p>新浪微博</p></li>
+			<li class="-mob-share-qzone"><p>QQ空间</p></li>
+		</ul>
+		<div class="-mob-share-close">取消</div>
+	</div>
+	<div class="-mob-share-ui-bg"></div>
+	<script id="-mob-share" src="https://f1.webshare.mob.com/code/mob-share.js?appkey=8c49c537a706"></script>
 	
  <jsp:include flush="true" page="pHead.jsp"></jsp:include> 
 </body>

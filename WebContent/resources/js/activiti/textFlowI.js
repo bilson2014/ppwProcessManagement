@@ -1284,6 +1284,7 @@ function initAddTalk(){
 		var projectId = $('#projectId').val();
 		var taskName = $('#taskName').val();
 		var talkInfo = $('#talkInfo').val();
+		var taskId = $('#currentTaskId').val();
 		$('.upInfo #submitTalkInfo').off('click');
 		$('#areaError').text('');
 		if(talkInfo == "" || talkInfo == null || talkInfo == undefined){
@@ -1298,6 +1299,7 @@ function initAddTalk(){
 				initAddTalk();
 			}
 		}, getContextPath() + '/message/addTopic',$.toJSON({
+			taskId:taskId,
 			projectId:projectId,
 			taskName:taskName,
 			content:talkInfo

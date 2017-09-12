@@ -19,7 +19,6 @@ import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
  */
 @RestController
 @RequestMapping("/project/phone")
-@RestController
 public class ProjectFlowPhoneController extends BaseController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProjectFlowPhoneController.class);
@@ -87,6 +86,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	 * 
 	 * @return
 	 */
+	
 	@RequestMapping("/message/{taskId}/{projectId}/{processInstanceId}")
 	public ModelAndView messageView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
@@ -100,7 +100,6 @@ public class ProjectFlowPhoneController extends BaseController {
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
-
 		return mv;
 	}
 
