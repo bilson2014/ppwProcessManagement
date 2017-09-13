@@ -11,7 +11,10 @@
 
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
 	
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1e200bf9c963493ac948660375407099fd413358
 
 	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
 
@@ -27,6 +30,7 @@
 	<!--项目流程 -->
 	<mvc:view-controller path="/pis" view-name="/phoneActiviti/pFlowStep" />
 
+<<<<<<< HEAD
 	<!-- 项目信息页 --> 
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
 	<!-- 项目信息修改页 -->
@@ -42,6 +46,13 @@
 	
 	<!--项目流程详情页 -->
 	<mvc:view-controller path="/psi" view-name="/phoneActiviti/pFlowStepInfo" />
+=======
+	
+	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
+
+	<!--项目流程详情页 -->
+
+>>>>>>> 1e200bf9c963493ac948660375407099fd413358
 
 	<context:annotation-config />
 

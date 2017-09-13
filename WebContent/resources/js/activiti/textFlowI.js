@@ -270,8 +270,7 @@ function createStageInfo(res,state){
 
 function getStageInfo(stage){	
 			var keys = stage;
-			var resMap = "";
-			
+			var resMap = "";			
 			if(resMap == ""){
 				loadData(function(res){
 					initLastTime(res.projectCycle,res.createDate);

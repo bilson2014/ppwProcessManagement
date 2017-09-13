@@ -124,25 +124,6 @@ function createTalkInfo(res){
 		'	    </div>                                                                                         ',
 	    '      <div class="itemLine"></div>',
 	    ' </div>' ,
-/*	    '<div class="areaItem">',
-	    '   <div class="infoItem">',
-		'	  <img src="'+imgUrl+'">',
-		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
-		'       <div class="time">',
-		'       	<span>发布时间：'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</span>',
-		'     	    <div class="openTalk"></div>',
-		'       </div>',
-   		'   </div>',
-		'   <div class="infoContent">',
-		'     '+body+'',
-		'      <input>',
-		'   </div>',
-		'<span class="errorSpan"></span>',
-		'   <div class="upInfo">',
-		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
-		'   </div>',
-		'</div>',*/
-
 	].join('');
 	return html;
 }
