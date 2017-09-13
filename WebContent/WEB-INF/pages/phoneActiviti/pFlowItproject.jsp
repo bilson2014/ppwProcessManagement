@@ -2,7 +2,7 @@
     <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
             <%-- import CSS --%>
-                <spring:url value="/resources/css/phoneActiviti/pFlowItem.css" var="pFlowItemCss" />
+                <spring:url value="/resources/css/phoneActiviti/pFlowItproject.css" var="pFlowItprojectCss" />
                 <%-- import JS --%>
                     <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs" />
                     <spring:url value="/resources/js/common.js" var="commonJs" />
@@ -26,7 +26,7 @@
                         <meta name="description" content="">
                         <title></title>
 
-                        <link rel="stylesheet" href="${pFlowItemCss}">
+                        <link rel="stylesheet" href="${pFlowItprojectCss}">
 
                         <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -35,61 +35,89 @@
 
                     <body>
                         <div class="pagePhone">
+                            <!--项目信息修改  -->
+                            <div class="projectbox">
+                                <!--项目名称 -->
+                                <div class="name">
+                                    <div>项目名称</div>
+                                    <input type="text" value="혼천의">
+                                </div>
+                                <!--项目来源  -->
+                                <div class="origin">
+                                    <div>项目来源</div>
+                                    <select class="choice">
+                                        <option value="线上-电销">线上-电销</option>
+                                        <option value="线下-直销">线下-直销</option>
+                                        <option value="线下-活动">线下-活动</option>
+                                        <option value="线下-渠道">线下-渠道</option>
+                                        <option value="复购">复购/option>
+                                        <option value="线上-网购">线上-网购</option>
+                                        <option value="线上-活动">线上-活动</option>
+                                        <option value="线上-新媒体">线上-新媒体</option>
+                                        <option value="线上-400">线上-400</option>
+                                        <option value="线上-商桥">线上-商桥</option>
+                                        <option value="线上-PC-首页banner">线上-PC-首页banner</option>
+                                        <option value="线上-PC-直接下单">线上-PC-直接下单</option>
+                                        <option value="线上-PC-成本计算器">线上-PC-成本计算器</option>
+                                        <option value="线上-PC-供应商首页">线上-PC-供应商首页</option>
+                                        <option value="线上-PC-作品">线上-PC-作品</option>
+                                        <option value="线上-移动-首页banner">线上-移动-首页banner</option>
+                                        <option value="线上-移动-成本计算器">线上-移动-成本计算器</option>
+                                        <option value="线上-移动-作品">线上-移动-作品</option>
+                                        <option value="线上-公众号-成本计算器">线上-公众号-成本计算器</option>
+                                        <option value="线上-公众号-直接下单">线上-公众号-直接下单</option>
+                                        <option value="线上-公众号-作品">线上-公众号-作品</option>
+                                    </select>
+                                </div>
+                                <!--项目评级  -->
+                                <div class="rate">
+                                    <div>项目评级</div>
+                                    <select class="choice">
+                                        <option value="S">S</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                    </select>
+                                </div>
+                                <!--项目周期  -->
+                                <div class="period">
+                                    <div>项目周期</div>
+                                    <input type="text" value="9">
+                                    <span>天</span>
+                                </div>
+                                <!--对标影片  -->
+                                <div class="film">
+                                    <div>对标影片</div>
+                                    <textarea name="" id="" cols="30" rows="2">http://www.apaipian.com:8087/project/start/project</textarea>
+                                </div>
+                                <!--项目描述  -->
+                                <div class="describe">
+                                    <div>项目描述</div>
+                                    <textarea rows="" cols="2">되다 효 혼천의 되다 효 혼천의되다 효  되다 효 혼천의 되다 효 혼천의되다 효 </textarea>
+                                </div>
+
+                                <!-- 取消和确认 -->
+                                <div class="surebox">
+                                    <div class="cancel">
+                                        <div>取消</div>
+                                    </div>
+                                    <div class="sure">
+                                        <div>确认</div>
+                                    </div>
+                                </div>
 
 
-                            <!--项目信息 -->
-                            <div class="projectinfo">
-                                <div class="protitle">
-                                    <span class='pic'></span>
-                                    <span>项目信息</span>
-                                    <a href="#" class="write"></a>
-                                </div>
-                                <div class="probox">
-                                    <ul>
-                                        <li>
-                                            <div>项目编号</div>
-                                            <span>1010010</span>
-                                        </li>
-                                        <li>
-                                            <div>项目来源</div>
-                                            <span>线上-网站</span>
-                                        </li>
-                                        <li>
-                                            <div>项目名称</div>
-                                            <span>国产三维动画拍摄画拍摄</span>
-                                        </li>
-                                        <li>
-                                            <div>项目评级</div>
-                                            <span>S</span>
-                                        </li>
-                                        <li>
-                                            <div>项目周期</div>
-                                            <span>45天</span>
-                                        </li>
-                                        <li>
-                                            <div>产品线</div>
-                                            <span>企业形象宣传片</span>
-                                        </li>
-                                        <li>
-                                            <div>立项时间</div>
-                                            <span>2017-07-09</span>
-                                        </li>
-                                        <li>
-                                            <div>项目配置</div>
-                                            <span>尊享版+6分钟（两个拍摄日）+广告演员（1名）+广告摄影棚+广告级航拍4K</span>
-                                        </li>
-                                        <li>
-                                            <div>对标影片</div>
-                                            <span>http://www.apaipian.com/play/16_13461.html</span>
-                                        </li>
-                                        <li>
-                                            <div>项目描述</div>
-                                            <span>도저히 이렇겐 더 안되겠어내가 어떻게든 좀 손보겠어낡은 스타일밖에 모르는 널프로듀스 얼마나 멋져질지 좀 알겠어</span>
-                                        </li>
-                                    </ul>
-                                </div>
+
+
+
+
+
+
+
                             </div>
-                            <div class="line"></div>
+
 
 
 

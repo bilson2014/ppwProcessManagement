@@ -8,6 +8,7 @@
                     <spring:url value="/resources/js/common.js" var="commonJs" />
                     <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs" />
                     <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs" />
+                    <spring:url value="/resources/js/phoneActiviti/pFlowItem.js" var="pFlowItemJs" />
                     <spring:url value="/resources/images" var="imgPath" />
 
                     <!DOCTYPE html>
@@ -27,6 +28,7 @@
                         <title></title>
 
                         <link rel="stylesheet" href="${pFlowItemCss}">
+                        <link rel="stylesheet" href="${pFlowItemJs}">
 
                         <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -93,7 +95,7 @@
                                 <div class="protitle">
                                     <span class='pic'></span>
                                     <span>项目信息</span>
-                                    <a href="#" class="write"></a>
+                                    <a href="/pfip" class="write"></a>
                                 </div>
                                 <div class="probox">
                                     <ul>
@@ -146,7 +148,7 @@
                                 <div class="custitle">
                                     <span class='pic'></span>
                                     <span>客户信息</span>
-                                    <a href="#" class="write"></a>
+                                    <a href="/pfic" class="write"></a>
                                 </div>
                                 <div class="cusbox">
                                     <ul>
@@ -175,7 +177,7 @@
                                 <div class="suptitle">
                                     <span class='pic'></span>
                                     <span>供应商信息</span>
-                                    <a href="#" class="write"></a>
+                                    <a href="/pfipro" class="write"></a>
                                 </div>
                                 <div class="supbox">
                                     <!--策划供应商  -->
@@ -228,7 +230,7 @@
                                 <div class="prititle">
                                     <span class='pic'></span>
                                     <span>价格信息</span>
-                                    <a href="#" class="write"></a>
+                                    <a href="/pfipri" class="write"></a>
                                 </div>
                                 <div class="pribox">
                                     <ul>

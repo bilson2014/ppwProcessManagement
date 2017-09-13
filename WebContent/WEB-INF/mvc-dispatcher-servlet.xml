@@ -27,9 +27,19 @@
 	<!--项目流程 -->
 	<mvc:view-controller path="/pis" view-name="/phoneActiviti/pFlowStep" />
 
-	
+	<!-- 项目信息页 --> 
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
-
+	<!-- 项目信息修改页 -->
+	<!-- 修改项目信息 -->
+	<mvc:view-controller path="/pfip" view-name="/phoneActiviti/pFlowItproject" />
+	<!-- 修改客户信息 -->
+	<mvc:view-controller path="/pfic" view-name="/phoneActiviti/pFlowItclient" />
+	<!-- 修改价格信息 -->
+	<mvc:view-controller path="/pfipri" view-name="/phoneActiviti/pFlowItprice" />
+	<!-- 修改供应商信息 -->
+	<mvc:view-controller path="/pfipro" view-name="/phoneActiviti/pFlowItprovider" />
+	
+	
 	<!--项目流程详情页 -->
 	<mvc:view-controller path="/psi" view-name="/phoneActiviti/pFlowStepInfo" />
 
