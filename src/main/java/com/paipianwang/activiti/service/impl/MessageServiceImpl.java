@@ -21,8 +21,7 @@ import com.paipianwang.pat.facade.user.entity.PmsUser;
 import com.paipianwang.pat.facade.user.service.PmsUserFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
-
-@Service
+@Service("messageService")
 public class MessageServiceImpl implements MessageService {
 	private final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 	@Autowired
@@ -51,8 +50,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<PmsProjectMessage> getProjectTaskMessage(String projectId, String taskName) {
-		List<PmsProjectMessage> result = pmsProjectMessageFacade.getProjectTaskMessage(projectId, taskName);
+	public List<PmsProjectMessage> getProjectTaskMessage(String taskId) {
+		List<PmsProjectMessage> result=pmsProjectMessageFacade.getProjectTaskMessage(taskId);
 		editShowInfo(result);
 		return result;
 	}
@@ -129,5 +128,19 @@ public class MessageServiceImpl implements MessageService {
 		if (message.getCreateDate() != null) {
 			message.setCreateDate(DateUtils.getDateByFormat(message.getCreateDate(), "yyyy-MM-dd HH:mm:ss").toString());
 		}
+	}
+
+	@Override
+	public void insertSystemMessage(String projectId, String content) {
+		PmsProjectMessage message=new PmsProjectMessage();
+		message.setFromId("system");
+		message.setFromGroup("system");
+		message.setProjectId(projectId);
+		message.setMessageType(PmsProjectMessage.TYPE_LOG);
+		message.setFromName("系统");
+		
+		message.setContent(content);
+		pmsProjectMessageFacade.insert(message);
+		
 	}
 }

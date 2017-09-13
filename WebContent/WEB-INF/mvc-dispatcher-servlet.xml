@@ -11,7 +11,13 @@
 
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
 	
+
+	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
+	<!-- xcc此处添加安全页的名字 -->
+	<mvc:view-controller path='save' view-name='/activiti/saveInfo'/>
+
 	<!--项目列表  -->
+
 	<mvc:view-controller path="/pf" view-name="/phoneActiviti/pFlowList" />
 	<!--待办任务  -->
 	<mvc:view-controller path="/pit" view-name="/phoneActiviti/pFlowInfoTask" />
@@ -21,8 +27,12 @@
 	<mvc:view-controller path="/pim" view-name="/phoneActiviti/pFlowMessage" />
 	<!--项目流程 -->
 	<mvc:view-controller path="/pis" view-name="/phoneActiviti/pFlowStep" />
+
+	
+	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
+
 	<!--项目流程详情页 -->
-	<mvc:view-controller path="/psi" view-name="/phoneActiviti/pFlowStepInfo" />
+
 
 	<context:annotation-config />
 
@@ -37,5 +47,4 @@
 			<bean class="com.paipianwang.activiti.interceptors.SecurityInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
-
 </beans>

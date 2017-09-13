@@ -34,34 +34,35 @@
 </head>
 
 <body>  
+
+   <input type="hidden" id="projectId" value="${projectId}">
+   <input type="hidden" id="taskId" value="${taskId}">
+   <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
 	<div class="pagePhone">
           	     <div class="title">
           	         <img src="/resources/images/pFlow/infoState.png">
           	         <div>事件状态</div>
-          	         <img src="/resources/images/pFlow/sDeil.png">
-          	         <div>已完成</div>
+          	         <img id="stateImg" src="/resources/images/pFlow/sDeil.png">
+          	         <div id="stateWord"></div>
           	     </div>
-          	     <div class="itemWord">
+          	     <div class="itemWord hide">
           	           <div class="itemTitle">策划人</div>
           	           <div class="itemContent">描述</div>
           	     </div>
           	     <div class="itemWord">
-          	           <div class="itemTextAreaTitle">时间描述</div>
-          	           <div class="itemTextArea">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+          	           <div class="itemTextAreaTitle" >事件描述</div>
+          	           <div class="itemTextArea" id="stateContent"></div>
           	     </div>
           	     <div class="itemWord">
           	           <div class="itemTitle">开始时间</div>
-          	           <div class="itemContent">20170809</div>
+          	           <div class="itemContent" id="infoStartTime"></div>
           	     </div>
           	     <div class="itemWord">
           	           <div class="itemTitle">结束时间</div>
-          	           <div class="itemContent">20170809</div>
+          	           <div class="itemContent" id="infoEndTime"></div>
           	     </div>
 
-          	     <div class="itemWord">
-          	           <div class="itemTitle">实际执行周期</div>
-          	           <div class="itemContent">20170809</div>
-          	     </div>
           	     
           	     <div class="line"></div>
           	     

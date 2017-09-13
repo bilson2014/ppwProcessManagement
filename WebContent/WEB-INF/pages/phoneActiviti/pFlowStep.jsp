@@ -34,18 +34,28 @@
 </head>
 
 <body>  
+
+
+   <input type="hidden" id="projectId" value="${projectId}">
+   <input type="hidden" id="projectStage" value="${projectStage}">
+   <input type="hidden" id="projectStatus" value="${projectStatus}">
+   <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+   <input type="hidden" id="projectName" value="${projectName}">
+   <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
+
 	<div class="pagePhone">
           	      <div class="title">项目流程及历史</div>
           	     <div class="step">
           	       
           	         <div class="stepItem">
-          	                 <div class="itemTop">
+          	                 <div class="itemTop" id="stage1" data-value="沟通阶段">
           	                      <div class="icon"></div> 
           	                      <div class="name">沟通阶段</div> 
           	                      <div class="openIcon"></div> 
           	                 </div>
           	                 <div class="line"></div>
-          	                 <div class="itemInfo">
+          	                 <div class="itemInfo" id="stageInfo1">
           	                        <div class="setContent">
           	                               <img src="/resources/images/pFlow/sDeil.png" />
           	                               <img src="/resources/images/pFlow/check.png" />
@@ -65,43 +75,42 @@
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop yellowItem">
+          	                 <div class="itemTop" id="stage2" data-value="方案阶段">
           	                      <div class="icon"></div> 
           	                      <div class="name">方案阶段</div> 
           	                      <div class="openIcon"></div> 
           	                 </div>
           	                 <div class="line"></div>
-          	                 <div class="itemInfo"></div>
+          	                 <div class="itemInfo" id="stageInfo2"></div>
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop greenItem">
+          	                 <div class="itemTop" id="stage3" data-value="商务阶段">
           	                      <div class="icon"></div> 
           	                      <div class="name">商务阶段</div> 
           	                      <div class="openIcon"></div> 
           	                 </div>
           	                 <div class="line"></div>
-          	                 <div class="itemInfo"></div>
+          	                 <div class="itemInfo" id="stageInfo3"></div>
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop pauseItem">
+          	                 <div class="itemTop" id="stage4" data-value="制作阶段">
           	                      <div class="icon"></div> 
           	                      <div class="name">制作阶段</div> 
           	                      <div class="openIcon"></div> 
           	                 </div>
           	                 <div class="line"></div>
-          	                 <div class="itemInfo"></div>
+          	                 <div class="itemInfo" id="stageInfo4"></div>
           	                 <div class="line"></div>
           	         </div>
           	         <div class="stepItem">
-          	                 <div class="itemTop cancleItem">
+          	                 <div class="itemTop" id="stage5" data-value="交付阶段">
           	                      <div class="icon"></div> 
           	                      <div class="name">交付阶段</div> 
           	                      <div class="openIcon"></div> 
           	                 </div>
-          	                 <div class="itemInfo"></div>
-
+          	                 <div class="itemInfo" id="stageInfo5"></div>
           	         </div>
           	       
           	     </div>

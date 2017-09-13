@@ -351,7 +351,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Override
 	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId,
-			List<String> userGroup) {
+			List<String> userGroup, String realName) {
 		// 完成节点时，需要保存业务数据
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		String processInstanceId = task.getProcessInstanceId();
@@ -388,20 +388,25 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			message.setProjectId(projectId);
 			message.setTaskName(taskName);
 			message.setContent("我完成了\"" + taskName + "\"任务");
+			message.setMessageType(PmsProjectMessage.TYPE_LOG);
+			message.setFromName(realName);
 			pmsProjectMessageFacade.insert(message);
 
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
 
+			ProjectCycleItem item=null;
+			
 			List<Task> nextTasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
 			if (nextTasks != null && !nextTasks.isEmpty()) {
 				for (Task nextTask : nextTasks) {
 					// 添加 最终日期
 					String taskDefinitionKey = nextTask.getTaskDefinitionKey();
 					String nextTaskId = nextTask.getId();
-					ProjectCycleItem item = getCycleByTask(taskDefinitionKey);
+					item = getCycleByTask(taskDefinitionKey);
 					taskService.setDueDate(nextTaskId, getExpectDate(taskDefinitionKey));
 					// TODO 异常处理、事务处理
+
 					taskService.setVariable(nextTaskId, "task_stage", item.getStage());
 					taskService.setVariable(nextTaskId, "task_description", item.getDescription());
 					
@@ -416,6 +421,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						}
 					}
 				}
+			}
+			//更新项目当前阶段
+			if(item!=null){
+				Map<String,Object> metaData=new HashMap<>();
+				metaData.put("projectStage", item.getStageId());
+				flowFacade.update(metaData, projectId,processInstanceId);
 			}
 
 		} finally {
@@ -1133,6 +1144,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					message.setFromGroup(activitiGroup);
 					message.setFromId(info.getActivitiUserId());
 					message.setProjectId(projectId);
+					message.setMessageType(PmsProjectMessage.TYPE_LOG);
+					message.setFromName(info.getRealName());
 					pmsProjectMessageFacade.insert(message);
 				}
 			}
@@ -1152,6 +1165,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					message.setFromGroup(activitiGroup);
 					message.setFromId(info.getActivitiUserId());
 					message.setProjectId(projectId);
+					message.setMessageType(PmsProjectMessage.TYPE_LOG);
+					message.setFromName(info.getRealName());
 					pmsProjectMessageFacade.insert(message);
 				}
 			}
@@ -1181,6 +1196,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		// 根据名称模糊匹配flow
 		Map<String, Object> params = new HashMap<>();
 		params.put("projectName", flowName);
+		if(ValidateUtil.isValid(activitiUserId)){
+			params.put("employeeId",activitiUserId.split("_")[1]);
+		}
+		
 		List<PmsProjectFlow> flowList = flowFacade.getProjectFlowByCondition(params);
 
 		if (!ValidateUtil.isValid(flowList)) {
@@ -1193,37 +1212,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			cycles = new HashMap<>();
 		}
 
-		// 查询出所有的--包括未来的
-		// HistoricProcessInstanceQuery
-		// insQuery=historyService.createHistoricProcessInstanceQuery();
-		// if(ValidateUtil.isValid(activitiUserId)){
-		// insQuery=insQuery.variableValueEquals(activitiUserId);
-		//// .or()
-		//// .variableValueEquals("saleDirectorId", activitiUserId)
-		//// .variableValueEquals("creativityDirectorId", activitiUserId)
-		//// .variableValueEquals("user", activitiUserId)
-		//// .endOr();
-		// }
-		// if (!StringUtils.isBlank(flowName)) {
-		// insQuery=insQuery.variableValueLike("pf_projectName", "%"+flowName+"%");
-		// }
-		//
-		// List<HistoricProcessInstance> pslist=insQuery.list();
-
 		// 查询所有参与过的任务-流程
 		List<String> nn = new ArrayList<>();
 		HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
-		if (ValidateUtil.isValid(activitiUserId)) {
-			query = query.taskAssignee(activitiUserId);
-		}
-		if (!StringUtils.isBlank(flowName)) {
+//		if (ValidateUtil.isValid(activitiUserId)) {
+//			query = query.taskAssignee(activitiUserId);
+//		}
+//		if (!StringUtils.isBlank(flowName)) {
 			for (PmsProjectFlow flow : flowList) {
 				if (flow.getProcessInstanceId() != null) {
 					nn.add(flow.getProcessInstanceId());
 				}
 			}
 			query = query.processInstanceIdIn(nn);
-		}
+//		}
 		List<HistoricTaskInstance> allTasks=query.list();
 		if(!ValidateUtil.isValid(allTasks)){
 			return result;

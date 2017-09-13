@@ -7,7 +7,6 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
-
 <spring:url value="/resources/js/activiti/flowMenu.js" var="flowMenuJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 <spring:url value="http://localhost:8081/" var="url" />
@@ -19,7 +18,6 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
@@ -39,12 +37,8 @@
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
-
-
 </head>
-
 <body>
-
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
      
 	    <div class="flowMenu">
@@ -85,15 +79,20 @@
 	                  <li>已提交</li>
 	                  <li>无效订单</li>
 	              </ul> -->
+
+
+	              <div class="treeitem">
 	              <a class="treeA" href="${url}running?save">
+
 		              <div class="treeitem">
 		                  <div class="save"></div>
 		                  <div class="title">收藏列表</div>
 		             </div>
 	             </a>
 	              <div class="treeitem hide">
+
 	                  <div class="safe"></div>
-	                  <div class="title">安全设置</div>
+	                  <a href='http://www.apaipian.com/activiti/saveInfo'><div class="title">安全设置</div></a>
 	             </div>
 	              <a href="${url}login/loginout">
 	             <div class="treeitem treeitemRed">
@@ -105,6 +104,7 @@
 	        </div>
 	   </div>
 	</div> 
+	</div>
   
 	<!-- video-->
 </body>

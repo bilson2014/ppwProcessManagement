@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoader;
 
 import com.paipianwang.activiti.mq.email.service.BaseMQService;
+import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 
@@ -30,15 +31,8 @@ public class SendSuggestionEmailToTeam implements JavaDelegate, Serializable {
 		BaseMQService projectSampleMideaMQService = (BaseMQService) context.getBean("projectSampleMideaMQService");
 		projectSampleMideaMQService.sendMessage(projectId);
 		//留言
-				PmsProjectMessageFacade pmsProjectMessageFacade = (PmsProjectMessageFacade) context.getBean("pmsProjectMessageFacade");
-				PmsProjectMessage message=new PmsProjectMessage();
-				message.setFromId("system");
-				message.setFromGroup("system");
-				message.setProjectId(projectId);
-				
-				
-				message.setContent("向供应商发送修改表");
-				pmsProjectMessageFacade.insert(message);
+		MessageService messageService=(MessageService) context.getBean("messageService");
+		messageService.insertSystemMessage(projectId, "向供应商发送修改表");
 	}
 
 }

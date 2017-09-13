@@ -6,6 +6,10 @@
     @import "compass/typography/text/ellipsis";
     @import "pflow";
 
+     body{
+        background-color: $gray-dark !important;
+     }
+
 
     .setContent {
         width: 10rem;
@@ -35,6 +39,17 @@
             .item {
                 font-size: 0;
                 margin-bottom: 0.4rem;
+                position: relative;
+
+                &:after {
+                    content: attr(data-content);
+                    color: $red-base;
+                    font-size: $size30;
+                    position: absolute;
+                    left: 2rem;
+                    top: 0.9rem;
+                }
+
                 .name {
                     width: 1.7rem;
                     font-size: $size34;
@@ -55,6 +70,23 @@
                     display: inline-block;
                     vertical-align: middle;
                 }
+                
+                .upload{
+                    width: 2.4rem;
+                    height: .9rem;
+                    line-height: .9rem;
+                    background: transparent;
+                    font-size: $size34;
+                    border: 1px solid $border-line;
+                    border-radius: 0.08rem;
+                    font-size: $size34;
+                    color: $border-line;
+                    text-align: center;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 0.2rem;
+                }
+
                 .orderSelect {
                     width: 7.3rem;
                     height: .9rem;
@@ -82,4 +114,101 @@
                 }
             }
         }
+    }
+
+
+     //进度条
+    .upProgress {
+        padding-left: 0.3rem;
+        font-size: $font-size-sm;
+        color: $gray;
+        position: relative;
+        width: 92%;
+        padding-top: 0.3rem;
+    }
+
+    .progress {
+        height: 0.12rem;
+        border-radius: 0.9rem !important;
+        margin-top: 0.1rem;
+        margin-bottom: 0px !important;
+    }
+
+    .progress-bar {
+        /*     background-color: #337ab7;
+background-image: none !important; */
+    }
+
+    .upIng {
+        position: absolute;
+        font-size: $font-size-sm;
+        color: $gray;
+        right: 0px;
+        top: 0.3rem;
+    }
+
+    .upSuccess {
+        position: absolute;
+        font-size: $font-size-sm;
+        color: $gray;
+        right: 0px;
+        top: 0.3rem;
+        display: none;
+        img {
+            position: relative;
+            top: -2px;
+            margin-right: 0.1rem;
+            width: 0.14rem;
+        }
+    }
+
+    .upError {
+        position: absolute;
+        font-size: $font-size-sm;
+        color: $gray;
+        right: 0px;
+        top: 0.3rem;
+        display: none;
+        img {
+            position: relative;
+            top: -2px;
+            margin-right: 0.1rem;
+            width: 0.14rem;
+        }
+    }
+
+    .noFile {
+        color: $gray-light;
+        font-size: $font-size-sm;
+        margin-left: 0.4rem;
+        display: none;
+    }
+
+    .longInput {
+        width: 4.2rem !important;
+    }
+
+
+
+    .errorItem,
+    .errorItemArea {
+        position: relative;
+    }
+
+    .errorItem:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: $size30;
+        position: absolute;
+        left: 1.4rem;
+        top: 0.4rem;
+    }
+
+    .errorItemArea:after {
+        content: attr(data-content);
+        color: $red-base;
+        font-size: $size30;
+        position: absolute;
+        left: 1.4rem;
+        top: 0.85rem;
     }

@@ -1,5 +1,5 @@
 $().ready(function(){
-	document.domain = getUrl();	
+//	document.domain = getUrl();	
 	windowChange();
 	$(window.parent.document).find('.footBot').show();
 });
@@ -13,4 +13,8 @@ function windowChange(){
 		$(window.parent.document).find('.frame').css('height',$('body').height());
 		
 	};
+}
+
+function getHeight(){
+	(window.parent.document).find('.frame').css('height',$('body').height());
 }

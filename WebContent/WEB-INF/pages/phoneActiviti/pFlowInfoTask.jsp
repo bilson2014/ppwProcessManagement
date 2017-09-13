@@ -4,6 +4,7 @@
 <%-- import CSS --%>
 <spring:url value="/resources/css/phoneActiviti/pFlowInfoTask.css" var="pFlowInfoTaskCss"/>
 <spring:url value="/resources/lib/merge/iosSelect.css" var="iosSelectCss" />
+<spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -31,6 +32,7 @@
 
 <link rel="stylesheet" href="${pFlowInfoTaskCss}">
 <link rel="stylesheet" href="${iosSelectCss}">
+<link rel="stylesheet" href="${bootstrapCss}">
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -46,17 +48,39 @@
 	                  <div class="name">任务名字</div>
 	                  <div class="time">时间</div>
 	            </div>
+	             <div class="upProgress singleProgress" style="margin-bottom:40px;" id="singleUp">
+								<div class="proTitle" id="proTitle">上传进度</div>
+								<div  class="progress progress-striped active">
+									<div id="singleSetWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 0;"></div>
+								</div>
+								<div class="upIng">上传中...</div>
+								<div class="upSuccess">
+									<img src="/resources/images/provider/sure.png">上传成功
+								</div>
+								<div class="upError">
+									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
+								</div>
+		       </div>
 	            <div class="content">
+	            
+	                     
+	            
 		                <div class="item">
 		                     <div class="name">大大</div>
 		                     <input  />
 		                </div>
-		                <div class="item">
+		                <div class="item" data-content="error">
 		                     <div class="name">大大</div>
 		                     <div class="orderSelect">
 		                            <input readonly class="setSelect"  id="setinput"/>
 		                            <div></div>
 		                     </div>
+		                </div>
+		                 <div class="item" data-content="error">
+		                       <input readonly class=""  id=""/>
+                               <div class="upload">上传</div>
 		                </div>
 	            </div>
 	       </div>
