@@ -1,6 +1,9 @@
+var resMap = "";
 $().ready(function(){
+	$('.frameHead .name').text($('#projectName').val());
 	getStepMore();
-	getStageInfo();
+	getStageInfo($('#projectStage').val());
+	getStage();
 });
 
 function getStepMore(){
@@ -9,6 +12,7 @@ function getStepMore(){
 			$(this).removeClass('open');
 			$(this).parent().find('.itemInfo').slideUp();
 		}else{
+			getStageInfo($(this).attr('data-value'));
 			$(this).addClass('open');
 			$(this).parent().find('.itemInfo').slideDown();
 		}
@@ -17,20 +21,20 @@ function getStepMore(){
 
 function getStage(){
 	
-	var stage = $('#taskStage').val();
-	if(stage == '沟通阶段'){
+	var stage = $('#projectStage').val();
+	if(stage == '1'){
 		stage1();
 	}
-	if(stage == '方案阶段'){
+	if(stage == '2'){
 		stage2();
 	}
-	if(stage == '商务阶段'){
+	if(stage == '3'){
 		stage3();
 	}
-	if(stage == '制作阶段'){
+	if(stage == '4'){
 		stage4();
 	}
-	if(stage == '交付阶段'){
+	if(stage == '5'){
 		stage5();
 	}
 
@@ -80,36 +84,60 @@ function checkId(id){
 	}
 }
 
+function getLocation(){
+	
+	$('.setContent').off('click').on('click',function(){
+             var id = $(this).attr('data-id');
+             var pId = $('#projectId').val();
+             var psId =  $('#processInstanceId').val();
+             window.location.href ="/project/phone/info/"+id+"/"+pId+"/"+psId";
+	});
+	
+}
+
 function getStageInfo(stage){	
 	var keys = stage;
-	var resMap = "";
 	if(resMap == ""){
 		loadData(function(res){
-			initLastTime(res.projectCycle,res.createDate);
 			if(res != null && res != undefined){
 			    resMap = res;
-				var sethtml="";
-				var resKey = res[keys];
-				getStageCard(keys,resKey);
 			}
 		}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
 	}else{
 		var resKey = resMap[keys];
-		getStageCard(keys,resKey);
+		getStageCard(resKey,stage);
 	}
 }
 
-function getStageCard(keys,resKey){
-var Stage = $('#taskStage').val();
+function getStageCard(resKey,stage){
+var Stage = $('#projectStage').val();
 	if(resKey.length > 0){
-		var body =$('.itemInfo');
-		body.html('');
+		if(stage == '沟通阶段'){
+			var body =$('#stageInfo1');
+			body.html('');
+		}
+		if(stage == '方案阶段'){
+			var body =$('#stageInfo2');
+			body.html('');
+		}
+		if(stage == '商务阶段'){
+			var body =$('#stageInfo3');
+			body.html('');
+		}
+		if(stage == '制作阶段'){
+			var body =$('#stageInfo4');
+			body.html('');
+		}
+		if(stage == '交付阶段'){
+			var body =$('#stageInfo5');
+			body.html('');
+		}
+		
 		var setBody = "";
 		for (var int = 0; int < resKey.length; int++) {
 			 var html =createStageInfo(resKey[int]); 
 			 body.append(html);
 		}
-		getHeight();
 	}
 }
 

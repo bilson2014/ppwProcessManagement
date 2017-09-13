@@ -145,7 +145,6 @@ public class ProjectFlowPhoneController extends BaseController {
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
-
 		return mv;
 	}
 }
