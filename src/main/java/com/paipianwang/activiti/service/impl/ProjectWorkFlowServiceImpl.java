@@ -422,6 +422,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					}
 				}
 			}
+			
 			//更新项目当前阶段
 			if(item!=null){
 				Map<String,Object> metaData=new HashMap<>();
