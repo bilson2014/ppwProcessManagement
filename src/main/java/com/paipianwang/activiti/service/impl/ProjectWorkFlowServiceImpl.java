@@ -253,13 +253,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 添加 最终日期
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 			String taskDefinitionKey = nextTask.getTaskDefinitionKey();
+			ProjectCycleItem item=getCycleByTask(taskDefinitionKey);
+			
 			taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
-			taskService.setVariable(nextTask.getId(), "task_stage", getCycleByTask(taskDefinitionKey).getStage());
-			taskService.setVariable(nextTask.getId(), "task_description",
-					getCycleByTask(taskDefinitionKey).getDescription());
+			taskService.setVariable(nextTask.getId(), "task_stage", item.getStage());
+			taskService.setVariable(nextTask.getId(), "task_description",item.getDescription());
 			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
 
 			// TODO 添加任务启动的系统留言
+			//更新项目当前阶段
+			if(item!=null){
+				Map<String,Object> metaData=new HashMap<>();
+				metaData.put("projectStage", item.getStageId());
+				flowFacade.update(metaData, projectId,processInstance.getProcessInstanceId());
+			}
 
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
