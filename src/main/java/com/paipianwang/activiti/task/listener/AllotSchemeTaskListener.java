@@ -44,7 +44,8 @@ public class AllotSchemeTaskListener implements TaskListener, Serializable{
 			PmsEmployee employee = pmsEmployeeFacade.findEmployeeById(synergyId);
 			
 			PmsProjectSynergy projectSynergy = new PmsProjectSynergy();
-			projectSynergy.setEmployeeGroup(ProjectRoleType.scheme.getId());
+			final String groupId = ProjectRoleType.scheme.getId();
+			projectSynergy.setEmployeeGroup(groupId);
 			projectSynergy.setEmployeeId(synergyId);
 			projectSynergy.setProjectId(projectId);
 			if(employee != null) {
@@ -52,6 +53,8 @@ public class AllotSchemeTaskListener implements TaskListener, Serializable{
 				projectSynergy.setTelephone(employee.getPhoneNumber());
 				projectSynergy.setImgUrl(employee.getEmployeeImg());
 			}
+			
+			pmsProjectSynergyFacade.deleteByProjectIdAndRoleId(projectId, groupId);
 			pmsProjectSynergyFacade.insert(projectSynergy);
 		}
 	}

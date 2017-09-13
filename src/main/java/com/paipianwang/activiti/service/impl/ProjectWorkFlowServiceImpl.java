@@ -713,7 +713,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 如果是非供应商，那么添加 主负责人
 			if (!PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
 				// 查找主负责人
-				PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+				PmsProjectSynergy assignee = synergyMap.get(ProjectRoleType.sale.getId());
+				if(assignee != null) {
+					assignee.setEmployeeGroup(ProjectRoleType.assignee.getText());
+					result.add(assignee);
+				}
+				/*PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
 				Integer assigneeId = projectFlow.getPrincipal();
 				if (assigneeId != null) {
 					PmsProjectSynergy synergy = new PmsProjectSynergy();
@@ -726,10 +731,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					synergy.setEmployeeGroup(ProjectRoleType.assignee.getText());
 					synergy.setProjectId(projectId);
 					result.add(synergy);
-				}
+				}*/
 			}
 
 			if (synergyMap != null && !synergyMap.isEmpty()) {
+				// 删除主负责人
+				synergyMap.remove(ProjectRoleType.sale.getId());
+				
 				for (Entry<String, PmsProjectSynergy> entry : synergyMap.entrySet()) {
 					String projectRole = entry.getKey();
 					PmsProjectSynergy synergy = entry.getValue();
