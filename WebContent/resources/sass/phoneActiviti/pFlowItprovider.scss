@@ -52,6 +52,13 @@ $e2:#222;
                     top: 3.39rem;
                     left: 3.2rem;
                 }
+                .error {
+                    font-size: $size30;
+                    color: $red-base;
+                    position: absolute;
+                    top: 4.35rem;
+                    left: 3.2rem;
+                }
             }
             .phone {
                 div {
@@ -77,10 +84,16 @@ $e2:#222;
                     top: 4.79rem;
                     left: 3.2rem;
                 }
+                 .error {
+                    font-size: $size30;
+                    color: $red-base;
+                    position: absolute;
+                    top: 5.65rem;
+                    left: 3.2rem;
+                }
             }
         }
-    }
-    // 制作供应商
+    } // 制作供应商
     .make {
         .title {
             .pic {
@@ -124,6 +137,13 @@ $e2:#222;
                     top: 8rem;
                     left: 3.2rem;
                 }
+                .error {
+                    font-size: $size30;
+                    color: $red-base;
+                    position: absolute;
+                    top: 9rem;
+                    left: 3.2rem;
+                }
             }
             .phone {
                 div {
@@ -149,9 +169,21 @@ $e2:#222;
                     top: 9.4rem;
                     left: 3.2rem;
                 }
+                .error {
+                    font-size: $size30;
+                    color: $red-base;
+                    position: absolute;
+                    top: 10.3rem;
+                    left: 3.2rem;
+                }
             }
         }
     }
+}
+
+.error{
+    width: 100% !important;
+    display: none;
 }
 
 .clientbox {
@@ -178,8 +210,7 @@ $e2:#222;
             top: 1.91rem;
             left: 2.601rem;
         }
-    }
-    //客户电话
+    } //客户电话
     .phone {
         div {
             font-size: 0.34rem;

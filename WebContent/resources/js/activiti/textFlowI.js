@@ -123,7 +123,6 @@ function stageTalkEven(){
 
 function loadStageInfoEven(name){
 	loadData(function(res){	
-		
 		var body =$('#itemHeightInfo');
 		body.html('');
 		if(res != null && res != undefined){
@@ -331,8 +330,6 @@ function getStageCard(keys,resKey){
 		getHeight();
 	}
 }
-
-
 
 function toDoing(){
 	$('#cancle').off('click').on('click',function(){
