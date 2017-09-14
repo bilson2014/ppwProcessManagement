@@ -9,7 +9,8 @@ $().ready(function(){
 	UploadFile();
 	addForm(); 
 	initDaibanTime();
-	
+	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
+    $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
 });
 function isIos(){
 	var u = navigator.userAgent;
