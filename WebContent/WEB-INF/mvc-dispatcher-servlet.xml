@@ -47,7 +47,6 @@
 	
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
 
-	<!--项目流程详情页 -->
 
 
 	<context:annotation-config />
