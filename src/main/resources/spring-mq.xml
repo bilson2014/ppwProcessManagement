@@ -93,7 +93,7 @@
 	
 	<!-- 可以获取session的MessageListener,邮件队列监听事件 -->
 	<bean id="projectSynergyConsumerSessionAwareMessageListener"
-		class="com.paipianwang.mq.consumer.listener.MailConsumerSessionAwareMessageListener"></bean>
+		class="com.paipianwang.activiti.mq.listener.ProjectSynergyConsumerAwareMessageListener"></bean>
 		
 	<jms:listener-container container-type="default"
 		connection-factory="connectionFactory" acknowledge="auto" concurrency="10"

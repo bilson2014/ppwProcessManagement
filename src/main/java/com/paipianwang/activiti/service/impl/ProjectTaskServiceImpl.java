@@ -52,6 +52,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 					if (ValidateUtil.isValid(tasks)) {
 						for (final Task task : tasks) {
 							// 获取当前 task
+							final String taskId = task.getId();
 							final String taskDefinitionKey = task.getTaskDefinitionKey();
 							final String taskName = task.getName();
 							
@@ -75,7 +76,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 										PmsProjectSynergy synergy = synergys.get(0);
 										String synergyId = "employee_" + synergy.getEmployeeId();
 										if (!assignee.equals(synergyId)) {
-											task.setAssignee(synergyId);
+											taskService.setAssignee(taskId, synergyId);
 											logger.info("projectId is " + projectId + " , taskName is " + taskName + " , change assignee 【" + assignee + "】 to " + synergyId);
 										}
 									}
