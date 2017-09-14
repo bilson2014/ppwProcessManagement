@@ -1,0 +1,95 @@
+@import "common";
+@import "buttons";
+@import "video";
+@import "bootstrap-grid";
+@import "companyCommon";
+@import "compass/typography/text/ellipsis";
+@import "pflow";
+$e2:#222;
+// 客户信息修改
+.clientbox {
+    // 客户联系人
+    .name {
+        div {
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            position: absolute;
+            top: 2.25rem;
+            left: 0.8rem;
+        }
+        input {
+            width: 7.4rem;
+            height: 0.9rem;
+            border-radius: 0.08rem;
+            background: #333;
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            padding-left: 0.399rem;
+            border-width: 0.02rem;
+            border-color: #D1D1D1;
+            position: absolute;
+            top: 1.91rem;
+            left: 2.601rem;
+        }
+    }
+    //客户电话
+    .phone {
+        div {
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            position: absolute;
+            top: 3.65rem;
+            left: 0.8rem;
+        }
+        input {
+            width: 7.4rem;
+            height: 0.9rem;
+            border-radius: 0.08rem;
+            background: #333;
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            padding-left: 0.399rem;
+            border-width: 0.02rem;
+            border-color: #D1D1D1;
+            position: absolute;
+            top: 3.31rem;
+            left: 2.601rem;
+        }
+    }
+}
+
+// 取消和确认
+.surebox {
+    position: absolute;
+    bottom: 3.32rem;
+    .cancel {
+        width: 3.6rem;
+        height: 1rem;
+        background: #999999;
+        box-shadow: 0 0.02rem 0.03rem 0 rgba(0, 0, 0, 0.27);
+        border-radius: 100rem;
+        position: absolute;
+        left: 1.4rem;
+        div {
+            text-align: center;
+            font-size: 0.36rem;
+            color: #FFFFFF;
+            line-height: 1rem;
+        }
+    }
+    .sure {
+        width: 3.6rem;
+        height: 1rem;
+        background: #FE5453;
+        box-shadow: 0 0.02rem 0.03rem 0 rgba(0, 0, 0, 0.27);
+        position: absolute;
+        border-radius: 100rem;
+        left: 5.8rem;
+        div {
+            text-align: center;
+            font-size: 0.36rem;
+            color: #FFFFFF;
+            line-height: 1rem;
+        }
+    }
+}

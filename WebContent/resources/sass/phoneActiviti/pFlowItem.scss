@@ -1,0 +1,473 @@
+@import "common";
+@import "buttons";
+@import "video";
+@import "bootstrap-grid";
+@import "companyCommon";
+@import "compass/typography/text/ellipsis";
+@import "pflow";
+$e2:#222;
+// 项目团队信息模块
+.teaminfo {
+    .teamtitle {
+        height: 1.12rem;
+        position: relative;
+        .pic {
+            position: absolute;
+            top: 0.56rem;
+            left: 0.6rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/teampic.png);
+            background-size: 0.36rem;
+        }
+        span {
+            color: #fff;
+            font-size: 0.40rem;
+            position: absolute;
+            top: 0.56rem;
+            left: 1.14rem;
+        }
+    }
+    .teambox {
+        ul {
+            margin-left: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        ul li {
+            display: inline-block;
+            margin-top: 0.5rem;
+            div {
+                width: 1.6rem;
+                height: 1.6rem;
+                background: url(/resources/images/user/icon6.jpg);
+                background-size: 1.6rem;
+                border-radius: 50%;
+            }
+            span {
+                font-size: 0.36rem;
+                color: #999;
+                width: 1.6rem;
+                display: block;
+                height: 0.47rem;
+                margin-top: 0.2rem;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.line {
+    width: 100%;
+    height: 0.06rem;
+    background-color: #222;
+}
+
+// 项目信息
+.projectinfo {
+    .protitle {
+        height: 1.18rem;
+        position: relative;
+        .pic {
+            position: absolute;
+            top: 0.56rem;
+            left: 0.6rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/mes.png);
+            background-size: 0.36rem;
+        }
+        span {
+            color: #fff;
+            font-size: 0.40rem;
+            position: absolute;
+            top: 0.56rem;
+            left: 1.14rem;
+        }
+        .write {
+            position: absolute;
+            top: 0.56rem;
+            left: 9.68rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/edit.png);
+            background-size: 0.36rem;
+        }
+    }
+    .probox {
+        ul {
+            margin-left: 0.8rem;
+            margin-bottom: 0.6rem;
+            height: 12.72rem;
+            position: relative;
+        }
+        ul li {
+            position: absolute;
+            width: 5rem;
+            height: 1.14rem;
+            top: 0.5rem;
+            &:nth-child(2) {
+                left: 5.7rem;
+                width: 4rem;
+            }
+            &:nth-child(3) {
+                top: 2.14rem;
+                width: 9rem;
+            }
+            &:nth-child(4) {
+                top: 3.78rem;
+            }
+            &:nth-child(5) {
+                top: 3.78rem;
+                left: 5.7rem;
+                width: 4rem;
+            }
+            &:nth-child(6) {
+                top: 5.42rem;
+            }
+            &:nth-child(7) {
+                top: 5.42rem;
+                left: 5.7rem;
+                width: 4rem;
+            }
+            &:nth-child(8) {
+                top: 7.06rem;
+                width: 9rem;
+            }
+            &:nth-child(9) {
+                top: 9.17rem;
+                width: 9rem;
+            }
+            &:nth-child(10) {
+                top: 10.81rem;
+                width: 9rem;
+            }
+            div {
+                font-size: 0.36rem;
+                color: #999999;
+            }
+            span {
+                font-size: 0.36rem;
+                color: #E3E3E3;
+                position: absolute;
+                top: 0.6rem;
+                line-height: 0.47rem;
+            }
+        }
+    }
+}
+
+// 客户信息
+.customerinfo {
+    .custitle {
+        height: 1.18rem;
+        position: relative;
+        .pic {
+            position: absolute;
+            top: 0.56rem;
+            left: 0.6rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/cus.png);
+            background-size: 0.36rem;
+        }
+        span {
+            color: #fff;
+            font-size: 0.40rem;
+            position: absolute;
+            top: 0.56rem;
+            left: 1.14rem;
+        }
+        .write {
+            position: absolute;
+            top: 0.56rem;
+            left: 9.68rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/edit.png);
+            background-size: 0.36rem;
+        }
+    }
+    .cusbox {
+        div {
+            font-size: 0.36rem;
+            color: #999999;
+        }
+        span {
+            font-size: 0.36rem;
+            color: #E3E3E3;
+            display: block;
+            margin-top: 0.2rem;
+        }
+        ul {
+            margin-left: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        ul li {
+            display: inline-block;
+            width: 4rem;
+            &:nth-child(1) {
+                width: 9rem;
+            }
+            &:nth-child(2) {
+                width: 9rem;
+            }
+            &:nth-child(4) {
+                margin-left: 1.35rem;
+            }
+        }
+    }
+}
+
+// 供应商信息
+.supplierinfo {
+    .suptitle {
+        height: 1.18rem;
+        position: relative;
+        .pic {
+            position: absolute;
+            top: 0.56rem;
+            left: 0.6rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/suplier.png);
+            background-size: 0.36rem;
+        }
+        span {
+            color: #fff;
+            font-size: 0.40rem;
+            position: absolute;
+            top: 0.56rem;
+            left: 1.14rem;
+        }
+        .write {
+            position: absolute;
+            top: 0.56rem;
+            left: 9.68rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/edit.png);
+            background-size: 0.36rem;
+        }
+    }
+    .supbox {
+        .plantitle {
+            height: 1.18rem;
+            position: relative;
+            .pic {
+                position: absolute;
+                top: 0.56rem;
+                left: 0.6rem;
+                width: 0.159rem;
+                height: 0.289rem;
+                background: url(/resources/images/pFlow/plan.png);
+                background-size: 0.2rem;
+                color: #fff;
+            }
+            span {
+                color: #E3E3E3;
+                font-size: 0.36rem;
+                position: absolute;
+                top: 0.56rem;
+                left: 1.14rem;
+            }
+        }
+        .planbox {
+            div {
+                font-size: 0.36rem;
+                color: #999999;
+            }
+            span {
+                font-size: 0.36rem;
+                color: #E3E3E3;
+                display: block;
+                margin-top: 0.2rem;
+            }
+            ul {
+                margin-left: 0.8rem;
+                margin-bottom: 0rem;
+            }
+            ul li {
+                display: inline-block;
+                width: 4rem;
+                &:nth-child(1) {
+                    width: 9rem;
+                }
+                &:nth-child(3) {
+                    margin-left: 1.35rem;
+                }
+            }
+        }
+        .maketitle {
+            height: 1.18rem;
+            position: relative;
+            .pic {
+                position: absolute;
+                top: 0.56rem;
+                left: 0.6rem;
+                width: 0.159rem;
+                height: 0.289rem;
+                background: url(/resources/images/pFlow/plan.png);
+                background-size: 0.2rem;
+                color: #fff;
+            }
+            span {
+                color: #E3E3E3;
+                font-size: 0.36rem;
+                position: absolute;
+                top: 0.56rem;
+                left: 1.14rem;
+            }
+        }
+        .makebox {
+            div {
+                font-size: 0.36rem;
+                color: #999999;
+            }
+            span {
+                font-size: 0.36rem;
+                color: #E3E3E3;
+                display: block;
+                margin-top: 0.2rem;
+            }
+            ul {
+                margin-left: 0.8rem;
+                margin-bottom: 0.6rem;
+            }
+            ul li {
+                display: inline-block;
+                width: 4rem;
+                &:nth-child(1) {
+                    width: 9rem;
+                }
+                &:nth-child(3) {
+                    margin-left: 1.35rem;
+                }
+            }
+        }
+    }
+}
+
+// 价格信息
+.priceinfo {
+    margin-bottom: 1.5rem;
+    .prititle {
+        height: 1.18rem;
+        position: relative;
+        .pic {
+            position: absolute;
+            top: 0.56rem;
+            left: 0.6rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/price.png);
+            background-size: 0.36rem;
+        }
+        span {
+            color: #fff;
+            font-size: 0.40rem;
+            position: absolute;
+            top: 0.56rem;
+            left: 1.14rem;
+        }
+        .write {
+            position: absolute;
+            top: 0.56rem;
+            left: 9.68rem;
+            width: 0.36rem;
+            height: 0.36rem;
+            background: url(/resources/images/pFlow/edit.png);
+            background-size: 0.36rem;
+        }
+    }
+    .pribox {
+        div {
+            font-size: 0.36rem;
+            color: #999999;
+        }
+        span {
+            font-size: 0.36rem;
+            color: #E3E3E3;
+            display: block;
+            margin-top: 0.2rem;
+        }
+        ul {
+            margin-left: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+        ul li {
+            display: inline-block;
+            width: 4rem;
+            &:nth-child(2) {
+                margin-left: 1.35rem;
+            }
+        }
+    }
+}
+
+// 遮罩层
+.mask {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    background-color: rgba(3, 3, 3, 0.8);
+    .close {
+        width: 0.8rem;
+        height: 0.8rem;
+        background: url(/resources/images/pFlow/close.png);
+        background-size: 0.8rem;
+        position: relative;
+        top: 3.9rem;
+        left: 7.89rem;
+        z-index: 5;
+    }
+    .box {
+        width: 6rem;
+        height: 6.86rem;
+        background: #FFFFFF;
+        border-radius: 0.18rem;
+        position: absolute;
+        top: 4.12rem;
+        left: 2.4rem;
+        .pic {
+            width: 2.4rem;
+            height: 2.4rem;
+            position: absolute;
+            top: 0.8rem;
+            left: 1.8rem;
+            border-radius: 50%;
+            background: url(/resources/images/user/icon5.jpg);
+            background-size: 2.4rem;
+        }
+        .name {
+            position: absolute;
+            top: 3.6rem;
+            left: 2.4rem;
+            font-size: 0.4rem;
+            color: #333333;
+        }
+        .smallline {
+            width: 4.8rem;
+            height: 0.02rem;
+            background-color: #D1D1D1;
+            position: absolute;
+            top: 4.52rem;
+            left: 0.6rem;
+        }
+        .text {
+            position: absolute;
+            top: 4.92rem;
+            left: 2.46rem;
+            font-size: 0.36rem;
+            color: #FE5453;
+        }
+        .phone {
+            font-size: 0.36rem;
+            color: #666666;
+            position: absolute;
+            top: 5.59rem;
+            left: 1.84rem;
+        }
+    }
+}

@@ -29,7 +29,7 @@ public class SendProjectEmailToUser implements JavaDelegate {
 		
 		//留言
 		MessageService messageService=(MessageService) context.getBean("messageService");
-		messageService.insertSystemMessage(projectId, "向客户发送验收函");
+		messageService.insertSystemMessage(projectId, "向客户发送项目确认函");
 	}
 
 }
