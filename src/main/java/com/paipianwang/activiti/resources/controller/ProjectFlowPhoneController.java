@@ -79,7 +79,6 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("dueDate", task.getDueDate());
 
 		if (flow != null) {
-
 			mv.addObject("projectName", flow.getProjectName());
 		}
 		return mv;
@@ -301,6 +300,23 @@ public class ProjectFlowPhoneController extends BaseController {
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
 		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprice");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		return mv;
+	}
+	/**
+	 * 修改供应商信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @return
+	 */
+	@RequestMapping("/editTeam/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editTeamView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprovider");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
