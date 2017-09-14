@@ -1,6 +1,7 @@
 package com.paipianwang.activiti.resources.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -22,6 +23,8 @@ import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
 /**
@@ -38,13 +41,13 @@ public class ProjectFlowPhoneController extends BaseController {
 
 	@Autowired
 	private PmsProjectFlowFacade projectFlowFacade = null;
-	
+
 	@Autowired
 	private ProjectWorkFlowService projectWorkFlowService = null;
-	
+
 	@Autowired
 	private TaskService taskService = null;
-	
+
 	/**
 	 * 跳转到 项目页
 	 * 
@@ -69,21 +72,21 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
-		
+
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
 		PmsProjectFlowResult result = new PmsProjectFlowResult();
 		result.setPmsProjectFlow(flow);
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		result.setTaskName(task.getName());
 		result.setDueDate(task.getDueDate());
-		
-		if(flow != null) {
+
+		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
 
 		return mv;
 	}
-	
+
 	/**
 	 * 完成当前阶段
 	 * 
@@ -110,7 +113,7 @@ public class ProjectFlowPhoneController extends BaseController {
 
 		SessionInfo info = getCurrentInfo(request);
 		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
-				info.getActivitGroups(),info.getRealName());
+				info.getActivitGroups(), info.getRealName());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/phone/projectFlow");
@@ -129,9 +132,9 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
-		
+
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		if(flow != null) {
+		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
 
@@ -143,7 +146,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	 * 
 	 * @return
 	 */
-	
+
 	@RequestMapping("/message/{taskId}/{projectId}/{processInstanceId}")
 	public ModelAndView messageView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
@@ -152,9 +155,9 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
-		
+
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		if(flow != null) {
+		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
 		return mv;
@@ -173,13 +176,13 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
-		
+
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		
-		if(flow != null) {
+
+		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 			mv.addObject("projectStage", flow.getProjectStage());
-			mv.addObject("projectStatus",flow.getProjectStatus());
+			mv.addObject("projectStatus", flow.getProjectStatus());
 		}
 
 		return mv;
@@ -198,12 +201,59 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
-		
+
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		if(flow != null) {
+		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
 		return mv;
 	}
-	
+
+	/**
+	 * 项目信息
+	 * 
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/flowinfo/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView flowInfoView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItem");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		SessionInfo info = getCurrentInfo(request);
+
+		// 获取可见数据
+		Map<String, Object> param = projectWorkFlowService.getReadableColumns(info.getActivitiUserId(), taskId,
+				projectId);
+		List<PmsProjectSynergy> synergyList = projectWorkFlowService.getSynergy(info.getActivitiUserId(), projectId,
+				info);
+
+		Map<String, Object> flowMap = (Map<String, Object>) param.get("PROJECT_FLOW");
+		Map<String, Object> priceMap = (Map<String, Object>) param.get("PROJECT_PRICE");
+		List<Map<String, Object>> teamPlanMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPLAN");
+		List<Map<String, Object>> teamProductMap = (List<Map<String, Object>>) param.get("PROJECT_TEAMPRODUCT");
+		Map<String, Object> userMap = (Map<String, Object>) param.get("PROJECT_USER");
+
+		// 项目信息
+		mv.addObject("flow_info", flowMap);
+		// 策划供应商信息
+		mv.addObject("teamPlan_info", teamPlanMap);
+		// 制作供应商信息
+		mv.addObject("teamProduct_info", teamProductMap);
+		// 客户信息
+		mv.addObject("user_info", userMap);
+		// 协同人信息
+		mv.addObject("synergyList", synergyList);
+		// 价格信息
+		mv.addObject("price_info", priceMap);
+
+		return mv;
+	}
+
 }

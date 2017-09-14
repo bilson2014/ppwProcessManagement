@@ -12,6 +12,7 @@
 	<context:component-scan base-package="com.paipianwang.activiti.resources.controller" />
 	
 
+
 	<mvc:view-controller path="doing" view-name="/activiti/doingFlow" />
 
 	<!--项目列表  -->
@@ -45,6 +46,7 @@
 
 	
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
+
 
 
 	<context:annotation-config />
