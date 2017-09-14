@@ -636,8 +636,13 @@ public class ProjectFlowController extends BaseController {
 
 	// 更新 项目信息、用户信息
 	@RequestMapping(value = "/edit/information", method = RequestMethod.POST)
-	public ModelAndView updateInformation(final HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("redirect:/project/running-doing");
+	public ModelAndView updateInformation(final HttpServletRequest request, String client) {
+		String dir = "redirect:/project/running-doing";
+		if(StringUtils.isNotBlank(client)) {
+			dir = "redirect:/project/phone/projectFlow";
+		}
+		
+		ModelAndView mv = new ModelAndView(dir);
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
 		if (paramMap != null && !paramMap.isEmpty()) {
@@ -655,8 +660,12 @@ public class ProjectFlowController extends BaseController {
 
 	// 更新团队信息
 	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
-	public ModelAndView updateTeamInformation(final HttpServletRequest request) {
-		ModelAndView mv = new ModelAndView("redirect:/project/running-doing");
+	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client) {
+		String dir = "redirect:/project/running-doing";
+		if(StringUtils.isNotBlank(client)) {
+			dir = "redirect:/project/phone/projectFlow";
+		}
+		ModelAndView mv = new ModelAndView(dir);
 
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
