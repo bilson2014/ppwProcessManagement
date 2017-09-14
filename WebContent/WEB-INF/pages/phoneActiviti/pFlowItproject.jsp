@@ -7,7 +7,7 @@
                     <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs" />
                     <spring:url value="/resources/js/common.js" var="commonJs" />
                     <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs" />
-                    <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs" />
+                    <spring:url value="/resources/js/phoneActiviti/pFlowItproject.js" var="pFlowItprojectJs" />
                     <spring:url value="/resources/images" var="imgPath" />
 
                     <!DOCTYPE html>
@@ -35,12 +35,14 @@
 
                     <body>
                         <div class="pagePhone">
+                            <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
                             <!--项目信息修改  -->
                             <div class="projectbox">
                                 <!--项目名称 -->
                                 <div class="name">
                                     <div>项目名称</div>
                                     <input type="text" value="혼천의">
+                                    <p>*用户名不能</p>
                                 </div>
                                 <!--项目来源  -->
                                 <div class="origin">
@@ -86,16 +88,19 @@
                                     <div>项目周期</div>
                                     <input type="text" value="9">
                                     <span>天</span>
+                                    <p>*用户名不能</p>
                                 </div>
                                 <!--对标影片  -->
                                 <div class="film">
                                     <div>对标影片</div>
                                     <textarea name="" id="" cols="30" rows="2">http://www.apaipian.com:8087/project/start/project</textarea>
+                                    <p>*用户名不能</p>
                                 </div>
                                 <!--项目描述  -->
                                 <div class="describe">
                                     <div>项目描述</div>
                                     <textarea rows="" cols="2">되다 효 혼천의 되다 효 혼천의되다 효  되다 효 혼천의 되다 효 혼천의되다 효 </textarea>
+                                    <p></p>
                                 </div>
 
                                 <!-- 取消和确认 -->
@@ -104,7 +109,7 @@
                                         <div>取消</div>
                                     </div>
                                     <div class="sure">
-                                        <div>确认</div>
+                                        <div id='surebtn'>确认</div>
                                     </div>
                                 </div>
 
@@ -133,6 +138,6 @@
                     <script type="text/javascript" src="${jsonJs}"></script>
                     <script type="text/javascript" src="${commonJs}"></script>
                     <script type="text/javascript" src="${commonPhoneJs}"></script>
-                    <script type="text/javascript" src="${pFlwFileJs}"></script>
+                    <script type="text/javascript" src="${pFlowItprojectJs}"></script>
 
                     </html>
