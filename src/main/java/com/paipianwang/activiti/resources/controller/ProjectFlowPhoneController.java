@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
 /**
@@ -39,6 +42,8 @@ public class ProjectFlowPhoneController extends BaseController {
 	@Autowired
 	private ProjectWorkFlowService projectWorkFlowService = null;
 	
+	@Autowired
+	private TaskService taskService = null;
 	
 	/**
 	 * 跳转到 项目页
@@ -66,6 +71,12 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("processInstanceId", processInstanceId);
 		
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
+		PmsProjectFlowResult result = new PmsProjectFlowResult();
+		result.setPmsProjectFlow(flow);
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		result.setTaskName(task.getName());
+		result.setDueDate(task.getDueDate());
+		
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
