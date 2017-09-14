@@ -50,8 +50,10 @@ import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 @RequestMapping("/project")
 public class ProjectFlowController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(ProjectFlowController.class);
+	
 	@Autowired
 	private ProjectWorkFlowService projectWorkFlowService = null;
+	
 	/**
 	 * 新建项目页跳转
 	 */

@@ -287,10 +287,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ "
-					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE sy.employeeId = "+ userId.split("_")[1]
-					+ " AND ART.ASSIGNEE_ = '"
-					+ userId
-					+ "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
+					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
+					+ " WHERE sy.employeeId = "+ userId.split("_")[1]
+					/*+ " AND ART.ASSIGNEE_ = '"*/
+					/*+ userId + "'"*/
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
 		}
 
 		return getRuningTaskBySql(sql, userId);
@@ -429,6 +430,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					}
 				}
 			}
+			
 			//更新项目当前阶段
 			if(item!=null){
 				Map<String,Object> metaData=new HashMap<>();
@@ -707,13 +709,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ AND PF.projectStatus = 'suspend' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
 		} else {
-			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN pat.PROJECT_SYNERGY SY "
-					+ " ON RES.BUSINESS_KEY_ = SY.projectId"
-					+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ "
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
+					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId"
+					/*+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
 					+ " AND SY.employeeId = "+ userId.split("_")[1]
-					+ " AND PF.projectStatus = 'suspend' AND ART.ASSIGNEE_ = '"
-					+ userId
-					+ "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
+					+ " AND PF.projectStatus = 'suspend' "
+					/*+ " AND ART.ASSIGNEE_ = '"
+					+ userId + "'"*/
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
 		}
 
 		return getRuningTaskBySql(sql, userId);
@@ -1499,11 +1503,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId "
-					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ "
+					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
 					+ " AND SY.employeeId = " + userId.split("_")[1]
-					+ " AND PF.projectStatus = 'cancel' AND ART.ASSIGNEE_ = '"
-					+ userId
-					+ "' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
+					+ " AND PF.projectStatus = 'cancel' "
+					/*+ " AND ART.ASSIGNEE_ = '"
+					+ userId + "'"*/
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
 		}
 
 		return getRuningTaskBySql(sql, userId);

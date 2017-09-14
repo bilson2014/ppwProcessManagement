@@ -1,5 +1,12 @@
 package com.paipianwang.activiti.resources.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.paipianwang.activiti.service.ProjectWorkFlowService;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
@@ -25,6 +35,10 @@ public class ProjectFlowPhoneController extends BaseController {
 
 	@Autowired
 	private PmsProjectFlowFacade projectFlowFacade = null;
+	
+	@Autowired
+	private ProjectWorkFlowService projectWorkFlowService = null;
+	
 	
 	/**
 	 * 跳转到 项目页
@@ -58,9 +72,41 @@ public class ProjectFlowPhoneController extends BaseController {
 
 		return mv;
 	}
+	
+	/**
+	 * 完成当前阶段
+	 * 
+	 * @param taskId
+	 * @param processType
+	 * @param redirectAttributes
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("completeTask/{taskId}")
+	public ModelAndView completeTask(@PathVariable("taskId") final String taskId, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
+
+		Map<String, String> formProperties = new HashMap<String, String>();
+		// 从request中读取参数然后转换
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
+		for (Entry<String, String[]> entry : entrySet) {
+			String key = entry.getKey();
+			formProperties.put(key, entry.getValue()[0]);
+		}
+
+		logger.debug("start form parameters: {}", formProperties);
+
+		SessionInfo info = getCurrentInfo(request);
+		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
+				info.getActivitGroups(),info.getRealName());
+
+		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
+		return new ModelAndView("redirect:/project/phone/projectFlow");
+	}
 
 	/**
-	 * 跳转到 代办任务
+	 * 跳转到 文件页
 	 * 
 	 * @return
 	 */
@@ -118,6 +164,7 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("processInstanceId", processInstanceId);
 		
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
+		
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 			mv.addObject("projectStage", flow.getProjectStage());

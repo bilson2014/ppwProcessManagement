@@ -6,9 +6,9 @@
     @import "compass/typography/text/ellipsis";
     @import "pflow";
 
-     body{
+    body {
         background-color: $gray-dark !important;
-     }
+    }
 
 
     .setContent {
@@ -20,7 +20,7 @@
             position: relative;
             width: 100%;
             margin-top: 0.6rem;
-            .name {
+            .names {
                 font-size: $size40;
                 color: white;
                 position: absolute;
@@ -38,7 +38,7 @@
             padding-top: 1rem;
             .item {
                 font-size: 0;
-                margin-bottom: 0.4rem;
+                margin-bottom: 0.5rem;
                 position: relative;
 
                 &:after {
@@ -47,7 +47,7 @@
                     font-size: $size30;
                     position: absolute;
                     left: 2rem;
-                    top: 0.9rem;
+                    top: 1.25rem;
                 }
 
                 .name {
@@ -70,8 +70,8 @@
                     display: inline-block;
                     vertical-align: middle;
                 }
-                
-                .upload{
+
+                .upload {
                     width: 2.4rem;
                     height: .9rem;
                     line-height: .9rem;
@@ -116,21 +116,38 @@
         }
     }
 
+    .btnInput {
+        width: 8rem;
+        margin: 0 auto;
+    }
 
-     //进度条
+    #toSubmitForm {
+        width: 8rem;
+        height: 1rem;
+        text-align: center;
+        line-height: 1rem;
+        font-size: .36rem;
+        color: white;
+        border-radius: 1rem;
+        margin: 0 auto;
+        margin-top: 0.3rem;
+        margin-bottom: 0.3rem;
+        border: none;
+    } //进度条
     .upProgress {
         padding-left: 0.3rem;
         font-size: $font-size-sm;
         color: $gray;
         position: relative;
         width: 92%;
-        padding-top: 0.3rem;
+        padding-top: 0.8rem;
+        display: none;
     }
 
     .progress {
-        height: 0.12rem;
+        height: 0.3rem !important;
         border-radius: 0.9rem !important;
-        margin-top: 0.1rem;
+        margin-top: 0rem !important;
         margin-bottom: 0px !important;
     }
 
@@ -139,41 +156,46 @@
 background-image: none !important; */
     }
 
+    .proTitle {
+        font-size: $size30;
+        color: $gray-light;
+    }
+
     .upIng {
         position: absolute;
-        font-size: $font-size-sm;
-        color: $gray;
+        font-size: $size30;
+        color: $gray-light;
         right: 0px;
-        top: 0.3rem;
+        top: 0.8rem;
     }
 
     .upSuccess {
         position: absolute;
-        font-size: $font-size-sm;
-        color: $gray;
+        font-size: $size30;
+        color: $gray-light;
         right: 0px;
-        top: 0.3rem;
+        top: 0.8rem;
         display: none;
         img {
             position: relative;
             top: -2px;
             margin-right: 0.1rem;
-            width: 0.14rem;
+            width: 0.3rem;
         }
     }
 
     .upError {
         position: absolute;
-        font-size: $font-size-sm;
-        color: $gray;
+        font-size: $size30;
+        color: $gray-light;
         right: 0px;
-        top: 0.3rem;
+        top: 0.8rem;
         display: none;
         img {
             position: relative;
             top: -2px;
             margin-right: 0.1rem;
-            width: 0.14rem;
+            width: 0.3rem;
         }
     }
 
@@ -187,7 +209,6 @@ background-image: none !important; */
     .longInput {
         width: 4.2rem !important;
     }
-
 
 
     .errorItem,
@@ -211,4 +232,81 @@ background-image: none !important; */
         position: absolute;
         left: 1.4rem;
         top: 0.85rem;
+    }
+
+
+    .webuploader-pick {
+        background: transparent !important;
+        padding: 0 !important;
+    }
+
+    .webuploader-pick-hover {
+        background: transparent !important;
+    }
+
+
+    .modelTool {
+        background-color: rgba(0, 0, 0, 0.7);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        position: relative;
+        display: none;
+        .success {
+            position: absolute;
+            top: 3rem;
+            left: 50%;
+            margin-left: -4.5rem;
+            width: 9rem;
+            height: 8rem;
+            background: white;
+            text-align: center;
+            border-radius: 18px;
+            .modelTitle {
+                height: 1.5rem;
+                font-size: 0.46rem;
+                color: $gray-dark;
+                border-bottom: 1px solid $gray-light;
+                line-height: 1.5rem;
+            }
+
+            div:nth-child(2) {
+                color: $gray-dark;
+                color: #333;
+                font-size: 0.4rem;
+                margin-bottom: 0.4rem;
+                line-height: 0.6rem;
+                padding: 0.5rem;
+                padding-top: 2rem;
+            }
+            div:nth-child(3) {
+                color: white;
+                font-size: 0.36rem;
+                width: 3.2rem;
+                height: 1rem;
+                line-height: 1rem;
+                text-align: center;
+                border-radius: 100px;
+                background: $gray-light;
+                box-shadow: 0 4px 8px 0;
+                position: absolute;
+                left: 1rem;
+                bottom: 1rem;
+            }
+            div:nth-child(4) {
+                color: white;
+                font-size: 0.36rem;
+                width: 3.2rem;
+                height: 1rem;
+                line-height: 1rem;
+                text-align: center;
+                border-radius: 100px;
+                background: $red-base;
+                box-shadow: 0 4px 8px 0;
+                position: absolute;
+                right: 1rem;
+                bottom: 1rem;
+            }
+        }
     }
