@@ -1,5 +1,5 @@
 $().ready(function(){
-//	document.domain = getUrl();	
+	document.domain = getUrl();	
 	windowChange();
 	$(window.parent.document).find('.footBot').show();
 });

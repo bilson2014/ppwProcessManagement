@@ -46,8 +46,6 @@ function searchEven(){
 }
 //进行中
 function loadDoing(){	
-	
-	
 	var setMission =  $('.setMission');
 	var otherCard  =  $('.setCard');
 	setMission.html('');
@@ -135,7 +133,7 @@ function createWaitCard(res){
 	var isWho = "";
 	var timeImg = "";
 	var time = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
+	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -183,7 +181,7 @@ function createStateOtherCard(res,stage){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
+	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -269,7 +267,7 @@ function createOtherCard(res){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/phone/resource/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+' ">';
+	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{

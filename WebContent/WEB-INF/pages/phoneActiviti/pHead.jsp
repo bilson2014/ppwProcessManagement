@@ -36,8 +36,8 @@
 <body>
 
      <div class="frameHead">
-	              <img src="/resources/images/pFlow/return.png">
-	              <div class="name">标题</div>
+	             <a href="/project/phone/projectFlow"> <img src="/resources/images/pFlow/return.png"></a>
+	             <div class="name">标题</div>
 	 </div>
 
 </body>

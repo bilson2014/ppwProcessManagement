@@ -71,16 +71,12 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("processInstanceId", processInstanceId);
 		
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		PmsProjectFlowResult result = new PmsProjectFlowResult();
-		result.setPmsProjectFlow(flow);
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-		result.setTaskName(task.getName());
-		result.setDueDate(task.getDueDate());
-		
+		mv.addObject("taskName", task.getName());
+		mv.addObject("dueDate", task.getDueDate());
 		if(flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
-
 		return mv;
 	}
 	
