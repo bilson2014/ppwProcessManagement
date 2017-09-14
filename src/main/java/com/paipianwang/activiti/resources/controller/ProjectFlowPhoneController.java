@@ -75,16 +75,9 @@ public class ProjectFlowPhoneController extends BaseController {
 
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-<<<<<<< HEAD
 		mv.addObject("taskName", task.getName());
 		mv.addObject("dueDate", task.getDueDate());
 		if(flow != null) {
-=======
-		result.setTaskName(task.getName());
-		result.setDueDate(task.getDueDate());
-
-		if (flow != null) {
->>>>>>> be36ef1dfa26e349fbfe90b46d14db837f5c11d8
 			mv.addObject("projectName", flow.getProjectName());
 		}
 		return mv;
@@ -306,6 +299,23 @@ public class ProjectFlowPhoneController extends BaseController {
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
 		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprice");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		return mv;
+	}
+	/**
+	 * 修改供应商信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @return
+	 */
+	@RequestMapping("/editTeam/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editTeamView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprovider");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
