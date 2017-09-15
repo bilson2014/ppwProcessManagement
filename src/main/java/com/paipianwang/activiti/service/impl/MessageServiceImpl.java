@@ -178,6 +178,7 @@ public class MessageServiceImpl implements MessageService {
 		message.setContent(content);
 		message.setMessageType(PmsProjectMessage.TYPE_LOG);
 		message.setFromName(fromName);
+		message.setTaskId(taskId);
 		pmsProjectMessageFacade.insert(message);
 	}
 }
