@@ -29,6 +29,9 @@ function getFileInfo(){
 				}
 				getFileMore();
 				bindFileShareBtn();
+		}else{
+			$('#daiban').show();
+			$('#daibanword').text('未上传文件');
 		}
 	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
 }

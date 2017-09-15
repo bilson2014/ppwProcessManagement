@@ -89,8 +89,12 @@
 								</div>
 		       </div>
 	            <div class="content" id="setContent">
-	               
+	                
 	            </div>
+	             <div id="daiban">
+                             <img src="/resources/images/pFlow/daiban.png">
+                             <div id="daibanword">您没有任何待办任务~</div>	                 
+	                 </div>
 	       </div>
 	</div>
 	

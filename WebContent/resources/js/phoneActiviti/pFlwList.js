@@ -7,6 +7,9 @@ $().ready(function(){
 	
 });
 
+
+
+
 function tagEven(){
 	$('.menuTag div').off('click').on('click',function(){
 		var id = $(this).attr('data-id');
@@ -133,7 +136,7 @@ function createWaitCard(res){
 	var isWho = "";
 	var timeImg = "";
 	var time = "";
-	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
+	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?task">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{
@@ -181,7 +184,7 @@ function createStateOtherCard(res,stage){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
-	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+' ">';
+	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
 	}else{

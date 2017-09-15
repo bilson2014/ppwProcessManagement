@@ -47,6 +47,10 @@
 	      <div class="setFile">
 	      
 	      </div>
+	       <div id="daiban">
+                             <img src="/resources/images/pFlow/daiban.png">
+                             <div id="daibanword">未上传文件~</div>	                 
+	        </div>
 	     <%--  <div class="item">
 		         <img class="file" src="${imgPath}/pFlow/avi.png">
 		         <img class="fileMore" src="${imgPath}/pFlow/fileMore.png">
