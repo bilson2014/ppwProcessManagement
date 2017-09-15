@@ -4,14 +4,11 @@ import java.io.Serializable;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.ContextLoader;
 
 import com.paipianwang.activiti.mq.email.service.BaseMQService;
 import com.paipianwang.activiti.service.MessageService;
-import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
-import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 
 /**
  * 向供应商发送验收函

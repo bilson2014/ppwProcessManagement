@@ -92,7 +92,7 @@
                             </div>
                             <!-- 取消和确认 -->
                             <div class="surebox">
-	                            <a href="/project/phone/flowInfo/${taskId}/${projectId}/${processInstanceId}">
+	                            <a href="/project/phone/flowinfo/${taskId}/${projectId}/${processInstanceId}">
 		                                <div class="cancel">
 		                                    <div>取消</div>
 		                                </div>

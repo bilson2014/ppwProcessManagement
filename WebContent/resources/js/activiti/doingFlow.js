@@ -238,12 +238,14 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isPause.png"> ';
 		  var getTime = res.suspendDate;
 		  time ="暂停于"+formatDate(getTime);
+		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?pause">';
 	}
 	if(taskStatus == "completed"){
 		  img= '<img src="/resources/images/flow/isFinish.png"> ';
 		  var getTime = res.finishedDate
 		  time = "结束于"+formatDate(getTime);
 		  taskname = "";
+		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?status=finished">';
 	}
 	
 	if(taskStatus == "cancel"){

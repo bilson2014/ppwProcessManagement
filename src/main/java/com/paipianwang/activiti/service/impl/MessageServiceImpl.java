@@ -5,12 +5,14 @@ import java.util.List;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paipianwang.activiti.service.MessageService;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
@@ -131,6 +133,9 @@ public class MessageServiceImpl implements MessageService {
 		}
 	}
 
+	/**
+	 * 插入系统操作日志
+	 */
 	@Override
 	public void insertSystemMessage(String projectId, String content) {
 		PmsProjectMessage message=new PmsProjectMessage();
@@ -143,5 +148,37 @@ public class MessageServiceImpl implements MessageService {
 		message.setContent(content);
 		pmsProjectMessageFacade.insert(message);
 		
+	}
+
+	/**
+	 * 插入操作日志
+	 */
+	@Override
+	public void insertOperationLog(String projectId, String taskId, String taskName, String content, SessionInfo info) {
+		PmsProjectMessage message = new PmsProjectMessage();
+		message.setFromId(info.getActivitiUserId());
+		message.setFromGroup(StringUtils.join(info.getActivitGroups(), ","));
+		message.setProjectId(projectId);
+		message.setContent(content);
+		message.setMessageType(PmsProjectMessage.TYPE_LOG);
+		message.setFromName(info.getRealName());
+		message.setTaskId(taskId);
+		message.setTaskName(taskName);
+		pmsProjectMessageFacade.insert(message);
+	}
+
+	@Override
+	public void insertDetailOperationLog(String projectId, String taskId, String taskName, String content,
+			String fromId, String fromName, List<String> activitiGroup) {
+		PmsProjectMessage message = new PmsProjectMessage();
+		message.setFromId(fromId);
+		message.setFromGroup(StringUtils.join(activitiGroup, ","));
+		message.setProjectId(projectId);
+		message.setTaskName(taskName);
+		message.setContent(content);
+		message.setMessageType(PmsProjectMessage.TYPE_LOG);
+		message.setFromName(fromName);
+		message.setTaskId(taskId);
+		pmsProjectMessageFacade.insert(message);
 	}
 }

@@ -70,7 +70,8 @@
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
 						   		<div class="otherCard">
-							      	<a href="/project/task/${staff.historicProcessInstance.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?status=finished">
+	
+							      	<a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?status=finished">
 			                             <div class="cardH">
 			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 				                                  <c:if test="${staff.isPrincipal == 1}">

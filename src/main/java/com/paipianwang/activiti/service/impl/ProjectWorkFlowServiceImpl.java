@@ -43,6 +43,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.domin.TaskVO;
+import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.KeyValue;
@@ -56,7 +57,6 @@ import com.paipianwang.pat.facade.right.entity.PmsEmployee;
 import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
-import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
@@ -68,7 +68,6 @@ import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnUpdateShipFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectGroupResourceUpdateFacade;
-import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
@@ -121,7 +120,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	private WorkFlowFacade workFlowFacade = null;
 
 	@Autowired
-	private PmsProjectMessageFacade pmsProjectMessageFacade;
+//	private PmsProjectMessageFacade pmsProjectMessageFacade;
+	private MessageService messageService;
 
 	@Autowired
 	private PmsProjectGroupColumnUpdateShipFacade updateShipFacade = null;
@@ -267,6 +267,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				metaData.put("projectStage", item.getStageId());
 				flowFacade.update(metaData, projectId,processInstance.getProcessInstanceId());
 			}
+			//记录项目日志
+			messageService.insertOperationLog(projectId, null, null,"创建了\"" + flowMap.get("projectName") + "\"项目", info);
+			
 
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
@@ -390,15 +393,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		try {
 			// 需要完成系统留言
 			String taskName = task.getName();
-			PmsProjectMessage message = new PmsProjectMessage();
-			message.setFromId(userId);
-			message.setFromGroup(StringUtils.join(userGroup, ","));
-			message.setProjectId(projectId);
-			message.setTaskName(taskName);
-			message.setContent("我完成了\"" + taskName + "\"任务");
-			message.setMessageType(PmsProjectMessage.TYPE_LOG);
-			message.setFromName(realName);
-			pmsProjectMessageFacade.insert(message);
+//			PmsProjectMessage message = new PmsProjectMessage();
+//			message.setFromId(userId);
+//			message.setFromGroup(StringUtils.join(userGroup, ","));
+//			message.setProjectId(projectId);
+//			message.setTaskName(taskName);
+//			message.setContent("完成了\"" + taskName + "\"任务");
+//			message.setMessageType(PmsProjectMessage.TYPE_LOG);
+//			message.setFromName(realName);
+//			pmsProjectMessageFacade.insert(message);
+			messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId, realName, userGroup);
+			
 
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
@@ -685,20 +690,30 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void suspendProcess(String processInstanceId, String projectId) {
+	public void suspendProcess(String processInstanceId, String projectId, SessionInfo sessionInfo) {
 		runtimeService.suspendProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", ProjectFlowStatus.suspend.getId());
 		metaData.put("suspendDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
+		//记录项目日志
+		List<String> flowData=new ArrayList<String>();
+		flowData.add("projectName");
+		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null, "暂停了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
 	}
 
 	@Override
-	public void activateProcess(String processInstanceId, String projectId) {
+	public void activateProcess(String processInstanceId, String projectId,SessionInfo sessionInfo) {
 		runtimeService.activateProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", null);
 		flowFacade.update(metaData, projectId, processInstanceId);
+		//记录项目日志
+		List<String> flowData=new ArrayList<String>();
+		flowData.add("projectName");
+		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null, "恢复了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
 	}
 
 	@Override
@@ -1139,8 +1154,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 			// 日志内容
 			StringBuffer content = new StringBuffer();
-			String activitiGroup = StringUtils.join(info.getActivitGroups(), ",");
-			content.append("【").append(activitiGroup).append("】").append(info.getRealName()).append("更新了 ");
+//			String activitiGroup = StringUtils.join(info.getActivitGroups(), ",");
+			content
+//			.append("【").append(activitiGroup).append("】").append(info.getRealName())
+			.append("更新了 ");
 
 			if (flowMap != null && !flowMap.isEmpty()) {
 				// 更新项目信息
@@ -1150,14 +1167,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					flowFacade.update(flowMap, projectId);
 
 					// 写入日志
-					PmsProjectMessage message = new PmsProjectMessage();
-					message.setContent(content.append(" 项目信息").toString());
-					message.setFromGroup(activitiGroup);
-					message.setFromId(info.getActivitiUserId());
-					message.setProjectId(projectId);
-					message.setMessageType(PmsProjectMessage.TYPE_LOG);
-					message.setFromName(info.getRealName());
-					pmsProjectMessageFacade.insert(message);
+					messageService.insertOperationLog(projectId, null, null, content.append(" 项目信息").toString(), info);
 				}
 			}
 
@@ -1170,15 +1180,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 					// 写入日志
 					final String projectId = formProperties.get("projectId");
-					PmsProjectMessage message = new PmsProjectMessage();
-
-					message.setContent(content.append(" 客户信息").toString());
-					message.setFromGroup(activitiGroup);
-					message.setFromId(info.getActivitiUserId());
-					message.setProjectId(projectId);
-					message.setMessageType(PmsProjectMessage.TYPE_LOG);
-					message.setFromName(info.getRealName());
-					pmsProjectMessageFacade.insert(message);
+					messageService.insertOperationLog(projectId, null, null, content.append(" 客户信息").toString(), info);
 				}
 			}
 
@@ -1486,12 +1488,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void cancelProcess(String processInstanceId, String projectId) {
+	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo) {
 		runtimeService.suspendProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", ProjectFlowStatus.cancel.getId());
 		metaData.put("finishedDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
+		//记录项目日志
+		List<String> flowData=new ArrayList<String>();
+		flowData.add("projectName");
+		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null, "取消了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
 	}
 
 	@Override
