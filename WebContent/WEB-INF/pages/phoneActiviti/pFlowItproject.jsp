@@ -34,20 +34,34 @@
                     </head>
 
                     <body>
+                        <input type="hidden" id="projectId" value="${projectId}">
+                        <input type="hidden" id="taskId" value="${taskId}">
+                        <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+                        <input type="hidden" id="projectName" value="${projectName}">
+                        <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
                         <div class="pagePhone">
-                            <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
                             <!--项目信息修改  -->
-                            <div class="projectbox">
-                                <!--项目名称 -->
-                                <div class="name">
-                                    <div>项目名称</div>
-                                    <input type="text" value="혼천의">
-                                    <p>*用户名不能</p>
-                                </div>
-                                <!--项目来源  -->
-                                <div class="origin">
-                                    <div>项目来源</div>
-                                    <select class="choice">
+                            <form method="post" action="/project/edit/information" id="toProjectForm">
+                                <input type="hidden" id="proId" name="pf_projectId" value="${flow_info['projectId']}">
+
+                                <div class="projectbox">
+
+                                    <!--项目名称 -->
+                                    <div class="name">
+                                        <div>项目名称</div>
+                                        <!-- <input type="text" value="혼천의"> -->
+                                        <input id="proName" name="pf_projectName" value="">
+                                        <p></p>
+                                    </div>
+                                    <!--项目来源  -->
+                                    <div class="origin">
+                                        <div>项目来源</div>
+                                        <input type="hidden" id="pf_ResourInput" name="pf_projectSource" value="">
+                                        <ul class="oSelect" id="pResour">
+                                        </ul>
+                                        <!-- <select class="choice">
                                         <option value="线上-电销">线上-电销</option>
                                         <option value="线下-直销">线下-直销</option>
                                         <option value="线下-活动">线下-活动</option>
@@ -69,12 +83,13 @@
                                         <option value="线上-公众号-成本计算器">线上-公众号-成本计算器</option>
                                         <option value="线上-公众号-直接下单">线上-公众号-直接下单</option>
                                         <option value="线上-公众号-作品">线上-公众号-作品</option>
-                                    </select>
-                                </div>
-                                <!--项目评级  -->
-                                <div class="rate">
-                                    <div>项目评级</div>
-                                    <select class="choice">
+                                    </select> -->
+                                    </div>
+                                    <!--项目评级  -->
+                                    <div class="rate">
+                                        <div>项目评级</div>
+                                        <input type="hidden" id="pf_projectGradeInput" name="pf_projectGrade" value="">
+                                        <select class="choice">
                                         <option value="S">S</option>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
@@ -82,49 +97,51 @@
                                         <option value="D">D</option>
                                         <option value="E">E</option>
                                     </select>
-                                </div>
-                                <!--项目周期  -->
-                                <div class="period">
-                                    <div>项目周期</div>
-                                    <input type="text" value="9">
-                                    <span>天</span>
-                                    <p>*用户名不能</p>
-                                </div>
-                                <!--对标影片  -->
-                                <div class="film">
-                                    <div>对标影片</div>
-                                    <textarea name="" id="" cols="30" rows="2">http://www.apaipian.com:8087/project/start/project</textarea>
-                                    <p>*用户名不能</p>
-                                </div>
-                                <!--项目描述  -->
-                                <div class="describe">
-                                    <div>项目描述</div>
-                                    <textarea rows="" cols="2">되다 효 혼천의 되다 효 혼천의되다 효  되다 효 혼천의 되다 효 혼천의되다 효 </textarea>
-                                    <p></p>
-                                </div>
-
-                                <!-- 取消和确认 -->
-                                <div class="surebox">
-                                    <div class="cancel">
-                                        <div>取消</div>
                                     </div>
-                                    <div class="sure">
-                                        <div id='surebtn'>确认</div>
+                                    <!--项目周期  -->
+                                    <div class="period">
+                                        <div>项目周期</div>
+                                        <input type="text" value="9">
+                                        <span>天</span>
+                                        <p></p>
                                     </div>
+                                    <!--对标影片  -->
+                                    <div class="film">
+                                        <div>对标影片</div>
+                                        <textarea name="" id="" cols="30" rows="2">http://www.apaipian.com:8087/project/start/project</textarea>
+                                        <p></p>
+                                    </div>
+                                    <!--项目描述  -->
+                                    <div class="describe">
+                                        <div>项目描述</div>
+                                        <textarea rows="" cols="2">되다 효 혼천의 되다 효 혼천의되다 효  되다 효 혼천의 되다 효 혼천의되다 효 </textarea>
+                                        <p></p>
+                                    </div>
+
+                                    <!-- 取消和确认 -->
+                                    <div class="surebox">
+                                        <a href="/project/phone/flowInfo/${taskId}/${projectId}/${processInstanceId}">
+                                            <div class="cancel">
+                                                <div>取消</div>
+                                            </div>
+                                        </a>
+                                        <div class="sure">
+                                            <div id='surebtn'>确认</div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
                                 </div>
 
 
-
-
-
-
-
-
-
-                            </div>
-
-
-
+                            </form>
 
 
 

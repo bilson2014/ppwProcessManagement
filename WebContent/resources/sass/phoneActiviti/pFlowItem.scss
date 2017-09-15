@@ -35,22 +35,24 @@ $e2:#222;
         }
         ul li {
             display: inline-block;
-            margin-top: 0.5rem;
-            div {
+            margin-top: 0.35rem;
+            img {
                 width: 1.6rem;
                 height: 1.6rem;
-                background: url(/resources/images/user/icon6.jpg);
-                background-size: 1.6rem;
                 border-radius: 50%;
+                display: block;
+                margin: 0 auto;
             }
-            span {
+            div {
                 font-size: 0.36rem;
                 color: #999;
-                width: 1.6rem;
-                display: block;
-                height: 0.47rem;
-                margin-top: 0.2rem;
                 text-align: center;
+                padding-top: 0.2rem;
+                overflow: hidden;
+                width: 1.6rem;
+                height: 0.56rem;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }
@@ -106,8 +108,8 @@ $e2:#222;
             height: 1.14rem;
             top: 0.5rem;
             &:nth-child(2) {
-                left: 5.7rem;
-                width: 4rem;
+                left: 5.2rem;
+                width: 4.5rem;
             }
             &:nth-child(3) {
                 top: 2.14rem;
@@ -118,16 +120,16 @@ $e2:#222;
             }
             &:nth-child(5) {
                 top: 3.78rem;
-                left: 5.7rem;
-                width: 4rem;
+                left: 5.2rem;
+                width: 4.5rem;
             }
             &:nth-child(6) {
                 top: 5.42rem;
             }
             &:nth-child(7) {
                 top: 5.42rem;
-                left: 5.7rem;
-                width: 4rem;
+                left: 5.2rem;
+                width: 4.5rem;
             }
             &:nth-child(8) {
                 top: 7.06rem;
@@ -151,6 +153,9 @@ $e2:#222;
                 position: absolute;
                 top: 0.6rem;
                 line-height: 0.47rem;
+                min-height: 0.47rem;
+                max-height: 1.4rem;
+                overflow: hidden;
             }
         }
     }
@@ -197,6 +202,7 @@ $e2:#222;
             color: #E3E3E3;
             display: block;
             margin-top: 0.2rem;
+            min-height: 0.47rem;
         }
         ul {
             margin-left: 0.8rem;
@@ -211,8 +217,9 @@ $e2:#222;
             &:nth-child(2) {
                 width: 9rem;
             }
-            &:nth-child(4) {
-                margin-left: 1.35rem;
+            &:nth-child(3) {
+                width: 4.5rem;
+                // margin-left: 0.9rem;
             }
         }
     }
@@ -269,6 +276,7 @@ $e2:#222;
                 position: absolute;
                 top: 0.56rem;
                 left: 1.14rem;
+                height: 0.47rem;
             }
         }
         .planbox {
@@ -281,6 +289,7 @@ $e2:#222;
                 color: #E3E3E3;
                 display: block;
                 margin-top: 0.2rem;
+                min-height: 0.47rem;
             }
             ul {
                 margin-left: 0.8rem;
@@ -292,8 +301,9 @@ $e2:#222;
                 &:nth-child(1) {
                     width: 9rem;
                 }
-                &:nth-child(3) {
-                    margin-left: 1.35rem;
+                &:nth-child(2) {
+                    width: 4.5rem;
+                    // margin-left: 0.9rem;
                 }
             }
         }
@@ -328,6 +338,7 @@ $e2:#222;
                 color: #E3E3E3;
                 display: block;
                 margin-top: 0.2rem;
+                min-height: 0.47rem;
             }
             ul {
                 margin-left: 0.8rem;
@@ -339,8 +350,9 @@ $e2:#222;
                 &:nth-child(1) {
                     width: 9rem;
                 }
-                &:nth-child(3) {
-                    margin-left: 1.35rem;
+                &:nth-child(2) {
+                    width: 4.5rem;
+                    // margin-left: 0.9rem;
                 }
             }
         }
@@ -389,6 +401,7 @@ $e2:#222;
             color: #E3E3E3;
             display: block;
             margin-top: 0.2rem;
+            min-height: 0.47rem;
         }
         ul {
             margin-left: 0.8rem;
@@ -397,8 +410,9 @@ $e2:#222;
         ul li {
             display: inline-block;
             width: 4rem;
-            &:nth-child(2) {
-                margin-left: 1.35rem;
+            &:nth-child(1) {
+                width: 4.5rem;
+                // margin-left: 0.9rem;
             }
         }
     }
@@ -437,19 +451,19 @@ $e2:#222;
             top: 0.8rem;
             left: 1.8rem;
             border-radius: 50%;
-            background: url(/resources/images/user/icon5.jpg);
-            background-size: 2.4rem;
         }
         .name {
-            position: absolute;
-            top: 3.6rem;
-            left: 2.4rem;
+            display: block;
+            margin: 0 auto;
+            width: 2.3rem;
+            text-align: center;
+            margin-top: 3.6rem;
             font-size: 0.4rem;
             color: #333333;
         }
         .smallline {
             width: 4.8rem;
-            height: 0.02rem;
+            height: 1px;
             background-color: #D1D1D1;
             position: absolute;
             top: 4.52rem;

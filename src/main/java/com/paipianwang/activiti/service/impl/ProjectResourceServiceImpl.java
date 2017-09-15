@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.activiti.service.ProjectResourceService;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.enums.FileType;
@@ -37,7 +38,8 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 	private RuntimeService runtimeService = null;
 
 	@Autowired
-	private PmsProjectMessageFacade pmsProjectMessageFacade;
+//	private PmsProjectMessageFacade pmsProjectMessageFacade;
+	private MessageService messageService;
 
 	@Override
 	public String addResource(String resourceName, String taskId, String resourceType, MultipartFile file,
@@ -84,7 +86,7 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			// 写入日志
 			PmsProjectMessage message = new PmsProjectMessage();
 			StringBuffer content = new StringBuffer();
-			content.append(sessionInfo.getRealName()).append("上传了 《");
+			content.append("上传了 《");
 			if(res != null) {
 				String resName = res.getResourceName();
 				content.append(resName.substring(0, resName.lastIndexOf(".")));
@@ -93,14 +95,15 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			}
 			content.append("》 文件");
 			
-			message.setContent(content.toString());
-			message.setFromGroup(StringUtils.join(groups, ","));
-			message.setFromId(sessionInfo.getActivitiUserId());
-			message.setProjectId(projectId);
-			message.setTaskName(taskName);
-			message.setMessageType(PmsProjectMessage.TYPE_LOG);
-			message.setFromName(sessionInfo.getRealName());
-			pmsProjectMessageFacade.insert(message);
+//			message.setContent(content.toString());
+//			message.setFromGroup(StringUtils.join(groups, ","));
+//			message.setFromId(sessionInfo.getActivitiUserId());
+//			message.setProjectId(projectId);
+//			message.setTaskName(taskName);
+//			message.setMessageType(PmsProjectMessage.TYPE_LOG);
+//			message.setFromName(sessionInfo.getRealName());
+//			pmsProjectMessageFacade.insert(message);
+			messageService.insertOperationLog(projectId, taskId, taskName, content.toString(), sessionInfo);
 			
 			if (result == -1) {
 				return false + "";
