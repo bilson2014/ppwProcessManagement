@@ -10,12 +10,14 @@ $e2:#222;
 .projectbox {
     // 项目编号
     .name {
+        height: 1.5rem;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 2.25rem;
-            left: 0.8rem;
+            width: 1.73rem;
+            height: 0.47rem;
+            display: inline-block;
+            margin-left: 0.8rem;
         }
         input {
             width: 7.4rem;
@@ -26,26 +28,26 @@ $e2:#222;
             color: #D1D1D1;
             padding-left: 0.399rem;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 1.91rem;
-            left: 2.601rem;
         }
         p {
             color: #FE5453;
-            font-size: 0.1rem;
-            position: absolute;
-            top: 2.95rem;
-            left: 2.601rem;
+            font-size: 0.09rem;
+            height: 0.5rem;
+            margin-left: 2.9rem;
+            display: block;
+            margin-top: 0.2rem;
         }
     }
     // 项目来源
     .origin {
+        height: 1.5rem;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 3.65rem;
-            left: 0.8rem;
+            width: 1.73rem;
+            height: 0.47rem;
+            display: inline-block;
+            margin-left: 0.8rem;
         }
         .choice {
             padding-left: 0.399rem;
@@ -54,9 +56,6 @@ $e2:#222;
             font-size: 0.34rem;
             color: #D1D1D1;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 3.31rem;
-            left: 2.601rem;
             border-radius: 0.08rem;
             background: #333;
             outline: none;
@@ -67,28 +66,51 @@ $e2:#222;
     }
     // 项目评级
     .rate {
-        div {
+        height: 1.5rem;
+        .name {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 4.98rem;
-            left: 0.8rem;
+            width: 1.73rem;
+            height: 0.45rem;
+            display: inline-block;
+            margin-left: 0.8rem;
+            margin-right: 0;
+            vertical-align: middle;
         }
-        .choice {
-            padding-left: 0.399rem;
+        .orderSelect {
             width: 7.4rem;
             height: 0.9rem;
-            font-size: 0.34rem;
-            color: #D1D1D1;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 4.61rem;
-            left: 2.601rem;
+            display: inline-block;
+            margin-top: 0.5rem;
             border-radius: 0.08rem;
-            background: #333;
-            outline: none;
-            option {
-                outline: none;
+            div {
+                font-size: 0.34rem;
+                color: #D1D1D1;
+                width: 5.5rem;
+                border-right: 1px solid #D1D1D1;
+                height: 0.89rem;
+                display: inline-block;
+                margin-left: 0.8rem;
+                line-height: 0.9rem;
+                vertical-align: text-top;
+            }
+            img {
+                display: inline-block;
+                width: 0.368rem;
+                height: 0.368rem;
+                vertical-align: text-top;
+                margin-top: 0.25rem;
+            }
+            .oSelect {
+                width: 6.49rem;
+                height: 0.9rem;
+                border: 1px solid #D1D1D1;
+                li {
+                    width: 6.49rem;
+                    height: 0.9rem;
+                    border: 1px solid #D1D1D1;
+                }
             }
         }
     }

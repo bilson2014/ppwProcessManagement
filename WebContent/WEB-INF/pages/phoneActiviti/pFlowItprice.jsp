@@ -7,7 +7,7 @@
                     <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs" />
                     <spring:url value="/resources/js/common.js" var="commonJs" />
                     <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs" />
-                    <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs" />
+                    <spring:url value="/resources/js/phoneActiviti/pFlowItprice.js" var="pFlowItpriceJs" />
                     <spring:url value="/resources/images" var="imgPath" />
 
                     <!DOCTYPE html>
@@ -34,44 +34,36 @@
                     </head>
 
                     <body>
+                        <input type="hidden" id="projectId" value="${projectId}">
+                        <input type="hidden" value="${taskId }" id="currentTaskId">
+                        <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+                        <input type="hidden" id="projectName" value="${projectName}">
+                        <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
                         <div class="pagePhone">
-                            <!--价格信息修改  -->
-                            <div class="pricebox">
-                                <!--预估价格  -->
-                                <div class="porecast">
-                                    <div>预估价格</div>
-                                    <input type="" name="" value="1000">
-                                    <span>元</span>
+                            <form method="post" action="/project/phone/flowinfo/${taskId}/${projectId}/${processInstanceId}" id="toPriceForm">
+                                <input type="hidden" id="priceId" name="pf_projectId">
+                                <!--价格信息修改  -->
+                                <div class="pricebox">
+                                    <!--预估价格  -->
+                                    <div class="porecast">
+                                        <div>预估价格</div>
+
+                                        <input id="est" name="pf_estimatedPrice">
+                                        <span>元</span>
+                                        <p></p>
+                                    </div>
                                 </div>
-                            </div>
-
-
-                            <!-- 取消和确认 -->
-                            <div class="surebox">
-                                <div class="cancel">
-                                    <div>取消</div>
+                                <!-- 取消和确认 -->
+                                <div class="surebox">
+                                    <div class="cancel">
+                                        <div>取消</div>
+                                    </div>
+                                    <div class="sure">
+                                        <div id="sumbitPrice">确认</div>
+                                    </div>
                                 </div>
-                                <div class="sure">
-                                    <div>确认</div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            </form>
                         </div>
 
                         <jsp:include flush="true" page="pHead.jsp"></jsp:include>
@@ -81,6 +73,6 @@
                     <script type="text/javascript" src="${jsonJs}"></script>
                     <script type="text/javascript" src="${commonJs}"></script>
                     <script type="text/javascript" src="${commonPhoneJs}"></script>
-                    <script type="text/javascript" src="${pFlwFileJs}"></script>
+                    <script type="text/javascript" src="${pFlowItpriceJs}"></script>
 
                     </html>

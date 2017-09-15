@@ -64,7 +64,7 @@
                             <div class="protitle">
                                 <span class='pic'></span>
                                 <span>项目信息</span>
-                                <a href="/pfip" class="write"></a>
+                                <a href="/project/phone/editInfo/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                             </div>
                             <div class="probox">
                                 <ul>
@@ -129,7 +129,7 @@
                             <div class="custitle">
                                 <span class='pic'></span>
                                 <span>客户信息</span>
-                                <a href="/pfic" class="write"></a>
+                                <a href="/project/phone/editUser/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                             </div>
                             <div class="cusbox">
                                 <ul>
@@ -212,7 +212,7 @@
                                 <div class="prititle">
                                     <span class='pic'></span>
                                     <span>价格信息</span>
-                                    <a href="/pfipri" class="write"></a>
+                                    <a href="/project/phone/editPrice/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                                 </div>
                                 <div class="pribox">
                                     <ul>
