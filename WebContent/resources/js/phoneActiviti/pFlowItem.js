@@ -1,8 +1,8 @@
 $().ready(function() {
 
-    // $('.frameHead .name').text('华为手机最新产品宣传页');
+    $('.frameHead .name').text('华为手机最新产品宣传页');
     console.log('666');
-    $('.frameHead .name').text($('#projectName').val());
+    // $('.frameHead .name').text($('#projectName').val());
 
 });
 

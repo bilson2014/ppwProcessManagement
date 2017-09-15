@@ -2,12 +2,15 @@ var upload_Video;
 var data = new Array();
 var title;
 var video_max_size = 200*1024*1024;
+var hasPicker = false;
 $().ready(function(){
+	$('.frameHead .name').text($('#projectName').val());
 	selectEven();
 	UploadFile();
 	addForm(); 
 	initDaibanTime();
-	
+	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
+    $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
 });
 function isIos(){
 	var u = navigator.userAgent;
@@ -180,9 +183,7 @@ function addForm() {
 		trs += '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>'	
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
-		var hasPicker = $('div').hasClass('picker');
-		console.info(hasPicker);
-		if($('div').hasClass('picker')){
+		if(hasPicker){
 			if(isIos()){
 				UploadFile();
 			}
@@ -213,6 +214,7 @@ var formFieldCreator = {
 				if(isWhat == "file"){
 					result += "<input readonly id='" + prop.id + "' name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
+					hasPicker = true;
 					return result;
 				}
 				if(prop.id == "pt_teamName"){

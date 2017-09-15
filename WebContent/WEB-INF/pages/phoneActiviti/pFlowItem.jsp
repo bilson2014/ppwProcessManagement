@@ -7,7 +7,6 @@
                     <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs" />
                     <spring:url value="/resources/js/common.js" var="commonJs" />
                     <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs" />
-                    <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs" />
                     <spring:url value="/resources/js/phoneActiviti/pFlowItem.js" var="pFlowItemJs" />
                     <spring:url value="/resources/images" var="imgPath" />
 
@@ -28,7 +27,7 @@
                         <title></title>
 
                         <link rel="stylesheet" href="${pFlowItemCss}">
-                        <link rel="stylesheet" href="${pFlowItemJs}">
+
 
                         <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -101,11 +100,11 @@
                                     <ul>
                                         <li>
                                             <div>项目编号</div>
-                                            <span>1010010</span>
+                                            <span>${flow_info["projectId"]}</span>
                                         </li>
                                         <li>
                                             <div>项目来源</div>
-                                            <span>线上-网站</span>
+                                            <span>${flow_info["projectSource"]}</span>
                                         </li>
                                         <li>
                                             <div>项目名称</div>
@@ -271,6 +270,6 @@
                     <script type="text/javascript" src="${jsonJs}"></script>
                     <script type="text/javascript" src="${commonJs}"></script>
                     <script type="text/javascript" src="${commonPhoneJs}"></script>
-                    <script type="text/javascript" src="${pFlwFileJs}"></script>
+                    <script type="text/javascript" src="${pFlowItemJs}"></script>
 
                     </html>

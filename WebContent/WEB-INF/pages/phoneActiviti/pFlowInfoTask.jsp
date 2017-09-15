@@ -55,6 +55,7 @@
    <input type="hidden" id="processInstanceId" value="${processInstanceId}">
    <input type="hidden" id="projectName" value="${projectName}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+   <input type="hidden" id="initTask" value="initTask">
    
    
    <div class="modelTool" id="showInfo">
@@ -89,21 +90,6 @@
 		       </div>
 	            <div class="content" id="setContent">
 	               
-		                <div class="item">
-		                     <div class="name">大大</div>
-		                     <input  />
-		                </div>
-		                <div class="item" data-content="error">
-		                     <div class="name">大大</div>
-		                     <div class="orderSelect">
-		                            <input readonly class="setSelect"  id="setinput"/>
-		                            <div></div>
-		                     </div>
-		                </div>
-		                 <div class="item" data-content="error">
-		                       <input readonly class="setFileName"  id=""/>
-                               <div class="upload" id="picker">上传</div>
-		                </div>
 	            </div>
 	       </div>
 	</div>

@@ -74,16 +74,13 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("processInstanceId", processInstanceId);
 
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		PmsProjectFlowResult result = new PmsProjectFlowResult();
-		result.setPmsProjectFlow(flow);
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-		result.setTaskName(task.getName());
-		result.setDueDate(task.getDueDate());
+		mv.addObject("taskName", task.getName());
+		mv.addObject("dueDate", task.getDueDate());
 
 		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
 		}
-
 		return mv;
 	}
 
@@ -211,7 +208,6 @@ public class ProjectFlowPhoneController extends BaseController {
 
 	/**
 	 * 项目信息
-	 * 
 	 * @param taskId
 	 * @param projectId
 	 * @param processInstanceId
@@ -253,6 +249,77 @@ public class ProjectFlowPhoneController extends BaseController {
 		// 价格信息
 		mv.addObject("price_info", priceMap);
 
+		return mv;
+	}
+	/**
+	 * 修改项目信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/editInfo/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editInfoView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItproject");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		return mv;
+	}
+	/**
+	 * 修改客户信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/editUser/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editUserView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItclient");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		return mv;
+	}
+	/**
+	 * 修改价格信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/editPrice/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editPriceView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprice");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
+		return mv;
+	}
+	/**
+	 * 修改供应商信息页
+	 * @param taskId
+	 * @param projectId
+	 * @param processInstanceId
+	 * @return
+	 */
+	@RequestMapping("/editTeam/{taskId}/{projectId}/{processInstanceId}")
+	public ModelAndView editTeamView(@PathVariable("taskId") final String taskId,
+			@PathVariable("projectId") final String projectId,
+			@PathVariable("processInstanceId") final String processInstanceId) {
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprovider");
+		mv.addObject("taskId", taskId);
+		mv.addObject("projectId", projectId);
+		mv.addObject("processInstanceId", processInstanceId);
 		return mv;
 	}
 
