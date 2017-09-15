@@ -514,10 +514,10 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}/{projectId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId) {
+			@PathVariable("projectId") final String projectId,HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.suspendProcess(processInstanceId, projectId);
+			projectWorkFlowService.suspendProcess(processInstanceId, projectId,getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -595,10 +595,10 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}/{projectId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId) {
+			@PathVariable("projectId") final String projectId,HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 激活
-			projectWorkFlowService.activateProcess(processInstanceId, projectId);
+			projectWorkFlowService.activateProcess(processInstanceId, projectId,getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/suspend-task");
 	}
@@ -765,10 +765,10 @@ public class ProjectFlowController extends BaseController {
 	// 取消
 	@RequestMapping("/cancelProcess/{processInstandeId}/{projectId}")
 	public ModelAndView cancelProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId) {
+			@PathVariable("projectId") final String projectId,final HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.cancelProcess(processInstanceId, projectId);
+			projectWorkFlowService.cancelProcess(processInstanceId, projectId,getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}

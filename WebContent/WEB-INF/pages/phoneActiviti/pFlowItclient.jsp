@@ -34,47 +34,45 @@
                     </head>
 
                     <body>
+                        <input type="hidden" id="projectId" value="${projectId}">
+                        <input type="hidden" id="taskId" value="${taskId}">
+                        <input type="hidden" id="processInstanceId" value="${processInstanceId}">
+                        <input type="hidden" id="projectName" value="${projectName}">
+                        <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+
                         <div class="pagePhone">
-                            <!--客户信息修改  -->
-                            <div class="clientbox">
-                                <!--客户联系人  -->
-                                <div class="name">
-                                    <div>客户联系人</div>
-                                    <input type="" name="" value="小橙子">
+                            <form method="post" action="/project/edit/information" id="toCusForm">
+                                <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
+                                <!--客户信息修改  -->
+                                <div class="clientbox">
+                                    <!--客户联系人  -->
+                                    <div class="name">
+                                        <div>客户联系人</div>
+                                        <input id="cusLinkman" name="pu_linkman" value=''>
+                                        <!-- <input type="" name="" value="小橙子"> -->
+                                        <p></p>
+                                    </div>
+                                    <!--客户电话  -->
+                                    <div class="phone">
+                                        <div>客户电话</div>
+                                        <input id="cusTelephone" name="pu_telephone" value=''>
+                                        <!-- <input type="" name="" value="18235174568"> -->
+                                        <p></p>
+                                    </div>
+
                                 </div>
-                                <!--客户电话  -->
-                                <div class="phone">
-                                    <div>客户电话</div>
-                                    <input type="" name="" value="18235174568">
+
+
+                                <!-- 取消和确认 -->
+                                <div class="surebox">
+                                    <div class="cancel">
+                                        <div>取消</div>
+                                    </div>
+                                    <div class="sure" id="surebtn">
+                                        <div id="">确认</div>
+                                    </div>
                                 </div>
-
-                            </div>
-
-
-                            <!-- 取消和确认 -->
-                            <div class="surebox">
-                                <div class="cancel">
-                                    <div>取消</div>
-                                </div>
-                                <div class="sure">
-                                    <div id="">确认</div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            </form>
 
 
                         </div>
