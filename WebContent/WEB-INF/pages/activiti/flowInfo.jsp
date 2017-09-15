@@ -767,7 +767,7 @@
                    <div class="closeModel"></div>
             </div>
            <form method="post" action="/project/edit/information" id="toProjectForm"> 
-            <input type="hidden" id="proId" name="pf_projectId"" value="${flow_info['projectId']}">
+            <input type="hidden" id="proId" name="pf_projectId" value="${flow_info['projectId']}">
             <div class="getPriceContent">
                     <div class="item errorItem" id="proNameError">
                          <div class="title">项目名称</div>

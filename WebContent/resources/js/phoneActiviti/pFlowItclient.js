@@ -1,43 +1,51 @@
 $().ready(function() {
     // 设置标题的信息
-    $('.frameHead .name').text('客户信息修改');
-
+    // $('.frameHead .name').text('客户信息修改');
+    $('.frameHead .name').text($('#projectName').val());
+    console.log($('#projectName').val());
     surebtn();
-
+    openCusInfo();
 });
 // sure 事件
 function surebtn() {
     $('#surebtn').off('click').on('click', function() {
-        console.log('666');
         var name = $('.name input').val();
-        var day = $('.period input').val();
-        var url = $('.film textarea').val();
-        var describe = $('.describe textarea').val();
+        var phone = $('.phone input').val();
+
         $('.name p').text('');
-        $('.period p').text('');
-        $('.film p').text('');
-        $('.describe p').text('');
-        var num = /^[0-9]*$/;
+        $('.phone p').text('');
+
+        var num = /^1\d{10}$/;
         if (name.length == 0) {
-            $('.name p').text('*项目名称不能为空');
+            $('.name p').text('*客户联系人不能为空');
 
-        } else if (day.length == 0) {
-            $('.period p').text('*项目周期不能为空');
+        } else if (phone.length == 0) {
+            $('.phone p').text('*客户电话不能为空');
 
-        } else if (!num.test(day)) {
-            $('.period p').text('*请输入正确的数字');
-        } else if (url.length == 0) {
-            $('.film p').text('*对标影片不能为空');
-
-        } else if (describe.length == 0) {
-            $('.describe p').text('*项目描述不能为空');
-
+        } else if (!num.test(phone)) {
+            $('.phone p').text('*请输入正确的手机号');
         } else {
             $('.name p').text('');
-            $('.period p').text('');
-            $('.film p').text('');
-            $('.describe p').text('');
+            $('.phone p').text('');
+            return true;
         }
 
     })
+}
+
+
+//用户信息修改
+function openCusInfo() {
+    loadData(function(res) {
+        $('#cusId').val(res.projectUser.pu_projectUserId);
+        $('#cusLinkman').val(res.projectUser.pu_linkman);
+        $('#cusTelephone').val(res.projectUser.pu_telephone);
+    }, getContextPath() + '/project/task/edit/parameter/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/pu", null);
+
+    $('#submitCus').off('click').on('click', function() {
+        if (surebtn()) {
+            $('#toCusForm').submit();
+        }
+
+    });
 }
