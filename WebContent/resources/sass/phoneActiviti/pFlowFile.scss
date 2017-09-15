@@ -83,3 +83,19 @@
             }
         }
     }
+
+       #daiban{
+        width: 100%;
+        font-size: 0;
+        text-align: center;
+        img{
+            width: 4rem;
+            height: 3.24rem;
+            margin-top: 0.3rem;
+        }
+        div{
+            font-size: 0.46rem;
+            color:$gray-light;
+            margin-top: 0.2rem;
+        }
+    }

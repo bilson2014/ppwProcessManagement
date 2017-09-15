@@ -4,18 +4,28 @@ var title;
 var video_max_size = 200*1024*1024;
 var hasPicker = false;
 $().ready(function(){
-	$('.frameHead .name').text($('#projectName').val());
-	selectEven();
-	UploadFile();
-	addForm(); 
-	initDaibanTime();
+	$('.frameHead .name').text($('#projectName').val());	
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
+    checkState();
 });
 function isIos(){
 	var u = navigator.userAgent;
 	var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 	return isIOS;
+}
+
+function checkState(){
+	var href = window.location.href;
+    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+    if(state.trim() != "task"){
+    	$('#daiban').show();
+    }else{
+    	    selectEven();
+    		UploadFile();
+    		addForm(); 
+    		initDaibanTime();
+    }
 }
 
 //待办任务时间
@@ -185,6 +195,10 @@ function addForm() {
 		$('.dynamic-form-table').html(trs);
 		if(hasPicker){
 			if(isIos()){
+				$('.dynamic-form-table').hide();
+				$('#daiban').show();
+				$('#daibanword').text('ios暂不支持上传');
+			}else{
 				UploadFile();
 			}
 		}
