@@ -68,6 +68,13 @@
 	</div>
   
 	<div class="pagePhone">
+	       <div class="item">
+		        <div class='orderSelect'>
+					  <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "'/>
+					  <div></div>
+				</div>
+		   </div>	
+	
 	       <div class="setContent">
 	            <div class="contentTitle">
 	                  <div class="names">${taskName}</div>

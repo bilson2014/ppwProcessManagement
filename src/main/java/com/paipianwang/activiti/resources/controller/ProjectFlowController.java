@@ -93,7 +93,7 @@ public class ProjectFlowController extends BaseController {
 				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
-		return new ModelAndView("redirect:/project/running-task");
+		return new ModelAndView("redirect:http://www.apaipian.com/list.html");
 	}
 
 	/**
