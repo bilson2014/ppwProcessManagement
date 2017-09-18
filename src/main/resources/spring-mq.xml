@@ -95,10 +95,10 @@
 	<bean id="projectSynergyConsumerSessionAwareMessageListener"
 		class="com.paipianwang.activiti.mq.listener.ProjectSynergyConsumerAwareMessageListener"></bean>
 		
-	<jms:listener-container container-type="default"
+	<!-- <jms:listener-container container-type="default"
 		connection-factory="connectionFactory" acknowledge="auto" concurrency="10"
 		task-executor="threadPoolTaskExecutor">
 		<jms:listener destination="${projectSynergyQueue}"
 			ref="projectSynergyConsumerSessionAwareMessageListener" method="onMessage" />
-	</jms:listener-container>
+	</jms:listener-container> -->
 </beans>
