@@ -9,7 +9,6 @@ $().ready(function(){
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
     initDaibanTime();
-    selectEven();
 });
 function isIos(){
 	var u = navigator.userAgent;
