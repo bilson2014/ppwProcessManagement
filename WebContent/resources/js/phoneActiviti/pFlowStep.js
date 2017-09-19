@@ -90,7 +90,7 @@ function getLocation(){
              var id = $(this).attr('data-id');
              var pId = $('#projectId').val();
              var psId =  $('#processInstanceId').val();
-             window.location.href ="/project/phone/info/"+id+"/"+pId+"/"+psId";
+             window.location.href ="/project/phone/info/"+id+"/"+pId+"/"+psId;
 	});
 	
 }
@@ -138,6 +138,7 @@ var Stage = $('#projectStage').val();
 			 var html =createStageInfo(resKey[int]); 
 			 body.append(html);
 		}
+		getLocation();
 	}
 }
 
