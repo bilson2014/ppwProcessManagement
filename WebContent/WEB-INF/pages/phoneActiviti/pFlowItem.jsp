@@ -33,6 +33,7 @@
                 </head>
 
                 <body>
+
                     <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
                     <div class="pagePhone">
                         <!--项目团队信息模块  -->
@@ -64,7 +65,7 @@
                             <div class="protitle">
                                 <span class='pic'></span>
                                 <span>项目信息</span>
-                                <a href="/pfip" class="write"></a>
+                                <a href="/project/phone/editInfo/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                             </div>
                             <div class="probox">
                                 <ul>
@@ -129,7 +130,7 @@
                             <div class="custitle">
                                 <span class='pic'></span>
                                 <span>客户信息</span>
-                                <a href="/pfic" class="write"></a>
+                                <a href="/project/phone/editUser/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                             </div>
                             <div class="cusbox">
                                 <ul>
@@ -212,7 +213,7 @@
                                 <div class="prititle">
                                     <span class='pic'></span>
                                     <span>价格信息</span>
-                                    <a href="/pfipri" class="write"></a>
+                                    <a href="/project/phone/editPrice/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                                 </div>
                                 <div class="pribox">
                                     <ul>
@@ -250,7 +251,7 @@
                                 <span class="name"></span>
                                 <div class="smallline"></div>
                                 <span class="text">负责人</span>
-                                <span class="phone"></span>
+                                <span class="phone"><a href="tell://18235170627"></a></span>
                             </div>
                         </div>
                     </div>

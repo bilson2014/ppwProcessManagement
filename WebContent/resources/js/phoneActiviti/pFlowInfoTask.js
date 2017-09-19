@@ -8,6 +8,12 @@ $().ready(function(){
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
+
+//    selectEven();
+    
+
+//    initDaibanTime();
+
 });
 function isIos(){
 	var u = navigator.userAgent;
@@ -55,6 +61,25 @@ function selectEven(){
 }
 
 function initSelectIos(){
+	var data = [ {
+		'id' : '10001',
+		'value' : '看情况'
+	}, {
+		'id' : '10002',
+		'value' : '1万元及以上'
+	}, {
+		'id' : '10003',
+		'value' : '2万元及以上'
+	}, {
+		'id' : '10004',
+		'value' : '3万元及以上'
+	}, {
+		'id' : '10005',
+		'value' : '5万元及以上'
+	}, {
+		'id' : '10006',
+		'value' : '10万元及以上'
+	}, ];
 	var bankSelect = new IosSelect(1, [ data ], {
 		title : title,
 		itemHeight : 35,
@@ -197,15 +222,14 @@ function addForm() {
 			if(isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
-				$('#daibanword').text('ios暂不支持上传');
+				$('#daibanword').html('IOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
 			}else{
 				UploadFile();
 			}
 		}
 		selectEven();
 		formCheck();
-		dataEven();
-		
+		dataEven();	
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 

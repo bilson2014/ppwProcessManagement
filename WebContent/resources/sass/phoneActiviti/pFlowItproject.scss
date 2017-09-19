@@ -10,12 +10,13 @@ $e2:#222;
 .projectbox {
     // 项目编号
     .name {
+        height: 1.5rem;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 2.25rem;
-            left: 0.8rem;
+            height: 0.47rem;
+            display: inline-block;
+            margin-left: 0.8rem;
         }
         input {
             width: 7.4rem;
@@ -26,69 +27,111 @@ $e2:#222;
             color: #D1D1D1;
             padding-left: 0.399rem;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 1.91rem;
-            left: 2.601rem;
         }
         p {
             color: #FE5453;
-            font-size: 0.1rem;
-            position: absolute;
-            top: 2.95rem;
-            left: 2.601rem;
+            font-size: 0.09rem;
+            height: 0.4rem;
+            margin-left: 2.9rem;
+            display: block;
+            margin-top: 0.2rem;
         }
     }
     // 项目来源
     .origin {
+        height: 1.5rem;
+        margin-top: 0.1rem;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 3.65rem;
-            left: 0.8rem;
+            height: 0.47rem;
+            display: inline-block;
+            margin-left: 0.8rem;
         }
-        .choice {
-            padding-left: 0.399rem;
+        .orderSelect {
             width: 7.4rem;
             height: 0.9rem;
-            font-size: 0.34rem;
-            color: #D1D1D1;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 3.31rem;
-            left: 2.601rem;
+            display: inline-flex;
             border-radius: 0.08rem;
-            background: #333;
-            outline: none;
-            option {
-                outline: none;
+            margin-left: 0rem;
+            div {
+                font-size: 0.34rem;
+                color: #D1D1D1;
+                width: 7.4rem;
+                height: 0.89rem;
+                display: inline-block;
+                margin-left: 0.4rem;
+                line-height: 0.9rem;
+                vertical-align: text-top;
+                .pf_Resour {
+                    width: 5.5rem;
+                    display: inline-block;
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-left: 0;
+                }
+                img {
+                    display: inline-block;
+                    width: 0.8rem;
+                    height: 0.88rem;
+                    padding-top: 0.2rem;
+                    padding-bottom: 0.2rem;
+                    margin-left: 0.35rem;
+                    border-left: 1px solid #D1D1D1;
+                    padding-left: 0.3rem;
+                    vertical-align: top;
+                }
             }
         }
     }
     // 项目评级
     .rate {
-        div {
+        height: 1.5rem;
+        .name {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 4.98rem;
-            left: 0.8rem;
+            height: 0.45rem;
+            display: inline-block;
+            margin-left: 0.8rem;
+            margin-right: 0;
+            vertical-align: text-top;
+            margin-top: 0.3rem;
         }
-        .choice {
-            padding-left: 0.399rem;
+        .orderSelect {
             width: 7.4rem;
             height: 0.9rem;
-            font-size: 0.34rem;
-            color: #D1D1D1;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 4.61rem;
-            left: 2.601rem;
+            display: inline-block;
+            margin-top: 0.5rem;
             border-radius: 0.08rem;
-            background: #333;
-            outline: none;
-            option {
-                outline: none;
+            div {
+                font-size: 0.34rem;
+                color: #D1D1D1;
+                width: 7.4rem;
+                height: 0.89rem;
+                display: inline-block;
+                margin-left: 0.4rem;
+                line-height: 0.9rem;
+                vertical-align: text-top;
+                .pf_Resour {
+                    width: 5.5rem;
+                    display: inline-block;
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-left: 0;
+                }
+                img {
+                    display: inline-block;
+                    width: 0.8rem;
+                    height: 0.88rem;
+                    padding-top: 0.2rem;
+                    padding-bottom: 0.2rem;
+                    margin-left: 0.35rem;
+                    border-left: 1px solid #D1D1D1;
+                    padding-left: 0.3rem;
+                    vertical-align: top;
+                }
             }
         }
     }
@@ -97,9 +140,8 @@ $e2:#222;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 6.28rem;
-            left: 0.8rem;
+            margin-left: 0.8rem;
+            display: inline-block;
         }
         input {
             width: 6.49rem;
@@ -110,33 +152,33 @@ $e2:#222;
             color: #D1D1D1;
             padding-left: 0.399rem;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 5.91rem;
-            left: 2.601rem;
+            vertical-align: middle;
+            margin-top: 0.2rem;
         }
         span {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 6.28rem;
-            left: 9.35rem;
+            vertical-align: middle;
+            margin-top: 0.25rem;
+            display: inline-block;
         }
         p {
             color: #FE5453;
+            height: 0.4rem;
+            margin-left: 2.9rem;
             font-size: 0.09rem;
-            position: absolute;
-            top: 6.9rem;
-            left: 2.601rem;
+            margin-top: 0.2rem;
         }
     }
     //对标影片
     .film {
         div {
             font-size: 0.34rem;
+            display: inline-block;
             color: #D1D1D1;
-            position: absolute;
-            top: 7.58rem;
-            left: 0.8rem;
+            vertical-align: top;
+            margin-left: 0.8rem;
+            margin-top: 0.52rem;
         }
         textarea {
             width: 7.4rem;
@@ -150,16 +192,13 @@ $e2:#222;
             padding-top: 0.11rem;
             line-height: 0.7rem;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 7.21rem;
-            left: 2.601rem;
+            margin-top: 0.2rem;
         }
         p {
             color: #FE5453;
             font-size: 0.09rem;
-            position: absolute;
-            top: 9.1rem;
-            left: 2.601rem;
+            margin-left: 2.9rem;
+            height: 0.4rem;
         }
     }
     //项目描述
@@ -167,9 +206,10 @@ $e2:#222;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
-            position: absolute;
-            top: 9.8rem;
-            left: 0.8rem;
+            display: inline-block;
+            vertical-align: top;
+            margin-left: 0.8rem;
+            margin-top: 0.5rem;
         }
         textarea {
             width: 7.4rem;
@@ -183,22 +223,17 @@ $e2:#222;
             padding-top: 0.11rem;
             line-height: 0.7rem;
             border: 1px solid #D1D1D1;
-            position: absolute;
-            top: 9.51rem;
-            left: 2.601rem;
+            margin-top: 0.2rem;
         }
         p {
             color: #FE5453;
             font-size: 0.09rem;
-            position: absolute;
-            top: 11.5rem;
-            left: 2.601rem;
+            margin-left: 2.9rem;
+            height: 0.4rem;
         }
     }
     // 取消和确认
     .surebox {
-        position: absolute;
-        bottom: 3.32rem;
         .cancel {
             width: 3.6rem;
             height: 1rem;
