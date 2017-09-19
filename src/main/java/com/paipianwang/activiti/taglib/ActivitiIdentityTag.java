@@ -29,11 +29,14 @@ public class ActivitiIdentityTag extends TagSupport{
 			final SessionInfo info = (SessionInfo) pageContext.getSession().getAttribute(PmsConstant.SESSION_INFO);
 			if(info != null){
 				final List<String> groups = info.getActivitGroups();
+				System.err.println("ActivitiIdentityTag : groups is " + groups);
 				// 已经登陆,判断角色
-				if(groups.contains(role)){
-					return EVAL_BODY_INCLUDE;
-				} else if(groups.contains(role2)) {
-					return EVAL_BODY_INCLUDE;
+				if(ValidateUtil.isValid(groups)) {
+					if(groups.contains(role)){
+						return EVAL_BODY_INCLUDE;
+					} else if(groups.contains(role2)) {
+						return EVAL_BODY_INCLUDE;
+					}
 				}
 			}
 		}
