@@ -8,8 +8,12 @@ $().ready(function(){
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
+
     selectEven();
     
+
+    initDaibanTime();
+
 });
 function isIos(){
 	var u = navigator.userAgent;
@@ -225,8 +229,7 @@ function addForm() {
 		}
 		selectEven();
 		formCheck();
-		dataEven();
-		
+		dataEven();	
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 

@@ -68,6 +68,7 @@
 	</div>
   
 	<div class="pagePhone">
+	
 	       <div class="setContent">
 	            <div class="contentTitle">
 	                  <div class="names">${taskName}</div>

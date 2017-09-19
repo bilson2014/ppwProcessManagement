@@ -129,6 +129,14 @@ function initResouces() {
 
         var rowsR = res.result.resource;
         console.log(rowsR);
+
+        var newarr = [];
+        $.each(rowsR, function(i, v) {
+            $.each(v, function(j, val) {
+                newarr.push(val);
+            })
+        })
+        console.log(newarr);
         // var data = [];
         // for (i in rowsR) {
         //     data.push(i);
@@ -139,15 +147,18 @@ function initResouces() {
         //     datas.id = data[i];
         //     data.push(datas);
         // }
-        var a = JSON.parse(rowsR);
-        console.log(a);
-        var b = JSON.stringify(a);
-        console.log(b);
-        var c = [];
-        for (var i = 0; i < a.length; i++) {
-            c[i] = a[i];
-        }
-        console.log(c);
+
+
+
+        // var a = JSON.parse(rowsR);
+        // console.log(a);
+        // var b = JSON.stringify(a);
+        // console.log(b);
+        // var c = [];
+        // for (var i = 0; i < a.length; i++) {
+        //     c[i] = a[i];
+        // }
+        // console.log(c);
         // console.log(data);
         // console.log(datas);
     }, getContextPath() + '/product/productSelection', null);
