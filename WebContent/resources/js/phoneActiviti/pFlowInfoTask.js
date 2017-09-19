@@ -9,10 +9,10 @@ $().ready(function(){
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
 
-    selectEven();
+//    selectEven();
     
 
-    initDaibanTime();
+//    initDaibanTime();
 
 });
 function isIos(){

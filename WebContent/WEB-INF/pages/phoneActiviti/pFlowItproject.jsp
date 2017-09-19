@@ -37,6 +37,7 @@
                     </head>
 
                     <body>
+                        <input type="hidden" id="data">
                         <input type="hidden" id="projectId" value="${projectId}">
                         <input type="hidden" value="${taskId }" id="currentTaskId">
                         <input type="hidden" id="processInstanceId" value="${processInstanceId}">

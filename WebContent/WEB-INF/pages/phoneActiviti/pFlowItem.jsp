@@ -33,6 +33,7 @@
                 </head>
 
                 <body>
+
                     <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
                     <div class="pagePhone">
                         <!--项目团队信息模块  -->
