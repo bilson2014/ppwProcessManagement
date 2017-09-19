@@ -618,7 +618,7 @@ function openPriceInfo(){
 		getScroll();
 		priceClear();
 		loadData(function(res){
-			$('#priceId').val(res.projectFlow.pf_projectId)
+			$('#priceId').val(res.projectFlow.pf_projectId);
 			$('#est').val(res.projectFlow.pf_estimatedPrice);
 			if(res.projectFlow.pf_projectBudget == null || res.projectFlow.pf_projectBudget == undefined || res.projectFlow.pf_projectBudget == ""){
 				$('#pjsError').remove();

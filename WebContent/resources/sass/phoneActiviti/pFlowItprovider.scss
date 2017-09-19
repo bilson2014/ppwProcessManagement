@@ -84,7 +84,7 @@ $e2:#222;
                     top: 4.79rem;
                     left: 3.2rem;
                 }
-                 .error {
+                .error {
                     font-size: $size30;
                     color: $red-base;
                     position: absolute;
@@ -181,7 +181,7 @@ $e2:#222;
     }
 }
 
-.error{
+.error {
     width: 100% !important;
     display: none;
 }
@@ -238,8 +238,6 @@ $e2:#222;
 
 // 取消和确认
 .surebox {
-    position: absolute;
-    bottom: 3.32rem;
     .cancel {
         width: 3.6rem;
         height: 1rem;

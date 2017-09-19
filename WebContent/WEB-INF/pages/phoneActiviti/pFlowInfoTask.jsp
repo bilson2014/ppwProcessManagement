@@ -57,7 +57,7 @@
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
    <input type="hidden" id="initTask" value="initTask">
    
-   
+ 
    <div class="modelTool" id="showInfo">
 	          <div class="success">
 	            <div class="modelTitle">提示</div>

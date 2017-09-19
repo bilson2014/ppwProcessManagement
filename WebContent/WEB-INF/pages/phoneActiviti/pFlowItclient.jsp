@@ -41,11 +41,12 @@
                         <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
 
                         <div class="pagePhone">
-                            <form method="post" action="/project/phone/flowinfo/${taskId}/${projectId}/${processInstanceId}" id="toCusForm">
+                            <form method="post" action="/project/edit/information" id="toCusForm">
                                 <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
                                 <!--客户信息修改  -->
                                 <div class="clientbox">
                                     <!--客户联系人  -->
+                                    <input type="hidden" id="cusId" name="pu_projectUserId">
                                     <div class="name">
                                         <div>客户联系人</div>
                                         <input id="cusLinkman" name="pu_linkman" value=''>

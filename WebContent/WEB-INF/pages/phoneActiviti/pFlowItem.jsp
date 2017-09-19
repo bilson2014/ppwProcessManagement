@@ -250,7 +250,7 @@
                                 <span class="name"></span>
                                 <div class="smallline"></div>
                                 <span class="text">负责人</span>
-                                <span class="phone"></span>
+                                <span class="phone"><a href="tell://18235170627"></a></span>
                             </div>
                         </div>
                     </div>
