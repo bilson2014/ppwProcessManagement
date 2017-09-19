@@ -1,5 +1,5 @@
 var title;
-var rowsR
+var rowsR;
 $().ready(function() {
     // 设置标题的信息
     $('.frameHead .name').text('项目信息修改');
@@ -71,8 +71,7 @@ function projectchange() {
         if (Grade == '0') {
             Grade = 'E';
         }
-        console.log(res.projectFlow.pf_projectGrade);
-        console.log(Grade);
+
         $('#pf_projectGradeInput').val(Grade);
 
 
@@ -125,42 +124,34 @@ function pp() {
 //初始化来源
 function initResouces() {
     loadData(function(res) {
-        console.log(res);
-
         var rowsR = res.result.resource;
-        console.log(rowsR);
-
         var newarr = [];
-        $.each(rowsR, function(i, v) {
-            $.each(v, function(j, val) {
-                newarr.push(val);
-            })
-        })
-        console.log(newarr);
-        // var data = [];
-        // for (i in rowsR) {
-        //     data.push(i);
-
-        // }
-        // for (var i = 0; i < data.length; i++) {
-        //     var datas = {};
-        //     datas.id = data[i];
-        //     data.push(datas);
-        // }
-
-
-
-        // var a = JSON.parse(rowsR);
-        // console.log(a);
-        // var b = JSON.stringify(a);
-        // console.log(b);
-        // var c = [];
-        // for (var i = 0; i < a.length; i++) {
-        //     c[i] = a[i];
-        // }
-        // console.log(c);
-        // console.log(data);
-        // console.log(datas);
+        for (var i = 0; i < rowsR.length; i++) {
+            // console.log(rowsR[i].id);
+            // console.log(rowsR[i].text);
+            newarr.push(new city(rowsR[i].id, rowsR[i].text));
+        }
+        // $.each(rowsR, function(i, v) {
+        //     console.log(v);
+        // newarr.push(new city(i, v));
+        // $.each(v, function(i, val) {
+        //     if (i == 'id') {
+        //         var dd = val;
+        //         // newarr.push(new city(dd, cc));
+        //     }
+        //     if (i == 'text') {
+        //         var cc = val;
+        //     }
+        //     newarr.push(new city(dd, cc));
+        //     console.log(newarr);
+        //     // else {
+        //     //     console.log('1');
+        //     //     // newarr.push(new city(i, val));
+        //     // }
+        // })
+        // })
+        newarr = JSON.stringify(newarr);
+        initSelectIos(newarr);
     }, getContextPath() + '/product/productSelection', null);
 }
 
@@ -172,42 +163,57 @@ function createOption(value, text, price) {
 
 function selectEven() {
     $('.setSelect').off('click').on('click', function() {
-        initSelectIos();
+
+        initResouces();
+
         $(window.parent.document).find('.pagePhone').scrollTop(9999);
     })
 }
 
-function initSelectIos() {
-    console.log($('#setinput').text());
-    var data = rowsR;
-
+function initSelectIos(nnn) {
+    // initResouces();
+    // console.log("sssasjkdhadshakjda" + nn);
+    var a = nnn;
+    console.log(a);
+    // var data = rowsR;
+    // console.log(data);
     // var data = [{
-    //     'id': '10001',
+    //     'id': 10001,
     //     'value': '看情况'
     // }, {
-    //     'id': '10002',
+    //     'id': 10002,
     //     'value': '1万元及以上'
     // }, {
-    //     'id': '10003',
+    //     'id': 10003,
     //     'value': '2万元及以上'
     // }, {
-    //     'id': '10004',
+    //     'id': 10004,
     //     'value': '3万元及以上'
     // }, {
-    //     'id': '10005',
+    //     'id': 10005,
     //     'value': '5万元及以上'
     // }, {
-    //     'id': '10006',
+    //     'id': 10006,
     //     'value': '10万元及以上'
     // }, ];
-    var bankSelect = new IosSelect(1, [data], {
+    // var data = [{ "id": 4, "value": "线下-电销" }, { "id": 5, "value": "线下-直销" }, { "id": 6, "text": "线下-活动" }, { "id": 7, "text": "线下-渠道" }, { "id": 8, "text": "复购" }, { "id": 1, "text": "线上-网站" }, { "id": 2, "text": "线上-活动" }, { "id": 3, "text": "线上-新媒体" }, { "id": 9, "text": "线上-400" }, { "id": 10, "text": "线上-商桥" }, { "id": 11, "text": "线上-PC-首页banner" }, { "id": 12, "text": "线上-PC-直接下单" }, { "id": 13, "text": "线上-PC-成本计算器" }, { "id": 14, "text": "线上-PC-供应商首页" }, { "id": 15, "text": "线上-PC-作品" }, { "id": 16, "text": "线上-移动-首页banner" }, { "id": 17, "text": "线上-移动-成本计算器" }, { "id": 18, "text": "线上-移动-作品" }, { "id": 19, "text": "线上-公众号-成本计算器 " }, { "id": 20, "text": "线上-公众号-直接下单" }, { "id": 21, "text": "线上-公众号-作品" }];
+    // var data = [{ "id": 4, "value": "线下-电销" }, { "id": 5, "value": "线下-直销" }, { "id": 6, "value": "线下-活动" }, { "id": 7, "value": "线下-渠道" }, { "id": 8, "value": "复购" }, { "id": 1, "value": "线上-网站" }, { "id": 2, "value": "线上-活动" }, { "id": 3, "value": "线上-新媒体" }, { "id": 9, "value": "线上-400" }, { "id": 10, "value": "线上-商桥" }, { "id": 11, "value": "线上-PC-首页banner" }, { "id": 12, "value": "线上-PC-直接下单" }, { "id": 13, "value": "线上-PC-成本计算器" }, { "id": 14, "value": "线上-PC-供应商首页" }, { "id": 15, "value": "线上-PC-作品" }, { "id": 16, "value": "线上-移动-首页banner" }, { "id": 17, "value": "线上-移动-成本计算器" }, { "id": 18, "value": "线上-移动-作品" }, { "id": 19, "value": "线上-公众号-成本计算器 " }, { "id": 20, "value": "线上-公众号-直接下单" }, { "id": 21, "value": "线上-公众号-作品" }];
+    // console.log(data);
+    var bankSelect = new IosSelect(1, nnn, {
         title: title,
         itemHeight: 35,
         oneLevelId: '',
         callback: function(selectOneObj) {
+            var a = selectOneObj.id;
+            console.log(a);
             $('#setinput').attr('data-id', selectOneObj.id);
             $('#setinput').text(selectOneObj.value);
             // .text($(resour[i]).text());
         }
     });
+}
+
+function city(id, text) {
+    this.id = id;
+    this.value = text;
 }
