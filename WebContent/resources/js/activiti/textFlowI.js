@@ -26,6 +26,9 @@ $().ready(function() {
 	initResouces();
 });
 
+function getScroll(){
+	$(window.parent.parent.parent.document).find('body').scrollTop(0);
+}
 
 //初始化来源
 function initResouces(){
@@ -107,7 +110,7 @@ function stageTalkEven(){
 		var name = $(this).attr('data-name');
 		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
-		scrollTo(0,0);
+		getScroll();
 		$('#infoNameTitle').text("");
 		$('#stateContent').html("");
 		$('#infoStartTime').text("");
@@ -465,7 +468,7 @@ function initWindow(){
 function openProjectInfo(){
 	$('#openProjectInfo').off('click').on('click',function(){
 		$('#showProjectInfo').show();
-		scrollTo(0,0);
+		getScroll();
 		proInfoClear();
 		loadData(function(res){
 			  $('#proName').val(res.projectFlow.pf_projectName);
@@ -565,7 +568,7 @@ function proInfoClear(){
 function openCusInfo(){
 	$('#openCusInfo').off('click').on('click',function(){
 		$('#showCusInfo').show();
-		scrollTo(0,0);
+		getScroll();
 		cusClear();
 		loadData(function(res){
 			  $('#cusId').val(res.projectUser.pu_projectUserId);
@@ -612,7 +615,7 @@ function checkCusInfo(){
 function openPriceInfo(){
 	$('#openPriceInfo').off('click').on('click',function(){
 		$('#showPriceInfo').show();
-		scrollTo(0,0);
+		getScroll();
 		priceClear();
 		loadData(function(res){
 			$('#priceId').val(res.projectFlow.pf_projectId);
@@ -661,7 +664,7 @@ function checkPrice(){
 function openProviderInfo(){
 	$('#openProvider').off('click').on('click',function(){
 		$('#showProvider').show();
-		scrollTo(0,0);
+		getScroll();
 		clearProvi();
 		loadData(function(res){
 	          var scheme = res.project_team_scheme;
@@ -764,7 +767,7 @@ function initFileUpload(){
 		 $('#upModel').show();
 		 UploadSingleFile();
 		 getFileType();
-		 scrollTo(0,0);
+		 getScroll();
 		 $('#errorType').attr('data-content','');
 	});	
 }
@@ -1519,7 +1522,7 @@ function createFileInfo(res){
 function controlModel(){
 	$('.conMod').off('click').on('click',function(){
 		$('#controlModel').show();
-		scrollTo(0,0);
+		getScroll();
 		getFileModelInfo();
 	});
 }
