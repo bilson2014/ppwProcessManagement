@@ -139,7 +139,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskName:$('#infoNameTitle').attr('data-name')
+		taskId:$('#currentTaskId').val()
 	}));
 }
 
@@ -1073,7 +1073,7 @@ var formFieldCreator = {
 			return result;
 		}
 		
-	     if(isWhat == 'schemeId'  || isWhat == 'superviseId')	{
+	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
 	    	result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
 	 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 	 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";

@@ -66,12 +66,8 @@ public class SynergyController extends BaseController{
 		memberGroup.put(ProjectRoleType.teamDirector.getId(), teamDirectors);
 		
 		// 供应商管家
-		List<User> teamProviders = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamProvider.getId()).list();
-		memberGroup.put(ProjectRoleType.teamProvider.getId(), teamProviders);
-		
-		// 供应商采购
-		/*List<User> teamPurchases = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamPurchase.getId()).list();
-		memberGroup.put(ProjectRoleType.teamPurchase.getId(), teamPurchases);*/
+		/*List<User> teamProviders = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamProvider.getId()).list();
+		memberGroup.put(ProjectRoleType.teamProvider.getId(), teamProviders);*/
 		
 		// 财务总监
 		List<User> financeDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.financeDirector.getId()).list();

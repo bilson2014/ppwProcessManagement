@@ -8,6 +8,7 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/phoneActiviti/commonPhone.js" var="commonPhoneJs"/>
 <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs"/>
+<spring:url value="/resources/js/phoneActiviti/ZeroClipboard.js" var="zclipJs" />
 <spring:url value="/resources/images" var="imgPath" />
 
 <!DOCTYPE html>
@@ -41,35 +42,22 @@
    <input type="hidden" id="projectName" value="${projectName}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
   
+   <div class="modelTool" id="showShare">
+	          <div class="success">
+	            <img id="closeModel" src="/resources/images/pFlow/close.png">
+	            <div class="modelTitle">文件分享</div>
+	            <div id="setInfoCopy"></div>
+	            <input class="btn-c-r" readonly id="checkInfo" type="button" data-clipboard-target="setInfoCopy" value="复制链接">
+	         </div>
+	</div>
+  
 	<div class="pagePhone">
 	      <div class="title">项目文件</div>
-	      
-	      <div class="setFile">
-	      
-	      </div>
-	       <div id="daiban">
+	      <div class="setFile"></div>
+	      <div id="daiban">
                              <img src="/resources/images/pFlow/daiban.png">
                              <div id="daibanword">未上传文件~</div>	                 
-	        </div>
-	     <%--  <div class="item">
-		         <img class="file" src="${imgPath}/pFlow/avi.png">
-		         <img class="fileMore" src="${imgPath}/pFlow/fileMore.png">
-		         <div class="fileContent">
-		               <div>文件名</div>
-		               <div>2017上传人</div>
-		         </div>
-		         <div class="fileContentMore">
-		              <div class="moreItem">
-			              <img src="${imgPath}/pFlow/download.png">
-			              <div>下载</div>
-		              </div>
-		              <div class="moreItem">
-			              <img src="${imgPath}/pFlow/share.png">
-			              <div>分享</div>
-		              </div>
-		         </div>
-	      </div> --%>
-	    
+	       </div>
 	</div>
 	
 		<!-- webshare -->
@@ -93,6 +81,7 @@
 <script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${commonPhoneJs}"></script>
+<script type="text/javascript" src="${zclipJs}"></script>
 <script type="text/javascript" src="${pFlwFileJs}"></script>
 
 </html>

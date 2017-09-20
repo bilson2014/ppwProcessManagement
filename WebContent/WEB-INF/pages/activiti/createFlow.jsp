@@ -204,24 +204,13 @@
 				                </ul>    
 					      </div>
 	                 </div>
-	                  <div class="smallItem errorItem" id="teamProviderError">
+	                  <%-- <div class="smallItem errorItem" id="teamProviderError">
 	                       <div class="itemTitle">供应商管家<span>*</span></div>
 	                       <input type="hidden" id="ps_teamProvider" name="ps_teamProvider"/>
 	                       <div class="orderSelect" >
 				                <div id="teamProvider"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">
 				                <ul class="oSelect" id="teamProviders">
-				                    <li data-id="1">gg</li>
-				                </ul>    
-					      </div>
-	                 </div>
-	                 <%--  <div class="smallItem errorItem" id="teamPurchaseError">
-	                       <div class="itemTitle">供应商采购<span>*</span></div>
-	                       <input type="hidden" id="ps_teamPurchase" name="ps_teamPurchase"/>
-	                       <div class="orderSelect" >
-				                <div id="teamPurchase"></div>
-				                <img src="${imgPath}/flow/selectOrder.png">
-				                <ul class="oSelect" id="teamPurchases">
 				                    <li data-id="1">gg</li>
 				                </ul>    
 					      </div>

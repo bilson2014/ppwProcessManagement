@@ -4,15 +4,12 @@ var title;
 var video_max_size = 200*1024*1024;
 var hasPicker = false;
 $().ready(function(){
-	$('.frameHead .name').text($('#projectName').val());	
+	$('.frameHead .name').text($('#projectName').val());
+	initDaibanTime();
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
-
-//    selectEven();
-    
-
-//    initDaibanTime();
+   
 
 });
 function isIos(){
@@ -36,7 +33,6 @@ function checkState(){
 
 //待办任务时间
 function initDaibanTime(){
-	   $('.frameHead .name').text($('#projectName').val());
 	   var nowData = Date.parse(new Date());
 	   var time =Date.parse($('#missinTime').text().replace("CST","GMT+0800"));
 	   var lastTime = (time - nowData);
@@ -140,6 +136,7 @@ function UploadFile(){
     	});
 	    upload_Video.upload();
 		$('.dynamic-form-table .item').hide();
+		$('#toSubmitForm').off('click');
 	});
 
 	upload_Video.on('uploadProgress',function(file, percentage) {
@@ -151,11 +148,10 @@ function UploadFile(){
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
-			
+			formCheck();
 			$('.upIng').hide();
 			$('.upSuccess').show();
 			$('.upError').hide();
-			initFormEven();
 		}else{		
 			$('.upIng').hide();
 			$('.upSuccess').hide();
@@ -250,7 +246,7 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];; 
 			if (prop.writable === true) {
 				if(isWhat == "file"){
-					result += "<input readonly id='" + prop.id + "' name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+prop.taskName+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;

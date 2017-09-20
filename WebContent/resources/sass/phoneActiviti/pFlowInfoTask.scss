@@ -31,11 +31,12 @@
                 color: $gray-light;
                 position: absolute;
                 right: 0;
+                top:0.8rem;
             }
         }
 
         .content {
-            padding-top: 1rem;
+            padding-top: 1.8rem;
             .item {
                 font-size: 0;
                 margin-bottom: 0.5rem;
@@ -316,6 +317,7 @@ background-image: none !important; */
         width: 100%;
         font-size: 0;
         text-align: center;
+        display: none;
         img{
             width: 4rem;
             height: 3.24rem;

@@ -38,6 +38,7 @@
    <input type="hidden" id="projectId" value="${projectId}">
    <input type="hidden" id="taskId" value="${taskId}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
+   <input type="hidden" id="projectName" value="${projectName}">
 
 	<div class="pagePhone">
           	     <div class="title">
