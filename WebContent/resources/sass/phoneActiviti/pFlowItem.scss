@@ -99,14 +99,15 @@ $e2:#222;
         ul {
             margin-left: 0.8rem;
             margin-bottom: 0.6rem;
-            height: 12.7rem;
+            // height: 12.7rem;
             position: relative;
         }
         ul li {
-            position: absolute;
+            // position: absolute;
             width: 5rem;
             height: 1.14rem;
-            top: 0.5rem;
+            // top: 0.5rem;
+            display: inline-block;
             &:nth-child(2) {
                 left: 5.2rem;
                 width: 4.5rem;
@@ -146,38 +147,42 @@ $e2:#222;
             div {
                 font-size: 0.36rem;
                 color: #999999;
+                margin-top: 0.5rem;
             }
             .film {
                 font-size: 0.36rem;
                 color: #E3E3E3;
-                position: absolute;
-                top: 0.65rem;
+                // position: absolute;
+                // top: 0.65rem;
                 line-height: 0.47rem;
                 min-height: 0.47rem;
                 max-height: 1.4rem;
                 width: 9rem;
-                display: inline-block;
+                display: block;
                 overflow: hidden;
+                margin-top: 0.2rem;
             }
             span {
                 font-size: 0.36rem;
                 color: #E3E3E3;
-                position: absolute;
-                top: 0.65rem;
+                // position: absolute;
+                // top: 0.65rem;
                 line-height: 0.47rem;
                 min-height: 0.47rem;
                 max-height: 1.4rem;
                 overflow: hidden;
+                display: block;
+                margin-top: 0.2rem;
             }
             .miaoshu {
                 font-size: 0.36rem;
                 color: #E3E3E3;
-                position: absolute;
-                top: 0.65rem;
+                // position: absolute;
+                // top: 0.65rem;
                 line-height: 0.47rem;
                 min-height: 0.47rem;
-                max-height: 1.7rem;
-                overflow: auto;
+                // max-height: 1.7rem;
+                overflow: visible;
             }
         }
     }

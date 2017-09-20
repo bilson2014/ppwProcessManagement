@@ -8,9 +8,11 @@ var curCounts = 0; // 当前剩余秒数 - 注册
 var InterValObj; // timer变量，控制时间 - 注册
 
 
-var UrlDo = "www.apaipian.com";
+//var UrlDo = "www.apaipian.com";
 //var UrlDo = "test.apaipian.com";
 //var UrlDo = "localhost";
+var UrlDo = "192.168.0.101";
+
 
 
 $().ready(function(){
