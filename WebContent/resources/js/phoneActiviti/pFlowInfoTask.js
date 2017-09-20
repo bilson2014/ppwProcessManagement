@@ -8,12 +8,9 @@ $().ready(function(){
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
+    initDaibanTime();
 
 //    selectEven();
-    
-
-//    initDaibanTime();
-
 });
 function isIos(){
 	var u = navigator.userAgent;
@@ -219,7 +216,7 @@ function addForm() {
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
 		if(hasPicker){
-			if(isIos()){
+			if(!isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
 				$('#daibanword').html('IOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
@@ -250,7 +247,7 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];; 
 			if (prop.writable === true) {
 				if(isWhat == "file"){
-					result += "<input readonly id='" + prop.id + "' name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+res.taskName+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;

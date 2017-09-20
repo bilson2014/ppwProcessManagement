@@ -138,7 +138,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskName:$('#infoNameTitle').attr('data-name')
+		taskId:$('#currentTaskId').val()
 	}));
 }
 
