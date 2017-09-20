@@ -77,7 +77,7 @@
 	             <div class="upProgress singleProgress" style="margin-bottom:40px;" id="singleUp">
 								<div class="proTitle" id="proTitle">上传进度</div>
 								<div  class="progress progress-striped active">
-									<div id="singleSetWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+									<div id="setWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
 										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
 										style="width: 0;"></div>
 								</div>
