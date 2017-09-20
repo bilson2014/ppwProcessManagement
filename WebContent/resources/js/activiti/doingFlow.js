@@ -56,6 +56,7 @@ function getAllSearchInfo(search){
 					 otherCard.append(html);
 				 }
 			}
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 			$('#daiNum').text($('.waitCard').length);
 			$('#otherNum').text($('.otherCard').length);
 			if($('.waitCard').length == 0){
@@ -66,6 +67,7 @@ function getAllSearchInfo(search){
 			  }
 			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		}
+		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
 	}));
