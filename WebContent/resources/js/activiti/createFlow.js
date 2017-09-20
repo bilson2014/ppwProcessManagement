@@ -146,7 +146,7 @@ function checkInfo(){
 	var creativityDirector = $('#creativityDirector').attr('data-id');//创意总监
 	var superviseDirector = $('#superviseDirector').attr('data-id');//监制总监
 	var teamDirector = $('#teamDirector').attr('data-id');//供应商总监
-	var teamProvider = $('#teamProvider').attr('data-id');//供应商管家
+	// var teamProvider = $('#teamProvider').attr('data-id');//供应商管家
 	var teamPurchase = $('#teamPurchase').attr('data-id');//供应商采购
 	var financeDirector = $('#financeDirector').attr('data-id');//财务主管
 	var finance = $('#finance').attr('data-id');//财务出纳
@@ -180,12 +180,12 @@ function checkInfo(){
 	}else{
 		$('#ps_teamDirector').val(teamDirector);
 	}
-	if(teamProvider == undefined || teamProvider == "" || teamProvider ==null ){
+	/*if(teamProvider == undefined || teamProvider == "" || teamProvider ==null ){
 		$('#teamProviderError').attr('data-content','供应商管家未选择');
 		return false;
 	}else{
 		$('#ps_teamProvider').val(teamProvider);
-	}
+	}*/
 	if(financeDirector == undefined || financeDirector == "" || financeDirector ==null ){
 		$('#financeDirectorError').attr('data-content','财务主管未选择');
 		return false;
@@ -410,7 +410,7 @@ function getSynInfo(){
 		}
 		
 		//供应商管家
-		var teamProviders = res.result.teamProvider;
+		/*var teamProviders = res.result.teamProvider;
 		var body = $('#teamProviders');
 		body.html('');
 		if(teamProviders != null && teamProviders != undefined){
@@ -419,7 +419,7 @@ function getSynInfo(){
 				   body.append(html);
 			};
 			
-		}
+		}*/
 		
 		
 		//财务总监

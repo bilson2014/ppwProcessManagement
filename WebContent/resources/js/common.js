@@ -7,9 +7,9 @@ var counts = 120; // 间隔函数，1秒执行
 var curCounts = 0; // 当前剩余秒数 - 注册
 var InterValObj; // timer变量，控制时间 - 注册
 
-var UrlDo = "www.apaipian.com";
+//var UrlDo = "www.apaipian.com";
 //var UrlDo = "test.apaipian.com";
-//var UrlDo = "localhost";
+var UrlDo = "localhost";
 
 $().ready(function(){
 	getImgUrl();
@@ -20,6 +20,7 @@ $().ready(function(){
 		$('#toolbar-modal').modal({
 			keyboard: false
 		})
+		
 		$('#modal-call').on('click',function(){
 			// 检测手机号码
 			var phoneNumber = $('#phoneCall').val();

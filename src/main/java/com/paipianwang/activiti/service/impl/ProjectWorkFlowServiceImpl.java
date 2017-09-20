@@ -544,7 +544,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		if (teamList != null) {
 
-			// 如果为 供应商管家、供应商采购、供应商总监 可以看见所有供应商指定信息
+			// 如果为 供应商管家、供应商总监 可以看见所有供应商指定信息
 			List<String> teamGroup = new ArrayList<String>(
 					Arrays.asList(ProjectRoleType.teamDirector.getId(), ProjectRoleType.teamProvider.getId(), ProjectRoleType.sale.getId(), ProjectRoleType.saleDirector.getId()));
 			// 如果是 策划供应商可以看见 策划供应商信息

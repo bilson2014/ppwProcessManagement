@@ -31,6 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
+import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
@@ -93,7 +94,7 @@ public class ProjectFlowController extends BaseController {
 				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
-		return new ModelAndView("redirect:http://www.apaipian.com/project/running");
+		return new ModelAndView("redirect:http://"+ PublicConfig.HTTP_REFERER +"/project/running");
 	}
 
 	/**
@@ -162,8 +163,7 @@ public class ProjectFlowController extends BaseController {
 
 			Map<String, List<PmsProjectFlowResult>> results = new HashMap<String, List<PmsProjectFlowResult>>();
 			// 判断身份
-			if (groups.contains(ProjectRoleType.teamDirector.getId())
-					|| groups.contains(ProjectRoleType.financeDirector.getId())
+			if (groups.contains(ProjectRoleType.financeDirector.getId())
 					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 				// 供应商总监、财务总监、客服总监 应该看见所有项目
 				// 查询参与的正在进行中的任务
@@ -254,6 +254,10 @@ public class ProjectFlowController extends BaseController {
 					Map<String, String> supervise = projectWorkFlowService
 							.getUserByRole(ProjectRoleType.supervise.getId());
 					result.put("superviseId", supervise);
+				} else if (formProperty.getId().equals("teamProviderId")) {
+					Map<String, String> teamProvider = projectWorkFlowService
+							.getUserByRole(ProjectRoleType.teamProvider.getId());
+					result.put("teamProviderId", teamProvider);
 				}
 
 			}
@@ -495,8 +499,7 @@ public class ProjectFlowController extends BaseController {
 		List<PmsProjectFlowResult> cancelList = new ArrayList<PmsProjectFlowResult>();
 		// 判断身份
 		if (ValidateUtil.isValid(groups)) {
-			if (groups.contains(ProjectRoleType.teamDirector.getId())
-					|| groups.contains(ProjectRoleType.financeDirector.getId())
+			if (groups.contains(ProjectRoleType.financeDirector.getId())
 					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 				// 供应商总监、财务总监、客服总监 应该看见所有项目
 
@@ -511,7 +514,7 @@ public class ProjectFlowController extends BaseController {
 				cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
 			}
 		}
-		
+
 		// 混合数据
 		if (!ValidateUtil.isValid(list)) {
 			list = new ArrayList<PmsProjectFlowResult>();
@@ -586,8 +589,7 @@ public class ProjectFlowController extends BaseController {
 		List<PmsProjectFlowResult> suspendTasks = null;
 		if (groups != null && !groups.isEmpty()) {
 			// 判断身份
-			if (groups.contains(ProjectRoleType.teamDirector.getId())
-					|| groups.contains(ProjectRoleType.financeDirector.getId())
+			if (groups.contains(ProjectRoleType.financeDirector.getId())
 					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 				// 供应商总监、财务总监、客服总监 应该看见所有项目
 				suspendTasks = projectWorkFlowService.getSuspendTasks(null);
@@ -714,8 +716,7 @@ public class ProjectFlowController extends BaseController {
 		List<String> groups = info.getActivitGroups();
 		List<TaskVO> tasks = null;
 		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
+		if (groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
 			tasks = projectWorkFlowService.getSearchTasks(taskVO.getProjectName(), null);
@@ -734,8 +735,7 @@ public class ProjectFlowController extends BaseController {
 		List<TaskVO> suspendTasks = null;
 
 		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
+		if (groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
 			suspendTasks = projectWorkFlowService.getAgentTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(),
@@ -755,8 +755,7 @@ public class ProjectFlowController extends BaseController {
 		List<TaskVO> suspendTasks = null;
 
 		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
+		if (groups.contains(ProjectRoleType.financeDirector.getId())
 				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
 			// 供应商总监、财务总监、客服总监 应该看见所有项目
 			suspendTasks = projectWorkFlowService.getTasksByStage(taskVO.getTaskStage(), info.getActivitiUserId(), 1);
