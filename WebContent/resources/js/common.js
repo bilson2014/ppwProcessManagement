@@ -10,10 +10,13 @@ var InterValObj; // timer变量，控制时间 - 注册
 //var UrlDo = "www.apaipian.com";
 //var UrlDo = "test.apaipian.com";
 var UrlDo = "localhost";
+<<<<<<< HEAD
 //var UrlDo = "192.168.0.157";
 
 
 
+=======
+>>>>>>> 7a1a84d7ab7664a4e749cfab32105688d819d10d
 
 $().ready(function(){
 	getImgUrl();
@@ -24,6 +27,7 @@ $().ready(function(){
 		$('#toolbar-modal').modal({
 			keyboard: false
 		})
+		
 		$('#modal-call').on('click',function(){
 			// 检测手机号码
 			var phoneNumber = $('#phoneCall').val();
