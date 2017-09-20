@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:application name="pat-activiti-boss" /> 
+	
+	<!-- dubbo接口去除注册中心，采用直连的方式  -->
+  	<dubbo:registry address="N/A" ></dubbo:registry>
+  	
+  	<!-- 使用multicast广播注册中心暴露发现服务地址 -->
+    <dubbo:registry address="multicast://224.224.224.2:1224?unicast=false" />
+ 		
+	<!-- Activiti接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.WorkFlowFacade" id="pmsWorkFlowFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.WorkFlowFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade" id="pmsProjectFlowFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade" id="pmsProjectResourceFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade" id="pmsProjectSynergyFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade" id="pmsProjectTeamFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectUserFacade" id="pmsProjectUserFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectUserFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade" id="pmsProjectColumnShipFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnShipFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnUpdateShipFacade" id="pmsProjectGroupColumnUpdateShipFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectGroupColumnUpdateShipFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade" id="pmsEmployeeSynergyFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsEmployeeSynergyFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade" id="pmsProjectMessageFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProjectGroupResourceUpdateFacade" id="pmsProjectGroupResourceUpdateFacade" url="dubbo://localhost:20996/com.paipianwang.pat.workflow.facade.PmsProjectGroupResourceUpdateFacade" retries="1" check="false" timeout="5000" />
+	<!-- 人员接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.right.service.PmsEmployeeFacade" id="pmsEmployeeFacade" url="dubbo://localhost:28880/com.paipianwang.pat.facade.right.service.PmsEmployeeFacade" retries="1" check="false" timeout="5000" />
+	<!-- 财务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.finance.service.PmsFinanceFacade" id="pmsFinanceFacade" url="dubbo://localhost:23880/com.paipianwang.pat.facade.finance.service.PmsFinanceFacade" retries="1" check="false" timeout="5000" />
+	<!--作品服务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsChanPinConfigurationFacade" id="pmsChanPinConfigurationFacade" url="dubbo://localhost:21880/com.paipianwang.pat.facade.product.service.PmsChanPinConfigurationFacade" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsChanPinFacade" id="pmsChanPinFacade" url="dubbo://localhost:21880/com.paipianwang.pat.facade.product.service.PmsChanPinFacade" check="false" timeout="5000" />
+	<!--用户服务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.user.service.PmsUserFacade" id="pmsUserFacade" url="dubbo://localhost:22880/com.paipianwang.pat.facade.user.service.PmsUserFacade" check="false" timeout="10000" />
+	<!-- 权限接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.right.service.PmsRightFacade" id="pmsRightFacade" url="dubbo://localhost:28880/com.paipianwang.pat.facade.right.service.PmsRightFacade" check="false" timeout="10000" />
+	<!--供应商服务接口 -->
+	<dubbo:reference interface="com.paipianwang.pat.facade.team.service.PmsTeamFacade" id="pmsTeamFacade" url="dubbo://localhost:25880/com.paipianwang.pat.facade.team.service.PmsTeamFacade" check="false" timeout="15000" />
+	
+</beans>
+
