@@ -222,7 +222,7 @@ function addForm() {
 			if(isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
-				$('#daibanword').text('ios暂不支持上传');
+				$('#daibanword').html('IOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
 			}else{
 				UploadFile();
 			}

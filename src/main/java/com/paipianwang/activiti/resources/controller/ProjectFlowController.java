@@ -50,10 +50,10 @@ import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 @RequestMapping("/project")
 public class ProjectFlowController extends BaseController {
 	private final Logger logger = LoggerFactory.getLogger(ProjectFlowController.class);
-	
+
 	@Autowired
 	private ProjectWorkFlowService projectWorkFlowService = null;
-	
+
 	/**
 	 * 新建项目页跳转
 	 */
@@ -93,8 +93,7 @@ public class ProjectFlowController extends BaseController {
 				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
-		return new ModelAndView("redirect:http://www.apaipian.com/list.html");
-
+		return new ModelAndView("redirect:http://www.apaipian.com/project/running");
 	}
 
 	/**
@@ -109,8 +108,10 @@ public class ProjectFlowController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 
 		Map<String, List<PmsProjectFlowResult>> result = loadRunningDoingTasks(info);
-		mv.addObject("runningTasks", result.get("runningTasks"));
-		mv.addObject("gTasks", result.get("gTasks"));
+		if (ValidateUtil.isValid(result)) {
+			mv.addObject("runningTasks", result.get("runningTasks"));
+			mv.addObject("gTasks", result.get("gTasks"));
+		}
 		return mv;
 	}
 
@@ -423,7 +424,7 @@ public class ProjectFlowController extends BaseController {
 
 		SessionInfo info = getCurrentInfo(request);
 		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
-				info.getActivitGroups(),info.getRealName());
+				info.getActivitGroups(), info.getRealName());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		return new ModelAndView("redirect:/project/running-doing");
@@ -441,7 +442,10 @@ public class ProjectFlowController extends BaseController {
 		ModelAndView mv = new ModelAndView("/activiti/finishFlow");
 		SessionInfo info = getCurrentInfo(request);
 		// 加载数据
-		mv.addObject("finishedTasks", loadFinishedProjectList(info));
+		List<PmsProjectFlowResult> result = loadFinishedProjectList(info);
+		if (ValidateUtil.isValid(result))
+			mv.addObject("finishedTasks", result);
+
 		return mv;
 	}
 
@@ -490,22 +494,29 @@ public class ProjectFlowController extends BaseController {
 		List<PmsProjectFlowResult> list = new ArrayList<PmsProjectFlowResult>();
 		List<PmsProjectFlowResult> cancelList = new ArrayList<PmsProjectFlowResult>();
 		// 判断身份
-		if (groups.contains(ProjectRoleType.teamDirector.getId())
-				|| groups.contains(ProjectRoleType.financeDirector.getId())
-				|| groups.contains(ProjectRoleType.customerDirector.getId())) {
-			// 供应商总监、财务总监、客服总监 应该看见所有项目
-			
-			// 查询已完成的项目
-			list = projectWorkFlowService.getFinishedTask(null);
-			// 查询已取消的项目
-			cancelList = projectWorkFlowService.getCancelTask(null);
-		} else {
-			// 查询已完成的项目
-			list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
-			// 查询已取消的项目
-			cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
+		if (ValidateUtil.isValid(groups)) {
+			if (groups.contains(ProjectRoleType.teamDirector.getId())
+					|| groups.contains(ProjectRoleType.financeDirector.getId())
+					|| groups.contains(ProjectRoleType.customerDirector.getId())) {
+				// 供应商总监、财务总监、客服总监 应该看见所有项目
+
+				// 查询已完成的项目
+				list = projectWorkFlowService.getFinishedTask(null);
+				// 查询已取消的项目
+				cancelList = projectWorkFlowService.getCancelTask(null);
+			} else {
+				// 查询已完成的项目
+				list = projectWorkFlowService.getFinishedTask(info.getActivitiUserId());
+				// 查询已取消的项目
+				cancelList = projectWorkFlowService.getCancelTask(info.getActivitiUserId());
+			}
 		}
+		
 		// 混合数据
+		if (!ValidateUtil.isValid(list)) {
+			list = new ArrayList<PmsProjectFlowResult>();
+		}
+
 		if (cancelList != null && !cancelList.isEmpty())
 			list.addAll(cancelList);
 
@@ -515,10 +526,10 @@ public class ProjectFlowController extends BaseController {
 	// 挂起
 	@RequestMapping("/suspendProcess/{processInstandeId}/{projectId}")
 	public ModelAndView suspendProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId,HttpServletRequest request) {
+			@PathVariable("projectId") final String projectId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.suspendProcess(processInstanceId, projectId,getCurrentInfo(request));
+			projectWorkFlowService.suspendProcess(processInstanceId, projectId, getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -596,10 +607,10 @@ public class ProjectFlowController extends BaseController {
 	 */
 	@RequestMapping("/activateProcess/{processInstandeId}/{projectId}")
 	public ModelAndView ActivateProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId,HttpServletRequest request) {
+			@PathVariable("projectId") final String projectId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 激活
-			projectWorkFlowService.activateProcess(processInstanceId, projectId,getCurrentInfo(request));
+			projectWorkFlowService.activateProcess(processInstanceId, projectId, getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/suspend-task");
 	}
@@ -639,10 +650,10 @@ public class ProjectFlowController extends BaseController {
 	@RequestMapping(value = "/edit/information", method = RequestMethod.POST)
 	public ModelAndView updateInformation(final HttpServletRequest request, String client) {
 		String dir = "redirect:/project/running-doing";
-		if(StringUtils.isNotBlank(client)) {
+		if (StringUtils.isNotBlank(client)) {
 			dir = "redirect:/project/phone/projectFlow";
 		}
-		
+
 		ModelAndView mv = new ModelAndView(dir);
 		// 从request中读取参数然后转换
 		Map<String, String[]> paramMap = request.getParameterMap();
@@ -663,7 +674,7 @@ public class ProjectFlowController extends BaseController {
 	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
 	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client) {
 		String dir = "redirect:/project/running-doing";
-		if(StringUtils.isNotBlank(client)) {
+		if (StringUtils.isNotBlank(client)) {
 			dir = "redirect:/project/phone/projectFlow";
 		}
 		ModelAndView mv = new ModelAndView(dir);
@@ -766,10 +777,10 @@ public class ProjectFlowController extends BaseController {
 	// 取消
 	@RequestMapping("/cancelProcess/{processInstandeId}/{projectId}")
 	public ModelAndView cancelProcess(@PathVariable("processInstandeId") final String processInstanceId,
-			@PathVariable("projectId") final String projectId,final HttpServletRequest request) {
+			@PathVariable("projectId") final String projectId, final HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.cancelProcess(processInstanceId, projectId,getCurrentInfo(request));
+			projectWorkFlowService.cancelProcess(processInstanceId, projectId, getCurrentInfo(request));
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
