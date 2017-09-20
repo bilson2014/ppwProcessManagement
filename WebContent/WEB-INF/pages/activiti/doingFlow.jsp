@@ -139,7 +139,7 @@
 	                </div>
 	           <div class="setCard" id="otherCard">
 	           
-	            <c:if test="${!empty runningTasks}">
+	            <c:if test="${not empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard">
 							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">

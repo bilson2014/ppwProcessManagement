@@ -99,7 +99,7 @@ $e2:#222;
         ul {
             margin-left: 0.8rem;
             margin-bottom: 0.6rem;
-            height: 12.72rem;
+            height: 12.7rem;
             position: relative;
         }
         ul li {
@@ -136,7 +136,7 @@ $e2:#222;
                 width: 9rem;
             }
             &:nth-child(9) {
-                top: 9.17rem;
+                top: 8.9rem;
                 width: 9rem;
             }
             &:nth-child(10) {
@@ -147,15 +147,37 @@ $e2:#222;
                 font-size: 0.36rem;
                 color: #999999;
             }
+            .film {
+                font-size: 0.36rem;
+                color: #E3E3E3;
+                position: absolute;
+                top: 0.65rem;
+                line-height: 0.47rem;
+                min-height: 0.47rem;
+                max-height: 1.4rem;
+                width: 9rem;
+                display: inline-block;
+                overflow: hidden;
+            }
             span {
                 font-size: 0.36rem;
                 color: #E3E3E3;
                 position: absolute;
-                top: 0.6rem;
+                top: 0.65rem;
                 line-height: 0.47rem;
                 min-height: 0.47rem;
                 max-height: 1.4rem;
                 overflow: hidden;
+            }
+            .miaoshu {
+                font-size: 0.36rem;
+                color: #E3E3E3;
+                position: absolute;
+                top: 0.65rem;
+                line-height: 0.47rem;
+                min-height: 0.47rem;
+                max-height: 1.7rem;
+                overflow: auto;
             }
         }
     }
@@ -472,7 +494,8 @@ $e2:#222;
         .text {
             position: absolute;
             top: 4.92rem;
-            left: 2.46rem;
+            width: 100%;
+            text-align: center;
             font-size: 0.36rem;
             color: #FE5453;
         }
