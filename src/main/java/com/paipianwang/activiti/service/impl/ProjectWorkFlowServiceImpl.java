@@ -287,7 +287,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY START_TIME_ DESC";
-		} else {
+		} else if (userId.indexOf("team_") > -1) {
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
+					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
+					+ " WHERE ART.ASSIGNEE_ = '" + userId + "'"
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
+		}else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ "
 					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
@@ -307,8 +312,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if(StringUtils.isNoneBlank(userId)) {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ " WHERE PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
-		} else {
-			
+		} else if(userId.indexOf("team_") > -1) {
+			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
+					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = PROC.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
+							+ userId + "'"
+							+ " AND PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
+		}else {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = PROC.BUSINESS_KEY_ "
 					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = PROC.PROC_INST_ID_ WHERE sy.employeeId = "+ userId.split("_")[1]
@@ -723,7 +732,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ AND PF.projectStatus = 'suspend' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
-		} else {
+		} else if(userId.indexOf("team_") > -1){
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
+					+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
+					+ " AND PF.projectStatus = 'suspend' "
+					+ " AND ART.ASSIGNEE_ = '"
+					+ userId + "'"
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
+		}else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId"
 					/*+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
@@ -1507,7 +1524,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ AND PF.projectStatus = 'cancel' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
-		} else {
+		} else if(userId.indexOf("team_") > -1) {
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
+					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
+					+ " AND PF.projectStatus = 'cancel' "
+					+ " AND ART.ASSIGNEE_ = '"
+					+ userId + "'"
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
+		}else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId "
 					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
