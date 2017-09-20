@@ -53,6 +53,7 @@
                                                 <img src="/resources/images/flow/def.png">
                                             </c:if>
                                             <div class="reTalkItem">${item.employeeName}</div>
+                                            <div class="study hide">${item.employeeGroup}</div>
                                             <span class="telephone hide">${item.telephone}</span>
                                         </li>
                                     </c:forEach>
@@ -84,6 +85,7 @@
                                     <li>
                                         <div>项目评级</div>
                                         <span>${flow_info["projectGrade"]}</span>
+
                                     </li>
                                     <li>
                                         <div>项目周期</div>
@@ -115,11 +117,11 @@
                                     </li>
                                     <li>
                                         <div>对标影片</div>
-                                        <span>${flow_info['filmDestPath']}</span>
+                                        <a class="film" href="${flow_info['filmDestPath']}">${flow_info['filmDestPath']}</a>
                                     </li>
                                     <li>
                                         <div>项目描述</div>
-                                        <span>${flow_info["projectDescription"]}</span>
+                                        <span class="miaoshu">${flow_info["projectDescription"]}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -250,8 +252,8 @@
                                 <img src="" class="pic">
                                 <span class="name"></span>
                                 <div class="smallline"></div>
-                                <span class="text">负责人</span>
-                                <span class="phone"><a href="tell://18235170627"></a></span>
+                                <span class="text"></span>
+                                <span class="phone"><a href="tel:18235170627"></a></span>
                             </div>
                         </div>
                     </div>

@@ -33,6 +33,7 @@ function getScroll(){
 //初始化来源
 function initResouces(){
 	loadData(function (res){
+		console.log(res);
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
