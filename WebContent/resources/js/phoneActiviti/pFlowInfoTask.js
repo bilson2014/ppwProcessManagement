@@ -137,6 +137,7 @@ function UploadFile(){
     	});
 	    upload_Video.upload();
 		$('.dynamic-form-table .item').hide();
+		$('#toSubmitForm').off('click')；	
 	});
 
 	upload_Video.on('uploadProgress',function(file, percentage) {
@@ -148,7 +149,7 @@ function UploadFile(){
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
-			
+			formCheck();
 			$('.upIng').hide();
 			$('.upSuccess').show();
 			$('.upError').hide();
