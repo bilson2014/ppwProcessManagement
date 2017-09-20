@@ -1,6 +1,7 @@
+var clip;
 $().ready(function(){
 	$('.frameHead .name').text($('#projectName').val());
-	getFileInfo();
+	getFileInfo();	
 });
 
 function getFileMore(){
@@ -21,7 +22,7 @@ function getFileInfo(){
 		var res = res;
 		var body =$('.setFile');
 		body.html('');
-		if(res != null && res != undefined){
+		if(res != null && res != undefined && res.length>0){
 			var newList = bulidFileList(res);
 				for (var int = 0; int < newList.length; int++) {
 					 var html =createFileInfo(newList[int]);
@@ -141,10 +142,44 @@ function createFileInfo(res){
 
 function bindFileShareBtn(){
 	$('.share').on('click',function(){
-		var key = $(this).attr('data-url');
-		jumpShare(key);
+		var key = $(this).find('div').attr('data-id');
+		$('#setInfoCopy').text(key);
+		showShare();
+/*		var url=window.location.href; //获取当前url地址  
+        var clip =  new ZeroClipboard($('#checkInfo'), {  
+            moviePath: "ZeroClipboard.swf"  
+        } );    //初始化  
+        clip.setText(url);       //复制url参数  
+*/		//jumpShare(key);
 	});
 }
+
+function showShare(){
+	clip = new ZeroClipboard($("#checkInfo"));
+	$('#showShare').show();
+	getCopyUrl();
+	closeModel();
+}
+
+function closeModel(){
+	$('#closeModel').off('click').on('click',function(){
+		$('#showShare').hide();
+		$('#checkInfo').attr("class","");
+		$('#checkInfo').addClass('btn-c-r');
+		$('#checkInfo').val('复制链接');
+	});
+}
+
+function getCopyUrl(){
+	
+	clip.on("copy", function(e) {
+		$('#checkInfo').val('已复制');
+		$('#checkInfo').attr("class","");
+		$('#checkInfo').addClass('btn-c-g');
+	});
+}
+
+
 
 function jumpShare(url) {
 	$('#share-open').click();	

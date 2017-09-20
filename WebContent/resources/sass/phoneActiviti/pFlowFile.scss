@@ -84,20 +84,79 @@
         }
     }
 
-    #daiban{
+    #daiban {
         width: 100%;
         font-size: 0;
         text-align: center;
         display: none;
-        img{
+        img {
             width: 4rem;
             height: 3.24rem;
             margin-top: 1.5rem;
         }
-        div{
+        div {
             font-size: 0.46rem;
-            color:$gray-light;
+            color: $gray-light;
             margin-top: 1rem;
         }
     }
 
+
+    .modelTool {
+        background-color: rgba(0, 0, 0, 0.7);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 20;
+        position: relative;
+        display: none;
+        .success {
+            position: absolute;
+            top: 3rem;
+            left: 50%;
+            margin-left: -4.5rem;
+            width: 9rem;
+            height: 8rem;
+            background: white;
+            text-align: center;
+            border-radius: 18px;
+            .modelTitle {
+                height: 1.5rem;
+                font-size: 0.46rem;
+                color: $gray-dark;
+                border-bottom: 1px solid $gray-light;
+                line-height: 1.5rem;
+            }
+
+            img {
+                width: 0.8rem;
+                height: 0.8rem;
+                position: absolute;
+                right: -0.3rem;
+                top: -0.3rem;
+            }
+
+            div:nth-child(3) {
+                color: $gray-dark;
+                color: #333;
+                font-size: 0.4rem;
+                line-height: 0.6rem;
+                padding: 0.5rem;
+                padding-top: 1.5rem;
+                word-wrap: break-word;
+            }
+            input:nth-child(4) {
+                outline: none;
+                border:none;
+                color: white;
+                font-size: 0.36rem;
+                width: 7rem;
+                height: 1rem;
+                line-height: 1rem;
+                text-align: center;
+                border-radius: 100px;
+                box-shadow: 0 4px 8px 0;
+                margin: 0 auto;
+            }
+        }
+    }

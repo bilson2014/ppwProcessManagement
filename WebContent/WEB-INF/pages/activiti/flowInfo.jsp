@@ -77,7 +77,7 @@
 		                         <div class="newControl">
 		                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}/${projectId}"><div id="">暂停项目</div></a>
 		                              <a id="isBack"  href="/project/activateProcess/${processInstanceId}/${projectId}"><div id="">恢复项目</div></a>
-		                              <a id="isCancle"  href="/project/cancelProcess/${processInstanceId}/${projectId}"><div id="">取消项目</div></a>
+		                              <a id="isCancle" href="/project/cancelProcess/${processInstanceId}/${projectId}"><div id="">取消项目</div></a>
 		                         </div>
 	                     	</div>
 	                     </r:group>

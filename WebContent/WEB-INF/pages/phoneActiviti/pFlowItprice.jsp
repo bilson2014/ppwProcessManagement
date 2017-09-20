@@ -39,7 +39,6 @@
                         <input type="hidden" id="processInstanceId" value="${processInstanceId}">
                         <input type="hidden" id="projectName" value="${projectName}">
                         <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
-
                         <div class="pagePhone">
                             <form method="post" action="/project/edit/information" id="toPriceForm">
                                 <input type="hidden" id="priceId" name="pf_projectId">
@@ -68,7 +67,6 @@
 
                         <jsp:include flush="true" page="pHead.jsp"></jsp:include>
                     </body>
-
                     <script type="text/javascript" src="${jqueryJs}"></script>
                     <script type="text/javascript" src="${jsonJs}"></script>
                     <script type="text/javascript" src="${commonJs}"></script>
