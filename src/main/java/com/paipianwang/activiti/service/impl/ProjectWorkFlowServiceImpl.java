@@ -307,7 +307,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Override
 	public List<PmsProjectFlowResult> getFinishedTask(String userId) {
-		
 		String sql = "";
 		if(StringUtils.isNoneBlank(userId)) {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
