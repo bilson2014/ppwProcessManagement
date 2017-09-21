@@ -26,7 +26,7 @@ $e2:#222;
             font-size: 0.34rem;
             color: #D1D1D1;
             padding-left: 0.399rem;
-            border: 1px solid #D1D1D1;
+            border: 1px solid #999999;
         }
         p {
             color: #FE5453;
@@ -40,7 +40,6 @@ $e2:#222;
     // 项目来源
     .origin {
         height: 1.5rem;
-        margin-top: 0.1rem;
         div {
             font-size: 0.34rem;
             color: #D1D1D1;
@@ -51,7 +50,7 @@ $e2:#222;
         .orderSelect {
             width: 7.4rem;
             height: 0.9rem;
-            border: 1px solid #D1D1D1;
+            border: 1px solid #999999;
             display: inline-flex;
             border-radius: 0.08rem;
             margin-left: 0rem;
@@ -74,12 +73,12 @@ $e2:#222;
                 img {
                     display: inline-block;
                     width: 0.8rem;
-                    height: 0.88rem;
-                    padding-top: 0.2rem;
-                    padding-bottom: 0.2rem;
-                    margin-left: 0.35rem;
-                    border-left: 1px solid #D1D1D1;
-                    padding-left: 0.3rem;
+                    height: 0.8rem;
+                    padding-top: 0.1rem;
+                    padding-bottom: 0.1rem;
+                    margin-left: 0.45rem;
+                    border-left: 1px solid #999999;
+                    padding-left: 0.2rem;
                     vertical-align: top;
                 }
             }
@@ -101,7 +100,7 @@ $e2:#222;
         .orderSelect {
             width: 7.4rem;
             height: 0.9rem;
-            border: 1px solid #D1D1D1;
+            border: 1px solid #999999;
             display: inline-block;
             margin-top: 0.5rem;
             border-radius: 0.08rem;
@@ -124,12 +123,12 @@ $e2:#222;
                 img {
                     display: inline-block;
                     width: 0.8rem;
-                    height: 0.88rem;
-                    padding-top: 0.2rem;
-                    padding-bottom: 0.2rem;
-                    margin-left: 0.35rem;
-                    border-left: 1px solid #D1D1D1;
-                    padding-left: 0.3rem;
+                    height: 0.8rem;
+                    padding-top: 0.1rem;
+                    padding-bottom: 0.1rem;
+                    margin-left: 0.45rem;
+                    border-left: 1px solid #999999;
+                    padding-left: 0.2rem;
                     vertical-align: top;
                 }
             }
@@ -153,7 +152,7 @@ $e2:#222;
             font-size: 0.34rem;
             color: #D1D1D1;
             padding-left: 0.399rem;
-            border: 1px solid #D1D1D1;
+            border: 1px solid #999999;
             vertical-align: middle;
             margin-top: 0.2rem;
         }
@@ -180,7 +179,7 @@ $e2:#222;
             color: #D1D1D1;
             vertical-align: top;
             margin-left: 0.8rem;
-            margin-top: 0.52rem;
+            margin-top: 0.32rem;
         }
         textarea {
             width: 7.4rem;
@@ -193,8 +192,7 @@ $e2:#222;
             padding-right: 0.3999rem;
             padding-top: 0.11rem;
             line-height: 0.7rem;
-            border: 1px solid #D1D1D1;
-            margin-top: 0.2rem;
+            border: 1px solid #999999;
         }
         p {
             color: #FE5453;
@@ -211,7 +209,7 @@ $e2:#222;
             display: inline-block;
             vertical-align: top;
             margin-left: 0.8rem;
-            margin-top: 0.5rem;
+            margin-top: 0.32rem;
         }
         textarea {
             width: 7.4rem;
@@ -224,8 +222,7 @@ $e2:#222;
             padding-right: 0.3999rem;
             padding-top: 0.11rem;
             line-height: 0.7rem;
-            border: 1px solid #D1D1D1;
-            margin-top: 0.2rem;
+            border: 1px solid #999999;
         }
         p {
             color: #FE5453;
@@ -236,6 +233,7 @@ $e2:#222;
     }
     // 取消和确认
     .surebox {
+        margin-top: 0.5rem;
         .cancel {
             width: 3.6rem;
             height: 1rem;

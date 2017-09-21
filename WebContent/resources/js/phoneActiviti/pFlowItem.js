@@ -1,5 +1,9 @@
 $().ready(function() {
-    $('.frameHead .name').text($('#projectName').val());
+    // 设置标题的信息
+
+    // $('.frameHead .name').text('项目信息修改');
+
+    $('.frameHead .name').text($('.projectinfo .probox ul li .best').text());
     $('#projectTime').text(formatDate($('#projectTime').text().replace("CST", "GMT+0800")));
     logobtn();
 });

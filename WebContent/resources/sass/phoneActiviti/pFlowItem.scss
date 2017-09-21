@@ -67,6 +67,7 @@ $e2:#222;
 // 项目信息
 .projectinfo {
     .protitle {
+        margin-top: 0.1rem;
         height: 1.18rem;
         position: relative;
         .pic {
@@ -275,12 +276,11 @@ $e2:#222;
     }
     .supbox {
         .plantitle {
-            height: 1.18rem;
-            position: relative;
+            height: 0.47rem;
+            margin-top: 0.6rem;
+            margin-left: 0.8rem;
             .pic {
-                position: absolute;
-                top: 0.56rem;
-                left: 0.6rem;
+                display: inline-block;
                 width: 0.159rem;
                 height: 0.289rem;
                 background: url(/resources/images/pFlow/plan.png);
@@ -290,13 +290,13 @@ $e2:#222;
             span {
                 color: #E3E3E3;
                 font-size: 0.36rem;
-                position: absolute;
-                top: 0.56rem;
-                left: 1.14rem;
+                display: inline-block;
+                vertical-align: text-top;
                 height: 0.47rem;
             }
         }
         .planbox {
+            margin-top: 0.2rem;
             div {
                 font-size: 0.36rem;
                 color: #999999;
@@ -320,17 +320,16 @@ $e2:#222;
                 }
                 &:nth-child(2) {
                     width: 4.5rem;
-                    // margin-left: 0.9rem;
+                    margin-top: 0.5rem;
                 }
             }
         }
         .maketitle {
-            height: 1.18rem;
-            position: relative;
+            height: 0.47rem;
+            margin-top: 0.6rem;
+            margin-left: 0.8rem;
             .pic {
-                position: absolute;
-                top: 0.56rem;
-                left: 0.6rem;
+                display: inline-block;
                 width: 0.159rem;
                 height: 0.289rem;
                 background: url(/resources/images/pFlow/plan.png);
@@ -340,12 +339,12 @@ $e2:#222;
             span {
                 color: #E3E3E3;
                 font-size: 0.36rem;
-                position: absolute;
-                top: 0.56rem;
-                left: 1.14rem;
+                display: inline-block;
+                vertical-align: text-top;
             }
         }
         .makebox {
+            margin-top: 0.2rem;
             div {
                 font-size: 0.36rem;
                 color: #999999;
@@ -369,7 +368,7 @@ $e2:#222;
                 }
                 &:nth-child(2) {
                     width: 4.5rem;
-                    // margin-left: 0.9rem;
+                    margin-top: 0.5rem;
                 }
             }
         }
@@ -409,6 +408,7 @@ $e2:#222;
         }
     }
     .pribox {
+        margin-top: 0.2rem;
         div {
             font-size: 0.36rem;
             color: #999999;
@@ -450,23 +450,24 @@ $e2:#222;
         background-size: 0.8rem;
         position: relative;
         top: 3.9rem;
-        left: 7.89rem;
+        left: 9.5rem;
         z-index: 5;
     }
     .box {
-        width: 6rem;
-        height: 6.86rem;
+        width: 9rem;
+        height: 9.07rem;
         background: #FFFFFF;
         border-radius: 0.18rem;
         position: absolute;
         top: 4.12rem;
-        left: 2.4rem;
+        left: 50%;
+        margin-left: -4.5rem;
         .pic {
-            width: 2.4rem;
-            height: 2.4rem;
-            position: absolute;
-            top: 0.8rem;
-            left: 1.8rem;
+            width: 3rem;
+            height: 3rem;
+            display: block;
+            margin: 0 auto;
+            margin-top: 1.2rem;
             border-radius: 50%;
         }
         .name {
@@ -474,32 +475,32 @@ $e2:#222;
             margin: 0 auto;
             width: 2.3rem;
             text-align: center;
-            margin-top: 3.6rem;
-            font-size: 0.4rem;
+            margin-top: 0.6rem;
+            font-size: 0.46rem;
             color: #333333;
         }
         .smallline {
-            width: 4.8rem;
-            height: 1px;
+            width: 7rem;
+            height: 2px;
             background-color: #D1D1D1;
-            position: absolute;
-            top: 4.52rem;
-            left: 0.6rem;
+            margin: 0 auto;
+            margin-top: 0.5rem;
         }
         .text {
-            position: absolute;
-            top: 4.92rem;
+            display: block;
+            margin-top: 0.5rem;
             width: 100%;
             text-align: center;
-            font-size: 0.36rem;
+            font-size: 0.4rem;
             color: #FE5453;
         }
         .phone {
             font-size: 0.36rem;
             color: #666666;
-            position: absolute;
-            top: 5.59rem;
-            left: 1.84rem;
+            display: block;
+            text-align: center;
+            font-size: 0.4rem;
+            margin-top: 0.4rem;
             a {
                 color: #666;
             }

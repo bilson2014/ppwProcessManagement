@@ -22,6 +22,7 @@ import com.paipianwang.pat.facade.team.service.PmsTeamFacade;
 import com.paipianwang.pat.facade.user.entity.PmsUser;
 import com.paipianwang.pat.facade.user.service.PmsUserFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 
 @Service("messageService")
@@ -54,7 +55,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Override
 	public List<PmsProjectMessage> getProjectTaskMessage(String taskId) {
-		List<PmsProjectMessage> result=pmsProjectMessageFacade.getProjectTaskMessage(taskId);
+		List<PmsProjectMessage> result = pmsProjectMessageFacade.getProjectTaskMessage(taskId);
 		editShowInfo(result);
 		return result;
 	}
@@ -138,16 +139,16 @@ public class MessageServiceImpl implements MessageService {
 	 */
 	@Override
 	public void insertSystemMessage(String projectId, String content) {
-		PmsProjectMessage message=new PmsProjectMessage();
+		PmsProjectMessage message = new PmsProjectMessage();
 		message.setFromId("system");
 		message.setFromGroup("system");
 		message.setProjectId(projectId);
 		message.setMessageType(PmsProjectMessage.TYPE_LOG);
 		message.setFromName("系统");
-		
+
 		message.setContent(content);
 		pmsProjectMessageFacade.insert(message);
-		
+
 	}
 
 	/**
@@ -180,5 +181,22 @@ public class MessageServiceImpl implements MessageService {
 		message.setFromName(fromName);
 		message.setTaskId(taskId);
 		pmsProjectMessageFacade.insert(message);
+	}
+
+	@Override
+	public void insertGageWayOperationLog(String projectId, String taskId, String taskName, String content,
+			PmsProjectSynergy synergy) {
+		if (synergy != null) {
+			PmsProjectMessage message = new PmsProjectMessage();
+			message.setFromId("employee_" + synergy.getEmployeeId());
+			message.setFromGroup(StringUtils.join(synergy.getEmployeeGroup(), ","));
+			message.setProjectId(projectId);
+			message.setTaskName(taskName);
+			message.setContent(content);
+			message.setMessageType(PmsProjectMessage.TYPE_LOG);
+			message.setFromName(synergy.getEmployeeName());
+			message.setTaskId(taskId);
+			pmsProjectMessageFacade.insert(message);
+		}
 	}
 }

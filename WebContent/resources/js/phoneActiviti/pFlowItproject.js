@@ -1,6 +1,7 @@
 var title;
 var rowsR;
 $().ready(function() {
+    console.log('/project/phone/flowinfo/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/" + $('#processInstanceId').val());
     // 设置标题的信息
     $('.frameHead .name').text('项目信息修改');
     // 初始化项目来源
@@ -10,6 +11,8 @@ $().ready(function() {
     projectchange();
 
     selectEven();
+
+
 });
 // 确认事件
 function surebtn() {
@@ -144,7 +147,7 @@ function projectchange() {
             name = '线上-公众号-作品';
         }
         $('#pf_ResourInput').val(res.projectFlow.pf_projectSource);
-        $('#setinput').text($('#pf_ResourInput').val());
+        $('#setinput').text(name);
         //项目名称
         $('#proName').val(res.projectFlow.pf_projectName);
         // 项目周期
@@ -160,8 +163,10 @@ function projectchange() {
         }
     });
     // 取消事件
-    $('.cancel div').off('click').on('click', function() {
-        window.location.href = '/project/phone/flowinfo/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/" + $('#processInstanceId').val();
+    $('.projectbox .surebox .cancel div').off('click').on('click', function() {
+        //     console.log("33");
+        //     window.location.href = '/project/phone/flowinfo/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/" + $('#processInstanceId').val();
+
     });
     // 返回的跳转
     $('.frameHead a').attr('href', '/project/phone/flowinfo/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/" + $('#processInstanceId').val());
