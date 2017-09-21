@@ -24,6 +24,7 @@
           <activiti:value id="true" name="确认"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${projectInfoBySaleDirectorConfirmListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-F09FAB69-E29A-46D0-B1AD-EF01BE0DE0DF" sourceRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715" targetRef="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225"></sequenceFlow>
@@ -34,6 +35,7 @@
           <activiti:value id="true" name="确认"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${projectInfoByCreativityDirectorConfirmListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-8706AD6D-C469-4063-A8C0-4B2C6AAC2C1B"></exclusiveGateway>
@@ -43,6 +45,7 @@
           <activiti:value id="inner" name="内部"></activiti:value>
           <activiti:value id="outer" name="外部"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${allotOutOrInnerSchemeListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <userTask id="sid-C19EC752-8B92-411D-91F0-AA1DC0122092" name="【创意总监】分配内部策划人员" activiti:assignee="${creativityDirectorId}">
@@ -291,12 +294,13 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_projectplanPass == 'true'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="usertask2" targetRef="sid-93052D9F-D76E-41BB-99CD-EF3F332F4330"></sequenceFlow>
-    <userTask id="usertask3" name="【供应商总监】审核可行性（通过/驳回）" activiti:assignee="${teamDirectorId}">
+    <userTask id="usertask3" name="【供应商总监】审核项目可行性（通过/驳回）" activiti:assignee="${teamDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_schemeConfirm" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${teamDirectorConfirmProjectAbleListern}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="exclusivegateway2"></exclusiveGateway>
@@ -321,6 +325,7 @@
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${confirmPlanTeamChooseTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow14" sourceRef="sid-3891F78C-418D-42E8-BB3E-7D2952A69618" targetRef="usertask4"></sequenceFlow>
@@ -499,7 +504,7 @@
         <omgdc:Bounds height="81.0" width="121.0" x="820.0" y="253.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="usertask3" id="BPMNShape_usertask3">
-        <omgdc:Bounds height="77.0" width="105.0" x="1250.0" y="353.0"></omgdc:Bounds>
+        <omgdc:Bounds height="77.0" width="105.0" x="1250.0" y="361.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="1395.0" y="377.0"></omgdc:Bounds>
@@ -721,7 +726,7 @@
         <omgdi:waypoint x="970.0" y="296.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
-        <omgdi:waypoint x="1355.0" y="391.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1355.0" y="399.0"></omgdi:waypoint>
         <omgdi:waypoint x="1395.0" y="397.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
@@ -781,7 +786,7 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
         <omgdi:waypoint x="1302.0" y="313.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1302.0" y="353.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1302.0" y="361.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
