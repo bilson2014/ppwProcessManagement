@@ -15,8 +15,8 @@ var UrlDo = "localhost";
 =======
 
 //var UrlDo = "www.apaipian.com";
-var UrlDo = "test.apaipian.com";
-//var UrlDo = "localhost";
+//var UrlDo = "test.apaipian.com";
+var UrlDo = "localhost";
 //var UrlDo = "192.168.0.157";
 >>>>>>> 3bc1c355e3988665c05e3e504c6d9a9384d2222f
 

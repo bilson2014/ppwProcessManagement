@@ -17,7 +17,7 @@ $yellowColor:#F6A623;
     position: relative;
     width: 100%;
     padding: 0.6rem 0.6rem 0 0rem;
-        margin-top: 1.5rem;
+    margin-top: 1.5rem;
     font-size: 0;
     div,
     img {
@@ -89,6 +89,9 @@ $yellowColor:#F6A623;
         padding-right: 0.8rem;
         line-height: 0.5rem;
         margin-top: 0.2rem;
+        a {
+            color: $red-base !important;
+        }
     }
 }
 

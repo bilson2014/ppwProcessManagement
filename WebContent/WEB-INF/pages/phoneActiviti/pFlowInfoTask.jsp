@@ -57,7 +57,6 @@
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
    <input type="hidden" id="initTask" value="initTask">
    
- 
    <div class="modelTool" id="showInfo">
 	          <div class="success">
 	            <div class="modelTitle">提示</div>
@@ -74,6 +73,7 @@
 	                  <div class="names">${taskName}</div>
 	                  <div class="time" id="missinTime">${dueDate}</div>
 	            </div>
+	            <div class="taskDescription">${taskDescription}</div>
 	             <div class="upProgress singleProgress" style="margin-bottom:40px;" id="singleUp">
 								<div class="proTitle" id="proTitle">上传进度</div>
 								<div  class="progress progress-striped active">

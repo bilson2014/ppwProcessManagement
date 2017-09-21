@@ -107,7 +107,7 @@ function createTalkInfo(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div class="contentItem"><div class="name">'+children[int].fromName+' 回复 :</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div> <div class="itemContent">'+children[int].content+'</div></div>';
+			body +='<div class="contentItem" style="padding-left:0.5rem"><div class="name">'+children[int].fromName+' 回复 :</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div> <div class="itemContent">'+children[int].content+'</div></div>';
 		}
 	}
 	var html = [
