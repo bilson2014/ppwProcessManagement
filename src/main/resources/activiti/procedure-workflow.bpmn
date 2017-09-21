@@ -309,6 +309,14 @@
     </sequenceFlow>
     <userTask id="usertask4" name="【供应商总监】审核策划供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
       <extensionElements>
+        <activiti:formProperty id="pt_teamName" name="供应商名称" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_budget" name="供应商预算" type="long" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_planContent" name="供应商策划内容" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_planTime" name="供应商策划交付时间" type="date" datePattern="yyyy-MM-dd" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_accessMan" name="对接人" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_accessManTelephone" name="对接人联系方式" type="string" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="condition_projectPlanTeamAllotPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
@@ -326,6 +334,12 @@
     </sequenceFlow>
     <userTask id="usertask5" name="【供应商总监】审核制作供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
       <extensionElements>
+        <activiti:formProperty id="pt_teamName" name="供应商名称" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_budget" name="供应商预算" type="long" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_makeContent" name="供应商制作内容" type="string" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_makeTime" name="项目制作交付时间" type="date" datePattern="yyyy-MM-dd" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="condition_projectPlanTeamAllotConfirmPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
