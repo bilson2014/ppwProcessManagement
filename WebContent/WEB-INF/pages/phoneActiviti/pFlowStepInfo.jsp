@@ -39,6 +39,7 @@
    <input type="hidden" id="taskId" value="${taskId}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
    <input type="hidden" id="projectName" value="${projectName}">
+   <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
 
 	<div class="pagePhone">
           	     <div class="title">
@@ -64,44 +65,10 @@
           	           <div class="itemContent" id="infoEndTime"></div>
           	     </div>
 
-          	     
           	     <div class="line"></div>
           	     
-          	     <div class="setMessageContent">
-	              <div class="item">
-                        <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">
-	                    <div class="content">
-	                            <div class="contentItem">
-	                                   <div class="name">名字时间20171818</div>
-	                                   <div class="itemContent">内容内容内容内</div>               
-	                            </div>
-	                             <div class="contentItem">
-	                                   <div class="name">名字时间20171818</div>
-	                                   <div class="itemContent">内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-	                                                                         内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>               
-	                            </div>
-	                    </div>
-	                    <input />
-	                    
-	                    <div class="itemLine"></div>
-	              </div>
-	              <div class="item">
-                        <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">
-	                    <div class="content">
-	                            <div class="contentItem">
-	                                   <div class="name">名字时间20171818</div>
-	                                   <div class="itemContent">内容内容内容内</div>               
-	                            </div>
-	                             <div class="contentItem">
-	                                   <div class="name">名字时间20171818</div>
-	                                   <div class="itemContent">内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-	                                                                         内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>               
-	                            </div>
-	                    </div>
-	                    <input />
-	                     <div class="itemLine"></div>
-	              </div>
-	       </div>
+          	     <div class="setMessageContent"></div>
+ 
 	</div>
  <jsp:include flush="true" page="pHead.jsp"></jsp:include> 
 </body>

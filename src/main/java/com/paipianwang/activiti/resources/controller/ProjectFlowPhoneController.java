@@ -24,6 +24,7 @@ import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
@@ -77,9 +78,15 @@ public class ProjectFlowPhoneController extends BaseController {
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		mv.addObject("taskName", task.getName());
 		mv.addObject("dueDate", task.getDueDate());
-
+		
+		ProjectCycleItem projectCycleItem = projectWorkFlowService.getCycleByTask(task.getTaskDefinitionKey());
+		
 		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
+		}
+		
+		if(projectCycleItem != null) {
+			mv.addObject("taskDescription", projectCycleItem.getDescription());
 		}
 		return mv;
 	}
@@ -251,6 +258,7 @@ public class ProjectFlowPhoneController extends BaseController {
 
 		return mv;
 	}
+	
 	/**
 	 * 修改项目信息页
 	 * @param taskId
@@ -263,7 +271,13 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editInfoView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItproject");
+		StringBuffer target = new StringBuffer();
+		target.append("redirect:/flowinfo");
+		target.append("/" + taskId);
+		target.append("/" + projectId);
+		target.append("/" + processInstanceId);
+		
+		ModelAndView mv = new ModelAndView(target.toString());
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -281,7 +295,13 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editUserView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItclient");
+		StringBuffer target = new StringBuffer();
+		target.append("redirect:/flowinfo");
+		target.append("/" + taskId);
+		target.append("/" + projectId);
+		target.append("/" + processInstanceId);
+		
+		ModelAndView mv = new ModelAndView(target.toString());
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -299,7 +319,13 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editPriceView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprice");
+		StringBuffer target = new StringBuffer();
+		target.append("redirect:/flowinfo");
+		target.append("/" + taskId);
+		target.append("/" + projectId);
+		target.append("/" + processInstanceId);
+		
+		ModelAndView mv = new ModelAndView(target.toString());
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -316,7 +342,13 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editTeamView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprovider");
+		StringBuffer target = new StringBuffer();
+		target.append("redirect:/flowinfo");
+		target.append("/" + taskId);
+		target.append("/" + projectId);
+		target.append("/" + processInstanceId);
+		
+		ModelAndView mv = new ModelAndView(target.toString());
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
