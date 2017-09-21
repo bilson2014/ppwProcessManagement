@@ -128,6 +128,7 @@
             </div>
             <div class="line"></div>
             <!--客戶信息  -->
+            <c:if test="${!empty user_info}"> 
             <div class="customerinfo">
                 <div class="custitle">
                     <span class='pic'></span>
@@ -142,7 +143,8 @@
                         </li>
                         <li>
                             <div>客户评级</div>
-                            <span>ffff${user_info["userLevel"]}</span>
+                            <span>${user_info["userLevel"]}</span>
+                            
                         </li>
                         <li>
                             <div>客户联系人</div>
@@ -156,7 +158,9 @@
                 </div>
             </div>
             <div class="line"></div>
+            </c:if>
             <!--供应商信息  -->
+            <c:if test="${not empty teamProduct_info || not empty teamPlan_info}">
             <div class="supplierinfo">
                 <div class="suptitle">
                     <span class='pic'></span>
@@ -215,6 +219,7 @@
                 </div>
             </div>
             <div class="line"></div>
+            </c:if> 
             <!--价格信息  -->
             <c:if test="${!empty price_info}">
                 <div class="priceinfo">

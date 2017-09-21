@@ -86,6 +86,7 @@
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="不同意"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${creativityDirectorConfirmSchemePlanTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-5C6B9B4A-970F-43B5-971D-D0B72EB53C00" sourceRef="sid-E04DE940-F8C8-4FD8-A22E-5232BD03D585" targetRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0"></sequenceFlow>
@@ -98,6 +99,7 @@
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="不同意"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${confirmUserProjectInfoTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-F14FA24E-C36B-4E3F-AFB9-435EDCE3A6D2"></exclusiveGateway>
@@ -160,6 +162,7 @@
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="不同意"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${confirmCustomerSatisfiedTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-57EAD5DB-0716-4AD2-A6BA-F01773319D27" sourceRef="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7" targetRef="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6"></sequenceFlow>
@@ -349,6 +352,7 @@
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
         </activiti:formProperty>
+        <activiti:taskListener event="complete" delegateExpression="${confirmProductTeamAllotTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
