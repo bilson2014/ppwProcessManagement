@@ -658,7 +658,7 @@ public class ProjectFlowController extends BaseController {
 		String dir = "redirect:/project/running-doing";
 		if (StringUtils.isNotBlank(client)) {
 			StringBuffer target = new StringBuffer();
-			target.append("redirect:/flowinfo");
+			target.append("redirect:/project/phone/flowinfo");
 			target.append("/" + taskId);
 			target.append("/" + projectId);
 			target.append("/" + processInstanceId);
@@ -688,7 +688,7 @@ public class ProjectFlowController extends BaseController {
 		String dir = "redirect:/project/running-doing";
 		if (StringUtils.isNotBlank(client)) {
 			StringBuffer target = new StringBuffer();
-			target.append("redirect:/flowinfo");
+			target.append("redirect:/project/phone/flowinfo");
 			target.append("/" + taskId);
 			target.append("/" + projectId);
 			target.append("/" + processInstanceId);

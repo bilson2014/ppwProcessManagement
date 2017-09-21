@@ -86,7 +86,7 @@ public class ProjectFlowPhoneController extends BaseController {
 		}
 		
 		if(projectCycleItem != null) {
-			mv.addObject("taskDescription", projectCycleItem);
+			mv.addObject("taskDescription", projectCycleItem.getDescription());
 		}
 		return mv;
 	}
