@@ -46,28 +46,27 @@ $e2:#222;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     padding-left: 0.399rem;
-                    border-width: 0.02rem;
-                    border-color: #D1D1D1;
+                    border:1px solid #D1D1D1;
                     position: absolute;
                     top: 3.39rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
                 .error {
                     font-size: $size30;
                     color: $red-base;
                     position: absolute;
                     top: 4.35rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
             }
             .phone {
                 div {
-                    width: 1.8rem;
+                   
                     line-height: 0.5rem;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     position: absolute;
-                    top: 4.86rem;
+                    top: 5rem;
                     left: 0.8rem;
                 }
                 input {
@@ -78,18 +77,17 @@ $e2:#222;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     padding-left: 0.399rem;
-                    border-width: 0.02rem;
-                    border-color: #D1D1D1;
+                   border:1px solid #D1D1D1;
                     position: absolute;
                     top: 4.79rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
                 .error {
                     font-size: $size30;
                     color: $red-base;
                     position: absolute;
                     top: 5.65rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
             }
         }
@@ -131,28 +129,27 @@ $e2:#222;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     padding-left: 0.399rem;
-                    border-width: 0.02rem;
-                    border-color: #D1D1D1;
+                    border:1px solid #D1D1D1;
                     position: absolute;
                     top: 8rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
                 .error {
                     font-size: $size30;
                     color: $red-base;
                     position: absolute;
                     top: 9rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
             }
             .phone {
                 div {
-                    width: 1.8rem;
+                  
                     line-height: 0.5rem;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     position: absolute;
-                    top: 9.43rem;
+                    top: 9.65rem;
                     left: 0.8rem;
                 }
                 input {
@@ -163,18 +160,17 @@ $e2:#222;
                     font-size: 0.34rem;
                     color: #D1D1D1;
                     padding-left: 0.399rem;
-                    border-width: 0.02rem;
-                    border-color: #D1D1D1;
+                   border:1px solid #D1D1D1;
                     position: absolute;
                     top: 9.4rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
                 .error {
                     font-size: $size30;
                     color: $red-base;
                     position: absolute;
                     top: 10.3rem;
-                    left: 3.2rem;
+                    left: 3.5rem;
                 }
             }
         }
@@ -238,6 +234,8 @@ $e2:#222;
 
 // 取消和确认
 .surebox {
+  position: fixed;
+    bottom: 3.03rem;
     .cancel {
         width: 3.6rem;
         height: 1rem;
