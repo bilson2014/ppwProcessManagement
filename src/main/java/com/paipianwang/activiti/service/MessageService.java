@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
+import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 
 public interface MessageService {
 
@@ -18,5 +19,6 @@ public interface MessageService {
 	void insertOperationLog(String projectId,String taskId,String taskName,String content,SessionInfo info);
 	
 	void insertDetailOperationLog(String projectId,String taskId,String taskName,String content,String fromId,String fromName, List<String> activitiGroup);
-
+	
+	void insertGageWayOperationLog(String projectId,String taskId,String taskName,String content, PmsProjectSynergy synergy);
 }
