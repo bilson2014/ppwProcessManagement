@@ -56,7 +56,7 @@
           	                 </div>
           	                 <div class="line"></div>
           	                 <div class="itemInfo" id="stageInfo1">
-          	                        <div class="setContent">
+          	                       <!--  <div class="setContent">
           	                               <img src="/resources/images/pFlow/sDeil.png" />
           	                               <img src="/resources/images/pFlow/check.png" />
           	                               <div>名字名字</div>
@@ -70,7 +70,7 @@
           	                               <img src="/resources/images/pFlow/sDeil.png" />
           	                               <img src="/resources/images/pFlow/check.png" />
           	                               <div>名字名字</div>
-          	                        </div>
+          	                        </div> -->
           	                 </div>
           	                 <div class="line"></div>
           	         </div>

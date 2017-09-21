@@ -23,6 +23,8 @@ function getMessageMore(){
 			$(this).parent().find('.reTalkItem').hide();
 			$('.reTalkItem').attr('data-content','');
 		}else{
+			$('.itemMore').removeClass('open');
+			$('.reTalkItem').hide();
 			$(this).addClass('open');
 			$(this).parent().find('.reTalkItem').show();
 			$('.reTalkItem').attr('data-content','');

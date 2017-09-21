@@ -11,6 +11,8 @@ function getMessageMore(){
 			$(this).parent().find('.reTalkItem').hide();
 			$('.reTalkItem').attr('data-content','');
 		}else{
+			$('.itemMore').removeClass('open');
+			$('.reTalkItem').hide();
 			$(this).addClass('open');
 			$(this).parent().find('.reTalkItem').show();
 			$('.reTalkItem').attr('data-content','');
@@ -38,15 +40,26 @@ function initStageInfoTop(res){
 	if(checkStatus == "completed"){
 		$('#stateImg').attr('src',"/resources/images/pFlow/c.png");
 		$('#stateWord').text('已完成');
+		$('#infoEndTitle').text('完成时间');
+		$('#stateWord').attr('style','color:#79D01B');
+		$('#infoEndTitle').text('完成时间');
+		$('#infoEndTime').text(formatDate(res.endTime));
 	}
 	if(checkStatus == "running"){
-		$('#stateImg').attr('src',"/resources/images/pFlow/toWati.png");
+		$('#stateImg').attr('src',"/resources/images/pFlow/sWait.png");
 		$('#stateWord').text('进行中');
+		$('#stateWord').attr('style','color:#fe5453');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueDate)
 	}
 	if(checkStatus == "futher"){
-		$('#stateImg').attr('src',"/resources/images/pFlow/sNoDo.png");
+		$('#stateImg').attr('src',"/resources/images/pFlow/tagError.png");
 		$('#stateWord').text('未开始');
+		$('#stateWord').attr('style','color:#F5A623');
+		$('#infoEndTitle').text('预计时间');
+		$('#infoEndTime').text(formatDate(res.dueDate));
 	}
+	
 }
 
 function loadStageInfoEven(){
