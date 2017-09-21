@@ -1058,11 +1058,16 @@ function createFieldHtml(prop, obj, className) {
 
 var formFieldCreator = {
 'string': function(prop, datas, className) {
+	var addClass ="";
+	if(prop.id =="pt_teamId"){
+		addClass = "hide";
+	}
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		
+		var result = "<div class='title"+hide+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title'>" + prop.name + "</div>";
+		var result = "<div class='title "+hide+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	var isWhat = prop.id.split('_')[0];; 
@@ -1070,6 +1075,11 @@ var formFieldCreator = {
 		if(prop.id == "pt_teamName"){
 			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += "<ul class='utoInfo'></ul>";
+			return result;
+		}
+		
+		if(prop.id =="pt_teamId"){
+			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			return result;
 		}
 		

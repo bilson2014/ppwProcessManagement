@@ -9,7 +9,7 @@
 
 body {
     height: auto;
-    background: black;
+    background: $gray-dark !important;
 }
 
 .pagePhone {
@@ -116,8 +116,7 @@ body {
     padding-left: 0.4rem;
     width: 100%;
     overflow: auto;
-    margin-top: 0.3rem;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.2rem;
     li {
         width: 1.5rem;
         height: 0.8rem;
@@ -125,7 +124,7 @@ body {
         font-size: $size36;
         color: $border-line;
         line-height: 0.8rem;
-        background: $gray;
+        background: #424242;
         display: inline-block;
         vertical-align: top;
         border-radius: 1rem;
@@ -151,13 +150,13 @@ body {
     width: 10rem;
     height: auto;
     margin: 0 auto;
-    background: $gray;
+    background-color:rgba(102,102,102,0.5);
     border-radius: 0.16rem;
     margin-top: 0.1rem;
     .cardTop {
         height: 1.31rem;
         width: 100%;
-        border-bottom: 1px solid $border-line;
+        border-bottom: 1px solid $gray-light;
         position: relative;
         padding-right: 0.4rem;
         padding-left: 0.4rem;
@@ -235,13 +234,13 @@ body {
     width: 10rem;
     height: auto;
     margin: 0 auto;
-    background: $gray;
+    background-color:rgba(102,102,102,0.5);
     border-radius: 0.16rem;
     margin-top: 0.1rem;
     .cardTop {
         height: 1.31rem;
         width: 100%;
-        border-bottom: 1px solid $border-line;
+        border-bottom: 1px solid $gray-light;
         position: relative;
         padding-right: 0.4rem;
         padding-left: 0.4rem;

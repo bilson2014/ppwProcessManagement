@@ -60,7 +60,7 @@
           	           <div class="itemContent" id="infoStartTime"></div>
           	     </div>
           	     <div class="itemWord">
-          	           <div class="itemTitle">结束时间</div>
+          	           <div class="itemTitle" id="infoEndTitle">结束时间</div>
           	           <div class="itemContent" id="infoEndTime"></div>
           	     </div>
 

@@ -145,13 +145,13 @@
             color: white;
             border-radius: 1rem;
             margin: 0 auto;
-            margin-top: 0.3rem;
-            margin-bottom: 0.3rem;
+            margin-top: 0.1rem;
+            margin-bottom: 0.6rem;
         }
 
         .itemLine {
             width: 100%;
             height: 1px;
-            border-bottom: 1px dashed $border-line;
+            border-bottom: 1px dashed $gray;
         }
     }
