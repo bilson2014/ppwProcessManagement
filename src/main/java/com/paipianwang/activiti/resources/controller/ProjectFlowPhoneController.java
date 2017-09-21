@@ -271,13 +271,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editInfoView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		StringBuffer target = new StringBuffer();
-		target.append("redirect:/flowinfo");
-		target.append("/" + taskId);
-		target.append("/" + projectId);
-		target.append("/" + processInstanceId);
-		
-		ModelAndView mv = new ModelAndView(target.toString());
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItproject");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -295,13 +289,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editUserView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		StringBuffer target = new StringBuffer();
-		target.append("redirect:/flowinfo");
-		target.append("/" + taskId);
-		target.append("/" + projectId);
-		target.append("/" + processInstanceId);
-		
-		ModelAndView mv = new ModelAndView(target.toString());
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItclient");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -319,13 +307,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editPriceView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		StringBuffer target = new StringBuffer();
-		target.append("redirect:/flowinfo");
-		target.append("/" + taskId);
-		target.append("/" + projectId);
-		target.append("/" + processInstanceId);
-		
-		ModelAndView mv = new ModelAndView(target.toString());
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprice");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
@@ -342,13 +324,7 @@ public class ProjectFlowPhoneController extends BaseController {
 	public ModelAndView editTeamView(@PathVariable("taskId") final String taskId,
 			@PathVariable("projectId") final String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId) {
-		StringBuffer target = new StringBuffer();
-		target.append("redirect:/flowinfo");
-		target.append("/" + taskId);
-		target.append("/" + projectId);
-		target.append("/" + processInstanceId);
-		
-		ModelAndView mv = new ModelAndView(target.toString());
+		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItprovider");
 		mv.addObject("taskId", taskId);
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);

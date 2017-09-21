@@ -281,7 +281,7 @@ public class ProjectFlowController extends BaseController {
 
 		SessionInfo info = getCurrentInfo(request);
 
-		if (StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
+		if (StringUtils.isNotBlank(projectId)) {
 
 			Map<String, Object> result = loadInformation(taskId, projectId, status, info);
 
@@ -368,7 +368,7 @@ public class ProjectFlowController extends BaseController {
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> loadInformation(final String taskId, final String projectId, final String status,
 			final SessionInfo info) {
-		if (StringUtils.isNotBlank(taskId) && StringUtils.isNotBlank(projectId)) {
+		if (StringUtils.isNotBlank(projectId)) {
 
 			Map<String, Object> result = new HashMap<String, Object>();
 
@@ -380,7 +380,7 @@ public class ProjectFlowController extends BaseController {
 
 			// 获取当前节点所在阶段 以及 备注信息
 			Map<String, String> state = null;
-			if (!ProjectFlowStatus.finished.getId().equals(status)) {
+			if (!ProjectFlowStatus.finished.getId().equals(status) || StringUtils.isNotBlank(taskId)) {
 				state = projectWorkFlowService.getTaskStateAndDescription(taskId);
 			}
 
@@ -396,7 +396,10 @@ public class ProjectFlowController extends BaseController {
 			result.put("teamProductMap", teamProductMap);
 			result.put("userMap", userMap);
 			result.put("synergyList", synergyList);
-			result.put("state", state);
+			
+			if(StringUtils.isNotBlank(taskId))
+				result.put("state", state);
+			
 			return result;
 		}
 		return null;
@@ -650,10 +653,16 @@ public class ProjectFlowController extends BaseController {
 
 	// 更新 项目信息、用户信息
 	@RequestMapping(value = "/edit/information", method = RequestMethod.POST)
-	public ModelAndView updateInformation(final HttpServletRequest request, String client) {
+	public ModelAndView updateInformation(final HttpServletRequest request, String client, final String taskId,
+			final String projectId, final String processInstanceId) {
 		String dir = "redirect:/project/running-doing";
 		if (StringUtils.isNotBlank(client)) {
-			dir = "redirect:/project/phone/projectFlow";
+			StringBuffer target = new StringBuffer();
+			target.append("redirect:/project/phone/flowinfo");
+			target.append("/" + taskId);
+			target.append("/" + projectId);
+			target.append("/" + processInstanceId);
+			dir = target.toString();
 		}
 
 		ModelAndView mv = new ModelAndView(dir);
@@ -674,10 +683,16 @@ public class ProjectFlowController extends BaseController {
 
 	// 更新团队信息
 	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
-	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client) {
+	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client, final String taskId,
+			final String projectId, final String processInstanceId) {
 		String dir = "redirect:/project/running-doing";
 		if (StringUtils.isNotBlank(client)) {
-			dir = "redirect:/project/phone/projectFlow";
+			StringBuffer target = new StringBuffer();
+			target.append("redirect:/project/phone/flowinfo");
+			target.append("/" + taskId);
+			target.append("/" + projectId);
+			target.append("/" + processInstanceId);
+			dir = target.toString();
 		}
 		ModelAndView mv = new ModelAndView(dir);
 

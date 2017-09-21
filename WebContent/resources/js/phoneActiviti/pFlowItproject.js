@@ -74,12 +74,8 @@ function projectchange() {
         if (Grade == '0') {
             Grades = 'E';
         }
-
         $('#pf_projectGradeInput').val(res.projectFlow.pf_projectGrade);
         $('#setinputs').text(Grades);
-        console.log('11111111111111');
-        console.log($('#pf_projectGradeInput').val());
-
         // 获取项目来源
         var num = res.projectFlow.pf_projectSource;
         var name;
@@ -238,7 +234,7 @@ function initSelectIos(nnn) {
         callback: function(selectOneObj) {
             $('#setinput').attr('data-id', selectOneObj.id);
             $('#setinput').text(selectOneObj.value);
-            $('#pf_ResourInput').val(selectOneObj.value);
+            $('#pf_ResourInput').val(selectOneObj.id);
         }
     });
 }
