@@ -2,10 +2,8 @@ package com.paipianwang.activiti.task.listener;
 
 import java.util.List;
 
-import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
-import org.activiti.engine.identity.Group;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
@@ -16,54 +14,43 @@ import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
 
 /**
- * 多人联合内审 监听器
+ * 【销售】与客户确认提案信息（通过/驳回）
  * @author jacky
  *
  */
-@Component
-public class AuditCounterSignCompleteListener implements TaskListener {
+@Component("confirmUserProjectInfoTaskListener")
+public class ConfirmUserProjectInfoTaskListener implements TaskListener {
 
-	private static final long serialVersionUID = 6164221672207305686L;
+	private static final long serialVersionUID = 8640907282237274971L;
 
 	@Override
 	public void notify(DelegateTask delegateTask) {
-		// 审核判断
-		String approved = (String) delegateTask.getVariable("approved");
-        if (approved.equals("true")) {
-            Long agreeCounter = (Long) delegateTask.getVariable("approvedCounter");
-            delegateTask.setVariable("approvedCounter", agreeCounter + 1);
-        }
-
-        // 添加系统日志
+		String confirm = (String) delegateTask.getVariable("condition_cutomerconfirmPass");
+		String group = "sale";
+		
 		final String taskId = delegateTask.getId();
 		final String taskName = delegateTask.getName();
 		final String projectId = delegateTask.getExecution().getProcessBusinessKey();
-		
-		// 办理人
-		final String assignee = delegateTask.getAssignee();
-		IdentityService identityService = delegateTask.getExecution().getEngineServices().getIdentityService();
-		
-		// 查询办理人身份
-		Group group = identityService.createGroupQuery().groupMember(assignee).singleResult();
 		
 		// 查询执行人的角色组以及真实姓名
 		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 		PmsProjectSynergyFacade pmsProjectSynergyFacade = (PmsProjectSynergyFacade) context.getBean("pmsProjectSynergyFacade");
 		MessageService messageService = (MessageService) context.getBean("messageService");
 
-		List<PmsProjectSynergy> synergys = pmsProjectSynergyFacade.getSynergys(projectId, group.getId());
+		List<PmsProjectSynergy> synergys = pmsProjectSynergyFacade.getSynergys(projectId, group);
 		
 		String content = "";
-		if ("true".equals(approved)) {
-			content = "通过了 联合内审";
-		} else if ("false".equals(approved)) {
-			content = "驳回了 联合内审";
+		if ("true".equals(confirm)) {
+			content = "通过了 与客户确认提案信息";
+		} else if ("false".equals(confirm)) {
+			content = "驳回了 与客户确认提案信息";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {
 			PmsProjectSynergy synergy = synergys.get(0);
 			messageService.insertGageWayOperationLog(projectId, taskId, taskName, content, synergy);
 		}
+
 	}
 
 }
