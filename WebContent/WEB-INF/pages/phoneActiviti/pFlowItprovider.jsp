@@ -43,7 +43,7 @@
 
         <div class="pagePhone">
             <!--供应商信息修改  -->
-            <form method="post" action="/project/edit/teamInformation" id="toProForm">
+            <form method="post" action="/project/edit/teamInformation?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toProForm">
                 <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
                 <div class="providerbox">
                     <!--策划供应商  -->

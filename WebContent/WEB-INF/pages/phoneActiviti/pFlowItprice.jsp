@@ -40,7 +40,7 @@
         <input type="hidden" id="projectName" value="${projectName}">
         <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
         <div class="pagePhone">
-            <form method="post" action="/project/edit/information" id="toPriceForm">
+            <form method="post" action="/edit/information?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toPriceForm">
                 <input type="hidden" id="priceId" name="pf_projectId">
                 <!--价格信息修改  -->
                 <div class="pricebox">

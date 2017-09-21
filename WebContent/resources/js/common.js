@@ -7,18 +7,21 @@ var counts = 120; // 间隔函数，1秒执行
 var curCounts = 0; // 当前剩余秒数 - 注册
 var InterValObj; // timer变量，控制时间 - 注册
 
+
 <<<<<<< HEAD
+
+//var UrlDo = "www.apaipian.com";
+var UrlDo = "test.apaipian.com";
+//var UrlDo = "localhost";
+//var UrlDo = "192.168.0.157";
+
+=======
 //var UrlDo = "www.apaipian.com";
 //var UrlDo = "test.apaipian.com";
 var UrlDo = "localhost";
 //var UrlDo = "192.168.0.101";
-=======
 
-//var UrlDo = "www.apaipian.com";
-//var UrlDo = "test.apaipian.com";
-var UrlDo = "localhost";
-//var UrlDo = "192.168.0.157";
->>>>>>> 3bc1c355e3988665c05e3e504c6d9a9384d2222f
+>>>>>>> 9dea43a975bdc3c8a2e72c21b7dd2f21c4c67157
 
 
 

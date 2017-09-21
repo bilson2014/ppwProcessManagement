@@ -15,6 +15,9 @@
         margin-top: 0.3rem;
         font-size: $size36;
         color: $gray-light;
+        a{
+            color:$red-base;
+        }
     }
 
     .setContent {
