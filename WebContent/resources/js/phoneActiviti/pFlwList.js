@@ -143,7 +143,7 @@ function createWaitCard(res){
 	    isWho = '<div class="user">负责人:'+res.pmsProjectFlow.principalName+'</div>';  
 	}
 	   var nowData = Date.parse(new Date());
-	   var time =res.pmsProjectFlow.dueDate;
+	   var time =res.dueDate;
 	   var lastTime = (time - nowData);
 	   var lastHour =(time - nowData)/3600000;
 	   if(lastHour < 0){
@@ -205,7 +205,7 @@ function createStateOtherCard(res,stage){
 	}
 	if(stage == 0){
 	if(taskStatus == "running" || taskStatus == null){
-			time ="截止于"+formatDate(res.pmsProjectFlow.createTime);
+			time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
 			if(taskStage == '沟通阶段'){
 				 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 			}
