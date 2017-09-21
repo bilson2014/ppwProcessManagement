@@ -234,7 +234,7 @@ function initSelectIos(nnn) {
         callback: function(selectOneObj) {
             $('#setinput').attr('data-id', selectOneObj.id);
             $('#setinput').text(selectOneObj.value);
-            $('#pf_ResourInput').val(selectOneObj.value);
+            $('#pf_ResourInput').val(selectOneObj.id);
         }
     });
 }
