@@ -45,7 +45,7 @@
 
         <div class="pagePhone">
             <!--项目信息修改  -->
-            <form method="post" action="/project/edit/information" id="toProjectForm">
+            <form method="post" action="/edit/information?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toProjectForm">
                 <input type="hidden" id="proId" name="pf_projectId" value="${flow_info['projectId']}">
                 <div class="projectbox">
                     <!--项目名称 -->
