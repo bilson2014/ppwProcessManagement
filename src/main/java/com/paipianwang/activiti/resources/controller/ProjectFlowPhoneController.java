@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,10 +224,14 @@ public class ProjectFlowPhoneController extends BaseController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/flowinfo/{taskId}/{projectId}/{processInstanceId}")
 	public ModelAndView flowInfoView(@PathVariable("taskId") final String taskId,
-			@PathVariable("projectId") final String projectId,
+			@PathVariable("projectId") String projectId,
 			@PathVariable("processInstanceId") final String processInstanceId, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView("/phoneActiviti/pFlowItem");
 		mv.addObject("taskId", taskId);
+		if(StringUtils.isNotEmpty(projectId))
+			if(projectId.indexOf(",") > -1)
+				projectId = projectId.split(",")[0];
+		
 		mv.addObject("projectId", projectId);
 		mv.addObject("processInstanceId", processInstanceId);
 		SessionInfo info = getCurrentInfo(request);
