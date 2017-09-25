@@ -41,7 +41,7 @@
         <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
 
         <div class="pagePhone">
-            <form method="post" action="/edit/information?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toCusForm">
+            <form method="post" action="/project/edit/information?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toCusForm">
                 <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
                 <!--客户信息修改  -->
                 <div class="clientbox">
