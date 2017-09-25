@@ -425,7 +425,11 @@
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
-	                       
+	                   <!-- 留言区的权限判断 -->
+	                   <r:identity role="provider"> 
+	                   </r:identity>
+	              
+	                    <r:identity role="employee">
 	                       <div class="projectTitle">留言评论区</div>
 	                       <div class="toSetArea">
 	                             <textarea id="talkInfo"></textarea>
@@ -459,6 +463,43 @@
 	                                  <div></div>
 	                             </div>
 	                       </div>
+	                	</r:identity>
+	                	<r:identity role="customer">
+	                       <div class="projectTitle">留言评论区</div>
+	                       <div class="toSetArea">
+	                             <textarea id="talkInfo"></textarea>
+	                             <div class="upInfo" style="display:block">
+	                                 <div class="btn-c-r" id="submitTalkInfo">提交</div>
+	                             </div>
+	                             <div class="errorSpan errorSpans" id="areaError"></div>
+	                       </div>
+	                       <div class="setAreaDiv">
+	                        
+	                          <!--    <div class="areaItem">
+	                                 <div class="infoItem">
+	                                     <img src="/resources/images/flow/def.png">
+	                                     <div class="info">策划人：完成 上传策划方案 任务</div>
+	                                     <div class="time">
+	                                        <span>发布时间：22017-07-09  14：00</span>
+	                                        <div class="openTalk"></div>
+	                                     </div>
+	                                 </div>
+	                                 <div class="infoContent">
+	                                       <div>负责人:<span>策划方案需要调整一下</span></div>
+	                                       <div>负责人:<span>策划方案需要调整一下</span></div>
+	                                       <input>
+	                                 </div>
+	                                 <div class="upInfo">
+	                                            <div class="btn-c-r">提交</div>
+	                                 </div>
+	                            </div> -->
+	                             <div class="getMore hide">
+	                                  <div>展开更多</div>
+	                                  <div></div>
+	                             </div>
+	                       </div>
+	                	</r:identity>
+	                
 	                </div>
 	           </div>              
 	    </div>
@@ -488,7 +529,16 @@
 	                  <div class="title" id="infoEndTitle">截止时间 : </div>
 	                  <div class="content" id="infoEndTime">2017-11-12</div>
 	             </div>
-	             <div class="itemHeight" id="itemHeightInfo"></div>
+	             <!--留言区的权限判断  -->
+	             <r:identity role="customer">
+	             	<div class="itemHeight" id="itemHeightInfo"></div>
+	             </r:identity>
+	             <r:identity role="employee">
+	             	<div class="itemHeight" id="itemHeightInfo"></div>
+	             </r:identity>
+	             
+	             <r:identity role="provider">
+	             </r:identity>
             </div>
      </div>
 </div>
