@@ -24,10 +24,51 @@ $().ready(function() {
 	pageInit();
 	initDaibanTime();
 	initResouces();
+	initStateBtn();
 });
 
 function getScroll(){
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
+}
+
+function initStateBtn(){
+	 $('#isBack').off('click').on('click',function(){
+		 $('#isReView').show();
+	 });
+	 
+	 $('#isPause').off('click').on('click',function(){
+		 $('#isPauseModel').show();
+		 $('#puaseReasonError').attr('data-content','');
+	 });
+	 
+	 $('#checkpause').off('click').on('click',function(){
+		 $('#puaseReasonError').attr('data-content','');
+		 var checkVal = $('#puaseReason').val();
+		 if(checkVal !="" && checkVal !=null && checkVal!=undefined){
+			   $('#toProjectpause').submit();
+		   }else{
+			   $('#puaseReasonError').attr('data-content','请填写暂停原因');
+		   }
+	 });
+	 
+	 $('#isCancle').off('click').on('click',function(){
+		 $('#isCancleModel').show();
+		 $('#cancleReasonError').attr('data-content','');
+	 });
+	 
+	 $('#checkcancle').off('click').on('click',function(){
+		 $('#cancleReasonError').attr('data-content','');
+		 var checkVal = $('#cancleReason').val();
+		 if(checkVal !="" && checkVal !=null && checkVal!=undefined){
+			   $('#toProjectcancle').submit();
+		   }else{
+			   $('#cancleReasonError').attr('data-content','请填写取消原因');
+		   }
+	 });
+	 
+	 
+	 
+	 
 }
 
 //初始化来源
@@ -1064,10 +1105,10 @@ var formFieldCreator = {
 	}
 	if(prop.required){
 		
-		var result = "<div class='title"+hide+"'>" + prop.name + "<span> *</span></div>";
+		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title "+hide+"'>" + prop.name + "</div>";
+		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	var isWhat = prop.id.split('_')[0];; 
@@ -1433,6 +1474,7 @@ function getFileInfo(){
 					 var html =createFileInfo(newList[int]);
 					 body.append(html);
 				}
+				shareEven();
 				getHeight();
 		}
 	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
@@ -1515,6 +1557,7 @@ function createFileInfo(res){
 	}
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
+	var url = getDfsHostName() + res.resourcePath;
 	var html = [
 		'<div class="filmItem">                                     ',
         '<img class="filmImg" src="'+src+'"> ',
@@ -1523,6 +1566,7 @@ function createFileInfo(res){
         '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
         '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
+        '      <div class="share" data-content="'+url+'"></div>                        ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
         '</div>                                                             ',
@@ -1625,6 +1669,21 @@ function createOption(value,text,price){
 	
 	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 	return html;
+}
+
+function shareEven(){
+	$('.share').off('click').on('click',function(){
+		$('#isCopy').show();
+		var url = $(this).attr('data-content');
+		$('#setInfoCopy').text(url);
+		var clip = new ZeroClipboard($("#checkInfo"));
+		clip.on("copy", function(e) {
+			$('#checkInfo').val('已复制');
+			$('#checkInfo').attr("class","");
+			$('#checkInfo').addClass('btn-c-g');
+		});
+		
+	});
 }
 
 

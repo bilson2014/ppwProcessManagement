@@ -19,6 +19,7 @@
 <spring:url value="/resources/images" var="imgPath" />
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <spring:url value="/resources/lib/json/ezmorph.jar" var="ezmorphJs" />
+<spring:url value="/resources/js/phoneActiviti/ZeroClipboard.js" var="zclipJs" />
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -75,9 +76,9 @@
 	                     	<div class="proControl">
 	                                                        	项目操作
 		                         <div class="newControl">
-		                              <a id="isPause" href="/project/suspendProcess/${processInstanceId}/${projectId}"><div id="">暂停项目</div></a>
-		                              <a id="isBack"  href="/project/activateProcess/${processInstanceId}/${projectId}"><div id="">恢复项目</div></a>
-		                              <a id="isCancle" href="/project/cancelProcess/${processInstanceId}/${projectId}"><div id="">取消项目</div></a>
+		                              <a id="isPause" <%-- href="/project/suspendProcess/${processInstanceId}/${projectId}" --%>><div id="">暂停项目</div></a>
+		                              <a id="isBack"  <%-- href="/project/activateProcess/${processInstanceId}/${projectId}" --%>><div id="">恢复项目</div></a>
+		                              <a id="isCancle"<%--  href="/project/cancelProcess/${processInstanceId}/${projectId}" --%>><div id="">取消项目</div></a>
 		                         </div>
 	                     	</div>
 	                     </r:group>
@@ -420,8 +421,10 @@
 	                        </c:if>
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
-	                        <div class="conMod btn-c-r">版本管理</div>
-	                        <div class="upFile btn-c-r">文件更新</div>
+		                   <r:group role="sale" role2="saleDirector" >
+		                        <div class="conMod btn-c-r">版本管理</div>
+		                        <div class="upFile btn-c-r">文件更新</div>
+		                   </r:group>
 	                   </div>
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
@@ -955,8 +958,7 @@
 									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
 								</div>
 							</div>
-            <div class="otherContent" id="setAutoInfo">
-           </div>
+            <div class="otherContent" id="setAutoInfo"></div>
 </div>
 </div>
 
@@ -993,7 +995,7 @@
  
 
  <!-- 提示信息 -->
-<div class="cusModel" id="infoModel">
+<div class="cusModel" id="infoModel" >
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">操作确认</div>
@@ -1004,6 +1006,75 @@
                       <div class="btn-c-g" id="cancle">取消</div>
                       <div class="btn-c-r" id="checkSure">确认</div>
             </div>
+      </div>    
+</div>
+
+ <!-- 提示信息 -->
+<div class="cusModel" id="isReView" >
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">恢复确认</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="warnInfo">确认恢复吗</div>
+           <a id="isBack"  href="/project/activateProcess/${processInstanceId}/${projectId}">
+			    <div class="btnMid margin-bottom">
+	                      <div class="btn-c-g" id="cancle">取消</div>
+	                      <div class="btn-c-r">确认</div>
+	            </div>
+	       </a>     
+      </div>    
+</div>
+
+ <!-- 提示信息 -->
+<div class="cusModel" id="isPauseModel">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">暂停确认</div>
+                   <div class="closeModel"></div>
+            </div>
+            <form method="post" action="/project/suspendProcess/${processInstanceId}/${projectId}" id="toProjectpause"> 
+               <div class="ReasonItem" id="puaseReasonError">
+		            <div class="warnReason">暂停原因</div>
+		            <textarea id="puaseReason" name="remark"></textarea>
+	           </div>  
+			    <div class="btnMid margin-bottom">
+	                      <div class="btn-c-g" id="cancle">取消</div>
+	                      <div class="btn-c-r" id="checkpause">确认</div>
+	            </div>
+            </form>
+      </div>    
+</div>
+ <!-- 提示信息 -->
+<div class="cusModel" id="isCancleModel">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">取消确认</div>
+                   <div class="closeModel"></div>
+            </div>
+            <form method="post" action="/project/cancelProcess/${processInstanceId}/${projectId}" id="toProjectcancle"> 
+               <div class="ReasonItem" id="cancleReasonError">
+		            <div class="warnReason">取消原因</div>
+		            <textarea id="cancleReason" name="remark"></textarea>
+	           </div>  
+			    <div class="btnMid margin-bottom">
+	                      <div class="btn-c-g" id="cancle">取消</div>
+	                      <div class="btn-c-r" id="checkcancle">确认</div>
+	            </div>
+            </form>
+      </div>    
+</div>
+ <!-- 提示信息 -->
+<div class="cusModel" id="isCopy">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">分享</div>
+                   <div class="closeModel"></div>
+            </div>
+		        <div class="copyUrl" id="setInfoCopy"></div>
+		        <div class="midDiv">
+	                <input class="btn-c-r" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
+	            </div>
       </div>    
 </div>
 
@@ -1023,6 +1094,7 @@
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
 <script type="text/javascript" src="${webuploaderJs}"></script>
+<script type="text/javascript" src="${zclipJs}"></script>
 <script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${textFlowIJs}"></script>
 </body>

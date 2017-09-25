@@ -8,8 +8,8 @@ var curCounts = 0; // 当前剩余秒数 - 注册
 var InterValObj; // timer变量，控制时间 - 注册
 
 //var UrlDo = "www.apaipian.com";
-//var UrlDo = "test.apaipian.com";
-var UrlDo = "localhost";
+var UrlDo = "test.apaipian.com";
+//var UrlDo = "localhost";
 //var UrlDo = "192.168.0.157";
 
 $().ready(function(){
@@ -69,18 +69,7 @@ $().ready(function(){
 	    });
 	//end
 	
-	//检测用户是否完善登录名和密码 wanglc
-	loadData(function(flag){
-		if(!flag){
-			$(".right-part").append('<div class="warn">!</div>');
-			//.append('<div class="warnWindom"><div class="divImg"></div><div></div></div>');
-			//如果是供应商和客户info页面
-			var url = window.location.href;
-			if(url.indexOf("provider/company-info") != -1 || url.indexOf("user/info") != -1){
-				$("#safe-point").append('<div class="warn" style="left: 72px;">!</div>');
-			}
-		}
-	}, getContextPath() + '/loginName/validate');
+
 	
 	playVideo();
 	chickShowOrder();

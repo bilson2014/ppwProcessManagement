@@ -36,6 +36,8 @@ function addMessage(){
 	$('#submitTalkInfo').off('click').on('click',function(){
 		var projectId = $('#projectId').val();
 		var talkInfo = $('#addmessage').val();
+		var taskId = $('#taskId').val();
+		var taskName = $('#taskName').val();
 		$('#submitTalkInfo').off('click');
 		if(talkInfo == "" || talkInfo == null || talkInfo == undefined){
 			$('.setMessage').attr("data-content",'留言不能为空');
@@ -49,6 +51,8 @@ function addMessage(){
 				addMessage();
 			}
 		}, getContextPath() + '/message/addTopic',$.toJSON({
+			taskId:taskId,
+			taskName:taskName,
 			projectId:projectId,
 			content:talkInfo
 		}));

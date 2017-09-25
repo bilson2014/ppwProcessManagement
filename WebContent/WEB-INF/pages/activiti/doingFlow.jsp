@@ -48,8 +48,8 @@
 	<div class="productListAreas">
 	           <div class="waitWork">
 	                 <div class="titleNameWork">
-	                    <div class="name">项目名称</div>
-	                    <input>
+	                    <div class="name">项目搜索</div>
+	                    <input placeholder="项目名称或负责人姓名">
 	                    <div class="search btn-c-r">搜索</div>
 	                    <div class="errorItem errorTr">搜索不能为空</div>
 	                    <r:group role="sale" >

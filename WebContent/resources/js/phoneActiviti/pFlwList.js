@@ -8,8 +8,6 @@ $().ready(function(){
 });
 
 
-
-
 function tagEven(){
 	$('.menuTag div').off('click').on('click',function(){
 		var id = $(this).attr('data-id');
@@ -18,6 +16,7 @@ function tagEven(){
 			$('.menuTag').removeClass('tagTwo');
 			$('.menuTag').removeClass('tagThree');
 			$('.search').hide();
+			$('#daiban').hide();
 			loadPause();
 		}
 		if(id == 1){
@@ -27,6 +26,7 @@ function tagEven(){
 			$('.search').show();
 			$('.search li').removeClass('checkSearch');
 			$('#getAll').addClass('checkSearch');
+			$('#daiban').hide();
 			loadDoing();
 		}
 		if(id == 2){
@@ -34,6 +34,7 @@ function tagEven(){
 			$('.menuTag').removeClass('tagTwo');
 			$('.menuTag').addClass('tagThree');
 			$('.search').hide();
+			$('#daiban').hide();
 			loadFinish();
 		}
 	});
@@ -64,6 +65,9 @@ function loadDoing(){
 				 }
 			     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
 			 }	
+			 else{
+				 $('#daiban').show();
+			 }	
 		if(runningTasks != null && runningTasks != undefined){
 			for (var int = 0; int < runningTasks.length; int++) {
 				 var html = createStateOtherCard(runningTasks[int],0);
@@ -85,6 +89,8 @@ function loadPause(){
 				 otherCard.append(html);
 			 }
 		     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
+		 }else{
+			 $('#daiban').show();
 		 }	
 	}, getContextPath() + '/project/ajax/loadSuspendList',null);	
 }
@@ -105,7 +111,9 @@ function loadFinish(){
 				 otherCard.append(html);
 			 }
 		     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
-		 }
+		 }else{
+			 $('#daiban').show();
+		 }	
 
 	}, getContextPath() + '/project/ajax/loadFinishedList',null);
 }

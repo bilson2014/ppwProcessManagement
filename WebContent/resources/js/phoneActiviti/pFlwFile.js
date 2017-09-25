@@ -120,7 +120,7 @@ function createFileInfo(res){
 		'	        <img class="file" src="'+src+'">           ',
 		'	        <img class="fileMore" src="/resources/images/pFlow/fileMore.png">  ',
 		'	        <div class="fileContent">                                   ',
-		'	              <div>'+res.uploaderName+'</div>                                     ',
+		'	              <div>'+checkName+'</div>                                     ',
 		'	              <div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+''+checkName+'</div>                                 ',
 		'	        </div>                                                      ',
 		'	        <div class="fileContentMore">                               ',

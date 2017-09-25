@@ -37,6 +37,7 @@
 
    <input type="hidden" id="projectId" value="${projectId}">
    <input type="hidden" id="taskName" value="${taskName}">
+   <input type="hidden" id="taskId" value="${taskId}">
    <input type="hidden" id="processInstanceId" value="${processInstanceId}">
    <input type="hidden" id="projectName" value="${projectName}">
    <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">

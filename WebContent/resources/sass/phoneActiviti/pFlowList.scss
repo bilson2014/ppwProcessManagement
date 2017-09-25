@@ -48,8 +48,8 @@ body {
 
 .menuTag {
     height: 1.25rem;
-    border-top: 1px solid $s97;
-    border-bottom: 1px solid $s97;
+    border-top: 1px solid $gray;
+    border-bottom: 1px solid $gray;
     font-size: 0;
     position: fixed;
     width: 100%;
@@ -323,3 +323,21 @@ body {
         }
     }
 }
+
+
+    #daiban {
+        width: 100%;
+        font-size: 0;
+        text-align: center;
+        display: none;
+        img {
+            width: 4rem;
+            height: 3.24rem;
+            margin-top: 1.5rem;
+        }
+        div {
+            font-size: 0.46rem;
+            color: $gray-light;
+            margin-top: 1rem;
+        }
+    }
