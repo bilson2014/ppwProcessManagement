@@ -60,10 +60,17 @@ function selectEven(){
 		initSelectIos();
 		$(window.parent.document).find('.pagePhone').scrollTop(9999);
 	})
+	
+	$('.orderSelect div').off('click').on('click',function(){
+		initSelectIos();
+		$(window.parent.document).find('.pagePhone').scrollTop(9999);
+	})
+	
+	
 }
 
 function initSelectIos(){
-	var data = [ {
+	/*var data = [ {
 		'id' : '10001',
 		'value' : '看情况'
 	}, {
@@ -81,7 +88,7 @@ function initSelectIos(){
 	}, {
 		'id' : '10006',
 		'value' : '10万元及以上'
-	}, ];
+	}, ];*/
 	var bankSelect = new IosSelect(1, [ data ], {
 		title : title,
 		itemHeight : 35,
