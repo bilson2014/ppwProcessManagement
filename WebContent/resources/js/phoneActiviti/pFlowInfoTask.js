@@ -60,10 +60,17 @@ function selectEven(){
 		initSelectIos();
 		$(window.parent.document).find('.pagePhone').scrollTop(9999);
 	})
+	
+	$('.orderSelect div').off('click').on('click',function(){
+		initSelectIos();
+		$(window.parent.document).find('.pagePhone').scrollTop(9999);
+	})
+	
+	
 }
 
 function initSelectIos(){
-	var data = [ {
+	/*var data = [ {
 		'id' : '10001',
 		'value' : '看情况'
 	}, {
@@ -81,7 +88,7 @@ function initSelectIos(){
 	}, {
 		'id' : '10006',
 		'value' : '10万元及以上'
-	}, ];
+	}, ];*/
 	var bankSelect = new IosSelect(1, [ data ], {
 		title : title,
 		itemHeight : 35,
@@ -221,7 +228,7 @@ function addForm() {
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
 		if(hasPicker){
-			if(!isIos()){
+			if(isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
 				$('#daibanword').html('iOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
@@ -252,7 +259,7 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];; 
 			if (prop.writable === true) {
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.name+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
@@ -263,7 +270,7 @@ var formFieldCreator = {
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-			 		result += "<input readonly class='autoSelect "+isCheck+" ' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
+			 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
 			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 			 		$.each(datas[prop.id], function(k, v) {
 			 			data.push(new city(k, v));
@@ -272,7 +279,7 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
 			}
 			return result;
 		},
@@ -287,7 +294,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		},
@@ -302,7 +309,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		},
@@ -325,7 +332,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		}

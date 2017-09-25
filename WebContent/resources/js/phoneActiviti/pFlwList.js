@@ -58,7 +58,7 @@ function loadDoing(){
 	loadData(function(res){  
 			var gTasks = res.gTasks;
 			var runningTasks = res.runningTasks;
-			if(gTasks != null && gTasks != undefined){
+			if(gTasks != null && gTasks != undefined && gTasks != ''){
 				for (var int = 0; int < gTasks.length; int++) {
 					 var html = createWaitCard(gTasks[int]);
 					 setMission.append(html);
@@ -83,7 +83,7 @@ function loadPause(){
 	var otherCard  =  $('.setCard');
 	otherCard.html('');
 	loadData(function(res){  
-		if(res != null && res != undefined){
+		if(res != null && res != undefined && res != ''){
 			for (var int = 0; int < res.length; int++) {
 				 var html = createStateOtherCard(res[int],1);
 				 otherCard.append(html);
@@ -101,7 +101,7 @@ function loadFinish(){
 	otherCard.html('');
 	loadData(function(res){  
 
-		if(res != null && res != undefined){
+		if(res != null && res != undefined && res != ''){
 			for (var int = 0; int < res.length; int++) {				
 				if(res[int].pmsProjectFlow.projectStatus == 'finished'){
 					var html = createStateOtherCard(res[int],2);

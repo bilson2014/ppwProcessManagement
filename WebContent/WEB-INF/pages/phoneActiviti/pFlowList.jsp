@@ -95,7 +95,7 @@
 	
 	 <div id="daiban">
                              <img src="/resources/images/pFlow/daiban.png">
-                             <div id="daibanword">您没有任何待办任务~</div>	                 
+                             <div id="daibanword">您没有任何任务~</div>	                 
 	 </div>
 	<!-- video-->
 	<script type="text/javascript" src="${pFlwListJs}"></script>
