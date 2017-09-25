@@ -221,7 +221,7 @@ function addForm() {
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
 		if(hasPicker){
-			if(!isIos()){
+			if(isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
 				$('#daibanword').html('iOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
@@ -263,7 +263,7 @@ var formFieldCreator = {
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-			 		result += "<input readonly class='autoSelect "+isCheck+" ' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
+			 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
 			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 			 		$.each(datas[prop.id], function(k, v) {
 			 			data.push(new city(k, v));
@@ -272,7 +272,7 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
 			}
 			return result;
 		},
@@ -287,7 +287,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		},
@@ -302,7 +302,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		},
@@ -325,7 +325,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly/>";
 			}
 			return result;
 		}

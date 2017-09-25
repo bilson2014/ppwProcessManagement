@@ -1125,7 +1125,7 @@ var formFieldCreator = {
 		}
 		
 	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-	    	result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+	    	result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 	 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 	 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 	 		result += "<ul class='autoSelectUl'>";
@@ -1137,14 +1137,14 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
 	}
 	return result;
 },
@@ -1159,7 +1159,7 @@ var formFieldCreator = {
 	if (prop.writable === true) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1174,7 +1174,7 @@ var formFieldCreator = {
 	if (prop.writable === true) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1187,7 +1187,7 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	if (prop.writable === true) {
-		result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 		result += "<ul class='autoSelectUl'>";
@@ -1196,7 +1196,7 @@ var formFieldCreator = {
 		});
 		result += "</ul>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 }
