@@ -252,7 +252,7 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];; 
 			if (prop.writable === true) {
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.name+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
