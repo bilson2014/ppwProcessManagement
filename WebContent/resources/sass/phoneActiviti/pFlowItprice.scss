@@ -9,6 +9,7 @@ $e2:#222;
 // 价格信息修改
 .pricebox {
     // 预估价格
+    
     .porecast {
         div {
             font-size: 0.34rem;
@@ -45,8 +46,7 @@ $e2:#222;
 
 // 取消和确认
 .surebox {
-    position: fixed;
-    bottom: 3.03rem;
+    margin-top: 0.5rem;
     .cancel {
         width: 3.6rem;
         height: 1rem;

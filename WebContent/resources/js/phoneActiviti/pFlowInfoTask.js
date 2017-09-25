@@ -21,9 +21,15 @@ function isIos(){
 function checkState(){
 	var href = window.location.href;
     var state = href.substr(href.lastIndexOf("?")+1,href.length);
-    if(state.trim() != "task"){
+    $(window.parent.document).find('.footBot #toFile').attr('data-content',$('#url').val());
+    $(window.parent.document).find('.footBot #toMessage').attr('data-content',$('#url').val());
+    $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val());
+    $(window.parent.document).find('.footBot #toFlow').attr('data-content',$('#url').val());
+    if(state.trim()!= "task"){
     	$('#daiban').show();
+    	$(window.parent.document).find('.footBot #toMission').attr('data-content',$('#url').val());
     }else{
+    	$(window.parent.document).find('.footBot #toMission').attr('data-content',$('#url').val()+"?task");
     	    selectEven();
     		UploadFile();
     		addForm(); 
@@ -215,10 +221,10 @@ function addForm() {
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
 		if(hasPicker){
-			if(isIos()){
+			if(!isIos()){
 				$('.dynamic-form-table').hide();
 				$('#daiban').show();
-				$('#daibanword').html('IOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
+				$('#daibanword').html('iOS暂不支持文件上传</br>请到PC或安卓系统上传文件');
 			}else{
 				UploadFile();
 			}
@@ -246,7 +252,7 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];; 
 			if (prop.writable === true) {
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.taskName+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+prop.name+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
@@ -256,7 +262,7 @@ var formFieldCreator = {
 					return result;
 				}
 				
-			     if(isWhat == 'schemeId'  || isWhat == 'superviseId')	{
+			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
 			 		result += "<input readonly class='autoSelect "+isCheck+" ' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
 			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 			 		$.each(datas[prop.id], function(k, v) {

@@ -24,15 +24,57 @@ $().ready(function() {
 	pageInit();
 	initDaibanTime();
 	initResouces();
+	initStateBtn();
 });
 
 function getScroll(){
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 }
 
+function initStateBtn(){
+	 $('#isBack').off('click').on('click',function(){
+		 $('#isReView').show();
+	 });
+	 
+	 $('#isPause').off('click').on('click',function(){
+		 $('#isPauseModel').show();
+		 $('#puaseReasonError').attr('data-content','');
+	 });
+	 
+	 $('#checkpause').off('click').on('click',function(){
+		 $('#puaseReasonError').attr('data-content','');
+		 var checkVal = $('#puaseReason').val();
+		 if(checkVal !="" && checkVal !=null && checkVal!=undefined){
+			   $('#toProjectpause').submit();
+		   }else{
+			   $('#puaseReasonError').attr('data-content','请填写暂停原因');
+		   }
+	 });
+	 
+	 $('#isCancle').off('click').on('click',function(){
+		 $('#isCancleModel').show();
+		 $('#cancleReasonError').attr('data-content','');
+	 });
+	 
+	 $('#checkcancle').off('click').on('click',function(){
+		 $('#cancleReasonError').attr('data-content','');
+		 var checkVal = $('#cancleReason').val();
+		 if(checkVal !="" && checkVal !=null && checkVal!=undefined){
+			   $('#toProjectcancle').submit();
+		   }else{
+			   $('#cancleReasonError').attr('data-content','请填写取消原因');
+		   }
+	 });
+	 
+	 
+	 
+	 
+}
+
 //初始化来源
 function initResouces(){
 	loadData(function (res){
+		console.log(res);
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -138,7 +180,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskName:$('#infoNameTitle').attr('data-name')
+		taskId:$('#currentTaskId').val()
 	}));
 }
 
@@ -618,7 +660,7 @@ function openPriceInfo(){
 		getScroll();
 		priceClear();
 		loadData(function(res){
-			$('#priceId').val(res.projectFlow.pf_projectId)
+			$('#priceId').val(res.projectFlow.pf_projectId);
 			$('#est').val(res.projectFlow.pf_estimatedPrice);
 			if(res.projectFlow.pf_projectBudget == null || res.projectFlow.pf_projectBudget == undefined || res.projectFlow.pf_projectBudget == ""){
 				$('#pjsError').remove();
@@ -1057,11 +1099,16 @@ function createFieldHtml(prop, obj, className) {
 
 var formFieldCreator = {
 'string': function(prop, datas, className) {
+	var addClass ="";
+	if(prop.id =="pt_teamId"){
+		addClass = "hide";
+	}
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		
+		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title'>" + prop.name + "</div>";
+		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	var isWhat = prop.id.split('_')[0];; 
@@ -1072,8 +1119,13 @@ var formFieldCreator = {
 			return result;
 		}
 		
+		if(prop.id =="pt_teamId"){
+			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			return result;
+		}
+		
 	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-	    	result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+	    	result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 	 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 	 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 	 		result += "<ul class='autoSelectUl'>";
@@ -1085,14 +1137,14 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
 	}
 	return result;
 },
@@ -1107,7 +1159,7 @@ var formFieldCreator = {
 	if (prop.writable === true) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1122,7 +1174,7 @@ var formFieldCreator = {
 	if (prop.writable === true) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1135,7 +1187,7 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	if (prop.writable === true) {
-		result += "<input readonly class='autoSelect' id='" + prop.id + "'  class='" + className + "'>";
+		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 		result += "<ul class='autoSelectUl'>";
@@ -1144,7 +1196,7 @@ var formFieldCreator = {
 		});
 		result += "</ul>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly/>";
+		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 }
@@ -1422,6 +1474,7 @@ function getFileInfo(){
 					 var html =createFileInfo(newList[int]);
 					 body.append(html);
 				}
+				shareEven();
 				getHeight();
 		}
 	}, getContextPath() + '/resource/list/'+$('#projectId').val(),null);	
@@ -1504,6 +1557,7 @@ function createFileInfo(res){
 	}
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
+	var url = getDfsHostName() + res.resourcePath;
 	var html = [
 		'<div class="filmItem">                                     ',
         '<img class="filmImg" src="'+src+'"> ',
@@ -1512,6 +1566,7 @@ function createFileInfo(res){
         '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
         '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
+        '      <div class="share" data-content="'+url+'"></div>                        ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
         '</div>                                                             ',
@@ -1614,6 +1669,21 @@ function createOption(value,text,price){
 	
 	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 	return html;
+}
+
+function shareEven(){
+	$('.share').off('click').on('click',function(){
+		$('#isCopy').show();
+		var url = $(this).attr('data-content');
+		$('#setInfoCopy').text(url);
+		var clip = new ZeroClipboard($("#checkInfo"));
+		clip.on("copy", function(e) {
+			$('#checkInfo').val('已复制');
+			$('#checkInfo').attr("class","");
+			$('#checkInfo').addClass('btn-c-g');
+		});
+		
+	});
 }
 
 

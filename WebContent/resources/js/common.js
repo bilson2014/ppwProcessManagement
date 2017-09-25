@@ -68,6 +68,11 @@ $().ready(function(){
 	    });
 	//end
 	
+<<<<<<< HEAD
+=======
+
+	
+>>>>>>> dfac382fec3931c93a7a6a494a10deb06fddbd3f
 	playVideo();
 	chickShowOrder();
 	
