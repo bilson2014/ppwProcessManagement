@@ -33,7 +33,6 @@ function getScroll(){
 //初始化来源
 function initResouces(){
 	loadData(function (res){
-		console.log(res);
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -139,7 +138,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskId:$('#currentTaskId').val()
+		taskName:$('#infoNameTitle').attr('data-name')
 	}));
 }
 
@@ -619,7 +618,7 @@ function openPriceInfo(){
 		getScroll();
 		priceClear();
 		loadData(function(res){
-			$('#priceId').val(res.projectFlow.pf_projectId);
+			$('#priceId').val(res.projectFlow.pf_projectId)
 			$('#est').val(res.projectFlow.pf_estimatedPrice);
 			if(res.projectFlow.pf_projectBudget == null || res.projectFlow.pf_projectBudget == undefined || res.projectFlow.pf_projectBudget == ""){
 				$('#pjsError').remove();
@@ -1058,16 +1057,11 @@ function createFieldHtml(prop, obj, className) {
 
 var formFieldCreator = {
 'string': function(prop, datas, className) {
-	var addClass ="";
-	if(prop.id =="pt_teamId"){
-		addClass = "hide";
-	}
 	if(prop.required){
-		
-		var result = "<div class='title"+hide+"'>" + prop.name + "<span> *</span></div>";
+		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title "+hide+"'>" + prop.name + "</div>";
+		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	var isWhat = prop.id.split('_')[0];; 
@@ -1075,11 +1069,6 @@ var formFieldCreator = {
 		if(prop.id == "pt_teamName"){
 			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += "<ul class='utoInfo'></ul>";
-			return result;
-		}
-		
-		if(prop.id =="pt_teamId"){
-			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			return result;
 		}
 		
