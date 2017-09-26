@@ -1012,8 +1012,6 @@
 </div>
 </div>
 
-<>
-
 <!-- 价格信息修改 -->
 <div class="cusModel" id="showPriceInfo">
      <div class="modelCard">

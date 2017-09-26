@@ -15,8 +15,8 @@
         margin-top: 0.3rem;
         font-size: $size36;
         color: $gray-light;
-        a{
-            color:$red-base;
+        a {
+            color: $red-base;
         }
     }
 
@@ -37,7 +37,7 @@
             .time {
                 font-size: $size30;
                 color: $gray-light;
-                    margin-top: 0.2rem;
+                margin-top: 0.2rem;
             }
         }
 
@@ -63,6 +63,7 @@
                     color: $border-line;
                     display: inline-block;
                     vertical-align: middle;
+                    margin-right: 0.2rem;
                 }
                 input {
                     width: 7.3rem;
@@ -333,5 +334,32 @@ background-image: none !important; */
             font-size: 0.46rem;
             color: $gray-light;
             margin-top: 1rem;
+        }
+    }
+
+    .utoInfo {
+        position: absolute;
+        width: 7.3rem;
+        left: 1.9rem;
+        max-height: 3rem;
+        z-index: 3;
+        display: none;
+        background: black;
+        cursor: pointer;
+        border: 1px solid $gray-light;
+        border-top: 1px solid #979797;
+        border-radius: 4px;
+        overflow: auto;
+        li {
+            width: 100%;
+            height: 0.8rem;
+            text-align: center;
+            line-height: 0.8rem;
+            color: $gray;
+            font-size: $size30;
+            border-bottom: 1px solid $gray-light;
+            &:hover {
+                background: $f0;
+            }
         }
     }
