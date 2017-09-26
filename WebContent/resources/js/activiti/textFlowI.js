@@ -1112,8 +1112,15 @@ var formFieldCreator = {
 		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	var isWhat = prop.id.split('_')[0];; 
+	var isWhat = prop.id.split('_')[0];
+	var str = prop.id;
+	var isRead = str.indexOf('info');
+		
 	if (prop.writable === true) {
+		if(isRead == 0){
+			result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+			return result;
+		}
 		if(prop.id == "pt_teamName"){
 			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			result += "<ul class='utoInfo'></ul>";
