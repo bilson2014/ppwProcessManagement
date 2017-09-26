@@ -1072,8 +1072,9 @@ function addForm() {
 			var className = this.required === true ? "required" : "";
 			this.value = this.value ? this.value : "";
 			var isRe = this.required;
-			trs += "<div class='item'>" + createFieldHtml(this, datas, className);
+			trs += "<div class='itemCard'>" + createFieldHtml(this, datas, className);
 			trs += "</div>";
+		//	trs +=  createFieldHtml(this, datas, className);
 		});
 		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
@@ -1144,7 +1145,7 @@ var formFieldCreator = {
 		}
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
+		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
 	return result;
 },

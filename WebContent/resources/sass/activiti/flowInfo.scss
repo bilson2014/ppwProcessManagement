@@ -1831,7 +1831,7 @@
             .otherContent {
                 padding-top: 20px;
                 padding-bottom: 30px;
-                .item {
+                .itemCard {
                     display: inline-block;
                     vertical-align: top;
                     margin-left: 55px;
@@ -1874,7 +1874,7 @@
                     .autoSelectUl {
                         position: absolute;
                         width: 100%;
-                        top: 100%;
+                        top: 65px;
                         left: 0;
                         z-index: 3;
                         display: none;
@@ -2512,7 +2512,6 @@ background-image: none !important; */
             margin: 0 auto;
             margin-bottom: 30px;
             font-size: $font-size-base;
-            color: white;
             border: none;
             outline: none;
         }

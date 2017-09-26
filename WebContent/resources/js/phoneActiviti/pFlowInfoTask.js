@@ -279,7 +279,7 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
@@ -294,7 +294,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
@@ -309,7 +309,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
@@ -332,7 +332,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}
