@@ -133,7 +133,7 @@ function UploadFile(){
 	});
 	
 	upload_Video.option('formData', {
-		resourceName:$('#file').val(),
+		resourceName:$('#file').attr('data-title'),
 		taskId : $('#taskId').val(),
 		resourceType:$('#file').attr('data-name')
 	});
@@ -145,7 +145,7 @@ function UploadFile(){
 	    $('.upProgress').show();
 	    upload_Video.option('formData', {
     		resourceName:$('#file').attr('data-title'),
-    		taskId : $('#currentTaskId').val(),
+    		taskId : $('#taskId').val(),
     		resourceType:$('#file').attr('data-name')
     	});
 	    upload_Video.upload();
@@ -237,6 +237,7 @@ function addForm() {
 				UploadFile();
 			}
 		}
+		autoInput();
 		selectEven();
 		formCheck();
 		dataEven();	
@@ -250,6 +251,7 @@ function createFieldHtml(prop, obj, className) {
 var formFieldCreator = {
 		'string': function(prop, datas, className) {
 			title = prop.name;
+			var proValue = '';
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -260,37 +262,53 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];
 			var str = prop.id;
 			var isRead = str.indexOf('info');
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if (prop.writable === true) {
 				if(isRead == 0){
-					result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;
 				}
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file'  data-title="+prop.name+" data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + proValue + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
 				}
 				if(prop.id == "pt_teamName"){
-					result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+					result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
+					result += "<ul class='utoInfo'></ul>";
 					return result;
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-			 		result += "<input readonly id='setinputValue' class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
-			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
+/*			 		result += "<input readonly id='setinputValue' class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
+			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";*/
+					result += "<div class='orderSelect'>";
+					result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
+					result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";
+					result += "   <div></div>";
+					result += "</div>";
 			 		$.each(datas[prop.id], function(k, v) {
 			 			data.push(new city(k, v));
 			 		});
 			 		return result;
 			     }
-				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
 		'date': function(prop, datas, className) {
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -299,13 +317,19 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable === true) {
-				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' name='" + prop.id + "' readonly/>";
+				result += "<input class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
 		'long': function(prop, datas, className) {
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -314,14 +338,20 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable === true) {
-				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
 		'enum': function(prop, datas, className) {
 			title = prop.name;
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -340,11 +370,61 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}
 	};
+
+//自动联动客户信息
+function autoInput(){
+	$('#pt_teamId').parent().hide();
+	$('#pt_teamName').bind('input propertychange', function() {
+		 $('#pt_teamId').val("");
+		var theName = $(this).val();
+		 findAutoInfo(theName);
+		 $('.utoInfo').show();
+		 if(theName == null || theName == ""){
+			 $('.utoInfo').hide();
+		 }
+	});
+}
+
+function findAutoInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.utoInfo');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			autoLi();
+		}
+	}, getContextPath() + '/team/listByName/'+userName,null);
+}
+
+function autoLi(){
+	
+	$('.utoInfo li').off('click').on('click',function(){
+		  $('.utoInfo').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#pt_teamId').val(id);
+		  $('#pt_linkman').val(linkman);
+		  $('#pt_telephone').val(phone);
+	});
+	$('#pt_teamId').parent().hide();
+}
+
+function createUserInfo(id,name,linkman,phone){
+	var html = '<li data-id="'+id+'"  data-linkman="'+ linkman +'" data-phone="'+ phone +'">'+name+'</li>';
+	return html;
+}
 
 
 

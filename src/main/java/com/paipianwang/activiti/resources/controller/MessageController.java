@@ -77,9 +77,12 @@ public class MessageController {
 		}
 		pmsProjectMessage.setMessageType(PmsProjectMessage.TYPE_HANDLE);
 		pmsProjectMessage.setFromName(info.getRealName());
+		//获取topic的taskId
+		PmsProjectMessage topic=pmsProjectMessageFacade.getById(pmsProjectMessage.getParentId());
+		pmsProjectMessage.setTaskId(topic.getTaskId());
+		long id=pmsProjectMessageFacade.insert(pmsProjectMessage);
 		
 		//发送新留言邮件通知
-		// long id=pmsProjectMessageFacade.insert(pmsProjectMessage);
 		// topicReplyInformMQServiceImpl.sendMessage(id+"");
 		result.setCode(BaseMsg.NORMAL);
 		return result;

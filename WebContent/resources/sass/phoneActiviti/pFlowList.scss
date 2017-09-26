@@ -160,7 +160,7 @@ body {
         padding-left: 0.4rem;
 
         .cardName {
-            width: 3rem;
+            width: 9rem;
             line-height: 1.3rem;
             @include ellipsis;
             display: inline-block;
@@ -183,17 +183,7 @@ body {
             color: $gray-light;
             font-weight: bold;
         }
-        .user,
-        .your {
-            position: absolute;
-            right: 0.4rem;
-            top: 0.4rem;
-            font-size: $size36;
-            color: $gray-light;
-        }
-        .your {
-            color: $red-base !important;
-        }
+       
     }
 
     .cardBot {
@@ -207,6 +197,16 @@ body {
             font-size: $size34;
             width: 6rem;
             @include ellipsis;
+        }
+         .user,
+        .your {
+            position: relative;
+            top: 0.3rem;
+            font-size: $size36;
+            color: $gray-light;
+        }
+        .your {
+            color: $red-base !important;
         }
         .taskName {
             position: relative;
@@ -226,7 +226,9 @@ body {
     }
 }
 
-
+.redWord{
+    border:1px solid $red-base!important;
+}
 
 .MissionCard {
     width: 10rem;
@@ -257,7 +259,7 @@ body {
             border-radius: 0.68rem;
         }
         .cardName {
-            width: 3rem;
+            width: 7rem;
             line-height: 1.3rem;
             @include ellipsis;
             display: inline-block;
@@ -280,17 +282,7 @@ body {
             color: $gray-light;
             font-weight: bold;
         }
-        .user,
-        .your {
-            position: absolute;
-            right: 0.4rem;
-            top: 0.4rem;
-            font-size: $size36;
-            color: $gray-light;
-        }
-        .your {
-            color: $red-base !important;
-        }
+        
     }
 
     .cardBot {
@@ -304,6 +296,16 @@ body {
             font-size: $size34;
             width: 6rem;
             @include ellipsis;
+        }
+        .user,
+        .your {
+            position:relative;
+            top: 0.3rem;
+            font-size: $size36;
+            color: $gray-light;
+        }
+        .your {
+            color: $red-base !important;
         }
 
         .taskName {
