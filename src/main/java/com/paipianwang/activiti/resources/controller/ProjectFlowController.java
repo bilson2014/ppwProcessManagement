@@ -535,7 +535,8 @@ public class ProjectFlowController extends BaseController {
 			@PathVariable("projectId") final String projectId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			projectWorkFlowService.suspendProcess(processInstanceId, projectId, getCurrentInfo(request));
+			String remark=request.getParameter("remark");
+			projectWorkFlowService.suspendProcess(processInstanceId, projectId,getCurrentInfo(request),remark);	 
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -793,8 +794,9 @@ public class ProjectFlowController extends BaseController {
 	public ModelAndView cancelProcess(@PathVariable("processInstandeId") final String processInstanceId,
 			@PathVariable("projectId") final String projectId, final HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
-			// 挂起
-			projectWorkFlowService.cancelProcess(processInstanceId, projectId, getCurrentInfo(request));
+			// 取消
+			String remark=request.getParameter("remark");
+			projectWorkFlowService.cancelProcess(processInstanceId, projectId,getCurrentInfo(request),remark);
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}

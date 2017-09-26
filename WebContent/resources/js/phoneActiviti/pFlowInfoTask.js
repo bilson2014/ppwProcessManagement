@@ -96,6 +96,7 @@ function initSelectIos(){
 		callback : function(selectOneObj) {
              $('#setinput').attr('data-id',selectOneObj.id);
              $('#setinput').val(selectOneObj.value);
+             $('#setinputValue').val(selectOneObj.id);
 		}
 	});
 }
@@ -256,8 +257,14 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			var isWhat = prop.id.split('_')[0];; 
+			var isWhat = prop.id.split('_')[0];
+			var str = prop.id;
+			var isRead = str.indexOf('info');
 			if (prop.writable === true) {
+				if(isRead == 0){
+					result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+					return result;
+				}
 				if(isWhat == "file"){
 					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
@@ -270,7 +277,7 @@ var formFieldCreator = {
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-			 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
+			 		result += "<input readonly id='setinputValue' class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
 			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 			 		$.each(datas[prop.id], function(k, v) {
 			 			data.push(new city(k, v));
@@ -279,7 +286,7 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "'/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
@@ -294,7 +301,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
@@ -309,7 +316,7 @@ var formFieldCreator = {
 			if (prop.writable === true) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
@@ -325,14 +332,15 @@ var formFieldCreator = {
 	
 			if (prop.writable === true) {
 				result += "<div class='orderSelect'>";
-				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "'/>";
+				result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
+				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";
 				result += "   <div></div>";
 				result += "</div>";
 				$.each(datas[prop.id], function(k, v) {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly/>";
+				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}

@@ -15,7 +15,6 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/js/activiti/textFlowI.js" var="textFlowIJs"/>
 <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
-<%-- <spring:url value="/resources/js/activiti/dynamic-form-handler.js" var="dynamicJs"/> --%>
 <spring:url value="/resources/images" var="imgPath" />
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <spring:url value="/resources/lib/json/ezmorph.jar" var="ezmorphJs" />
@@ -273,6 +272,7 @@
 			                                          <div>客户名称</div>
 			                                          <div>${user_info["userName"]}</div>
 				                                  </div>
+				                                 
 		                                  		</c:if>
 		                                  		
 		                                  		<c:if test="${not empty user_info['userLevel']}">
@@ -1012,6 +1012,8 @@
 </div>
 </div>
 
+<>
+
 <!-- 价格信息修改 -->
 <div class="cusModel" id="showPriceInfo">
      <div class="modelCard">
@@ -1137,7 +1139,9 @@
             </div>
      </div>       
 </div> --%>
-	
+<!-- <form class="dynamic-form" method="post" action="/project/task/complete/47853">
+    <input value="panfeng" placeholder="panfeng" name="pt_teamName" />
+</form> -->
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${dynamicJs}"></script>
