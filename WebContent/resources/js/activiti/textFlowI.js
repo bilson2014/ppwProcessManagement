@@ -1114,10 +1114,10 @@ var formFieldCreator = {
 	}
 	var isWhat = prop.id.split('_')[0];
 	var str = prop.id;
-	var isRead = str.substring(0,4);
+	var isRead = str.indexOf('info');
 		
 	if (prop.writable === true) {
-		if(isRead == 'info'){
+		if(isRead == 0){
 			result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 			return result;
 		}
