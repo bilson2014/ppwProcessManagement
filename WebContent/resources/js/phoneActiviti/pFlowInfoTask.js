@@ -257,8 +257,14 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			var isWhat = prop.id.split('_')[0];; 
+			var isWhat = prop.id.split('_')[0];
+			var str = prop.id;
+			var isRead = str.substring(0,4);
 			if (prop.writable === true) {
+				if(isRead == 'info'){
+					result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+					return result;
+				}
 				if(isWhat == "file"){
 					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
