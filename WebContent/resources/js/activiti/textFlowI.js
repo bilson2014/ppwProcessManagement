@@ -1012,6 +1012,7 @@ function autoSelectUl(){
 
 //自动联动客户信息
 function autoInput(){
+	$('#pt_teamId').parent().hide();
 	$('#pt_teamName').bind('input propertychange', function() {
 		 $('#pt_teamId').val("");
 		var theName = $(this).val();

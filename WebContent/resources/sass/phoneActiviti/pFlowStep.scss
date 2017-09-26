@@ -192,6 +192,8 @@ $s97:#979797;
         display: inline-block;
         vertical-align: top;
         margin-left: 0.2rem;
+        width: 7rem;
+        @include ellipsis; 
     }
 
     &:after {

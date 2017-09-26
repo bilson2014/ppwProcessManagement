@@ -251,6 +251,7 @@ function createFieldHtml(prop, obj, className) {
 var formFieldCreator = {
 		'string': function(prop, datas, className) {
 			title = prop.name;
+			var proValue = '';
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -261,19 +262,23 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];
 			var str = prop.id;
 			var isRead = str.indexOf('info');
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if (prop.writable === true) {
 				if(isRead == 0){
-					result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;
 				}
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' >";
+					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + proValue + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
 				}
 				if(prop.id == "pt_teamName"){
-					result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+					result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 					result += "<ul class='utoInfo'></ul>";
 					return result;
 				}
@@ -291,13 +296,19 @@ var formFieldCreator = {
 			 		});
 			 		return result;
 			     }
-				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'  />";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
 		'date': function(prop, datas, className) {
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -306,13 +317,19 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable === true) {
-				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' name='" + prop.id + "' readonly/>";
+				result += "<input class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
 		'long': function(prop, datas, className) {
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -321,14 +338,20 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable === true) {
-				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
 		'enum': function(prop, datas, className) {
 			title = prop.name;
+			var proValue = '';
+			var str = prop.id;
+			var isPt = str.indexOf('pt');
+			if(isPt == 0){
+				proValue = prop.value;
+			}
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -347,7 +370,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + prop.value + "' readonly name='" + prop.id + "'/>";
+				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}
@@ -355,6 +378,7 @@ var formFieldCreator = {
 
 //自动联动客户信息
 function autoInput(){
+	$('#pt_teamId').parent().hide();
 	$('#pt_teamName').bind('input propertychange', function() {
 		 $('#pt_teamId').val("");
 		var theName = $(this).val();
