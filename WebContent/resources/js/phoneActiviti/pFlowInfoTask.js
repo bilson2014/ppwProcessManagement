@@ -96,6 +96,7 @@ function initSelectIos(){
 		callback : function(selectOneObj) {
              $('#setinput').attr('data-id',selectOneObj.id);
              $('#setinput').val(selectOneObj.value);
+             $('#setinputValue').val(selectOneObj.id);
 		}
 	});
 }
@@ -270,7 +271,7 @@ var formFieldCreator = {
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
-			 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
+			 		result += "<input readonly id='setinputValue' class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "' >";
 			 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
 			 		$.each(datas[prop.id], function(k, v) {
 			 			data.push(new city(k, v));
@@ -325,7 +326,8 @@ var formFieldCreator = {
 	
 			if (prop.writable === true) {
 				result += "<div class='orderSelect'>";
-				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "' name='" + prop.id + "'/>";
+				result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
+				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";
 				result += "   <div></div>";
 				result += "</div>";
 				$.each(datas[prop.id], function(k, v) {
