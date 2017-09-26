@@ -401,15 +401,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		try {
 			// 需要完成系统留言
 			String taskName = task.getName();
-//			PmsProjectMessage message = new PmsProjectMessage();
-//			message.setFromId(userId);
-//			message.setFromGroup(StringUtils.join(userGroup, ","));
-//			message.setProjectId(projectId);
-//			message.setTaskName(taskName);
-//			message.setContent("完成了\"" + taskName + "\"任务");
-//			message.setMessageType(PmsProjectMessage.TYPE_LOG);
-//			message.setFromName(realName);
-//			pmsProjectMessageFacade.insert(message);
 			messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId, realName, userGroup);
 			
 
@@ -698,7 +689,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void suspendProcess(String processInstanceId, String projectId, SessionInfo sessionInfo) {
+	public void suspendProcess(String processInstanceId, String projectId, SessionInfo sessionInfo, String remark) {
 		runtimeService.suspendProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", ProjectFlowStatus.suspend.getId());
@@ -708,7 +699,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> flowData=new ArrayList<String>();
 		flowData.add("projectName");
 		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
-		messageService.insertOperationLog(projectId, null, null, "暂停了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
+		messageService.insertOperationLog(projectId, null, null, "暂停了\""+flowInfo.get("projectName")+"\"项目,暂停原因："+remark, sessionInfo);
 	}
 
 	@Override
@@ -1504,7 +1495,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo) {
+	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo,String remark) {
 		runtimeService.suspendProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", ProjectFlowStatus.cancel.getId());
@@ -1514,7 +1505,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> flowData=new ArrayList<String>();
 		flowData.add("projectName");
 		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
-		messageService.insertOperationLog(projectId, null, null, "取消了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
+		messageService.insertOperationLog(projectId, null, null, "取消了\""+flowInfo.get("projectName")+"\"项目,取消原因："+remark, sessionInfo);
 	}
 
 	@Override
