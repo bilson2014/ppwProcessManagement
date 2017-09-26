@@ -133,7 +133,7 @@ function UploadFile(){
 	});
 	
 	upload_Video.option('formData', {
-		resourceName:$('#file').val(),
+		resourceName:$('#file').attr('data-title'),
 		taskId : $('#taskId').val(),
 		resourceType:$('#file').attr('data-name')
 	});
@@ -145,7 +145,7 @@ function UploadFile(){
 	    $('.upProgress').show();
 	    upload_Video.option('formData', {
     		resourceName:$('#file').attr('data-title'),
-    		taskId : $('#currentTaskId').val(),
+    		taskId : $('#taskId').val(),
     		resourceType:$('#file').attr('data-name')
     	});
 	    upload_Video.upload();
@@ -272,7 +272,7 @@ var formFieldCreator = {
 					return result;
 				}
 				if(isWhat == "file"){
-					result += "<input readonly id='file' data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + proValue + "' >";
+					result += "<input readonly id='file'  data-title="+prop.name+" data-name="+prop.id+" name='" + prop.id + "' class='picker setFileName uploadInput "+isCheck+" " + className + "' value='" + proValue + "' >";
 					result += "<div class='upload' id='picker'>上传</div>";
 					hasPicker = true;
 					return result;
