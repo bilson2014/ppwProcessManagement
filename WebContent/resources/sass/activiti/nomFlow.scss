@@ -170,10 +170,9 @@ $ba:#bababa; */
                         line-height: 39px;
                         font-size: $font-size-base;
                         color: $gray-dark;
-                        width: 100%;
-                        // @include ellipsis;
+                        width: 40%;
+                        @include ellipsis;
                         font-weight: bold;
-                        overflow: hidden;
                     }
                     .your {
                         width: 80px;
@@ -405,12 +404,12 @@ $ba:#bababa; */
             .errorTr {
                 color: transparent !important;
             }
-
-            .errorItem{
-            	color:$red-base;
-            	margin-left: 10px;
+            
+            .errorItem {
+                color: $red-base;
+                margin-left: 10px;
             }
-
-            .redWord{
-                border:1px solid $red-base !important;
+            
+            .redWord {
+                border: 1px solid $red-base !important;
             }
