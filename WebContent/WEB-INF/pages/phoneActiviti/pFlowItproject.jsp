@@ -93,7 +93,7 @@
                     <div class="describe">
                         <div>项目描述</div>
                         <textarea id="projectDes" name="pf_projectDescription"></textarea>
-                        <p></p>
+                       
                     </div>
                     <!-- 取消和确认 -->
                     <div class="surebox">

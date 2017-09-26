@@ -23,7 +23,7 @@ function surebtn() {
     $('.name p').text('');
     $('.period p').text('');
     $('.film p').text('');
-    $('.describe p').text('');
+
     var num = /^[0-9]*$/;
     if (name.length == 0) {
         $('.name p').text('*项目名称不能为空');
@@ -36,22 +36,18 @@ function surebtn() {
     } else if (url.length == 0) {
         $('.film p').text('*对标影片不能为空');
 
-    } else if (describe.length == 0) {
-        $('.describe p').text('*项目描述不能为空');
-
-    } else {
+    }  else {
         $('.name p').text('');
         $('.period p').text('');
         $('.film p').text('');
-        $('.describe p').text('');
+       
         return true;
     }
 }
 //项目信息修改
 function projectchange() {
     loadData(function(res) {
-        console.log('666666666');
-        console.log(res);
+      
         // 表单添加id
         $('#proId').val(res.projectFlow.pf_projectId);
         // 获取项目评级
