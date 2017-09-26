@@ -27,7 +27,8 @@
 	
 	<import resource="activiti-spring-config.xml" />
 	
-	<import resource="dubbo/dubbo-consumer-redirect.xml" />
+	<import resource="dubbo/dubbo-consumer.xml" />
+<!-- 	<import resource="dubbo/dubbo-consumer-redirect.xml" /> -->
 	
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

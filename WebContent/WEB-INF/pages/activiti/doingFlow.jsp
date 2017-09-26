@@ -50,7 +50,7 @@
 	                 <div class="titleNameWork">
 	                    <div class="name">项目搜索</div>
 	                    <input placeholder="项目名称或负责人姓名">
-	                    <div class="search btn-c-r">搜索</div>
+	                    <div class="search">搜索</div>
 	                    <div class="errorItem errorTr">搜索不能为空</div>
 	                    <r:group role="sale" >
 		                    <div class="createPro" id="toCreate">
@@ -63,7 +63,7 @@
 	                <div class="lineTop"></div>
 	                
 	                <div class="title">
-	                     <div class="titleName" id="daibanName">待办任务(<span id="daiNum"></span>)</div>
+	                     <div class="titleName" id="daibanName">待办项目(<span id="daiNum"></span>)</div>
 	                </div>
 	                
 	                 <c:if test="${empty gTasks}">
@@ -123,7 +123,7 @@
 	           </div>
 	           <div class="otherWork">
 	                <div class="title">
-	                     <div class="titleName" id="downName"><label id="otherWord">其它任务</label>(<span id="otherNum"></span>)</div>
+	                     <div class="titleName" id="downName"><label id="otherWord">其它项目</label>(<span id="otherNum"></span>)</div>
 	                     <div class="orderSelect" id='isOther'>
 				                <div id="projectGrade"></div>
 				                <img src="${imgPath}/flow/selectOrder.png">

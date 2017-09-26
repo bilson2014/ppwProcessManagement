@@ -3,11 +3,10 @@
             @import "video";
             @import "orderSelect";
             @import "compass/typography/text/ellipsis";
-
             body {
                 background: white !important;
             }
-
+            
             @mixin anmotion {
                 transition: all .3s ease-in-out .2s;
                 -moz-transition: all .3s ease-in-out .2s;
@@ -16,13 +15,12 @@
                 /* Safari 和 Chrome */
                 -o-transition: all .3s ease-in-out .2s;
             }
-
+            
             .frame {
                 width: 100%;
                 height: 1000px;
             }
-
-
+            
             .productListAreas {
                 width: 100%;
                 height: auto;
@@ -32,7 +30,7 @@
                 @include anmotion;
                 position: relative;
             }
-
+            
             .waitWork {
                 .titleName {
                     font-size: $font-size;
@@ -42,8 +40,7 @@
                     padding-left: 20px;
                 }
             }
-
-
+            
             .titleNameWork {
                 height: 55px;
                 position: relative;
@@ -57,22 +54,29 @@
                     width: 56px;
                     height: 30px;
                     line-height: 30px;
-                    font-size: $font-size-sm;
-                    color: white;
+                    font-size: 1.2rem;
+                    color: #666666;
                     border-radius: 4px;
                     text-align: center;
+                    background: #fff;
+                    border: 1px solid #999999;
+                    &:hover {
+                        color: #333;
+                    }
                 }
                 .createPro {
                     position: absolute;
                     right: 30px;
                     width: 120px;
                     height: 30px;
-                    border: 1px solid $gray-light;
+                    border: 1px solid #fe5453;
                     border-radius: 4px;
                     text-align: center;
-                    color: $gray-dark;
-                    font-size: $font-size-base;
+                    color: #fff;
+                    font-size: 1.4rem;
                     padding-top: 6px;
+                    cursor: pointer;
+                    background-color: #fe5453;
                     cursor: pointer;
                     .newAdd {
                         width: 14px;
@@ -80,11 +84,10 @@
                         margin-right: 5px;
                         background: url(/resources/images/provider/add.png);
                         background-size: 14px 28px;
+                        background-position-y: 14px;
                     }
                     &:hover {
-                        background: $red-base;
-                        color: white;
-                        border: 1px solid $red-base;
+                        background: red;
                         .newAdd {
                             background-position-y: -14px;
                         }
@@ -95,7 +98,7 @@
                     border: none;
                     border: 1px solid $gray-light;
                     border-radius: 4px;
-                    width: 120px;
+                    width: 240px;
                     height: 30px;
                     line-height: 30px;
                     padding-left: 5px;
@@ -120,7 +123,7 @@ $areaMinWidth:1240px;
 $areaMinMidWidth:1132px;
 $smallMinWidth:900px;
 $ba:#bababa; */
-
+            
             $noNeedpad:20px;
             $areaWidth:1110px;
             $areaMidWidth:1020px;
@@ -129,7 +132,6 @@ $ba:#bababa; */
             $smallWidth:780px;
             $areaMinMidWidth:1140px;
             $areaMinWidth:1240px;
-
             .lineTop {
                 width: 100%;
                 position: absolute;
@@ -137,7 +139,7 @@ $ba:#bababa; */
                 left: 0;
                 border: 1px solid $e;
             }
-
+            
             .nodaiban {
                 height: 36px;
                 width: 95%;
@@ -151,7 +153,7 @@ $ba:#bababa; */
                 padding-left: 10px;
                 line-height: 34px;
             }
-
+            
             @mixin cardhead {
                 .cardH {
                     height: 39px;
@@ -168,9 +170,10 @@ $ba:#bababa; */
                         line-height: 39px;
                         font-size: $font-size-base;
                         color: $gray-dark;
-                        width: 40%;
-                        @include ellipsis;
+                        width: 100%;
+                        // @include ellipsis;
                         font-weight: bold;
+                        overflow: hidden;
                     }
                     .your {
                         width: 80px;
@@ -250,10 +253,7 @@ $ba:#bababa; */
                     }
                 }
             }
-
-
-
-
+            
             .productListAreas .setCard {
                 font-size: 0;
                 height: auto;
@@ -303,12 +303,11 @@ $ba:#bababa; */
                         }
                     }
                 }
-
                 .waitCard:nth-child(3n) {
                     margin-right: 0px !important;
                 }
             }
-
+            
             .toChange .setCard {
                 .waitCard,
                 .otherCard {
@@ -322,18 +321,19 @@ $ba:#bababa; */
                     }
                 }
             }
-
+            
             .cardLine {
                 width: 100%;
                 height: 1px;
                 padding-right: 20px;
+                padding-left: 20px;
                 div {
                     width: 100%;
                     height: 100%;
                     background: $border-line;
                 }
             }
-
+            
             .otherWork {
                 .titleName {
                     font-size: $font-size;
@@ -348,6 +348,7 @@ $ba:#bababa; */
                     display: inline-block;
                     vertical-align: middle;
                     margin-left: 50px;
+                    width: 240px;
                 }
                 .setCard {
                     .otherCard {
@@ -400,11 +401,12 @@ $ba:#bababa; */
                     }
                 }
             }
-
-            .errorTr{
-                color:transparent !important; 
+            
+            .errorTr {
+                color: transparent !important;
             }
-            .errorItem{
-            	color:$red-base;
-            	margin-left: 10px;
+            
+            .errorItem {
+                color: $red-base;
+                margin-left: 10px;
             }
