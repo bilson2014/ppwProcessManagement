@@ -151,8 +151,8 @@
     <sequenceFlow id="sid-59291D5C-8CD6-40CA-8AC8-C604BF473FA0" sourceRef="sid-BE8A9B75-F474-4B94-A151-F7625741CBC1" targetRef="sid-4A9E432E-9765-4220-A6AC-B754F8CC0F2A"></sequenceFlow>
     <userTask id="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6" name="【监制】填写水印样片地址" activiti:assignee="${superviseId}">
       <extensionElements>
-        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="info_watermarkPass" name="密码" type="string"></activiti:formProperty>
+        <activiti:formProperty id="watermarkUrl" name="水印样片地址" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="watermarkPass" name="密码" type="string"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${providerConfirmFileToAuditTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
