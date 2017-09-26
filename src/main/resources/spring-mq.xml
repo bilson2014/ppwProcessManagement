@@ -84,6 +84,12 @@
 		<property name="defaultDestinationName" value="${projectAcceptLetterQueue}"/>
 	</bean>
 	
+	<!-- 添加留言回复邮件通知 -->
+	<bean id="topicReplyInformEmailTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="${topicReplyInformEmailQueue}"/>
+	</bean>
+	
 	<!-- 监听协同人更新通知 -->
 	<bean id="projectSynergyQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
