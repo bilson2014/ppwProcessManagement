@@ -262,10 +262,11 @@ var formFieldCreator = {
 			var isWhat = prop.id.split('_')[0];
 			var str = prop.id;
 			var isRead = str.indexOf('info');
-			var isPt = str.indexOf('pt');
-			if(isPt == 0){
+			
+			if(str.indexOf('pt_') < 0){
 				proValue = prop.value;
 			}
+			
 			if (prop.writable === true) {
 				if(isRead == 0){
 					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
@@ -305,10 +306,11 @@ var formFieldCreator = {
 		'date': function(prop, datas, className) {
 			var proValue = '';
 			var str = prop.id;
-			var isPt = str.indexOf('pt');
-			if(isPt == 0){
+			
+			if(str.indexOf('pt_') < 0){
 				proValue = prop.value;
 			}
+			
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -326,10 +328,11 @@ var formFieldCreator = {
 		'long': function(prop, datas, className) {
 			var proValue = '';
 			var str = prop.id;
-			var isPt = str.indexOf('pt');
-			if(isPt == 0){
+			
+			if(str.indexOf('pt_') < 0){
 				proValue = prop.value;
 			}
+			
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -348,8 +351,7 @@ var formFieldCreator = {
 			title = prop.name;
 			var proValue = '';
 			var str = prop.id;
-			var isPt = str.indexOf('pt');
-			if(isPt == 0){
+			if(str.indexOf('pt_') < 0){
 				proValue = prop.value;
 			}
 			if(prop.required){

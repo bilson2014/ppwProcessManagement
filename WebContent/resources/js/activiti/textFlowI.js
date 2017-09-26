@@ -1106,6 +1106,7 @@ var formFieldCreator = {
 	if(prop.id.indexOf('pt_') > -1){
 		prop.value = '';
 	}
+	
 	// --> filter start with pt_ value by jack at 20170926 end
 	
 	
@@ -1177,6 +1178,10 @@ var formFieldCreator = {
 	return result;
 },
 'long': function(prop, datas, className) {
+	if(prop.id.indexOf('pt_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
