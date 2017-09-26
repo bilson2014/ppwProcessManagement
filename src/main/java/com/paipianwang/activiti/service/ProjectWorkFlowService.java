@@ -85,8 +85,9 @@ public interface ProjectWorkFlowService {
 	 * 挂起
 	 * @param processInstanceId 流程ID
 	 * @param sessionInfo 
+	 * @param remark 
 	 */
-	public void suspendProcess(String processInstanceId, String projectId, SessionInfo sessionInfo);
+	public void suspendProcess(String processInstanceId, String projectId, SessionInfo sessionInfo, String remark);
 
 	/**
 	 * 激活
@@ -187,8 +188,9 @@ public interface ProjectWorkFlowService {
 	 * @param processInstanceId 实例ID
 	 * @param projectId 项目流程ID
 	 * @param sessionInfo 
+	 * @param remark 
 	 */
-	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo);
+	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo, String remark);
 
 	/**
 	 * 查询已取消的task
