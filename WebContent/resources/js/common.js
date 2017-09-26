@@ -68,6 +68,7 @@ $().ready(function(){
 	    });
 	//end
 	
+
 	playVideo();
 	chickShowOrder();
 	
