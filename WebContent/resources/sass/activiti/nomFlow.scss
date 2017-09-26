@@ -405,8 +405,12 @@ $ba:#bababa; */
             .errorTr {
                 color: transparent !important;
             }
-            
-            .errorItem {
-                color: $red-base;
-                margin-left: 10px;
+
+            .errorItem{
+            	color:$red-base;
+            	margin-left: 10px;
+            }
+
+            .redWord{
+                border:1px solid $red-base !important;
             }
