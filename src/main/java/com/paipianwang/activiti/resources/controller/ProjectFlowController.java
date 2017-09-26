@@ -140,6 +140,7 @@ public class ProjectFlowController extends BaseController {
 							pmsProjectFlowResult.setTaskId(task.getId());
 							pmsProjectFlowResult.setTaskName(task.getName());
 							pmsProjectFlowResult.setDueDate(task.getDueDate());
+							pmsProjectFlowResult.setCreateDate(task.getCreateTime());
 							pmsProjectFlowResult.setTask(null);
 						}
 						if (pIs != null) {

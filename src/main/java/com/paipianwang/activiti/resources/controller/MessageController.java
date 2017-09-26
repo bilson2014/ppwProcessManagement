@@ -2,7 +2,6 @@ package com.paipianwang.activiti.resources.controller;
 
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,10 +77,10 @@ public class MessageController {
 		}
 		pmsProjectMessage.setMessageType(PmsProjectMessage.TYPE_HANDLE);
 		pmsProjectMessage.setFromName(info.getRealName());
-		long id=pmsProjectMessageFacade.insert(pmsProjectMessage);
 		
 		//发送新留言邮件通知
-		topicReplyInformMQServiceImpl.sendMessage(id+"");
+		// long id=pmsProjectMessageFacade.insert(pmsProjectMessage);
+		// topicReplyInformMQServiceImpl.sendMessage(id+"");
 		result.setCode(BaseMsg.NORMAL);
 		return result;
 	}

@@ -1104,6 +1104,14 @@ var formFieldCreator = {
 	if(prop.id =="pt_teamId"){
 		addClass = "hide";
 	}
+	
+	// --> filter start with pt_ value by jack at 20170926 begin
+	if(prop.id.indexOf('pt_') > -1){
+		prop.value = '';
+	}
+	// --> filter start with pt_ value by jack at 20170926 end
+	
+	
 	if(prop.required){
 		
 		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";

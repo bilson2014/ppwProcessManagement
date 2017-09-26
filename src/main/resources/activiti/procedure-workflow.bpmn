@@ -8,7 +8,7 @@
     </startEvent>
     <userTask id="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" name="【销售】上传项目资料" activiti:assignee="${applyUserId}">
       <extensionElements>
-        <activiti:formProperty id="file_projectBrief" name="项目简报" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="file_projectBrief" name="项目资料" type="string" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7" sourceRef="startEvent" targetRef="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB"></sequenceFlow>
@@ -260,8 +260,8 @@
     <sequenceFlow id="sid-78329B22-7B1C-4BB4-B689-28B43675A4CF" sourceRef="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26" targetRef="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526"></sequenceFlow>
     <userTask id="auditTotalTask" name="【总监】联合内审（通过/驳回）" activiti:assignee="${user}">
       <extensionElements>
-        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" writable="false"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${watermarkUrl}"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${watermarkPass}"></activiti:formProperty>
         <activiti:formProperty id="approved" name="审批意见" type="enum">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="拒绝"></activiti:value>
