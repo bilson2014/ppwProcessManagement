@@ -273,6 +273,7 @@
 			                                          <div>客户名称</div>
 			                                          <div>${user_info["userName"]}</div>
 				                                  </div>
+				                                 
 		                                  		</c:if>
 		                                  		
 		                                  		<c:if test="${not empty user_info['userLevel']}">
@@ -1012,6 +1013,8 @@
 </div>
 </div>
 
+<>
+
 <!-- 价格信息修改 -->
 <div class="cusModel" id="showPriceInfo">
      <div class="modelCard">
@@ -1137,7 +1140,9 @@
             </div>
      </div>       
 </div> --%>
-	
+<!-- <form class="dynamic-form" method="post" action="/project/task/complete/47853">
+    <input value="panfeng" placeholder="panfeng" name="pt_teamName" />
+</form> -->
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${dynamicJs}"></script>

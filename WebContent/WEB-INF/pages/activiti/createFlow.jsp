@@ -27,7 +27,6 @@
 <title></title>
 <link rel="stylesheet" href="${textCss}">
 <link rel="stylesheet" href="${datepickerCss}">
-<script type="text/javascript" src="resources/lib/Clamp/clamp.js"></script>
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${jsonJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
