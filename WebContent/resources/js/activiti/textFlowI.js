@@ -844,7 +844,6 @@ function UploadSingleFile(){
 	
 	upload_VideoFile.on('fileQueued', function(file) {
 	    $('#getFileName').val(file.name);
-	    
 	    upload_VideoFile.option('formData', {
     		resourceName:$('#hasFile').text(),
     		taskId : $('#currentTaskId').val(),
@@ -855,8 +854,7 @@ function UploadSingleFile(){
 	    var file= $('#hasFile').text();
 	    if(file == null || file == "" || file == undefined){
 	    	 $('#errorType').attr('data-content','请选择类型');
-	    }else{
-	    	
+	    }else{    	
 	    	$('.singleProgress').show();
 	 	    $('#upContent').hide();
 	    	$('.upIng').show();
@@ -938,7 +936,7 @@ function UploadFile(){
     		resourceType:$('#file').attr('data-name')
     	});
 	    upload_Video.upload();
-		$('.dynamic-form-table .item').hide();
+		$('.dynamic-form-table .itemCard').hide();
 	});
 /*	upload_Video.on('fileQueued', function(file) {
 		//跳转step2.添加信息
@@ -954,13 +952,11 @@ function UploadFile(){
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
-			
 			$('.upIng').hide();
 			$('.upSuccess').show();
 			$('.upError').hide();
 			initFormEven();
 		}else{
-		
 			$('.upIng').hide();
 			$('.upSuccess').hide();
 			$('.upError').show();

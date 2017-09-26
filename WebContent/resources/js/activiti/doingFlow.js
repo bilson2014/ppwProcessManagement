@@ -131,8 +131,7 @@ function getDate(){
 
 	var otherTime = $('.otherTime');
 	if(otherTime.length >= 0){
-        for (var i = 0; i < otherTime.length; i++) {
-		 
+        for (var i = 0; i < otherTime.length; i++) { 
 		   var getTime = Date.parse($(otherTime[i]).text().replace("CST","GMT+0800"));
 		   $(otherTime[i]).text('截止于'+formatDate(getTime));
 	    }		
@@ -209,7 +208,15 @@ function createOtherCard(res){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
+	var redWord = "";
 	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
+	var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
+	   var lastTime = (time - nowData);
+	   var lastHour =(time - nowData)/3600000;
+	   var getTime =$(setTime[i]).text();
+	   if(lastHour < 0){
+		   redWord = "redWord";
+	   }
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{
@@ -244,20 +251,19 @@ function createOtherCard(res){
 	}
 	if(taskStatus == "completed"){
 		  img= '<img src="/resources/images/flow/isFinish.png"> ';
-		  var getTime = res.finishedDate
+		  var getTime = res.finishedDate;
 		  time = "结束于"+formatDate(getTime);
 		  taskname = "";
 		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?status=finished">';
-	}
-	
+	}	
 	if(taskStatus == "cancel"){
 		  img= '<img src="/resources/images/flow/isCancle.png"> ';
-		  var getTime = res.cancelDate
+		  var getTime = res.cancelDate;
 		  time = "取消于"+formatDate(getTime);
 	}
 		
 	            var html = [
-				' <div class="otherCard">',
+				' <div class="otherCard redWord">',
 				'	        '+aTag+' ',
 				'           <div class="cardH">                                                                                                           ',
 				'               <div class="title">'+res.projectName+'</div>                                                              ',

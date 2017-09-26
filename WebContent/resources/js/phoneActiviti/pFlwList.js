@@ -55,26 +55,29 @@ function loadDoing(){
 	setMission.html('');
 	otherCard.html('');
 
-	loadData(function(res){  
-			var gTasks = res.gTasks;
-			var runningTasks = res.runningTasks;
-			if(gTasks != null && gTasks != undefined && gTasks != ''){
-				for (var int = 0; int < gTasks.length; int++) {
-					 var html = createWaitCard(gTasks[int]);
-					 setMission.append(html);
+	loadData(function(res){
+		
+		if($('.menuTag').hasClass('tagTwo')){
+				var gTasks = res.gTasks;
+				var runningTasks = res.runningTasks;
+				if(gTasks != null && gTasks != undefined && gTasks != ''){
+					for (var int = 0; int < gTasks.length; int++) {
+						 var html = createWaitCard(gTasks[int]);
+						 setMission.append(html);
+					 }
+				     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
+				 }	
+				 else{
+					 $('#daiban').show();
+				 }	
+			if(runningTasks != null && runningTasks != undefined){
+				for (var int = 0; int < runningTasks.length; int++) {
+					 var html = createStateOtherCard(runningTasks[int],0);
+					 otherCard.append(html);
 				 }
 			     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
 			 }	
-			 else{
-				 $('#daiban').show();
-			 }	
-		if(runningTasks != null && runningTasks != undefined){
-			for (var int = 0; int < runningTasks.length; int++) {
-				 var html = createStateOtherCard(runningTasks[int],0);
-				 otherCard.append(html);
-			 }
-		     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
-		 }	
+		}
 	}, getContextPath() + '/project/ajax/loadRuntasks',null);	
 }
 
@@ -83,15 +86,18 @@ function loadPause(){
 	var otherCard  =  $('.setCard');
 	otherCard.html('');
 	loadData(function(res){  
-		if(res != null && res != undefined && res != ''){
-			for (var int = 0; int < res.length; int++) {
-				 var html = createStateOtherCard(res[int],1);
-				 otherCard.append(html);
-			 }
-		     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
-		 }else{
-			 $('#daiban').show();
-		 }	
+		
+		if($('.menuTag').hasClass('tagOne')){
+			if(res != null && res != undefined && res != ''){
+				for (var int = 0; int < res.length; int++) {
+					 var html = createStateOtherCard(res[int],1);
+					 otherCard.append(html);
+				 }
+			     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
+			 }else{
+				 $('#daiban').show();
+			 }	
+		}
 	}, getContextPath() + '/project/ajax/loadSuspendList',null);	
 }
 
@@ -100,7 +106,7 @@ function loadFinish(){
 	var otherCard  =  $('.setCard');
 	otherCard.html('');
 	loadData(function(res){  
-
+		if($('.menuTag').hasClass('tagThree')){
 		if(res != null && res != undefined && res != ''){
 			for (var int = 0; int < res.length; int++) {				
 				if(res[int].pmsProjectFlow.projectStatus == 'finished'){
@@ -114,7 +120,7 @@ function loadFinish(){
 		 }else{
 			 $('#daiban').show();
 		 }	
-
+		}
 	}, getContextPath() + '/project/ajax/loadFinishedList',null);
 }
 
@@ -173,9 +179,9 @@ function createWaitCard(res){
 	    ' <div class="cardTop">                                                      ',
 	    '<div class="cardState">待办</div>',
 	    '     <div class="cardName">'+res.pmsProjectFlow.projectName+'</div>                                   ',
-	    '     '+isWho+'                                       ',
 	    ' </div>                                                                     ',
 	    ' <div class="cardBot">                                                      ',
+	    '     '+isWho+'                                       ',
 	    '        <div class="taskName">'+res.taskName+'</div>                              ',
 	    '        <div class="taskTime">'+time+'</div>                     ',
 	    '        '+timeImg+'     ',
@@ -192,6 +198,7 @@ function createStateOtherCard(res,stage){
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
+	var redWord = "";
 	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
@@ -213,7 +220,14 @@ function createStateOtherCard(res,stage){
 	}
 	if(stage == 0){
 	if(taskStatus == "running" || taskStatus == null){
-			time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
+		   var nowData = Date.parse(new Date());
+		   var time =res.dueDate;
+		   var lastTime = (time - nowData);
+		   var lastHour =(time - nowData)/3600000;
+		   if(lastHour < 0){
+		   redWord = "redWord";
+		   }
+		   time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
 			if(taskStage == '沟通阶段'){
 				 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 			}
@@ -253,12 +267,12 @@ function createStateOtherCard(res,stage){
 	}
 	            var html = [
 	            	' '+aTag+' ',
-	            	' <div class="otherCard">                                                    ',
+	            	' <div class="otherCard '+redWord+'">                                                    ',
 	                ' <div class="cardTop">                                                      ',
 	                '     <div class="cardName">'+res.pmsProjectFlow.projectName+'</div>                                   ',
-	                '     '+isWho+'                                       ',
 	                ' </div>                                                                     ',
 	                ' <div class="cardBot">                                                      ',
+	        	    '     '+isWho+'                                       ',
                     '        <div class="taskName">'+res.taskName+'</div>                              ',
                     '        <div class="taskTime">'+time+'</div>                     ',
                     '        '+img+'     ',
@@ -269,15 +283,13 @@ function createStateOtherCard(res,stage){
 		return html;
 	}
 
-
-
-
 function createOtherCard(res){
 	var isWho = "";
 	var taskStatus = res.taskStatus;
 	var taskStage = res.taskStage;
 	var time = "";
 	var img = "";
+	var redWord="";
 	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+' ">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
@@ -285,7 +297,16 @@ function createOtherCard(res){
 	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
 	}
 	if(taskStatus == "running" || taskStatus == null){
-		 time ="截止于"+formatDate(res.createTime);
+		  var nowData = Date.parse(new Date());
+		   var time =res.dueDate;
+		   var lastTime = (time - nowData);
+		   var lastHour =(time - nowData)/3600000;
+		   if(lastHour < 0){
+
+			   redWord = "redWord";
+		   }
+			   time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
+		   
 		if(taskStage == '沟通阶段'){
 			 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 		}
@@ -324,12 +345,12 @@ function createOtherCard(res){
 	}
 	            var html = [
 	            	' '+aTag+' ',
-	            	' <div class="otherCard">                                                    ',
+	            	' <div class="otherCard '+redWord+'">                                                    ',
 	                ' <div class="cardTop">                                                      ',
 	                '     <div class="cardName">'+res.projectName+'</div>                                   ',
-	                '     '+isWho+'                                       ',
 	                ' </div>                                                                     ',
 	                ' <div class="cardBot">                                                      ',
+	        	    '     '+isWho+'                                       ',
                     '        <div class="taskName">'+res.taskName+'</div>                              ',
                     '        <div class="taskTime">'+time+'</div>                     ',
                     '        '+img+'     ',
