@@ -478,6 +478,9 @@ public class ProjectFlowController extends BaseController {
 					pmsProjectFlowResult.setTaskId(task.getId());
 					pmsProjectFlowResult.setTaskName(task.getName());
 					pmsProjectFlowResult.setTask(null);
+				}else{
+					//已完成的taskId取空
+					pmsProjectFlowResult.setTaskId(" ");
 				}
 				if (hPs != null) {
 					pmsProjectFlowResult.setEndTime(hPs.getEndTime());
