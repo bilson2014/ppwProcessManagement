@@ -167,7 +167,7 @@ function stageTalkEven(){
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
-		}, getContextPath() + '/project/task-detail/'+id,null);
+		}, getContextPath() + '/project/task-detail/'+taskIdname,null);
 		
 	});
 }
