@@ -71,7 +71,13 @@
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
 						   		<div class="otherCard">
 	
-							      	<a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?status=finished">
+									<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
+				                       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?cancel">
+				                    </c:if>
+				                    <c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
+				                    	<a href="/project/task/${staff.taskId}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?status=finished">
+				                    </c:if>
+							      	
 			                             <div class="cardH">
 			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
 				                                 

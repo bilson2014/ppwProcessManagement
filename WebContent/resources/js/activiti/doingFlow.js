@@ -210,13 +210,7 @@ function createOtherCard(res){
 	var img = "";
 	var redWord = "";
 	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
-	var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
-	   var lastTime = (time - nowData);
-	   var lastHour =(time - nowData)/3600000;
-	   var getTime =$(setTime[i]).text();
-	   if(lastHour < 0){
-		   redWord = "redWord";
-	   }
+	
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
 	}else{
@@ -224,6 +218,13 @@ function createOtherCard(res){
 	}
 	if(taskStatus == "running" || taskStatus == null){
 		 time ="截止于"+formatDate(res.createTime);
+		 var time = res.dueDate;
+			var nowData = Date.parse(new Date());
+			   var lastTime = (time - nowData);
+			   var lastHour =(time - nowData)/3600000;
+			   if(lastHour < 0){
+				   redWord = "redWord";
+			}
 		if(taskStage == '沟通阶段'){
 			 img= '<img src="/resources/images/flow/isTalk.png"> ';
 		}

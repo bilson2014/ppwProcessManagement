@@ -208,7 +208,29 @@ function checkForm(){
             	   return false;
                }	
 	}
+	
+	var getCheckInfoUrl = $('.isUrl');
+	for (var i = 0; i < getCheckInfoUrl.length; i++) {
+		var check = $(getCheckInfo[i]).val();
+               if(!IsUrl(check))	{
+            	   checkFlag = false;
+            	   $(getCheckInfo[i]).parent().attr('data-content','填写格式错误');
+            	   $(getCheckInfo[i]).parent().parent().attr('data-content','填写格式错误');
+            	   return false;
+               }	
+	}
 	return true;
+}
+
+function IsUrl(str){   
+	var Url=str;
+	var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+	var objExp=new RegExp(Expression);
+	if(objExp.test(Url)==true){
+	return true;
+	}else{
+	return false;
+	}	 
 }
 
 //加载动态表单
@@ -267,6 +289,8 @@ var formFieldCreator = {
 				proValue = prop.value;
 			}
 			
+			
+			
 			if (prop.writable === true) {
 				if(isRead == 0){
 					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
@@ -282,6 +306,9 @@ var formFieldCreator = {
 					result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 					result += "<ul class='utoInfo'></ul>";
 					return result;
+				}
+				if(prop.id.indexOf("Url")>-1){
+					result += "<input class='isUrl' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{

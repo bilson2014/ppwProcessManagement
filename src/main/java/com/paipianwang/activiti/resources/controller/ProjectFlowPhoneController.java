@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
@@ -76,11 +77,17 @@ public class ProjectFlowPhoneController extends BaseController {
 		mv.addObject("processInstanceId", processInstanceId);
 
 		final PmsProjectFlow flow = projectFlowFacade.getProjectFlowByProjectId(projectId);
-		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-		mv.addObject("taskName", task.getName());
-		mv.addObject("dueDate", task.getDueDate());
 		
-		ProjectCycleItem projectCycleItem = projectWorkFlowService.getCycleByTask(task.getTaskDefinitionKey());
+		ProjectCycleItem projectCycleItem=null;
+		
+		if(ValidateUtil.isValid(taskId)){
+			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			mv.addObject("taskName", task.getName());
+			mv.addObject("dueDate", task.getDueDate());
+			
+			projectCycleItem = projectWorkFlowService.getCycleByTask(task.getTaskDefinitionKey());
+		}
+		
 		
 		if (flow != null) {
 			mv.addObject("projectName", flow.getProjectName());
