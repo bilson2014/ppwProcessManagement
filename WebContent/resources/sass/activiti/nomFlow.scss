@@ -279,14 +279,17 @@ $ba:#bababa; */
                             width: 56%;
                             .listName {
                                 font-size: 1.4px;
+                                font-weight: bold;
                                 color: $gray;
                                 margin-bottom: 8px;
+                                line-height: 18px;
                                 @include ellipsis;
                             }
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
                                 line-height: 16px;
+                                margin-bottom: 8px;
                             }
                             .your {
                                 height: 16px;
@@ -376,7 +379,8 @@ $ba:#bababa; */
                                 width: 84px;
                                 height: 56px;
                                 position: absolute;
-                                bottom: 15px;
+                                top: 65px;
+                                // bottom: 35px;
                                 right: 15px;
                             }
                             .setContent {
