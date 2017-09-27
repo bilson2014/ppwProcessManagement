@@ -60,6 +60,7 @@
                     text-align: center;
                     background: #fff;
                     border: 1px solid #999999;
+                    cursor: pointer;
                     &:hover {
                         color: #333;
                     }
@@ -170,22 +171,9 @@ $ba:#bababa; */
                         line-height: 39px;
                         font-size: $font-size-base;
                         color: $gray-dark;
-                        width: 40%;
+                        width: 100%;
                         @include ellipsis;
                         font-weight: bold;
-                    }
-                    .your {
-                        width: 80px;
-                        height: 20px;
-                        border-radius: 4px;
-                        border: 1px solid $red-base;
-                        color: $red-base;
-                        line-height: 18px;
-                        text-align: center;
-                        font-size: $font-size-sm;
-                        position: absolute;
-                        right: 12px;
-                        top: 8px;
                     }
                     .point {
                         width: 40px;
@@ -265,7 +253,6 @@ $ba:#bababa; */
                     @media screen and (min-width: 1030px) {
                         width: ($areaWidth - $noNeedpad*3)/3;
                     }
-                    height: 134px;
                     margin-right: 10px;
                     margin-bottom: 30px;
                     border: 1px solid $ba;
@@ -278,8 +265,9 @@ $ba:#bababa; */
                         img {
                             width: 70px;
                             height: 70px;
-                            margin-left: 15px;
-                            margin-top: 12px;
+                            margin-left: 20px;
+                            margin-top: 20px;
+                            margin-bottom: 20px;
                             display: inline-block;
                             vertical-align: top;
                         }
@@ -287,17 +275,32 @@ $ba:#bababa; */
                             display: inline-block;
                             vertical-align: top;
                             margin-top: 25px;
-                            margin-left: 15px;
+                            margin-left: 20px;
                             width: 56%;
                             .listName {
-                                font-size: $font-size-sm;
+                                font-size: 1.4px;
                                 color: $gray;
-                                margin-bottom: 10px;
+                                margin-bottom: 8px;
                                 @include ellipsis;
                             }
                             .lastTime {
                                 font-size: $font-size-sm;
                                 color: $gray-light;
+                                line-height: 16px;
+                            }
+                            .your {
+                                height: 16px;
+                                color: #fe5453;
+                                line-height: 18px;
+                                margin-bottom: 8px;
+                                font-size: 1.2px;
+                            }
+                            .user {
+                                height: 16px;
+                                color: #fe5453;
+                                line-height: 18px;
+                                margin-bottom: 8px;
+                                font-size: 1.2px;
                             }
                         }
                     }
@@ -359,7 +362,6 @@ $ba:#bababa; */
                         @media screen and (min-width: 1030px) {
                             width: ($areaWidth - $noNeedpad*3)/3;
                         }
-                        height: 134px;
                         margin-right: 10px;
                         margin-bottom: 30px;
                         border: 1px solid $ba;
@@ -394,6 +396,22 @@ $ba:#bababa; */
                                     color: $gray;
                                     line-height: 20px;
                                     overflow: hidden;
+                                }
+                                .your {
+                                    height: 20px;
+                                    color: #666666;
+                                    line-height: 18px;
+                                    margin-top: 16px;
+                                    font-size: 1.2rem;
+                                    margin-bottom: 20px;
+                                }
+                                .user {
+                                    height: 20px;
+                                    color: #666666;
+                                    line-height: 18px;
+                                    margin-top: 16px;
+                                    font-size: 1.2rem;
+                                    margin-bottom: 20px;
                                 }
                             }
                         }

@@ -49,7 +49,7 @@
 	                <div class="titleNameWork">
 	                    <div class="name">项目名称</div>
 	                    <input>
-	                    <div class="search btn-c-r">搜索</div>
+	                    <div class="search">搜索</div>
 	                      <r:group role="sale">
 		                    <div class="createPro" id="toCreate">
 		                        <div class="newAdd"></div>
@@ -74,12 +74,7 @@
 							      	<a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?status=finished">
 			                             <div class="cardH">
 			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-				                                  <c:if test="${staff.isPrincipal == 1}">
-				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-				                                  </c:if>
-				                                  <c:if test="${staff.isPrincipal == 0}">
-				                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-				                                  </c:if>
+				                                 
 			                             </div>
 			                             <div class="cardContent">
 			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
@@ -95,6 +90,13 @@
 				                                    <c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
 				                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
 				                                    </c:if>
+				                                    <!--cxx  -->
+				                                     <c:if test="${staff.isPrincipal == 1}">
+				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
+				                                  <c:if test="${staff.isPrincipal == 0}">
+				                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+				                                  </c:if>
 			                                  </div>
 			                             </div>
 		                             </a>
