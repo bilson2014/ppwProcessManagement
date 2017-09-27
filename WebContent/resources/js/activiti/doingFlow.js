@@ -262,6 +262,7 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isCancle.png"> ';
 		  var getTime = res.cancelDate;
 		  time = "取消于"+formatDate(getTime);
+		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?cancel">';
 	}
 		
 	            var html = [
