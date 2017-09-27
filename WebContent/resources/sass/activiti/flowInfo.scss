@@ -2287,17 +2287,21 @@
                         margin-left: 48px;
                         position: relative;
 
-                        div:nth-child(1) {
-                            font-size: $font-size-base;
-                            color: $gray-dark;
-                            padding-right: 150px;
-                        }
-                        div:nth-child(2) {
-                            font-size: $font-size-base;
-                            color: $gray-light;
-                            position: absolute;
-                            right: 5px;
-                            top: 19px;
+                        .itemPos {
+                            position: relative;
+                            width: 100%;
+                            div:nth-child(1) {
+                                font-size: $font-size-base;
+                                color: $gray-dark;
+                                padding-right: 150px;
+                            }
+                            div:nth-child(2) {
+                                font-size: $font-size-base;
+                                color: $gray-light;
+                                position: absolute;
+                                right: 5px;
+                                top: 1px;
+                            }
                         }
                     }
                     input {
@@ -2310,7 +2314,7 @@
                         outline: none;
                         padding-left: 10px;
                         font-size: $font-size-base;
-                        color: $gray;
+                        color: $gray !important;
                         line-height: 34px;
                         display: none;
                     }
@@ -2506,14 +2510,12 @@ background-image: none !important; */
             width: 120px !important;
             margin: 0 auto;
         }
-        input {
+        .shareInput {
             width: 120px;
             height: 30px;
             border-radius: 8px;
             margin: 0 auto;
-            margin-bottom: 30px;
-            margin-top: 30px;
-            color:white !important;
+            color: white !important;
             font-size: $font-size-base;
             border: none;
             outline: none;

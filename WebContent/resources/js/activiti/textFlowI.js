@@ -66,10 +66,7 @@ function initStateBtn(){
 			   $('#cancleReasonError').attr('data-content','请填写取消原因');
 		   }
 	 });
-	 
-	 
-	 
-	 
+
 }
 
 //初始化来源
@@ -128,6 +125,7 @@ function initLastTime(ctyle,createTime){
 		$('#imgWord').text('暂停');
 		$('#imgWord').attr('style','color:#fe5453');
 		$('#lastTimeWord').text("");
+		$('.update').hide();
     }else{
     	if(checkDay >= 0){
     		$('#imgFlow').addClass('imgRed');
@@ -144,10 +142,12 @@ function initLastTime(ctyle,createTime){
     if(state.trim() == "status=finished"){
     	$('#imgWord').text('完成');
     	$('.proControl').hide();
+    	$('.update').hide();
     }
     if(state.trim() == "cancel"){
     	$('#imgWord').text('取消');
     	$('.proControl').hide();
+    	$('.update').hide();
     }
     
 }
@@ -167,7 +167,7 @@ function stageTalkEven(){
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
-		}, getContextPath() + '/project/task-detail/'+id,null);
+		}, getContextPath() + '/project/task-detail/'+taskIdname,null);
 		
 	});
 }
@@ -224,7 +224,7 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div>';
+			body +='<div class="itemPos"><div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == "" ){

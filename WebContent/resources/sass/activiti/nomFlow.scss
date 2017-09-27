@@ -278,7 +278,7 @@ $ba:#bababa; */
                             margin-left: 20px;
                             width: 56%;
                             .listName {
-                                font-size: 1.4px;
+                                font-size: 14px;
                                 font-weight: bold;
                                 color: $gray;
                                 margin-bottom: 8px;
@@ -293,17 +293,17 @@ $ba:#bababa; */
                             }
                             .your {
                                 height: 16px;
-                                color: #fe5453;
+                                color: #fe5453 !important;
                                 line-height: 18px;
                                 margin-bottom: 8px;
-                                font-size: 1.2px;
+                                font-size: 12px;
                             }
                             .user {
                                 height: 16px;
-                                color: #fe5453;
+                                color: #666 !important;
                                 line-height: 18px;
                                 margin-bottom: 8px;
-                                font-size: 1.2px;
+                                font-size: 12px;
                             }
                         }
                     }
@@ -406,7 +406,7 @@ $ba:#bababa; */
                                     color: #666666;
                                     line-height: 18px;
                                     margin-top: 16px;
-                                    font-size: 1.2rem;
+                                    font-size: 12px;
                                     margin-bottom: 20px;
                                 }
                                 .user {
@@ -414,7 +414,7 @@ $ba:#bababa; */
                                     color: #666666;
                                     line-height: 18px;
                                     margin-top: 16px;
-                                    font-size: 1.2rem;
+                                    font-size: 12px;
                                     margin-bottom: 20px;
                                 }
                             }

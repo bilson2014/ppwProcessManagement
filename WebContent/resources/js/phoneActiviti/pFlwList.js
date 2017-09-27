@@ -211,15 +211,18 @@ function createStateOtherCard(res,stage){
 	if(stage == 1){
 		 time ="暂停于"+formatDate(res.pmsProjectFlow.suspendDate);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isPause.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?pause">';
 	}
 	if(stage == 2){
-		 time ="完成于"+formatDate(res.pmsProjectFlow.suspendDate);
+		 time ="完成于"+formatDate(res.endTime);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isFinish.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?finish">';
 		 taskname = "";
 	}
 	if(stage == 3){
 		 time ="取消于"+formatDate(res.pmsProjectFlow.suspendDate);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isCancle.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?cancel">';
 		 taskname = "";
 	}
 	if(stage == 0){
@@ -231,7 +234,7 @@ function createStateOtherCard(res,stage){
 		   if(lastHour < 0){
 		   redWord = "redWord";
 		   }
-		   time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
+		   time ="截止于"+formatDate(res.dueDate);
 			if(taskStage == '沟通阶段'){
 				 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 			}
@@ -309,8 +312,7 @@ function createOtherCard(res){
 
 			   redWord = "redWord";
 		   }
-			   time ="截止于"+formatDate(res.createTime);
-		   
+			 time ="截止于"+formatDate(res.dueDate);	   
 		if(taskStage == '沟通阶段'){
 			 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 		}

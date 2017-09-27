@@ -1123,7 +1123,7 @@
             </div>
 		        <div class="copyUrl" id="setInfoCopy"></div>
 		        <div class="midDiv">
-	                <input class="btn-c-r" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
+	                <input class="btn-c-r shareInput" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
 	            </div>
       </div>    
 </div>

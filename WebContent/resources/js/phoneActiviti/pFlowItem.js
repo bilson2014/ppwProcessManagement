@@ -25,5 +25,12 @@ function logobtn() {
     })
     $('.mask .close').off('click').on('click', function() {
         $('.mask').hide();
-    })
+    });
+    
+    //addLt
+    var href = window.location.href;
+    var state = href.substr(href.lastIndexOf("?")+1,href.length); 
+    if(state.trim()== "cancel" ||state.trim()== "finish" ||state.trim()== "pause"){
+    	  $('.write').hide();
+    }
 }
