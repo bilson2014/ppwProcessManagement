@@ -210,7 +210,7 @@ function checkForm(){
 	}
 	
 	var getCheckInfoUrl = $('.isUrl');
-	for (var i = 0; i < getCheckInfo.length; i++) {
+	for (var i = 0; i < getCheckInfoUrl.length; i++) {
 		var check = $(getCheckInfo[i]).val();
                if(!IsUrl(check))	{
             	   checkFlag = false;
