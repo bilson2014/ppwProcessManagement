@@ -78,18 +78,27 @@
 						       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                  <c:if test="${staff.isPrincipal == 1}">
+		                                 <!-- <c:if test="${staff.isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
 		                                  <c:if test="${staff.isPrincipal == 0}">
 		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
+		                                  </c:if>-->
 	                             </div>
 	                             <div class="cardContent">
 	                                  <img src="/resources/images/flow/demoG.png">
 	                                  <div class="setContent">
 	                                      <div class="listName">${staff.task.name}</div>
-	                                      <div class="lastTime setLastTime">${staff.task.dueDate}</div>
+	                                     
+	                                      <!-- cxx修改 -->
+	                                       <c:if test="${staff.isPrincipal == 1}">
+		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  <c:if test="${staff.isPrincipal == 0}">
+		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  
+		                                   <div class="lastTime setLastTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
 	                            </a>  
@@ -145,17 +154,24 @@
 							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                  <c:if test="${staff.isPrincipal == 1}">
-		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                  <c:if test="${staff.isPrincipal == 0}">
-		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
+		                                  
+		                                  
+		                                  
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
 		                                      <div class="lastTime otherTime">${staff.task.createTime}</div>
+		                                      
+		                                      <!--cxx  -->
+		                                      <c:if test="${staff.isPrincipal == 1}">
+		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                  <c:if test="${staff.isPrincipal == 0}">
+		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  </c:if>
+		                                      
+		                                      
 		                                  </div>
 		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
 		                                  <img src="/resources/images/flow/isTalk.png">
