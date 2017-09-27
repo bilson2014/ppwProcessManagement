@@ -1107,6 +1107,10 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	// --> filter start with pt_ value by jack at 20170926 end
 	
 	
@@ -1163,6 +1167,11 @@ var formFieldCreator = {
 	return result;
 },
 'date': function(prop, datas, className) {
+	
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
@@ -1182,6 +1191,10 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
@@ -1197,6 +1210,10 @@ var formFieldCreator = {
 	return result;
 },
 'enum': function(prop, datas, className) {
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";

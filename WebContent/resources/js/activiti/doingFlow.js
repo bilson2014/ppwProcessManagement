@@ -1,6 +1,6 @@
 
 $().ready(function() {
-//	document.domain = getUrl();	
+	document.domain = getUrl();	
 	initPageEven();
 	toSearch();
 });

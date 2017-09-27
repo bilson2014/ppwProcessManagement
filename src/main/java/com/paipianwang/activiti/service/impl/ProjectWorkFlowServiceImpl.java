@@ -293,12 +293,18 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					+ " WHERE ART.ASSIGNEE_ = '" + userId + "'"
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
 		}else {
-			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
+			/*sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ "
-					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
+					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
 					+ " WHERE sy.employeeId = "+ userId.split("_")[1]
-					/*+ " AND ART.ASSIGNEE_ = '"*/
-					/*+ userId + "'"*/
+					+ " AND ART.ASSIGNEE_ = '"
+					+ userId + "'"
+					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";*/
+			
+			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
+					+ " LEFT JOIN pat.PROJECT_FLOW flow ON flow.PROCESSINSTANCEID = RES.PROC_INST_ID_ "
+					+ " LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.PROJECTID = flow.PROJECTID "
+					+ " WHERE sy.employeeId = "+ userId.split("_")[1]
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
 		}
 
