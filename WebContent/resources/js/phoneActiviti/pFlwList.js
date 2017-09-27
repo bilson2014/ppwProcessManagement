@@ -205,6 +205,7 @@ function createStateOtherCard(res,stage){
 	}else{
 	    isWho = '<div class="user">负责人:'+res.pmsProjectFlow.principalName+'</div>';  
 	}
+	var taskname = res.taskName;
 	
 	if(stage == 1){
 		 time ="暂停于"+formatDate(res.pmsProjectFlow.suspendDate);
@@ -213,6 +214,7 @@ function createStateOtherCard(res,stage){
 	if(stage == 2){
 		 time ="完成于"+formatDate(res.pmsProjectFlow.suspendDate);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isFinish.png"> ';
+		 taskname = "";
 	}
 	if(stage == 3){
 		 time ="取消于"+formatDate(res.pmsProjectFlow.suspendDate);
@@ -246,7 +248,7 @@ function createStateOtherCard(res,stage){
 		}
 	}
 	
-	var taskname = res.taskName;
+	
 	
 	if(taskStatus == "suspend"){
 		  img= '<img class="taskImg" src="/resources/images/pFlow/isPause.png"> ';
@@ -273,7 +275,7 @@ function createStateOtherCard(res,stage){
 	                ' </div>                                                                     ',
 	                ' <div class="cardBot">                                                      ',
 	        	    '     '+isWho+'                                       ',
-                    '        <div class="taskName">'+res.taskName+'</div>                              ',
+                    '        <div class="taskName">'+taskname+'</div>                              ',
                     '        <div class="taskTime">'+time+'</div>                     ',
                     '        '+img+'     ',
 	                ' </div>                                                                     ',
