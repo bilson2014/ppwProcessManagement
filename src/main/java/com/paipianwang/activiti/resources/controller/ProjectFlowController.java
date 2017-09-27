@@ -238,6 +238,7 @@ public class ProjectFlowController extends BaseController {
 			@PathVariable("projectId") final String projectId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
+		
 		result.put("taskFormData", taskFormData);
 
 		List<FormProperty> properties = taskFormData.getFormProperties();

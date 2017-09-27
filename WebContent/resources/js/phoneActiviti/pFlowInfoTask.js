@@ -289,7 +289,9 @@ var formFieldCreator = {
 				proValue = prop.value;
 			}
 			
-			
+			if(str.indexOf('dl_') < 0){
+				proValue = prop.value;
+			}
 			
 			if (prop.writable === true) {
 				if(isRead == 0){
@@ -338,6 +340,10 @@ var formFieldCreator = {
 				proValue = prop.value;
 			}
 			
+			if(str.indexOf('dl_') < 0){
+				proValue = prop.value;
+			}
+			
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -360,6 +366,10 @@ var formFieldCreator = {
 				proValue = prop.value;
 			}
 			
+			if(str.indexOf('dl_') < 0){
+				proValue = prop.value;
+			}
+			
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
@@ -378,9 +388,15 @@ var formFieldCreator = {
 			title = prop.name;
 			var proValue = '';
 			var str = prop.id;
+			
 			if(str.indexOf('pt_') < 0){
 				proValue = prop.value;
 			}
+			
+			if(str.indexOf('dl_') < 0){
+				proValue = prop.value;
+			}
+			
 			if(prop.required){
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "checkInfo";
