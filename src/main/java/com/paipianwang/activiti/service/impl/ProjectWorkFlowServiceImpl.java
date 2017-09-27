@@ -345,6 +345,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 							result.setIsPrincipal(0);
 						}
 						result.setPmsProjectFlow(flow);
+						//task使用空字符串
+						result.setTaskId(" ");
 					}
 
 					resultList.add(result);
@@ -1280,6 +1282,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setProjectName(flow.getProjectName());
 						each.setPrincipalName(flow.getPrincipalName());
 						each.setFinishedDate(flow.getFinishedDate());
+						//已完成的taskId取空
+						each.setTaskId(" ");
 						result.add(each);
 					}
 				}
