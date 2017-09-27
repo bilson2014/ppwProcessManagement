@@ -211,9 +211,9 @@ function createOtherCard(res){
 	var redWord = "";
 	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
 	var time = res.dueDate;
+	var nowData = Date.parse(new Date());
 	   var lastTime = (time - nowData);
 	   var lastHour =(time - nowData)/3600000;
-	   var getTime =$(setTime[i]).text();
 	   if(lastHour < 0){
 		   redWord = "redWord";
 	   }
