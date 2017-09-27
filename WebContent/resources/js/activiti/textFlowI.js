@@ -5,6 +5,7 @@ var upload_Video;
 var upload_VideoFile;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
+var taskIdname ="";
 $().ready(function() {
 	document.domain = getUrl();
 	// 加载动态表单
@@ -142,13 +143,18 @@ function initLastTime(ctyle,createTime){
     }
     if(state.trim() == "status=finished"){
     	$('#imgWord').text('完成');
+    	$('.proControl').hide();
+    }
+    if(state.trim() == "cancel"){
+    	$('#imgWord').text('取消');
+    	$('.proControl').hide();
     }
     
 }
 
 function stageTalkEven(){
 	$('.findTalk').off('click').on('click',function(){
-		var id = $(this).attr('data-id');
+		taskIdname= $(this).attr('data-id');
 		var name = $(this).attr('data-name');
 		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
@@ -166,7 +172,7 @@ function stageTalkEven(){
 	});
 }
 
-function loadStageInfoEven(name){
+function loadStageInfoEven(){
 	loadData(function(res){	
 		var body =$('#itemHeightInfo');
 		body.html('');
@@ -180,7 +186,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskId:$('#currentTaskId').val()
+		taskId:taskIdname
 	}));
 }
 
