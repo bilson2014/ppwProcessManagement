@@ -154,15 +154,11 @@
 							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                  
-		                                  
-		                                  
 		                             </div>
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime otherTime">${staff.task.createTime}</div>
-		                                      
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
 		                                      <!--cxx  -->
 		                                      <c:if test="${staff.isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>

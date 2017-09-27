@@ -25,6 +25,17 @@ function checkState(){
     $(window.parent.document).find('.footBot #toMessage').attr('data-content',$('#url').val());
     $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val());
     $(window.parent.document).find('.footBot #toFlow').attr('data-content',$('#url').val());
+    
+    if(state.trim()== "cancel"){
+    	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?cancel");
+    }
+    if(state.trim()== "finish"){
+  	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?finish");
+  }
+    if(state.trim()== "pause"){
+  	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?pause");
+  }
+    
     if(state.trim()!= "task"){
     	$('#daiban').show();
     	$(window.parent.document).find('.footBot #toMission').attr('data-content',$('#url').val());
