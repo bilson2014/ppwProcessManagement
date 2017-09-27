@@ -2497,6 +2497,8 @@ background-image: none !important; */
         padding-right: 5%;
         margin-top: 30px;
         margin-bottom: 30px;
+        position: relative;
+        top: 15px;
     }
 
     .modelCard {
@@ -2510,6 +2512,8 @@ background-image: none !important; */
             border-radius: 8px;
             margin: 0 auto;
             margin-bottom: 30px;
+            margin-top: 30px;
+            color:white !important;
             font-size: $font-size-base;
             border: none;
             outline: none;
