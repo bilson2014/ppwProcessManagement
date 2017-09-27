@@ -1,6 +1,6 @@
 
 $().ready(function() {
-//	document.domain = getUrl();	
+	document.domain = getUrl();	
 	initPageEven();
 	toSearch();
 });
@@ -210,7 +210,7 @@ function createOtherCard(res){
 	var img = "";
 	var redWord = "";
 	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
-	var time =Date.parse($(setTime[i]).text().replace("CST","GMT+0800"));
+	var time = res.dueDate;
 	   var lastTime = (time - nowData);
 	   var lastHour =(time - nowData)/3600000;
 	   var getTime =$(setTime[i]).text();

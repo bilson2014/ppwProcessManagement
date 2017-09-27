@@ -784,12 +784,33 @@ function checkForm(){
                }	
 	}
 	
+	var getCheckInfoUrl = $('.isUrl');
+	for (var i = 0; i < getCheckInfo.length; i++) {
+		var check = $(getCheckInfo[i]).val();
+               if(!IsUrl(check)){
+            	   checkFlag = false;
+            	   $(getCheckInfo[i]).parent().attr('data-content','填写格式错误');
+            	   $(getCheckInfo[i]).parent().parent().attr('data-content','填写格式错误');
+            	   return false;
+               }	
+	}
 	if(checkFlag){
 		$('#toSubmitForm').prop("type","submit");
 		$('.btnInput').off('click');
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 	}
+}
+
+function IsUrl(str){   
+	var Url=str;
+	var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+	var objExp=new RegExp(Expression);
+	if(objExp.test(Url)==true){
+	return true;
+	}else{
+	return false;
+	}	 
 }
 
 function initFormEven(){
@@ -1136,6 +1157,10 @@ var formFieldCreator = {
 		if(prop.id =="pt_teamId"){
 			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
 			return result;
+		}
+		
+		if(prop.id.indexOf("Url")>-1){
+			result += "<input class='isUrl' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 		}
 		
 	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
