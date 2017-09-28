@@ -143,6 +143,8 @@ function initLastTime(ctyle,createTime){
     	$('#imgWord').text('完成');
     	$('.proControl').hide();
     	$('.update').hide();
+    	$('.conMod').hide();
+    	$('.upFile').hide();
     }
     if(state.trim() == "cancel"){
     	$('#imgWord').text('取消');
@@ -791,13 +793,12 @@ function checkForm(){
 	}
 	
 	var getCheckInfoUrl = $('.isUrl');
-	for (var i = 0; i < getCheckInfo.length; i++) {
-		var check = $(getCheckInfo[i]).val();
+	for (var i = 0; i < getCheckInfoUrl.length; i++) {
+		var check = $(getCheckInfoUrl[i]).val();
                if(!IsUrl(check)){
             	   checkFlag = false;
-            	   $(getCheckInfo[i]).parent().attr('data-content','填写格式错误');
-            	   $(getCheckInfo[i]).parent().parent().attr('data-content','填写格式错误');
-            	   return false;
+            	   $('#errorInfo').text('填写格式错误');
+            	   initFormEven();
                }	
 	}
 	if(checkFlag){
@@ -805,6 +806,7 @@ function checkForm(){
 		$('.btnInput').off('click');
 	}else{
 		$('#errorInfo').text('请补充必填信息');
+		initFormEven();
 	}
 }
 
@@ -1184,7 +1186,8 @@ var formFieldCreator = {
 		}
 		
 		if(prop.id.indexOf("Url")>-1){
-			result += "<input class='isUrl' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+			result += "<input class='isUrl' value='" + prop.value + "' name='" + prop.id + "'  />";
+			return result;
 		}
 		
 	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{

@@ -222,11 +222,11 @@ function checkForm(){
 	
 	var getCheckInfoUrl = $('.isUrl');
 	for (var i = 0; i < getCheckInfoUrl.length; i++) {
-		var check = $(getCheckInfo[i]).val();
+		var check = $(getCheckInfoUrl[i]).val();
                if(!IsUrl(check))	{
             	   checkFlag = false;
-            	   $(getCheckInfo[i]).parent().attr('data-content','填写格式错误');
-            	   $(getCheckInfo[i]).parent().parent().attr('data-content','填写格式错误');
+            	   $(getCheckInfoUrl[i]).parent().attr('data-content','填写格式错误');
+            	   $(getCheckInfoUrl[i]).parent().parent().attr('data-content','填写格式错误');
             	   return false;
                }	
 	}
@@ -321,7 +321,8 @@ var formFieldCreator = {
 					return result;
 				}
 				if(prop.id.indexOf("Url")>-1){
-					result += "<input class='isUrl' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+					result += "<input class='isUrl' value='" + proValue + "' name='" + prop.id + "'  />";
+					return result;
 				}
 				
 			     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{

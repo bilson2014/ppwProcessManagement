@@ -152,6 +152,19 @@ function getDate(){
 		   $(finishTime[i]).text('结束于'+formatDate(getTime));
 	    }		
 	}
+	
+/*	var dueTime = $('.setBorder');
+	if(dueTime.length >= 0){
+        for (var i = 0; i < dueTime.length; i++) {
+
+		   var getTime = Date.parse(($(dueTime[i]).attr('data-content')).replace("CST","GMT+0800"));
+		   var nowData = Date.parse(new Date());
+		   var lastHour =(getTime - nowData)/3600000;
+		   if(lastHour < 0){
+			   $(dueTime[i]).addClass('redWord');
+		   }
+	    }		
+	}*/
 }
 
 function createWaitCard(res){

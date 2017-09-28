@@ -150,7 +150,7 @@
 	           
 	            <c:if test="${not empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
-							     <div class="otherCard">
+							     <div class="otherCard setBorder" data-contnet="${staff.task.dueDate}">
 							        <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?doing">
 		                             <div class="cardH">
 		                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>

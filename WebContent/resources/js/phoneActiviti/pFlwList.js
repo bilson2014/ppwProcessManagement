@@ -54,9 +54,11 @@ function loadDoing(){
 	var otherCard  =  $('.setCard');
 	setMission.html('');
 	otherCard.html('');
-
+	
 	loadData(function(res){
 		
+		var check1 = true;
+		var check2 = true;
 		if($('.menuTag').hasClass('tagTwo')){
 				var gTasks = res.gTasks;
 				var runningTasks = res.runningTasks;
@@ -68,7 +70,7 @@ function loadDoing(){
 				     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
 				 }	
 				 else{
-					 $('#daiban').show();
+					 check1 = false;
 				 }	
 			if(runningTasks != null && runningTasks != undefined){
 				for (var int = 0; int < runningTasks.length; int++) {
@@ -76,7 +78,13 @@ function loadDoing(){
 					 otherCard.append(html);
 				 }
 			     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
-			 }	
+			 }	else{
+				 check2 = false;
+			 }
+          if(!check1&&!check2)	{
+        	  $('#daiban').show();
+          }		
+			
 		}
 	}, getContextPath() + '/project/ajax/loadRuntasks',null);	
 }

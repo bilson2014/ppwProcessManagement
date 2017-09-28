@@ -388,12 +388,12 @@ $ba:#bababa; */
                                 vertical-align: top;
                                 margin-top: 25px;
                                 margin-left: 15px;
-                                width: 56%;
+                                width: 60%;
                                 .listName {
                                     font-size: $font-size-sm;
                                     color: $gray;
-                                    margin-bottom: 10px;
-                                    @include ellipsis;
+                                    margin-bottom:5px;
+                                    line-height: 20px;
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;
