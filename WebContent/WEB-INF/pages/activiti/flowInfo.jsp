@@ -1121,7 +1121,7 @@
                    <div class="title">分享</div>
                    <div class="closeModel"></div>
             </div>
-		        <div class="copyUrl" id="setInfoCopy"></div>
+		        <a class="copyUrl" id="setInfoCopy"></a>
 		        <div class="midDiv">
 	                <input class="btn-c-r shareInput" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
 	            </div>
