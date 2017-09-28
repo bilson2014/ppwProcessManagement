@@ -1926,7 +1926,7 @@
 
                     .utoInfo {
                         position: absolute;
-                        width: 65px;
+                        width: 240px;
                         left: 0;
                         z-index: 3;
                         display: none;
@@ -1944,6 +1944,7 @@
                             line-height: 36px;
                             color: $gray;
                             font-size: $font-size-base;
+                            @include ellipsis;
                             &:hover {
                                 background: $f0;
                             }
@@ -2287,17 +2288,21 @@
                         margin-left: 48px;
                         position: relative;
 
-                        div:nth-child(1) {
-                            font-size: $font-size-base;
-                            color: $gray-dark;
-                            padding-right: 150px;
-                        }
-                        div:nth-child(2) {
-                            font-size: $font-size-base;
-                            color: $gray-light;
-                            position: absolute;
-                            right: 5px;
-                            top: 19px;
+                        .itemPos {
+                            position: relative;
+                            width: 100%;
+                            div:nth-child(1) {
+                                font-size: $font-size-base;
+                                color: $gray-dark;
+                                padding-right: 150px;
+                            }
+                            div:nth-child(2) {
+                                font-size: $font-size-base;
+                                color: $gray-light;
+                                position: absolute;
+                                right: 5px;
+                                top: 1px;
+                            }
                         }
                     }
                     input {
@@ -2310,7 +2315,7 @@
                         outline: none;
                         padding-left: 10px;
                         font-size: $font-size-base;
-                        color: $gray;
+                        color: $gray !important;
                         line-height: 34px;
                         display: none;
                     }
@@ -2495,8 +2500,8 @@ background-image: none !important; */
         margin: 0 auto;
         padding-left: 5%;
         padding-right: 5%;
-        margin-top: 30px;
-        margin-bottom: 30px;
+        position: relative;
+        top: 30px;
     }
 
     .modelCard {
@@ -2504,14 +2509,16 @@ background-image: none !important; */
             width: 120px !important;
             margin: 0 auto;
         }
-        input {
+        .shareInput {
             width: 120px;
             height: 30px;
             border-radius: 8px;
             margin: 0 auto;
-            margin-bottom: 30px;
+            color: white !important;
             font-size: $font-size-base;
             border: none;
             outline: none;
+            margin-bottom: 30px;
+            margin-top: 50px;
         }
     }

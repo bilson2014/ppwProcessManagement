@@ -213,4 +213,10 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public Task getCurrentTaskName(final String taskId);
+
+	/**
+	 * 获取 水印样片 以及 水印样片密码
+	 * @param projectId
+	 */
+	public Map<String, Object> getFlowSample(String projectId);
 }

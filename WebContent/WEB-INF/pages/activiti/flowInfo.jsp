@@ -252,6 +252,20 @@
 	                                          <div>${flow_info["projectDescription"]}</div>
 				                           </div>
 			                           </c:if>
+			                           
+			                           <c:if test="${not empty flow_info['sampleUrl']}">
+		                                  	<div class="longItem">
+	                                          <div>水印样片地址</div>
+	                                          <div><a href='${flow_info["sampleUrl"]}' target="_blank">${flow_info["sampleUrl"]}</a></div>
+				                            </div>
+	                                  </c:if>
+	                                  
+	                                  <c:if test="${not empty flow_info['samplePassword']}">
+		                                  	<div class="longItem">
+	                                          <div>水印样片密码</div>
+	                                          <div>${flow_info["samplePassword"]}</div>
+				                            </div>
+	                                  </c:if>
 	                            </div>
 	                       </div>
 	                       
@@ -1121,9 +1135,9 @@
                    <div class="title">分享</div>
                    <div class="closeModel"></div>
             </div>
-		        <div class="copyUrl" id="setInfoCopy"></div>
+		        <a class="copyUrl" id="setInfoCopy"></a>
 		        <div class="midDiv">
-	                <input class="btn-c-r" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
+	                <input class="btn-c-r shareInput" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
 	            </div>
       </div>    
 </div>

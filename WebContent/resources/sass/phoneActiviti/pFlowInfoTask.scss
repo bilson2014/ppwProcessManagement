@@ -54,7 +54,7 @@
                     font-size: $size30;
                     position: absolute;
                     left: 2rem;
-                    top: 1.25rem;
+                    top: 1rem;
                 }
 
                 .name {
@@ -127,6 +127,8 @@
     .btnInput {
         width: 8rem;
         margin: 0 auto;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
 
     #toSubmitForm {

@@ -116,14 +116,7 @@
                     vertical-align: middle;
                 }
             }
-            /*             $noNeedpad:20px;
-$areaWidth:1110px;
-$areaMidWidth:1000px;
-$smallWidth:770px;
-$areaMinWidth:1240px;
-$areaMinMidWidth:1132px;
-$smallMinWidth:900px;
-$ba:#bababa; */
+ 
             
             $noNeedpad:20px;
             $areaWidth:1110px;
@@ -278,7 +271,7 @@ $ba:#bababa; */
                             margin-left: 20px;
                             width: 56%;
                             .listName {
-                                font-size: 1.4px;
+                                font-size: 14px;
                                 font-weight: bold;
                                 color: $gray;
                                 margin-bottom: 8px;
@@ -293,17 +286,17 @@ $ba:#bababa; */
                             }
                             .your {
                                 height: 16px;
-                                color: #fe5453;
+                                color: #fe5453 !important;
                                 line-height: 18px;
                                 margin-bottom: 8px;
-                                font-size: 1.2px;
+                                font-size: 12px;
                             }
                             .user {
                                 height: 16px;
-                                color: #fe5453;
+                                color: #666 !important;
                                 line-height: 18px;
                                 margin-bottom: 8px;
-                                font-size: 1.2px;
+                                font-size: 12px;
                             }
                         }
                     }
@@ -388,15 +381,18 @@ $ba:#bababa; */
                                 vertical-align: top;
                                 margin-top: 25px;
                                 margin-left: 15px;
-                                width: 56%;
+                                width: 60%;
                                 .listName {
                                     height: 40px;
                                     width: 200px;
                                     line-height: 22px;
                                     font-size: $font-size-sm;
                                     color: $gray;
+
                                     margin-bottom: 10px;
                                     overflow: hidden;
+
+
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;
@@ -409,7 +405,7 @@ $ba:#bababa; */
                                     color: #666666;
                                     line-height: 18px;
                                     margin-top: 16px;
-                                    font-size: 1.2rem;
+                                    font-size: 12px;
                                     margin-bottom: 20px;
                                 }
                                 .user {
@@ -417,7 +413,7 @@ $ba:#bababa; */
                                     color: #666666;
                                     line-height: 18px;
                                     margin-top: 16px;
-                                    font-size: 1.2rem;
+                                    font-size: 12px;
                                     margin-bottom: 20px;
                                 }
                             }

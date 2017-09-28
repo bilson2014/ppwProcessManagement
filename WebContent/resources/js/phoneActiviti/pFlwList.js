@@ -54,9 +54,11 @@ function loadDoing(){
 	var otherCard  =  $('.setCard');
 	setMission.html('');
 	otherCard.html('');
-
+	
 	loadData(function(res){
 		
+		var check1 = true;
+		var check2 = true;
 		if($('.menuTag').hasClass('tagTwo')){
 				var gTasks = res.gTasks;
 				var runningTasks = res.runningTasks;
@@ -68,7 +70,7 @@ function loadDoing(){
 				     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
 				 }	
 				 else{
-					 $('#daiban').show();
+					 check1 = false;
 				 }	
 			if(runningTasks != null && runningTasks != undefined){
 				for (var int = 0; int < runningTasks.length; int++) {
@@ -76,7 +78,13 @@ function loadDoing(){
 					 otherCard.append(html);
 				 }
 			     $(window.parent.document).find('.frame').css('height',$('body').height() + 100);
-			 }	
+			 }	else{
+				 check2 = false;
+			 }
+          if(!check1&&!check2)	{
+        	  $('#daiban').show();
+          }		
+			
 		}
 	}, getContextPath() + '/project/ajax/loadRuntasks',null);	
 }
@@ -199,6 +207,7 @@ function createStateOtherCard(res,stage){
 	var time = "";
 	var img = "";
 	var redWord = "";
+	var taskname = res.taskName;
 	var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'">';
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.pmsProjectFlow.principalName+'</div>';  
@@ -210,15 +219,19 @@ function createStateOtherCard(res,stage){
 	if(stage == 1){
 		 time ="暂停于"+formatDate(res.pmsProjectFlow.suspendDate);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isPause.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?pause">';
 	}
 	if(stage == 2){
-		 time ="完成于"+formatDate(res.pmsProjectFlow.suspendDate);
+		 time ="完成于"+formatDate(res.endTime);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isFinish.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?finish">';
 		 taskname = "";
 	}
 	if(stage == 3){
 		 time ="取消于"+formatDate(res.pmsProjectFlow.suspendDate);
 		 img= '<img class="taskImg" src="/resources/images/pFlow/isCancle.png"> ';
+		 var aTag = '<a href="/project/phone/todo/'+res.taskId+'/'+res.pmsProjectFlow.projectId+'/'+res.processInstanceId+'?cancel">';
+		 taskname = "";
 	}
 	if(stage == 0){
 	if(taskStatus == "running" || taskStatus == null){
@@ -229,7 +242,7 @@ function createStateOtherCard(res,stage){
 		   if(lastHour < 0){
 		   redWord = "redWord";
 		   }
-		   time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
+		   time ="截止于"+formatDate(res.dueDate);
 			if(taskStage == '沟通阶段'){
 				 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 			}
@@ -247,10 +260,10 @@ function createStateOtherCard(res,stage){
 			}	
 		}
 	}
+
 	
 	
-	
-	if(taskStatus == "suspend"){
+/*	if(taskStatus == "suspend"){
 		  img= '<img class="taskImg" src="/resources/images/pFlow/isPause.png"> ';
 		  var getTime = res.suspendDate;
 		  time ="暂停于"+formatDate(getTime);
@@ -266,7 +279,7 @@ function createStateOtherCard(res,stage){
 		  img= '<img class="taskImg" src="/resources/images/pFlow/isCancle.png"> ';
 		  var getTime = res.cancelDate;
 		  time = "取消于"+formatDate(getTime);
-	}
+	}*/
 	            var html = [
 	            	' '+aTag+' ',
 	            	' <div class="otherCard '+redWord+'">                                                    ',
@@ -307,8 +320,7 @@ function createOtherCard(res){
 
 			   redWord = "redWord";
 		   }
-			   time ="截止于"+formatDate(res.pmsProjectFlow.createDate);
-		   
+			 time ="截止于"+formatDate(res.dueDate);	   
 		if(taskStage == '沟通阶段'){
 			 img= '<img class="taskImg" src="/resources/images/pFlow/isTalk.png"> ';
 		}

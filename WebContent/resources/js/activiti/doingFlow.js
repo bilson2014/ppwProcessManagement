@@ -104,7 +104,6 @@ function getDate(){
 		$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
 	  }
 	}
-	
 	var setTime =  $('.setLastTime');
 	if(setTime.length >= 0){
 		var nowData = Date.parse(new Date());
@@ -153,6 +152,19 @@ function getDate(){
 		   $(finishTime[i]).text('结束于'+formatDate(getTime));
 	    }		
 	}
+	
+	var dueTime = $('.setBorder');
+	if(dueTime.length >= 0){
+        for (var i = 0; i < dueTime.length; i++) {
+           var theTime=  $(dueTime[i]).attr('data-content');
+		   var getTime = Date.parse(theTime.replace("CST","GMT+0800"));
+		   var nowData = Date.parse(new Date());
+		   var lastHour =(getTime - nowData)/3600000;
+		   if(lastHour < 0){
+			   $(dueTime[i]).addClass('redWord');
+		   }
+	    }		
+	}
 }
 
 function createWaitCard(res){
@@ -192,7 +204,6 @@ function createWaitCard(res){
 	  '          '+timeImg+'                                                                        ',
 	  '          <div class="setContent">                                                                                             ',
 	  '              <div class="listName">'+res.taskName+'</div>                                                                   ',
-	 
 	  '              <div class="lastTime setLastTime">'+time+'</div>                                                    ',
 	  '              '+isWho+'   ',
 	  '          </div>                                                                                                               ',
@@ -207,7 +218,7 @@ function createOtherCard(res){
 	var isWho = "";
 	var taskStatus = res.taskStatus;
 	var taskStage = res.taskStage;
-	var time = "";
+	var time = res.dueDate;
 	var img = "";
 	var redWord = "";
 	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
@@ -218,8 +229,7 @@ function createOtherCard(res){
 	    isWho = '<div class="user">负责人:'+res.principalName+'</div>';  
 	}
 	if(taskStatus == "running" || taskStatus == null){
-		 time ="截止于"+formatDate(res.createTime);
-		 var time = res.dueDate;
+		 time ="截止于"+formatDate(res.dueDate);
 			var nowData = Date.parse(new Date());
 			   var lastTime = (time - nowData);
 			   var lastHour =(time - nowData)/3600000;
@@ -262,6 +272,7 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isCancle.png"> ';
 		  var getTime = res.cancelDate;
 		  time = "取消于"+formatDate(getTime);
+		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?cancel">';
 	}
 		
 	            var html = [
@@ -273,7 +284,6 @@ function createOtherCard(res){
 				'           <div class="cardContent">                                                                                                     ',
 				'                <div class="setContent">                                                                                                 ',
 				'                    <div class="listName">'+taskname+'</div>                                                                       ',
-			
 				'                    <div class="lastTime otherTime">'+time+'</div>                                                       ',
 				'                '+isWho+'  ',
 				'                </div>                                                                                                                   ',

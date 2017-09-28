@@ -60,9 +60,9 @@
         <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_budget" name="供应商预算" type="long" required="true"></activiti:formProperty>
-        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string"></activiti:formProperty>
-        <activiti:formProperty id="pt_planContent" name="供应商策划内容" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_planTime" name="供应商策划交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_planContent" name="供应商策划内容" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string"></activiti:formProperty>
         <activiti:formProperty id="pt_accessMan" name="对接人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_accessManTelephone" name="对接人联系方式" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_teamId" name="供应商表ID" type="string" required="true"></activiti:formProperty>
@@ -119,9 +119,9 @@
         <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_budget" name="供应商预算" type="long" required="true"></activiti:formProperty>
-        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string" readable="false" writable="false"></activiti:formProperty>
-        <activiti:formProperty id="pt_makeContent" name="供应商制作内容" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_makeTime" name="项目制作交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_makeContent" name="供应商制作内容" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_remark" name="供应商启动函备注信息" type="string" readable="false" writable="false"></activiti:formProperty>
         <activiti:formProperty id="pt_teamId" name="供应商唯一编号" type="string" required="true"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${allotProductTeamTaskLisnter}"></activiti:taskListener>
       </extensionElements>
@@ -151,8 +151,8 @@
     <sequenceFlow id="sid-59291D5C-8CD6-40CA-8AC8-C604BF473FA0" sourceRef="sid-BE8A9B75-F474-4B94-A151-F7625741CBC1" targetRef="sid-4A9E432E-9765-4220-A6AC-B754F8CC0F2A"></sequenceFlow>
     <userTask id="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6" name="【监制】填写水印样片地址" activiti:assignee="${superviseId}">
       <extensionElements>
-        <activiti:formProperty id="watermarkUrl" name="水印样片地址" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="watermarkPass" name="密码" type="string"></activiti:formProperty>
+        <activiti:formProperty id="pf_sampleUrl" name="水印样片地址" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pf_samplePassword" name="密码" type="string"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${providerConfirmFileToAuditTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
@@ -260,8 +260,8 @@
     <sequenceFlow id="sid-78329B22-7B1C-4BB4-B689-28B43675A4CF" sourceRef="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26" targetRef="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526"></sequenceFlow>
     <userTask id="auditTotalTask" name="【总监】联合内审（通过/驳回）" activiti:assignee="${user}">
       <extensionElements>
-        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${watermarkUrl}"></activiti:formProperty>
-        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${watermarkPass}"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${pf_sampleUrl}"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${pf_samplePassword}"></activiti:formProperty>
         <activiti:formProperty id="approved" name="审批意见" type="enum">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="拒绝"></activiti:value>

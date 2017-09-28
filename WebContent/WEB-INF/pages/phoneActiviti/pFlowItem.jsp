@@ -125,6 +125,14 @@
                             <div>项目描述</div>
                             <span class="miaoshu">${flow_info["projectDescription"]}</span>
                         </li>
+                        <li>
+                            <div>水印样片地址</div>
+                            <span class="miaoshu"><a href='${flow_info["sampleUrl"]}' target="_self">${flow_info["sampleUrl"]}</a></span>
+                        </li>
+                        <li>
+                            <div>水印样片密码</div>
+                            <span class="miaoshu">${flow_info["samplePassword"]}</span>
+                        </li>
                     </ul>
                 </div>
             </div>

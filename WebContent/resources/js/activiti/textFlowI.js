@@ -5,6 +5,7 @@ var upload_Video;
 var upload_VideoFile;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
+var taskIdname ="";
 $().ready(function() {
 	document.domain = getUrl();
 	// 加载动态表单
@@ -65,10 +66,7 @@ function initStateBtn(){
 			   $('#cancleReasonError').attr('data-content','请填写取消原因');
 		   }
 	 });
-	 
-	 
-	 
-	 
+
 }
 
 //初始化来源
@@ -127,6 +125,7 @@ function initLastTime(ctyle,createTime){
 		$('#imgWord').text('暂停');
 		$('#imgWord').attr('style','color:#fe5453');
 		$('#lastTimeWord').text("");
+		$('.update').hide();
     }else{
     	if(checkDay >= 0){
     		$('#imgFlow').addClass('imgRed');
@@ -142,13 +141,22 @@ function initLastTime(ctyle,createTime){
     }
     if(state.trim() == "status=finished"){
     	$('#imgWord').text('完成');
+    	$('.proControl').hide();
+    	$('.update').hide();
+    	$('.conMod').hide();
+    	$('.upFile').hide();
+    }
+    if(state.trim() == "cancel"){
+    	$('#imgWord').text('取消');
+    	$('.proControl').hide();
+    	$('.update').hide();
     }
     
 }
 
 function stageTalkEven(){
 	$('.findTalk').off('click').on('click',function(){
-		var id = $(this).attr('data-id');
+		taskIdname= $(this).attr('data-id');
 		var name = $(this).attr('data-name');
 		$('#infoNameTitle').attr('data-name',name);
 		$('#cusModel').show();
@@ -161,12 +169,12 @@ function stageTalkEven(){
 		loadData(function(res){		
 			initStageInfoTop(res);	
 			loadStageInfoEven();
-		}, getContextPath() + '/project/task-detail/'+id,null);
+		}, getContextPath() + '/project/task-detail/'+taskIdname,null);
 		
 	});
 }
 
-function loadStageInfoEven(name){
+function loadStageInfoEven(){
 	loadData(function(res){	
 		var body =$('#itemHeightInfo');
 		body.html('');
@@ -180,7 +188,7 @@ function loadStageInfoEven(name){
 		}
 	}, getContextPath() + '/message/getTaskMsg/',$.toJSON({
 		projectId:$('#projectId').val(),
-		taskId:$('#currentTaskId').val()
+		taskId:taskIdname
 	}));
 }
 
@@ -218,7 +226,7 @@ function crearteInfoCard(res){
 	var body = '';
 	if(children != null && children != undefined && children !=""){
 		for (var int = 0; int < children.length; int++) {
-			body +='<div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div>';
+			body +='<div class="itemPos"><div>'+children[int].fromName+' 回复 :'+children[int].content+'</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div></div>';
 		}
 	}
 	if(res.fromUrl == null || res.fromUrl == "" ){
@@ -785,13 +793,12 @@ function checkForm(){
 	}
 	
 	var getCheckInfoUrl = $('.isUrl');
-	for (var i = 0; i < getCheckInfo.length; i++) {
-		var check = $(getCheckInfo[i]).val();
+	for (var i = 0; i < getCheckInfoUrl.length; i++) {
+		var check = $(getCheckInfoUrl[i]).val();
                if(!IsUrl(check)){
             	   checkFlag = false;
-            	   $(getCheckInfo[i]).parent().attr('data-content','填写格式错误');
-            	   $(getCheckInfo[i]).parent().parent().attr('data-content','填写格式错误');
-            	   return false;
+            	   $('#errorInfo').text('填写格式错误');
+            	   initFormEven();
                }	
 	}
 	if(checkFlag){
@@ -799,6 +806,7 @@ function checkForm(){
 		$('.btnInput').off('click');
 	}else{
 		$('#errorInfo').text('请补充必填信息');
+		initFormEven();
 	}
 }
 
@@ -1128,8 +1136,26 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
-	// --> filter start with pt_ value by jack at 20170926 end
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
 	
+	// 加载最新水印样片地址
+	// TODO guo
+	/*var watermarkPass = '';
+	if(prop.id == 'info_watermarkUrl') {
+		loadData(function(res){
+			prop.value = res.sampleUrl;
+			watermarkPass = res.samplePassword;
+		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}*/
+	
+	// 加载最新水印样片密码
+	/*if(prop.id == 'info_watermarkPass') {
+		prop.value = watermarkPass;
+	}*/
+	
+	// --> filter start with pt_ value by jack at 20170926 end
 	
 	if(prop.required){
 		
@@ -1160,7 +1186,8 @@ var formFieldCreator = {
 		}
 		
 		if(prop.id.indexOf("Url")>-1){
-			result += "<input class='isUrl' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+			result += "<input class='isUrl' value='" + prop.value + "' name='" + prop.id + "'  />";
+			return result;
 		}
 		
 	     if(isWhat == 'schemeId'  || isWhat == 'superviseId' || isWhat == 'teamProviderId')	{
@@ -1176,7 +1203,7 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
+			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
 			result += " <div id='picker' class='upload picker'>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
@@ -1188,6 +1215,11 @@ var formFieldCreator = {
 	return result;
 },
 'date': function(prop, datas, className) {
+	
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
@@ -1207,6 +1239,10 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
@@ -1222,6 +1258,10 @@ var formFieldCreator = {
 	return result;
 },
 'enum': function(prop, datas, className) {
+	if(prop.id.indexOf('dl_') > -1){
+		prop.value = '';
+	}
+	
 	if(prop.required){
 		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
