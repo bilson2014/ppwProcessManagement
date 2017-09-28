@@ -1926,7 +1926,7 @@
 
                     .utoInfo {
                         position: absolute;
-                        width: 65px;
+                        width: 240px;
                         left: 0;
                         z-index: 3;
                         display: none;
@@ -1944,6 +1944,7 @@
                             line-height: 36px;
                             color: $gray;
                             font-size: $font-size-base;
+                            @include ellipsis;
                             &:hover {
                                 background: $f0;
                             }
@@ -2519,5 +2520,6 @@ background-image: none !important; */
             font-size: $font-size-base;
             border: none;
             outline: none;
+            margin-bottom: 30px;
         }
     }
