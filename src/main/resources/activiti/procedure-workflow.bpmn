@@ -152,7 +152,7 @@
     <userTask id="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6" name="【监制】填写水印样片地址" activiti:assignee="${superviseId}">
       <extensionElements>
         <activiti:formProperty id="pf_sampleUrl" name="水印样片地址" type="string" required="true"></activiti:formProperty>
-        <activiti:formProperty id="pt_samplePassword" name="密码" type="string"></activiti:formProperty>
+        <activiti:formProperty id="pf_samplePassword" name="密码" type="string"></activiti:formProperty>
         <activiti:taskListener event="complete" delegateExpression="${providerConfirmFileToAuditTaskListener}"></activiti:taskListener>
       </extensionElements>
     </userTask>
@@ -260,8 +260,8 @@
     <sequenceFlow id="sid-78329B22-7B1C-4BB4-B689-28B43675A4CF" sourceRef="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26" targetRef="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526"></sequenceFlow>
     <userTask id="auditTotalTask" name="【总监】联合内审（通过/驳回）" activiti:assignee="${user}">
       <extensionElements>
-        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${pt_sampleUrl}"></activiti:formProperty>
-        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${pt_samplePassword}"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${pf_sampleUrl}"></activiti:formProperty>
+        <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${pf_samplePassword}"></activiti:formProperty>
         <activiti:formProperty id="approved" name="审批意见" type="enum">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="拒绝"></activiti:value>

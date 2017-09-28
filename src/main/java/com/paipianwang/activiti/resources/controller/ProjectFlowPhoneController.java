@@ -3,8 +3,8 @@ package com.paipianwang.activiti.resources.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,10 +24,8 @@ import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
-import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
-import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
 /**
@@ -84,7 +82,6 @@ public class ProjectFlowPhoneController extends BaseController {
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 			mv.addObject("taskName", task.getName());
 			mv.addObject("dueDate", task.getDueDate());
-			
 			projectCycleItem = projectWorkFlowService.getCycleByTask(task.getTaskDefinitionKey());
 		}
 		

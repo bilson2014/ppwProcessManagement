@@ -1560,4 +1560,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 		return null;
 	}
+
+	// 获取 水印样片 以及 水印样片密码
+	@Override
+	public Map<String, Object> getFlowSample(String projectId) {
+		// List<String> columns = new ArrayList<String>();
+		String[] columns = new String[]{"sampleUrl","samplePassword"};
+		Map<String, Object> result = flowFacade.getProjectFlowColumnByProjectId(Arrays.asList(columns), projectId);
+		return result;
+	}
 }

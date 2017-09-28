@@ -806,4 +806,13 @@ public class ProjectFlowController extends BaseController {
 		return new ModelAndView("redirect:/project/running-doing");
 	}
 
+	// 获取 水印样片 以及 水印样片密码
+	@RequestMapping("/getFlowSample/{projectId}")
+	public Map<String, Object> getFlowSample(@PathVariable("projectId") final String projectId) {
+		if(StringUtils.isNotBlank(projectId)) {
+			Map<String, Object> param = projectWorkFlowService.getFlowSample(projectId);
+			return param;
+		}
+		return null;
+	}
 }
