@@ -1141,21 +1141,21 @@ var formFieldCreator = {
 	}
 	
 	// 加载最新水印样片地址
-	var watermarkPass = '';
+	// TODO guo
+	/*var watermarkPass = '';
 	if(prop.id == 'info_watermarkUrl') {
 		loadData(function(res){
 			prop.value = res.sampleUrl;
 			watermarkPass = res.samplePassword;
 		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
-	}
+	}*/
 	
 	// 加载最新水印样片密码
-	if(prop.id == 'info_watermarkPass') {
+	/*if(prop.id == 'info_watermarkPass') {
 		prop.value = watermarkPass;
-	}
+	}*/
 	
 	// --> filter start with pt_ value by jack at 20170926 end
-	
 	
 	if(prop.required){
 		
