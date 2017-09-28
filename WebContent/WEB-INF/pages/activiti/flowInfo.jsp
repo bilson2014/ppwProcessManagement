@@ -252,6 +252,20 @@
 	                                          <div>${flow_info["projectDescription"]}</div>
 				                           </div>
 			                           </c:if>
+			                           
+			                           <c:if test="${not empty flow_info['sampleUrl']}">
+		                                  	<div class="longItem">
+	                                          <div>水印样片地址</div>
+	                                          <div><a href='${flow_info["sampleUrl"]}' target="_blank">${flow_info["sampleUrl"]}</a></div>
+				                            </div>
+	                                  </c:if>
+	                                  
+	                                  <c:if test="${not empty flow_info['samplePassword']}">
+		                                  	<div class="longItem">
+	                                          <div>水印样片密码</div>
+	                                          <div>${flow_info["samplePassword"]}</div>
+				                            </div>
+	                                  </c:if>
 	                            </div>
 	                       </div>
 	                       
