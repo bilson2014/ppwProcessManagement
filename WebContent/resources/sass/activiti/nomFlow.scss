@@ -88,7 +88,7 @@
                         background-position-y: 14px;
                     }
                     &:hover {
-                        background: red;
+                        background-color: #fe2220;
                         .newAdd {
                             background-position-y: -14px;
                         }
@@ -390,10 +390,13 @@ $ba:#bababa; */
                                 margin-left: 15px;
                                 width: 56%;
                                 .listName {
+                                    height: 40px;
+                                    width: 200px;
+                                    line-height: 22px;
                                     font-size: $font-size-sm;
                                     color: $gray;
                                     margin-bottom: 10px;
-                                    @include ellipsis;
+                                    overflow: hidden;
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;

@@ -25,6 +25,7 @@
 <title></title>
 
   <link rel="stylesheet" href="${aaCss}">
+  
 
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
@@ -140,12 +141,7 @@
                     <span>原手机号</span>
                     <span>181****6793</span>
                 </div>
-                <!-- <div class="verifyphone">
-                    <span>验证手机</span>
-                    <input id="inputverpho"></input>
-                    <span>发送验证码</span>
-                    <p></p>
-                </div> -->
+               
                 <div class="newphone">
                     <span>新手机号</span>
                     <input id="inputnewpho"></input>
