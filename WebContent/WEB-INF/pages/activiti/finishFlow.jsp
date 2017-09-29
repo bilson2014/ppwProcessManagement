@@ -96,7 +96,7 @@
 				                                    <c:if test="${staff.pmsProjectFlow.projectStatus == 'finished'}">
 				                                      <div class="lastTime finishTime">${staff.historicProcessInstance.endTime}</div>
 				                                    </c:if>
-				                                    <!--cxx  -->
+				                            
 				                                     <c:if test="${staff.isPrincipal == 1}">
 				                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 				                                  </c:if>
