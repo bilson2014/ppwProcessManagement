@@ -89,16 +89,15 @@
 	                                  <img src="/resources/images/flow/demoG.png">
 	                                  <div class="setContent">
 	                                      <div class="listName">${staff.task.name}</div>
-	                                     
-	                                      <!-- cxx修改 -->
-	                                       <c:if test="${staff.isPrincipal == 1}">
+	           
+		                                   <div class="lastTime setLastTime">${staff.task.dueDate}</div>
+		                                  
+		                                  <c:if test="${staff.isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
 		                                  <c:if test="${staff.isPrincipal == 0}">
 		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
-		                                  
-		                                   <div class="lastTime setLastTime">${staff.task.dueDate}</div>
 	                                  </div>
 	                             </div>
 	                            </a>  

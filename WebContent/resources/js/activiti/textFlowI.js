@@ -1249,7 +1249,10 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = str.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
 		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
@@ -1272,7 +1275,10 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = str.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
 		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
@@ -1291,7 +1297,10 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = str.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";

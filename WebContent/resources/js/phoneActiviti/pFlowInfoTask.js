@@ -308,12 +308,14 @@ var formFieldCreator = {
 			var str = prop.id;
 			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			proValue=prop.value;
+			
+			if(str.indexOf('pt_') >-1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') >-1){
+				proValue = '';
 			}
 			
 			if (prop.writable === true) {
@@ -364,15 +366,16 @@ var formFieldCreator = {
 			return result;
 		},
 		'date': function(prop, datas, className) {
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') >-1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') >-1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -382,7 +385,7 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true) {
+			if (prop.writable === true && isRead != 0) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
 				result += "<input class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
@@ -390,15 +393,16 @@ var formFieldCreator = {
 			return result;
 		},
 		'long': function(prop, datas, className) {
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') > -1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') > -1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -408,7 +412,7 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true) {
+			if (prop.writable === true && isRead != 0) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
 				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
@@ -417,15 +421,16 @@ var formFieldCreator = {
 		},
 		'enum': function(prop, datas, className) {
 			title = prop.name;
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') > -1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') > -1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -436,7 +441,7 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 	
-			if (prop.writable === true) {
+			if (prop.writable === true && isRead != 0) {
 				result += "<div class='orderSelect'>";
 				result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
 				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";

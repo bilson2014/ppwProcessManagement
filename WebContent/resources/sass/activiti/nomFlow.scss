@@ -88,7 +88,7 @@
                         background-position-y: 14px;
                     }
                     &:hover {
-                        background: red;
+                        background-color: #fe2220;
                         .newAdd {
                             background-position-y: -14px;
                         }
@@ -116,14 +116,7 @@
                     vertical-align: middle;
                 }
             }
-            /*             $noNeedpad:20px;
-$areaWidth:1110px;
-$areaMidWidth:1000px;
-$smallWidth:770px;
-$areaMinWidth:1240px;
-$areaMinMidWidth:1132px;
-$smallMinWidth:900px;
-$ba:#bababa; */
+ 
             
             $noNeedpad:20px;
             $areaWidth:1110px;
@@ -390,10 +383,16 @@ $ba:#bababa; */
                                 margin-left: 15px;
                                 width: 60%;
                                 .listName {
+                                    height: 40px;
+                                    width: 200px;
+                                    line-height: 22px;
                                     font-size: $font-size-sm;
                                     color: $gray;
-                                    margin-bottom:5px;
-                                    line-height: 20px;
+
+                                    margin-bottom: 10px;
+                                    overflow: hidden;
+
+
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;
