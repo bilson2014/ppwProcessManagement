@@ -46,7 +46,7 @@
  
 	<div class="pagePhone">
          <div class="searchProject">
-              <input>
+              <input placeholder="项目名称或负责人姓名">
               <img id="toSearch" src="/resources/images/index/toSearch.png">
          </div>
 	     <div class="setMission">

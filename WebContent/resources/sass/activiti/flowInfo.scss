@@ -1209,7 +1209,6 @@
                     vertical-align: top;
                 }
                 div:nth-child(2) {
-                    color: $gray-light;
                     line-height: 18px;
                     width: 320px;
                     @media screen and (min-width: 775px) and (max-width: 1025px) {
@@ -1436,9 +1435,8 @@
                     }
                 }
             } //版本管理
-            .openItems {
-                            background-position-y: 14px !important;
-                        }
+
+         
             .controlContent {
                 padding: 30px 20px 30px 20px;
                 max-height: 500px;
@@ -1450,6 +1448,9 @@
                         div {
                             display: inline-block;
                             vertical-align: top;
+                        }
+                           .openItems {
+                            background-position-y: 14px !important;
                         }
                         .controlOpen {
                             width: 14px;

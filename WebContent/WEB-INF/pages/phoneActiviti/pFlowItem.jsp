@@ -197,7 +197,14 @@
                             <div>客户电话</div>
                             <span>${user_info["telephone"]}</span>
                         </li>
-                        </c:if>                        
+                        </c:if>    
+                        
+                          <c:if test="${not empty user_info['email']}">
+					            <li>
+		                            <div>邮箱地址</div>
+		                            <span>${user_info["email"]}</span>
+		                        </li>
+			              </c:if>                    
                     </ul>
                 </div>
             </div>

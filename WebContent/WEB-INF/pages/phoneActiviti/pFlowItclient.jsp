@@ -58,6 +58,11 @@
                         <input id="cusTelephone" name="pu_telephone" value=''>
                         <p></p>
                     </div>
+                    <div class="name">
+                        <div>邮箱地址</div>
+                        <input id="cusEmail" name="pu_email" value=''>
+                        <p id="emailError"></p>
+                    </div>
                 </div>
                 <!-- 取消和确认 -->
                 <div class="surebox">

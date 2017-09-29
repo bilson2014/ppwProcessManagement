@@ -629,6 +629,7 @@ function openCusInfo(){
 			  $('#cusId').val(res.projectUser.pu_projectUserId);
 			  $('#cusLinkman').val(res.projectUser.pu_linkman);
 			  $('#cusTelephone').val(res.projectUser.pu_telephone);
+			  $('#cusEmail').val(res.projectUser.pu_email);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pu",null);
 	});
 	$('#submitCus').off('click').on('click',function(){
@@ -643,12 +644,14 @@ function openCusInfo(){
 function cusClear(){
 	$('#cusLinkman').val('');
 	$('#cusTelephone').val('');
+	$('#cusEmail').val('');
 	$('.errorItem').attr('data-content','');
 }
 
 function checkCusInfo(){
     var cusLinkman = $('#cusLinkman').val();
     var cusTelephone = $('#cusTelephone').val();
+    var cusEmail = $('#cusEmail').val();
     $('.errorItem').attr('data-content',''); 
 	 if(cusLinkman == undefined || cusLinkman == "" || cusLinkman ==null ){
 			$('#cusLinkmanError').attr('data-content','客户联系人未填写');
@@ -663,6 +666,17 @@ function checkCusInfo(){
 			$('#cusTelephoneError').attr('data-content','电话未格式不正确');
 			return false;
 		}
+	 
+	 if(cusEmail == undefined || cusEmail == "" || cusEmail ==null ){
+			$('#pu_email').attr('data-content','邮箱地址未填写');
+			return false;
+		}
+	 if(!checkEmail(cusEmail)){
+		 $('#pu_email').attr('data-content','邮箱格式不正确');
+			return false;
+	 }
+	 
+	 
 	 return true;
 }
 
@@ -1250,7 +1264,7 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	
-	var isRead = str.indexOf('info');
+	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
@@ -1276,7 +1290,7 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	
-	var isRead = str.indexOf('info');
+	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
@@ -1298,7 +1312,7 @@ var formFieldCreator = {
 		var isCheck = "noCheckInfo";
 	}
 	
-	var isRead = str.indexOf('info');
+	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
