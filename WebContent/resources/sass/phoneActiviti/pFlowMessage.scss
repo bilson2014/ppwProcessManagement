@@ -84,7 +84,7 @@
             height: 0.5rem;
             position: absolute;
             right: 0.6rem;
-            top: -0.15rem;
+            top: -0.1rem;
         }
         .content {
             width: 100%;
@@ -95,6 +95,7 @@
                 .name {
                     font-size: $size36;
                     color: $e3;
+                    line-height: 0.5rem;
                 }
                 .itemContent {
                     font-size: $size36;

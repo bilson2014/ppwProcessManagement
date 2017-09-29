@@ -234,15 +234,20 @@ function crearteInfoCard(res){
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
 	}
+	var isSys;
+	if(res.messageType == 1){
+		isSys = 	'       <div>'+res.fromName+' : '+res.content+'</div>';
+	}else{
+		isSys = 	'       <div class="sys">【系统自动】'+res.fromName+' : '+res.content+'</div>';
+	}
 
 	var html = [
 				'<div class="infoItem">',
 				'    <div  class="itemTop">',
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li><div>'+res.fromName+' : '+res.content+'</div><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
-				/*              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
-*/				'           </ul>                                                                                                   ',
+				'              <li>'+isSys+'<div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
+				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
@@ -1114,6 +1119,7 @@ function addForm() {
 		if(hasPicker !=null && hasPicker !="" && hasPicker !=undefined){
 			UploadFile();
 		}
+		getWatermarkUrl();
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1122,6 +1128,16 @@ function addForm() {
  */
 function createFieldHtml(prop, obj, className) {
 	return formFieldCreator[prop.type.name](prop, obj, className);
+}
+
+function getWatermarkUrl(){
+	if($('div').hasClass('watermarkUrl')){
+		loadData(function(res){
+			$('#info_watermarkUrl').text(res.sampleUrl);
+			$('#info_watermarkUrl').attr('href',res.sampleUrl);
+			$('#info_watermarkPass').val(res.samplePassword);
+		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}
 }
 
 var formFieldCreator = {
@@ -1157,14 +1173,20 @@ var formFieldCreator = {
 	
 	// --> filter start with pt_ value by jack at 20170926 end
 	
-	if(prop.required){
-		
+	if(prop.required){	
 		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
+	
+	if(prop.id == 'info_watermarkUrl'){
+		result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+		result += "<div class='watermarkUrl'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
+		return result;
+	}
+	
 	var isWhat = prop.id.split('_')[0];
 	var str = prop.id;
 	var isRead = str.indexOf('info');
@@ -1517,11 +1539,18 @@ function createTalkInfo(res){
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
 	}
+	var isSys;
+	if(res.messageType == 1){
+		isSys = 	'       <div class="info">'+res.fromName+' : '+res.content+'</div>';
+	}else{
+		isSys = 	'       <div class="info sys">【系统自动】'+res.fromName+' : '+res.content+'</div>';
+	}
+	
 	var html = [
 	    '<div class="areaItem">',
 	    '   <div class="infoItem">',
 		'	  <img src="'+imgUrl+'">',
-		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
+		'       '+isSys+'',
 		'       <div class="time">',
 		'       	<span>发布时间：'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</span>',
 		'     	    <div class="openTalk"></div>',

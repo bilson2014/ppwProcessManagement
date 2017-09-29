@@ -45,6 +45,7 @@ function checkState(){
     		UploadFile();
     		addForm(); 
     		initDaibanTime();
+    		$('.contentTitle').hide();
     }
 }
 
@@ -274,11 +275,22 @@ function addForm() {
 		selectEven();
 		formCheck();
 		dataEven();	
+		getWatermarkUrl();
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 
 function createFieldHtml(prop, obj, className) {
 	return formFieldCreator[prop.type.name](prop, obj, className);
+}
+
+function getWatermarkUrl(){
+	if($('div').hasClass('watermarkUrl')){
+		loadData(function(res){
+			$('#info_watermarkUrl').text(res.sampleUrl);
+			$('#info_watermarkUrl').attr('href',res.sampleUrl);
+			$('#info_watermarkPass').val(res.samplePassword);
+		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}
 }
 
 var formFieldCreator = {
@@ -305,6 +317,13 @@ var formFieldCreator = {
 			}
 			
 			if (prop.writable === true) {
+				
+				if(prop.id == 'info_watermarkUrl'){
+					result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+					result += "<div class='watermarkUrl'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
+					return result;
+				}
+				
 				if(isRead == 0){
 					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;

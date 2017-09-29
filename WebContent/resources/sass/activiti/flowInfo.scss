@@ -1193,6 +1193,10 @@
                 display: inline-block;
                 vertical-align: top;
             }
+            .sys{
+                color:$gray-light !important;
+            }
+
             .info {
                 font-size: $font-size-base;
                 color: $gray-dark;
@@ -1477,6 +1481,9 @@
                     }
                 }
             } //版本管理
+            .openItems {
+                            background-position-y: 14px !important;
+                        }
             .controlContent {
                 padding: 30px 20px 30px 20px;
                 max-height: 500px;
@@ -1844,6 +1851,17 @@
                         span {
                             font-size: $font-size-sm;
                             color: $red-base;
+                        }
+                    }
+
+                    .watermarkUrl {
+                        width: 240px;
+                        border-radius: 4px;
+                        height: 36px;
+                        padding-left: 5px;
+                        line-height: 34px;
+                        a {
+                            font-size: $font-size-base;
                         }
                     }
                     input {
@@ -2521,4 +2539,8 @@ background-image: none !important; */
             margin-bottom: 30px;
             margin-top: 50px;
         }
+    }
+
+    .sys{
+        color:$gray-light !important;
     }

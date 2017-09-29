@@ -143,12 +143,40 @@ body {
     display: none
 }
 
+.searchProject {
+    width: 9rem;
+    height: 1rem;
+    position: absolute;
+    top: 1rem;
+    left:50%;
+    margin-left: -4.5rem;
+    input {
+        width: 100%;
+        height: 100%;
+        line-height: 1rem;
+        outline: none;
+        font-size: $size34;
+        color: $gray-light;
+        border: 1px solid #d1d1d1;
+        background: #424242;
+        border-radius: 71px;
+        padding-right: 1rem;
+        padding-left: 0.5rem;
+    }
+    img {
+        width: 1rem;
+        position: absolute;
+        right: 0.3rem;
+        top: 0.55rem;
+        padding: 0.2rem;
+    }
+}
 
 .otherCard {
     width: 10rem;
     height: auto;
     margin: 0 auto;
-    background-color:rgba(102,102,102,0.5);
+    background-color: rgba(102, 102, 102, 0.5);
     border-radius: 0.16rem;
     margin-top: 0.1rem;
     .cardTop {
@@ -183,7 +211,6 @@ body {
             color: $gray-light;
             font-weight: bold;
         }
-       
     }
 
     .cardBot {
@@ -198,7 +225,7 @@ body {
             width: 6rem;
             @include ellipsis;
         }
-         .user,
+        .user,
         .your {
             position: relative;
             top: 0.3rem;
@@ -226,15 +253,15 @@ body {
     }
 }
 
-.redWord{
-    border:1px solid $red-base!important;
+.redWord {
+    border: 1px solid $red-base!important;
 }
 
 .MissionCard {
     width: 10rem;
     height: auto;
     margin: 0 auto;
-    background-color:rgba(102,102,102,0.5);
+    background-color: rgba(102, 102, 102, 0.5);
     border-radius: 0.16rem;
     margin-top: 0.1rem;
     .cardTop {
@@ -282,7 +309,6 @@ body {
             color: $gray-light;
             font-weight: bold;
         }
-        
     }
 
     .cardBot {
@@ -299,7 +325,7 @@ body {
         }
         .user,
         .your {
-            position:relative;
+            position: relative;
             top: 0.3rem;
             font-size: $size36;
             color: $gray-light;
@@ -327,19 +353,19 @@ body {
 }
 
 
-    #daiban {
-        width: 100%;
-        font-size: 0;
-        text-align: center;
-        display: none;
-        img {
-            width: 4rem;
-            height: 3.24rem;
-            margin-top: 1.5rem;
-        }
-        div {
-            font-size: 0.46rem;
-            color: $gray-light;
-            margin-top: 1rem;
-        }
+#daiban {
+    width: 100%;
+    font-size: 0;
+    text-align: center;
+    display: none;
+    img {
+        width: 4rem;
+        height: 3.24rem;
+        margin-top: 1.5rem;
     }
+    div {
+        font-size: 0.46rem;
+        color: $gray-light;
+        margin-top: 1rem;
+    }
+}

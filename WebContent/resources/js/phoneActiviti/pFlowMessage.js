@@ -114,12 +114,20 @@ function createTalkInfo(res){
 			body +='<div class="contentItem" style="padding-left:0.5rem"><div class="name">'+children[int].fromName+' 回复 :</div><div>'+formatDate((children[int].createDate).replace("CST","GMT+0800"))+'</div> <div class="itemContent">'+children[int].content+'</div></div>';
 		}
 	}
+	var isSys;
+	if(res.messageType == 1){
+		isSys ='';
+	}else{
+		isSys ='【系统】';
+		color="color:#999 !important"
+	}
+	
 	var html = [
 		'<div class="item">                                                                                        ',
 	    '     <img class="itemMore" src="/resources/images/pFlow/moreMessage.png">                                 ',
 	    '     <div class="content">                                                                                ',
 	    '             <div class="contentItem">                                                                    ',
-	    '                    <div class="name">'+res.fromName+''+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div>',
+	    '                    <div class="name" style="'+color+'">'+isSys+''+res.fromName+''+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div>',
 	    '                    <div class="itemContent">'+res.content+'</div>                                         ',
 	    '             </div>                                                                                       ',
 	    ' '+body+' ',             
