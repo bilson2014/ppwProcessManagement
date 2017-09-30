@@ -10,6 +10,8 @@ function getFileMore(){
     		$(this).removeClass('open');
     		$(this).parent().find('.fileContentMore').slideUp();
     	}else{
+    		  $('.fileMore').removeClass('open');
+    		  $('.fileMore').removeClass('open').slideUp();
     		$(this).addClass('open');
     		$(this).parent().find('.fileContentMore').slideDown();
     	}
