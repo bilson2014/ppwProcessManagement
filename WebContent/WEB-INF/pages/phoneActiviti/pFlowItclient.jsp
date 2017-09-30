@@ -61,8 +61,7 @@
                     <!--邮箱地址  -->
                     <div class="email">
                         <div>邮箱地址</div>
-                        <input id="cusEmail" name="pu_email" value=''>
-                        
+                        <input id="cusEmail" name="pu_email" value=''>     
                     </div>
                     <p id="emailError"></p>
                 </div>

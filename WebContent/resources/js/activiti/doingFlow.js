@@ -1,10 +1,18 @@
 
 $().ready(function() {
 	document.domain = getUrl();	
+	titleNameInput();
 	initPageEven();
 	toSearch();
 });
-
+function titleNameInput(){
+	$('.productListAreas #titleNameInput').focus(function(){
+		$(this).addClass('pp');
+	});
+	$('.productListAreas #titleNameInput').blur(function(){
+		$(this).removeClass('pp');
+	});
+}
 function initPageEven(){
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 	getDate();
