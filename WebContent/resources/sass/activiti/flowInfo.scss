@@ -320,14 +320,14 @@
         }
         .imgRed {
             background: url(/resources/images/flow/setNorRed.png) no-repeat !important;
-            background-size: 82px 82px !important;
+            background-size: 100px 100px !important;
         }
         .imgFlow,
         .imgRed {
-            width: 82px;
-            height: 82px;
+            width: 100px;
+            height: 100px;
             background: url(/resources/images/flow/setNor.png) no-repeat;
-            background-size: 82px 82px;
+            background-size: 100px 100px;
             display: inline-block;
             vertical-align: middle;
             div:nth-child(1) {
@@ -692,7 +692,7 @@
                 ul {
                     margin-left: 10px;
                     position: relative;
-                    top: 10px;
+                    top: 6px;
                 }
                 img {
                     width: 80px;
@@ -779,20 +779,21 @@
                 color: $gray-light;
                 position: absolute;
                 left: 30px;
-                top: 14px;
+                top: 10px;
             }
             .endTime {
                 font-size: $font-size-sm;
                 color: $gray-light;
                 position: absolute;
                 right: 30px;
-                top: 14px;
+                top: 10px;
             }
         }
         .listContent {
             padding-top: 20px;
             padding-bottom: 20px;
             position: relative;
+            color:$gray;
             .listItem {
                 height: 36px;
                 width: 100%;
@@ -1172,6 +1173,7 @@
                 @media screen and (min-width: 1100px) {
                     width: 700px;
                 }
+                word-wrap:break-word;
             }
             .time {
                 font-size: $font-size-sm;
@@ -1217,6 +1219,7 @@
                     @media screen and (min-width: 1100px) {
                         width: 650px;
                     }
+                    word-wrap:break-word;
                 }
                 div:nth-child(3) {
                     font-size: $font-size-sm;
@@ -1788,7 +1791,7 @@
                 }
             }
             .otherContent {
-                padding-top: 20px;
+                padding-top:0px;
                 padding-bottom: 30px;
                 .itemCard {
                     display: inline-block;
@@ -1936,6 +1939,10 @@
                         vertical-align: top;
                         width: 120px;
                         height: 36px;
+                        &:hover
+                        {
+                            color:$gray-dark;
+                        }
                         /*          border: 1px solid $border-line;
                        border-radius: 4px;
                        height: 36px;
@@ -2188,6 +2195,7 @@
                             margin-bottom: 10px;
                             div:nth-child(1) {
                                 width: 330px;
+                                word-wrap:break-word;
                             }
                             div:nth-child(2) {
                                 font-size: $font-size-base;
@@ -2250,6 +2258,7 @@
                                 font-size: $font-size-base;
                                 color: $gray-dark;
                                 padding-right: 150px;
+                                word-wrap:break-word;
                             }
                             div:nth-child(2) {
                                 font-size: $font-size-base;

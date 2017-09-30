@@ -577,7 +577,7 @@ function checkProviderInfo(){
            var pf_Resour = $('#pf_Resour').attr('data-id');
            var proCycle = $('#proCycle').val();
            var proFdp = $('#proFdp').val();
-           var projectDes = $('#projectDes').val();
+
        
         if(proName == undefined || proName == "" || proName ==null ){
        		$('#proNameError').attr('data-content','项目名称未填写未填写');
@@ -602,10 +602,7 @@ function checkProviderInfo(){
        		$('#proFdpError').attr('data-content','对标影片地址未填写');
        		return false;
        	}
-        if(projectDes == undefined || projectDes == "" || projectDes ==null ){
-       		$('#projectDesError').attr('data-content','项目描述未填写');
-       		return false;
-       	}
+
         
         return true;
 }
@@ -1240,7 +1237,7 @@ var formFieldCreator = {
 		
 		if(isWhat == "file"){
 			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
-			result += " <div id='picker' class='upload picker'>选择文件</div>";
+			result += " <div id='picker' class='upload picker '>选择文件</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
@@ -1269,7 +1266,7 @@ var formFieldCreator = {
 	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1295,7 +1292,7 @@ var formFieldCreator = {
 	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1324,7 +1321,7 @@ var formFieldCreator = {
 		});
 		result += "</ul>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 }

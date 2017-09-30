@@ -318,7 +318,7 @@ var formFieldCreator = {
 				proValue = '';
 			}
 			
-			if (prop.writable === true) {
+			if (prop.writable == true) {
 				
 				if(prop.id == 'info_watermarkUrl'){
 					result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
@@ -361,7 +361,7 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
@@ -385,10 +385,10 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true && isRead != 0) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
@@ -412,10 +412,10 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true && isRead != 0) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
@@ -441,7 +441,7 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 	
-			if (prop.writable === true && isRead != 0) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<div class='orderSelect'>";
 				result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
 				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";
@@ -451,7 +451,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}
