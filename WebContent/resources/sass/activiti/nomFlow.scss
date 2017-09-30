@@ -116,7 +116,6 @@
                     vertical-align: middle;
                 }
             }
- 
             
             $noNeedpad:20px;
             $areaWidth:1110px;
@@ -263,6 +262,10 @@
                             margin-bottom: 20px;
                             display: inline-block;
                             vertical-align: top;
+                            @media screen and (max-width: 775px) {
+                                margin-bottom: 10px;
+                                margin-top: 10px;
+                            }
                         }
                         .setContent {
                             display: inline-block;
@@ -270,6 +273,10 @@
                             margin-top: 25px;
                             margin-left: 20px;
                             width: 56%;
+                            @media screen and (max-width: 775px) {
+                                margin-top: 0px;
+                                width: 210px;
+                            }
                             .listName {
                                 font-size: 14px;
                                 font-weight: bold;
@@ -388,11 +395,11 @@
                                     line-height: 22px;
                                     font-size: $font-size-sm;
                                     color: $gray;
-
                                     margin-bottom: 10px;
                                     overflow: hidden;
-
-
+                                    @media screen and (max-width: 775px) {
+                                        width: 150px;
+                                    }
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;

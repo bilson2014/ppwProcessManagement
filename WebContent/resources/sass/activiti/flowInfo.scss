@@ -1001,7 +1001,7 @@
             text-align: right;
             @media screen and (max-width: 1025px) and (min-width: 775px) {}
             @media screen and (max-width: 775px) {
-                width: 100px;
+                width: 130px;
             }
             div {
                 height: 20px;
@@ -1024,7 +1024,7 @@
             @include ellipsis;
             @media screen and (max-width: 1025px) and (min-width: 775px) {}
             @media screen and (max-width: 775px) {
-                width: 100px;
+                width: 80px;
             }
         }
         .time {
