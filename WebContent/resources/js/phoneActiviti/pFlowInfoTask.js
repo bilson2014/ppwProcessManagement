@@ -36,7 +36,8 @@ function checkState(){
   	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?pause");
   }
     
-    if(state.trim()!= "task"){
+    if(state.trim()!="task"){
+    	$('.contentTitle').hide();
     	$('#daiban').show();
     	$(window.parent.document).find('.footBot #toMission').attr('data-content',$('#url').val());
     }else{
@@ -44,8 +45,7 @@ function checkState(){
     	    selectEven();
     		UploadFile();
     		addForm(); 
-    		initDaibanTime();
-    		$('.contentTitle').hide();
+    		initDaibanTime();   	
     }
 }
 
