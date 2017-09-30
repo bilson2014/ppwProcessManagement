@@ -67,7 +67,7 @@
 	                </div>
 	                
 	                 <c:if test="${empty gTasks}">
-	                     <div class="nodaiban">当前没有待办任务</div>
+	                     <div class="nodaiban"><img src="/resources/images/index/nodai.png"></div>
 	                 </c:if>
 	                
 	                <c:if test="${!empty gTasks}">

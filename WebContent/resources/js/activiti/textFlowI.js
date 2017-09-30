@@ -794,12 +794,13 @@ function checkProvider(){
     }
     return true;
 }
-
+var checkClick = true;
 //表单验证
 function checkForm(){
 	$('#errorInfo').text('');
 	var getCheckInfo = $('.checkInfo');
 	var checkFlag = true;
+	
 	for (var i = 0; i < getCheckInfo.length; i++) {
 		var check = $(getCheckInfo[i]).val();
                if(check == null || check == "" || check == undefined )	{
@@ -817,9 +818,10 @@ function checkForm(){
             	   initFormEven();
                }	
 	}
-	if(checkFlag){
-		$('#toSubmitForm').prop("type","submit");
-		$('.btnInput').off('click');
+	
+	if(checkFlag && checkClick){
+		checkClick = false; 
+		$('.dynamic-form').submit();
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 		initFormEven();
@@ -838,8 +840,8 @@ function IsUrl(str){
 }
 
 function initFormEven(){
-	$('.btnInput').off('click').on('click',function(){
-		$('.btnInput').off('click');
+	$('#toSubmitForm').off('click').on('click',function(){
+		$('#toSubmitForm').off('click');
 		checkForm();
 	});
 	
@@ -993,7 +995,7 @@ function UploadFile(){
 		$('.upIng').show();
 		$('.upSuccess').hide();
 		$('.upError').hide();
-		$('#btnInput').off('click');
+		$('#toSubmitForm').off('click');
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
@@ -1194,7 +1196,7 @@ var formFieldCreator = {
 	
 	if(prop.id == 'info_watermarkUrl'){
 		result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
-		result += "<div class='watermarkUrl'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
+		result += "<div class='watermarkUrl' style='width:100% !important'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
 		return result;
 	}
 	
@@ -1237,7 +1239,7 @@ var formFieldCreator = {
 		
 		if(isWhat == "file"){
 			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
-			result += " <div id='picker' class='upload picker '>选择文件</div>";
+			result += " <div id='picker' class='upload picker '>上传</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
@@ -1805,6 +1807,7 @@ function createOption(value,text,price){
 
 function shareEven(){
 	$('.share').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);

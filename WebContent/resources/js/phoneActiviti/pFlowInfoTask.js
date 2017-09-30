@@ -201,6 +201,7 @@ function formCheck(){
 		$('.modelTool').hide();
 	});
 	$('#checkInfo').off('click').on('click',function(){
+		$('#checkInfo').off('click');
 		$('.dynamic-form').submit();
 	});
 	

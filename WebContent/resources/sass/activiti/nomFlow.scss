@@ -134,17 +134,16 @@
             }
             
             .nodaiban {
-                height: 36px;
                 width: 95%;
                 margin: 0 auto;
-                margin-top: 20px;
                 margin-bottom: 20px;
                 border-radius: 4px;
                 color: $border-line;
                 font-size: $font-size-sm;
-                border: 1px solid $border-line;
-                padding-left: 10px;
-                line-height: 34px;
+                text-align: center;
+                img{
+                    width: 84px;
+                }
             }
             
             @mixin cardhead {
