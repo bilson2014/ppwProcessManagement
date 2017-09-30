@@ -40,8 +40,9 @@
 	<!--项目流程详情页 -->
 	<mvc:view-controller path="/psi" view-name="/phoneActiviti/pFlowStepInfo" />
 
-	
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
+	
+	<mvc:view-controller path="/project/phone/pfs" view-name="/phoneActiviti/pFlowSearch" />
 
 
 

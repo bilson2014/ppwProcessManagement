@@ -83,7 +83,7 @@ public class MessageController {
 		long id=pmsProjectMessageFacade.insert(pmsProjectMessage);
 		
 		//发送新留言邮件通知
-		// topicReplyInformMQServiceImpl.sendMessage(id+"");
+		topicReplyInformMQServiceImpl.sendMessage(id+"");
 		result.setCode(BaseMsg.NORMAL);
 		return result;
 	}

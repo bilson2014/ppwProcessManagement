@@ -320,14 +320,14 @@
         }
         .imgRed {
             background: url(/resources/images/flow/setNorRed.png) no-repeat !important;
-            background-size: 82px 82px !important;
+            background-size: 100px 100px !important;
         }
         .imgFlow,
         .imgRed {
-            width: 82px;
-            height: 82px;
+            width: 100px;
+            height: 100px;
             background: url(/resources/images/flow/setNor.png) no-repeat;
-            background-size: 82px 82px;
+            background-size: 100px 100px;
             display: inline-block;
             vertical-align: middle;
             div:nth-child(1) {
@@ -692,7 +692,7 @@
                 ul {
                     margin-left: 10px;
                     position: relative;
-                    top: 10px;
+                    top: 6px;
                 }
                 img {
                     width: 80px;
@@ -779,20 +779,21 @@
                 color: $gray-light;
                 position: absolute;
                 left: 30px;
-                top: 14px;
+                top: 10px;
             }
             .endTime {
                 font-size: $font-size-sm;
                 color: $gray-light;
                 position: absolute;
                 right: 30px;
-                top: 14px;
+                top: 10px;
             }
         }
         .listContent {
             padding-top: 20px;
             padding-bottom: 20px;
             position: relative;
+            color:$gray;
             .listItem {
                 height: 36px;
                 width: 100%;
@@ -1154,6 +1155,10 @@
                 display: inline-block;
                 vertical-align: top;
             }
+            .sys{
+                color:$gray-light !important;
+            }
+
             .info {
                 font-size: $font-size-base;
                 color: $gray-dark;
@@ -1168,6 +1173,7 @@
                 @media screen and (min-width: 1100px) {
                     width: 700px;
                 }
+                word-wrap:break-word;
             }
             .time {
                 font-size: $font-size-sm;
@@ -1205,7 +1211,6 @@
                     vertical-align: top;
                 }
                 div:nth-child(2) {
-                    color: $gray-light;
                     line-height: 18px;
                     width: 320px;
                     @media screen and (min-width: 775px) and (max-width: 1025px) {
@@ -1214,6 +1219,7 @@
                     @media screen and (min-width: 1100px) {
                         width: 650px;
                     }
+                    word-wrap:break-word;
                 }
                 div:nth-child(3) {
                     font-size: $font-size-sm;
@@ -1432,6 +1438,8 @@
                     }
                 }
             } //版本管理
+
+         
             .controlContent {
                 padding: 30px 20px 30px 20px;
                 max-height: 500px;
@@ -1443,6 +1451,9 @@
                         div {
                             display: inline-block;
                             vertical-align: top;
+                        }
+                           .openItems {
+                            background-position-y: 14px !important;
                         }
                         .controlOpen {
                             width: 14px;
@@ -1488,6 +1499,7 @@
                                 }
                             }
                         }
+
                         .fileName {
                             font-size: $font-size-base;
                             color: $gray;
@@ -1779,7 +1791,7 @@
                 }
             }
             .otherContent {
-                padding-top: 20px;
+                padding-top:0px;
                 padding-bottom: 30px;
                 .itemCard {
                     display: inline-block;
@@ -1794,6 +1806,17 @@
                         span {
                             font-size: $font-size-sm;
                             color: $red-base;
+                        }
+                    }
+
+                    .watermarkUrl {
+                        width: 240px;
+                        border-radius: 4px;
+                        height: 36px;
+                        padding-left: 5px;
+                        line-height: 34px;
+                        a {
+                            font-size: $font-size-base;
                         }
                     }
                     input {
@@ -1916,6 +1939,10 @@
                         vertical-align: top;
                         width: 120px;
                         height: 36px;
+                        &:hover
+                        {
+                            color:$gray-dark;
+                        }
                         /*          border: 1px solid $border-line;
                        border-radius: 4px;
                        height: 36px;
@@ -2168,6 +2195,7 @@
                             margin-bottom: 10px;
                             div:nth-child(1) {
                                 width: 330px;
+                                word-wrap:break-word;
                             }
                             div:nth-child(2) {
                                 font-size: $font-size-base;
@@ -2230,6 +2258,7 @@
                                 font-size: $font-size-base;
                                 color: $gray-dark;
                                 padding-right: 150px;
+                                word-wrap:break-word;
                             }
                             div:nth-child(2) {
                                 font-size: $font-size-base;
@@ -2449,4 +2478,8 @@ background-image: none !important; */
             margin-bottom: 30px;
             margin-top: 50px;
         }
+    }
+
+    .sys{
+        color:$gray-light !important;
     }
