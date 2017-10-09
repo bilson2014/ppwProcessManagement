@@ -319,14 +319,14 @@
     </sequenceFlow>
     <userTask id="usertask4" name="【供应商总监】审核策划供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
       <extensionElements>
-        <activiti:formProperty id="info_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
-        <activiti:formProperty id="info_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
-        <activiti:formProperty id="info_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
-        <activiti:formProperty id="info_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
-        <activiti:formProperty id="info_planContent" name="供应商策划内容" type="string" default="${pt_planContent}"></activiti:formProperty>
-        <activiti:formProperty id="info_planTime" name="供应商策划交付时间" type="date" default="${pt_planTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
-        <activiti:formProperty id="info_accessMan" name="对接人" type="string" default="${pt_accessMan}"></activiti:formProperty>
-        <activiti:formProperty id="info_accessManTelephone" name="对接人联系方式" type="string" default="${pt_accessManTelephone}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_planContent" name="供应商策划内容" type="string" default="${pt_planContent}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_planTime" name="供应商策划交付时间" type="date" default="${pt_planTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_accessMan" name="对接人" type="string" default="${pt_accessMan}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_accessManTelephone" name="对接人联系方式" type="string" default="${pt_accessManTelephone}"></activiti:formProperty>
         <activiti:formProperty id="condition_projectPlanTeamAllotPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
@@ -345,12 +345,12 @@
     </sequenceFlow>
     <userTask id="usertask5" name="【供应商总监】审核制作供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
       <extensionElements>
-        <activiti:formProperty id="info_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
-        <activiti:formProperty id="info_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
-        <activiti:formProperty id="info_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
-        <activiti:formProperty id="info_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
-        <activiti:formProperty id="info_makeContent" name="供应商制作内容" type="string" default="${pt_makeContent}"></activiti:formProperty>
-        <activiti:formProperty id="info_makeTime" name="项目制作交付时间" type="date" default="${pt_makeTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_makeContent" name="供应商制作内容" type="string" default="${pt_makeContent}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_makeTime" name="项目制作交付时间" type="date" default="${pt_makeTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
         <activiti:formProperty id="condition_projectPlanTeamAllotConfirmPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
           <activiti:value id="false" name="退回"></activiti:value>
