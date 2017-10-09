@@ -6,7 +6,15 @@
 <spring:url value="/resources/lib/merge/iosSelect.css" var="iosSelectCss" />
 <spring:url value="/resources/lib/Bootstrap/css/bootstrap.min.css" var="bootstrapCss" />
 <spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
-<spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
+
+
+<spring:url value="/resources/lib/mobScroll/css/bootstrap.min.css" var="timeCss1"/>
+<spring:url value="/resources/lib/mobScroll/css/common.css" var=""/>
+<spring:url value="/resources/lib/mobScroll/css/info_self.css" var="timeCss2"/>
+<spring:url value="/resources/lib/mobScroll/css/mobiscroll.android-ics-2.5.2.css" var="timeCss3"/>
+<spring:url value="/resources/lib/mobScroll/css/mobiscroll.animation-2.5.2.css" var="timeCss4"/>
+<spring:url value="/resources/lib/mobScroll/css/mobiscroll.core-2.5.2.css" var="timeCss5"/>
+<spring:url value="/resources/lib/mobScroll/css/reset.css" var="timeCss6"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -15,8 +23,12 @@
 <spring:url value="/resources/js/phoneActiviti/pFlowInfoTask.js" var="pFlowInfoTaskJs"/>
 <spring:url value="/resources/lib/merge/iosSelect.js" var="iosSelectJs" />
 <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
-<spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
-<spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
+
+<spring:url value="/resources/lib/mobScroll/js/mobiscroll.android-ics-2.5.2.js" var="time1"/>
+<spring:url value="/resources/lib/mobScroll/js/mobiscroll.core-2.5.2-zh.js" var="time3"/>
+<spring:url value="/resources/lib/mobScroll/js/mobiscroll.core-2.5.2.js" var="time2"/>
+<spring:url value="/resources/lib/mobScroll/js/mobiscroll.datetime-2.5.1-zh.js" var="time5"/>
+<spring:url value="/resources/lib/mobScroll/js/mobiscroll.datetime-2.5.1.js" var="time4"/>
 <spring:url value="/resources/images" var="imgPath" />
 
 
@@ -30,7 +42,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"  />
 <meta name="keywords" content="">
 <meta name="description" content="">
 <title></title>
@@ -39,7 +51,13 @@
 <link rel="stylesheet" href="${iosSelectCss}">
 <link rel="stylesheet" href="${bootstrapCss}">
 <link rel="stylesheet" href="${webuploaderCss}">
-<link rel="stylesheet" href="${datepickerCss}">
+
+<link rel="stylesheet" href="${timeCss1}">
+<link rel="stylesheet" href="${timeCss2}">
+<link rel="stylesheet" href="${timeCss3}">
+<link rel="stylesheet" href="${timeCss4}">
+<link rel="stylesheet" href="${timeCss5}">
+<link rel="stylesheet" href="${timeCss6}">
 
 
 <!--[if lt IE 9]>
@@ -107,9 +125,13 @@
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${commonPhoneJs}"></script>
 <script type="text/javascript" src="${webuploaderJs}"></script>
-<script type="text/javascript" src="${datepickerJs}"></script>
-<script type="text/javascript" src="${datepickerZhJs}"></script>
+
 <script type="text/javascript" src="${iosSelectJs}"></script>
+<script type="text/javascript" src="${time1}"></script>
+<script type="text/javascript" src="${time2}"></script>
+<script type="text/javascript" src="${time3}"></script>
+<script type="text/javascript" src="${time4}"></script>
+<script type="text/javascript" src="${time5}"></script>
 <script type="text/javascript" src="${pFlowInfoTaskJs}"></script>
 
 </html>
