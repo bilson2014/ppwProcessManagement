@@ -153,18 +153,18 @@ function getDate(){
 	    }		
 	}
 	
-/*	var dueTime = $('.setBorder');
+	var dueTime = $('.setBorder');
 	if(dueTime.length >= 0){
         for (var i = 0; i < dueTime.length; i++) {
-
-		   var getTime = Date.parse(($(dueTime[i]).attr('data-content')).replace("CST","GMT+0800"));
+           var theTime=  $(dueTime[i]).attr('data-content');
+		   var getTime = Date.parse(theTime.replace("CST","GMT+0800"));
 		   var nowData = Date.parse(new Date());
 		   var lastHour =(getTime - nowData)/3600000;
 		   if(lastHour < 0){
 			   $(dueTime[i]).addClass('redWord');
 		   }
 	    }		
-	}*/
+	}
 }
 
 function createWaitCard(res){

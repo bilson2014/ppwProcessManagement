@@ -88,7 +88,7 @@
                         background-position-y: 14px;
                     }
                     &:hover {
-                        background: red;
+                        background-color: #fe2220;
                         .newAdd {
                             background-position-y: -14px;
                         }
@@ -116,14 +116,6 @@
                     vertical-align: middle;
                 }
             }
-            /*             $noNeedpad:20px;
-$areaWidth:1110px;
-$areaMidWidth:1000px;
-$smallWidth:770px;
-$areaMinWidth:1240px;
-$areaMinMidWidth:1132px;
-$smallMinWidth:900px;
-$ba:#bababa; */
             
             $noNeedpad:20px;
             $areaWidth:1110px;
@@ -142,17 +134,16 @@ $ba:#bababa; */
             }
             
             .nodaiban {
-                height: 36px;
                 width: 95%;
                 margin: 0 auto;
-                margin-top: 20px;
                 margin-bottom: 20px;
                 border-radius: 4px;
                 color: $border-line;
                 font-size: $font-size-sm;
-                border: 1px solid $border-line;
-                padding-left: 10px;
-                line-height: 34px;
+                text-align: center;
+                img{
+                    width: 84px;
+                }
             }
             
             @mixin cardhead {
@@ -270,6 +261,10 @@ $ba:#bababa; */
                             margin-bottom: 20px;
                             display: inline-block;
                             vertical-align: top;
+                            @media screen and (max-width: 775px) {
+                                margin-bottom: 10px;
+                                margin-top: 10px;
+                            }
                         }
                         .setContent {
                             display: inline-block;
@@ -277,6 +272,10 @@ $ba:#bababa; */
                             margin-top: 25px;
                             margin-left: 20px;
                             width: 56%;
+                            @media screen and (max-width: 775px) {
+                                margin-top: 0px;
+                                width: 210px;
+                            }
                             .listName {
                                 font-size: 14px;
                                 font-weight: bold;
@@ -354,6 +353,7 @@ $ba:#bababa; */
                     vertical-align: middle;
                     margin-left: 50px;
                     width: 240px;
+                    height: 30px !important;
                 }
                 .setCard {
                     .otherCard {
@@ -390,10 +390,16 @@ $ba:#bababa; */
                                 margin-left: 15px;
                                 width: 60%;
                                 .listName {
+                                    height: 40px;
+                                    width: 200px;
+                                    line-height: 22px;
                                     font-size: $font-size-sm;
                                     color: $gray;
-                                    margin-bottom:5px;
-                                    line-height: 20px;
+                                    margin-bottom: 10px;
+                                    overflow: hidden;
+                                    @media screen and (max-width: 775px) {
+                                        width: 150px;
+                                    }
                                 }
                                 .lastTime {
                                     font-size: $font-size-sm;

@@ -309,6 +309,16 @@
 		                                          <div>${user_info["telephone"]}</div>
 			                                    </div>
 			                                  </c:if>
+			                                  
+			                                  <c:if test="${not empty user_info['email']}">
+			                                  	<div class="item">
+		                                          <div>邮箱地址</div>
+		                                          <div>${user_info["email"]}</div>
+			                                    </div>
+			                                  </c:if>
+			                                  
+			                                  
+			                                  
 		                                  </div>
 		                            </div>
 		                       </div>
@@ -910,6 +920,10 @@
 	                         <div class="title">客户电话</div>
 	                         <input id="cusTelephone" name="pu_telephone" value=''>
 	                    </div>
+	                    <div class="itemTime errorItem" id="cusEmailError">
+	                         <div class="title">邮箱地址</div>
+	                         <input id="cusEmail" name="pu_email" value=''>
+	                    </div>
 	                    <div class="btnMid">
 			                      <div class="btn-c-g">取消</div>
 			                      <div class="btn-c-r" id="submitCus">确认</div>
@@ -1135,7 +1149,7 @@
                    <div class="title">分享</div>
                    <div class="closeModel"></div>
             </div>
-		        <div class="copyUrl" id="setInfoCopy"></div>
+		        <a class="copyUrl" id="setInfoCopy"></a>
 		        <div class="midDiv">
 	                <input class="btn-c-r shareInput" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
 	            </div>

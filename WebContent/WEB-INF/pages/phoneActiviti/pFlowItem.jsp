@@ -72,23 +72,32 @@
                 </div>
                 <div class="probox">
                     <ul>
-                        <li>
+                     	<c:if test="${!empty flow_info['projectId']}">
+                        <li> 
                             <div>项目编号</div>
                             <span>${flow_info["projectId"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['projectSource']}">
                         <li>
                             <div>项目来源</div>
                             <span>${flow_info["projectSource"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['projectName']}">
                         <li>
                             <div>项目名称</div>
                             <span class='best'>${flow_info["projectName"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['projectGrade']}">
                         <li>
                             <div>项目评级</div>
                             <span>${flow_info["projectGrade"]}</span>
 
                         </li>
+                        </c:if>
+                       
                         <li>
                             <div>项目周期</div>
                             <c:if test="${flow_info['projectCycle'] == 0}">
@@ -98,14 +107,20 @@
                                 <span>${flow_info["projectCycle"]}天</span>
                             </c:if>
                         </li>
+                       
+                        <c:if test="${!empty flow_info['productName']}">
                         <li>
                             <div>产品线</div>
                             <span>${flow_info["productName"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['createDate']}">
                         <li>
                             <div>立项时间</div>
                             <span id="projectTime">${flow_info["createDate"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['productConfigLengthName']}">
                         <li>
                             <div>项目配置</div>
                             <span>${flow_info["productConfigLevelName"]}
@@ -117,22 +132,31 @@
 		                                          </c:if>
                                             </span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['filmDestPath']}">
                         <li>
                             <div>对标影片</div>
                             <a class="film" target='_blank' href="${flow_info['filmDestPath']}">${flow_info['filmDestPath']}</a>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['projectDescription']}">
                         <li>
                             <div>项目描述</div>
                             <span class="miaoshu">${flow_info["projectDescription"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['sampleUrl']}">
                         <li>
                             <div>水印样片地址</div>
                             <span class="miaoshu"><a href='${flow_info["sampleUrl"]}' target="_self">${flow_info["sampleUrl"]}</a></span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty flow_info['samplePassword']}">
                         <li>
                             <div>水印样片密码</div>
                             <span class="miaoshu">${flow_info["samplePassword"]}</span>
                         </li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
@@ -149,23 +173,38 @@
                 </div>
                 <div class="cusbox">
                     <ul>
+                    
+                        <c:if test="${!empty user_info['userName']}">
                         <li>
                             <div>客户名称</div>
                             <span>${user_info["userName"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty user_info['userLevel']}">
                         <li>
                             <div>客户评级</div>
-                            <span>${user_info["userLevel"]}</span>
-                            
+                            <span>${user_info["userLevel"]}</span>                            
                         </li>
+                        </c:if>
+                        <c:if test="${!empty user_info['linkman']}">
                         <li>
                             <div>客户联系人</div>
                             <span>${user_info["linkman"]}</span>
                         </li>
+                        </c:if>
+                        <c:if test="${!empty user_info['telephone']}">
                         <li>
                             <div>客户电话</div>
                             <span>${user_info["telephone"]}</span>
                         </li>
+                        </c:if>    
+                        
+                          <c:if test="${not empty user_info['email']}">
+					            <li>
+		                            <div>邮箱地址</div>
+		                            <span>${user_info["email"]}</span>
+		                        </li>
+			              </c:if>                    
                     </ul>
                 </div>
             </div>
@@ -186,22 +225,25 @@
                         <span>策划供应商</span>
                     </div>
                     <div class="planbox">
-                        <ul>
+                        <ul>                        
+                        	<c:if test="${!empty plan['teamName']}">
                             <li>
-                                <div>供应商名称</div>
-                                <!-- <span>周杰伦</span> -->
+                                <div>供应商名称</div>                               
                                 <span>${plan["teamName"]}</span>
                             </li>
+                            </c:if>
+                            <c:if test="${!empty plan['linkman']}">
                             <li>
-                                <div>供应商联系人</div>
-                                <!-- <span>周杰伦</span> -->
+                                <div>供应商联系人</div>                              
                                 <span>${plan["linkman"]}</span>
                             </li>
+                            </c:if>
+                            <c:if test="${!empty plan['telephone']}">
                             <li>
                                 <div>供应商联系电话</div>
-                                <!-- <span>12345678945</span> -->
                                 <span>${plan["telephone"]}</span>
                             </li>
+                            </c:if>
                         </ul>
                     </div>
                     <!--制作供应商  -->
@@ -210,22 +252,25 @@
                         <span>制作供应商</span>
                     </div>
                     <div class="makebox">
-                        <ul>
+                        <ul>                        
+                            <c:if test="${!empty product['teamName']}">
                             <li>
                                 <div>供应商名称</div>
-                                <!-- <span>啦啦啦</span> -->
                                 <span>${product["teamName"]}</span>
                             </li>
+                            </c:if>
+                            <c:if test="${!empty product['linkman']}">
                             <li>
                                 <div>供应商联系人</div>
-                                <!-- <span>啦啦啦</span> -->
                                 <span>${product["linkman"]}</span>
                             </li>
+                            </c:if>
+                            <c:if test="${!empty product['telephone']}">
                             <li>
                                 <div>供应商联系电话</div>
-                                <!-- <span>12345678945</span> -->
                                 <span>${product["telephone"]}</span>
                             </li>
+                            </c:if>                           
                         </ul>
                     </div>
                 </div>
@@ -243,7 +288,7 @@
                         </r:group>
                     </div>
                     <div class="pribox">
-                        <ul>
+                        <ul>                            
                             <li>
                                 <c:if test="${not empty price_info['estimatedPrice']}">
                                     <div>预估价格</div>
@@ -254,7 +299,7 @@
                                         <span>${price_info["estimatedPrice"]}元</span>
                                     </c:if>
                                 </c:if>
-                            </li>
+                            </li>                                                   
                             <li>
                                 <c:if test="${not empty price_info['projectBudget']}">
                                     <div>客户项目预算</div>

@@ -7,8 +7,17 @@ $().ready(function() {
 function surebtn() {
     var name = $('.name input').val();
     var phone = $('.phone input').val();
+    var cusEmail = $('#cusEmail').val();
     $('.name p').text('');
     $('.phone p').text('');
+    if(cusEmail == undefined || cusEmail == "" || cusEmail ==null ){
+		$('#emailError').text('邮箱地址未填写');
+		return false;
+	}
+     if(!checkEmail(cusEmail)){
+	 $('#emailError').attr('邮箱格式不正确');
+		return false;
+    }
     var num = /^1\d{10}$/;
     if (name.length == 0) {
         $('.name p').text('*客户联系人不能为空');
@@ -31,6 +40,7 @@ function openCusInfo() {
         $('#cusId').val(res.projectUser.pu_projectUserId);
         $('#cusLinkman').val(res.projectUser.pu_linkman);
         $('#cusTelephone').val(res.projectUser.pu_telephone);
+        $('#cusEmail').val(res.projectUser.pu_email);
     }, getContextPath() + '/project/task/edit/parameter/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/pu", null);
     // 数据获取添加表单的id
     loadData(function(res) {

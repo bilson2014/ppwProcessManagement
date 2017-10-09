@@ -174,6 +174,9 @@ $e2:#222;
                 line-height: 0.47rem;
                 min-height: 0.47rem;
                 overflow: visible;
+                a {
+                    color: #E3E3E3;
+                }
             }
         }
     }
@@ -457,7 +460,7 @@ $e2:#222;
         width: 9rem;
         height: 9.07rem;
         background: #FFFFFF;
-        border-radius: 0.18rem;
+        border-radius: 0.2rem;
         position: absolute;
         top: 4.12rem;
         left: 50%;
@@ -473,7 +476,7 @@ $e2:#222;
         .name {
             display: block;
             margin: 0 auto;
-            width: 2.3rem;
+            width: 7rem;
             text-align: center;
             margin-top: 0.6rem;
             font-size: 0.46rem;

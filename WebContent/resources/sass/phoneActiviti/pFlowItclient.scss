@@ -69,6 +69,39 @@ $e2:#222;
             margin-top: 0.2rem;
         }
     }
+    //邮箱地址
+    .email {
+        div {
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            height: 0.47rem;
+            display: inline-block;
+            margin-left: 0.8rem;
+            vertical-align: text-top;
+            margin-top: 0.3rem;
+        }
+        input {
+            width: 7rem;
+            height: 0.9rem;
+            border-radius: 0.08rem;
+            background: #333;
+            font-size: 0.34rem;
+            color: #D1D1D1;
+            padding-left: 0.399rem;
+            border: 1px solid #999999;
+            margin-left: 0.3rem;
+            vertical-align: text-top;
+        }
+    }
+    #emailError {
+        height: 0.5rem;
+        color: #FE5453;
+        font-size: 0.09rem;
+        color: #FE5453;
+        font-size: 0.09rem;
+        margin-left: 3rem;
+        display: block;
+    }
 }
 
 // 取消和确认

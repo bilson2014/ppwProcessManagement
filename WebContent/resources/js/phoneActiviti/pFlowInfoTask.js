@@ -36,7 +36,8 @@ function checkState(){
   	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?pause");
   }
     
-    if(state.trim()!= "task"){
+    if(state.trim()!="task"){
+    	$('.contentTitle').hide();
     	$('#daiban').show();
     	$(window.parent.document).find('.footBot #toMission').attr('data-content',$('#url').val());
     }else{
@@ -44,7 +45,7 @@ function checkState(){
     	    selectEven();
     		UploadFile();
     		addForm(); 
-    		initDaibanTime();
+    		initDaibanTime();   	
     }
 }
 
@@ -200,6 +201,7 @@ function formCheck(){
 		$('.modelTool').hide();
 	});
 	$('#checkInfo').off('click').on('click',function(){
+		$('#checkInfo').off('click');
 		$('.dynamic-form').submit();
 	});
 	
@@ -274,11 +276,22 @@ function addForm() {
 		selectEven();
 		formCheck();
 		dataEven();	
+		getWatermarkUrl();
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 
 function createFieldHtml(prop, obj, className) {
 	return formFieldCreator[prop.type.name](prop, obj, className);
+}
+
+function getWatermarkUrl(){
+	if($('div').hasClass('watermarkUrl')){
+		loadData(function(res){
+			$('#info_watermarkUrl').text(res.sampleUrl);
+			$('#info_watermarkUrl').attr('href',res.sampleUrl);
+			$('#info_watermarkPass').val(res.samplePassword);
+		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}
 }
 
 var formFieldCreator = {
@@ -296,15 +309,24 @@ var formFieldCreator = {
 			var str = prop.id;
 			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			proValue=prop.value;
+			
+			if(str.indexOf('pt_') >-1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') >-1){
+				proValue = '';
 			}
 			
-			if (prop.writable === true) {
+			if (prop.writable == true) {
+				
+				if(prop.id == 'info_watermarkUrl'){
+					result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+					result += "<div class='watermarkUrl'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
+					return result;
+				}
+				
 				if(isRead == 0){
 					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;
@@ -340,20 +362,21 @@ var formFieldCreator = {
 			     }
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + proValue + "' />";
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 			}
 			return result;
 		},
 		'date': function(prop, datas, className) {
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') >-1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') >-1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -363,23 +386,24 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
 		'long': function(prop, datas, className) {
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') > -1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') > -1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -389,24 +413,25 @@ var formFieldCreator = {
 				var result = "<div class='name'>" + prop.name + "</div>";
 				var isCheck = "noCheckInfo";
 			}
-			if (prop.writable === true) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
 		'enum': function(prop, datas, className) {
 			title = prop.name;
-			var proValue = '';
+			var proValue = prop.value;
 			var str = prop.id;
+			var isRead = str.indexOf('info');
 			
-			if(str.indexOf('pt_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('pt_') > -1){
+				proValue = '';
 			}
 			
-			if(str.indexOf('dl_') < 0){
-				proValue = prop.value;
+			if(str.indexOf('dl_') > -1){
+				proValue = '';
 			}
 			
 			if(prop.required){
@@ -417,7 +442,7 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 	
-			if (prop.writable === true) {
+			if (prop.writable == true && isRead != 0) {
 				result += "<div class='orderSelect'>";
 				result += "   <input  type='hidden' id='setinputValue'   class='" + className + "' name='" + prop.id + "'/>";
 				result += "   <input readonly class='setSelect checkInfo'  id='setinput' id='" + prop.id + "'  class='" + className + "'/>";
@@ -427,7 +452,7 @@ var formFieldCreator = {
 					data.push(new city(k, v));
 				});
 			} else {
-				result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
+				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		}

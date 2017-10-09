@@ -234,15 +234,20 @@ function crearteInfoCard(res){
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
 	}
+	var isSys;
+	if(res.messageType == 1){
+		isSys = 	'       <div>'+res.fromName+' : '+res.content+'</div>';
+	}else{
+		isSys = 	'       <div class="sys">【系统自动】'+res.fromName+' : '+res.content+'</div>';
+	}
 
 	var html = [
 				'<div class="infoItem">',
 				'    <div  class="itemTop">',
 				'          <img class="logo" src="'+imgUrl+'">                                                                                ',
 				'           <ul>                                                                                                    ',
-				'              <li><div>'+res.fromName+' : '+res.content+'</div><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
-				/*              <li><div>'+res.taskName+'</div> <img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>',
-*/				'           </ul>                                                                                                   ',
+				'              <li>'+isSys+'<div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div><img class="modelOpen " src="/resources/images/flow/areaMore.png"></li>                                                             ',
+				'           </ul>                                                                                                   ',
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
@@ -572,7 +577,7 @@ function checkProviderInfo(){
            var pf_Resour = $('#pf_Resour').attr('data-id');
            var proCycle = $('#proCycle').val();
            var proFdp = $('#proFdp').val();
-           var projectDes = $('#projectDes').val();
+
        
         if(proName == undefined || proName == "" || proName ==null ){
        		$('#proNameError').attr('data-content','项目名称未填写未填写');
@@ -597,10 +602,7 @@ function checkProviderInfo(){
        		$('#proFdpError').attr('data-content','对标影片地址未填写');
        		return false;
        	}
-        if(projectDes == undefined || projectDes == "" || projectDes ==null ){
-       		$('#projectDesError').attr('data-content','项目描述未填写');
-       		return false;
-       	}
+
         
         return true;
 }
@@ -624,6 +626,7 @@ function openCusInfo(){
 			  $('#cusId').val(res.projectUser.pu_projectUserId);
 			  $('#cusLinkman').val(res.projectUser.pu_linkman);
 			  $('#cusTelephone').val(res.projectUser.pu_telephone);
+			  $('#cusEmail').val(res.projectUser.pu_email);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pu",null);
 	});
 	$('#submitCus').off('click').on('click',function(){
@@ -638,12 +641,14 @@ function openCusInfo(){
 function cusClear(){
 	$('#cusLinkman').val('');
 	$('#cusTelephone').val('');
+	$('#cusEmail').val('');
 	$('.errorItem').attr('data-content','');
 }
 
 function checkCusInfo(){
     var cusLinkman = $('#cusLinkman').val();
     var cusTelephone = $('#cusTelephone').val();
+    var cusEmail = $('#cusEmail').val();
     $('.errorItem').attr('data-content',''); 
 	 if(cusLinkman == undefined || cusLinkman == "" || cusLinkman ==null ){
 			$('#cusLinkmanError').attr('data-content','客户联系人未填写');
@@ -658,6 +663,17 @@ function checkCusInfo(){
 			$('#cusTelephoneError').attr('data-content','电话未格式不正确');
 			return false;
 		}
+	 
+	 if(cusEmail == undefined || cusEmail == "" || cusEmail ==null ){
+			$('#pu_email').attr('data-content','邮箱地址未填写');
+			return false;
+		}
+	 if(!checkEmail(cusEmail)){
+		 $('#pu_email').attr('data-content','邮箱格式不正确');
+			return false;
+	 }
+	 
+	 
 	 return true;
 }
 
@@ -778,12 +794,13 @@ function checkProvider(){
     }
     return true;
 }
-
+var checkClick = true;
 //表单验证
 function checkForm(){
 	$('#errorInfo').text('');
 	var getCheckInfo = $('.checkInfo');
 	var checkFlag = true;
+	
 	for (var i = 0; i < getCheckInfo.length; i++) {
 		var check = $(getCheckInfo[i]).val();
                if(check == null || check == "" || check == undefined )	{
@@ -801,9 +818,10 @@ function checkForm(){
             	   initFormEven();
                }	
 	}
-	if(checkFlag){
-		$('#toSubmitForm').prop("type","submit");
-		$('.btnInput').off('click');
+	
+	if(checkFlag && checkClick){
+		checkClick = false; 
+		$('.dynamic-form').submit();
 	}else{
 		$('#errorInfo').text('请补充必填信息');
 		initFormEven();
@@ -822,8 +840,8 @@ function IsUrl(str){
 }
 
 function initFormEven(){
-	$('.btnInput').off('click').on('click',function(){
-		$('.btnInput').off('click');
+	$('#toSubmitForm').off('click').on('click',function(){
+		$('#toSubmitForm').off('click');
 		checkForm();
 	});
 	
@@ -977,7 +995,7 @@ function UploadFile(){
 		$('.upIng').show();
 		$('.upSuccess').hide();
 		$('.upError').hide();
-		$('#btnInput').off('click');
+		$('#toSubmitForm').off('click');
 	});
 	upload_Video.on('uploadSuccess', function(file,response) {
 		if(response){
@@ -1114,6 +1132,7 @@ function addForm() {
 		if(hasPicker !=null && hasPicker !="" && hasPicker !=undefined){
 			UploadFile();
 		}
+		getWatermarkUrl();
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1122,6 +1141,16 @@ function addForm() {
  */
 function createFieldHtml(prop, obj, className) {
 	return formFieldCreator[prop.type.name](prop, obj, className);
+}
+
+function getWatermarkUrl(){
+	if($('div').hasClass('watermarkUrl')){
+		loadData(function(res){
+			$('#info_watermarkUrl').text(res.sampleUrl);
+			$('#info_watermarkUrl').attr('href',res.sampleUrl);
+			$('#info_watermarkPass').val(res.samplePassword);
+		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}
 }
 
 var formFieldCreator = {
@@ -1157,14 +1186,20 @@ var formFieldCreator = {
 	
 	// --> filter start with pt_ value by jack at 20170926 end
 	
-	if(prop.required){
-		
+	if(prop.required){	
 		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
+	
+	if(prop.id == 'info_watermarkUrl'){
+		result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+		result += "<div class='watermarkUrl' style='width:100% !important'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
+		return result;
+	}
+	
 	var isWhat = prop.id.split('_')[0];
 	var str = prop.id;
 	var isRead = str.indexOf('info');
@@ -1203,8 +1238,8 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
-			result += " <div id='picker' class='upload picker'>选择文件</div>";
+			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
+			result += " <div id='picker' class='upload picker '>上传</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
@@ -1227,10 +1262,13 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = prop.id.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1250,10 +1288,13 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = prop.id.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1269,7 +1310,10 @@ var formFieldCreator = {
 		var result = "<div class='title'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
-	if (prop.writable === true) {
+	
+	var isRead = prop.id.indexOf('info');
+	
+	if (prop.writable === true && isRead != 0) {
 		result += "<input readonly class='autoSelect checkInfo' id='" + prop.id + "'  class='" + className + "'>";
 		result += "<input type='hidden' class='hideInput' name='" + prop.id + "' >";
 		result += "<img class='autoImg' src='/resources/images/flow/selectOrder.png'>";
@@ -1279,7 +1323,7 @@ var formFieldCreator = {
 		});
 		result += "</ul>";
 	} else {
-		result += "<input class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='"+isCheck+"' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 }
@@ -1517,11 +1561,18 @@ function createTalkInfo(res){
 	}else{
 		var  imgUrl = getDfsHostName()+res.fromUrl;
 	}
+	var isSys;
+	if(res.messageType == 1){
+		isSys = 	'       <div class="info">'+res.fromName+' : '+res.content+'</div>';
+	}else{
+		isSys = 	'       <div class="info sys">【系统自动】'+res.fromName+' : '+res.content+'</div>';
+	}
+	
 	var html = [
 	    '<div class="areaItem">',
 	    '   <div class="infoItem">',
 		'	  <img src="'+imgUrl+'">',
-		'       <div class="info">'+res.fromName+' : '+res.content+'</div>',
+		'       '+isSys+'',
 		'       <div class="time">',
 		'       	<span>发布时间：'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</span>',
 		'     	    <div class="openTalk"></div>',
@@ -1756,6 +1807,7 @@ function createOption(value,text,price){
 
 function shareEven(){
 	$('.share').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);
