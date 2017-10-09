@@ -251,10 +251,12 @@ function crearteInfoCard(res){
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
-				'          <input>                                                                                                  ',
+				'     <div class="reviewItem">',
+				'      <input>',
+				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>',
+				'     </div>',
 				'    </div> ',
 				'<div class="errorSpan"></div>',
-				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>                                                                   ',
 				'</div>                                                                                                       '
 			].join('');
 			return html;
@@ -266,7 +268,7 @@ function infoAddReplyEven(){
 		    var projectId = $(this).attr('data-projectId');
 		    var name = $(this).attr('data-name');
 		    var parentId = $(this).attr('data-parentId');
-		    var content = $(this).parent().find('.itemArea').find('input').val();
+		    var content = $(this).parent().find('input').val();
 		    
 		    if(content == null || content == "" || content == undefined){
 		    	$(this).parent().find('.errorSpan').text('回复不能为空');
@@ -416,12 +418,10 @@ function getFileInfo(){
 			for (var int = 0; int < res.length; int++) {
 				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
 				   body.append(html);
-			};
-			
+			};	
 		}
 	}, getContextPath() + '/resource/version/'+$('#currentTaskId').val(),null);
 }
-
 
 function checkState(){
 	var href = window.location.href;
@@ -1358,11 +1358,11 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').find('input').hide();
+            	nowItem.parent().parent().parent().find('.infoContent').find('.reviewItem').hide();
             	nowItem.parent().parent().parent().find('.upInfo').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
+            	nowItem.parent().parent().parent().find('.infoContent').find('.reviewItem').show();
             	nowItem.parent().parent().parent().find('.upInfo').show();     
             }	
             getHeight();
@@ -1519,23 +1519,22 @@ function initAllTalk(){
 //留言回复
 function rePickTalk(){
 	
-   $('.upInfo .toArea').off('click').on('click',function(){
+   $('.toArea').off('click').on('click',function(){
 	    var projectId = $(this).attr('data-id');
 	    var taskName = $(this).attr('data-name');
 	    var parentId = $(this).attr('data-parentId');
-	    var content = $(this).parent().parent().find('.infoContent').find('input').val();
-	    
+	    var content = $(this).parent().find('input').val();    
 	    if(content == null || content == "" || content == undefined){
 	    	$(this).parent().parent().find('.errorSpan').text('回复不能为空');
 	    }else{
 	    
-	    $('.upInfo .toArea').off('click');
+	    $('.toArea').off('click');
 			loadData(function(res){
 				if(res.code == 200){
 					  initAllTalk();
-					  $('.upInfo .toArea').off('click');
+					  $('.toArea').off('click');
 				}else{
-					  $('.upInfo .toArea').off('click');
+					  $('.toArea').off('click');
 				}
 			}, getContextPath() + '/message/addReply',$.toJSON({
 				projectId:projectId,
@@ -1580,12 +1579,12 @@ function createTalkInfo(res){
    		'   </div>',
 		'   <div class="infoContent">',
 		'     '+body+'',
+		'     <div class="reviewItem">',
 		'      <input>',
+		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
+		'     </div>',
 		'   </div>',
 		'<span class="errorSpan"></span>',
-		'   <div class="upInfo">',
-		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
-		'   </div>',
 		'</div>',
 
 	].join('');
