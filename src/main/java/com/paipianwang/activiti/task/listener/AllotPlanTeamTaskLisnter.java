@@ -65,6 +65,10 @@ public class AllotPlanTeamTaskLisnter implements TaskListener {
 				ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 				PmsProjectTeamFacade pmsProjectTeamFacade = (PmsProjectTeamFacade) context
 						.getBean("pmsProjectTeamFacade");
+				
+				// 先删除策划供应商
+				pmsProjectTeamFacade.deleteProjectTeamByProjectIdAndTeamType(projectId, ProjectTeamType.scheme.getCode());
+				
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
 				delegateTask.setVariable("teamPlanId", activitiTeamId); // 设置供应商的唯一ID
 				delegateTask.setVariable("projectTeam_plan", projectTeamId); // 设置策划供应商的唯一ID

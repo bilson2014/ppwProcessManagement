@@ -1569,4 +1569,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		Map<String, Object> result = flowFacade.getProjectFlowColumnByProjectId(Arrays.asList(columns), projectId);
 		return result;
 	}
+
+	// 获取 制作供应商 信息
+	@Override
+	public Map<String, Object> getProduceTeamInfo(String projectId) {
+		String[] columns = new String[]{"teamName","linkman","telephone","budget","makeContent","makeTime"};
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns), projectId, ProjectTeamType.produce.getCode());
+		return ValidateUtil.isValid(list) ? list.get(0) : null;
+	}
+
+	// 获取 策划供应商 信息
+	@Override
+	public Map<String, Object> getSchemeTeamInfo(String projectId) {
+		String[] columns = new String[]{"teamName","linkman","telephone","budget","planContent","planTime","accessMan","accessManTelephone"};
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns), projectId, ProjectTeamType.scheme.getCode());
+		return ValidateUtil.isValid(list) ? list.get(0) : null;
+	}
 }

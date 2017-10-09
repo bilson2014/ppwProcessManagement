@@ -94,7 +94,7 @@ public class ProjectFlowController extends BaseController {
 				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
-		return new ModelAndView("redirect:http://"+ PublicConfig.HTTP_REFERER +"/project/running");
+		return new ModelAndView("redirect:http://" + PublicConfig.HTTP_REFERER + "/project/running");
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class ProjectFlowController extends BaseController {
 			@PathVariable("projectId") final String projectId) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		TaskFormDataImpl taskFormData = projectWorkFlowService.getTaskFormData(taskId);
-		
+
 		result.put("taskFormData", taskFormData);
 
 		List<FormProperty> properties = taskFormData.getFormProperties();
@@ -398,10 +398,10 @@ public class ProjectFlowController extends BaseController {
 			result.put("teamProductMap", teamProductMap);
 			result.put("userMap", userMap);
 			result.put("synergyList", synergyList);
-			
-			if(StringUtils.isNotBlank(taskId))
+
+			if (StringUtils.isNotBlank(taskId))
 				result.put("state", state);
-			
+
 			return result;
 		}
 		return null;
@@ -479,8 +479,8 @@ public class ProjectFlowController extends BaseController {
 					pmsProjectFlowResult.setTaskId(task.getId());
 					pmsProjectFlowResult.setTaskName(task.getName());
 					pmsProjectFlowResult.setTask(null);
-				}else{
-					//已完成的taskId取空
+				} else {
+					// 已完成的taskId取空
 					pmsProjectFlowResult.setTaskId(" ");
 				}
 				if (hPs != null) {
@@ -540,8 +540,8 @@ public class ProjectFlowController extends BaseController {
 			@PathVariable("projectId") final String projectId, HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 挂起
-			String remark=request.getParameter("remark");
-			projectWorkFlowService.suspendProcess(processInstanceId, projectId,getCurrentInfo(request),remark);	 
+			String remark = request.getParameter("remark");
+			projectWorkFlowService.suspendProcess(processInstanceId, projectId, getCurrentInfo(request), remark);
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -689,8 +689,8 @@ public class ProjectFlowController extends BaseController {
 
 	// 更新团队信息
 	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
-	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client, final String taskId,
-			final String projectId, final String processInstanceId) {
+	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client,
+			final String taskId, final String projectId, final String processInstanceId) {
 		String dir = "redirect:/project/running-doing";
 		if (StringUtils.isNotBlank(client)) {
 			StringBuffer target = new StringBuffer();
@@ -800,8 +800,8 @@ public class ProjectFlowController extends BaseController {
 			@PathVariable("projectId") final String projectId, final HttpServletRequest request) {
 		if (StringUtils.isNotBlank(processInstanceId) && StringUtils.isNotBlank(projectId)) {
 			// 取消
-			String remark=request.getParameter("remark");
-			projectWorkFlowService.cancelProcess(processInstanceId, projectId,getCurrentInfo(request),remark);
+			String remark = request.getParameter("remark");
+			projectWorkFlowService.cancelProcess(processInstanceId, projectId, getCurrentInfo(request), remark);
 		}
 		return new ModelAndView("redirect:/project/running-doing");
 	}
@@ -809,8 +809,28 @@ public class ProjectFlowController extends BaseController {
 	// 获取 水印样片 以及 水印样片密码
 	@RequestMapping("/getFlowSample/{projectId}")
 	public Map<String, Object> getFlowSample(@PathVariable("projectId") final String projectId) {
-		if(StringUtils.isNotBlank(projectId)) {
+		if (StringUtils.isNotBlank(projectId)) {
 			Map<String, Object> param = projectWorkFlowService.getFlowSample(projectId);
+			return param;
+		}
+		return null;
+	}
+
+	// 获取 制作供应商 信息
+	@RequestMapping("/getProduceTeamInfo/{projectId}")
+	public Map<String, Object> getProduceTeamInfo(@PathVariable("projectId") final String projectId) {
+		if (StringUtils.isNotBlank(projectId)) {
+			Map<String, Object> param = projectWorkFlowService.getProduceTeamInfo(projectId);
+			return param;
+		}
+		return null;
+	}
+
+	// 获取 策划供应商 信息
+	@RequestMapping("/getSchemeTeamInfo/{projectId}")
+	public Map<String, Object> getSchemeTeamInfo(@PathVariable("projectId") final String projectId) {
+		if (StringUtils.isNotBlank(projectId)) {
+			Map<String, Object> param = projectWorkFlowService.getSchemeTeamInfo(projectId);
 			return param;
 		}
 		return null;

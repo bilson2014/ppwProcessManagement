@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
@@ -74,7 +75,9 @@ public class ProviderConfirmFileToAuditTaskListener implements TaskListener {
 					param.put(key.split("_")[1], formProperty.getValue());
 				}
 			}
-			flowFacade.update(param, projectId);
+			if(ValidateUtil.isValid(param)) {
+				flowFacade.update(param, projectId);
+			}
 		}
 		
 	}

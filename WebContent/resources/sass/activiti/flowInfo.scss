@@ -1228,7 +1228,7 @@
                 }
             }
             input {
-                width: 80%;
+                width: 100%;
                 border: 1px solid $border-line;
                 border-radius: 4px;
                 height: 30px;
@@ -1326,7 +1326,7 @@
                 margin: 0 auto;
                 position: relative;
                 .warnReason {
-                    text-align: center;
+                    text-align: left;
                     margin-top: 10px;
                     margin-bottom: 10px;
                 }
@@ -2481,4 +2481,8 @@ background-image: none !important; */
 
     .sys{
         color:$gray-light !important;
+    }
+
+    .webuploader-pick-hover{
+            color:$gray-dark !important;
     }

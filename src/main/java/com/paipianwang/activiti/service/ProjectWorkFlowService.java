@@ -219,4 +219,16 @@ public interface ProjectWorkFlowService {
 	 * @param projectId
 	 */
 	public Map<String, Object> getFlowSample(String projectId);
+
+	/**
+	 * 获取 制作供应商 信息
+	 * @param projectId
+	 */
+	public Map<String, Object> getProduceTeamInfo(String projectId);
+	
+	/**
+	 * 获取策划供应商 信息
+	 * @param projectId
+	 */
+	public Map<String, Object> getSchemeTeamInfo(String projectId);
 }

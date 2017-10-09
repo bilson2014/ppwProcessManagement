@@ -56,7 +56,7 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 				}
 			}
 
-			// 保存关于策划供应商的信息
+			// 保存关于制作供应商的信息
 			if (param != null && !param.isEmpty()) {
 				// 预置字段
 				param.put("teamType", ProjectTeamType.produce.getCode()); // 策划供应商
@@ -66,6 +66,10 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 				PmsProjectTeamFacade pmsProjectTeamFacade = (PmsProjectTeamFacade) context
 						.getBean("pmsProjectTeamFacade");
 				String activitiTeamId = "team_" + String.valueOf(param.get("teamId"));
+				
+				// 先删除制作供应商
+				pmsProjectTeamFacade.deleteProjectTeamByProjectIdAndTeamType(projectId, ProjectTeamType.produce.getCode());
+				
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
 				delegateTask.setVariable("teamProductId", activitiTeamId); // 设置供应商唯一ID
 				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置策划供应商的唯一ID
