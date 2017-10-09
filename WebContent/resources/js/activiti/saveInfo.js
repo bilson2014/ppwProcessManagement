@@ -30,9 +30,7 @@ $().ready(function(){
         $('#leftsmall').toggleClass('show');
         $('#left').toggleClass('hide');
         $('#right').toggleClass('rightsize');
-
     })
-
     loginpassword();
     verpassword();
     phonebind();
@@ -42,11 +40,9 @@ $().ready(function(){
     userpicInfo();
     // verifyData();
 });
-
     //文件上传
     //头像修改
     function userpicInfo() {
-
         uploader && uploader.destroy();
         uploader = WebUploader.create({
             auto: true,
@@ -98,9 +94,7 @@ $().ready(function(){
         $('#sureCheck').off('click').on('click', function() {
             $('.tooltip-check').hide();
         });
-
     }
-
     //设置登录密码
     function loginpassword() {
         $('#password').click(function() {
@@ -192,11 +186,12 @@ $().ready(function(){
             $('#pho .verifynewphone p').hide();
         })
         $('#inputnewpho').blur(function() {
+
             var inputnewpho = this.value;
             var pho = $('#inputnewpho').val();
-            var rge = /^1[34578]\d{9}$/;
-            if (inputnewpho.length <= 0) {
-                $('#pho .newphone p').text("*手机号码不能为空");
+            var reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+            if (pho == '') {
+                $('#pho .newphone p').text("*请填写手机号");
                 $('#pho .verifynewphone p').text('');
                 return false;
             } else if (!rge.test(pho)) {

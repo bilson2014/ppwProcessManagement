@@ -1,6 +1,14 @@
 
 $().ready(function() {
 	document.domain = getUrl();	
+	
+	if($('#otherCard').height()==0){
+		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
+	}else{		
+		var a=$('.pages').height();
+		a=a-1000;
+		$(window.parent.document).find('.frame').css('height',a);
+	}
 	titleNameInput();
 	initPageEven();
 	toSearch();
@@ -14,13 +22,23 @@ function titleNameInput(){
 	});
 }
 function initPageEven(){
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+
+//	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
+//	console.log($('.pages').height()+280);
+//	
 	getDate();
+	
+//	if($('#otherCard').height()==0){
+//		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
+//	}else{		
+//		var a=$('.pages').height();
+//		a=a-1000;
+//		$(window.parent.document).find('.frame').css('height',a);
+//	}
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
 	});
 }
-
 //全局搜索
 function toSearch(){
 	$('.search').off('click').on('click',function(){
@@ -73,9 +91,9 @@ function getAllSearchInfo(search){
 				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').show();
 				$(window.parent.parent.parent.parent.parent.document).find('#cardNum').text($('.waitCard').length);
 			  }
-			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+//			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		}
-		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+//		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 	}, getContextPath() + '/project/search', $.toJSON({
 		projectName : search
 	}));
@@ -92,7 +110,7 @@ function getState(name){
 					 otherCard.append(html);
 				 }
 			$('#otherNum').text($('.otherCard').length);
-			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
+//			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		 }	
 	}, getContextPath() + '/project/agent/search', $.toJSON({
 		taskStage : name
