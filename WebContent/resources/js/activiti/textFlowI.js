@@ -1133,6 +1133,8 @@ function addForm() {
 			UploadFile();
 		}
 		getWatermarkUrl();
+		getScheme();
+		getProduce();
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1153,6 +1155,35 @@ function getWatermarkUrl(){
 	}
 }
 
+function getScheme(){
+	if($('div').hasClass('info_scheme_teamName')){
+		loadData(function(res){
+			$('.info_scheme_teamName').val(res.info_scheme_teamName);
+			$('.info_scheme_linkman').val(res.info_scheme_linkman);
+			$('.info_scheme_telephone').val(res.info_scheme_telephone);
+			$('.info_scheme_budget').val(res.info_scheme_budget);
+			$('.info_scheme_planContent').val(res.info_scheme_planContent);
+			$('.info_scheme_planTime').val(res.info_scheme_planTime);
+			$('.info_scheme_accessMan').val(res.info_scheme_accessMan);
+			$('.info_scheme_planTime').val(res.info_scheme_planTime);
+			$('.info_scheme_accessManTelephone').val(res.info_scheme_accessManTelephone);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+	}
+}
+
+function getProduce(){
+	if($('div').hasClass('info_produce_teamName')){
+		loadData(function(res){
+			$('.info_produce_teamName').val(res.info_produce_teamName);
+			$('.info_produce_linkman').val(res.info_scheme_linkman);
+			$('.info_produce_telephone').val(res.info_produce_telephone);
+			$('.info_produce_budget').val(res.info_produce_budget);
+			$('.info_produce_makeContent').val(res.info_produce_makeContent);
+			$('.info_produce_makeTime').val(res.info_produce_makeTime);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+	}
+}
+
 var formFieldCreator = {
 'string': function(prop, datas, className) {
 	var addClass ="";
@@ -1169,22 +1200,6 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
-	// 加载最新水印样片地址
-	// TODO guo
-	/*var watermarkPass = '';
-	if(prop.id == 'info_watermarkUrl') {
-		loadData(function(res){
-			prop.value = res.sampleUrl;
-			watermarkPass = res.samplePassword;
-		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
-	}*/
-	
-	// 加载最新水印样片密码
-	/*if(prop.id == 'info_watermarkPass') {
-		prop.value = watermarkPass;
-	}*/
-	
-	// --> filter start with pt_ value by jack at 20170926 end
 	
 	if(prop.required){	
 		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
@@ -1810,12 +1825,13 @@ function shareEven(){
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);
-		var clip = new ZeroClipboard($("#checkInfo"));
-		clip.on("copy", function(e) {
-			$('#checkInfo').val('已复制');
-			$('#checkInfo').attr("class","");
-			$('#checkInfo').addClass('btn-c-g');
-		});
+		var clipboard = new Clipboard('.btnShare');   
+		   clipboard.on('success', function(e) {  
+			        $('.btnShare').text('复制成功');
+		        });  
+		   clipboard.on('error', function(e) {  
+			        $('.btnShare').text('复制失败');
+		        }); 
 		
 	});
 }

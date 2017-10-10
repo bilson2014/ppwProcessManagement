@@ -147,17 +147,10 @@ function bindFileShareBtn(){
 		var key = $(this).find('div').attr('data-id');
 		$('#setInfoCopy').text(key);
 		showShare();
-/*		var url=window.location.href; //获取当前url地址  
-        var clip =  new ZeroClipboard($('#checkInfo'), {  
-            moviePath: "ZeroClipboard.swf"  
-        } );    //初始化  
-        clip.setText(url);       //复制url参数  
-*/		//jumpShare(key);
 	});
 }
 
 function showShare(){
-	clip = new ZeroClipboard($("#checkInfo"));
 	$('#showShare').show();
 	getCopyUrl();
 	closeModel();
@@ -166,22 +159,25 @@ function showShare(){
 function closeModel(){
 	$('#closeModel').off('click').on('click',function(){
 		$('#showShare').hide();
-		$('#checkInfo').attr("class","");
-		$('#checkInfo').addClass('btn-c-r');
-		$('#checkInfo').val('复制链接');
+		$('.btnShare').attr("class","");
+		$('.btnShare').addClass('btn-c-r');
+		$('.btnShare').text('复制链接');
 	});
 }
 
 function getCopyUrl(){
 	
-	clip.on("copy", function(e) {
-		$('#checkInfo').val('已复制');
-		$('#checkInfo').attr("class","");
-		$('#checkInfo').addClass('btn-c-g');
-	});
+	var clipboard = new Clipboard('.btnShare');   
+	   clipboard.on('success', function(e) {  
+		        $('.btnShare').text('已复制');
+				$('.btnShare').attr("class","");
+				$('.btnShare').addClass('btn-c-g');
+
+	        });  
+	   clipboard.on('error', function(e) {  
+		   		$('.btnShare').text('复制失败');
+	        }); 
 }
-
-
 
 function jumpShare(url) {
 	$('#share-open').click();	
