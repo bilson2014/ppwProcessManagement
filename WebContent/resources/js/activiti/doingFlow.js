@@ -1,14 +1,7 @@
 
 $().ready(function() {
 	document.domain = getUrl();	
-	
-	if($('#otherCard').height()==0){
-		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
-	}else{		
-		var a=$('.pages').height();
-		a=a-1000;
-		$(window.parent.document).find('.frame').css('height',a);
-	}
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
 	titleNameInput();
 	initPageEven();
 	toSearch();
