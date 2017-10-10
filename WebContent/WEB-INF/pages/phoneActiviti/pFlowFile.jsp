@@ -10,6 +10,7 @@
 <spring:url value="/resources/js/phoneActiviti/pFlwFile.js" var="pFlwFileJs"/>
 <spring:url value="/resources/js/phoneActiviti/ZeroClipboard.js" var="zclipJs" />
 <spring:url value="/resources/images" var="imgPath" />
+<spring:url value="/resources/lib/clipboard/clipboard.min.js" var="zclipJs" />
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -47,7 +48,7 @@
 	            <img id="closeModel" src="/resources/images/pFlow/close.png">
 	            <div class="modelTitle">文件分享</div>
 	            <div id="setInfoCopy"></div>
-	            <input class="btn-c-r" readonly id="checkInfo" type="button" data-clipboard-target="setInfoCopy" value="复制链接">
+	            <button class="btnShare btn-c-r" data-clipboard-action="copy" data-clipboard-target="#setInfoCopy">复制链接</button>  
 	         </div>
 	</div>
   
