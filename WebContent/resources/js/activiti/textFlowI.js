@@ -21,7 +21,6 @@ $().ready(function() {
 	    	getStageInfo(task);
 	    	$('#lastTimeWord').show();
 	    }
-	
 	pageInit();
 	initDaibanTime();
 	initResouces();
@@ -1817,6 +1816,7 @@ function createFileInfo(res){
         '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
         '      <div class="share" data-content="'+url+'"></div>                        ',
+        '      <a href="'+url+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
         '</div>                                                             ',
@@ -1921,6 +1921,7 @@ function createOption(value,text,price){
 	return html;
 }
 
+
 function shareEven(){
 	$('.share').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
@@ -1937,5 +1938,7 @@ function shareEven(){
 		
 	});
 }
+
+
 
 

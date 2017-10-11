@@ -15,14 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.paipianwang.activiti.service.MessageService;
+import com.paipianwang.activiti.service.OnlineDocService;
 import com.paipianwang.activiti.service.ProjectResourceService;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.enums.FileType;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.web.file.FastDFSClient;
-import com.paipianwang.pat.workflow.entity.PmsProjectMessage;
 import com.paipianwang.pat.workflow.entity.PmsProjectResource;
-import com.paipianwang.pat.workflow.facade.PmsProjectMessageFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectResourceFacade;
 
 @Service
@@ -38,8 +37,10 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 	private RuntimeService runtimeService = null;
 
 	@Autowired
-//	private PmsProjectMessageFacade pmsProjectMessageFacade;
 	private MessageService messageService;
+	
+	@Autowired
+	private OnlineDocService onlineDocService;
 
 	@Override
 	public String addResource(String resourceName, String taskId, String resourceType, MultipartFile file,
@@ -76,15 +77,11 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			resource.setUploaderGroup(group);// TODO 上传时身份
 			resource.setUploaderName(sessionInfo.getRealName());
 
-			// resource.setPreviewPath("");
-			// resource.setVersion();
-
 			long result = pmsProjectResourceFacade.insert(resource);
 			// 根据ID查找 文件实体
 			PmsProjectResource res = pmsProjectResourceFacade.getProjectResourceById(result);
 
 			// 写入日志
-			PmsProjectMessage message = new PmsProjectMessage();
 			StringBuffer content = new StringBuffer();
 			content.append("上传了 《");
 			if(res != null) {
@@ -95,21 +92,13 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 			}
 			content.append("》 文件");
 			
-//			message.setContent(content.toString());
-//			message.setFromGroup(StringUtils.join(groups, ","));
-//			message.setFromId(sessionInfo.getActivitiUserId());
-//			message.setProjectId(projectId);
-//			message.setTaskName(taskName);
-//			message.setMessageType(PmsProjectMessage.TYPE_LOG);
-//			message.setFromName(sessionInfo.getRealName());
-//			pmsProjectMessageFacade.insert(message);
 			messageService.insertOperationLog(projectId, taskId, taskName, content.toString(), sessionInfo);
 			
 			if (result == -1) {
 				return false + "";
 			}
 			// 转换文件
-			// onlineDocService.convertFile(resource);
+			onlineDocService.convertFile(res);
 		}
 		return true + "";
 
@@ -165,6 +154,14 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 		}
 
 		return result;
+	}
+
+	/**
+	 * 更新预览文件路径
+	 */
+	@Override
+	public void updatePreview(PmsProjectResource pmsProjectResource) {
+		pmsProjectResourceFacade.updateViewPath(pmsProjectResource.getPreviewPath(), pmsProjectResource.getProjectResourceId());
 	}
 
 }

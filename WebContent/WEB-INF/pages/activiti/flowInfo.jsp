@@ -688,7 +688,7 @@
             </div>
             <div class="warnContent">
                      <img src="/resources/images/flow/warn.png">
-                    <div class="info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+                    <div class="info">内容内容内容内容内容内容内容内容内容内容</div>
                     <div class="btnMid">
                       <div class="btn-c-g">取消</div>
                       <div class="btn-c-r">确认</div>
