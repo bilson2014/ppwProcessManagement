@@ -47,19 +47,19 @@
                 <div class="clientbox">
                     <!--客户联系人  -->
                     <input type="hidden" id="cusId" name="pu_projectUserId">
-                    <div class="name">
+                    <div class="name" id="name">
                         <div>客户联系人</div>
                         <input id="cusLinkman" name="pu_linkman" value=''>
                         <p></p>
                     </div>
                     <!--客户电话  -->
-                    <div class="phone">
+                    <div class="phone" id="phone">
                         <div>客户电话</div>
                         <input id="cusTelephone" name="pu_telephone" value=''>
                         <p></p>
                     </div>
                     <!--邮箱地址  -->
-                    <div class="email">
+                    <div class="email" id="email">
                         <div>邮箱地址</div>
                         <input id="cusEmail" name="pu_email" value=''>     
                     </div>

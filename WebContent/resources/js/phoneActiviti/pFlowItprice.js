@@ -8,14 +8,18 @@ function sumbitPrice() {
     var price = $('.porecast input').val();
     $('.porecast p').text('');
     var num = /^[0-9]*$/;
-    if (price.length == 0) {
-        $('.porecast p').text('*预估价格不能为空');
-    } else if (!num.test(price)) {
-        $('.porecast p').text('*请输入正确的价格');
-    } else {
-        $('.porecast p').text('');
-        return true;
+    
+    if($('#porecast').hasClass('porecast')){
+    	if(price == undefined || price == "" || price == null){
+    		$('.porecast p').text('*预估价格不能为空');
+ 		   return false;
+ 	   }
+    	 if (!num.test(price)) {
+    	        $('.porecast p').text('*请输入正确的价格');
+    	        return false;
+    	    }
     }
+     return true;
 }
 //价格信息修改
 function openPriceInfo() {
@@ -38,4 +42,12 @@ function openPriceInfo() {
     });
     // 返回的跳转
     $('.frameHead a').attr('href', '/project/phone/flowinfo/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/" + $('#processInstanceId').val());
+}
+
+function removItemProject(res){
+	var projectName = res.projectFlow.pf_estimatedPrice;
+
+	if(projectName == undefined || projectName == "" || projectName == null){
+		$('.porecast').remove();
+	}
 }

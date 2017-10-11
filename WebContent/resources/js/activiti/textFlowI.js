@@ -560,6 +560,7 @@ function openProjectInfo(){
 			  $('#proCycle').val(res.projectFlow.pf_projectCycle);
 			  $('#proFdp').val(res.projectFlow.pf_filmDestPath);
 			  $('#projectDes').val(res.projectFlow.pf_projectDescription);
+			  removItemProject(res);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	
@@ -570,39 +571,78 @@ function openProjectInfo(){
 	});
 }
 
+function removItemProject(res){
+	var projectName = res.projectFlow.pf_projectName;
+	var Grade = res.projectFlow.pf_projectGrade;
+	var pSource = res.projectFlow.pf_projectSource;
+	var proCycle = res.projectFlow.pf_projectCycle;
+	var proFdp = res.projectFlow.pf_projectSource;
+	var projectDes = res.projectFlow.pf_projectDescription;
+	
+	
+	if(projectName == undefined || projectName == "" || projectName == null){
+		$('#proNameError').remove();
+	}
+	
+	if(Grade == undefined || Grade == "" || Grade == null){
+		$('#pf_projectGradeError').remove();
+	}
+	if(pSource == undefined || pSource == "" || pSource == null){
+		$('#pf_ResourInputError').remove();
+	}
+	if(proCycle == undefined || proCycle == "" || proCycle == null){
+		$('#proCycleError').remove();
+	}
+	if(proFdp == undefined || proFdp == "" || proFdp == null){
+		$('#proFdpError').remove();
+	}
+	if(projectDesError == undefined || projectDesError == "" || projectDesError == null){
+		$('#proFdpError').remove();
+	}
+}
+
 function checkProviderInfo(){
            var proName = $('#proName').val();
            var pf_projectGrade = $('#pf_projectGrade').attr('data-id');
            var pf_Resour = $('#pf_Resour').attr('data-id');
            var proCycle = $('#proCycle').val();
            var proFdp = $('#proFdp').val();
-
-       
-        if(proName == undefined || proName == "" || proName ==null ){
-       		$('#proNameError').attr('data-content','项目名称未填写未填写');
-       		return false;
-       	}
-        if(pf_projectGrade == undefined || pf_projectGrade == "" || pf_projectGrade ==null ){
-       		$('#pf_projectGradeError').attr('data-content','项目评级未填写');
-       		
-       		return false;
-       	}
-        $('#pf_projectGradeInput').val(pf_projectGrade);
-        if(pf_Resour == undefined || pf_Resour == "" || pf_Resour ==null ){
-       		$('#pf_ResourInputError').attr('data-content','项目来源未填写');
-       		return false;
-       	}
-        $('#pf_ResourInput').val(pf_Resour);
-        if(proCycle == undefined || proCycle == "" || proCycle ==null ){
-       		$('#proCycleError').attr('data-content','项目周期未填写');
-       		return false;
-       	}
-        if(proFdp == undefined || proFdp == "" || proFdp ==null ){
-       		$('#proFdpError').attr('data-content','对标影片地址未填写');
-       		return false;
-       	}
-
         
+       	if($('#proNameError').hasClass('errorItem')){
+	        if(proName == undefined || proName == "" || proName ==null ){
+	       		$('#proNameError').attr('data-content','项目名称未填写未填写');
+	       		return false;
+	       	}
+       	}
+       	
+     	if($('#pf_projectGradeError').hasClass('errorItem')){
+	        if(pf_projectGrade == undefined || pf_projectGrade == "" || pf_projectGrade ==null ){
+	       		$('#pf_projectGradeError').attr('data-content','项目评级未填写');
+	       		
+	       		return false;
+	       	}
+     	}
+     	
+    	if($('#pf_ResourInputError').hasClass('errorItem')){
+    		 $('#pf_projectGradeInput').val(pf_projectGrade);
+    	        if(pf_Resour == undefined || pf_Resour == "" || pf_Resour ==null ){
+    	       		$('#pf_ResourInputError').attr('data-content','项目来源未填写');
+    	       		return false;
+    	       	}
+    	        $('#pf_ResourInput').val(pf_Resour);
+     	}
+    	if($('#proCycleError').hasClass('errorItem')){
+    		 if(proCycle == undefined || proCycle == "" || proCycle ==null ){
+    	       		$('#proCycleError').attr('data-content','项目周期未填写');
+    	       		return false;
+    	       	}
+     	}
+    	if($('#proFdpError').hasClass('errorItemArea')){
+            if(proFdp == undefined || proFdp == "" || proFdp ==null ){
+           		$('#proFdpError').attr('data-content','对标影片地址未填写');
+           		return false;
+           	}
+     	}
         return true;
 }
 
@@ -626,14 +666,32 @@ function openCusInfo(){
 			  $('#cusLinkman').val(res.projectUser.pu_linkman);
 			  $('#cusTelephone').val(res.projectUser.pu_telephone);
 			  $('#cusEmail').val(res.projectUser.pu_email);
+			  removItemCus(res);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pu",null);
 	});
 	$('#submitCus').off('click').on('click',function(){
 		if(checkCusInfo()){
 			$('#toCusForm').submit();
 		}
-		
 	});
+}
+
+function removItemCus(res){
+	var cusLinkman = res.projectUser.pu_linkman;
+	var cusTelephone = res.projectUser.pu_telephonee;
+	var cusEmail = res.projectUser.pu_email;
+
+		if(cusLinkman == undefined || cusLinkman == "" || cusLinkman == null){
+			$('#cusLinkmanError').remove();
+		}
+
+		if(cusTelephone == undefined || cusTelephone == "" || cusTelephone == null){
+			$('#cusTelephoneError').remove();
+		}
+ 	
+		if(cusEmail == undefined || cusEmail == "" || cusEmail == null){
+			$('#cusEmailError').remove();
+		}
 }
 
 
@@ -649,30 +707,36 @@ function checkCusInfo(){
     var cusTelephone = $('#cusTelephone').val();
     var cusEmail = $('#cusEmail').val();
     $('.errorItem').attr('data-content',''); 
-	 if(cusLinkman == undefined || cusLinkman == "" || cusLinkman ==null ){
-			$('#cusLinkmanError').attr('data-content','客户联系人未填写');
-			return false;
+    
+    
+	if($('#cusLinkmanError').hasClass('errorItem')){
+		 if(cusLinkman == undefined || cusLinkman == "" || cusLinkman ==null ){
+				$('#cusLinkmanError').attr('data-content','客户联系人未填写');
+				return false;
+			}
+	}
+	if($('#cusTelephoneError').hasClass('errorItem')){
+		 if(cusTelephone == undefined || cusTelephone == "" || cusTelephone ==null ){
+				$('#cusTelephoneError').attr('data-content','客户联系人电话未填写');
+				return false;
+			}
+		 
+		 if (!checkMobile(cusTelephone)) {
+				$('#cusTelephoneError').attr('data-content','电话格式不正确');
+				return false;
+			}
 		}
-	 if(cusTelephone == undefined || cusTelephone == "" || cusTelephone ==null ){
-			$('#cusTelephoneError').attr('data-content','客户联系人电话未填写');
-			return false;
-		}
-	 
-	 if (!checkMobile(cusTelephone)) {
-			$('#cusTelephoneError').attr('data-content','电话未格式不正确');
-			return false;
-		}
-	 
-	 if(cusEmail == undefined || cusEmail == "" || cusEmail ==null ){
-			$('#pu_email').attr('data-content','邮箱地址未填写');
-			return false;
-		}
-	 if(!checkEmail(cusEmail)){
-		 $('#pu_email').attr('data-content','邮箱格式不正确');
-			return false;
-	 }
-	 
-	 
+	if($('#cusEmailError').hasClass('errorItem')){
+		 if (cusEmail == undefined || cusEmail == "" || cusEmail ==null) {
+				$('#cusEmailError').attr('data-content','邮箱未填写');
+				return false;
+			} 
+		 if (!checkEmail(cusEmail)) {
+				$('#cusEmailError').attr('data-content','邮箱格式不正确');
+				return false;
+			}
+	}
+	 	 
 	 return true;
 }
 
@@ -690,6 +754,7 @@ function openPriceInfo(){
 			}else{
 				$('#pjs').val(res.projectFlow.pf_projectBudget);
 			}
+			removPriceCus(res);
 		}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pf",null);
 	});
 	$('#sumbitPrice').off('click').on('click',function(){
@@ -697,6 +762,17 @@ function openPriceInfo(){
 			$('#toPriceForm').submit();
 		}
 	});
+}
+
+function removPriceCus(res){
+	var est = res.projectFlow.pf_estimatedPrice;
+	var pjs = res.projectFlow.pf_projectBudget;
+		if(est == undefined || est == "" || est == null){
+			$('#estError').remove();
+		}
+		if(pjs == undefined || pjs == "" || pjs == null){
+			$('#pjsError').remove();
+		}
 }
 
 function priceClear(){
@@ -709,19 +785,25 @@ function priceClear(){
 function checkPrice(){
 	var est = $('#est').val();
 	var pjs = $('#pjs').val();
-	 if(est == undefined || est == "" || est ==null ){
-		 $('#estError').attr('data-content','预估价格未填写');
-		 return false;
-	 }
-	 
-	 var pjsName = $('#pjsError').hasClass('item'); 
-	 if(pjsName){
-		 if(pjs == undefined || pjs == "" || pjs ==null ){
-	    	 $('#pjsError').attr('data-content','客户项目预算未填写');
+	
+	
+	if($('#estError').hasClass('errorItem')){
+		 if(est == undefined || est == "" || est ==null ){
+			 $('#estError').attr('data-content','预估价格未填写');
 			 return false;
 		 }
-	 }
-     
+	}
+	
+	if($('#pjsError').hasClass('errorItem')){
+			 var pjsName = $('#pjsError').hasClass('item'); 
+			 if(pjsName){
+				 if(pjs == undefined || pjs == "" || pjs ==null ){
+			    	 $('#pjsError').attr('data-content','客户项目预算未填写');
+					 return false;
+				 }
+			 }
+		}
+
      return true;
 }
 
@@ -738,24 +820,42 @@ function openProviderInfo(){
 	  		      $('#isHideTop').remove();
 	  		    }else{
 	  		    	 for (var i = 0; i < scheme.length; i++) {
-                           $('#scCusName').val(scheme[i].pt_teamName);
+	  		    		   
+		  		    		 var pt_linkman = scheme[i].pt_linkman;
+		  		    		 var pt_telephone = scheme[i].pt_telephone;
+                        //   $('#scCusName').val(scheme[i].pt_teamName);
                            $('#scLink').val(scheme[i].pt_linkman);
                            $('#scTel').val(scheme[i].pt_telephone);
                            $('#scId').val(scheme[i].pt_projectTeamId);
-					   }
+                    	if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
+                    		$('#scLinkError').remove();
+                		}
+                    	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
+                    		$('#scTelError').remove();
+                		}
+                           
+					  }
 	  		    }
 	          
 	          if(produce == undefined || produce == "" || produce ==null ){
 	  		      $('#isHideBot').remove();
 	  		    }else{
 	  		    	 for (var i = 0; i < scheme.length; i++) {
-                           $('#prCusName').val(produce[i].pt_teamName);
+                           //$('#prCusName').val(produce[i].pt_teamName);
+	  		    		 var pt_linkman = produce[i].pt_linkman;
+	  		    		 var pt_telephone = produce[i].pt_telephone;
                            $('#prLink').val(produce[i].pt_linkman);
                            $('#prTel').val(produce[i].pt_telephone);
                            $('#prId').val(produce[i].pt_projectTeamId);
+                           if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
+                       		$('#prLinkError').remove();
+                   		}
+                       	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
+                       		$('#prTelError').remove();
+                   		}
 					   }
 	  		    }
-	          
+	          removItemProvider(res)
 			}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pt",null);
 	});
 	
@@ -765,6 +865,8 @@ function openProviderInfo(){
 		}
 	});
 }
+
+
 
 function clearProvi(){
 	$('.checkError').val('');

@@ -45,9 +45,8 @@
                 <!--价格信息修改  -->
                 <div class="pricebox">
                     <!--预估价格  -->
-                    <div class="porecast">
+                    <div class="porecast" id="porecast">
                         <div>预估价格</div>
-
                         <input id="est" name="pf_estimatedPrice">
                         <span>元</span>
                         <p></p>
