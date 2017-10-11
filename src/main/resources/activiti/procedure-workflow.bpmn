@@ -18,7 +18,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71" sourceRef="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" targetRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715"></sequenceFlow>
-    <userTask id="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225" name="【销售总监】确认项目信息（通过/驳回）" activiti:assignee="${saleDirectorId}">
+    <userTask id="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225" name="【销售总监】审核项目信息" activiti:assignee="${saleDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_projectmarketPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="确认"></activiti:value>
@@ -29,7 +29,7 @@
     </userTask>
     <sequenceFlow id="sid-F09FAB69-E29A-46D0-B1AD-EF01BE0DE0DF" sourceRef="sid-EAFA21D9-C52A-49F8-AA09-BE496ED16715" targetRef="sid-1790EB9A-A78E-4AEA-859A-6220E1F61225"></sequenceFlow>
     <exclusiveGateway id="sid-0EC05FB2-76D3-4042-A0D5-FC3CB41F4833"></exclusiveGateway>
-    <userTask id="sid-75B324FE-95AC-492E-B78A-BD82DDB83E74" name="【创意总监】确认项目信息（通过/驳回）" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-75B324FE-95AC-492E-B78A-BD82DDB83E74" name="【创意总监】审核项目信息" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_projectplanPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="确认"></activiti:value>
@@ -80,7 +80,7 @@
         <activiti:formProperty id="file_planning" name="策划方案" type="string" required="true"></activiti:formProperty>
       </extensionElements>
     </userTask>
-    <userTask id="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" name="【创意总监】确认策划方案（通过/驳回）" activiti:assignee="${creativityDirectorId}">
+    <userTask id="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" name="【创意总监】审核策划方案" activiti:assignee="${creativityDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_planconfirmPass" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -93,7 +93,7 @@
     <sequenceFlow id="sid-2B94CBE2-E298-4202-876A-E0F8C410A27C" sourceRef="sid-E896C9F5-422D-4931-A087-7E98BCFFDBCF" targetRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0"></sequenceFlow>
     <exclusiveGateway id="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></exclusiveGateway>
     <sequenceFlow id="sid-610D05BC-659A-4E42-8355-066C4CD0721D" sourceRef="sid-CC64C989-5F78-45F1-BAFB-61CB97EF4ED0" targetRef="sid-5888891A-B5C3-4982-80E8-4668E6BB8DF8"></sequenceFlow>
-    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】与客户确认提案信息（通过/驳回）" activiti:assignee="${applyUserId}">
+    <userTask id="sid-6FADB9B9-6F7F-403B-88AE-5498DD70EEFD" name="【销售】与客户确认是否满意策划方案" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="condition_cutomerconfirmPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -157,7 +157,7 @@
       </extensionElements>
     </userTask>
     <sequenceFlow id="sid-DC2C5498-B610-41C0-970E-F5E5A8B87AF6" sourceRef="sid-4A9E432E-9765-4220-A6AC-B754F8CC0F2A" targetRef="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6"></sequenceFlow>
-    <userTask id="sid-81DA45E2-D57C-4505-892B-740065949278" name="【销售】确认客户满意样片（通过/驳回）" activiti:assignee="${applyUserId}">
+    <userTask id="sid-81DA45E2-D57C-4505-892B-740065949278" name="【销售】与客户确认是否满意水印样片" activiti:assignee="${applyUserId}">
       <extensionElements>
         <activiti:formProperty id="condition_samplecustomerPass" name="审核意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -258,7 +258,7 @@
     <sequenceFlow id="sid-3E4B8220-8250-4578-87E5-033A9D8CE23F" sourceRef="sid-99AA92A7-CC33-4A32-BCDE-ED2E5B6F2574" targetRef="sid-144D920F-9FC4-484A-ABBA-6B3456CC7EF8"></sequenceFlow>
     <sequenceFlow id="sid-FCFF6139-F115-4A39-99F7-6433BC2E6E23" sourceRef="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526" targetRef="sid-ED17751D-4D1B-4EB6-BCD3-1D0716FEA54E"></sequenceFlow>
     <sequenceFlow id="sid-78329B22-7B1C-4BB4-B689-28B43675A4CF" sourceRef="sid-5151E682-8DCB-4FC4-88F5-F92BB6A66D26" targetRef="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526"></sequenceFlow>
-    <userTask id="auditTotalTask" name="【总监】联合内审（通过/驳回）" activiti:assignee="${user}">
+    <userTask id="auditTotalTask" name="【销售/销售总监/监制总监】审核水印样片" activiti:assignee="${user}">
       <extensionElements>
         <activiti:formProperty id="info_watermarkUrl" name="水印样片地址" type="string" default="${pf_sampleUrl}"></activiti:formProperty>
         <activiti:formProperty id="info_watermarkPass" name="密码" type="string" default="${pf_samplePassword}"></activiti:formProperty>
@@ -300,7 +300,7 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_projectplanPass == 'true'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="usertask2" targetRef="sid-93052D9F-D76E-41BB-99CD-EF3F332F4330"></sequenceFlow>
-    <userTask id="usertask3" name="【供应商总监】审核项目可行性（通过/驳回）" activiti:assignee="${teamDirectorId}">
+    <userTask id="usertask3" name="【供应商总监】审核项目可行性" activiti:assignee="${teamDirectorId}">
       <extensionElements>
         <activiti:formProperty id="condition_schemeConfirm" name="审批意见" type="enum" required="true">
           <activiti:value id="true" name="同意"></activiti:value>
@@ -317,7 +317,7 @@
     <sequenceFlow id="flow13" sourceRef="exclusivegateway2" targetRef="sid-3891F78C-418D-42E8-BB3E-7D2952A69618">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_schemeConfirm == 'true'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask4" name="【供应商总监】审核策划供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
+    <userTask id="usertask4" name="【供应商总监】审核策划供应商的分配" activiti:assignee="${teamDirectorId}">
       <extensionElements>
         <activiti:formProperty id="info_scheme_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
@@ -343,7 +343,7 @@
     <sequenceFlow id="flow17" sourceRef="exclusivegateway3" targetRef="sid-3891F78C-418D-42E8-BB3E-7D2952A69618">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${condition_projectPlanTeamAllotPass == 'false'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask5" name="【供应商总监】审核制作供应商分配（通过/驳回）" activiti:assignee="${teamDirectorId}">
+    <userTask id="usertask5" name="【供应商总监】审核制作供应商的分配" activiti:assignee="${teamDirectorId}">
       <extensionElements>
         <activiti:formProperty id="info_produce_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
