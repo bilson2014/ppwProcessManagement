@@ -1,4 +1,3 @@
-
 $().ready(function() {
 	document.domain = getUrl();	
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
@@ -24,8 +23,7 @@ function initPageEven(){
 //全局搜索
 function toSearch(){
 	$('.search').off('click').on('click',function(){
-		 var search = $('.titleNameWork input').val();
-		 
+		 var search = $('.titleNameWork input').val();		 
 		 if(search == "" || search == null || search ==undefined){
 			 $('.errorItem').removeClass('errorTr');
 		 }else{
