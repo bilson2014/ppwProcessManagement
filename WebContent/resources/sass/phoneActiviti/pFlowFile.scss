@@ -6,15 +6,13 @@
     @import "compass/typography/text/ellipsis";
     @import "pflow";
     $e2:#222;
-
-
     .title {
         font-size: $size40;
         color: white;
         margin-top: 0.6rem;
         margin-left: 0.8rem;
     }
-
+    
     .item {
         position: relative;
         height: auto;
@@ -27,7 +25,6 @@
             vertical-align: top;
             margin-left: 0.8rem;
         }
-
         .fileMore {
             width: 0.5rem;
             height: 0.5rem;
@@ -64,7 +61,7 @@
             font-size: 0;
             display: none;
             .moreItem {
-                width: 50%;
+                width: 33%;
                 text-align: center;
                 display: inline-block;
                 vertical-align: top;
@@ -83,17 +80,25 @@
                     left: 0.5rem;
                 }
             }
-            .share{
-                img{
-                    left:-0.5rem !important;
+            .look {
+                img {
+                    left: -0.25rem !important;
                 }
-                div{
-                     left:-0.5rem !important;
+                div {
+                    left: -0.25rem !important;
                 }
-            } 
+            }
+            .share {
+                img {
+                    left: -0.5rem !important;
+                }
+                div {
+                    left: -0.5rem !important;
+                }
+            }
         }
     }
-
+    
     #daiban {
         width: 100%;
         font-size: 0;
@@ -110,8 +115,7 @@
             margin-top: 1rem;
         }
     }
-
-
+    
     .modelTool {
         background-color: rgba(0, 0, 0, 0.7);
         position: fixed;
@@ -137,7 +141,6 @@
                 border-bottom: 1px solid $gray-light;
                 line-height: 1.5rem;
             }
-
             img {
                 width: 0.8rem;
                 height: 0.8rem;
@@ -145,7 +148,6 @@
                 right: -0.3rem;
                 top: -0.3rem;
             }
-
             div:nth-child(3) {
                 color: $gray-dark;
                 color: #333;
@@ -155,9 +157,9 @@
                 padding-top: 1.5rem;
                 word-wrap: break-word;
             }
-            button{
+            button {
                 outline: none;
-                border:none;
+                border: none;
                 color: white;
                 font-size: 0.36rem;
                 width: 7rem;
