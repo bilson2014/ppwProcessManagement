@@ -21,7 +21,6 @@ $().ready(function() {
 	    	getStageInfo(task);
 	    	$('#lastTimeWord').show();
 	    }
-	
 	pageInit();
 	initDaibanTime();
 	initResouces();
@@ -251,10 +250,12 @@ function crearteInfoCard(res){
 				'    </div>                                                                                                         ',
 				'    <div class="itemArea">                                                                                         ',
 				'              '+body+'                                       ',
-				'          <input>                                                                                                  ',
+				'     <div class="reviewItem">',
+				'      <input>',
+				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>',
+				'     </div>',
 				'    </div> ',
 				'<div class="errorSpan"></div>',
-				'    <div class="backInfoTalk btn-c-r"  data-parentId="'+res.projectMessageId+'"  data-name="'+res.taskName+'" data-projectId="'+res.projectId+'">回复</div>                                                                   ',
 				'</div>                                                                                                       '
 			].join('');
 			return html;
@@ -266,7 +267,7 @@ function infoAddReplyEven(){
 		    var projectId = $(this).attr('data-projectId');
 		    var name = $(this).attr('data-name');
 		    var parentId = $(this).attr('data-parentId');
-		    var content = $(this).parent().find('.itemArea').find('input').val();
+		    var content = $(this).parent().find('input').val();
 		    
 		    if(content == null || content == "" || content == undefined){
 		    	$(this).parent().find('.errorSpan').text('回复不能为空');
@@ -416,12 +417,10 @@ function getFileInfo(){
 			for (var int = 0; int < res.length; int++) {
 				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
 				   body.append(html);
-			};
-			
+			};	
 		}
 	}, getContextPath() + '/resource/version/'+$('#currentTaskId').val(),null);
 }
-
 
 function checkState(){
 	var href = window.location.href;
@@ -1133,6 +1132,8 @@ function addForm() {
 			UploadFile();
 		}
 		getWatermarkUrl();
+		getScheme();
+		getProduce();
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1153,6 +1154,34 @@ function getWatermarkUrl(){
 	}
 }
 
+function getScheme(){
+	if($('div').hasClass('info_scheme_teamName')){
+		loadData(function(res){
+			$('.info_scheme_teamName').val(res.teamName);
+			$('.info_scheme_linkman').val(res.linkman);
+			$('.info_scheme_telephone').val(res.telephone);
+			$('.info_scheme_budget').val(res.budget);
+			$('.info_scheme_planContent').val(res.planContent);
+			$('.info_scheme_planTime').val(res.planTime);
+			$('.info_scheme_accessMan').val(res.accessMan);
+			$('.info_scheme_accessManTelephone').val(res.accessManTelephone);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+	}
+}
+
+function getProduce(){
+	if($('div').hasClass('info_produce_teamName')){
+		loadData(function(res){
+			$('.info_produce_teamName').val(res.teamName);
+			$('.info_produce_linkman').val(res.linkman);
+			$('.info_produce_telephone').val(res.telephone);
+			$('.info_produce_budget').val(res.budget);
+			$('.info_produce_makeContent').val(res.makeContent);
+			$('.info_produce_makeTime').val(res.makeTime);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+	}
+}
+
 var formFieldCreator = {
 'string': function(prop, datas, className) {
 	var addClass ="";
@@ -1169,22 +1198,6 @@ var formFieldCreator = {
 		prop.value = '';
 	}
 	
-	// 加载最新水印样片地址
-	// TODO guo
-	/*var watermarkPass = '';
-	if(prop.id == 'info_watermarkUrl') {
-		loadData(function(res){
-			prop.value = res.sampleUrl;
-			watermarkPass = res.samplePassword;
-		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
-	}*/
-	
-	// 加载最新水印样片密码
-	/*if(prop.id == 'info_watermarkPass') {
-		prop.value = watermarkPass;
-	}*/
-	
-	// --> filter start with pt_ value by jack at 20170926 end
 	
 	if(prop.required){	
 		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
@@ -1358,11 +1371,11 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').find('input').hide();
+            	nowItem.parent().parent().parent().find('.infoContent').find('.reviewItem').hide();
             	nowItem.parent().parent().parent().find('.upInfo').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().find('.infoContent').find('input').show();
+            	nowItem.parent().parent().parent().find('.infoContent').find('.reviewItem').show();
             	nowItem.parent().parent().parent().find('.upInfo').show();     
             }	
             getHeight();
@@ -1372,12 +1385,12 @@ function openInfoCard(){
 		var nowItem = $(this);
             if(nowItem.hasClass('openItem')){
             	nowItem.removeClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideUp();
-            	nowItem.parent().parent().parent().parent().find('.backInfoTalk').hide();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('.reviewItem').slideUp();
+            	nowItem.parent().parent().parent().parent().find('.reviewItem').hide();
             }else{
             	nowItem.addClass('openItem');
-            	nowItem.parent().parent().parent().parent().find('.itemArea').find('input').slideDown();
-             	nowItem.parent().parent().parent().parent().find('.backInfoTalk').show();
+            	nowItem.parent().parent().parent().parent().find('.itemArea').find('r.eviewItem').slideDown();
+             	nowItem.parent().parent().parent().parent().find('.reviewItem').show();
             }	
             getHeight();
 	});
@@ -1519,23 +1532,22 @@ function initAllTalk(){
 //留言回复
 function rePickTalk(){
 	
-   $('.upInfo .toArea').off('click').on('click',function(){
+   $('.toArea').off('click').on('click',function(){
 	    var projectId = $(this).attr('data-id');
 	    var taskName = $(this).attr('data-name');
 	    var parentId = $(this).attr('data-parentId');
-	    var content = $(this).parent().parent().find('.infoContent').find('input').val();
-	    
+	    var content = $(this).parent().find('input').val();    
 	    if(content == null || content == "" || content == undefined){
 	    	$(this).parent().parent().find('.errorSpan').text('回复不能为空');
 	    }else{
 	    
-	    $('.upInfo .toArea').off('click');
+	    $('.toArea').off('click');
 			loadData(function(res){
 				if(res.code == 200){
 					  initAllTalk();
-					  $('.upInfo .toArea').off('click');
+					  $('.toArea').off('click');
 				}else{
-					  $('.upInfo .toArea').off('click');
+					  $('.toArea').off('click');
 				}
 			}, getContextPath() + '/message/addReply',$.toJSON({
 				projectId:projectId,
@@ -1580,12 +1592,12 @@ function createTalkInfo(res){
    		'   </div>',
 		'   <div class="infoContent">',
 		'     '+body+'',
+		'     <div class="reviewItem">',
 		'      <input>',
+		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
+		'     </div>',
 		'   </div>',
 		'<span class="errorSpan"></span>',
-		'   <div class="upInfo">',
-		'      <div class="btn-c-r toArea" data-id="'+res.projectId+'" data-name="'+res.taskName+'" data-parentId="'+res.projectMessageId+'">回复</div>',
-		'   </div>',
 		'</div>',
 
 	].join('');
@@ -1608,6 +1620,7 @@ function getFileInfo(){
 					 var html =createFileInfo(newList[int]);
 					 body.append(html);
 				}
+				 $('.btnShare').text('复制链接');
 				shareEven();
 				getHeight();
 		}
@@ -1701,6 +1714,7 @@ function createFileInfo(res){
         '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
         '<div class="icon">                                         ',
         '      <div class="share" data-content="'+url+'"></div>                        ',
+        '      <a href="'+url+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
         '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
         '</div>                                                     ',
         '</div>                                                             ',
@@ -1805,20 +1819,24 @@ function createOption(value,text,price){
 	return html;
 }
 
+
 function shareEven(){
 	$('.share').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);
-		var clip = new ZeroClipboard($("#checkInfo"));
-		clip.on("copy", function(e) {
-			$('#checkInfo').val('已复制');
-			$('#checkInfo').attr("class","");
-			$('#checkInfo').addClass('btn-c-g');
-		});
+		var clipboard = new Clipboard('.btnShare');   
+		   clipboard.on('success', function(e) {  
+			        $('.btnShare').text('复制成功');
+		        });  
+		   clipboard.on('error', function(e) {  
+			        $('.btnShare').text('复制失败');
+		        }); 
 		
 	});
 }
+
+
 
 

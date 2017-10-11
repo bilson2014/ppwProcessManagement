@@ -49,7 +49,7 @@
 	           <div class="waitWork">
 	                 <div class="titleNameWork">
 	                    <div class="name">项目搜索</div>
-	                    <input placeholder="项目名称或负责人姓名">
+	                    <input placeholder="项目名称或负责人姓名" id='titleNameInput'>
 	                    <div class="search">搜索</div>
 	                    <div class="errorItem errorTr">搜索不能为空</div>
 	                    <r:group role="sale" >
@@ -146,7 +146,7 @@
 					      </div>
 	                </div>
 	           <div class="setCard" id="otherCard">
-	           
+	
 	            <c:if test="${not empty runningTasks}">
 							<c:forEach items="${runningTasks }" var="staff" varStatus="status">
 							     <div class="otherCard setBorder" data-content="${staff.task.dueDate}">
@@ -157,16 +157,13 @@
 		                             <div class="cardContent">
 		                                  <div class="setContent">
 		                                      <div class="listName">${staff.task.name}</div>
-		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>
-		                                      <!--cxx  -->
+		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>		                                    
 		                                      <c:if test="${staff.isPrincipal == 1}">
 		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
 		                                  </c:if>
 		                                  <c:if test="${staff.isPrincipal == 0}">
 		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                      
-		                                      
+		                                  </c:if>		                                  
 		                                  </div>
 		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
 		                                  <img src="/resources/images/flow/isTalk.png">
@@ -188,6 +185,7 @@
 		                        </div>
 							</c:forEach>
 					</c:if>
+
 	           </div>   
 	            </div>    
 	</div> 

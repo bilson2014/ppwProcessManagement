@@ -41,7 +41,12 @@
 <body>
     <jsp:include flush="true" page="../header.jsp"></jsp:include>
     <form method="post" action="/project/start-process" id="toListForm">
+    <!--顶部的弹框  -->
+	   <div class='topstyle'>
+	   		<label class='toptext'>请完整填写项目信息后提交</label>
+	   </div>
 	<div class="page">
+	
 	   
 	    <div class="title">新建项目</div> 
 	    <div class="infoTitle">项目信息</div> 

@@ -9,9 +9,27 @@ $().ready(function(){
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
-   
 
 });
+
+function initDateTime(){
+	var currYear = (new Date()).getFullYear();
+	var opt = {};
+	opt.datetime = {
+		preset: 'datetime'
+	};
+	opt.default = {
+		theme: 'ios', //皮肤样式
+		display: 'modal', //显示方式 ：modal（正中央）  bottom（底部）
+		mode: 'scroller', //日期选择模式
+		lang: 'zh',
+		startYear: currYear - 5, //开始年份currYear-5不起作用的原因是加了minDate: new Date()
+		endYear: currYear + 5, //结束年份
+	};
+	var optDateTime = $.extend(opt['datetime'], opt['default']);
+	$(".date").mobiscroll(optDateTime).datetime(optDateTime);	
+}
+
 function isIos(){
 	var u = navigator.userAgent;
 	var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -77,30 +95,10 @@ function selectEven(){
 		initSelectIos();
 		$(window.parent.document).find('.pagePhone').scrollTop(9999);
 	})
-	
-	
 }
 
 function initSelectIos(){
-	/*var data = [ {
-		'id' : '10001',
-		'value' : '看情况'
-	}, {
-		'id' : '10002',
-		'value' : '1万元及以上'
-	}, {
-		'id' : '10003',
-		'value' : '2万元及以上'
-	}, {
-		'id' : '10004',
-		'value' : '3万元及以上'
-	}, {
-		'id' : '10005',
-		'value' : '5万元及以上'
-	}, {
-		'id' : '10006',
-		'value' : '10万元及以上'
-	}, ];*/
+
 	var bankSelect = new IosSelect(1, [ data ], {
 		title : title,
 		itemHeight : 35,
@@ -119,12 +117,7 @@ function city(id, text) {
 }
 
 function dataEven(){
-	
-	$(".date").datepicker({
-		language: 'zh',
-		dateFormat:'yyyy-MM-dd'
-     });
-	
+	initDateTime();
 }
 
 //动态上传
@@ -277,6 +270,7 @@ function addForm() {
 		formCheck();
 		dataEven();	
 		getWatermarkUrl();
+		getScheme();
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -291,6 +285,35 @@ function getWatermarkUrl(){
 			$('#info_watermarkUrl').attr('href',res.sampleUrl);
 			$('#info_watermarkPass').val(res.samplePassword);
 		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
+	}
+}
+
+function getScheme(){
+	if($('div').hasClass('info_scheme_teamName')){
+		loadData(function(res){
+			$('.info_scheme_teamName').val(res.info_scheme_teamName);
+			$('.info_scheme_linkman').val(res.info_scheme_linkman);
+			$('.info_scheme_telephone').val(res.info_scheme_telephone);
+			$('.info_scheme_budget').val(res.info_scheme_budget);
+			$('.info_scheme_planContent').val(res.info_scheme_planContent);
+			$('.info_scheme_planTime').val(res.info_scheme_planTime);
+			$('.info_scheme_accessMan').val(res.info_scheme_accessMan);
+			$('.info_scheme_planTime').val(res.info_scheme_planTime);
+			$('.info_scheme_accessManTelephone').val(res.info_scheme_accessManTelephone);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+	}
+}
+
+function getProduce(){
+	if($('div').hasClass('info_produce_teamName')){
+		loadData(function(res){
+			$('.info_produce_teamName').val(res.info_produce_teamName);
+			$('.info_produce_linkman').val(res.info_scheme_linkman);
+			$('.info_produce_telephone').val(res.info_produce_telephone);
+			$('.info_produce_budget').val(res.info_produce_budget);
+			$('.info_produce_makeContent').val(res.info_produce_makeContent);
+			$('.info_produce_makeTime').val(res.info_produce_makeTime);
+		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
 	}
 }
 
@@ -328,7 +351,7 @@ var formFieldCreator = {
 				}
 				
 				if(isRead == 0){
-					result += "<input class='' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+					result += "<input class='" + prop.id + "' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;
 				}
 				if(isWhat == "file"){

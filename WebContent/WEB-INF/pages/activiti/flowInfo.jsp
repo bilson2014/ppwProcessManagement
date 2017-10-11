@@ -18,7 +18,8 @@
 <spring:url value="/resources/images" var="imgPath" />
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
 <spring:url value="/resources/lib/json/ezmorph.jar" var="ezmorphJs" />
-<spring:url value="/resources/js/phoneActiviti/ZeroClipboard.js" var="zclipJs" />
+<spring:url value="/resources/lib/clipboard/clipboard.min.js" var="zclipJs" />
+
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -687,7 +688,7 @@
             </div>
             <div class="warnContent">
                      <img src="/resources/images/flow/warn.png">
-                    <div class="info">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+                    <div class="info">内容内容内容内容内容内容内容内容内容内容</div>
                     <div class="btnMid">
                       <div class="btn-c-g">取消</div>
                       <div class="btn-c-r">确认</div>
@@ -1151,7 +1152,7 @@
             </div>
 		        <a class="copyUrl" id="setInfoCopy"></a>
 		        <div class="midDiv">
-	                <input class="btn-c-r shareInput" readonly id="checkInfo" type="button" data-clipboard-target="copyUrl" value="复制链接">
+	               <button class="btnShare btn-c-r" data-clipboard-action="copy" data-clipboard-target="#setInfoCopy">复制链接</button>  
 	            </div>
       </div>    
 </div>

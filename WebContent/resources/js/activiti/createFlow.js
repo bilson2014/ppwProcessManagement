@@ -29,13 +29,13 @@ $().ready(function() {
 
 function submitEven(){
 	$('#toSubmit').off('click').on('click',function(){
-		
 		if(checkInfo()){
-
+			$('.topstyle').attr('style','display:none');
 			$('#toListForm').submit();
-
+		}else{
+			$('.topstyle').attr('style','display:block');
 		}
-	//	
+		
 	});
 }
 
@@ -68,20 +68,23 @@ function checkInfo(){
 	var createDate = $('#pf_createDate').val();//立项时间
 	var projectSql = $('#pf_projectSql').val();//项目周期
 	var filmDestPath = $('#pf_filmDestPath').val();//对标影片
-	
+//	$('.topstyle').attr('display','none');
 	//项目信息
 	if(projectNo == undefined || projectNo == "" || projectNo ==null ){
 		$('#projectNoError').attr('data-content','项目编号未填写');
-		$('#projectNo').focus();
+		$('#projectNo').focus();		
 		return false;
+		
 	}
 	if(projectName == undefined || projectName == "" || projectName ==null ){
 		$('#projectNameError').attr('data-content','项目名称未填写');
+		
 		$('#projectName').focus();
 		return false;
 	}
 	if(projectGrade == undefined || projectGrade == "" || projectGrade ==null ){
 		$('#projectGradeError').attr('data-content','项目评级未填写');
+	
 		return false;
 	}else{
 		$('#pf_projectGrade').val(projectGrade);

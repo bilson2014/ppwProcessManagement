@@ -19,4 +19,6 @@ public interface ProjectResourceService {
 	String addResource(String resourceName, String taskId, String resourceType, MultipartFile file, SessionInfo info,
 			Integer flag);
 
+	void updatePreview(PmsProjectResource pmsProjectResource);
+
 }
