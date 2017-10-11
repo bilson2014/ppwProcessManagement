@@ -55,13 +55,13 @@
                         </div>
                         <div class="planbox" id="isHideBot">
                             <!--供应商联系人  -->
-                            <div class="name">
+                            <div class="name" id="pName">
                                 <div>供应商联系人</div>
                                 <input class="checkError" id="scLink" name="pt_linkman">
                                 <div class="error">内容不能为空</div>
                             </div>
                             <!-- 供应商电话 -->
-                            <div class="phone">
+                            <div class="phone" id="pPhone">
                                 <div>供应商联系电话</div>
                                 <input class="checkErrorP" id="scTel" name="pt_telephone">
                                 <div class="error">内容不能为空</div>
@@ -77,13 +77,13 @@
                         </div>
                         <div class="planbox">
                             <!--供应商联系人  -->
-                            <div class="name">
+                            <div class="name" id="mName">
                                 <div>供应商联系人</div>
                                 <input class="checkError" id="prLink" name="pt_linkman">
                                 <div class="error">内容不能为空</div>
                             </div>
                             <!-- 供应商电话 -->
-                            <div class="phone">
+                            <div class="phone" id="mPhone">
                                 <div>供应商联系电话</div>
                                 <input class="checkErrorP" id="prTel" name="pt_telephone">
                                 <div class="error">内容不能为空</div>

@@ -947,7 +947,6 @@
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
-
 	                    <div class="itemTime errorItem" id="scLinkError">
 	                         <div class="title">供应商联系人</div>
 	                         <input class="checkError" id="scLink" name="pt_linkman">

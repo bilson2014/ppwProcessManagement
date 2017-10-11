@@ -49,13 +49,13 @@
                 <input type="hidden" id="proId" name="pf_projectId" value="${flow_info['projectId']}">
                 <div class="projectbox">
                     <!--项目名称 -->
-                    <div class="name">
+                    <div class="name" id="name">
                         <div>项目名称</div>
                         <input id="proName" name="pf_projectName" value="">
                         <p></p>
                     </div>
                     <!--项目来源  -->
-                    <div class="origin">
+                    <div class="origin" id="origin">
                         <div>项目来源</div>
                         <input type="hidden" id="pf_ResourInput" name="pf_projectSource" value="">
                         <div class="orderSelect ">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <!--项目评级  -->
-                    <div class="rate">
+                    <div class="rate" id="rate">
                         <div class="name">项目评级</div>
                         <input type="hidden" id="pf_projectGradeInput" name="pf_projectGrade" value="">
                         <div class="orderSelect" id="grade">
@@ -77,14 +77,14 @@
                         </div>
                     </div>
                     <!-- 项目周期   -->
-                    <div class="period">
+                    <div class="period" id="period">
                         <div>项目周期</div>
                         <input id="proCycle" name="pf_projectCycle">
                         <span>天</span>
                         <p></p>
                     </div>
                     <!--对标影片  -->
-                    <div class="film">
+                    <div class="film" id="film">
                         <div>对标影片</div>
                         <textarea id="proFdp" name="pf_filmDestPath" name="" id="" cols="30" rows="2"></textarea>
                         <p></p>

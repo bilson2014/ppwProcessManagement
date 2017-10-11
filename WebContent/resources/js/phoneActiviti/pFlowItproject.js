@@ -23,26 +23,35 @@ function surebtn() {
     $('.name p').text('');
     $('.period p').text('');
     $('.film p').text('');
-
-    var num = /^[0-9]*$/;
-    if (name.length == 0) {
-        $('.name p').text('*项目名称不能为空');
-
-    } else if (day.length == 0) {
-        $('.period p').text('*项目周期不能为空');
-
-    } else if (!num.test(day)) {
-        $('.period p').text('*请输入正确的数字');
-    } else if (url.length == 0) {
-        $('.film p').text('*对标影片不能为空');
-
-    }  else {
-        $('.name p').text('');
-        $('.period p').text('');
-        $('.film p').text('');
-       
-        return true;
+  
+    if($('#name').hasClass('name')){
+    	if(name == undefined || name == "" || name == null){
+    		   $('.name p').text('*项目名称不能为空');
+    		   return false;
+    	}
     }
+    
+    if($('#period').hasClass('period')){
+    	 var num = /^[0-9]*$/;
+    	if(day == undefined || day == "" || day == null){
+    		   $('.period p').text('*项目周期不能为空');
+    		   return false;
+    	}
+    	if(!num.test(day)){
+    		  $('.period p').text('*请输入正确的数字');
+    		  return false;
+    	}
+    }
+    
+    if($('#film').hasClass('film')){
+    	if(url == undefined || url == "" || url == null){
+    		 $('.film p').text('*对标影片不能为空');
+    		 return false;
+    	}
+    }
+      
+        return true;
+    
 }
 //项目信息修改
 function projectchange() {
@@ -148,6 +157,7 @@ function projectchange() {
         $('#proFdp').val(res.projectFlow.pf_filmDestPath);
         // 项目描述
         $('#projectDes').val(res.projectFlow.pf_projectDescription);
+        removItemProject(res);
     }, getContextPath() + '/project/task/edit/parameter/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/pf", null);
     $('#surebtn').off('click').on('click', function() {
         if (surebtn()) {
@@ -172,6 +182,35 @@ function projectchange() {
         $('.projectbox .rate .orderSelect .oSelect').removeClass('show');
     })
 }
+
+
+function removItemProject(res){
+	var projectName = res.projectFlow.pf_projectName;
+	var Grade = res.projectFlow.pf_projectGrade;
+	var pSource = res.projectFlow.pf_projectSource;
+	var proCycle = res.projectFlow.pf_projectCycle;
+	var proFdp = res.projectFlow.pf_projectSource;
+	var projectDes = res.projectFlow.pf_projectDescription;
+	
+	
+	if(projectName == undefined || projectName == "" || projectName == null){
+		$('#name').remove();
+	}
+	
+	if(Grade == undefined || Grade == "" || Grade == null){
+		$('#rate').remove();
+	}
+	if(pSource == undefined || pSource == "" || pSource == null){
+		$('#origin').remove();
+	}
+	if(proCycle == undefined || proCycle == "" || proCycle == null){
+		$('#period').remove();
+	}
+	if(proFdp == undefined || proFdp == "" || proFdp == null){
+		$('#file').remove();
+	}
+}
+
 // 项目评级
 function pp() {
     $('.projectbox .rate .orderSelect .oSelect').removeClass('show');
