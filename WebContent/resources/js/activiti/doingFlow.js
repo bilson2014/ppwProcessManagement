@@ -15,19 +15,8 @@ function titleNameInput(){
 	});
 }
 function initPageEven(){
-
-//	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
-//	console.log($('.pages').height()+280);
-//	
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
 	getDate();
-	
-//	if($('#otherCard').height()==0){
-//		$(window.parent.document).find('.frame').css('height',$('.pages').height() + 280);
-//	}else{		
-//		var a=$('.pages').height();
-//		a=a-1000;
-//		$(window.parent.document).find('.frame').css('height',a);
-//	}
 	$('#toCreate').off('click').on('click',function(){
 		$(window.parent.parent.parent.document).find('#toCreate').click();
 	});

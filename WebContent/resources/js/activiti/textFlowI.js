@@ -21,12 +21,10 @@ $().ready(function() {
 	    	getStageInfo(task);
 	    	$('#lastTimeWord').show();
 	    }
-	
 	pageInit();
 	initDaibanTime();
 	initResouces();
 	initStateBtn();
-	
 });
 
 function getScroll(){
