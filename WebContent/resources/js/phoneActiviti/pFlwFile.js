@@ -54,7 +54,6 @@ function bulidFileList(arr) {
     }
     return arr;
 }
-
 //文件卡片
 function createFileInfo(res){
 	var name = res.resourceName;
@@ -119,7 +118,6 @@ function createFileInfo(res){
 	var url = getDfsHostName() + res.resourcePath;
 	var urls= getDfsHostName() + res.previewPath;
 	var ss=res.previewPath;
-	console.log(ss);
 	if (ss==null){
 		var html = [
 			'	 <div class="item">',
@@ -173,9 +171,7 @@ function createFileInfo(res){
 		].join('');
 		return html;
 	}
-
 }
-
 function bindFileShareBtn(){
 	$('.share').on('click',function(){
 		var key = $(this).find('div').attr('data-id');

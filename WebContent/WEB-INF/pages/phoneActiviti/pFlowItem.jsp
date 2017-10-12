@@ -94,11 +94,9 @@
                         <li>
                             <div>项目评级</div>
                             <span>${flow_info["projectGrade"]}</span>
-
                         </li>
-                        </c:if>
-                       
-                        <li>
+                        </c:if>                       
+                       <li>
                             <div>项目周期</div>
                             <c:if test="${flow_info['projectCycle'] == 0}">
                                 <span>待定</span>
@@ -106,8 +104,7 @@
                             <c:if test="${flow_info['projectCycle'] > 0}">
                                 <span>${flow_info["projectCycle"]}天</span>
                             </c:if>
-                        </li>
-                       
+                        </li>                       
                         <c:if test="${!empty flow_info['productName']}">
                         <li>
                             <div>产品线</div>
@@ -172,8 +169,7 @@
                     </r:group>
                 </div>
                 <div class="cusbox">
-                    <ul>
-                    
+                    <ul>                    
                         <c:if test="${!empty user_info['userName']}">
                         <li>
                             <div>客户名称</div>
@@ -197,14 +193,13 @@
                             <div>客户电话</div>
                             <span>${user_info["telephone"]}</span>
                         </li>
-                        </c:if>    
-                        
-                          <c:if test="${not empty user_info['email']}">
-					            <li>
-		                            <div>邮箱地址</div>
-		                            <span>${user_info["email"]}</span>
-		                        </li>
-			              </c:if>                    
+                        </c:if>                        
+                        <c:if test="${not empty user_info['email']}">
+					    <li>
+		                    <div>邮箱地址</div>
+		                    <span>${user_info["email"]}</span>
+		                </li>
+			            </c:if>                    
                     </ul>
                 </div>
             </div>
