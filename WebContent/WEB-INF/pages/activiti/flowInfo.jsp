@@ -317,9 +317,6 @@
 		                                          <div>${user_info["email"]}</div>
 			                                    </div>
 			                                  </c:if>
-			                                  
-			                                  
-			                                  
 		                                  </div>
 		                            </div>
 		                       </div>
@@ -915,7 +912,7 @@
 	                    <input type="hidden" id="cusId" name="pu_projectUserId">
 	                    <div class="itemTime errorItem" id="cusLinkmanError">
 	                         <div class="title">客户联系人</div>
-	                        <input id="cusLinkman" name="pu_linkman" value=''>
+	                         <input id="cusLinkman" name="pu_linkman" value=''>
 	                    </div>
 	                    <div class="itemTime errorItem" id="cusTelephoneError">
 	                         <div class="title">客户电话</div>
@@ -947,6 +944,11 @@
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
+	                    <div class="itemTime errorItem" id="scTeamError">
+	                         <div class="title">供应商团队</div>
+	                         <input class="checkError" id="scTeamName" name="pt_teamName">
+	                         <ul class="utoInfoTeam"></ul>
+	                    </div>
 	                    <div class="itemTime errorItem" id="scLinkError">
 	                         <div class="title">供应商联系人</div>
 	                         <input class="checkError" id="scLink" name="pt_linkman">
@@ -960,6 +962,11 @@
                   <div id="isHideBot"> 
 	                    <div class="bigTitle">制作供应商</div>
 	                    <input type="hidden" id="prId" name="pt_projectTeamId">
+	                    <div class="itemTime errorItem" id="prTeamError">
+	                         <div class="title">供应商团队</div>
+	                         <input class="checkError" id="prTeamName" name="pt_teamName">
+	                         <ul class="utoInfoMakeTeam"></ul>
+	                    </div>
 	                    <div class="itemTime errorItem" id="prLinkError">
 	                         <div class="title">供应商联系人</div>
 	                         <input class="checkError" id="prLink" name="pt_linkman">
