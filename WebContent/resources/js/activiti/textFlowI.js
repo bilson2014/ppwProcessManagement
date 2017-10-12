@@ -2061,13 +2061,7 @@ function autoTeamMakeLi(){
 		  $('#prId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
-=======
-			   $('.modelCard .btnShare').css('background','#999 ');
-			   $('.modelCard .btnShare').removeClass('btn-c-r');
-			   $('.btnShare').text('复制失败');
-		        }); 
-		
->>>>>>> 152890407e1a38bdd07cd12c512e8394b425d7ad
+
 	});
 }
 
