@@ -11,10 +11,17 @@ function getInfo(){
 		      $('#isHideTop').remove();
 		    }else{
 		    	 for (var i = 0; i < scheme.length; i++) {
-                     $('#scCusName').val(scheme[i].pt_teamName);
+		    		 pt_linkman = scheme[i].pt_linkman;
+		    		 pt_telephone = scheme[i].pt_telephone;
                      $('#scLink').val(scheme[i].pt_linkman);
                      $('#scTel').val(scheme[i].pt_telephone);
                      $('#scId').val(scheme[i].pt_projectTeamId);
+                     if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
+                 		$('#pName').remove();
+             		}
+                 	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
+                 		$('#pPhone').remove();
+             		}
 				   }
 		    }
         
@@ -22,10 +29,18 @@ function getInfo(){
 		      $('#isHideBot').remove();
 		    }else{
 		    	 for (var i = 0; i < scheme.length; i++) {
+		    		 var pt_linkman = produce[i].pt_linkman;
+  		    		 var pt_telephone = produce[i].pt_telephone;
                      $('#prCusName').val(produce[i].pt_teamName);
                      $('#prLink').val(produce[i].pt_linkman);
                      $('#prTel').val(produce[i].pt_telephone);
                      $('#prId').val(produce[i].pt_projectTeamId);
+                     if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
+                  		$('#mName').remove();
+              		}
+                  	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
+                  		$('#mPhone').remove();
+              		}
 				   }
 		    }
         
