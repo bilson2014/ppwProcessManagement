@@ -1259,10 +1259,6 @@
                 position: absolute;
                 right: 0;
             }
-            &:hover {
-                background-color: #fe2222;
-                color: #fff;
-            }
         }
     }
     
@@ -2269,9 +2265,8 @@
                     }
                     .itemArea {
                         width: 544px;
-                        background: #F8F8F8;
-                        border-radius: 4px;
-                        padding: 20px;
+                        border-radius:4px;
+                        padding:10px;
                         margin-left: 48px;
                         position: relative;
                         .itemPos {
@@ -2520,8 +2515,9 @@ background-image: none !important; */
         line-height: 36px !important;
         margin: 0 auto !important;
     }
-    
-    .utoInfoTeam {
+
+    .utoInfoTeam,.utoInfoMakeTeam {
+
         position: absolute;
         width: 162px;
         left: 133px;
@@ -2546,4 +2542,9 @@ background-image: none !important; */
                 background: $f0;
             }
         }
+
+
     }
+
+
+
