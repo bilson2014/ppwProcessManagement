@@ -2490,7 +2490,7 @@ background-image: none !important; */
         button {
             width: 120px;
             height: 30px;
-            border-radius: 8px;
+            border-radius: 4px;
             margin: 0 auto;
             color: white !important;
             font-size: $font-size-base;
@@ -2515,8 +2515,4 @@ background-image: none !important; */
         height: 36px !important;
         line-height: 36px !important;
         margin: 0 auto !important;
-    }
-    
-    .add {
-        background-color: #999;
     }
