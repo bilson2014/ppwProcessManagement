@@ -1810,21 +1810,41 @@ function createFileInfo(res){
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
 	var url = getDfsHostName() + res.resourcePath;
-	var html = [
-		'<div class="filmItem">                                     ',
-        '<img class="filmImg" src="'+src+'"> ',
-        '<div class="filmName">'+checkName+'</div>                         ',
-        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
-        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
-        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
-        '<div class="icon">                                         ',
-        '      <div class="share" data-content="'+url+'"></div>                        ',
-        '      <a href="'+url+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
-        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
-        '</div>                                                     ',
-        '</div>                                                             ',
-	].join('');
-	return html;
+	var urls=getDfsHostName() +res.previewPath;
+	var pang=res.previewPath;
+	if(pang==null){
+		var html = [
+			'<div class="filmItem">                                     ',
+	        '<img class="filmImg" src="'+src+'"> ',
+	        '<div class="filmName">'+checkName+'</div>                         ',
+	        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+	        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+	        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
+	        '<div class="icon">                                         ',
+	        '      <div class="share" data-content="'+url+'"></div>                        ',
+	        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+	        '</div>                                                     ',
+	        '</div>                                                             ',
+		].join('');
+		return html;
+	}else {
+		var html = [
+			'<div class="filmItem">                                     ',
+	        '<img class="filmImg" src="'+src+'"> ',
+	        '<div class="filmName">'+checkName+'</div>                         ',
+	        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+	        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+	        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
+	        '<div class="icon">                                         ',	      
+	        '      <a href="'+urls+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
+	        '      <div class="share" data-content="'+url+'"></div>                        ',
+	        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+	        '</div>                                                     ',
+	        '</div>                                                             ',
+		].join('');
+		return html;
+	}
+	
 }
 
 function controlModel(){
