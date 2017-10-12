@@ -48,41 +48,54 @@
                     <!--策划供应商  -->
                     <div class="plan" id="isHideTop">
                         <div class="title">
-                            <span class='pic'></span>
+                            <img class='pic' src="/resources/images/pFlow/plan.png" />
                             <span>策划供应商</span>
                             <input type="hidden" id="scId" name="pt_projectTeamId">
                         </div>
-                        <div class="planbox" id="isHideBot">
+                        <div class="planbox" >
                             <!--供应商联系人  -->
+                             <div class="name" id="scTeam">
+                                <div>供应商团队</div>
+                                <input class="checkError" id="scName" name="pt_teamName">
+                                <div class="error">内容不能为空</div>
+                                <ul class="utoInfoMake"></ul>
+                            </div>
                             <div class="name" id="pName">
                                 <div>供应商联系人</div>
                                 <input class="checkError" id="scLink" name="pt_linkman">
                                 <div class="error">内容不能为空</div>
                             </div>
                             <!-- 供应商电话 -->
-                            <div class="phone" id="pPhone">
+                            <div class="name" id="pPhone">
                                 <div>供应商联系电话</div>
                                 <input class="checkErrorP" id="scTel" name="pt_telephone">
                                 <div class="error">内容不能为空</div>
+                                
                             </div>
                         </div>
                     </div>
                     <!--制作供应商  -->
-                    <div class="make">
+                    <div class="plan">
                         <div class="title">
-                            <span class='pic'></span>
+                            <img class='pic' src="/resources/images/pFlow/plan.png" />
                             <span>制作供应商</span>
                             <input type="hidden" id="prId" name="pt_projectTeamId">
                         </div>
-                        <div class="planbox">
+                        <div class="planbox" id="isHideBot">
                             <!--供应商联系人  -->
+                             <div class="name" id="prTeam">
+                                <div>供应商团队</div>
+                                <input class="checkError" id="prName" name="pt_teamName">
+                                <div class="error">内容不能为空</div>
+                                <ul class="utoInfoMakeTeam"></ul>
+                            </div>
                             <div class="name" id="mName">
                                 <div>供应商联系人</div>
                                 <input class="checkError" id="prLink" name="pt_linkman">
                                 <div class="error">内容不能为空</div>
                             </div>
                             <!-- 供应商电话 -->
-                            <div class="phone" id="mPhone">
+                            <div class="name" id="mPhone">
                                 <div>供应商联系电话</div>
                                 <input class="checkErrorP" id="prTel" name="pt_telephone">
                                 <div class="error">内容不能为空</div>
