@@ -1808,7 +1808,6 @@ function createFileInfo(res){
 	var checkName = name.substring(0,fileName);
 	var url = getDfsHostName() + res.resourcePath;
 	var urls=getDfsHostName() +res.previewPath;
-	console.log(urls);
 	var pang=res.previewPath;
 	if(pang==null){
 		var html = [

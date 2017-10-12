@@ -117,35 +117,63 @@ function createFileInfo(res){
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
 	var url = getDfsHostName() + res.resourcePath;
+	var urls= getDfsHostName() + res.previewPath;
 	var ss=res.previewPath;
 	console.log(ss);
-	var html = [
-		'	 <div class="item">',
-		'	        <img class="file" src="'+src+'">           ',
-		'	        <img class="fileMore" src="/resources/images/pFlow/fileMore.png">  ',
-		'	        <div class="fileContent">                                   ',
-		'	              <div>'+checkName+'</div>                                     ',
-		'	              <div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+''+checkName+'</div>                                 ',
-		'	        </div>                                                      ',
-		'	        <div class="fileContentMore">                               ',
-		'	             <div class="moreItem">                                 ',
-		'                     <a href="/resource/getDFSFile/'+res.projectResourceId+'">',
-		'		              <img src="/resources/images/pFlow/download.png">         ',
-		'		              <div>下载</div>                                   ',
-		'                     </a>',
-		'	             </div>                                                 ',
-		'	             <div class="moreItem look">                                 ',
-		'		              <a href="'+url+'"><img src="/resources/images/pFlow/look.png">            ',
-		'		             <div data-id="'+url+'">查看</div></a>                                   ',
-		'	             </div>                                                 ',
-		'	             <div class="moreItem share">                                 ',
-		'		              <img src="/resources/images/pFlow/share.png">            ',
-		'		              <div data-id="'+url+'">分享</div>                                   ',
-		'	             </div>                                                 ',
-		'	        </div>                                                      ',
-		'	 </div>                                                             ',
-	].join('');
-	return html;
+	if (ss==null){
+		var html = [
+			'	 <div class="item">',
+			'	        <img class="file" src="'+src+'">           ',
+			'	        <img class="fileMore" src="/resources/images/pFlow/fileMore.png">  ',
+			'	        <div class="fileContent">                                   ',
+			'	              <div>'+checkName+'</div>                                     ',
+			'	              <div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+''+checkName+'</div>                                 ',
+			'	        </div>                                                      ',
+			'	        <div class="fileContentMore">                               ',
+			'	             <div class="moreItem" style="width:50%;">                                 ',
+			'                     <a href="/resource/getDFSFile/'+res.projectResourceId+'">',
+			'		              <img src="/resources/images/pFlow/download.png">         ',
+			'		              <div>下载</div>                                   ',
+			'                     </a>',
+			'	             </div>                                                 ',
+			'	             <div class="moreItem share" style="width:50%;">                                 ',
+			'		              <img src="/resources/images/pFlow/share.png">            ',
+			'		              <div data-id="'+url+'">分享</div>                                   ',
+			'	             </div>                                                 ',
+			'	        </div>                                                      ',
+			'	 </div>                                                             ',
+		].join('');
+		return html;
+	}else{
+		var html = [
+			'	 <div class="item">',
+			'	        <img class="file" src="'+src+'">           ',
+			'	        <img class="fileMore" src="/resources/images/pFlow/fileMore.png">  ',
+			'	        <div class="fileContent">                                   ',
+			'	              <div>'+checkName+'</div>                                     ',
+			'	              <div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+''+checkName+'</div>                                 ',
+			'	        </div>                                                      ',
+			'	        <div class="fileContentMore">                               ',
+			'	             <div class="moreItem">                                 ',
+			'                     <a href="/resource/getDFSFile/'+res.projectResourceId+'">',
+			'		              <img src="/resources/images/pFlow/download.png">         ',
+			'		              <div>下载</div>                                   ',
+			'                     </a>',
+			'	             </div>                                                 ',
+			'	             <div class="moreItem look">                                 ',
+			'		              <a href="'+url+'"><img src="/resources/images/pFlow/look.png">            ',
+			'		             <div data-id="'+url+'">查看</div></a>                                   ',
+			'	             </div>                                                 ',
+			'	             <div class="moreItem share">                                 ',
+			'		              <img src="/resources/images/pFlow/share.png">            ',
+			'		              <div data-id="'+url+'">分享</div>                                   ',
+			'	             </div>                                                 ',
+			'	        </div>                                                      ',
+			'	 </div>                                                             ',
+		].join('');
+		return html;
+	}
+
 }
 
 function bindFileShareBtn(){
