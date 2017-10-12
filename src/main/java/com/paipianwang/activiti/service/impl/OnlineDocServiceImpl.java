@@ -75,7 +75,12 @@ public class OnlineDocServiceImpl implements OnlineDocService {
 							projectResourceService.updatePreview(pmsProjectResource);
 						}
 
+					}else if(VerifyFileUtils.verifyImgFile(extName)){
+						//图片直接预览
+						pmsProjectResource.setPreviewPath(pmsProjectResource.getResourcePath());
+						projectResourceService.updatePreview(pmsProjectResource);
 					}
+					
 //					indentResourceService.saveResourceState(indentResource, OnlineDocService.FINISH);
 					// modify by laowang 2016.5.17 12:15 end
 				} catch (IOException e) {

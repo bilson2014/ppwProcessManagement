@@ -1253,6 +1253,10 @@
                 position: absolute;
                 right: 0;
             }
+            &:hover {
+                background-color: #fe2222;
+                color: #fff;
+            }
         }
     }
 
@@ -2538,4 +2542,3 @@ background-image: none !important; */
                 background: $f0;
             }
         }
-    }

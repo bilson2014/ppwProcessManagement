@@ -1957,15 +1957,22 @@ function createOption(value,text,price){
 
 function shareEven(){
 	$('.share').off('click').on('click',function(){
+		$('.btnShare').text('复制链接');
+		$('.modelCard .btnShare').css('background','#fe5453');
+	    $('.modelCard .btnShare').addClass('btn-c-r');	
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);
 		var clipboard = new Clipboard('.btnShare');   
-		   clipboard.on('success', function(e) {  
-			        $('.btnShare').text('复制成功');
+		   clipboard.on('success', function(e) { 
+			   $('.modelCard .btnShare').css('background','#999 ');
+			   $('.modelCard .btnShare').removeClass('btn-c-r');		
+			   $('.btnShare').text('复制成功');
 		        });  
 		   clipboard.on('error', function(e) {  
+			   $('.modelCard .btnShare').css('background','#999 ');
+			   $('.modelCard .btnShare').removeClass('btn-c-r');
 			        $('.btnShare').text('复制失败');
 		        }); 	
 	});
@@ -2054,6 +2061,13 @@ function autoTeamMakeLi(){
 		  $('#prId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
+=======
+			   $('.modelCard .btnShare').css('background','#999 ');
+			   $('.modelCard .btnShare').removeClass('btn-c-r');
+			   $('.btnShare').text('复制失败');
+		        }); 
+		
+>>>>>>> 152890407e1a38bdd07cd12c512e8394b425d7ad
 	});
 }
 
