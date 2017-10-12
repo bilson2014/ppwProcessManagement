@@ -40,7 +40,6 @@
         <input type="hidden" id="projectName" value="${projectName}">
         <input type="hidden" id="url" value="/${taskId}/${projectId}/${processInstanceId}">
 
-
         <div class="pagePhone">
             <!--供应商信息修改  -->
             <form method="post" action="/project/edit/teamInformation?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toProForm">

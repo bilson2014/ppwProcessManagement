@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="r" uri="/mytaglib" %>
     <!-- <%-- import CSS --%> -->
     <spring:url value="/resources/css/phoneActiviti/pFlowItem.css" var="pFlowItemCss" />
     <!-- <%-- import JS --%>  -->
@@ -168,7 +169,7 @@
                     <span class='pic'></span>
                     <span>客户信息</span>
                     <r:group role="sale" role2="saleDirector">  
-                    <a href="/project/phone/editUser/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
+                      <a href="/project/phone/editUser/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
                     </r:group>
                 </div>
                 <div class="cusbox">
@@ -216,63 +217,73 @@
                 <div class="suptitle">
                     <span class='pic'></span>
                     <span>供应商信息</span>
-                    <a href="/pfipro" class="write"></a>
+                     <r:group role="teamProvider" role2="teamDirector">
+                    	<a href="/project/phone/editTeam/${taskId}/${projectId}/${processInstanceId}" class="write"></a>
+                     </r:group>
                 </div>
                 <div class="supbox">
                     <!--策划供应商  -->
+                 <c:if test="${!empty teamPlan_info}">
                     <div class="plantitle">
                         <span class='pic'></span>
                         <span>策划供应商</span>
                     </div>
                     <div class="planbox">
-                        <ul>                        
-                        	<c:if test="${!empty plan['teamName']}">
-                            <li>
-                                <div>供应商名称</div>                               
-                                <span>${plan["teamName"]}</span>
-                            </li>
-                            </c:if>
-                            <c:if test="${!empty plan['linkman']}">
-                            <li>
-                                <div>供应商联系人</div>                              
-                                <span>${plan["linkman"]}</span>
-                            </li>
-                            </c:if>
-                            <c:if test="${!empty plan['telephone']}">
-                            <li>
-                                <div>供应商联系电话</div>
-                                <span>${plan["telephone"]}</span>
-                            </li>
-                            </c:if>
-                        </ul>
+	                    <c:forEach items="${teamPlan_info }" var="plan">
+	                        <ul>                        
+	                        	<c:if test="${!empty plan['teamName']}">
+	                            <li>
+	                                <div>供应商名称</div>                               
+	                                <span>${plan["teamName"]}</span>
+	                            </li>
+	                            </c:if>
+	                            <c:if test="${!empty plan['linkman']}">
+	                            <li>
+	                                <div>供应商联系人</div>                              
+	                                <span>${plan["linkman"]}</span>
+	                            </li>
+	                            </c:if>
+	                            <c:if test="${!empty plan['telephone']}">
+	                            <li>
+	                                <div>供应商联系电话</div>
+	                                <span>${plan["telephone"]}</span>
+	                            </li>
+	                            </c:if>
+	                        </ul>
+	                     </c:forEach>   
                     </div>
+                  </c:if>  
                     <!--制作供应商  -->
+                     <c:if test="${!empty teamProduct_info}">
                     <div class="maketitle">
                         <span class='pic'></span>
                         <span>制作供应商</span>
                     </div>
                     <div class="makebox">
-                        <ul>                        
-                            <c:if test="${!empty product['teamName']}">
-                            <li>
-                                <div>供应商名称</div>
-                                <span>${product["teamName"]}</span>
-                            </li>
-                            </c:if>
-                            <c:if test="${!empty product['linkman']}">
-                            <li>
-                                <div>供应商联系人</div>
-                                <span>${product["linkman"]}</span>
-                            </li>
-                            </c:if>
-                            <c:if test="${!empty product['telephone']}">
-                            <li>
-                                <div>供应商联系电话</div>
-                                <span>${product["telephone"]}</span>
-                            </li>
-                            </c:if>                           
-                        </ul>
+	                     <c:forEach items="${teamProduct_info }" var="product">
+	                        <ul>                        
+	                            <c:if test="${!empty product['teamName']}">
+	                            <li>
+	                                <div>供应商名称</div>
+	                                <span>${product["teamName"]}</span>
+	                            </li>
+	                            </c:if>
+	                            <c:if test="${!empty product['linkman']}">
+	                            <li>
+	                                <div>供应商联系人</div>
+	                                <span>${product["linkman"]}</span>
+	                            </li>
+	                            </c:if>
+	                            <c:if test="${!empty product['telephone']}">
+	                            <li>
+	                                <div>供应商联系电话</div>
+	                                <span>${product["telephone"]}</span>
+	                            </li>
+	                            </c:if>                           
+	                        </ul>
+	                      </c:forEach>  
                     </div>
+                    </c:if>
                 </div>
             </div>
             <div class="line"></div>
@@ -288,29 +299,31 @@
                         </r:group>
                     </div>
                     <div class="pribox">
-                        <ul>                            
-                            <li>
-                                <c:if test="${not empty price_info['estimatedPrice']}">
-                                    <div>预估价格</div>
-                                    <c:if test="${price_info['estimatedPrice'] == 0}">
-                                        <span>待定</span>
-                                    </c:if>
-                                    <c:if test="${price_info['estimatedPrice'] > 0}">
-                                        <span>${price_info["estimatedPrice"]}元</span>
-                                    </c:if>
-                                </c:if>
-                            </li>                                                   
-                            <li>
-                                <c:if test="${not empty price_info['projectBudget']}">
-                                    <div>客户项目预算</div>
-                                    <c:if test="${price_info['projectBudget'] == 0}">
-                                        <span>待定</span>
-                                    </c:if>
-                                    <c:if test="${price_info['projectBudget'] > 0}">
-                                        <span>${price_info['projectBudget']}元</span>
-                                    </c:if>
-                                </c:if>
-                            </li>
+                        <ul>   
+                          <c:if test="${not empty price_info['estimatedPrice']}">                         
+	                            <li>
+	                                    <div>预估价格</div>
+	                                    <c:if test="${price_info['estimatedPrice'] == 0}">
+	                                        <span>待定</span>
+	                                    </c:if>
+	                                    <c:if test="${price_info['estimatedPrice'] > 0}">
+	                                        <span>${price_info["estimatedPrice"]}元</span>
+	                                    </c:if>
+	                               
+	                            </li>   
+                           </c:if>     
+                               <c:if test="${not empty price_info['projectBudget']}">                                      
+		                            <li>
+		                               
+		                                    <div>客户项目预算</div>
+		                                    <c:if test="${price_info['projectBudget'] == 0}">
+		                                        <span>待定</span>
+		                                    </c:if>
+		                                    <c:if test="${price_info['projectBudget'] > 0}">
+		                                        <span>${price_info['projectBudget']}元</span>
+		                                    </c:if>
+		                            </li>
+                              </c:if>
                         </ul>
                     </div>
                 </div>

@@ -678,7 +678,7 @@ function openCusInfo(){
 
 function removItemCus(res){
 	var cusLinkman = res.projectUser.pu_linkman;
-	var cusTelephone = res.projectUser.pu_telephonee;
+	var cusTelephone = res.projectUser.pu_telephone;
 	var cusEmail = res.projectUser.pu_email;
 
 		if(cusLinkman == undefined || cusLinkman == "" || cusLinkman == null){
@@ -855,7 +855,6 @@ function openProviderInfo(){
                    		}
 					   }
 	  		    }
-	          removItemProvider(res)
 			}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pt",null);
 	});
 	
@@ -1298,6 +1297,10 @@ var formFieldCreator = {
 	
 	if(prop.id.indexOf('dl_') > -1){
 		prop.value = '';
+	}
+	
+	if(str.indexOf('file_') >-1){
+		proValue = '';
 	}
 	
 	
