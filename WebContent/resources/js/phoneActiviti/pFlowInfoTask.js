@@ -9,7 +9,6 @@ $().ready(function(){
 	$(window.parent.document).find('.footBot .item').removeClass('checkItem');
     $(window.parent.document).find('.footBot #toMission').addClass('checkItem');
     checkState();
-
 });
 
 function initDateTime(){
@@ -19,7 +18,7 @@ function initDateTime(){
 		preset: 'datetime'
 	};
 	opt.default = {
-		theme: 'ios', //皮肤样式
+		theme: 'android-ics light', //皮肤样式
 		display: 'modal', //显示方式 ：modal（正中央）  bottom（底部）
 		mode: 'scroller', //日期选择模式
 		lang: 'zh',
@@ -330,8 +329,7 @@ var formFieldCreator = {
 			}
 			var isWhat = prop.id.split('_')[0];
 			var str = prop.id;
-			var isRead = str.indexOf('info');
-			
+			var isRead = str.indexOf('info');		
 			proValue=prop.value;
 			
 			if(str.indexOf('pt_') >-1){
@@ -342,7 +340,14 @@ var formFieldCreator = {
 				proValue = '';
 			}
 			
+			if(str.indexOf('file_') >-1){
+				proValue = '';
+			}
+			
 			if (prop.writable == true) {
+				
+				
+				
 				
 				if(prop.id == 'info_watermarkUrl'){
 					result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
