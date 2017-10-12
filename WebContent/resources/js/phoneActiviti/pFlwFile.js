@@ -117,6 +117,8 @@ function createFileInfo(res){
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
 	var url = getDfsHostName() + res.resourcePath;
+	var ss=res.previewPath;
+	console.log(ss);
 	var html = [
 		'	 <div class="item">',
 		'	        <img class="file" src="'+src+'">           ',
