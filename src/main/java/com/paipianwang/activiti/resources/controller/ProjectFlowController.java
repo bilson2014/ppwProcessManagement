@@ -687,7 +687,7 @@ public class ProjectFlowController extends BaseController {
 		return mv;
 	}
 
-	// 更新团队信息
+	// 更新 供应商信息
 	@RequestMapping(value = "/edit/teamInformation", method = RequestMethod.POST)
 	public ModelAndView updateTeamInformation(final HttpServletRequest request, final String client,
 			final String taskId, final String projectId, final String processInstanceId) {

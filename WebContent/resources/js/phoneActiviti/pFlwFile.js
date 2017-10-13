@@ -11,7 +11,7 @@ function getFileMore(){
     		$(this).parent().find('.fileContentMore').slideUp();
     	}else{
     		  $('.fileMore').removeClass('open');
-    		  $('.fileMore').removeClass('open').slideUp();
+    		  $('.fileContentMore').slideUp();
     		$(this).addClass('open');
     		$(this).parent().find('.fileContentMore').slideDown();
     	}
