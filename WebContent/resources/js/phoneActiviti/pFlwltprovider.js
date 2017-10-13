@@ -14,7 +14,7 @@ function getInfo(){
 		    		var  pt_name = scheme[i].pt_teamName;
 		    		var  pt_linkman = scheme[i].pt_linkman;
 		    		var  pt_telephone = scheme[i].pt_telephone;
-		    		 $('#scName').val(produce[i].pt_teamName);
+		    		 $('#scName').val(scheme[i].pt_teamName);
                      $('#scLink').val(scheme[i].pt_linkman);
                      $('#scTel').val(scheme[i].pt_telephone);
                      $('#scId').val(scheme[i].pt_projectTeamId);
@@ -34,7 +34,7 @@ function getInfo(){
         if(produce == undefined || produce == "" || produce ==null ){
 		      $('#isHideBot').remove();
 		    }else{
-		    	 for (var i = 0; i < scheme.length; i++) {
+		    	 for (var i = 0; i < produce.length; i++) {
 		    		 var pt_name = produce[i].pt_teamName;
 		    		 var pt_linkman = produce[i].pt_linkman;
   		    		 var pt_telephone = produce[i].pt_telephone;
@@ -90,7 +90,7 @@ function checkProvider(){
 //自动联动客户信息
 function autoInput(){
 	$('#scName').bind('input propertychange', function() {
-		 $('#scId').val("");
+		 $('#scTeamId').val("");
 		var theName = $(this).val();
 		 findAutoInfo(theName);
 		 $('.utoInfoMake').show();
@@ -123,7 +123,7 @@ function autoLi(){
 		  var linkman = $(this).attr('data-linkman');
 		  var phone = $(this).attr('data-phone');
 		  $('#scName').val(name);
-		  $('#scId').val(id);
+		  $('#scTeamId').val(id);
 		  $('#scLink').val(linkman);
 		  $('#scTel').val(phone);
 	});
@@ -132,7 +132,7 @@ function autoLi(){
 //自动联动制作供应商信息
 function autoInputTeam(){
 	$('#prName').bind('input propertychange', function() {
-		 $('#prId').val("");
+		 $('#prTeamId').val("");
 		var theName = $(this).val();
 		findAutoInfoTeam(theName);
 		 $('.utoInfoMakeTeam').show();
@@ -165,7 +165,7 @@ function autoLiTeam(){
 		  var linkman = $(this).attr('data-linkman');
 		  var phone = $(this).attr('data-phone');
 		  $('#prName').val(name);
-		  $('#prId').val(id);
+		  $('#prTeamId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
 	});

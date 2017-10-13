@@ -1269,7 +1269,7 @@ function getWatermarkUrl(){
 }
 
 function getScheme(){
-	if($('div').hasClass('info_scheme_teamName')){
+	if($('input').hasClass('info_scheme_teamName')){
 		loadData(function(res){
 			$('.info_scheme_teamName').val(res.teamName);
 			$('.info_scheme_linkman').val(res.linkman);
@@ -1284,7 +1284,7 @@ function getScheme(){
 }
 
 function getProduce(){
-	if($('div').hasClass('info_produce_teamName')){
+	if($('input').hasClass('info_produce_teamName')){
 		loadData(function(res){
 			$('.info_produce_teamName').val(res.teamName);
 			$('.info_produce_linkman').val(res.linkman);
@@ -1292,7 +1292,7 @@ function getProduce(){
 			$('.info_produce_budget').val(res.budget);
 			$('.info_produce_makeContent').val(res.makeContent);
 			$('.info_produce_makeTime').val(res.makeTime);
-		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+		}, getContextPath() + '/project/getProduceTeamInfo/' + $('#projectId').val(),null);
 	}
 }
 
@@ -1337,7 +1337,7 @@ var formFieldCreator = {
 		
 	if (prop.writable === true) {
 		if(isRead == 0){
-			result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+			result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 			return result;
 		}
 		if(prop.id == "pt_teamName"){
@@ -1374,9 +1374,9 @@ var formFieldCreator = {
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' value='" + prop.value + "' />";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+		result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
 	return result;
 },
@@ -1397,9 +1397,9 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
 	} else {
-		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1423,9 +1423,9 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
 	} else {
-		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input class='" + prop.id + "' name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1985,7 +1985,7 @@ function shareEven(){
 function autoTeamInput(){
 	$('#scTeamName').bind('input propertychange', function() {
 		 var theName = $(this).val();
-		 $('#scId').val("");
+		 $('#scTeamId').val("");
 		 findAutoInfoTeam(theName);
 		 $('.utoInfoTeam').show();
 		 if(theName == null || theName == ""){
@@ -2018,7 +2018,7 @@ function autoTeamLi(){
 		  var phone = $(this).attr('data-phone');
 		  $(this).parent().parent().find('input').val(name);
 		  $('#scTeamName').val(name);
-		  $('#scId').val(id);
+		  $('#scTeamId').val(id);
 		  $('#scLink').val(linkman);
 		  $('#scTel').val(phone);
 	});
@@ -2028,7 +2028,7 @@ function autoTeamLi(){
 function autoTeamMakeInput(){
 	$('#prTeamName').bind('input propertychange', function() {
 		 var theName = $(this).val();
-		 $('#prId').val("");
+		 $('#prTeamId').val("");
 		 findAutoInfoMakeTeam(theName);
 		 $('.utoInfoMakeTeam').show();
 		 if(theName == null || theName == ""){
@@ -2061,10 +2061,9 @@ function autoTeamMakeLi(){
 		  var phone = $(this).attr('data-phone');
 		  $(this).parent().parent().find('input').val(name);
 		  $('#prTeamName').val(name);
-		  $('#prId').val(id);
+		  $('#prTeamId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
-
 	});
 }
 
