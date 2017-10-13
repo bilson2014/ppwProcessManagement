@@ -169,7 +169,7 @@
     <sequenceFlow id="sid-57EAD5DB-0716-4AD2-A6BA-F01773319D27" sourceRef="sid-4A64AF8C-44E9-4526-96B3-DDEF9F5ED9A7" targetRef="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6"></sequenceFlow>
     <exclusiveGateway id="sid-A7189870-2822-487F-9C23-EF6F4042C8FA"></exclusiveGateway>
     <sequenceFlow id="sid-D47A606B-FF7E-4B8D-962D-DF653EB671F6" sourceRef="sid-81DA45E2-D57C-4505-892B-740065949278" targetRef="sid-A7189870-2822-487F-9C23-EF6F4042C8FA"></sequenceFlow>
-    <userTask id="sid-F1A0E47B-28F8-441A-BBE1-BCA17BF2BE83" name="【监制】上传修改表" activiti:assignee="${superviseId}">
+    <userTask id="sid-F1A0E47B-28F8-441A-BBE1-BCA17BF2BE83" name="【监制】上传客户影片修改表" activiti:assignee="${superviseId}">
       <extensionElements>
         <activiti:formProperty id="file_vedioRevise" name="影片修改表" type="string" required="true"></activiti:formProperty>
       </extensionElements>
@@ -280,7 +280,7 @@
     <sequenceFlow id="flow4" name="全部同意" sourceRef="exclusivegateway1" targetRef="sid-81DA45E2-D57C-4505-892B-740065949278">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvedCounter == users.size()}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="usertask1" name="【监制】上传修改表" activiti:assignee="${superviseId}">
+    <userTask id="usertask1" name="【监制】上传会审影片修改表" activiti:assignee="${superviseId}">
       <extensionElements>
         <activiti:formProperty id="file_demoUpdate" name="影片修改表" type="string" required="true"></activiti:formProperty>
       </extensionElements>
