@@ -44,6 +44,9 @@
             <!--供应商信息修改  -->
             <form method="post" action="/project/edit/teamInformation?client=phone&taskId=${taskId}&projectId=${projectId}&processInstanceId=${processInstanceId}" id="toProForm">
                 <input type="hidden" id="proId" name="projectId" value="${flow_info['projectId']}">
+                
+               
+ 
                 <div class="providerbox">
                     <!--策划供应商  -->
                     <div class="plan" id="isHideTop">
@@ -51,6 +54,7 @@
                             <img class='pic' src="/resources/images/pFlow/plan.png" />
                             <span>策划供应商</span>
                             <input type="hidden" id="scId" name="pt_projectTeamId">
+                            <input type="hidden" id="scTeamId" name="pt_teamId" value="">
                         </div>
                         <div class="planbox" >
                             <!--供应商联系人  -->
@@ -80,6 +84,7 @@
                             <img class='pic' src="/resources/images/pFlow/plan.png" />
                             <span>制作供应商</span>
                             <input type="hidden" id="prId" name="pt_projectTeamId">
+                             <input type="hidden" id="prTeamId" name="pt_teamId" value="">
                         </div>
                         <div class="planbox" id="isHideBot">
                             <!--供应商联系人  -->

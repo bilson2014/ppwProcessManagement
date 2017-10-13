@@ -944,6 +944,7 @@
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
+	                    <input type="hidden" id="scTeamId"  name="pt_teamId">
 	                    <div class="itemTime errorItem" id="scTeamError">
 	                         <div class="title">供应商团队</div>
 	                         <input class="checkError" id="scTeamName" name="pt_teamName">
@@ -962,6 +963,7 @@
                   <div id="isHideBot"> 
 	                    <div class="bigTitle">制作供应商</div>
 	                    <input type="hidden" id="prId" name="pt_projectTeamId">
+	                    <input type="hidden" id="prTeamId"  name="pt_teamId">
 	                    <div class="itemTime errorItem" id="prTeamError">
 	                         <div class="title">供应商团队</div>
 	                         <input class="checkError" id="prTeamName" name="pt_teamName">
