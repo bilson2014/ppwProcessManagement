@@ -41,7 +41,11 @@ public class OnlineDocServiceImpl implements OnlineDocService {
 					String fileName = pmsProjectResource.getResourcePath();
 					String extName = FileUtils.getExtName(fileName, ".");
 					boolean isDoc = VerifyFileUtils.verifyDocFile(extName);
-					if (isDoc) {
+					if(VerifyFileUtils.verifyImgFile(extName) || "pdf".equals(extName)){
+						//图片、pdf直接预览
+						pmsProjectResource.setPreviewPath(pmsProjectResource.getResourcePath());
+						projectResourceService.updatePreview(pmsProjectResource);
+					}else if (isDoc) {
 						// 修改为从dfs上获取文件
 						InputStream inputStream = FastDFSClient.downloadFile(fileName);
 						File temp = new File(PublicConfig.DOC_TEMP_PATH,
@@ -75,10 +79,6 @@ public class OnlineDocServiceImpl implements OnlineDocService {
 							projectResourceService.updatePreview(pmsProjectResource);
 						}
 
-					}else if(VerifyFileUtils.verifyImgFile(extName)){
-						//图片直接预览
-						pmsProjectResource.setPreviewPath(pmsProjectResource.getResourcePath());
-						projectResourceService.updatePreview(pmsProjectResource);
 					}
 					
 //					indentResourceService.saveResourceState(indentResource, OnlineDocService.FINISH);
