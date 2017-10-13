@@ -1269,7 +1269,7 @@ function getWatermarkUrl(){
 }
 
 function getScheme(){
-	if($('div').hasClass('info_scheme_teamName')){
+	if($('input').hasClass('info_scheme_teamName')){
 		loadData(function(res){
 			$('.info_scheme_teamName').val(res.teamName);
 			$('.info_scheme_linkman').val(res.linkman);
@@ -1284,7 +1284,7 @@ function getScheme(){
 }
 
 function getProduce(){
-	if($('div').hasClass('info_produce_teamName')){
+	if($('input').hasClass('info_produce_teamName')){
 		loadData(function(res){
 			$('.info_produce_teamName').val(res.teamName);
 			$('.info_produce_linkman').val(res.linkman);
@@ -1337,7 +1337,7 @@ var formFieldCreator = {
 		
 	if (prop.writable === true) {
 		if(isRead == 0){
-			result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+			result += "<input class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 			return result;
 		}
 		if(prop.id == "pt_teamName"){

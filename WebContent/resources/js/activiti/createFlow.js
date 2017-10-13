@@ -249,13 +249,13 @@ function checkInfo(){
 		return false;
 	}
 	
-	var projectDescription = $('#projectDescription').val();
+/*	var projectDescription = $('#projectDescription').val();
 	// 验证邮箱正确性
 	if (projectDescription.length > 255) {
 		$('#outSide').attr('data-content','备注信息过长');
 		$('#projectDescription').focus();
 		return false;
-	}
+	}*/
 	
 	return true;
 

@@ -270,6 +270,7 @@ function addForm() {
 		dataEven();	
 		getWatermarkUrl();
 		getScheme();
+		getProduce();
 	}, '/project/get-form/task/' + $('#taskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -288,31 +289,31 @@ function getWatermarkUrl(){
 }
 
 function getScheme(){
-	if($('div').hasClass('info_scheme_teamName')){
+	if($('input').hasClass('info_scheme_teamName')){
 		loadData(function(res){
-			$('.info_scheme_teamName').val(res.info_scheme_teamName);
-			$('.info_scheme_linkman').val(res.info_scheme_linkman);
-			$('.info_scheme_telephone').val(res.info_scheme_telephone);
-			$('.info_scheme_budget').val(res.info_scheme_budget);
-			$('.info_scheme_planContent').val(res.info_scheme_planContent);
-			$('.info_scheme_planTime').val(res.info_scheme_planTime);
-			$('.info_scheme_accessMan').val(res.info_scheme_accessMan);
-			$('.info_scheme_planTime').val(res.info_scheme_planTime);
-			$('.info_scheme_accessManTelephone').val(res.info_scheme_accessManTelephone);
+			$('.info_scheme_teamName').val(res.teamName);
+			$('.info_scheme_linkman').val(res.linkman);
+			$('.info_scheme_telephone').val(res.telephone);
+			$('.info_scheme_budget').val(res.budget);
+			$('.info_scheme_planContent').val(res.planContent);
+			$('.info_scheme_planTime').val(res.planTime);
+			$('.info_scheme_accessMan').val(res.accessMan);
+			$('.info_scheme_planTime').val(res.planTime);
+			$('.info_scheme_accessManTelephone').val(res.accessManTelephone);
 		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
 	}
 }
 
 function getProduce(){
-	if($('div').hasClass('info_produce_teamName')){
+	if($('input').hasClass('info_produce_teamName')){
 		loadData(function(res){
-			$('.info_produce_teamName').val(res.info_produce_teamName);
-			$('.info_produce_linkman').val(res.info_scheme_linkman);
-			$('.info_produce_telephone').val(res.info_produce_telephone);
-			$('.info_produce_budget').val(res.info_produce_budget);
-			$('.info_produce_makeContent').val(res.info_produce_makeContent);
-			$('.info_produce_makeTime').val(res.info_produce_makeTime);
-		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+			$('.info_produce_teamName').val(res.teamName);
+			$('.info_produce_linkman').val(res.linkman);
+			$('.info_produce_telephone').val(res.telephone);
+			$('.info_produce_budget').val(res.budget);
+			$('.info_produce_makeContent').val(res.makeContent);
+			$('.info_produce_makeTime').val(res.makeTime);
+		}, getContextPath() + '/project/getProduceTeamInfo/' + $('#projectId').val(),null);
 	}
 }
 
