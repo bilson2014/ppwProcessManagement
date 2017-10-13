@@ -1471,7 +1471,7 @@
                         margin-bottom: 20px;
                         div {
                             display: inline-block;
-                            vertical-align: top;
+                            vertical-align: baseline;
                         }
                         .openItems {
                             background-position-y: 14px !important;
@@ -1489,6 +1489,7 @@
                         .title {
                             font-size: $font-size-base;
                             color: $gray-dark;
+                            vertical-align: text-bottom;
                         }
                     }
                     .getInfoItemContent {
@@ -1502,6 +1503,7 @@
                                 width: 16px;
                                 height: 16px;
                                 margin-left: 10px;
+                                vertical-align: baseline;
                             }
                             .flag {
                                 margin-left: 10px !important;
@@ -2181,7 +2183,7 @@
                     }
                     .content {
                         font-size: $font-size-base;
-                        color: $gray-light;
+                        color: $gray;
                         width: 520px;
                     }
                 }
@@ -2265,8 +2267,8 @@
                     }
                     .itemArea {
                         width: 544px;
-                        border-radius:4px;
-                        padding:10px;
+                        border-radius: 4px;
+                        padding: 10px;
                         margin-left: 48px;
                         position: relative;
                         .itemPos {
@@ -2515,9 +2517,9 @@ background-image: none !important; */
         line-height: 36px !important;
         margin: 0 auto !important;
     }
-
-    .utoInfoTeam,.utoInfoMakeTeam {
-
+    
+    .utoInfoTeam,
+    .utoInfoMakeTeam {
         position: absolute;
         width: 162px;
         left: 133px;
@@ -2542,9 +2544,4 @@ background-image: none !important; */
                 background: $f0;
             }
         }
-
-
     }
-
-
-
