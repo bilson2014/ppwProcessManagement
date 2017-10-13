@@ -71,7 +71,7 @@
                         <div>取消</div>
                     </div>
                     <div class="sure" id="surebtn">
-                        <div id="">确认</div>
+                        <div>确认</div>
                     </div>
                 </div>
             </form>
