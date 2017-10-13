@@ -1292,7 +1292,7 @@ function getProduce(){
 			$('.info_produce_budget').val(res.budget);
 			$('.info_produce_makeContent').val(res.makeContent);
 			$('.info_produce_makeTime').val(res.makeTime);
-		}, getContextPath() + '/project/getSchemeTeamInfo/' + $('#projectId').val(),null);
+		}, getContextPath() + '/project/getProduceTeamInfo/' + $('#projectId').val(),null);
 	}
 }
 
@@ -1337,7 +1337,7 @@ var formFieldCreator = {
 		
 	if (prop.writable === true) {
 		if(isRead == 0){
-			result += "<input class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+			result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 			return result;
 		}
 		if(prop.id == "pt_teamName"){
@@ -1374,9 +1374,9 @@ var formFieldCreator = {
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' value='" + prop.value + "' />";
 	} else {
-		result += "<input class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
+		result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
 	return result;
 },
@@ -1397,9 +1397,9 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
 	} else {
-		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1423,9 +1423,9 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
 	} else {
-		result += "<input name='" + prop.id + "' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input class='" + prop.id + "' name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },

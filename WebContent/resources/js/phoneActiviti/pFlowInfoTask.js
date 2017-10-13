@@ -347,9 +347,7 @@ var formFieldCreator = {
 			
 			if (prop.writable == true) {
 				
-				
-				
-				
+
 				if(prop.id == 'info_watermarkUrl'){
 					result += "<input type='hidden' class='' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 					result += "<div class='watermarkUrl'><a id='info_watermarkUrl' href='"+ prop.value + "' target='_blacnk'>" + prop.value + "</a></div>";
@@ -357,7 +355,7 @@ var formFieldCreator = {
 				}
 				
 				if(isRead == 0){
-					result += "<input class='" + prop.id + "' value='" + proValue + "' readonly name='" + prop.id + "'  />";
+					result += "<input  id='" + prop.id + "' class='" + prop.id + "' value='" + proValue + "' readonly name='" + prop.id + "'  />";
 					return result;
 				}
 				if(isWhat == "file"){
@@ -416,9 +414,9 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable == true && isRead != 0) {
-				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date "+isCheck+" " + className + "' value='" + proValue + "'/>";
+				result += "<input readonly type='text' id='" + prop.id + "' name='" + prop.id + "' class='date " + prop.id + " "+isCheck+" " + className + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
+				result += "<input class='" + prop.id + "' name='" + prop.id + "' class='' value='" + proValue + "' name='" + prop.id + "' readonly/>";
 			}
 			return result;
 		},
@@ -443,9 +441,9 @@ var formFieldCreator = {
 				var isCheck = "noCheckInfo";
 			}
 			if (prop.writable == true && isRead != 0) {
-				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + "' value='" + proValue + "'/>";
+				result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " " + prop.id + "' value='" + proValue + "'/>";
 			} else {
-				result += "<input name='" + prop.id + "' class='' value='" + proValue + "' readonly name='" + prop.id + "'/>";
+				result += "<input name='" + prop.id + "' class='" + prop.id + "' value='" + proValue + " " + prop.id + "' readonly name='" + prop.id + "'/>";
 			}
 			return result;
 		},
