@@ -1043,20 +1043,26 @@
                 background-size: 16px 32px;
                 width: 16px;
                 height: 16px;
-                margin-left: 8px;
             }
             .share {
                 background: url(/resources/images/flow/share.png)no-repeat;
                 background-size: 16px 32px;
                 width: 16px;
                 height: 16px;
+                margin-left: 15px;
+                @media screen and (max-width: 775px) {
+                    margin-left: 8px;
+                }
             }
             .download {
                 background: url(/resources/images/flow/download.png)no-repeat;
                 background-size: 16px 32px;
                 width: 16px;
                 height: 16px;
-                margin-left: 8px;
+                margin-left: 15px;
+                @media screen and (max-width: 775px) {
+                    margin-left: 8px;
+                }
             }
             div {
                 display: inline-block;
@@ -1499,8 +1505,6 @@
                             }
                             .flag {
                                 margin-left: 10px !important;
-                                position: relative;
-                                top: 2px;
                             }
                             .download {
                                 width: 16px;
@@ -2261,9 +2265,8 @@
                     }
                     .itemArea {
                         width: 544px;
-                        background: #F8F8F8;
-                        border-radius: 4px;
-                        padding: 20px;
+                        border-radius:4px;
+                        padding:10px;
                         margin-left: 48px;
                         position: relative;
                         .itemPos {
@@ -2486,7 +2489,7 @@ background-image: none !important; */
         button {
             width: 120px;
             height: 30px;
-            border-radius: 8px;
+            border-radius: 4px;
             margin: 0 auto;
             color: white !important;
             font-size: $font-size-base;
@@ -2512,3 +2515,36 @@ background-image: none !important; */
         line-height: 36px !important;
         margin: 0 auto !important;
     }
+
+    .utoInfoTeam,.utoInfoMakeTeam {
+
+        position: absolute;
+        width: 162px;
+        left: 133px;
+        z-index: 3;
+        display: none;
+        background: white;
+        cursor: pointer;
+        border: 1px solid $gray-light;
+        border-top: 1px solid #979797;
+        max-height: 300px;
+        border-radius: 4px;
+        overflow: auto;
+        li {
+            width: 100%;
+            height: 36px;
+            text-align: center;
+            line-height: 36px;
+            color: $gray;
+            font-size: $font-size-base;
+            @include ellipsis;
+            &:hover {
+                background: $f0;
+            }
+        }
+
+
+    }
+
+
+

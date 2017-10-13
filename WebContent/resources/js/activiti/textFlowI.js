@@ -678,7 +678,7 @@ function openCusInfo(){
 
 function removItemCus(res){
 	var cusLinkman = res.projectUser.pu_linkman;
-	var cusTelephone = res.projectUser.pu_telephonee;
+	var cusTelephone = res.projectUser.pu_telephone;
 	var cusEmail = res.projectUser.pu_email;
 
 		if(cusLinkman == undefined || cusLinkman == "" || cusLinkman == null){
@@ -813,6 +813,8 @@ function openProviderInfo(){
 		$('#showProvider').show();
 		getScroll();
 		clearProvi();
+		autoTeamInput();
+		autoTeamMakeInput();
 		loadData(function(res){
 	          var scheme = res.project_team_scheme;
 	          var produce = res.project_team_produce;
@@ -820,13 +822,16 @@ function openProviderInfo(){
 	  		      $('#isHideTop').remove();
 	  		    }else{
 	  		    	 for (var i = 0; i < scheme.length; i++) {
-	  		    		   
+	  		    		     var pt_teamName = scheme[i].pt_teamName;
 		  		    		 var pt_linkman = scheme[i].pt_linkman;
 		  		    		 var pt_telephone = scheme[i].pt_telephone;
-                        //   $('#scCusName').val(scheme[i].pt_teamName);
+                           $('#scTeamName').val(scheme[i].pt_teamName);
                            $('#scLink').val(scheme[i].pt_linkman);
                            $('#scTel').val(scheme[i].pt_telephone);
                            $('#scId').val(scheme[i].pt_projectTeamId);
+                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
+                       		$('#scTeamError').remove();
+                   		} 
                     	if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
                     		$('#scLinkError').remove();
                 		}
@@ -841,13 +846,18 @@ function openProviderInfo(){
 	  		      $('#isHideBot').remove();
 	  		    }else{
 	  		    	 for (var i = 0; i < scheme.length; i++) {
-                           //$('#prCusName').val(produce[i].pt_teamName);
+                          
+	  		    		 var pt_teamName = scheme[i].pt_teamName;
 	  		    		 var pt_linkman = produce[i].pt_linkman;
 	  		    		 var pt_telephone = produce[i].pt_telephone;
+	  		    		   $('#prTeamName').val(produce[i].pt_teamName);
                            $('#prLink').val(produce[i].pt_linkman);
                            $('#prTel').val(produce[i].pt_telephone);
                            $('#prId').val(produce[i].pt_projectTeamId);
-                           if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
+                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
+                          		$('#prTeamError').remove();
+                      	} 
+                        if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
                        		$('#prLinkError').remove();
                    		}
                        	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
@@ -855,7 +865,6 @@ function openProviderInfo(){
                    		}
 					   }
 	  		    }
-	          removItemProvider(res)
 			}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pt",null);
 	});
 	
@@ -1298,6 +1307,10 @@ var formFieldCreator = {
 	
 	if(prop.id.indexOf('dl_') > -1){
 		prop.value = '';
+	}
+	
+	if(prop.id.indexOf('file_') >-1){
+		proValue = '';
 	}
 	
 	
@@ -1807,21 +1820,41 @@ function createFileInfo(res){
 	var fileName = name.lastIndexOf(".");
 	var checkName = name.substring(0,fileName);
 	var url = getDfsHostName() + res.resourcePath;
-	var html = [
-		'<div class="filmItem">                                     ',
-        '<img class="filmImg" src="'+src+'"> ',
-        '<div class="filmName">'+checkName+'</div>                         ',
-        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
-        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
-        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
-        '<div class="icon">                                         ',
-        '      <div class="share" data-content="'+url+'"></div>                        ',
-        '      <a href="'+url+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
-        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
-        '</div>                                                     ',
-        '</div>                                                             ',
-	].join('');
-	return html;
+	var urls=getDfsHostName() +res.previewPath;
+	var pang=res.previewPath;
+	if(pang==null){
+		var html = [
+			'<div class="filmItem">                                     ',
+	        '<img class="filmImg" src="'+src+'"> ',
+	        '<div class="filmName">'+checkName+'</div>                         ',
+	        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+	        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+	        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
+	        '<div class="icon">                                         ',
+	        '      <div class="share" data-content="'+url+'"></div>                        ',
+	        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+	        '</div>                                                     ',
+	        '</div>                                                             ',
+		].join('');
+		return html;
+	}else {
+		var html = [
+			'<div class="filmItem">                                     ',
+	        '<img class="filmImg" src="'+src+'"> ',
+	        '<div class="filmName">'+checkName+'</div>                         ',
+	        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+	        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
+	        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
+	        '<div class="icon">                                         ',	      
+	        '      <a href="'+urls+'" target="_black"><div class="look" data-content="'+url+'"></div></a>                         ',
+	        '      <div class="share" data-content="'+url+'"></div>                        ',
+	        '      <a href="/resource/getDFSFile/'+res.projectResourceId+'"><div class="download" ></div></a>                         ',
+	        '</div>                                                     ',
+	        '</div>                                                             ',
+		].join('');
+		return html;
+	}
+	
 }
 
 function controlModel(){
@@ -1924,18 +1957,111 @@ function createOption(value,text,price){
 
 function shareEven(){
 	$('.share').off('click').on('click',function(){
+		$('.btnShare').text('复制链接');
+		$('.modelCard .btnShare').css('background','#fe5453');
+	    $('.modelCard .btnShare').addClass('btn-c-r');	
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
 		$('#setInfoCopy').text(url);
 		var clipboard = new Clipboard('.btnShare');   
-		   clipboard.on('success', function(e) {  
-			        $('.btnShare').text('复制成功');
+		   clipboard.on('success', function(e) { 
+			   $('.modelCard .btnShare').css('background','#999 ');
+			   $('.modelCard .btnShare').removeClass('btn-c-r');		
+			   $('.btnShare').text('复制成功');
 		        });  
 		   clipboard.on('error', function(e) {  
+			   $('.modelCard .btnShare').css('background','#999 ');
+			   $('.modelCard .btnShare').removeClass('btn-c-r');
 			        $('.btnShare').text('复制失败');
-		        }); 
-		
+		        }); 	
+	});
+}
+
+//自动联动供应商信息
+function autoTeamInput(){
+	$('#scTeamName').bind('input propertychange', function() {
+		 var theName = $(this).val();
+		 $('#scId').val("");
+		 findAutoInfoTeam(theName);
+		 $('.utoInfoTeam').show();
+		 if(theName == null || theName == ""){
+			 $('.utoInfoTeam').hide();
+		 }
+	});
+}
+
+function findAutoInfoTeam(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.utoInfoTeam');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			autoTeamLi();
+		}
+	}, getContextPath() + '/team/listByName/'+userName,null);
+}
+
+function autoTeamLi(){
+	$('.utoInfoTeam li').off('click').on('click',function(){
+		  $('.utoInfoTeam').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#scTeamName').val(name);
+		  $('#scId').val(id);
+		  $('#scLink').val(linkman);
+		  $('#scTel').val(phone);
+	});
+}
+
+//自动联动制作供应商信息
+function autoTeamMakeInput(){
+	$('#prTeamName').bind('input propertychange', function() {
+		 var theName = $(this).val();
+		 $('#prId').val("");
+		 findAutoInfoMakeTeam(theName);
+		 $('.utoInfoMakeTeam').show();
+		 if(theName == null || theName == ""){
+			 $('.utoInfoMakeTeam').hide();
+		 }
+	});
+}
+
+function findAutoInfoMakeTeam(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.utoInfoMakeTeam');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			autoTeamMakeLi();
+		}
+	}, getContextPath() + '/team/listByName/'+userName,null);
+}
+
+function autoTeamMakeLi(){
+	$('.utoInfoMakeTeam li').off('click').on('click',function(){
+		  $('.utoInfoMakeTeam').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#prTeamName').val(name);
+		  $('#prId').val(id);
+		  $('#prLink').val(linkman);
+		  $('#prTel').val(phone);
+
 	});
 }
 
