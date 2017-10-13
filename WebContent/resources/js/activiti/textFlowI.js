@@ -2061,6 +2061,7 @@ function autoTeamMakeLi(){
 		  $('#prId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
+
 	});
 }
 
