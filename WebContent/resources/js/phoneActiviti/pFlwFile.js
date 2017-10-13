@@ -174,8 +174,9 @@ function createFileInfo(res){
 }
 function bindFileShareBtn(){
 	$('.share').on('click',function(){
-		$('.btnShare').attr("class","");
-		$('.btnShare').addClass('btn-c-r');
+		$('.modelTool .success button').attr("class","");
+		$('.modelTool .success button').addClass('btn-c-r');
+		$('.modelTool .success button').addClass('btnShare');
 		$('.btnShare').text('复制链接');
 		var key = $(this).find('div').attr('data-id');
 		$('#setInfoCopy').text(key);
