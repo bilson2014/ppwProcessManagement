@@ -14,7 +14,7 @@ function getInfo(){
 		    		var  pt_name = scheme[i].pt_teamName;
 		    		var  pt_linkman = scheme[i].pt_linkman;
 		    		var  pt_telephone = scheme[i].pt_telephone;
-		    		 $('#scName').val(produce[i].pt_teamName);
+		    		 $('#scName').val(scheme[i].pt_teamName);
                      $('#scLink').val(scheme[i].pt_linkman);
                      $('#scTel').val(scheme[i].pt_telephone);
                      $('#scId').val(scheme[i].pt_projectTeamId);
@@ -34,7 +34,7 @@ function getInfo(){
         if(produce == undefined || produce == "" || produce ==null ){
 		      $('#isHideBot').remove();
 		    }else{
-		    	 for (var i = 0; i < scheme.length; i++) {
+		    	 for (var i = 0; i < produce.length; i++) {
 		    		 var pt_name = produce[i].pt_teamName;
 		    		 var pt_linkman = produce[i].pt_linkman;
   		    		 var pt_telephone = produce[i].pt_telephone;
