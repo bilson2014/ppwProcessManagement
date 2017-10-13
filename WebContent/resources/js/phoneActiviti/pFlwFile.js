@@ -174,6 +174,9 @@ function createFileInfo(res){
 }
 function bindFileShareBtn(){
 	$('.share').on('click',function(){
+		$('.btnShare').attr("class","");
+		$('.btnShare').addClass('btn-c-r');
+		$('.btnShare').text('复制链接');
 		var key = $(this).find('div').attr('data-id');
 		$('#setInfoCopy').text(key);
 		showShare();
@@ -195,14 +198,12 @@ function closeModel(){
 	});
 }
 
-function getCopyUrl(){
-	
+function getCopyUrl(){	
 	var clipboard = new Clipboard('.btnShare');   
 	   clipboard.on('success', function(e) {  
-		        $('.btnShare').text('已复制');
+		        $('.btnShare').text('复制成功');
 				$('.btnShare').attr("class","");
 				$('.btnShare').addClass('btn-c-g');
-
 	        });  
 	   clipboard.on('error', function(e) {  
 		   		$('.btnShare').text('复制失败');
