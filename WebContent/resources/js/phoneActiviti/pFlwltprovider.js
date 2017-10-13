@@ -90,7 +90,7 @@ function checkProvider(){
 //自动联动客户信息
 function autoInput(){
 	$('#scName').bind('input propertychange', function() {
-		 $('#scId').val("");
+		 $('#scTeamId').val("");
 		var theName = $(this).val();
 		 findAutoInfo(theName);
 		 $('.utoInfoMake').show();
@@ -132,7 +132,7 @@ function autoLi(){
 //自动联动制作供应商信息
 function autoInputTeam(){
 	$('#prName').bind('input propertychange', function() {
-		 $('#prId').val("");
+		 $('#prTeamId').val("");
 		var theName = $(this).val();
 		findAutoInfoTeam(theName);
 		 $('.utoInfoMakeTeam').show();

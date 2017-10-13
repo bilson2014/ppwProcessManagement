@@ -1985,7 +1985,7 @@ function shareEven(){
 function autoTeamInput(){
 	$('#scTeamName').bind('input propertychange', function() {
 		 var theName = $(this).val();
-		 $('#scId').val("");
+		 $('#scTeamId').val("");
 		 findAutoInfoTeam(theName);
 		 $('.utoInfoTeam').show();
 		 if(theName == null || theName == ""){
@@ -2028,7 +2028,7 @@ function autoTeamLi(){
 function autoTeamMakeInput(){
 	$('#prTeamName').bind('input propertychange', function() {
 		 var theName = $(this).val();
-		 $('#prId').val("");
+		 $('#prTeamId').val("");
 		 findAutoInfoMakeTeam(theName);
 		 $('.utoInfoMakeTeam').show();
 		 if(theName == null || theName == ""){
