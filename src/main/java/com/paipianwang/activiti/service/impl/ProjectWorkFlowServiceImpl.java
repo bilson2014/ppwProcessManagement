@@ -120,7 +120,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	private WorkFlowFacade workFlowFacade = null;
 
 	@Autowired
-//	private PmsProjectMessageFacade pmsProjectMessageFacade;
+	// private PmsProjectMessageFacade pmsProjectMessageFacade;
 	private MessageService messageService;
 
 	@Autowired
@@ -165,7 +165,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					synergy.setProjectId(projectId);
 
 					// 查询员工电话
-					PmsEmployee employee = employeeFacade.findEmployeeById(Integer.parseInt(entry.getValue().toString().split("_")[1]));
+					PmsEmployee employee = employeeFacade
+							.findEmployeeById(Integer.parseInt(entry.getValue().toString().split("_")[1]));
 					if (employee != null) {
 						synergy.setImgUrl(employee.getEmployeeImg());
 						synergy.setTelephone(employee.getPhoneNumber());
@@ -200,9 +201,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 					synergyFacade.insert(synergy);
 				}
-				
+
 				// 保存销售信息
-				if(info.getActivitGroups().contains(ProjectRoleType.sale.getId())) {
+				if (info.getActivitGroups().contains(ProjectRoleType.sale.getId())) {
 					PmsProjectSynergy synergy = new PmsProjectSynergy();
 					synergy.setEmployeeId(Integer.parseInt(info.getReqiureId().toString()));
 					synergy.setProjectId(projectId);
@@ -212,7 +213,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					synergy.setEmployeeGroup(ProjectRoleType.sale.getId());
 					synergyFacade.insert(synergy);
 				}
-				
+
 			}
 
 			if (userMap != null && !userMap.isEmpty()) {
@@ -253,23 +254,23 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			// 添加 最终日期
 			Task nextTask = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
 			String taskDefinitionKey = nextTask.getTaskDefinitionKey();
-			ProjectCycleItem item=getCycleByTask(taskDefinitionKey);
-			
+			ProjectCycleItem item = getCycleByTask(taskDefinitionKey);
+
 			taskService.setDueDate(nextTask.getId(), getExpectDate(taskDefinitionKey));
 			taskService.setVariable(nextTask.getId(), "task_stage", item.getStage());
-			taskService.setVariable(nextTask.getId(), "task_description",item.getDescription());
+			taskService.setVariable(nextTask.getId(), "task_description", item.getDescription());
 			flowFacade.updateProcessInstanceId(processInstance.getProcessInstanceId(), projectId);
 
 			// TODO 添加任务启动的系统留言
-			//更新项目当前阶段
-			if(item!=null){
-				Map<String,Object> metaData=new HashMap<>();
+			// 更新项目当前阶段
+			if (item != null) {
+				Map<String, Object> metaData = new HashMap<>();
 				metaData.put("projectStage", item.getStageId());
-				flowFacade.update(metaData, projectId,processInstance.getProcessInstanceId());
+				flowFacade.update(metaData, projectId, processInstance.getProcessInstanceId());
 			}
-			//记录项目日志
-			messageService.insertOperationLog(projectId, null, null,"创建了\"" + flowMap.get("projectName") + "\"项目", info);
-			
+			// 记录项目日志
+			messageService.insertOperationLog(projectId, null, null, "创建了\"" + flowMap.get("projectName") + "\"项目",
+					info);
 
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
@@ -292,19 +293,21 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
 					+ " WHERE ART.ASSIGNEE_ = '" + userId + "'"
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
-		}else {
-			/*sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
-					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ "
-					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
-					+ " WHERE sy.employeeId = "+ userId.split("_")[1]
-					+ " AND ART.ASSIGNEE_ = '"
-					+ userId + "'"
-					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";*/
-			
+		} else {
+			/*
+			 * sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES " +
+			 * "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ " +
+			 * "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ " +
+			 * " WHERE sy.employeeId = "+ userId.split("_")[1] + " AND ART.ASSIGNEE_ = '" +
+			 * userId + "'" +
+			 * " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC"
+			 * ;
+			 */
+
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
 					+ " LEFT JOIN pat.PROJECT_FLOW flow ON flow.PROCESSINSTANCEID = RES.PROC_INST_ID_ "
-					+ " LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.PROJECTID = flow.PROJECTID "
-					+ " WHERE sy.employeeId = "+ userId.split("_")[1]
+					+ " LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.PROJECTID = flow.PROJECTID " + " WHERE sy.employeeId = "
+					+ userId.split("_")[1]
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
 		}
 
@@ -314,21 +317,20 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public List<PmsProjectFlowResult> getFinishedTask(String userId) {
 		String sql = "";
-		if(StringUtils.isNoneBlank(userId)) {
+		if (StringUtils.isNoneBlank(userId)) {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ " WHERE PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
-		} else if(userId.indexOf("team_") > -1) {
+		} else if (userId.indexOf("team_") > -1) {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = PROC.PROC_INST_ID_ WHERE ART.ASSIGNEE_ = '"
-							+ userId + "'"
-							+ " AND PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
-		}else {
+					+ userId + "'"
+					+ " AND PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
+		} else {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = PROC.BUSINESS_KEY_ "
-					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = PROC.PROC_INST_ID_ WHERE sy.employeeId = "+ userId.split("_")[1]
-							+ " AND ART.ASSIGNEE_ = '"
-							+ userId + "'"
-							+ " AND PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
+					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = PROC.PROC_INST_ID_ WHERE sy.employeeId = "
+					+ userId.split("_")[1] + " AND ART.ASSIGNEE_ = '" + userId + "'"
+					+ " AND PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
 		}
 
 		NativeHistoricProcessInstanceQuery nativeExecutionQuery = historyService
@@ -351,7 +353,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 							result.setIsPrincipal(0);
 						}
 						result.setPmsProjectFlow(flow);
-						//task使用空字符串
+						// task使用空字符串
 						result.setTaskId(" ");
 					}
 
@@ -409,14 +411,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		try {
 			// 需要完成系统留言
 			String taskName = task.getName();
-			messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId, realName, userGroup);
-			
+			messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId,
+					realName, userGroup);
 
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);
 
-			ProjectCycleItem item=null;
-			
+			ProjectCycleItem item = null;
+
 			List<Task> nextTasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
 			if (nextTasks != null && !nextTasks.isEmpty()) {
 				for (Task nextTask : nextTasks) {
@@ -429,25 +431,25 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 					taskService.setVariable(nextTaskId, "task_stage", item.getStage());
 					taskService.setVariable(nextTaskId, "task_description", item.getDescription());
-					
+
 					// 分配下一阶段的办理人
 					String groups = item.getGroups();
-					if(StringUtils.isNotBlank(groups)) {
+					if (StringUtils.isNotBlank(groups)) {
 						// 查找协同人
 						List<PmsProjectSynergy> synergys = synergyFacade.getSynergys(projectId, groups);
-						if(ValidateUtil.isValid(synergys)) {
+						if (ValidateUtil.isValid(synergys)) {
 							final PmsProjectSynergy synergy = synergys.get(0);
 							taskService.setAssignee(nextTaskId, "employee_" + synergy.getEmployeeId());
 						}
 					}
 				}
 			}
-			
-			//更新项目当前阶段
-			if(item!=null){
-				Map<String,Object> metaData=new HashMap<>();
+
+			// 更新项目当前阶段
+			if (item != null) {
+				Map<String, Object> metaData = new HashMap<>();
 				metaData.put("projectStage", item.getStageId());
-				flowFacade.update(metaData, projectId,processInstanceId);
+				flowFacade.update(metaData, projectId, processInstanceId);
 			}
 
 		} finally {
@@ -553,11 +555,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 			// 如果为 供应商管家、供应商总监 可以看见所有供应商指定信息
 			List<String> teamGroup = new ArrayList<String>(
-					Arrays.asList(ProjectRoleType.teamDirector.getId(), ProjectRoleType.teamProvider.getId(), ProjectRoleType.sale.getId(), ProjectRoleType.saleDirector.getId()));
+					Arrays.asList(ProjectRoleType.teamDirector.getId(), ProjectRoleType.teamProvider.getId(),
+							ProjectRoleType.sale.getId(), ProjectRoleType.saleDirector.getId()));
 			// 如果是 策划供应商可以看见 策划供应商信息
 			List<String> teamPlanGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamPlan.getId()));
 			// 如果是制作供应商可以看见制作供应商信息
-			List<String> teamProudctGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamProduct.getId(), ProjectRoleType.supervise.getId(), ProjectRoleType.superviseDirector.getId()));
+			List<String> teamProudctGroup = new ArrayList<String>(Arrays.asList(ProjectRoleType.teamProduct.getId(),
+					ProjectRoleType.supervise.getId(), ProjectRoleType.superviseDirector.getId()));
 
 			for (final Group group : groups) {
 				String groupId = group.getId();
@@ -572,12 +576,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				} else if (teamPlanGroup.contains(groupId)) {
 					// 如果是 策划供应商可以看见 策划供应商信息
-					List<Map<String, Object>> projectTeamPlan = projectTeamFacade.getProjectsTeamColumnByProjectId(
-							teamList, projectId, ProjectTeamType.scheme.getCode());
+					List<Map<String, Object>> projectTeamPlan = projectTeamFacade
+							.getProjectsTeamColumnByProjectId(teamList, projectId, ProjectTeamType.scheme.getCode());
 					param.put("PROJECT_TEAMPLAN", projectTeamPlan);
 				} else if (teamProudctGroup.contains(groupId)) {
 					// 如果是制作供应商可以看见制作供应商信息
-					List<Map<String, Object>> projectTeamProduct = projectTeamFacade.getProjectsTeamColumnByProjectId(teamList, projectId, ProjectTeamType.produce.getCode());
+					List<Map<String, Object>> projectTeamProduct = projectTeamFacade
+							.getProjectsTeamColumnByProjectId(teamList, projectId, ProjectTeamType.produce.getCode());
 					param.put("PROJECT_TEAMPRODUCT", projectTeamProduct);
 				}
 			}
@@ -703,24 +708,26 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		metaData.put("projectStatus", ProjectFlowStatus.suspend.getId());
 		metaData.put("suspendDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
-		//记录项目日志
-		List<String> flowData=new ArrayList<String>();
+		// 记录项目日志
+		List<String> flowData = new ArrayList<String>();
 		flowData.add("projectName");
-		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
-		messageService.insertOperationLog(projectId, null, null, "暂停了\""+flowInfo.get("projectName")+"\"项目,暂停原因："+remark, sessionInfo);
+		Map<String, Object> flowInfo = flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null,
+				"暂停了\"" + flowInfo.get("projectName") + "\"项目,暂停原因：" + remark, sessionInfo);
 	}
 
 	@Override
-	public void activateProcess(String processInstanceId, String projectId,SessionInfo sessionInfo) {
+	public void activateProcess(String processInstanceId, String projectId, SessionInfo sessionInfo) {
 		runtimeService.activateProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", null);
 		flowFacade.update(metaData, projectId, processInstanceId);
-		//记录项目日志
-		List<String> flowData=new ArrayList<String>();
+		// 记录项目日志
+		List<String> flowData = new ArrayList<String>();
 		flowData.add("projectName");
-		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
-		messageService.insertOperationLog(projectId, null, null, "恢复了\""+flowInfo.get("projectName")+"\"项目", sessionInfo);
+		Map<String, Object> flowInfo = flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null, "恢复了\"" + flowInfo.get("projectName") + "\"项目",
+				sessionInfo);
 	}
 
 	@Override
@@ -730,23 +737,23 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ AND PF.projectStatus = 'suspend' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
-		} else if(userId.indexOf("team_") > -1){
+		} else if (userId.indexOf("team_") > -1) {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
-					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
-					+ " AND PF.projectStatus = 'suspend' "
-					+ " AND ART.ASSIGNEE_ = '"
-					+ userId + "'"
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ " + " AND PF.projectStatus = 'suspend' "
+					+ " AND ART.ASSIGNEE_ = '" + userId + "'"
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
-		}else {
+		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId"
-					/*+ " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
-					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
-					+ " AND SY.employeeId = "+ userId.split("_")[1]
+					/*
+					 * + " LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
+					 */
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ " + " AND SY.employeeId = " + userId.split("_")[1]
 					+ " AND PF.projectStatus = 'suspend' "
-					/*+ " AND ART.ASSIGNEE_ = '"
-					+ userId + "'"*/
+					/*
+					 * + " AND ART.ASSIGNEE_ = '" + userId + "'"
+					 */
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
 		}
 
@@ -766,30 +773,27 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			if (!PmsConstant.ROLE_PROVIDER.equals(sessionType)) {
 				// 查找主负责人
 				PmsProjectSynergy assignee = synergyMap.get(ProjectRoleType.sale.getId());
-				if(assignee != null) {
+				if (assignee != null) {
 					assignee.setEmployeeGroup(ProjectRoleType.assignee.getText());
 					result.add(assignee);
 				}
-				/*PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
-				Integer assigneeId = projectFlow.getPrincipal();
-				if (assigneeId != null) {
-					PmsProjectSynergy synergy = new PmsProjectSynergy();
-					PmsEmployee assignee = employeeFacade.findEmployeeById(assigneeId);
-					if (assignee != null) {
-						synergy.setEmployeeName(assignee.getEmployeeRealName());
-						synergy.setImgUrl(assignee.getEmployeeImg());
-						synergy.setTelephone(assignee.getPhoneNumber());
-					}
-					synergy.setEmployeeGroup(ProjectRoleType.assignee.getText());
-					synergy.setProjectId(projectId);
-					result.add(synergy);
-				}*/
+				/*
+				 * PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+				 * Integer assigneeId = projectFlow.getPrincipal(); if (assigneeId != null) {
+				 * PmsProjectSynergy synergy = new PmsProjectSynergy(); PmsEmployee assignee =
+				 * employeeFacade.findEmployeeById(assigneeId); if (assignee != null) {
+				 * synergy.setEmployeeName(assignee.getEmployeeRealName());
+				 * synergy.setImgUrl(assignee.getEmployeeImg());
+				 * synergy.setTelephone(assignee.getPhoneNumber()); }
+				 * synergy.setEmployeeGroup(ProjectRoleType.assignee.getText());
+				 * synergy.setProjectId(projectId); result.add(synergy); }
+				 */
 			}
 
 			if (synergyMap != null && !synergyMap.isEmpty()) {
 				// 删除主负责人
 				synergyMap.remove(ProjectRoleType.sale.getId());
-				
+
 				for (Entry<String, PmsProjectSynergy> entry : synergyMap.entrySet()) {
 					String projectRole = entry.getKey();
 					PmsProjectSynergy synergy = entry.getValue();
@@ -839,7 +843,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		param.put("taskName", task.getName());
-		if(task.getDueDate() != null)
+		if (task.getDueDate() != null)
 			param.put("dueDate", task.getDueDate().toString());
 		return param;
 	}
@@ -1169,10 +1173,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 			// 日志内容
 			StringBuffer content = new StringBuffer();
-//			String activitiGroup = StringUtils.join(info.getActivitGroups(), ",");
+			// String activitiGroup = StringUtils.join(info.getActivitGroups(), ",");
 			content
-//			.append("【").append(activitiGroup).append("】").append(info.getRealName())
-			.append("更新了 ");
+					// .append("【").append(activitiGroup).append("】").append(info.getRealName())
+					.append("更新了 ");
 
 			if (flowMap != null && !flowMap.isEmpty()) {
 				// 更新项目信息
@@ -1224,10 +1228,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		// 根据名称模糊匹配flow
 		Map<String, Object> params = new HashMap<>();
 		params.put("projectName", flowName);
-		if(ValidateUtil.isValid(activitiUserId)){
-			params.put("employeeId",activitiUserId.split("_")[1]);
+		if (ValidateUtil.isValid(activitiUserId)) {
+			params.put("employeeId", activitiUserId.split("_")[1]);
 		}
-		
+
 		List<PmsProjectFlow> flowList = flowFacade.getProjectFlowByCondition(params);
 
 		if (!ValidateUtil.isValid(flowList)) {
@@ -1243,19 +1247,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		// 查询所有参与过的任务-流程
 		List<String> nn = new ArrayList<>();
 		HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
-//		if (ValidateUtil.isValid(activitiUserId)) {
-//			query = query.taskAssignee(activitiUserId);
-//		}
-//		if (!StringUtils.isBlank(flowName)) {
-			for (PmsProjectFlow flow : flowList) {
-				if (flow.getProcessInstanceId() != null) {
-					nn.add(flow.getProcessInstanceId());
-				}
+		// if (ValidateUtil.isValid(activitiUserId)) {
+		// query = query.taskAssignee(activitiUserId);
+		// }
+		// if (!StringUtils.isBlank(flowName)) {
+		for (PmsProjectFlow flow : flowList) {
+			if (flow.getProcessInstanceId() != null) {
+				nn.add(flow.getProcessInstanceId());
 			}
-			query = query.processInstanceIdIn(nn);
-//		}
-		List<HistoricTaskInstance> allTasks=query.list();
-		if(!ValidateUtil.isValid(allTasks)){
+		}
+		query = query.processInstanceIdIn(nn);
+		// }
+		List<HistoricTaskInstance> allTasks = query.list();
+		if (!ValidateUtil.isValid(allTasks)) {
 			return result;
 		}
 
@@ -1263,7 +1267,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		for (HistoricTaskInstance ht : allTasks) {
 			processInstanceIds.add(ht.getProcessInstanceId());
 		}
-		List<String> instanceIdList=new ArrayList<>(processInstanceIds);
+		List<String> instanceIdList = new ArrayList<>(processInstanceIds);
 
 		// 获取进行中任务
 		List<Task> runningList = taskService.createTaskQuery().active().processInstanceIdIn(instanceIdList).list();
@@ -1288,7 +1292,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setProjectName(flow.getProjectName());
 						each.setPrincipalName(flow.getPrincipalName());
 						each.setFinishedDate(flow.getFinishedDate());
-						//已完成的taskId取空
+						// 已完成的taskId取空
 						each.setTaskId(" ");
 						result.add(each);
 					}
@@ -1312,18 +1316,18 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						each.setTaskStatus("suspend");
 						each.setAgent("0");
 						result.add(each);
-						
-						//取消任务
-						if("cancel".equals(flow.getProjectStatus())){
+
+						// 取消任务
+						if ("cancel".equals(flow.getProjectStatus())) {
 							each.setTaskStatus("cancel");
 							each.setCancelDate(DateUtils.getDateByFormat(flow.getUpdateDate(), "yyyy-MM-dd HH:mm:ss"));
 						}
-						
+
 						continue flowCheck;
 					}
 				}
 			}
-		}	
+		}
 
 		// 排序
 		result.sort(new Comparator<TaskVO>() {
@@ -1381,7 +1385,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	public List<TaskVO> getAgentTasksByStage(String stage, String activitiUserId, int flag) {
 		return getTasksByStage(stage, activitiUserId, flag, true);
 	}
-	public List<TaskVO> getTasksByStage(String stage, String activitiUserId, int flag,boolean forAgent) {
+
+	public List<TaskVO> getTasksByStage(String stage, String activitiUserId, int flag, boolean forAgent) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT DISTINCT rt.* FROM ACT_RU_TASK rt ");
 
@@ -1395,10 +1400,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			sql.append("where 1=1 ");
 		}
 		sql.append("and rt.SUSPENSION_STATE_ = " + SuspensionState.ACTIVE.getStateCode() + " ");
-		if(forAgent){
+		if (forAgent) {
 			sql.append("and rt.ASSIGNEE_!='" + activitiUserId + "' ");
 		}
-	
+
 		// 筛选阶段
 		if (!StringUtils.isBlank(stage) && !"0".equals(stage)) {
 			Map<String, ProjectCycleItem> cycles = workFlowFacade.getAllCycleTask();
@@ -1426,9 +1431,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				result.setAssignee(task.getAssignee());
 				result.setDueDate(task.getDueDate());
 				result.setCreateTime(task.getCreateTime());
-				if(task.getAssignee().equals(activitiUserId)){
+				if (task.getAssignee().equals(activitiUserId)) {
 					result.setAgent("1");
-				}else{
+				} else {
 					result.setAgent("0");
 				}
 
@@ -1472,7 +1477,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		return null;
 	}
 
-
 	@Override
 	public List<KeyValue> getEditResourceList(SessionInfo info, String taskId, String projectId) {
 		List<String> groupStrs = info.getActivitGroups();
@@ -1505,17 +1509,18 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo,String remark) {
+	public void cancelProcess(String processInstanceId, String projectId, SessionInfo sessionInfo, String remark) {
 		runtimeService.suspendProcessInstanceById(processInstanceId);
 		Map<String, Object> metaData = new HashMap<String, Object>();
 		metaData.put("projectStatus", ProjectFlowStatus.cancel.getId());
 		metaData.put("finishedDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
-		//记录项目日志
-		List<String> flowData=new ArrayList<String>();
+		// 记录项目日志
+		List<String> flowData = new ArrayList<String>();
 		flowData.add("projectName");
-		Map<String,Object> flowInfo=flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
-		messageService.insertOperationLog(projectId, null, null, "取消了\""+flowInfo.get("projectName")+"\"项目,取消原因："+remark, sessionInfo);
+		Map<String, Object> flowInfo = flowFacade.getProjectFlowColumnByProjectId(flowData, projectId);
+		messageService.insertOperationLog(projectId, null, null,
+				"取消了\"" + flowInfo.get("projectName") + "\"项目,取消原因：" + remark, sessionInfo);
 	}
 
 	@Override
@@ -1524,23 +1529,23 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		if (StringUtils.isBlank(userId)) {
 			// 如果userId为空，那么查询所有的项目
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ WHERE PF.projectId = RES.BUSINESS_KEY_ AND PF.projectStatus = 'cancel' AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY START_TIME_ DESC";
-		} else if(userId.indexOf("team_") > -1) {
+		} else if (userId.indexOf("team_") > -1) {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
-					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
-					+ " AND PF.projectStatus = 'cancel' "
-					+ " AND ART.ASSIGNEE_ = '"
-					+ userId + "'"
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ " + " AND PF.projectStatus = 'cancel' "
+					+ " AND ART.ASSIGNEE_ = '" + userId + "'"
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
-		}else {
+		} else {
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM pat.PROJECT_FLOW PF,ACT_RU_EXECUTION RES "
 					+ "LEFT JOIN pat.PROJECT_SYNERGY SY ON RES.BUSINESS_KEY_ = SY.projectId "
-					/*+ "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "*/
-					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ "
-					+ " AND SY.employeeId = " + userId.split("_")[1]
+					/*
+					 * + "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ "
+					 */
+					+ " WHERE PF.projectId = RES.BUSINESS_KEY_ " + " AND SY.employeeId = " + userId.split("_")[1]
 					+ " AND PF.projectStatus = 'cancel' "
-					/*+ " AND ART.ASSIGNEE_ = '"
-					+ userId + "'"*/
+					/*
+					 * + " AND ART.ASSIGNEE_ = '" + userId + "'"
+					 */
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 2 ORDER BY PROC_INST_ID_ DESC";
 		}
 
@@ -1554,7 +1559,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Override
 	public Task getCurrentTaskName(final String taskId) {
-		if(StringUtils.isNotBlank(taskId)) {
+		if (StringUtils.isNotBlank(taskId)) {
 			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 			return task;
 		}
@@ -1565,7 +1570,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public Map<String, Object> getFlowSample(String projectId) {
 		// List<String> columns = new ArrayList<String>();
-		String[] columns = new String[]{"sampleUrl","samplePassword"};
+		String[] columns = new String[] { "sampleUrl", "samplePassword" };
 		Map<String, Object> result = flowFacade.getProjectFlowColumnByProjectId(Arrays.asList(columns), projectId);
 		return result;
 	}
@@ -1573,16 +1578,39 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	// 获取 制作供应商 信息
 	@Override
 	public Map<String, Object> getProduceTeamInfo(String projectId) {
-		String[] columns = new String[]{"teamName","linkman","telephone","budget","makeContent","makeTime"};
-		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns), projectId, ProjectTeamType.produce.getCode());
-		return ValidateUtil.isValid(list) ? list.get(0) : null;
+		String[] columns = new String[] { "teamName", "linkman", "telephone", "budget", "makeContent", "makeTime" };
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
+				projectId, ProjectTeamType.produce.getCode());
+		if (ValidateUtil.isValid(list)) {
+			Map<String, Object> productTeamMap = list.get(0);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date makeTime = (Date) productTeamMap.get("makeTime");
+			if (makeTime != null) {
+				String makeTimeStr = formatter.format(makeTime);
+				list.get(0).put("makeTime", makeTimeStr);
+			}
+			return list.get(0);
+		}
+		return null;
 	}
 
 	// 获取 策划供应商 信息
 	@Override
 	public Map<String, Object> getSchemeTeamInfo(String projectId) {
-		String[] columns = new String[]{"teamName","linkman","telephone","budget","planContent","planTime","accessMan","accessManTelephone"};
-		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns), projectId, ProjectTeamType.scheme.getCode());
-		return ValidateUtil.isValid(list) ? list.get(0) : null;
+		String[] columns = new String[] { "teamName", "linkman", "telephone", "budget", "planContent", "planTime",
+				"accessMan", "accessManTelephone" };
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
+				projectId, ProjectTeamType.scheme.getCode());
+		if (ValidateUtil.isValid(list)) {
+			Map<String, Object> schemeTeamMap = list.get(0);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date planTime = (Date) schemeTeamMap.get("planTime");
+			if (planTime != null) {
+				String planTimeStr = formatter.format(planTime);
+				list.get(0).put("planTime", planTimeStr);
+			}
+			return list.get(0);
+		}
+		return null;
 	}
 }
