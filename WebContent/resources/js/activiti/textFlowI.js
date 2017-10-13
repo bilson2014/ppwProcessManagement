@@ -829,6 +829,8 @@ function openProviderInfo(){
                            $('#scLink').val(scheme[i].pt_linkman);
                            $('#scTel').val(scheme[i].pt_telephone);
                            $('#scId').val(scheme[i].pt_projectTeamId);
+                           $('#scTeamId').val(scheme[i].pt_teamId);
+                           
                         if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
                        		$('#scTeamError').remove();
                    		} 
@@ -854,6 +856,7 @@ function openProviderInfo(){
                            $('#prLink').val(produce[i].pt_linkman);
                            $('#prTel').val(produce[i].pt_telephone);
                            $('#prId').val(produce[i].pt_projectTeamId);
+                           $('#prTeamId').val(produce[i].pt_teamId);
                         if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
                           		$('#prTeamError').remove();
                       	} 
