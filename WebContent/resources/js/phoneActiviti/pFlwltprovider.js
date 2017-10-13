@@ -123,7 +123,7 @@ function autoLi(){
 		  var linkman = $(this).attr('data-linkman');
 		  var phone = $(this).attr('data-phone');
 		  $('#scName').val(name);
-		  $('#scId').val(id);
+		  $('#scTeamId').val(id);
 		  $('#scLink').val(linkman);
 		  $('#scTel').val(phone);
 	});
@@ -165,7 +165,7 @@ function autoLiTeam(){
 		  var linkman = $(this).attr('data-linkman');
 		  var phone = $(this).attr('data-phone');
 		  $('#prName').val(name);
-		  $('#prId').val(id);
+		  $('#prTeamId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
 	});

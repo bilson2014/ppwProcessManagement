@@ -2018,7 +2018,7 @@ function autoTeamLi(){
 		  var phone = $(this).attr('data-phone');
 		  $(this).parent().parent().find('input').val(name);
 		  $('#scTeamName').val(name);
-		  $('#scId').val(id);
+		  $('#scTeamId').val(id);
 		  $('#scLink').val(linkman);
 		  $('#scTel').val(phone);
 	});
@@ -2061,10 +2061,9 @@ function autoTeamMakeLi(){
 		  var phone = $(this).attr('data-phone');
 		  $(this).parent().parent().find('input').val(name);
 		  $('#prTeamName').val(name);
-		  $('#prId').val(id);
+		  $('#prTeamId').val(id);
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
-
 	});
 }
 
