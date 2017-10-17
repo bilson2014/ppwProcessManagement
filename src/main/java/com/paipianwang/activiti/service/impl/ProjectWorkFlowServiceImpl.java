@@ -191,9 +191,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					} else if (ProjectRoleType.teamProvider.getId().equals(activitiRole)) {
 						// 供应商管家
 						synergy.setEmployeeGroup(ProjectRoleType.teamProvider.getId());
-					} else if (ProjectRoleType.financeDirector.getId().equals(activitiRole)) {
-						// 财务主管
-						synergy.setEmployeeGroup(ProjectRoleType.financeDirector.getId());
 					} else if (ProjectRoleType.finance.getId().equals(activitiRole)) {
 						// 财务
 						synergy.setEmployeeGroup(ProjectRoleType.finance.getId());
@@ -662,25 +659,27 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					continue;
 
 				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
-				PmsEmployee employee = employeeFacade.findEmployeeById(project.getPrincipal());
-				project.setPrincipalName(employee.getEmployeeRealName());
-				PmsProjectFlowResult result = new PmsProjectFlowResult();
-				result.setPmsProjectFlow(project);
-				result.setTask(task);
-				result.setProcessInstance(processInstance);
-				result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
-
-				String taskStage = (String) taskService.getVariable(result.getTask().getId(), "task_stage");
-				String taskDescription = (String) taskService.getVariable(result.getTask().getId(), "task_description");
-				result.setTaskStage(taskStage);
-				result.setTaskDescription(taskDescription);
-				if (userId != null && project != null && userId.equals("employee_" + project.getPrincipal())) {
-					// 当前负责人
-					result.setIsPrincipal(1);
-				} else {
-					result.setIsPrincipal(0);
+				if(project != null) {
+					PmsEmployee employee = employeeFacade.findEmployeeById(project.getPrincipal());
+					project.setPrincipalName(employee.getEmployeeRealName());
+					PmsProjectFlowResult result = new PmsProjectFlowResult();
+					result.setPmsProjectFlow(project);
+					result.setTask(task);
+					result.setProcessInstance(processInstance);
+					result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
+					
+					String taskStage = (String) taskService.getVariable(result.getTask().getId(), "task_stage");
+					String taskDescription = (String) taskService.getVariable(result.getTask().getId(), "task_description");
+					result.setTaskStage(taskStage);
+					result.setTaskDescription(taskDescription);
+					if (userId != null && project != null && userId.equals("employee_" + project.getPrincipal())) {
+						// 当前负责人
+						result.setIsPrincipal(1);
+					} else {
+						result.setIsPrincipal(0);
+					}
+					list.add(result);
 				}
-				list.add(result);
 			}
 
 			return list;
