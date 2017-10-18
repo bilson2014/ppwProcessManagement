@@ -219,7 +219,7 @@
 				                </ul>    
 					      </div>
 	                 </div> --%>
-	                  <div class="smallItem errorItem" id="financeDirectorError">
+	                 <%--  <div class="smallItem errorItem" id="financeDirectorError">
 	                       <div class="itemTitle">财务主管<span>*</span></div>
 	                       <input type="hidden" id="ps_financeDirector" name="ps_financeDirector"/>
 	                       <div class="orderSelect">
@@ -229,7 +229,7 @@
 				                    <li data-id="1">gg</li>
 				                </ul>    
 					      </div>
-	                 </div>
+	                 </div> --%>
 	                  <div class="smallItem errorItem" id="financeError">
 	                       <div class="itemTitle">财务出纳<span>*</span></div>
 	                       <input type="hidden" id="ps_finance" name="ps_finance"/>
