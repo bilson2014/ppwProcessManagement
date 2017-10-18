@@ -443,7 +443,7 @@
 	                        </c:if>
 	                                              
 	                   <div class="projectTitle margin-top">项目文件
-		                   <r:group role="sale" role2="saleDirector" >
+		                   <r:group role="sale" role2="saleDirector" role3="scheme">
 		                        <div class="conMod btn-c-r">版本管理</div>
 		                        <div class="upFile btn-c-r">文件更新</div>
 		                   </r:group>

@@ -22,6 +22,8 @@ public class ActivitiIdentityTag extends TagSupport{
 	private String role = null;
 	
 	private String role2 = null;
+	
+	private String role3 = null;
 
 	public int doStartTag() throws JspException {
 		if(ValidateUtil.isValid(role)){
@@ -36,6 +38,9 @@ public class ActivitiIdentityTag extends TagSupport{
 						return EVAL_BODY_INCLUDE;
 					} else if(groups.contains(role2)) {
 						return EVAL_BODY_INCLUDE;
+					} 
+					else if(groups.contains(role3)){
+						return EVAL_BODY_INCLUDE;
 					}
 				}
 			}
@@ -49,6 +54,10 @@ public class ActivitiIdentityTag extends TagSupport{
 	
 	public void setRole2(String role2) {
 		this.role2 = role2;
+	}
+
+	public void setRole3(String role3) {
+		this.role3 = role3;
 	}
 	
 }
