@@ -121,11 +121,17 @@ public class ProjectFlowPhoneController extends BaseController {
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
+		String processInstanceId=projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
 				info.getActivitGroups(), info.getRealName());
 
-		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
-		return new ModelAndView("redirect:/project/phone/projectFlow");
+		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);	
+		
+		//获取下一步task信息
+		Map<String, Object> currentTask=projectWorkFlowService.getCurentTask(processInstanceId, info.getActivitiUserId());
+		if(currentTask==null){
+			return new ModelAndView("redirect:/project/phone/projectFlow");
+		}
+		return new ModelAndView("redirect:/project/phone/todo/"+currentTask.get("taskId")+"/"+currentTask.get("projectId")+"/"+currentTask.get("processInstanceId")+"?"+currentTask.get("status"));
 	}
 
 	/**

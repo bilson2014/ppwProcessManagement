@@ -1635,24 +1635,36 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public Map<String, Object> getCurentTask(String processInstanceId, String activitiUserId) {
 		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
-		if (!ValidateUtil.isValid(tasks)) {
-			return null;
-		}
+		
 		Map<String, Object> result = new HashMap<>();
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 				.processInstanceId(processInstanceId).singleResult();
 		String projectId = processInstance.getBusinessKey();
-		Task currentTask = tasks.get(0);
-		result.put("status","doing");
-		// 优先取负责任务
-		for (Task task : tasks) {
-			if (task.getAssignee().equals(activitiUserId)) {
-				currentTask = task;
-				result.put("status","task");
-			}
+		
+		if (ValidateUtil.isValid(tasks)) {
+			Task currentTask = tasks.get(0);
+			result.put("status","doing");
+			// 优先取负责任务
+			for (Task task : tasks) {
+				if (task.getAssignee().equals(activitiUserId)) {
+					currentTask = task;
+					result.put("status","task");
+				}
+			}	
+			result.put("taskId", currentTask.getId());
+		}else{
+			result.put("taskId", " ");
+		}
+		//项目特殊状态：已完成、取消、暂停
+		PmsProjectFlow flow=this.flowFacade.getProjectFlowByProjectId(projectId);
+		if(ProjectFlowStatus.finished.equals(flow.getProjectStatus())){
+			result.put("taskId", "status=finished");
+		}else if(ProjectFlowStatus.cancel.equals(flow.getProjectStatus())){
+			result.put("taskId", "cancel");
+		}else if(ProjectFlowStatus.suspend.equals(flow.getProjectStatus())){
+			result.put("taskId", "pause");
 		}
 		
-		result.put("taskId", currentTask.getId());
 		result.put("projectId", projectId);
 		result.put("processInstanceId", processInstanceId);
 		return result;
