@@ -1657,9 +1657,4 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		result.put("processInstanceId", processInstanceId);
 		return result;
 	}
-	public static void main(String[] args) {
-		String s="http://localhost:8084/project/task/197532/20171012150839632/175215?task&file_locate_storage_path=http%3A%2F%2F123.59.86.252%3A8888%2F";
-		System.out.println(s.indexOf("&"));
-		System.out.println(s.substring(s.lastIndexOf("?"), s.indexOf("&")));
-	}
 }
