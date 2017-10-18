@@ -10,7 +10,11 @@ $().ready(function() {
 	document.domain = getUrl();
 	// 加载动态表单
 	    var href = window.location.href;
-	    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+	    var paramLength=href.indexOf('&');
+	    if(paramLength<0){
+	    	paramLength=href.length;
+	    }
+	    var state = href.substr(href.lastIndexOf("?")+1,paramLength-href.lastIndexOf("?")-1);
 	    if(state.trim() == "status=finished"){
 	    	$('#imgWord').text('完成');
 			$('#lastTimeWord').hide();
@@ -117,7 +121,11 @@ function initLastTime(ctyle,createTime){
 	var nowData = Date.parse(new Date());
 	var checkDay = nowData - totalTime;
 	var href = window.location.href;
-    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+	var paramLength=href.indexOf('&');
+    if(paramLength<0){
+    	paramLength=href.length;
+    }
+    var state = href.substr(href.lastIndexOf("?")+1,paramLength-href.lastIndexOf("?")-1);
     
     if(state.trim() == "pause"){
     	$('#imgFlow').addClass('imgRed');
@@ -424,7 +432,11 @@ function getFileInfo(){
 
 function checkState(){
 	var href = window.location.href;
-    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+	var paramLength=href.indexOf('&');
+    if(paramLength<0){
+    	paramLength=href.length;
+    }
+    var state = href.substr(href.lastIndexOf("?")+1,paramLength-href.lastIndexOf("?")-1);
     
     if(state.trim() != "task"){
     	$('#daiban').hide();
