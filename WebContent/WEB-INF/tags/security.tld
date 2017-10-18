@@ -61,6 +61,7 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	 
 	</tag>
 	
 	<!-- 当前角色 -->
@@ -79,6 +80,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		
+		<attribute>
+			<name>role3</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute> 
 	</tag>
 	
 	<!-- 没有登陆 -->
