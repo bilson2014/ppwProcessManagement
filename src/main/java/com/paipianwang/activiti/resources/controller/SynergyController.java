@@ -42,7 +42,6 @@ public class SynergyController extends BaseController{
 	@RequestMapping("/memberGroup")
 	public BaseMsg getGroupMember(HttpServletRequest request) {
 		BaseMsg msg = new BaseMsg();
-		System.err.println(getCurrentInfo(request));
 		Map<String, Object> memberGroup = new HashMap<String, Object>();
 		
 		// 客户总监
@@ -64,14 +63,6 @@ public class SynergyController extends BaseController{
 		// 供应商总监
 		List<User> teamDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamDirector.getId()).list();
 		memberGroup.put(ProjectRoleType.teamDirector.getId(), teamDirectors);
-		
-		// 供应商管家
-		/*List<User> teamProviders = identityService.createUserQuery().memberOfGroup(ProjectRoleType.teamProvider.getId()).list();
-		memberGroup.put(ProjectRoleType.teamProvider.getId(), teamProviders);*/
-		
-		// 财务总监
-		List<User> financeDirectors = identityService.createUserQuery().memberOfGroup(ProjectRoleType.financeDirector.getId()).list();
-		memberGroup.put(ProjectRoleType.financeDirector.getId(), financeDirectors);
 		
 		// 财务出纳
 		List<User> finances = identityService.createUserQuery().memberOfGroup(ProjectRoleType.finance.getId()).list();

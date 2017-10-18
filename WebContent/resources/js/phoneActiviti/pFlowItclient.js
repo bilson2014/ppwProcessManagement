@@ -10,8 +10,7 @@ function surebtn() {
     var cusEmail = $('#cusEmail').val();
     $('.name p').text('');
     $('.phone p').text('');
-    
-    
+   
     if($('#name').hasClass('name')){
     	if(name == undefined || name == "" || name == null){
     		   $('.name p').text('*客户联系人不能为空');
@@ -40,6 +39,7 @@ function surebtn() {
     		return false;
         }
     }
+    return true;
 
 }
 //用户信息修改
@@ -58,7 +58,8 @@ function openCusInfo() {
         $('#proId').val(res.projectFlow.pf_projectId);
     }, getContextPath() + '/project/task/edit/parameter/' + $("#currentTaskId").val() + "/" + $('#projectId').val() + "/pf", null);
     // 确认提交
-    $('#surebtn').off('click').on('click', function() {
+    $('#surebtn div').off('click').on('click', function() {
+    	console.log('666');
         if (surebtn()) {
             $('#toCusForm').submit();
         }

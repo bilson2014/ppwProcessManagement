@@ -5,26 +5,24 @@
     @import "companyCommon";
     @import "compass/typography/text/ellipsis";
     @import "pflow";
-
     body {
         background-color: $gray-dark !important;
     }
-
+    
     .taskDescription {
         line-height: 0.5rem;
-        margin-top: 0.3rem;
+        margin-top: 0.4rem;
         font-size: $size36;
         color: $gray-light;
         a {
             color: $red-base;
         }
     }
-
+    
     .setContent {
         width: 10rem;
         height: auto;
         margin: 0 auto;
-
         .contentTitle {
             position: relative;
             width: 100%;
@@ -33,21 +31,20 @@
                 font-size: $size40;
                 color: white;
                 margin-top: 0.2rem;
+                margin-left: -0.15rem;
             }
             .time {
                 font-size: $size30;
                 color: $gray-light;
-                margin-top: 0.2rem;
+                margin-top: 0.3rem;
             }
         }
-
         .content {
             padding-top: 1.3rem;
             .item {
                 font-size: 0;
                 margin-bottom: 0.5rem;
                 position: relative;
-
                 &:after {
                     content: attr(data-content);
                     color: $red-base;
@@ -56,7 +53,6 @@
                     left: 2rem;
                     top: 1rem;
                 }
-
                 .name {
                     width: 2.1rem;
                     font-size: $size34;
@@ -65,8 +61,7 @@
                     vertical-align: middle;
                     margin-right: 0.2rem;
                 }
-
-                .watermarkUrl{
+                .watermarkUrl {
                     width: 7.3rem;
                     height: .9rem;
                     background: transparent;
@@ -77,14 +72,14 @@
                     display: inline-block;
                     vertical-align: middle;
                     line-height: 0.9rem;
-                    a{
-                        color:white !important;
-                        &:hover{
-                             color:white !important;
+
+                    a {
+                        color: white !important;
+                        &:hover {
+                            color: white !important;
                         }
                     }
-                }  
-
+                }
                 input {
                     width: 7.3rem;
                     height: .9rem;
@@ -98,7 +93,6 @@
                     display: inline-block;
                     vertical-align: middle;
                 }
-
                 .upload {
                     width: 2.4rem;
                     height: .9rem;
@@ -114,7 +108,6 @@
                     vertical-align: middle;
                     margin-left: 0.2rem;
                 }
-
                 .orderSelect {
                     width: 7.3rem;
                     height: .9rem;
@@ -143,14 +136,14 @@
             }
         }
     }
-
+    
     .btnInput {
         width: 8rem;
         margin: 0 auto;
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
     }
-
+    
     #toSubmitForm {
         width: 8rem;
         height: 1rem;
@@ -173,24 +166,24 @@
         padding-top: 1.5rem;
         display: none;
     }
-
+    
     .progress {
         height: 0.3rem !important;
         border-radius: 0.9rem !important;
         margin-top: 0rem !important;
         margin-bottom: 0px !important;
     }
-
+    
     .progress-bar {
         /*     background-color: #337ab7;
 background-image: none !important; */
     }
-
+    
     .proTitle {
         font-size: $size30;
         color: $gray-light;
     }
-
+    
     .upIng {
         position: absolute;
         font-size: $size30;
@@ -198,7 +191,7 @@ background-image: none !important; */
         right: 0px;
         top: 1.5rem;
     }
-
+    
     .upSuccess {
         position: absolute;
         font-size: $size30;
@@ -213,7 +206,7 @@ background-image: none !important; */
             width: 0.3rem;
         }
     }
-
+    
     .upError {
         position: absolute;
         font-size: $size30;
@@ -228,24 +221,23 @@ background-image: none !important; */
             width: 0.3rem;
         }
     }
-
+    
     .noFile {
         color: $gray-light;
         font-size: $font-size-sm;
         margin-left: 0.4rem;
         display: none;
     }
-
+    
     .longInput {
         width: 4.2rem !important;
     }
-
-
+    
     .errorItem,
     .errorItemArea {
         position: relative;
     }
-
+    
     .errorItem:after {
         content: attr(data-content);
         color: $red-base;
@@ -254,7 +246,7 @@ background-image: none !important; */
         left: 1.4rem;
         top: 0.4rem;
     }
-
+    
     .errorItemArea:after {
         content: attr(data-content);
         color: $red-base;
@@ -263,18 +255,16 @@ background-image: none !important; */
         left: 1.4rem;
         top: 0.85rem;
     }
-
-
+    
     .webuploader-pick {
         background: transparent !important;
         padding: 0 !important;
     }
-
+    
     .webuploader-pick-hover {
         background: transparent !important;
     }
-
-
+    
     .modelTool {
         background-color: rgba(0, 0, 0, 0.7);
         position: fixed;
@@ -300,7 +290,6 @@ background-image: none !important; */
                 border-bottom: 1px solid $gray-light;
                 line-height: 1.5rem;
             }
-
             div:nth-child(2) {
                 color: $gray-dark;
                 color: #333;
@@ -340,8 +329,7 @@ background-image: none !important; */
             }
         }
     }
-
-
+    
     #daiban {
         width: 100%;
         font-size: 0;
@@ -360,6 +348,7 @@ background-image: none !important; */
     }
 
     .utoInfo {
+
         position: absolute;
         width: 7.3rem;
         left: 2.3rem;

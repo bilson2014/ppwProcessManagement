@@ -243,7 +243,7 @@
 	                                  <c:if test="${not empty flow_info['filmDestPath']}">
 		                                  	<div class="longItem">
 	                                          <div>对标影片</div>
-	                                          <div><a href="${flow_info['filmDestPath']}">${flow_info["filmDestPath"]}</a></div>
+	                                          <div><a href="${flow_info['filmDestPath']}" target="_blank">${flow_info["filmDestPath"]}</a></div>
 				                            </div>
 	                                  </c:if>
 			                           
