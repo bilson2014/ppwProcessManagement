@@ -151,7 +151,7 @@ function checkInfo(){
 	var teamDirector = $('#teamDirector').attr('data-id');//供应商总监
 	// var teamProvider = $('#teamProvider').attr('data-id');//供应商管家
 	var teamPurchase = $('#teamPurchase').attr('data-id');//供应商采购
-	var financeDirector = $('#financeDirector').attr('data-id');//财务主管
+	//var financeDirector = $('#financeDirector').attr('data-id');//财务主管
 	var finance = $('#finance').attr('data-id');//财务出纳
 	if(customerDirector == undefined || customerDirector == "" || customerDirector ==null ){
 		$('#customerDirectorError').attr('data-content','客服总监未选择');
@@ -189,12 +189,12 @@ function checkInfo(){
 	}else{
 		$('#ps_teamProvider').val(teamProvider);
 	}*/
-	if(financeDirector == undefined || financeDirector == "" || financeDirector ==null ){
+/*	if(financeDirector == undefined || financeDirector == "" || financeDirector ==null ){
 		$('#financeDirectorError').attr('data-content','财务主管未选择');
 		return false;
 	}else{
 		$('#ps_financeDirector').val(financeDirector);
-	}
+	}*/
 	if(finance == undefined || finance == "" || finance ==null ){
 		$('#financeError').attr('data-content','财务出纳未选择');
 		return false;
@@ -249,13 +249,14 @@ function checkInfo(){
 		return false;
 	}
 	
-/*	var projectDescription = $('#projectDescription').val();
+	var projectDescription = $('#projectDescription').val();
 	// 验证邮箱正确性
-	if (projectDescription.length > 255) {
+	if (projectDescription.length > 500) {
 		$('#outSide').attr('data-content','备注信息过长');
+		$('#projectDescription').val(projectDescription.substring(0, 500) + "...");
 		$('#projectDescription').focus();
 		return false;
-	}*/
+	}
 	
 	return true;
 
@@ -425,7 +426,7 @@ function getSynInfo(){
 		}*/
 		
 		
-		//财务总监
+		/*//财务主管
 		var financeDirectors = res.result.financeDirector;
 		var body = $('#financeDirectors');
 		body.html('');
@@ -436,7 +437,7 @@ function getSynInfo(){
 				   body.append(html);
 			};
 			
-		}
+		}*/
 		
 		//财务出纳
 		var finances = res.result.finance;
