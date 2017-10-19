@@ -144,6 +144,8 @@ function initLastTime(ctyle,createTime){
     	$('.update').hide();
     	$('.conMod').hide();
     	$('.upFile').hide();
+    	$(window.parent.parent.parent.parent.parent.document).find('#productList li').removeClass('checkLi');
+    	$(window.parent.parent.parent.parent.parent.document).find('#finish').addClass('checkLi');
     }
     if(state.trim() == "cancel"){
     	$('#imgWord').text('取消');
