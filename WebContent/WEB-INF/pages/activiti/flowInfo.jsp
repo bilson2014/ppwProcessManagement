@@ -104,7 +104,7 @@
 	                               </div>
 	                            </div>
 	                       </div>
-	                      <input type="file" id="fififi">
+	                 
 	                   </div>    
                      </div>
 	                   <div class="productInfo secondProduct">    
