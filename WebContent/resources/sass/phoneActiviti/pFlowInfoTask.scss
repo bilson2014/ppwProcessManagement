@@ -72,7 +72,6 @@
                     display: inline-block;
                     vertical-align: middle;
                     line-height: 0.9rem;
-
                     a {
                         color: white !important;
                         &:hover {
@@ -342,13 +341,12 @@ background-image: none !important; */
         }
         div {
             font-size: 0.46rem;
-            color: $gray-light;
+            color: $border-line;
             margin-top: 1rem;
         }
     }
-
+    
     .utoInfo {
-
         position: absolute;
         width: 7.3rem;
         left: 2.3rem;
