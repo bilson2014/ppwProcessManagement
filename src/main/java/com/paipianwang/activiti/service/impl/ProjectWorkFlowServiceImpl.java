@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -41,6 +43,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.MessageService;
@@ -376,7 +379,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId,
+	public String completeTaskFromData(String taskId, Map<String, String> formProperties, String userId,
 			List<String> userGroup, String realName) {
 		// 完成节点时，需要保存业务数据
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
@@ -452,6 +455,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
+		return processInstanceId;
 
 	}
 
@@ -1228,7 +1232,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		Map<String, Object> params = new HashMap<>();
 		params.put("projectName", flowName);
 		if (ValidateUtil.isValid(activitiUserId)) {
-			params.put("employeeId", activitiUserId.split("_")[1]);
+			String idName="";
+			if(activitiUserId.startsWith("employee_")){
+				idName="employeeId";
+			}else if(activitiUserId.startsWith("team_")){
+				idName="teamId";
+			}else if(activitiUserId.startsWith("customer_")){
+				idName="userId";
+			}else{
+				return result;
+			}
+			
+			params.put(idName, activitiUserId.split("_")[1]);
+			
 		}
 
 		List<PmsProjectFlow> flowList = flowFacade.getProjectFlowByCondition(params);
@@ -1611,5 +1627,46 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			return list.get(0);
 		}
 		return null;
+	}
+
+	/**
+	 * 获取项目当前任务
+	 */
+	@Override
+	public Map<String, Object> getCurentTask(String processInstanceId, String activitiUserId) {
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
+		
+		Map<String, Object> result = new HashMap<>();
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+				.processInstanceId(processInstanceId).singleResult();
+		String projectId = processInstance.getBusinessKey();
+		
+		if (ValidateUtil.isValid(tasks)) {
+			Task currentTask = tasks.get(0);
+			result.put("status","doing");
+			// 优先取负责任务
+			for (Task task : tasks) {
+				if (task.getAssignee().equals(activitiUserId)) {
+					currentTask = task;
+					result.put("status","task");
+				}
+			}	
+			result.put("taskId", currentTask.getId());
+		}else{
+			result.put("taskId", " ");
+		}
+		//项目特殊状态：已完成、取消、暂停
+		PmsProjectFlow flow=this.flowFacade.getProjectFlowByProjectId(projectId);
+		if(ProjectFlowStatus.finished.equals(flow.getProjectStatus())){
+			result.put("taskId", "status=finished");
+		}else if(ProjectFlowStatus.cancel.equals(flow.getProjectStatus())){
+			result.put("taskId", "cancel");
+		}else if(ProjectFlowStatus.suspend.equals(flow.getProjectStatus())){
+			result.put("taskId", "pause");
+		}
+		
+		result.put("projectId", projectId);
+		result.put("processInstanceId", processInstanceId);
+		return result;
 	}
 }

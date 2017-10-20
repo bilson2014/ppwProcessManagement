@@ -4,7 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.activiti.engine.impl.form.TaskFormDataImpl;
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
@@ -64,8 +67,9 @@ public interface ProjectWorkFlowService {
 	 * @param realName 
 	 * @param id
 	 */
-	public void completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup, String realName);
+	public String completeTaskFromData(String taskId, Map<String, String> formProperties, String userId, List<String> userGroup, String realName);
 
+	
 	/**
 	 * 生成项目ID
 	 * @return
@@ -231,4 +235,6 @@ public interface ProjectWorkFlowService {
 	 * @param projectId
 	 */
 	public Map<String, Object> getSchemeTeamInfo(String projectId);
+	
+	public Map<String,Object> getCurentTask(String processInstanceId, String activitiUserId);
 }

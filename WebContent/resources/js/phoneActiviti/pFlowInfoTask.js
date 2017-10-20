@@ -37,7 +37,11 @@ function isIos(){
 
 function checkState(){
 	var href = window.location.href;
-    var state = href.substr(href.lastIndexOf("?")+1,href.length);
+	var paramLength=href.indexOf('&');
+    if(paramLength<0){
+    	paramLength=href.length;
+    }
+    var state = href.substr(href.lastIndexOf("?")+1,paramLength-href.lastIndexOf("?")-1);
     $(window.parent.document).find('.footBot #toFile').attr('data-content',$('#url').val());
     $(window.parent.document).find('.footBot #toMessage').attr('data-content',$('#url').val());
     $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val());

@@ -431,11 +431,16 @@ public class ProjectFlowController extends BaseController {
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
+		String processInstanceId=projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
 				info.getActivitGroups(), info.getRealName());
 
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
-		return new ModelAndView("redirect:/project/running-doing");
+		//获取下一步task信息
+		Map<String, Object> currentTask=projectWorkFlowService.getCurentTask(processInstanceId, info.getActivitiUserId());
+		if(currentTask==null){
+			return new ModelAndView("redirect:/project/running-doing");
+		}
+		return new ModelAndView("redirect:/project/task/"+currentTask.get("taskId")+"/"+currentTask.get("projectId")+"/"+currentTask.get("processInstanceId")+"?"+currentTask.get("status"));
 	}
 
 	/**
