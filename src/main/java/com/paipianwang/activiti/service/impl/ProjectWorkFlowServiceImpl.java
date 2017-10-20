@@ -317,7 +317,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public List<PmsProjectFlowResult> getFinishedTask(String userId) {
 		String sql = "";
-		if (StringUtils.isNoneBlank(userId)) {
+		if (StringUtils.isBlank(userId)) {
 			sql = "SELECT DISTINCT PROC.ID_,PROC.* FROM ACT_HI_PROCINST PROC "
 					+ " WHERE PROC.END_TIME_ IS NOT NULL AND PROC.END_ACT_ID_ IS NOT NULL ORDER BY PROC.END_TIME_ DESC";
 		} else if (userId.indexOf("team_") > -1) {
@@ -355,9 +355,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						result.setPmsProjectFlow(flow);
 						// task使用空字符串
 						result.setTaskId(" ");
+						resultList.add(result);
 					}
 
-					resultList.add(result);
 				}
 			}
 
