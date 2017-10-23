@@ -10,7 +10,7 @@
 	<!-- 注册中心地址 -->
 	<!-- 正式 -->
 	<!-- <dubbo:registry protocol="zookeeper" address="106.75.105.16:2181,106.75.105.16:2182,106.75.105.16:2183" /> -->
-
+	
 	<!-- 测试 -->
 	<dubbo:registry protocol="zookeeper" address="123.59.75.93:2181" />
  		

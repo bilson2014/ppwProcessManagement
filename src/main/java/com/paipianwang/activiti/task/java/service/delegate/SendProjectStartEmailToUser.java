@@ -21,7 +21,6 @@ public class SendProjectStartEmailToUser implements JavaDelegate, Serializable {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Auto-generated method stub
 		System.err.println("向客户发送项目启动函");
 		
 		String projectId = execution.getProcessBusinessKey();
