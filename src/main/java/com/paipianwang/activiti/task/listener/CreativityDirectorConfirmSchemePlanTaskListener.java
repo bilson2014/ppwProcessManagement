@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("creativityDirectorConfirmSchemePlanTaskListener")
-public class CreativityDirectorConfirmSchemePlanTaskListener implements TaskListener {
+public class CreativityDirectorConfirmSchemePlanTaskListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = 5300957302655805733L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String confirm = (String) delegateTask.getVariable("condition_planconfirmPass");
 		String group = "creativityDirector";
 		

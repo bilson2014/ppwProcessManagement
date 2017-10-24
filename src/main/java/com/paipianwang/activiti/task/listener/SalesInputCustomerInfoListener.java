@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component("salesInputCustomerInfoListener")
-public class SalesInputCustomerInfoListener implements TaskListener {
+public class SalesInputCustomerInfoListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = 8740846913128457528L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// nothing to do
 		
 	}

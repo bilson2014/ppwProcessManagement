@@ -23,12 +23,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
  *
  */
 @Component("inputProduceTeamPayInfoListener")
-public class InputProduceTeamPayInfoListener implements TaskListener {
+public class InputProduceTeamPayInfoListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = 2547325293519236559L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// taskId
 		final String taskId = delegateTask.getId();
 

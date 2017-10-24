@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
@@ -28,12 +29,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("providerConfirmFileToAuditTaskListener")
-public class ProviderConfirmFileToAuditTaskListener implements TaskListener {
+public class ProviderConfirmFileToAuditTaskListener extends BaseTaskListener{
 
 	private static final long serialVersionUID = -9037097182002871515L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		final String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		final String taskId = delegateTask.getId();
 		final List<String> users = new ArrayList<String>();

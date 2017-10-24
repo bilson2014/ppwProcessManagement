@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("allotTeamProviderTaskListener")
-public class AllotTeamProviderTaskListener implements TaskListener {
+public class AllotTeamProviderTaskListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = -6622911630202090468L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String teamProviderId = (String) delegateTask.getVariable("teamProviderId");
 		String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		if (StringUtils.isNotBlank(teamProviderId)) {

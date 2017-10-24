@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("confirmUserProjectInfoTaskListener")
-public class ConfirmUserProjectInfoTaskListener implements TaskListener {
+public class ConfirmUserProjectInfoTaskListener extends BaseTaskListener  {
 
 	private static final long serialVersionUID = 8640907282237274971L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String confirm = (String) delegateTask.getVariable("condition_cutomerconfirmPass");
 		String group = "sale";
 		

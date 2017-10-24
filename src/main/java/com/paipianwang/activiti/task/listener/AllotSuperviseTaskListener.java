@@ -23,12 +23,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  */
 
 @Component("allotSuperviseTaskListener")
-public class AllotSuperviseTaskListener implements TaskListener, Serializable {
+public class AllotSuperviseTaskListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = 8310410877334719308L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String superviseId = (String) delegateTask.getVariable("superviseId");
 		String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		if (StringUtils.isNotBlank(superviseId)) {
