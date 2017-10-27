@@ -382,7 +382,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_procedure-workflow">
     <bpmndi:BPMNPlane bpmnElement="procedure-workflow" id="BPMNPlane_procedure-workflow">
       <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
-        <omgdc:Bounds height="35.0" width="35.0" x="10.0" y="276.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="275.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB" id="BPMNShape_sid-31D60F35-7133-4DD3-A7AC-B3C104AE50AB">
         <omgdc:Bounds height="80.0" width="100.0" x="105.0" y="255.0"></omgdc:Bounds>
@@ -538,7 +538,7 @@
         <omgdc:Bounds height="81.0" width="105.0" x="3590.0" y="252.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7" id="BPMNEdge_sid-D88102A1-6AF5-4ED9-B3C7-F5BA6A6B5BE7">
-        <omgdi:waypoint x="45.0" y="293.0"></omgdi:waypoint>
+        <omgdi:waypoint x="55.0" y="292.0"></omgdi:waypoint>
         <omgdi:waypoint x="105.0" y="295.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71" id="BPMNEdge_sid-BCBB6303-2A95-4439-A09B-7B03DFD8BB71">

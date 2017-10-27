@@ -10,12 +10,8 @@
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/textFlow.js" var="textFlowJs"/>
 <spring:url value="/resources/images" var="imgPath" />
-
-  <spring:url value="/resources/js/activiti/saveInfo.js" var="saveInfoJs"/>
-  <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploader"/>
-
-
-
+<spring:url value="/resources/js/activiti/saveInfo.js" var="saveInfoJs"/>
+<spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploader"/>
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -36,31 +32,25 @@
 <link rel="stylesheet" href="${textCss}">
 <link rel="stylesheet" href="${aaCss}">
 
-
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${textFlowJs}"></script>
-  <script type="text/javascript" src="${saveInfoJs}"></script>
-  <script type="text/javascript" src="${webuploader}"></script>
-
-
+<script type="text/javascript" src="${saveInfoJs}"></script>
+<script type="text/javascript" src="${webuploader}"></script>
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
 
-
 </head>
 
 <body>
-
-     <a href="/project/start/project"><div id="toCreate"></div></a>
+    <a href="/project/start/project"><div id="toCreate"></div></a>
      
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<input type="hidden" id="realName" value="${realName}" />
 	<input type="hidden" id="photo" value="${photo}" />
 	<input type="hidden" id="photo" value="${status}" />
-	
 	
 	<div class="page">
 	    <jsp:include flush="true" page="../header.jsp"></jsp:include>

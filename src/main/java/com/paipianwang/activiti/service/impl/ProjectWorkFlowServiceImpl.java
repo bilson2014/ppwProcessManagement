@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -43,7 +41,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.rpc.Result;
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.activiti.service.MessageService;
@@ -553,7 +550,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		}
 
 		if (teamList != null) {
-
 			// 如果为 供应商管家、供应商总监 可以看见所有供应商指定信息
 			List<String> teamGroup = new ArrayList<String>(
 					Arrays.asList(ProjectRoleType.teamDirector.getId(), ProjectRoleType.teamProvider.getId(),

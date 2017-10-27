@@ -35,12 +35,9 @@
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
-
-
 </head>
 
 <body>
-
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	<input type="hidden" id="height" value="" />
 	<input type="hidden" id="num" value="0" />
@@ -78,12 +75,6 @@
 						       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?task">
 	                             <div class="cardH">
 	                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-		                                 <!-- <c:if test="${staff.isPrincipal == 1}">
-		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                  <c:if test="${staff.isPrincipal == 0}">
-		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>-->
 	                             </div>
 	                             <div class="cardContent">
 	                                  <img src="/resources/images/flow/demoG.png">

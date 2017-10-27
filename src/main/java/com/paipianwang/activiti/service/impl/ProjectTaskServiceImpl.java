@@ -76,6 +76,7 @@ public class ProjectTaskServiceImpl implements ProjectTaskService {
 										PmsProjectSynergy synergy = synergys.get(0);
 										String synergyId = "employee_" + synergy.getEmployeeId();
 										if (!assignee.equals(synergyId)) {
+											taskService.unclaim(taskId);
 											taskService.setAssignee(taskId, synergyId);
 											logger.info("projectId is " + projectId + " , taskName is " + taskName + " , change assignee 【" + assignee + "】 to " + synergyId);
 										}

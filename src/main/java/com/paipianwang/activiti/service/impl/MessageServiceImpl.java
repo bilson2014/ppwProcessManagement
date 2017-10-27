@@ -116,7 +116,8 @@ public class MessageServiceImpl implements MessageService {
 					}
 				}
 			}
-			userName = groupName.toString().substring(1) + " ";
+			if(StringUtils.isNotBlank(groupName))
+				userName = groupName.toString().substring(1) + " ";
 		}
 
 		for (User user : users) {

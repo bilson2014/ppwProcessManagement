@@ -451,8 +451,6 @@
 	                   <div class="noFile">暂无文件上传...</div>
 	                   <div class="projectFilm" id="projectFilm"></div>
 	                   <!-- 留言区的权限判断 -->
-	                   <r:identity role="provider"> 
-	                   </r:identity>
 	              
 	                    <r:identity role="employee">
 	                       <div class="projectTitle">留言评论区</div>
@@ -1078,10 +1076,7 @@
 </div>
 </div>
 
-
- 
-
- <!-- 提示信息 -->
+<!-- 提示信息 -->
 <div class="cusModel" id="infoModel" >
      <div class="modelCard">
             <div class="cardTop">
