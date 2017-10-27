@@ -41,9 +41,9 @@ public class ConfirmUserProjectInfoTaskListener extends BaseTaskListener  {
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 与客户确认提案信息";
+			content = "客户确认了提案信息";
 		} else if ("false".equals(confirm)) {
-			content = "驳回了 与客户确认提案信息";
+			content = "客户驳回了提案信息";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

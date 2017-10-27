@@ -42,9 +42,9 @@ public class ProjectInfoBySaleDirectorConfirmListener extends BaseTaskListener  
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 项目信息";
+			content = "通过了项目信息的审核";
 		} else if ("false".equals(confirm)) {
-			content = "驳回 项目信息";
+			content = "驳回了项目信息的审核";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

@@ -19,6 +19,7 @@ import org.springframework.web.context.ContextLoader;
 import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.activiti.utils.LogUtils;
 import com.paipianwang.pat.common.util.DateUtils;
+import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
@@ -83,6 +84,10 @@ public abstract class BaseTaskListener implements TaskListener{
 //								DateFormType type=(DateFormType) form.getType();
 //								Object format=type.getInformation("datePattern");
 								value=DateUtils.getDateByFormatStr(DateUtils.getDateByFormat(value, "yyyy-MM-dd"), "yyyy年MM月dd日");
+							}
+							//特殊处理
+							if("pf_samplePassword".equals(item) && !ValidateUtil.isValid(value)){
+								value="无";
 							}
 							logText=LogUtils.setLogValue(logText, item, value);
 							break;

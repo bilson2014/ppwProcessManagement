@@ -104,6 +104,11 @@ public class MessageServiceImpl implements MessageService {
 				message.setFromName("系统");
 				return;
 			}
+			if (message.getFromGroup().equals("manager")) {
+				// 系统
+				message.setFromName("管理员 "+message.getFromName());
+				return;
+			}
 			// 用户
 			StringBuilder groupName = new StringBuilder();
 			String[] fromGroups = message.getFromGroup().split(",");

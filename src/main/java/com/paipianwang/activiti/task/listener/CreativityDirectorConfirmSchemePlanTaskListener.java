@@ -41,9 +41,9 @@ public class CreativityDirectorConfirmSchemePlanTaskListener extends BaseTaskLis
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 策划方案";
+			content = "通过了策划方案的审核";
 		} else if ("false".equals(confirm)) {
-			content = "驳回了 确认策划方案";
+			content = "驳回了策划方案的审核";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

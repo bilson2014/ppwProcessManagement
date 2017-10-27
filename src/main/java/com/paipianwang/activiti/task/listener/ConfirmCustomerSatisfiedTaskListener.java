@@ -41,9 +41,9 @@ public class ConfirmCustomerSatisfiedTaskListener extends BaseTaskListener  {
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 确认客户满意样片";
+			content = "客户满意样片";
 		} else if ("false".equals(confirm)) {
-			content = "驳回了 确认客户满意样片";
+			content = "客户对样片有修改建议";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

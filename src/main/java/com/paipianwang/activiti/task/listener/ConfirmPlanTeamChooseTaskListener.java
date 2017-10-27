@@ -41,9 +41,9 @@ public class ConfirmPlanTeamChooseTaskListener extends BaseTaskListener  {
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 审核策划供应商分配";
+			content = "通过了策划供应商的分配";
 		} else if ("false".equals(confirm)) {
-			content = "驳回了 审核策划供应商分配";
+			content = "驳回了策划供应商的分配";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {
