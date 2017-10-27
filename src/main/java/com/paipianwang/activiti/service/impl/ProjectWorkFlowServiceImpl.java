@@ -407,9 +407,12 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		try {
 			// 需要完成系统留言
-			String taskName = task.getName();
-			messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId,
-					realName, userGroup);
+			ProjectCycleItem taskItem=getCycleByTask(task.getTaskDefinitionKey());
+			if(taskItem!=null && taskItem.getNeedFinishLog().equals(1)){
+				String taskName = task.getName();
+				messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId,
+						realName, userGroup);
+			}
 
 			identityService.setAuthenticatedUserId(userId);
 			formService.submitTaskFormData(taskId, formProperties);

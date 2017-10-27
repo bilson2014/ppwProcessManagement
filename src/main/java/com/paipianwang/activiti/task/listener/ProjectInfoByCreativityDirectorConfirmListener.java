@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("projectInfoByCreativityDirectorConfirmListener")
-public class ProjectInfoByCreativityDirectorConfirmListener implements TaskListener {
+public class ProjectInfoByCreativityDirectorConfirmListener extends BaseTaskListener  {
 
 	private static final long serialVersionUID = -5613624992715706337L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String confirm = (String) delegateTask.getVariable("condition_projectplanPass");
 		String group = "creativityDirector";
 		
@@ -41,9 +41,9 @@ public class ProjectInfoByCreativityDirectorConfirmListener implements TaskListe
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 项目信息";
+			content = "通过了项目信息的审核";
 		} else if ("false".equals(confirm)) {
-			content = "驳回 项目信息";
+			content = "驳回了项目信息的审核";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

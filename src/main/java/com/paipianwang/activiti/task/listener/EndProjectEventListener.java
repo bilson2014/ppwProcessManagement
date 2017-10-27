@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
+import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
@@ -38,6 +39,9 @@ public class EndProjectEventListener implements JavaDelegate,Serializable {
 		metaData.put("projectStatus", ProjectFlowStatus.finished.getId());
 		metaData.put("finishedDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
+		
+		MessageService messageService = (MessageService) context.getBean("messageService");
+		messageService.insertSystemMessage(projectId, "项目结束");
 	}
 
 }

@@ -27,12 +27,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
  *
  */
 @Component("allotPlanTeamTaskLisnter")
-public class AllotPlanTeamTaskLisnter implements TaskListener {
+public class AllotPlanTeamTaskLisnter extends BaseTaskListener {
 
 	private static final long serialVersionUID = -2204490453039201351L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// taskId
 		final String taskId = delegateTask.getId();
 		

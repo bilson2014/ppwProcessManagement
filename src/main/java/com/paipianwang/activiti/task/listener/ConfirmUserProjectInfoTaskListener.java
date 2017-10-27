@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("confirmUserProjectInfoTaskListener")
-public class ConfirmUserProjectInfoTaskListener implements TaskListener {
+public class ConfirmUserProjectInfoTaskListener extends BaseTaskListener  {
 
 	private static final long serialVersionUID = 8640907282237274971L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String confirm = (String) delegateTask.getVariable("condition_cutomerconfirmPass");
 		String group = "sale";
 		
@@ -41,9 +41,9 @@ public class ConfirmUserProjectInfoTaskListener implements TaskListener {
 		
 		String content = "";
 		if ("true".equals(confirm)) {
-			content = "通过了 与客户确认提案信息";
+			content = "客户确认了提案信息";
 		} else if ("false".equals(confirm)) {
-			content = "驳回了 与客户确认提案信息";
+			content = "客户驳回了提案信息";
 		}
 		
 		if(ValidateUtil.isValid(synergys)) {

@@ -19,12 +19,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("allotOutOrInnerSchemeListener")
-public class AllotOutOrInnerSchemeListener implements TaskListener {
+public class AllotOutOrInnerSchemeListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = -2210198217544838722L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String confirm = (String) delegateTask.getVariable("condition_planoutsidePass");
 		String group = "creativityDirector";
 		
