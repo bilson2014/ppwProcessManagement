@@ -236,5 +236,5 @@ public interface ProjectWorkFlowService {
 	 */
 	public Map<String, Object> getSchemeTeamInfo(String projectId);
 	
-	public Map<String,Object> getCurentTask(String processInstanceId, String activitiUserId);
+	public Map<String,Object> getCurentTask(String projectId, String activitiUserId);
 }
