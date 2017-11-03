@@ -329,6 +329,7 @@
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
 	                                 <r:group role="teamProvider" role2="teamDirector">
+	                                 <div class="addPro">新增</div>
 	                                 <div class="update btn-c-r" id="openProvider">更新</div>
 	                                 </r:group>
 	                            </div>
@@ -337,6 +338,8 @@
 	                            		<div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                            			<c:forEach items="${teamPlan_info }" var="plan">
 			                                  <div class="contentItem">
+			                                        <input type='hidden' class="contentTeamId" value='${plan["teamId"]}'>
+			                                        <input type='hidden' class="contentTeamId" value='${plan["projectTeamId"]}'>
 			                                  		<c:if test="${not empty plan['teamName']}">
 					                                     <div class="item">
 					                                          <div>供应商名称</div>
@@ -363,6 +366,23 @@
 					                                          </div>
 							                             </div>
 						                             </c:if>
+						                              <c:if test="${not empty plan['flag']}">
+							                             <div class="item smallItem">
+					                                          <div>状态</div>
+					                                           <c:if test="${plan['flag'] == 0}">
+					                                                     <div style="color:green">正常</div>                                           
+					                                           </c:if>
+					                                            <c:if test="${plan['flag'] == 1}">
+					                                                     <div style="color:#fe5453">已删除</div>
+					                                           </c:if>
+							                             </div>
+						                             </c:if>
+						                               <c:if test="${plan['flag'] == 0}">
+						                                  <div class="item smallItem">
+						                                          <div>操作</div>
+						                                          <div class="delPro">删除</div>
+								                          </div>                                       
+					                                   </c:if>
 												</div>
 	                            			</c:forEach>
 	                            	</c:if>
@@ -370,8 +390,9 @@
 	                                  <c:if test="${!empty teamProduct_info}">
 		                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 		                                  <c:forEach items="${teamProduct_info }" var="product">
-			                                  	<div class="contentItem" >
-						                             <div class="contentItem">
+			                                  	<div class="contentItem" id="makeProvItem">
+						                            <input type='hidden' class="contentTeamId" value='${plan["teamId"]}'>
+			                                        <input type='hidden' class="contentTeamId" value='${plan["projectTeamId"]}'>
 						                             	<c:if test="${not empty product['teamName']}">
 						                             		<div class="item">
 					                                          <div>供应商名称</div>
@@ -392,8 +413,18 @@
 					                                          <div>${product["telephone"]}</div>
 							                             	</div>
 							                             </c:if>
-							                             
-											         </div>
+							                            <c:if test="${plan['flag'] == 0}">
+						                                  <div class="item smallItem">
+						                                          <div class="delPro">删除</div>
+						                                          <div class="addPro">新增</div>
+								                          </div>                                       
+					                                   </c:if>
+					                                   
+					                                   <div class="item">
+					                                          <div>供应商邮箱</div>
+					                                          <div></div>
+							                           </div>
+											         
 											    </div>
 			                                  </c:forEach>
 							              </c:if>
@@ -943,6 +974,9 @@
              <input type="hidden" id="proId" name="projectId"" value="${flow_info['projectId']}">
                     <div id="isHideTop">
 	                    <div class="bigTitle">策划供应商</div>
+	                    <div class="setHideTop"></div>
+	                    
+	                   <!--  <div class="setHideTop">
 	                    <input type="hidden" id="scId"  name="pt_projectTeamId">
 	                    <input type="hidden" id="scTeamId"  name="pt_teamId">
 	                    <div class="itemTime errorItem" id="scTeamError">
@@ -958,11 +992,14 @@
 	                         <div class="title">供应商联系电话</div>
 	                         <input class="checkErrorP" id="scTel" name="pt_telephone">
 	                    </div>
+	                    </div> -->
                    </div> 
                    
                   <div id="isHideBot"> 
 	                    <div class="bigTitle">制作供应商</div>
-	                    <input type="hidden" id="prId" name="pt_projectTeamId">
+	                    <div class="setHideBot"></div>
+	                    
+	                   <!--  <input type="hidden" id="prId" name="pt_projectTeamId">
 	                    <input type="hidden" id="prTeamId"  name="pt_teamId">
 	                    <div class="itemTime errorItem" id="prTeamError">
 	                         <div class="title">供应商团队</div>
@@ -976,7 +1013,7 @@
 	                    <div class="itemTime errorItem" id="prTelError">
 	                         <div class="title">供应商联系电话</div>
 	                         <input class="checkErrorP" id="prTel" name="pt_telephone">
-	                    </div>
+	                    </div> -->
                    </div> 
                  </form>  
                     <div class="btnMid">
@@ -1025,28 +1062,28 @@
 
 <!-- 动态加载信息信息修改 -->
 <div class="cusModel" id="autoSet">
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title">${taskName}<span id="errorInfo"></span> </div>
-                   <div class="closeModel"></div>
-            </div>
-			                 <div class="upProgress">
-								<div class="proTitle" id="proTitle">上传进度</div>
-								<div  class="progress progress-striped active">
-									<div id="setWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
-										aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-										style="width: 0;"></div>
+	<div class="modelCard">
+	            <div class="cardTop">
+	                   <div class="title">${taskName}<span id="errorInfo"></span> </div>
+	                   <div class="closeModel"></div>
+	            </div>
+				                 <div class="upProgress">
+									<div class="proTitle" id="proTitle">上传进度</div>
+									<div  class="progress progress-striped active">
+										<div id="setWidth" class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar"
+											aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+											style="width: 0;"></div>
+									</div>
+									<div class="upIng">上传中...</div>
+									<div class="upSuccess">
+										<img src="/resources/images/provider/sure.png">上传成功
+									</div>
+									<div class="upError">
+										<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
+									</div>
 								</div>
-								<div class="upIng">上传中...</div>
-								<div class="upSuccess">
-									<img src="/resources/images/provider/sure.png">上传成功
-								</div>
-								<div class="upError">
-									<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
-								</div>
-							</div>
-            <div class="otherContent" id="setAutoInfo"></div>
-</div>
+	            <div class="otherContent" id="setAutoInfo"></div>
+	</div>
 </div>
 
 <!-- 价格信息修改 -->
@@ -1153,7 +1190,7 @@
 </div>
  <!-- 提示信息 -->
 <div class="cusModel" id="isCopy">
-     <div class="modelCard">
+     <div class="modelCard"><div class="warnReason">删除原因</div>
             <div class="cardTop">
                    <div class="title">分享</div>
                    <div class="closeModel"></div>
@@ -1163,6 +1200,68 @@
 	               <button class="btnShare btn-c-r" data-clipboard-action="copy" data-clipboard-target="#setInfoCopy">复制链接</button>  
 	            </div>
       </div>    
+</div>
+
+<!-- 新增供应商 -->
+<div class="cusModel" id="createProivder">
+	<div class="modelCard">
+	            <div class="cardTop">
+	                   <div class="title">新增供应商</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="otherContent">
+	                 <input type="hidden" id="prov_teamId" name="pt_teamId" class="checkProvError">
+	                 <div class="itemCard errorItem"><div class="title">供应商名称<span> *</span></div>
+		                 <input type="text" id="prov_teamName" name="pt_teamName" class="uploadInput checkInfo required checkProvError" value="">
+		                 <ul class="utoInfo createUi" style="display: none;"></ul>
+	                 </div>
+	                 <div class="itemCard errorItem"><div class="title">供应商联系人<span>*</span></div>
+		                 <input type="text" id="prov_linkman" name="pt_linkman" class="uploadInput checkInfo required checkProvError" value="">
+	                 </div>
+	                 <div class="itemCard errorItem"><div class="title">供应商电话<span>*</span></div>
+		                 <input type="text" id="prov_telephone" name="pt_telephone" class="uploadInput checkInfo required checkProvErrorP" value="">
+	                 </div>
+	                 <div class="itemCard errorItem"><div class="title">供应商预算<span>*</span></div>
+		                 <input type="text" id="prov_budget" name="pt_budget" class="uploadInput checkInfo required checkProvError" value="">
+	                 </div>
+	                  <div class="itemCard errorItem"><div class="title">供应商制作内容<span>*</span></div>
+		                 <input type="text" id="prov_makeContent" name="pt_makeContent" class="uploadInput checkInfo required checkProvError" value="">
+	                 </div>
+	                  <div class="itemCard errorItem"><div class="title">供应商制作时间<span>*</span></div>
+		                 <input  type="text" readonly id="prov_makeTime" name="pt_makeTime" class="date uploadInput checkInfo required checkProvError" value="">
+	                 </div>
+	                 <div class="itemCard errorItem"><div class="title">供应商添加原因<span>*</span></div>
+		                 <input  type="text" id="" name="" class="uploadInput checkInfo required checkProvError" value="">
+	                 </div>
+	                  <div class="itemCard errorItem"><div class="title">供应商启动函备注信息<span></span></div>
+		                 <input  type="text" id="prov_remark" name="pt_remark" class="uploadInput checkInfo required" value="">
+	                 </div>
+	                 <div class="btnMid margin-bottom">
+	                      <div class="btn-c-g" id="cancleCprov">取消</div>
+	                      <div class="btn-c-r" id="checkCprov">确认</div>
+	                 </div>
+	            </div>
+	</div>
+</div>
+
+<!-- 新增供应商删除 -->
+<div class="cusModel" id="errorDelProv" >
+     <div class="modelCard">
+         
+            <div class="cardTop">
+                   <div class="title">删除供应商确认</div>
+                   <div class="closeModel"></div>
+            </div>
+               <div class="ReasonItem" id="cancleReasonError">
+		            <div class="warnReason">删除原因</div>
+		            <textarea id="cancleReason" name="remark"></textarea>
+		            <div class="error">删除原因</div>
+	           </div>  
+			    <div class="btnMid margin-bottom">
+	                      <div class="btn-c-g" id="cancle">取消</div>
+	                      <div class="btn-c-r" id="checkcancle">确认</div>
+	            </div>
+     </div>
 </div>
 
 <%--  <!-- 文件上传 -->
