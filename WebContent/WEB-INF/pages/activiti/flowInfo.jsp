@@ -338,8 +338,6 @@
 	                            		<div class="title"><div class="long"></div><div class="short"></div>策划供应商</div>
 	                            			<c:forEach items="${teamPlan_info }" var="plan">
 			                                  <div class="contentItem">
-			                                        <input type='hidden' class="contentTeamId" value='${plan["teamId"]}'>
-			                                        <input type='hidden' class="contentTeamId" value='${plan["projectTeamId"]}'>
 			                                  		<c:if test="${not empty plan['teamName']}">
 					                                     <div class="item">
 					                                          <div>供应商名称</div>
@@ -377,12 +375,10 @@
 					                                           </c:if>
 							                             </div>
 						                             </c:if>
-						                               <c:if test="${plan['flag'] == 0}">
-						                                  <div class="item smallItem">
-						                                          <div>操作</div>
-						                                          <div class="delPro">删除</div>
-								                          </div>                                       
-					                                   </c:if>
+						                             <div class="item">
+					                                          <div>供应商邮箱</div>
+					                                          <div>${product["email"]}</div>
+							                           </div>
 												</div>
 	                            			</c:forEach>
 	                            	</c:if>
@@ -413,18 +409,28 @@
 					                                          <div>${product["telephone"]}</div>
 							                             	</div>
 							                             </c:if>
-							                            <c:if test="${plan['flag'] == 0}">
-						                                  <div class="item smallItem">
-						                                          <div class="delPro">删除</div>
-						                                          <div class="addPro">新增</div>
-								                          </div>                                       
-					                                   </c:if>
-					                                   
-					                                   <div class="item">
+							                          <c:if test="${not empty plan['flag']}">
+							                             <div class="item smallItem">
+					                                          <div>状态</div>
+					                                           <c:if test="${plan['flag'] == 0}">
+					                                                     <div style="color:green">正常</div>                                           
+					                                           </c:if>
+					                                            <c:if test="${plan['flag'] == 1}">
+					                                                     <div style="color:#fe5453">已删除</div>
+					                                           </c:if>
+							                             </div>
+						                             </c:if>
+								                        <c:if test="${plan['flag'] == 0}">
+							                                  <div class="item smallItem">
+							                                          <div>操作</div>
+							                                          <div class="delPro" data-id='${plan["teamId"]}' data-idp='${plan["projectTeamId"]}' >删除</div>
+									                          </div>                                       
+						                                   </c:if>
+						                                   <div class="item">
 					                                          <div>供应商邮箱</div>
-					                                          <div></div>
+					                                          <div>${product["email"]}</div>
 							                           </div>
-											         
+								                    </div>                                       
 											    </div>
 			                                  </c:forEach>
 							              </c:if>
@@ -1204,7 +1210,7 @@
 	                   <div class="title">新增供应商</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="otherContent">
+	            <div class="otherContent" id="ctc">
 	                 <input type="hidden" id="prov_teamId" name="pt_teamId" class="checkProvError">
 	                 <div class="itemCard errorItem"><div class="title">供应商名称<span> *</span></div>
 		                 <input type="text" id="prov_teamName" name="pt_teamName" class="uploadInput checkInfo required checkProvError" value="">
@@ -1225,11 +1231,8 @@
 	                  <div class="itemCard errorItem"><div class="title">供应商制作时间<span>*</span></div>
 		                 <input  type="text" readonly id="prov_makeTime" name="pt_makeTime" class="date uploadInput checkInfo required checkProvError" value="">
 	                 </div>
-	                 <div class="itemCard errorItem"><div class="title">供应商添加原因<span>*</span></div>
-		                 <input  type="text" id="" name="" class="uploadInput checkInfo required checkProvError" value="">
-	                 </div>
 	                  <div class="itemCard errorItem"><div class="title">供应商启动函备注信息<span></span></div>
-		                 <input  type="text" id="prov_remark" name="pt_remark" class="uploadInput checkInfo required" value="">
+		                 <input  type="text" id="comment" name="comment" class="uploadInput checkInfo required" value="">
 	                 </div>
 	                 <div class="btnMid margin-bottom">
 	                      <div class="btn-c-g" id="cancleCprov">取消</div>
