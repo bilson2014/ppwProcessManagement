@@ -1292,6 +1292,7 @@ function addForm() {
 		getScheme();
 		getProduce();
 		getLoadTeamFinanceInfo();
+		getLoadProduceTeamFinanceInfo();
 		var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
 		$('.dynamic-form-table').append(setbtn);
 		
@@ -1363,7 +1364,7 @@ function getLoadTeamFinanceInfo(){
 	}
 }
 
-function /project/loadProduceTeamFinanceInfo/(){
+function getLoadProduceTeamFinanceInfo(){
 	if($('input').hasClass('pt_actualPrice')){
 		loadData(function(res){
 			if(res != null && res != undefined && res != ''){
@@ -2169,16 +2170,17 @@ function createProv(){
 		  $('.checkProvError').val('');
 		  $('.checkProvErrorP').val('');
 		  $('#checkCprov').off('click').on('click',function(){
-			  checkCreateProvider();
+			  if(checkCreateProvider()){
+				  addSubmitProv();
+			  }
 		  });
 	});
 }
 
 //自动联动客户信息
 function autoInputCreateProv(){
-	$('#pt_teamId').parent().hide();
-	$('#pt_teamName').bind('input propertychange', function() {
-		 $('#pt_teamId').val("");
+	$('#prov_teamName').bind('input propertychange', function() {
+		 $('#prov_teamId').val("");
 		var theName = $(this).val();
 		 findAutoInfoCreateProv(theName);
 		 $('.createUi').show();
@@ -2217,7 +2219,6 @@ function autoLiCreateProv(){
 		  $('#prov_telephone').val(phone);
 		  
 	});
-	$('#pt_teamId').parent().hide();
 }
 
 function checkCreateProvider(){
@@ -2288,11 +2289,28 @@ function addSubmitProv(){
 	var prov_teamId =   $('#prov_teamId').val();
 	var prov_teamName = $('#prov_teamName').val();
 	var prov_linkman =  $('#prov_linkman').val();
-	var pt_telephone =  $('#pt_telephone').val();
+	var prov_telephone =  $('#prov_telephone').val();
 	var prov_budget =   $('#prov_budget').val();
-	var pt_makeContent =   $('#pt_makeContent').val();
-	var pt_makeTime =   $('#pt_makeTime').val();
-	var prov_budget =   $('#prov_budget').val();
+	var prov_makeContent =   $('#prov_makeContent').val();
+	var prov_makeTime =   $('#prov_makeTime').val();
+	var comment  = $('#comment').val();
+	loadData(function(res){
+		initLastTime(res.projectCycle,res.createDate);
+		if(res != null && res != undefined){
+		   console.info(res);
+		}
+	}, getContextPath() + '/project/add/produce/team/',$.toJSON({
+		projectId:$('#projectId').val(),
+		teamId:prov_teamId,
+		teamName:prov_teamName,
+		linkman:prov_linkman,
+		telephone:prov_telephone,
+		budget:prov_budget,
+		makeContent:prov_makeContent,
+		makeTime:prov_makeTime,
+		budget:prov_budget,
+		comment:comment
+	}));
 	
 }
 
