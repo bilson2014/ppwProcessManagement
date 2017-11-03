@@ -51,6 +51,7 @@ import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.enums.FileType;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.facade.finance.entity.PmsDealLog;
 import com.paipianwang.pat.facade.finance.service.PmsFinanceFacade;
 import com.paipianwang.pat.facade.indent.entity.IndentSource;
 import com.paipianwang.pat.facade.right.entity.PmsEmployee;
@@ -58,6 +59,7 @@ import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
 import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 import com.paipianwang.pat.workflow.entity.ProjectFlowConstant;
@@ -265,9 +267,9 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				metaData.put("projectStage", item.getStageId());
 				flowFacade.update(metaData, projectId, processInstance.getProcessInstanceId());
 			}
+
 			// 记录项目日志
-			messageService.insertOperationLog(projectId, null, null, "创建了\"" + flowMap.get("projectName") + "\"项目",
-					info);
+			messageService.insertOperationLog(projectId, null, null, "创建了" + flowMap.get("projectName") + "项目", info);
 
 			logger.debug("start a processinstance: {}", processInstance);
 		} finally {
@@ -291,16 +293,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					+ " WHERE ART.ASSIGNEE_ = '" + userId + "'"
 					+ " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC";
 		} else {
-			/*
-			 * sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES " +
-			 * "LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.projectId = RES.BUSINESS_KEY_ " +
-			 * "LEFT JOIN ACT_HI_TASKINST ART ON ART.PROC_INST_ID_ = RES.PROC_INST_ID_ " +
-			 * " WHERE sy.employeeId = "+ userId.split("_")[1] + " AND ART.ASSIGNEE_ = '" +
-			 * userId + "'" +
-			 * " AND ACT_ID_ IS NOT NULL AND IS_ACTIVE_ = 1 AND SUSPENSION_STATE_ = 1 ORDER BY PROC_INST_ID_ DESC"
-			 * ;
-			 */
-
 			sql = "SELECT DISTINCT RES.ID_,RES.* FROM ACT_RU_EXECUTION RES "
 					+ " LEFT JOIN pat.PROJECT_FLOW flow ON flow.PROCESSINSTANCEID = RES.PROC_INST_ID_ "
 					+ " LEFT JOIN pat.PROJECT_SYNERGY sy ON sy.PROJECTID = flow.PROJECTID " + " WHERE sy.employeeId = "
@@ -407,11 +399,11 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 		try {
 			// 需要完成系统留言
-			ProjectCycleItem taskItem=getCycleByTask(task.getTaskDefinitionKey());
-			if(taskItem!=null && taskItem.getNeedFinishLog().equals(1)){
+			ProjectCycleItem taskItem = getCycleByTask(task.getTaskDefinitionKey());
+			if (taskItem != null && taskItem.getNeedFinishLog().equals(1)) {
 				String taskName = task.getName();
-				messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务", userId,
-						realName, userGroup);
+				messageService.insertDetailOperationLog(projectId, taskId, taskName, "完成了\"" + taskName + "\"任务",
+						userId, realName, userGroup);
 			}
 
 			identityService.setAuthenticatedUserId(userId);
@@ -427,7 +419,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					String nextTaskId = nextTask.getId();
 					item = getCycleByTask(taskDefinitionKey);
 					taskService.setDueDate(nextTaskId, getExpectDate(taskDefinitionKey));
-					// TODO 异常处理、事务处理
 
 					taskService.setVariable(nextTaskId, "task_stage", item.getStage());
 					taskService.setVariable(nextTaskId, "task_description", item.getDescription());
@@ -662,7 +653,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					continue;
 
 				PmsProjectFlow project = flowFacade.getProjectFlowByProjectId(projectId);
-				if(project != null) {
+				if (project != null) {
 					PmsEmployee employee = employeeFacade.findEmployeeById(project.getPrincipal());
 					project.setPrincipalName(employee.getEmployeeRealName());
 					PmsProjectFlowResult result = new PmsProjectFlowResult();
@@ -670,9 +661,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					result.setTask(task);
 					result.setProcessInstance(processInstance);
 					result.setProcessDefinition(getProcessDefinition(processInstance.getProcessDefinitionId()));
-					
+
 					String taskStage = (String) taskService.getVariable(result.getTask().getId(), "task_stage");
-					String taskDescription = (String) taskService.getVariable(result.getTask().getId(), "task_description");
+					String taskDescription = (String) taskService.getVariable(result.getTask().getId(),
+							"task_description");
 					result.setTaskStage(taskStage);
 					result.setTaskDescription(taskDescription);
 					if (userId != null && project != null && userId.equals("employee_" + project.getPrincipal())) {
@@ -779,17 +771,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 					assignee.setEmployeeGroup(ProjectRoleType.assignee.getText());
 					result.add(assignee);
 				}
-				/*
-				 * PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
-				 * Integer assigneeId = projectFlow.getPrincipal(); if (assigneeId != null) {
-				 * PmsProjectSynergy synergy = new PmsProjectSynergy(); PmsEmployee assignee =
-				 * employeeFacade.findEmployeeById(assigneeId); if (assignee != null) {
-				 * synergy.setEmployeeName(assignee.getEmployeeRealName());
-				 * synergy.setImgUrl(assignee.getEmployeeImg());
-				 * synergy.setTelephone(assignee.getPhoneNumber()); }
-				 * synergy.setEmployeeGroup(ProjectRoleType.assignee.getText());
-				 * synergy.setProjectId(projectId); result.add(synergy); }
-				 */
 			}
 
 			if (synergyMap != null && !synergyMap.isEmpty()) {
@@ -1078,23 +1059,6 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 							}
 						}
 					}
-					/*
-					 * else if ("DEAL_LOG".equals(tableName)) { Map<String, List<Map<String,
-					 * Object>>> financeMap = financeFacade.getFinancesByProjectId(metaData,
-					 * projectId); for (Entry<String,List<Map<String,Object>>> dlEntry :
-					 * financeMap.entrySet()) { String key = dlEntry.getKey(); List<Map<String,
-					 * Object>> list = dlEntry.getValue(); if(list != null && !list.isEmpty()) { for
-					 * (Map<String, Object> map : list) { Map<String, Object> dlMap =
-					 * assembleData(variablesMap, metaData, map, "DEAL_LOG"); // 组装到list中
-					 * if(PmsConstant.ROLE_CUSTOMER.equals(key)) { // 客户 List<Map<String, Object>>
-					 * customerList = (List<Map<String, Object>>) result.get("deal_log_customer");
-					 * if(customerList != null) { } else { customerList = new ArrayList<Map<String,
-					 * Object>>(); } customerList.add(dlMap); } else if
-					 * (PmsConstant.ROLE_PROVIDER.equals(key)) { // 供应商 List<Map<String, Object>>
-					 * providerList = (List<Map<String, Object>>) result.get("deal_log_provider");
-					 * if(providerList != null) { } else { providerList = new ArrayList<Map<String,
-					 * Object>>(); } providerList.add(dlMap); } } } } }
-					 */
 				}
 
 				return result;
@@ -1231,19 +1195,19 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		Map<String, Object> params = new HashMap<>();
 		params.put("projectName", flowName);
 		if (ValidateUtil.isValid(activitiUserId)) {
-			String idName="";
-			if(activitiUserId.startsWith("employee_")){
-				idName="employeeId";
-			}else if(activitiUserId.startsWith("team_")){
-				idName="teamId";
-			}else if(activitiUserId.startsWith("customer_")){
-				idName="userId";
-			}else{
+			String idName = "";
+			if (activitiUserId.startsWith("employee_")) {
+				idName = "employeeId";
+			} else if (activitiUserId.startsWith("team_")) {
+				idName = "teamId";
+			} else if (activitiUserId.startsWith("customer_")) {
+				idName = "userId";
+			} else {
 				return result;
 			}
-			
+
 			params.put(idName, activitiUserId.split("_")[1]);
-			
+
 		}
 
 		List<PmsProjectFlow> flowList = flowFacade.getProjectFlowByCondition(params);
@@ -1592,7 +1556,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	// 获取 制作供应商 信息
 	@Override
 	public Map<String, Object> getProduceTeamInfo(String projectId) {
-		String[] columns = new String[] { "teamName", "linkman", "telephone", "budget", "makeContent", "makeTime" };
+		String[] columns = new String[] { "teamName", "linkman", "telephone", "budget", "makeContent", "makeTime",
+				"flag" };
 		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
 				projectId, ProjectTeamType.produce.getCode());
 		if (ValidateUtil.isValid(list)) {
@@ -1634,38 +1599,202 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Override
 	public Map<String, Object> getCurentTask(String processInstanceId, String activitiUserId) {
 		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
-		
+
 		Map<String, Object> result = new HashMap<>();
 		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
 				.processInstanceId(processInstanceId).singleResult();
 		String projectId = processInstance.getBusinessKey();
-		
+
 		if (ValidateUtil.isValid(tasks)) {
 			Task currentTask = tasks.get(0);
-			result.put("status","doing");
+			result.put("status", "doing");
 			// 优先取负责任务
 			for (Task task : tasks) {
 				if (task.getAssignee().equals(activitiUserId)) {
 					currentTask = task;
-					result.put("status","task");
+					result.put("status", "task");
 				}
-			}	
+			}
 			result.put("taskId", currentTask.getId());
-		}else{
+		} else {
 			result.put("taskId", " ");
 		}
-		//项目特殊状态：已完成、取消、暂停
-		PmsProjectFlow flow=this.flowFacade.getProjectFlowByProjectId(projectId);
-		if(ProjectFlowStatus.finished.equals(flow.getProjectStatus())){
+		// 项目特殊状态：已完成、取消、暂停
+		PmsProjectFlow flow = this.flowFacade.getProjectFlowByProjectId(projectId);
+		if (ProjectFlowStatus.finished.equals(flow.getProjectStatus())) {
 			result.put("taskId", "status=finished");
-		}else if(ProjectFlowStatus.cancel.equals(flow.getProjectStatus())){
+		} else if (ProjectFlowStatus.cancel.equals(flow.getProjectStatus())) {
 			result.put("taskId", "cancel");
-		}else if(ProjectFlowStatus.suspend.equals(flow.getProjectStatus())){
+		} else if (ProjectFlowStatus.suspend.equals(flow.getProjectStatus())) {
 			result.put("taskId", "pause");
 		}
-		
+
 		result.put("projectId", projectId);
 		result.put("processInstanceId", processInstanceId);
 		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> loadTeamFinanceInfo(final String projectId, final String taskId,
+			final String teamType) {
+		String[] columns = new String[] { "projectTeamId", "teamName", "actualPrice", "invoiceHead" };
+
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
+				projectId, teamType);
+		// 获取 流程中分配的唯一制作供应商
+		String projectTeamId = (String) taskService.getVariable(taskId, "projectTeam_produce");
+
+		return assembleAddTeam(list, "addpt_", projectTeamId);
+	}
+
+	public List<Map<String, Object>> assembleAddTeam(List<Map<String, Object>> list, String prefix,
+			final String exceptStr) {
+		if (ValidateUtil.isValid(list) && StringUtils.isNotBlank(prefix)) {
+			List<Map<String, Object>> result = new ArrayList<Map<String, Object>>(list.size());
+
+			for (Map<String, Object> map : list) {
+				if (map != null) {
+					String teamProjectId = (String) map.get("teamProjectId");
+					if (StringUtils.isNotBlank(teamProjectId)) {
+						if (teamProjectId.equals(exceptStr)) {
+							continue;
+						}
+					}
+					Set<Entry<String, Object>> entrySet = map.entrySet();
+					final Map<String, Object> resultMap = new HashMap<String, Object>();
+					for (Entry<String, Object> entry : entrySet) {
+						resultMap.put(prefix + entry.getKey(), entry.getValue());
+					}
+					result.add(resultMap);
+				}
+			}
+
+			return result;
+		}
+		return null;
+	}
+
+	@Override
+	public void updateTeamInformation(Map<String, String[]> addTeamProperties) {
+		if (addTeamProperties != null) {
+			String[] teamIds = addTeamProperties.get("addpt_projectTeamId");
+			List<Map<String, Object>> param = new ArrayList<Map<String, Object>>(teamIds.length);
+
+			// 初始化 Map
+			for (int i = 0; i < teamIds.length; i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				param.add(map);
+			}
+
+			// 数据分组
+			for (Map.Entry<String, String[]> entry : addTeamProperties.entrySet()) {
+				String entryKey = entry.getKey();
+				String[] values = entry.getValue();
+				if (values != null) {
+					for (int index = 0; index < values.length; index++) {
+						param.get(index).put(entryKey.split("_")[1], values[index]);
+					}
+				}
+			}
+
+			for (Map<String, Object> metaData : param) {
+				if (metaData != null) {
+					final String projectTeamId = (String) metaData.get("projectTeamId");
+					if (StringUtils.isNotBlank(projectTeamId)) {
+						metaData.remove("projectTeamId");
+						projectTeamFacade.update(metaData, Long.valueOf(projectTeamId));
+					}
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public List<Map<String, Object>> loadProduceTeamFinanceInfo(String projectId, String taskId, String teamType) {
+		String[] columns = new String[] { "projectTeamId", "teamName", "flag", "projectId"};
+
+		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
+				projectId, teamType);
+		// 获取 流程中分配的唯一制作供应商
+		String projectTeamId = (String) taskService.getVariable(taskId, "projectTeam_produce");
+
+		return assembleAddTeam(list, "addft_", projectTeamId);
+	}
+
+	@Override
+	public void saveFinaceByProduceTeam(Map<String, String[]> financeProperties) {
+		if (financeProperties != null) {
+			String[] teamIds = financeProperties.get("addft_projectId");
+			List<Map<String, Object>> param = new ArrayList<Map<String, Object>>(teamIds.length);
+
+			// 初始化 Map
+			for (int i = 0; i < teamIds.length; i++) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				param.add(map);
+			}
+
+			// 数据分组
+			for (Map.Entry<String, String[]> entry : financeProperties.entrySet()) {
+				String entryKey = entry.getKey();
+				String[] values = entry.getValue();
+				if (values != null) {
+					for (int index = 0; index < values.length; index++) {
+						param.get(index).put(entryKey.split("_")[1], values[index]);
+					}
+				}
+			}
+
+			for (Map<String, Object> metaData : param) {
+				if (metaData != null) {
+					String projectId = (String) metaData.get("projectId");
+					if(StringUtils.isNotBlank(projectId)) {
+						String json = JSON.toJSONString(metaData);
+						PmsDealLog dealLog = JSON.parseObject(json, PmsDealLog.class);
+						// 预置信息
+						dealLog.setDealStatus(1);
+						dealLog.setPayChannel("线下转账");
+						dealLog.setUserType(PmsConstant.ROLE_PROVIDER);
+						dealLog.setDealLogSource(1);
+						dealLog.setLogType(1); // 出账
+						
+						// 获取 项目名称
+						PmsProjectFlow projectFlow = flowFacade.getProjectFlowByProjectId(projectId);
+						dealLog.setProjectName(projectFlow.getProjectName());
+
+						// 获取客户ID
+						PmsProjectUser user = projectUserFacade.getProjectUserByProjectId(projectId);
+						dealLog.setUserId(user.getProjectUserId());
+						dealLog.setUserName(user.getUserName());
+						financeFacade.save(dealLog);
+					}
+					
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public boolean saveProduceTeam(PmsProjectTeam team) {
+		if(team != null) {
+			String projectId = team.getProjectId();
+			if(StringUtils.isNotBlank(projectId)) {
+				long result = projectTeamFacade.insert(team);
+				return result > -1 ? true : false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteProduceTeam(Long projectTeamId) {
+		if(projectTeamId != null) {
+			Map<String, Object> metaData = new HashMap<String, Object>();
+			metaData.put("flag", 1);
+			final long result = projectTeamFacade.update(metaData, projectTeamId);
+			return result > -1 ? true : false;
+		}
+		return false;
 	}
 }

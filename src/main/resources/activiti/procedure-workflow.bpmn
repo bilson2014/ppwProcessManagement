@@ -59,6 +59,7 @@
         <activiti:formProperty id="pt_teamName" name="供应商名称" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_email" name="邮箱" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_budget" name="供应商预算" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_planTime" name="供应商策划交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_planContent" name="供应商策划内容" type="string" required="true"></activiti:formProperty>
@@ -117,6 +118,7 @@
         <activiti:formProperty id="pt_teamName" name="供应商名称" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_linkman" name="供应商联系人" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_telephone" name="供应商电话" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="pt_email" name="邮箱" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_budget" name="供应商预算" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_makeTime" name="项目制作交付时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_makeContent" name="供应商制作内容" type="string" required="true"></activiti:formProperty>
@@ -178,6 +180,7 @@
     <userTask id="sid-ED17751D-4D1B-4EB6-BCD3-1D0716FEA54E" name="【供应商管家】工程文件审核" activiti:assignee="${teamProviderId}"></userTask>
     <userTask id="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A" name="【财务】填写付款信息" activiti:assignee="${financeId}">
       <extensionElements>
+        <activiti:formProperty id="info_produce_finance_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="dl_billNo" name="交易流水号" type="string" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_payTime" name="付款时间" type="date" datePattern="yyyy-MM-dd" required="true"></activiti:formProperty>
         <activiti:formProperty id="dl_payPrice" name="交易金额" type="long" required="true"></activiti:formProperty>
@@ -199,6 +202,7 @@
     <sequenceFlow id="sid-D6AF2CCA-EDB0-4D5A-95AD-6BC1E2BF201E" sourceRef="sid-76853896-9D0A-4855-90E0-9E2CA1891DB3" targetRef="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB"></sequenceFlow>
     <userTask id="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" name="【供应商管家】填写制作供应商结算信息" activiti:assignee="${teamProviderId}">
       <extensionElements>
+        <activiti:formProperty id="info_produce_budget_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="pt_actualPrice" name="供应商实际价格" type="long" required="true"></activiti:formProperty>
         <activiti:formProperty id="pt_invoiceHead" name="发票抬头" type="enum" required="true">
           <activiti:value id="北京攀峰文化传播有限公司" name="北京攀峰文化传播有限公司"></activiti:value>
@@ -320,6 +324,7 @@
         <activiti:formProperty id="info_scheme_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
+        <activiti:formProperty id="info_scheme_email" name="邮箱" type="string" default="${pt_email}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_planContent" name="供应商策划内容" type="string" default="${pt_planContent}"></activiti:formProperty>
         <activiti:formProperty id="info_scheme_planTime" name="供应商策划交付时间" type="date" default="${pt_planTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
@@ -346,6 +351,7 @@
         <activiti:formProperty id="info_produce_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_linkman" name="供应商联系人" type="string" default="${pt_linkman}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_telephone" name="供应商电话" type="string" default="${pt_telephone}"></activiti:formProperty>
+        <activiti:formProperty id="info_produce_email" name="邮箱" type="string" default="${pt_email}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_budget" name="供应商预算" type="long" default="${pt_budget}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_makeContent" name="供应商制作内容" type="string" default="${pt_makeContent}"></activiti:formProperty>
         <activiti:formProperty id="info_produce_makeTime" name="项目制作交付时间" type="date" default="${pt_makeTime}" datePattern="yyyy-MM-dd"></activiti:formProperty>
@@ -469,7 +475,7 @@
         <omgdc:Bounds height="35.0" width="35.0" x="6210.0" y="277.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB" id="BPMNShape_sid-72A25AD8-EEBC-4F35-A86F-6B9DC998E5BB">
-        <omgdc:Bounds height="80.0" width="100.0" x="5045.0" y="256.0"></omgdc:Bounds>
+        <omgdc:Bounds height="80.0" width="100.0" x="5070.0" y="253.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="sid-BD751F20-4015-4B78-BD57-132E9B4344FB" id="BPMNShape_sid-BD751F20-4015-4B78-BD57-132E9B4344FB">
         <omgdc:Bounds height="80.0" width="100.0" x="5250.0" y="255.0"></omgdc:Bounds>
@@ -604,10 +610,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-D6AF2CCA-EDB0-4D5A-95AD-6BC1E2BF201E" id="BPMNEdge_sid-D6AF2CCA-EDB0-4D5A-95AD-6BC1E2BF201E">
         <omgdi:waypoint x="4990.0" y="294.0"></omgdi:waypoint>
-        <omgdi:waypoint x="5045.0" y="296.0"></omgdi:waypoint>
+        <omgdi:waypoint x="5070.0" y="293.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-E1D6E3D2-F661-4C5B-8F92-2C06F3E07B03" id="BPMNEdge_sid-E1D6E3D2-F661-4C5B-8F92-2C06F3E07B03">
-        <omgdi:waypoint x="5145.0" y="296.0"></omgdi:waypoint>
+        <omgdi:waypoint x="5170.0" y="293.0"></omgdi:waypoint>
         <omgdi:waypoint x="5250.0" y="295.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-651F5A8A-9A6E-46FE-9FB6-76777095E86D" id="BPMNEdge_sid-651F5A8A-9A6E-46FE-9FB6-76777095E86D">

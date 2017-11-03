@@ -72,7 +72,7 @@ public class AllotProductTeamTaskLisnter extends BaseTaskListener {
 				
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
 				delegateTask.setVariable("teamProductId", activitiTeamId); // 设置供应商唯一ID
-				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置策划供应商的唯一ID
+				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置制作供应商的唯一ID
 				
 				// 检测该供应商在activiti表中是否存在
 				User team = identityService.createUserQuery().userId(activitiTeamId).singleResult();

@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +56,7 @@ public class InputTeamDealLogTaskLisnter extends BaseTaskListener {
 				}
 			}
 			
-			// 保存关于策划供应商的信息
+			// 保存关于制作供应商的信息
 			if(param != null && !param.isEmpty()) {
 				ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 				PmsProjectFlowFacade flowFacade = (PmsProjectFlowFacade) context
