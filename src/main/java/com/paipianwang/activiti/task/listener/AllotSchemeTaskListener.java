@@ -1,9 +1,6 @@
 package com.paipianwang.activiti.task.listener;
 
-import java.io.Serializable;
-
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -21,12 +18,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("allotSchemeTaskListener")
-public class AllotSchemeTaskListener implements TaskListener, Serializable{
+public class AllotSchemeTaskListener extends BaseTaskListener{
 
 	private static final long serialVersionUID = -8240080360771368116L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		String schemeId = (String) delegateTask.getVariable("schemeId");
 		String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		if(StringUtils.isNotBlank(schemeId)) {

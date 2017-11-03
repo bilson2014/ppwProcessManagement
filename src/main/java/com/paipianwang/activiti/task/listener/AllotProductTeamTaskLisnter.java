@@ -28,12 +28,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectTeamFacade;
  *
  */
 @Component("allotProductTeamTaskLisnter")
-public class AllotProductTeamTaskLisnter implements TaskListener {
+public class AllotProductTeamTaskLisnter extends BaseTaskListener {
 
 	private static final long serialVersionUID = -2204490453039201351L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// taskId
 		final String taskId = delegateTask.getId();
 
@@ -72,7 +72,7 @@ public class AllotProductTeamTaskLisnter implements TaskListener {
 				
 				long projectTeamId = pmsProjectTeamFacade.insert(param);
 				delegateTask.setVariable("teamProductId", activitiTeamId); // 设置供应商唯一ID
-				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置策划供应商的唯一ID
+				delegateTask.setVariable("projectTeam_produce", projectTeamId); // 设置制作供应商的唯一ID
 				
 				// 检测该供应商在activiti表中是否存在
 				User team = identityService.createUserQuery().userId(activitiTeamId).singleResult();

@@ -52,6 +52,8 @@ function checkState(){
     }
     if(state.trim()== "finish"){
   	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?finish");
+  	  $('#daiban img').attr('src','/resources/images/pFlow/wc.png');
+  	  $('#daibanword').text('项目已完成!');
   }
     if(state.trim()== "pause"){
   	  $(window.parent.document).find('.footBot #toInfo').attr('data-content',$('#url').val()+"?pause");

@@ -30,12 +30,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
  *
  */
 @Component("inputCustomerDealLogTaskLisnter")
-public class InputCustomerDealLogTaskLisnter implements TaskListener {
+public class InputCustomerDealLogTaskLisnter extends BaseTaskListener {
 
 	private static final long serialVersionUID = -2204490453039201351L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// taskId
 		final String taskId = delegateTask.getId();
 		// processInstanceId

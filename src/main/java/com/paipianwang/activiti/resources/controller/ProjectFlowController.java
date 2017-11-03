@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,8 +39,10 @@ import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
 import com.paipianwang.pat.workflow.enums.ProjectFlowStatus;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;
+import com.paipianwang.pat.workflow.enums.ProjectTeamType;
 
 /**
  * 项目流程控制器
@@ -420,23 +423,43 @@ public class ProjectFlowController extends BaseController {
 			HttpServletRequest request) {
 
 		Map<String, String> formProperties = new HashMap<String, String>();
+		// 增加的供应商数据
+		Map<String, String[]> addTeamProperties = new HashMap<String, String[]>(); 
+		// 增加的供应商财务信息
+		Map<String, String[]> financeProperties = new HashMap<String, String[]>();
+		
 		// 从request中读取参数然后转换
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		Set<Entry<String, String[]>> entrySet = parameterMap.entrySet();
 		for (Entry<String, String[]> entry : entrySet) {
 			String key = entry.getKey();
-			formProperties.put(key, entry.getValue()[0]);
+			if(key.startsWith("addpt_"))
+				addTeamProperties.put(key, entry.getValue());
+			else if(key.startsWith("addft_"))
+				financeProperties.put(key, entry.getValue());
+			else
+				formProperties.put(key, entry.getValue()[0]);
 		}
 
 		logger.debug("start form parameters: {}", formProperties);
 
 		SessionInfo info = getCurrentInfo(request);
-		String processInstanceId=projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
+		String projectId=projectWorkFlowService.completeTaskFromData(taskId, formProperties, info.getActivitiUserId(),
 				info.getActivitGroups(), info.getRealName());
-
+		
+		if(addTeamProperties != null && !addTeamProperties.isEmpty()) {
+			// 如果 新增的供应商有数据存在，则执行更新操作
+			projectWorkFlowService.updateTeamInformation(addTeamProperties);
+		}
+		
+		if(financeProperties != null && !financeProperties.isEmpty()) {
+			// 如果新增供应商有财务信息存在，则执行插入操作
+			projectWorkFlowService.saveFinaceByProduceTeam(financeProperties);
+		}
+		
 		redirectAttributes.addFlashAttribute("message", "任务完成：taskId=" + taskId);
 		//获取下一步task信息
-		Map<String, Object> currentTask=projectWorkFlowService.getCurentTask(processInstanceId, info.getActivitiUserId());
+		Map<String, Object> currentTask=projectWorkFlowService.getCurentTask(projectId, info.getActivitiUserId());
 		if(currentTask==null){
 			return new ModelAndView("redirect:/project/running-doing");
 		}
@@ -834,4 +857,54 @@ public class ProjectFlowController extends BaseController {
 		}
 		return null;
 	}
+	
+	/**
+	 * 在 【供应商管家填写制作供应商结算信息】 
+	 * 获取 供应商实际价格、发票抬头
+	 * @param projectId
+	 * @return
+	 */
+	@PostMapping("/loadTeamFinanceInfo/{projectId}/{taskId}")
+	public List<Map<String, Object>> loadTeamFinanceInfo(@PathVariable("projectId") final String projectId, final String taskId) {
+		if(StringUtils.isNotBlank(projectId) && StringUtils.isNotBlank(taskId)) {
+			List<Map<String, Object>> list = projectWorkFlowService.loadTeamFinanceInfo(projectId, taskId, ProjectTeamType.produce.getCode());
+			return list;
+		}
+		return null;
+	}
+	
+	/**
+	 * 在 【财务】填写付款信息
+	 * 获取 供应商的交易流水号、付款时间、交易金额、描述
+	 * @return
+	 */
+	@PostMapping("/loadProduceTeamFinanceInfo/{projectId}/{taskId}")
+	public List<Map<String, Object>> loadProduceTeamFinanceInfo(@PathVariable("projectId") final String projectId, final String taskId) {
+		if(StringUtils.isNotBlank(projectId) && StringUtils.isNotBlank(taskId)) {
+			List<Map<String, Object>> list = projectWorkFlowService.loadProduceTeamFinanceInfo(projectId, taskId, ProjectTeamType.produce.getCode());
+			return list;
+		}
+		return null;
+	}
+	
+	@PostMapping("/add/produce/team")
+	public boolean saveProduceTeam(@RequestBody final PmsProjectTeam team) {
+		if(team != null) {
+			boolean result = projectWorkFlowService.saveProduceTeam(team);
+			return result;
+		}
+		
+		return false;
+	}
+	
+	@PostMapping("/delete/produce/team")
+	public boolean deleteProduceTeam(@PathVariable("projectTeamId") final PmsProjectTeam team) {
+		if(team != null) {
+			boolean result = projectWorkFlowService.deleteProduceTeam(team);
+			return result;
+		}
+		
+		return false;
+	}
+	
 }

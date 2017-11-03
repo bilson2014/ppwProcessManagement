@@ -77,7 +77,6 @@ function initStateBtn(){
 //初始化来源
 function initResouces(){
 	loadData(function (res){
-		console.log(res);
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -874,7 +873,7 @@ function openProviderInfo(){
 	          if(produce == undefined || produce == "" || produce ==null ){
 	  		      $('#isHideBot').remove();
 	  		    }else{
-	  		    	 for (var i = 0; i < scheme.length; i++) {
+	  		    	 for (var i = 0; i < produce.length; i++) {
 	  		    		 var pt_teamName = produce[i].pt_teamName;
 	  		    		 var pt_linkman = produce[i].pt_linkman;
 	  		    		 var pt_telephone = produce[i].pt_telephone;
