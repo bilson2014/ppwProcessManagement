@@ -20,6 +20,7 @@ $().ready(function() {
 			$('#lastTimeWord').hide();
 	    	$('#taskStage').val('交付阶段');
 	    	getStageInfo($('#taskStage').val());
+	    	$('#imgFlow').addClass('imgFinish');
 	    }else{
 	    	var task = $('#taskStage').val();
 	    	getStageInfo(task);
@@ -29,6 +30,7 @@ $().ready(function() {
 	initDaibanTime();
 	initResouces();
 	initStateBtn();
+	provNewInit();
 });
 
 function getScroll(){
@@ -838,22 +840,33 @@ function openProviderInfo(){
 	  		    		     var pt_teamName = scheme[i].pt_teamName;
 		  		    		 var pt_linkman = scheme[i].pt_linkman;
 		  		    		 var pt_telephone = scheme[i].pt_telephone;
-                           $('#scTeamName').val(scheme[i].pt_teamName);
-                           $('#scLink').val(scheme[i].pt_linkman);
-                           $('#scTel').val(scheme[i].pt_telephone);
-                           $('#scId').val(scheme[i].pt_projectTeamId);
-                           $('#scTeamId').val(scheme[i].pt_teamId);
-                           
-                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
-                       		$('#scTeamError').remove();
-                   		} 
-                    	if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
-                    		$('#scLinkError').remove();
-                		}
-                    	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
-                    		$('#scTelError').remove();
-                		}
-                           
+		  		    		 var pt_email = scheme[i].pt_email;
+                             var scId = scheme[i].pt_projectTeamId;
+                             var teamId = scheme[i].pt_teamId;
+                         $('.setHideTop').html('')
+                        var body = $('.setHideTop');
+                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+	                       if(pt_teamName != undefined && pt_teamName != "" && pt_teamName != null){
+	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
+	                   		} 
+	                    	if(pt_linkman != undefined && pt_linkman != "" && pt_linkman != null){
+	                    		body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
+	                		}
+	                    	if(pt_telephone != undefined && pt_telephone != "" && pt_telephone != null){
+	                    		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
+	                		}
+	                    	if(pt_email != undefined && pt_email != "" && pt_email != null){
+	                    		body.append(createUpdateCard('供应商邮箱',pt_telephone,'pt_email','',1));
+	                		}
+	                    	var html = [
+	            				'<div class="itemTime itemLong">',
+	            					'<div class="title">修改原因</div>',
+	            					'<textarea></textarea>',
+	            				'</div>'
+	            			].join('');
+	                    	body.append(html);
+	                    	body.append('<br/>');
 					  }
 	  		    }
 	          
@@ -861,24 +874,32 @@ function openProviderInfo(){
 	  		      $('#isHideBot').remove();
 	  		    }else{
 	  		    	 for (var i = 0; i < produce.length; i++) {
-                          
 	  		    		 var pt_teamName = produce[i].pt_teamName;
 	  		    		 var pt_linkman = produce[i].pt_linkman;
 	  		    		 var pt_telephone = produce[i].pt_telephone;
-	  		    		   $('#prTeamName').val(produce[i].pt_teamName);
-                           $('#prLink').val(produce[i].pt_linkman);
-                           $('#prTel').val(produce[i].pt_telephone);
-                           $('#prId').val(produce[i].pt_projectTeamId);
-                           $('#prTeamId').val(produce[i].pt_teamId);
-                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
-                          		$('#prTeamError').remove();
-                      	} 
-                        if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
-                       		$('#prLinkError').remove();
-                   		}
-                       	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
-                       		$('#prTelError').remove();
-                   		}
+	  		    		 var scId = produce[i].pt_projectTeamId;
+                         var teamId = produce[i].pt_teamId;
+                         $('.setHideBot').html('')
+                         var body = $('.setHideBot');
+                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+	                        if(pt_teamName != undefined && pt_teamName != "" && pt_teamName != null){
+	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
+	                      	} 
+	                        if(pt_linkman != undefined && pt_linkman != "" && pt_linkman != null){
+	                        	body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
+	                   		}
+	                       	if(pt_telephone != undefined && pt_telephone != "" && pt_telephone != null){
+	                       		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
+	                   		}
+	                       	var html = [
+	            				'<div class="itemTime itemLong">',
+	            					'<div class="title">修改原因</div>',
+	            					'<textarea></textarea>',
+	            				'</div>'
+	            			].join('');
+	                       	body.append(html);
+	                       	body.append('<br/>');
 					   }
 	  		    }
 			}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pt",null);
@@ -891,7 +912,19 @@ function openProviderInfo(){
 	});
 }
 
-
+function createUpdateCard(name,value,setName,read,phone){	
+	var setPhone = "checkErrorP"
+      if(phone == 1){
+    	  setPhone = "checkError"
+      }
+				var html = [
+				'<div class="itemTime errorItem">',
+					'<div class="title">'+name+'</div>',
+					'<input '+read+' class="'+setPhone+'" value="'+value+'" name="'+setName+'">',
+				'</div>'
+				].join('');
+	return html;
+}
 
 function clearProvi(){
 	$('.checkError').val('');
@@ -899,8 +932,7 @@ function clearProvi(){
     $('.errorItem').attr('data-content','');
 }
 
-function checkProvider(){
-             	
+function checkProvider(){           	
     var error = $('.checkError');
     var errorP = $('.checkErrorP');
     $('.errorItem').attr('data-content','');
@@ -1179,8 +1211,6 @@ function autoSelectUl(){
 	
 }
 
-
-
 //动态联动事件
 
 //自动联动客户信息
@@ -1249,7 +1279,7 @@ function addForm() {
 		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
 		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
-		trs += '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>'
+		
 		
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
@@ -1261,6 +1291,10 @@ function addForm() {
 		getWatermarkUrl();
 		getScheme();
 		getProduce();
+		getLoadTeamFinanceInfo();
+		var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+		$('.dynamic-form-table').append(setbtn);
+		
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1276,7 +1310,12 @@ function getWatermarkUrl(){
 		loadData(function(res){
 			$('#info_watermarkUrl').text(res.sampleUrl);
 			$('#info_watermarkUrl').attr('href',res.sampleUrl);
-			$('#info_watermarkPass').val(res.samplePassword);
+			if(res.samplePassword == '' || res.samplePassword == null || res.samplePassword == undefined ){
+				$('#info_watermarkPass').val('无');
+			}else{
+				$('#info_watermarkPass').val(res.samplePassword);
+			}
+			
 		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
 	}
 }
@@ -1309,6 +1348,35 @@ function getProduce(){
 	}
 }
 
+
+function getLoadTeamFinanceInfo(){
+	if($('input').hasClass('pt_actualPrice')){
+		loadData(function(res){
+			if(res != null && res != undefined && res != ''){
+				var body = $('.dynamic-form-table');
+				for (var int = 0; int < res.length; int++) {
+					   var html =createUserInfo();
+					   body.append(html);
+				};			
+			}
+		}, getContextPath() + '/project/loadTeamFinanceInfo' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
+	}
+}
+
+function /project/loadProduceTeamFinanceInfo/(){
+	if($('input').hasClass('pt_actualPrice')){
+		loadData(function(res){
+			if(res != null && res != undefined && res != ''){
+				var body = $('.dynamic-form-table');
+				for (var int = 0; int < res.length; int++) {
+					   var html =createUserInfo();
+					   body.append(html);
+				};			
+			}
+		}, getContextPath() + '/project/loadProduceTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
+	}
+}
+
 var formFieldCreator = {
 'string': function(prop, datas, className) {
 	var addClass ="";
@@ -1331,10 +1399,10 @@ var formFieldCreator = {
 	
 	
 	if(prop.required){	
-		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
+		var result = "<div class='title' "+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
+		var result = "<div class='title' "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	
@@ -1382,12 +1450,12 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
+			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "'      />";
 			result += " <div id='picker' class='upload picker '>上传</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
-		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' value='" + prop.value + "' />";
+		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput' "+isCheck+" '" + className + "' " + prop.id + "' value='" + prop.value + "' />";
 	} else {
 		result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
@@ -1436,7 +1504,7 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='"+isCheck+" " + prop.id + " " + className + " ' value='" + prop.value + "'/>";
 	} else {
 		result += "<input class='" + prop.id + "' name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
@@ -1553,7 +1621,6 @@ function dataEven(){
 		language: 'zh',
 		dateFormat:'yyyy-MM-dd'
      });
-	
 }
 
 //提示
@@ -1965,7 +2032,6 @@ function createNoInfo(res){
 }
 
 function createOption(value,text,price){
-	
 	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 	return html;
 }
@@ -2078,6 +2144,156 @@ function autoTeamMakeLi(){
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
 	});
+}
+
+
+function provNewInit(){
+	createProv();
+	delProv();
+}
+//删除供应商
+function delProv(){
+	$('.delPro').off('click').on('click',function(){
+		$('#errorDelProv').show();
+	});
+}
+
+//新增供应商
+function createProv(){
+	$('.addPro').off('click').on('click',function(){
+		  var id = $(this).parent().parent().find('.contentTeamId').val();
+		  $('#prov_teamId').val(id);
+		  $('#createProivder').show();
+		  autoInputCreateProv();
+		  dataEven();
+		  $('.checkProvError').val('');
+		  $('.checkProvErrorP').val('');
+		  $('#checkCprov').off('click').on('click',function(){
+			  checkCreateProvider();
+		  });
+	});
+}
+
+//自动联动客户信息
+function autoInputCreateProv(){
+	$('#pt_teamId').parent().hide();
+	$('#pt_teamName').bind('input propertychange', function() {
+		 $('#pt_teamId').val("");
+		var theName = $(this).val();
+		 findAutoInfoCreateProv(theName);
+		 $('.createUi').show();
+		 if(theName == null || theName == ""){
+			 $('.createUi').hide();
+		 }
+	});
+}
+
+function findAutoInfoCreateProv(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.createUi');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			autoLiCreateProv();
+		}
+	}, getContextPath() + '/team/listByName/'+userName,null);
+}
+
+function autoLiCreateProv(){
+	
+	$('.createUi li').off('click').on('click',function(){
+		  $('.createUi').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#prov_teamId').val(id);
+		  $('#prov_linkman').val(linkman);
+		  $('#prov_telephone').val(phone);
+		  
+	});
+	$('#pt_teamId').parent().hide();
+}
+
+function checkCreateProvider(){
+ 	
+    var error = $('.checkProvError');
+    var errorP = $('.checkProvErrorP');
+    $('.errorItem').attr('data-content','');
+    for (var i = 0; i < error.length; i++) {
+	    	 var word = $(error[i]).val();
+	    	 if(word == undefined || word == "" || word ==null ){
+	    		 $(error[i]).parent().attr('data-content','内容不能为空');
+	 			return false;
+	 		}
+	   }
+    for (var i = 0; i < errorP.length; i++) {
+   	 var phone = $(errorP[i]).val();
+   	 if(!checkMobile(phone)){
+   		$(errorP[i]).parent().attr('data-content','电话格式不正确');
+		return false;
+		}
+    }
+    return true;
+}
+
+
+function initProvCard(who,flag){
+	/*var html = "";
+	if(who == 0){
+		var html = [
+			'<div class="item">',
+		    '   <div>供应商联系电话</div>',
+		    '     <div>',
+		    '         内容',
+		    '     </div>',
+		    '</div> ',                                                                                    '
+		].join('');
+	}
+	if(who == 1){
+		var html = [
+			'<div class="item">',
+		    '   <div>供应商联系电话</div>',
+		    '     <div>',
+		    '         内容',
+		    '     </div>',
+		    '</div> ',                                                                                    '
+		].join('');
+	}
+	if(who == 2){
+		var html = [
+			'<div class="item">',
+		    '   <div>供应商联系电话</div>',
+		    '     <div>',
+		    '         内容',
+		    '     </div>',
+		    '</div> ',                                                                                    '
+		].join('');
+	}
+	return html;	*/
+}
+
+function loadProvInfo(){
+	$('#makeProvItem').html('');
+}
+
+
+function addSubmitProv(){
+	
+	var prov_teamId =   $('#prov_teamId').val();
+	var prov_teamName = $('#prov_teamName').val();
+	var prov_linkman =  $('#prov_linkman').val();
+	var pt_telephone =  $('#pt_telephone').val();
+	var prov_budget =   $('#prov_budget').val();
+	var pt_makeContent =   $('#pt_makeContent').val();
+	var pt_makeTime =   $('#pt_makeTime').val();
+	var prov_budget =   $('#prov_budget').val();
+	
 }
 
 
