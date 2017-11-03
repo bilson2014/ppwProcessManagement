@@ -446,7 +446,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		} finally {
 			identityService.setAuthenticatedUserId(null);
 		}
-		return processInstanceId;
+		return projectId;
 
 	}
 
@@ -511,8 +511,8 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<String> userList = columns.get("PROJECT_USER");
 
 		if (flowList != null) {
-			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);// TODO
-																												// 后期整改，不使用map
+			Map<String, Object> projectFlow = flowFacade.getProjectFlowColumnByProjectId(flowList, projectId);
+			
 			// 价格信息
 			Map<String, Object> priceFlow = new HashMap<>();
 			if (projectFlow.containsKey("estimatedPrice")) {
@@ -1597,13 +1597,22 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	 * 获取项目当前任务
 	 */
 	@Override
-	public Map<String, Object> getCurentTask(String processInstanceId, String activitiUserId) {
-		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
+	public Map<String, Object> getCurentTask(String projectId, String activitiUserId) {
+		PmsProjectFlow flow = this.flowFacade.getProjectFlowByProjectId(projectId);
+		String processInstanceId = flow.getProcessInstanceId();
 
 		Map<String, Object> result = new HashMap<>();
-		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
-				.processInstanceId(processInstanceId).singleResult();
-		String projectId = processInstance.getBusinessKey();
+		result.put("projectId", projectId);
+		result.put("processInstanceId", processInstanceId);
+		// 项目特殊状态：已完成、取消、暂停
+		if (ProjectFlowStatus.finished.getId().equals(flow.getProjectStatus())) {
+			result.put("status", "status=finished");
+		} else if (ProjectFlowStatus.cancel.getId().equals(flow.getProjectStatus())) {
+			result.put("status", "cancel");
+		} else if (ProjectFlowStatus.suspend.getId().equals(flow.getProjectStatus())) {
+			result.put("status", "pause");
+		}
+		List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
 
 		if (ValidateUtil.isValid(tasks)) {
 			Task currentTask = tasks.get(0);
@@ -1619,18 +1628,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		} else {
 			result.put("taskId", " ");
 		}
-		// 项目特殊状态：已完成、取消、暂停
-		PmsProjectFlow flow = this.flowFacade.getProjectFlowByProjectId(projectId);
-		if (ProjectFlowStatus.finished.equals(flow.getProjectStatus())) {
-			result.put("taskId", "status=finished");
-		} else if (ProjectFlowStatus.cancel.equals(flow.getProjectStatus())) {
-			result.put("taskId", "cancel");
-		} else if (ProjectFlowStatus.suspend.equals(flow.getProjectStatus())) {
-			result.put("taskId", "pause");
-		}
 
-		result.put("projectId", projectId);
-		result.put("processInstanceId", processInstanceId);
 		return result;
 	}
 
@@ -1781,6 +1779,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			String projectId = team.getProjectId();
 			if(StringUtils.isNotBlank(projectId)) {
 				long result = projectTeamFacade.insert(team);
+				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
 				return result > -1 ? true : false;
 			}
 		}
@@ -1793,6 +1792,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			Map<String, Object> metaData = new HashMap<String, Object>();
 			metaData.put("flag", 1);
 			final long result = projectTeamFacade.update(metaData, projectTeamId);
+			// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
 			return result > -1 ? true : false;
 		}
 		return false;
