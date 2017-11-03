@@ -254,7 +254,7 @@ public interface ProjectWorkFlowService {
 	 */
 	public void saveFinaceByProduceTeam(Map<String, String[]> financeProperties);
 
-	public boolean saveProduceTeam(PmsProjectTeam team);
+	public Long saveProduceTeam(PmsProjectTeam team);
 
 	/**
 	 * 逻辑删除

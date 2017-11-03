@@ -1774,17 +1774,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public boolean saveProduceTeam(PmsProjectTeam team) {
+	public Long saveProduceTeam(PmsProjectTeam team) {
 		if(team != null) {
 			String projectId = team.getProjectId();
 			if(StringUtils.isNotBlank(projectId)) {
 				team.setTeamType(ProjectTeamType.produce.getCode());
 				long result = projectTeamFacade.insert(team);
 				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
-				return result > -1 ? true : false;
+				return result;
 			}
 		}
-		return false;
+		return null;
 	}
 
 	@Override

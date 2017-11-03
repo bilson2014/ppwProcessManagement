@@ -888,12 +888,11 @@ public class ProjectFlowController extends BaseController {
 	}
 	
 	@PostMapping("/add/produce/team")
-	public boolean saveProduceTeam(@RequestBody final PmsProjectTeam team) {
+	public Long saveProduceTeam(@RequestBody final PmsProjectTeam team) {
 		if(team != null) {
-			boolean result = projectWorkFlowService.saveProduceTeam(team);
-			return result;
+			return projectWorkFlowService.saveProduceTeam(team);
 		}
-		return false;
+		return null;
 	}
 	
 	@PostMapping("/delete/produce/team")
