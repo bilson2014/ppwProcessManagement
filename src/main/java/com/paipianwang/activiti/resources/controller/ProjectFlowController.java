@@ -897,10 +897,10 @@ public class ProjectFlowController extends BaseController {
 		return false;
 	}
 	
-	@PostMapping("/delete/produce/team/{projectTeamId}")
-	public boolean saveProduceTeam(@PathVariable("projectTeamId") final Long projectTeamId) {
-		if(projectTeamId != null) {
-			boolean result = projectWorkFlowService.deleteProduceTeam(projectTeamId);
+	@PostMapping("/delete/produce/team")
+	public boolean deleteProduceTeam(@PathVariable("projectTeamId") final PmsProjectTeam team) {
+		if(team != null) {
+			boolean result = projectWorkFlowService.deleteProduceTeam(team);
 			return result;
 		}
 		

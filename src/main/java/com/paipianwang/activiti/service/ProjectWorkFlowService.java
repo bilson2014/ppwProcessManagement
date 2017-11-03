@@ -262,6 +262,6 @@ public interface ProjectWorkFlowService {
 	 * @param projectTeamId
 	 * @return
 	 */
-	public boolean deleteProduceTeam(Long projectTeamId);
+	public boolean deleteProduceTeam(final PmsProjectTeam team);
 	
 }

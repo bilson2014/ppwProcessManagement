@@ -1787,13 +1787,18 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	}
 
 	@Override
-	public boolean deleteProduceTeam(Long projectTeamId) {
-		if(projectTeamId != null) {
-			Map<String, Object> metaData = new HashMap<String, Object>();
-			metaData.put("flag", 1);
-			final long result = projectTeamFacade.update(metaData, projectTeamId);
-			// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
-			return result > -1 ? true : false;
+	public boolean deleteProduceTeam(final PmsProjectTeam team) {
+		if(team != null) {
+			final Long projectTeamId = team.getProjectTeamId();
+			if(projectTeamId != null) {
+				Map<String, Object> metaData = new HashMap<String, Object>();
+				metaData.put("flag", 1);
+				metaData.put("projectTeamId", projectTeamId);
+				metaData.put("reason", team.getReason());
+				final long result = projectTeamFacade.update(metaData, projectTeamId);
+				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
+				return result > -1 ? true : false;
+			}
 		}
 		return false;
 	}
