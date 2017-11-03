@@ -31,6 +31,7 @@ $().ready(function() {
 	initResouces();
 	initStateBtn();
 	provNewInit();
+	loadProvCard();
 });
 
 function getScroll(){
@@ -836,6 +837,7 @@ function openProviderInfo(){
 	          if(scheme == undefined || scheme == "" || scheme ==null ){
 	  		      $('#isHideTop').remove();
 	  		    }else{
+	  		    	 $('.setHideTop').html('');
 	  		    	 for (var i = 0; i < scheme.length; i++) {
 	  		    		     var pt_teamName = scheme[i].pt_teamName;
 		  		    		 var pt_linkman = scheme[i].pt_linkman;
@@ -843,7 +845,7 @@ function openProviderInfo(){
 		  		    		 var pt_email = scheme[i].pt_email;
                              var scId = scheme[i].pt_projectTeamId;
                              var teamId = scheme[i].pt_teamId;
-                         $('.setHideTop').html('')
+                        
                         var body = $('.setHideTop');
                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
@@ -873,13 +875,14 @@ function openProviderInfo(){
 	          if(produce == undefined || produce == "" || produce ==null ){
 	  		      $('#isHideBot').remove();
 	  		    }else{
+	  		    	$('.setHideBot').html('');
 	  		    	 for (var i = 0; i < produce.length; i++) {
 	  		    		 var pt_teamName = produce[i].pt_teamName;
 	  		    		 var pt_linkman = produce[i].pt_linkman;
 	  		    		 var pt_telephone = produce[i].pt_telephone;
 	  		    		 var scId = produce[i].pt_projectTeamId;
                          var teamId = produce[i].pt_teamId;
-                         $('.setHideBot').html('')
+                         
                          var body = $('.setHideBot');
                          body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
                          body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
@@ -2156,7 +2159,32 @@ function provNewInit(){
 function delProv(){
 	$('.delPro').off('click').on('click',function(){
 		$('#errorDelProv').show();
+		var proId = $(this).attr('data-idp');
+		initDelProv(proId);
 	});
+}
+
+function initDelProv(proId){
+	
+	$('#cancleProveReason').val('');
+	$('#errorProveReason').text('');
+	$('#checkReasopnProv').off('click').on('click',function(){
+		var setValue = $('#cancleProveReason').val();
+		if(setValue!=""&&setValue!=null&&setValue!=undefined){
+			loadData(function(res){
+				initLastTime(res.projectCycle,res.createDate);
+				if(res != null && res != undefined){
+				   console.info(res);
+				}
+			}, getContextPath() + '/project/delete/produce/team',$.toJSON({
+				projectId:proId,
+				content:$('#cancleProveReason').val()
+			}));
+		}else{
+			$('#errorProveReason').text('请填写删除原因');
+		}
+	});
+	
 }
 
 //新增供应商
@@ -2243,44 +2271,12 @@ function checkCreateProvider(){
     return true;
 }
 
-
-function initProvCard(who,flag){
-	/*var html = "";
-	if(who == 0){
-		var html = [
-			'<div class="item">',
-		    '   <div>供应商联系电话</div>',
-		    '     <div>',
-		    '         内容',
-		    '     </div>',
-		    '</div> ',                                                                                    '
-		].join('');
-	}
-	if(who == 1){
-		var html = [
-			'<div class="item">',
-		    '   <div>供应商联系电话</div>',
-		    '     <div>',
-		    '         内容',
-		    '     </div>',
-		    '</div> ',                                                                                    '
-		].join('');
-	}
-	if(who == 2){
-		var html = [
-			'<div class="item">',
-		    '   <div>供应商联系电话</div>',
-		    '     <div>',
-		    '         内容',
-		    '     </div>',
-		    '</div> ',                                                                                    '
-		].join('');
-	}
-	return html;	*/
-}
-
-function loadProvInfo(){
-	$('#makeProvItem').html('');
+function loadProvCard(){
+	loadData(function(res){
+		if(res != null && res != undefined){
+		   console.info(res);
+		}
+	}, getContextPath() + '/project/getProduceTeamInfo/'+$('#projectId').val(),'');
 }
 
 
@@ -2297,7 +2293,40 @@ function addSubmitProv(){
 	loadData(function(res){
 		initLastTime(res.projectCycle,res.createDate);
 		if(res != null && res != undefined){
-		   console.info(res);
+		   if(res){
+			   var html = [
+					'<div class="item">',
+				    '   <div>供应商名称</div>',
+				    '     <div>',
+				    '         内容',
+				    '     </div>',
+				    '</div> ',
+				    '<div class="item">',
+				    '   <div>供应商联系人</div>',
+				    '     <div>',
+				    '         内容',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item">',
+				    '   <div>供应商联系电话</div>',
+				    '     <div>',
+				    '         内容',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item smallItem">',
+				    '   <div>状态</div>',
+				    '     <div style="color:green">',
+				    '         正常',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item">',
+				    '   <div>操作</div>',
+				    '     <div class="delPro" data-idp="">',
+				    '         删除',
+				    '     </div>',
+				    '</div> ', 
+				].join('');
+		   }
 		}
 	}, getContextPath() + '/project/add/produce/team/',$.toJSON({
 		projectId:$('#projectId').val(),

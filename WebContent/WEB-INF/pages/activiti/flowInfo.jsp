@@ -364,38 +364,27 @@
 					                                          </div>
 							                             </div>
 						                             </c:if>
-						                              <c:if test="${not empty plan['flag']}">
-							                             <div class="item smallItem">
-					                                          <div>状态</div>
-					                                           <c:if test="${plan['flag'] == 0}">
-					                                                     <div style="color:green">正常</div>                                           
-					                                           </c:if>
-					                                            <c:if test="${plan['flag'] == 1}">
-					                                                     <div style="color:#fe5453">已删除</div>
-					                                           </c:if>
-							                             </div>
-						                             </c:if>
-						                             <div class="item">
-					                                          <div>供应商邮箱</div>
-					                                          <div>${product["email"]}</div>
-							                           </div>
+						     
+						                             <c:if test="${not empty plan['email']}">
+							                             <div class="item">
+						                                          <div>供应商邮箱</div>
+						                                          <div>${plan["email"]}</div>
+								                           </div>
+							                           </c:if>
 												</div>
 	                            			</c:forEach>
 	                            	</c:if>
 	                               
 	                                  <c:if test="${!empty teamProduct_info}">
 		                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
-		                                  <c:forEach items="${teamProduct_info }" var="product">
 			                                  	<div class="contentItem" id="makeProvItem">
-						                            <input type='hidden' class="contentTeamId" value='${plan["teamId"]}'>
-			                                        <input type='hidden' class="contentTeamId" value='${plan["projectTeamId"]}'>
+			                                  	  <c:forEach items="${teamProduct_info }" var="product">
 						                             	<c:if test="${not empty product['teamName']}">
 						                             		<div class="item">
 					                                          <div>供应商名称</div>
 					                                          <div>${product["teamName"]}</div>
 							                             	</div>
 						                             	</c:if>
-					                                     
 					                                     <c:if test="${not empty product['linkman']}">
 					                                     	<div class="item">
 					                                          <div>供应商联系人</div>
@@ -409,34 +398,36 @@
 					                                          <div>${product["telephone"]}</div>
 							                             	</div>
 							                             </c:if>
-							                          <c:if test="${not empty plan['flag']}">
-							                             <div class="item smallItem">
-					                                          <div>状态</div>
-					                                           <c:if test="${plan['flag'] == 0}">
-					                                                     <div style="color:green">正常</div>                                           
-					                                           </c:if>
-					                                            <c:if test="${plan['flag'] == 1}">
-					                                                     <div style="color:#fe5453">已删除</div>
-					                                           </c:if>
-							                             </div>
-						                             </c:if>
-								                        <c:if test="${plan['flag'] == 0}">
+									                          <c:if test="${not empty product['flag']}">
+									                             <div class="item smallItem">
+							                                          <div>状态</div>
+							                                           <c:if test="${product['flag'] == 0}">
+							                                                     <div style="color:green">正常</div>                                           
+							                                           </c:if>
+							                                            <c:if test="${product['flag'] == 1}">
+							                                                     <div style="color:#fe5453">已删除</div>
+							                                           </c:if>
+									                             </div>
+								                             </c:if>
+								                           <c:if test="${product['flag'] == 0}">
 							                                  <div class="item smallItem">
 							                                          <div>操作</div>
-							                                          <div class="delPro" data-id='${plan["teamId"]}' data-idp='${plan["projectTeamId"]}' >删除</div>
+							                                          <div class="delPro" data-id='${product["teamId"]}' data-idp='${product["projectTeamId"]}' >删除</div>
 									                          </div>                                       
 						                                   </c:if>
-						                                   <div class="item">
-					                                          <div>供应商邮箱</div>
-					                                          <div>${product["email"]}</div>
-							                           </div>
+						                                   <c:if test="${not empty product['email']}">
+									                             <div class="item">
+								                                          <div>供应商邮箱</div>
+								                                          <div>${product["email"]}</div>
+										                           </div>
+							                           		</c:if>
+							                           </br>
+							                           </c:forEach>
 								                    </div>                                       
 											    </div>
-			                                  </c:forEach>
 							              </c:if>
 	                                  </div>
 	                            </div>
-	                      
 	                      </c:if> 
 	                      
 	                       <c:if test="${!empty price_info}">
@@ -1252,12 +1243,12 @@
             </div>
                <div class="ReasonItem" id="cancleReasonError">
 		            <div class="warnReason">删除原因</div>
-		            <textarea id="cancleReason" name="remark"></textarea>
-		            <div class="error">删除原因</div>
+		            <textarea id="cancleProveReason" name="remark"></textarea>
+		            <div class="error" id="errorProveReason" style="color:#fe5453;font-size:12px">error</div>
 	           </div>  
 			    <div class="btnMid margin-bottom">
-	                      <div class="btn-c-g" id="cancle">取消</div>
-	                      <div class="btn-c-r" id="checkcancle">确认</div>
+	                      <div class="btn-c-g" >取消</div>
+	                      <div class="btn-c-r" id="checkReasopnProv">确认</div>
 	            </div>
      </div>
 </div>
