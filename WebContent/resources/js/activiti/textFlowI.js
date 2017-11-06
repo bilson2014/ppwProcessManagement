@@ -1400,6 +1400,7 @@ function getLoadProduceTeamFinanceInfo(){
 				dataEven();
 				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
 				$('.dynamic-form-table').append(setbtn);
+				initFormEven();
 			}
 		}, getContextPath() + '/project/loadProduceTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
 	}
