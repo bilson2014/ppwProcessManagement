@@ -865,7 +865,7 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("/loadTeamFinanceInfo/{projectId}/{taskId}")
-	public List<Map<String, Object>> loadTeamFinanceInfo(@PathVariable("projectId") final String projectId, final String taskId) {
+	public List<Map<String, Object>> loadTeamFinanceInfo(@PathVariable("projectId") final String projectId,@PathVariable("taskId") final String taskId) {
 		if(StringUtils.isNotBlank(projectId) && StringUtils.isNotBlank(taskId)) {
 			List<Map<String, Object>> list = projectWorkFlowService.loadTeamFinanceInfo(projectId, taskId, ProjectTeamType.produce.getCode());
 			return list;
@@ -879,7 +879,7 @@ public class ProjectFlowController extends BaseController {
 	 * @return
 	 */
 	@PostMapping("/loadProduceTeamFinanceInfo/{projectId}/{taskId}")
-	public List<Map<String, Object>> loadProduceTeamFinanceInfo(@PathVariable("projectId") final String projectId, final String taskId) {
+	public List<Map<String, Object>> loadProduceTeamFinanceInfo(@PathVariable("projectId") final String projectId, @PathVariable("taskId") final String taskId) {
 		if(StringUtils.isNotBlank(projectId) && StringUtils.isNotBlank(taskId)) {
 			List<Map<String, Object>> list = projectWorkFlowService.loadProduceTeamFinanceInfo(projectId, taskId, ProjectTeamType.produce.getCode());
 			return list;

@@ -402,10 +402,10 @@
 									                             <div class="item smallItem">
 							                                          <div>状态</div>
 							                                           <c:if test="${product['flag'] == 0}">
-							                                                     <div class="status" style="color:green">正常</div>                                           
+							                                                     <div class='${product["projectTeamId"]}' style="color:green">正常</div>                                           
 							                                           </c:if>
 							                                            <c:if test="${product['flag'] == 1}">
-							                                                     <div class="status" style="color:#fe5453">已删除</div>
+							                                                     <div class='${product["projectTeamId"]}' style="color:#fe5453">已删除</div>
 							                                           </c:if>
 									                             </div>
 								                             </c:if>
@@ -1057,7 +1057,7 @@
 <!-- 动态加载信息信息修改 -->
 <div class="cusModel" id="autoSet">
 	<div class="modelCard">
-	            <div class="cardTop">
+	            <div class="cardTop autoSetTop">
 	                   <div class="title">${taskName}<span id="errorInfo"></span> </div>
 	                   <div class="closeModel"></div>
 	            </div>
@@ -1076,7 +1076,7 @@
 										<img src="/resources/images/provider/error.png">上传失败,请关闭窗口重新上传
 									</div>
 								</div>
-	            <div class="otherContent" id="setAutoInfo"></div>
+	            <div class="otherContent otherContentItem" id="setAutoInfo"></div>
 	</div>
 </div>
 
@@ -1203,26 +1203,26 @@
 	            <div class="otherContent" id="ctc">
 	                 <input type="hidden" id="prov_teamId" name="pt_teamId" class="checkProvError">
 	                 <div class="itemCard errorItem"><div class="title">供应商名称<span> *</span></div>
-		                 <input type="text" id="prov_teamName" name="pt_teamName" class="uploadInput checkInfo required checkProvError" value="">
+		                 <input type="text" id="prov_teamName" name="pt_teamName" class="uploadInput  required checkProvError" value="">
 		                 <ul class="utoInfo createUi" style="display: none;"></ul>
 	                 </div>
 	                 <div class="itemCard errorItem"><div class="title">供应商联系人<span>*</span></div>
-		                 <input type="text" id="prov_linkman" name="pt_linkman" class="uploadInput checkInfo required checkProvError" value="">
+		                 <input type="text" id="prov_linkman" name="pt_linkman" class="uploadInput  required checkProvError" value="">
 	                 </div>
 	                 <div class="itemCard errorItem"><div class="title">供应商电话<span>*</span></div>
-		                 <input type="text" id="prov_telephone" name="pt_telephone" class="uploadInput checkInfo required checkProvErrorP" value="">
+		                 <input type="text" id="prov_telephone" name="pt_telephone" class="uploadInput  required checkProvErrorP" value="">
 	                 </div>
 	                 <div class="itemCard errorItem"><div class="title">供应商预算<span>*</span></div>
-		                 <input type="text" id="prov_budget" name="pt_budget" class="uploadInput checkInfo required checkProvError" value="">
+		                 <input type="text" id="prov_budget" name="pt_budget" class="uploadInput  required checkProvError" value="">
 	                 </div>
 	                  <div class="itemCard errorItem"><div class="title">供应商制作内容<span>*</span></div>
-		                 <input type="text" id="prov_makeContent" name="pt_makeContent" class="uploadInput checkInfo required checkProvError" value="">
+		                 <input type="text" id="prov_makeContent" name="pt_makeContent" class="uploadInput  required checkProvError" value="">
 	                 </div>
 	                  <div class="itemCard errorItem"><div class="title">供应商制作时间<span>*</span></div>
-		                 <input  type="text" readonly id="prov_makeTime" name="pt_makeTime" class="date uploadInput checkInfo required checkProvError" value="">
+		                 <input  type="text" readonly id="prov_makeTime" name="pt_makeTime" class="date uploadInput  required checkProvError" value="">
 	                 </div>
 	                  <div class="itemCard errorItem"><div class="title">供应商启动函备注信息<span></span></div>
-		                 <input  type="text" id="comment" name="comment" class="uploadInput checkInfo required" value="">
+		                 <input  type="text" id="comment" name="comment" class="uploadInput  required" value="">
 	                 </div>
 	                 <div class="btnMid margin-bottom">
 	                      <div class="btn-c-g" id="cancleCprov">取消</div>

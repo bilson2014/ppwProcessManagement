@@ -1336,12 +1336,20 @@
             left: 50%;
             top: 100px;
             margin-left: -332px;
+            max-height: 500px;
+            overflow: auto;
             .warnInfo {
                 color: $red-base;
                 font-size: $font-size-lg;
                 text-align: center;
                 margin-top: 20px;
                 margin-bottom: 30px !important;
+            }
+            .autoSetTop{
+            	position: absolute !important;
+            	top:0 !important;
+            	left:0 !important;
+            	width: 100%;
             }
             .cardTop {
                 height: 50px;
@@ -1857,6 +1865,9 @@
                         border-radius: 4px;
                     }
                 }
+            }
+            .otherContentItem{
+            	padding-top: 55px !important;
             }
             .otherContent {
                 padding-top: 0px;

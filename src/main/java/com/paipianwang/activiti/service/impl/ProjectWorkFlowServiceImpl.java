@@ -1640,13 +1640,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
 				projectId, teamType);
 		// 获取 流程中分配的唯一制作供应商
-		String projectTeamId = (String) taskService.getVariable(taskId, "projectTeam_produce");
+		Long projectTeamId = (Long) taskService.getVariable(taskId, "projectTeam_produce");
 
 		return assembleAddTeam(list, "addpt_", projectTeamId);
 	}
 
 	public List<Map<String, Object>> assembleAddTeam(List<Map<String, Object>> list, String prefix,
-			final String exceptStr) {
+			final Long exceptStr) {
 		if (ValidateUtil.isValid(list) && StringUtils.isNotBlank(prefix)) {
 			List<Map<String, Object>> result = new ArrayList<Map<String, Object>>(list.size());
 
@@ -1715,7 +1715,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 		List<Map<String, Object>> list = projectTeamFacade.getProjectsTeamColumnByProjectId(Arrays.asList(columns),
 				projectId, teamType);
 		// 获取 流程中分配的唯一制作供应商
-		String projectTeamId = (String) taskService.getVariable(taskId, "projectTeam_produce");
+		Long projectTeamId = (Long) taskService.getVariable(taskId, "projectTeam_produce");
 
 		return assembleAddTeam(list, "addft_", projectTeamId);
 	}
