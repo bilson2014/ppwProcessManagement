@@ -371,6 +371,12 @@
 						                                          <div>${plan["email"]}</div>
 								                           </div>
 							                           </c:if>
+							                           <c:if test="${not empty plan['comment']}">
+							                             <div class="item">
+						                                          <div>供应商制作内容</div>
+						                                          <div>${plan["comment"]}</div>
+								                           </div>
+							                           </c:if>
 												</div>
 	                            			</c:forEach>
 	                            	</c:if>
@@ -421,6 +427,12 @@
 								                                          <div>${product["email"]}</div>
 										                           </div>
 							                           		</c:if>
+							                           		<c:if test="${not empty product['comment']}">
+							                             <div class="item">
+						                                          <div>供应商制作内容</div>
+						                                          <div>${product["comment"]}</div>
+								                           </div>
+							                           </c:if>
 							                           </br>
 							                           </c:forEach>
 								                 </div>                                       
