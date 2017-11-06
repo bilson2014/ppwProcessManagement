@@ -1398,6 +1398,8 @@ function getLoadProduceTeamFinanceInfo(){
 					   body.append(getItemInfo('','addft_projectId',$('#projectId').val()));
 				};			
 				dataEven();
+				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+				$('.dynamic-form-table').append(setbtn);
 			}
 		}, getContextPath() + '/project/loadProduceTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
 	}
