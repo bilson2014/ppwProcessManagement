@@ -2160,11 +2160,11 @@ function delProv(){
 	$('.delPro').off('click').on('click',function(){
 		$('#errorDelProv').show();
 		var proId = $(this).attr('data-idp');
-		initDelProv(proId);
+		initDelProv(proId,$(this));
 	});
 }
 
-function initDelProv(proId){
+function initDelProv(proId,item){
 	
 	$('#cancleProveReason').val('');
 	$('#errorProveReason').text('');
@@ -2172,13 +2172,16 @@ function initDelProv(proId){
 		var setValue = $('#cancleProveReason').val();
 		if(setValue!=""&&setValue!=null&&setValue!=undefined){
 			loadData(function(res){
-				initLastTime(res.projectCycle,res.createDate);
 				if(res != null && res != undefined){
-				   console.info(res);
+					$('#errorDelProv').hide();
+					item.parent().parent().find('.item').find('.status').css('color','#fe5453');
+					item.parent().parent().find('.item').find('.status').text('取消')
+				}else{
+					$('#errorProveReason').text('请求异常');
 				}
 			}, getContextPath() + '/project/delete/produce/team',$.toJSON({
-				projectId:proId,
-				content:$('#cancleProveReason').val()
+				projectTeamId:proId,
+				reason:$('#cancleProveReason').val()
 			}));
 		}else{
 			$('#errorProveReason').text('请填写删除原因');
@@ -2293,40 +2296,41 @@ function addSubmitProv(){
 	loadData(function(res){
 		initLastTime(res.projectCycle,res.createDate);
 		if(res != null && res != undefined){
-		   if(res){
 			   var html = [
 					'<div class="item">',
 				    '   <div>供应商名称</div>',
 				    '     <div>',
-				    '         内容',
+				    '        '+prov_teamName+'',
 				    '     </div>',
 				    '</div> ',
 				    '<div class="item">',
 				    '   <div>供应商联系人</div>',
 				    '     <div>',
-				    '         内容',
+				    '        '+prov_linkman+'',
 				    '     </div>',
 				    '</div> ', 
 				    '<div class="item">',
 				    '   <div>供应商联系电话</div>',
 				    '     <div>',
-				    '         内容',
+				    '         '+prov_telephone+'',
 				    '     </div>',
 				    '</div> ', 
 				    '<div class="item smallItem">',
 				    '   <div>状态</div>',
-				    '     <div style="color:green">',
+				    '     <div class="status" style="color:green">',
 				    '         正常',
 				    '     </div>',
 				    '</div> ', 
-				    '<div class="item">',
+				    '<div class="item smallItem">',
 				    '   <div>操作</div>',
-				    '     <div class="delPro" data-idp="">',
+				    '     <div class="delPro" data-idp='+res+'>',
 				    '         删除',
 				    '     </div>',
 				    '</div> ', 
 				].join('');
-		   }
+			   $('#createProivder').hide();
+			   $('#makeProvItem').show();
+			   $('#makeProvItem').append(html);
 		}
 	}, getContextPath() + '/project/add/produce/team/',$.toJSON({
 		projectId:$('#projectId').val(),

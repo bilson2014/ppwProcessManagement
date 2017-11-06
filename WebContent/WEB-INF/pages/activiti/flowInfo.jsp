@@ -375,10 +375,10 @@
 	                            			</c:forEach>
 	                            	</c:if>
 	                               
-	                                  <c:if test="${!empty teamProduct_info}">
+	                             <c:if test="${!empty teamProduct_info}">
 		                                  <div class="title"><div class="long"></div><div class="short"></div>制作供应商</div>
 			                                  	<div class="contentItem" id="makeProvItem">
-			                                  	  <c:forEach items="${teamProduct_info }" var="product">
+			                                             	  <c:forEach items="${teamProduct_info }" var="product">
 						                             	<c:if test="${not empty product['teamName']}">
 						                             		<div class="item">
 					                                          <div>供应商名称</div>
@@ -402,10 +402,10 @@
 									                             <div class="item smallItem">
 							                                          <div>状态</div>
 							                                           <c:if test="${product['flag'] == 0}">
-							                                                     <div style="color:green">正常</div>                                           
+							                                                     <div class="status" style="color:green">正常</div>                                           
 							                                           </c:if>
 							                                            <c:if test="${product['flag'] == 1}">
-							                                                     <div style="color:#fe5453">已删除</div>
+							                                                     <div class="status" style="color:#fe5453">已删除</div>
 							                                           </c:if>
 									                             </div>
 								                             </c:if>
@@ -423,8 +423,7 @@
 							                           		</c:if>
 							                           </br>
 							                           </c:forEach>
-								                    </div>                                       
-											    </div>
+								                 </div>                                       
 							              </c:if>
 	                                  </div>
 	                            </div>
