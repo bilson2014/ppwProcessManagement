@@ -456,12 +456,20 @@ function checkState(){
     if(state.trim() == "pause"){
     	$('#isPause').hide();
     	$('#isCancle').hide();
+    	$('#isCancle').hide();
+    	
     }
     
-    if(state.trim() == "finish"){
+    if(state.trim() == "status=finished"){
     		 $('#isBack').hide();
     		 $('#isPause').hide();
     		 $('#isCancle').hide();
+    		 $('.addPro').hide();
+    	     $('.delPro').hide();
+    }
+    if(state.trim() == "cancel"){
+		 $('.addPro').hide();
+	     $('.delPro').hide();
     }
     
     if(state.trim() == "task"){
