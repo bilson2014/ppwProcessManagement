@@ -45,7 +45,7 @@
 <!--[if lt IE 9]><script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script><![endif]-->
 
 </head>
-<body>
+<body class="bb">
 
 <input type="hidden" value="${taskStage}" id="taskStage"/>
 <input type="hidden" value="${taskId }" id="currentTaskId" />
@@ -328,8 +328,11 @@
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
-	                                 <r:group role="teamProvider" role2="teamDirector">
+
+	                                 <r:addProductTeam projectId="${projectId}">
 	                                 <div class="addPro">新增</div>
+	                                 </r:addProductTeam >
+	                                 <r:group role="teamProvider" role2="teamDirector">
 	                                 <div class="update btn-c-r" id="openProvider">更新</div>
 	                                 </r:group>
 	                            </div>
@@ -1193,7 +1196,7 @@
 </div>
  <!-- 提示信息 -->
 <div class="cusModel" id="isCopy">
-     <div class="modelCard"><div class="warnReason">删除原因</div>
+     <div class="modelCard">
             <div class="cardTop">
                    <div class="title">分享</div>
                    <div class="closeModel"></div>
@@ -1212,7 +1215,7 @@
 	                   <div class="title">新增供应商</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="otherContent" id="ctc">
+	            <div class="otherContent otherContentCreate" id="ctc">
 	                 <input type="hidden" id="prov_teamId" name="pt_teamId" class="checkProvError">
 	                 <div class="itemCard errorItem"><div class="title">供应商名称<span> *</span></div>
 		                 <input type="text" id="prov_teamName" name="pt_teamName" class="uploadInput  required checkProvError" value="">
@@ -1224,6 +1227,9 @@
 	                 <div class="itemCard errorItem"><div class="title">供应商电话<span>*</span></div>
 		                 <input type="text" id="prov_telephone" name="pt_telephone" class="uploadInput  required checkProvErrorP" value="">
 	                 </div>
+	                  <div class="itemCard errorItem"><div class="title">供应商邮箱<span>*</span></div>
+		                 <input  type="text" id="prov_email" name="pt_email" class="uploadInput  required checkProvErrorEmail" value="">
+	                 </div>
 	                 <div class="itemCard errorItem"><div class="title">供应商预算<span>*</span></div>
 		                 <input type="text" id="prov_budget" name="pt_budget" class="uploadInput  required checkProvError" value="">
 	                 </div>
@@ -1233,6 +1239,7 @@
 	                  <div class="itemCard errorItem"><div class="title">供应商制作时间<span>*</span></div>
 		                 <input  type="text" readonly id="prov_makeTime" name="pt_makeTime" class="date uploadInput  required checkProvError" value="">
 	                 </div>
+	                
 	                  <div class="itemCard errorItem"><div class="title">供应商启动函备注信息<span></span></div>
 		                 <input  type="text" id="comment" name="comment" class="uploadInput  required" value="">
 	                 </div>

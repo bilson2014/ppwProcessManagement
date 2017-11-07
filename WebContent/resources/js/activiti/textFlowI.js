@@ -9,6 +9,7 @@ var taskIdname ="";
 var noNeed = true;
 $().ready(function() {
 	document.domain = getUrl();
+	
 	// 加载动态表单
 	    var href = window.location.href;
 	    var paramLength=href.indexOf('&');
@@ -36,6 +37,7 @@ $().ready(function() {
 });
 
 function getScroll(){
+	 $(window.parent.parent.parent.document).find('html').scrollTop(0);
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 }
 
@@ -828,6 +830,8 @@ function checkPrice(){
 function openProviderInfo(){
 	$('#openProvider').off('click').on('click',function(){
 		$('#showProvider').show();
+		 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		getScroll();
 		clearProvi();
 		autoTeamInput();
@@ -848,20 +852,12 @@ function openProviderInfo(){
                              var teamId = scheme[i].pt_teamId;
                         
                         var body = $('.setHideTop');
-                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
-                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
-	                       if(pt_teamName != undefined && pt_teamName != "" && pt_teamName != null){
+		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
 	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
-	                   		} 
-	                    	if(pt_linkman != undefined && pt_linkman != "" && pt_linkman != null){
 	                    		body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
-	                		}
-	                    	if(pt_telephone != undefined && pt_telephone != "" && pt_telephone != null){
 	                    		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
-	                		}
-	                    	if(pt_email != undefined && pt_email != "" && pt_email != null){
-	                    		body.append(createUpdateCard('供应商邮箱',pt_telephone,'pt_email','',1));
-	                		}
+	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
 	                    	var html = [
 	            				'<div class="itemTime itemLong">',
 	            					'<div class="title">修改原因</div>',
@@ -883,19 +879,15 @@ function openProviderInfo(){
 	  		    		 var pt_telephone = produce[i].pt_telephone;
 	  		    		 var scId = produce[i].pt_projectTeamId;
                          var teamId = produce[i].pt_teamId;
+                         var pt_email = scheme[i].pt_email;
                          
-                         var body = $('.setHideBot');
-                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
-                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
-	                        if(pt_teamName != undefined && pt_teamName != "" && pt_teamName != null){
+		                         var body = $('.setHideBot');
+		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
 	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
-	                      	} 
-	                        if(pt_linkman != undefined && pt_linkman != "" && pt_linkman != null){
 	                        	body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
-	                   		}
-	                       	if(pt_telephone != undefined && pt_telephone != "" && pt_telephone != null){
 	                       		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
-	                   		}
+	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
 	                       	var html = [
 	            				'<div class="itemTime itemLong">',
 	            					'<div class="title">修改原因</div>',
@@ -2109,7 +2101,8 @@ function shareEven(){
 	$('.share').off('click').on('click',function(){
 		$('.btnShare').text('复制链接');
 		$('.modelCard .btnShare').css('background','#fe5453');
-	    $('.modelCard .btnShare').addClass('btn-c-r');	
+	    $('.modelCard .btnShare').addClass('btn-c-r');
+	    $(window.parent.parent.parent.document).find('html').scrollTop(0);
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
@@ -2223,6 +2216,8 @@ function provNewInit(){
 function delProv(){
 	$('.delPro').off('click').on('click',function(){
 		$('#errorDelProv').show();
+		 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		var proId = $(this).attr('data-idp');
 		initDelProv(proId,$(this));
 	});
@@ -2236,15 +2231,16 @@ function initDelProv(proId,item){
 		var setValue = $('#cancleProveReason').val();
 		if(setValue!=""&&setValue!=null&&setValue!=undefined){
 			loadData(function(res){
-				if(res != null && res != undefined){
+				if(res.result){
 					$('#errorDelProv').hide();
 					item.parent().parent().find('.item').find('.'+proId+'').css('color','#fe5453');
 					item.parent().parent().find('.item').find('.'+proId+'').text('已删除')
 				}else{
-					$('#errorProveReason').text('请求异常');
+					$('#errorProveReason').text(res.err);
 				}
 			}, getContextPath() + '/project/delete/produce/team',$.toJSON({
 				projectTeamId:proId,
+				projectId:$('#projectId').val(),
 				reason:$('#cancleProveReason').val()
 			}));
 		}else{
@@ -2259,11 +2255,14 @@ function createProv(){
 	$('.addPro').off('click').on('click',function(){
 		  var id = $(this).parent().parent().find('.contentTeamId').val();
 		  $('#prov_teamId').val(id);
-		  $('#createProivder').show();
+		  $('#createProivder').show();		
+		  $(window.parent.parent.parent.document).find('body').scrollTop(0);
+		  $(window.parent.parent.parent.document).find('html').scrollTop(0);
 		  autoInputCreateProv();
 		  dataEven();
 		  $('.checkProvError').val('');
 		  $('.checkProvErrorP').val('');
+		  $('.checkProvErrorEmail').val('');
 		  $('#checkCprov').off('click').on('click',function(){
 			  if(checkCreateProvider()){
 				  addSubmitProv();
@@ -2334,6 +2333,12 @@ function checkCreateProvider(){
 		return false;
 		}
     }
+    
+    if(!checkEmail($('.checkProvErrorEmail').val())){
+    	$('.checkProvErrorEmail').parent().attr('data-content','邮箱格式不正确');
+    	return false;
+    }
+    
     return true;
 }
 
@@ -2356,6 +2361,7 @@ function addSubmitProv(){
 	var prov_makeContent =   $('#prov_makeContent').val();
 	var prov_makeTime =   $('#prov_makeTime').val();
 	var comment  = $('#comment').val();
+	var email  = $('#prov_email').val();
 	loadData(function(res){
 		initLastTime(res.projectCycle,res.createDate);
 		if(res != null && res != undefined){
@@ -2388,6 +2394,18 @@ function addSubmitProv(){
 				    '   <div>操作</div>',
 				    '     <div class="delPro" data-idp='+res+'>',
 				    '         删除',
+				    '     </div>',
+				    '</div> ',
+				    '<div class="item">',
+				    '   <div>供应商制作邮箱</div>',
+				    '     <div>',
+				    '         '+email+'',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item">',
+				    '   <div>供应商制作内容</div>',
+				    '     <div>',
+				    '         '+prov_makeContent+'',
 				    '     </div>',
 				    '</div> ', 
 				].join('');
