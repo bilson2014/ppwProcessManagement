@@ -263,5 +263,11 @@ public interface ProjectWorkFlowService {
 	 * @return
 	 */
 	public boolean deleteProduceTeam(final PmsProjectTeam team);
+
+	/**
+	 * 检测项目的制作供应商是否剩下一个
+	 * @param projectTeamId
+	 */
+	public boolean checkProduceTeamIsOnly(String projectId);
 	
 }

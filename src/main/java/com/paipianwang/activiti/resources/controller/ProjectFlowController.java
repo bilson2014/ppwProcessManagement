@@ -34,6 +34,7 @@ import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.activiti.utils.DataUtils;
 import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.entity.KeyValue;
+import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -887,6 +888,11 @@ public class ProjectFlowController extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 添加制作供应商
+	 * @param produceTeam
+	 * @return
+	 */
 	@PostMapping("/add/produce/team")
 	public Long saveProduceTeam(@RequestBody final PmsProjectTeam team) {
 		if(team != null) {
@@ -895,13 +901,27 @@ public class ProjectFlowController extends BaseController {
 		return null;
 	}
 	
+	/**
+	 * 逻辑删除制作供应商
+	 * @param team
+	 * @return
+	 */
 	@PostMapping("/delete/produce/team")
-	public boolean deleteProduceTeam(@RequestBody final PmsProjectTeam team) {
+	public PmsResult deleteProduceTeam(@RequestBody final PmsProjectTeam team) {
+		PmsResult result = new PmsResult();
+		result.setResult(false);
 		if(team != null) {
-			boolean result = projectWorkFlowService.deleteProduceTeam(team);
-			return result;
+			// 检测 制作供应商是否只剩一个
+			final String projectId = team.getProjectId();
+			boolean isExit = projectWorkFlowService.checkProduceTeamIsOnly(projectId);
+			if(isExit) {
+				boolean ret = projectWorkFlowService.deleteProduceTeam(team);
+				result.setResult(ret);
+			} else {
+				result.setErr("不能删除唯一的制作供应商!");
+			}
 		}
-		return false;
+		return result;
 	}
 	
 }

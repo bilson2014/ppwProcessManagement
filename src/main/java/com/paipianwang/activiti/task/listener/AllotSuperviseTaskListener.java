@@ -1,9 +1,6 @@
 package com.paipianwang.activiti.task.listener;
 
-import java.io.Serializable;
-
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
