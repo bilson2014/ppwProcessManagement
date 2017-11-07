@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +14,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
 
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.enums.ProjectRoleType;

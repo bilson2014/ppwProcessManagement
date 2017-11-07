@@ -1652,18 +1652,17 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 			for (Map<String, Object> map : list) {
 				if (map != null) {
-					String teamProjectId = (String) map.get("teamProjectId");
-					if (StringUtils.isNotBlank(teamProjectId)) {
-						if (teamProjectId.equals(exceptStr)) {
-							continue;
+					Integer projectTeamId = (Integer) map.get("projectTeamId");
+					if (projectTeamId != null) {
+						if (exceptStr.intValue() != projectTeamId.intValue()) {
+							Set<Entry<String, Object>> entrySet = map.entrySet();
+							final Map<String, Object> resultMap = new HashMap<String, Object>();
+							for (Entry<String, Object> entry : entrySet) {
+								resultMap.put(prefix + entry.getKey(), entry.getValue());
+							}
+							result.add(resultMap);
 						}
 					}
-					Set<Entry<String, Object>> entrySet = map.entrySet();
-					final Map<String, Object> resultMap = new HashMap<String, Object>();
-					for (Entry<String, Object> entry : entrySet) {
-						resultMap.put(prefix + entry.getKey(), entry.getValue());
-					}
-					result.add(resultMap);
 				}
 			}
 
@@ -1800,6 +1799,15 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
 				return result > -1 ? true : false;
 			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkProduceTeamIsOnly(final String projectId) {
+		if(StringUtils.isNotBlank(projectId)) {
+			Long count = projectTeamFacade.countProjectsTeamByProjectId(ProjectTeamType.produce.getCode(), projectId);
+			return count > 1 ? true : false;
 		}
 		return false;
 	}

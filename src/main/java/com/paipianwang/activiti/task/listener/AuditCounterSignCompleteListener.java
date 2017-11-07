@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.identity.Group;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
