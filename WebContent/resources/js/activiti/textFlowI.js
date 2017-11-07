@@ -1353,7 +1353,7 @@ function getProduce(){
 
 
 function getLoadTeamFinanceInfo(){
-	if($('input').hasClass('pt_actualPrice')){
+	if($('.missinInfo').text()=='【供应商管家】填写制作供应商结算信息'){
 		noNeed = false;
 		loadData(function(res){
 			if(res != null && res != undefined && res != ''){
@@ -1382,8 +1382,7 @@ function InitVoiceHead(){
 }
 
 function getLoadProduceTeamFinanceInfo(){
-	var s = $('input').hasClass('dl_billNo');
-	if($('input').hasClass('dl_billNo')){
+	if($('.missinInfo').text()=='【财务】填写付款信息'){
 		noNeed = false;
 		loadData(function(res){
 	       if(res != null && res != undefined && res != ''){
@@ -1469,7 +1468,7 @@ var formFieldCreator = {
 	
 	
 	if(prop.required){	
-		var result = "<div class='title' "+addClass+"'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class=' title' "+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title' "+addClass+"'>" + prop.name + "</div>";
@@ -1538,7 +1537,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
@@ -1564,7 +1563,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
@@ -1574,7 +1573,7 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' />";
 	} else {
 		result += "<input name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
@@ -1586,7 +1585,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
