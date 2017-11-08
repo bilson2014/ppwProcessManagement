@@ -6,8 +6,10 @@ var upload_VideoFile;
 var video_max_size = 200*1024*1024; // 200MB
 var video_err_msg = '视频大小超出200M上限,请重新上传!';
 var taskIdname ="";
+var noNeed = true;
 $().ready(function() {
 	document.domain = getUrl();
+	
 	// 加载动态表单
 	    var href = window.location.href;
 	    var paramLength=href.indexOf('&');
@@ -20,6 +22,7 @@ $().ready(function() {
 			$('#lastTimeWord').hide();
 	    	$('#taskStage').val('交付阶段');
 	    	getStageInfo($('#taskStage').val());
+	    	$('#imgFlow').addClass('imgFinish');
 	    }else{
 	    	var task = $('#taskStage').val();
 	    	getStageInfo(task);
@@ -29,9 +32,12 @@ $().ready(function() {
 	initDaibanTime();
 	initResouces();
 	initStateBtn();
+	provNewInit();
+	loadProvCard();
 });
 
 function getScroll(){
+	 $(window.parent.parent.parent.document).find('html').scrollTop(0);
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 }
 
@@ -75,7 +81,6 @@ function initStateBtn(){
 //初始化来源
 function initResouces(){
 	loadData(function (res){
-		console.log(res);
 		var body = $('#pResour');
 		body.html('');
 		var rowsR = res.result.resource;
@@ -451,12 +456,20 @@ function checkState(){
     if(state.trim() == "pause"){
     	$('#isPause').hide();
     	$('#isCancle').hide();
+    	$('#isCancle').hide();
+    	
     }
     
-    if(state.trim() == "finish"){
+    if(state.trim() == "status=finished"){
     		 $('#isBack').hide();
     		 $('#isPause').hide();
     		 $('#isCancle').hide();
+    		 $('.addPro').hide();
+    	     $('.delPro').hide();
+    }
+    if(state.trim() == "cancel"){
+		 $('.addPro').hide();
+	     $('.delPro').hide();
     }
     
     if(state.trim() == "task"){
@@ -825,6 +838,8 @@ function checkPrice(){
 function openProviderInfo(){
 	$('#openProvider').off('click').on('click',function(){
 		$('#showProvider').show();
+		 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		getScroll();
 		clearProvi();
 		autoTeamInput();
@@ -835,51 +850,60 @@ function openProviderInfo(){
 	          if(scheme == undefined || scheme == "" || scheme ==null ){
 	  		      $('#isHideTop').remove();
 	  		    }else{
+	  		    	 $('.setHideTop').html('');
 	  		    	 for (var i = 0; i < scheme.length; i++) {
 	  		    		     var pt_teamName = scheme[i].pt_teamName;
 		  		    		 var pt_linkman = scheme[i].pt_linkman;
 		  		    		 var pt_telephone = scheme[i].pt_telephone;
-                           $('#scTeamName').val(scheme[i].pt_teamName);
-                           $('#scLink').val(scheme[i].pt_linkman);
-                           $('#scTel').val(scheme[i].pt_telephone);
-                           $('#scId').val(scheme[i].pt_projectTeamId);
-                           $('#scTeamId').val(scheme[i].pt_teamId);
-                           
-                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
-                       		$('#scTeamError').remove();
-                   		} 
-                    	if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
-                    		$('#scLinkError').remove();
-                		}
-                    	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
-                    		$('#scTelError').remove();
-                		}
-                           
+		  		    		 var pt_email = scheme[i].pt_email;
+                             var scId = scheme[i].pt_projectTeamId;
+                             var teamId = scheme[i].pt_teamId;
+                        
+                        var body = $('.setHideTop');
+		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
+	                    		body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
+	                    		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
+	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
+	                    	var html = [
+	            				'<div class="itemTime itemLong">',
+	            					'<div class="title">修改原因</div>',
+	            					'<textarea></textarea>',
+	            				'</div>'
+	            			].join('');
+	                    	body.append(html);
+	                    	body.append('<br/>');
 					  }
 	  		    }
 	          
 	          if(produce == undefined || produce == "" || produce ==null ){
 	  		      $('#isHideBot').remove();
 	  		    }else{
-	  		    	 for (var i = 0; i < scheme.length; i++) {
-                          
-	  		    		 var pt_teamName = scheme[i].pt_teamName;
+	  		    	$('.setHideBot').html('');
+	  		    	 for (var i = 0; i < produce.length; i++) {
+	  		    		 var pt_teamName = produce[i].pt_teamName;
 	  		    		 var pt_linkman = produce[i].pt_linkman;
 	  		    		 var pt_telephone = produce[i].pt_telephone;
-	  		    		   $('#prTeamName').val(produce[i].pt_teamName);
-                           $('#prLink').val(produce[i].pt_linkman);
-                           $('#prTel').val(produce[i].pt_telephone);
-                           $('#prId').val(produce[i].pt_projectTeamId);
-                           $('#prTeamId').val(produce[i].pt_teamId);
-                        if(pt_teamName == undefined || pt_teamName == "" || pt_teamName == null){
-                          		$('#prTeamError').remove();
-                      	} 
-                        if(pt_linkman == undefined || pt_linkman == "" || pt_linkman == null){
-                       		$('#prLinkError').remove();
-                   		}
-                       	if(pt_telephone == undefined || pt_telephone == "" || pt_telephone == null){
-                       		$('#prTelError').remove();
-                   		}
+	  		    		 var scId = produce[i].pt_projectTeamId;
+                         var teamId = produce[i].pt_teamId;
+                         var pt_email = scheme[i].pt_email;
+                         
+		                         var body = $('.setHideBot');
+		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
+		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
+	                        	body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
+	                       		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
+	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
+	                       	var html = [
+	            				'<div class="itemTime itemLong">',
+	            					'<div class="title">修改原因</div>',
+	            					'<textarea></textarea>',
+	            				'</div>'
+	            			].join('');
+	                       	body.append(html);
+	                       	body.append('<br/>');
 					   }
 	  		    }
 			}, getContextPath() + '/project/task/edit/parameter/'+$("#currentTaskId").val()+"/"+$('#projectId').val()+"/pt",null);
@@ -892,7 +916,19 @@ function openProviderInfo(){
 	});
 }
 
-
+function createUpdateCard(name,value,setName,read,phone){	
+	var setPhone = "checkErrorP"
+      if(phone == 1){
+    	  setPhone = "checkError"
+      }
+				var html = [
+				'<div class="itemTime errorItem">',
+					'<div class="title">'+name+'</div>',
+					'<input '+read+' class="'+setPhone+'" value="'+value+'" name="'+setName+'">',
+				'</div>'
+				].join('');
+	return html;
+}
 
 function clearProvi(){
 	$('.checkError').val('');
@@ -900,8 +936,7 @@ function clearProvi(){
     $('.errorItem').attr('data-content','');
 }
 
-function checkProvider(){
-             	
+function checkProvider(){           	
     var error = $('.checkError');
     var errorP = $('.checkErrorP');
     $('.errorItem').attr('data-content','');
@@ -971,11 +1006,9 @@ function initFormEven(){
 		$('#toSubmitForm').off('click');
 		checkForm();
 	});
-	
 	dataEven();
 	autoInput();
 	autoSelect();
-	
 }
 
 function initFileUpload(){	
@@ -1180,8 +1213,6 @@ function autoSelectUl(){
 	
 }
 
-
-
 //动态联动事件
 
 //自动联动客户信息
@@ -1250,11 +1281,9 @@ function addForm() {
 		$('#setAutoInfo').html("<form class='dynamic-form' method='post'><div class='dynamic-form-table'></div></form>");
 		var $form = $('.dynamic-form');
 		$form.attr('action', '/project/task/complete/' + $('#currentTaskId').val());
-		trs += '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>'
-		
 		// 添加table内容
 		$('.dynamic-form-table').html(trs);
-		initFormEven();
+		
 		var hasPicker = $('.picker');
 		if(hasPicker !=null && hasPicker !="" && hasPicker !=undefined){
 			UploadFile();
@@ -1262,6 +1291,13 @@ function addForm() {
 		getWatermarkUrl();
 		getScheme();
 		getProduce();
+		getLoadTeamFinanceInfo();
+		getLoadProduceTeamFinanceInfo();
+		if(noNeed){
+			var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+			$('.dynamic-form-table').append(setbtn);
+			initFormEven();
+		}
 	}, '/project/get-form/task/' + $('#currentTaskId').val() + '/' + $('#projectId').val(), null);
 }
 
@@ -1277,7 +1313,12 @@ function getWatermarkUrl(){
 		loadData(function(res){
 			$('#info_watermarkUrl').text(res.sampleUrl);
 			$('#info_watermarkUrl').attr('href',res.sampleUrl);
-			$('#info_watermarkPass').val(res.samplePassword);
+			if(res.samplePassword == '' || res.samplePassword == null || res.samplePassword == undefined ){
+				$('#info_watermarkPass').val('无');
+			}else{
+				$('#info_watermarkPass').val(res.samplePassword);
+			}
+			
 		}, getContextPath() + '/project/getFlowSample/' + $('#projectId').val(),null);
 	}
 }
@@ -1310,6 +1351,101 @@ function getProduce(){
 	}
 }
 
+
+function getLoadTeamFinanceInfo(){
+	if($('.missinInfo').text()=='【供应商管家】填写制作供应商结算信息'){
+		noNeed = false;
+		loadData(function(res){
+			if(res != null && res != undefined && res != ''){
+				var body = $('.dynamic-form-table');
+				for (var int = 0; int < res.length; int++) {
+					   body.append('<br/>');
+					   body.append(getItemInfo('供应商名称','addpt_teamName',res[int].addpt_teamName));
+					   body.append(getItemInfo('供应商价格','addpt_actualPrice',''));
+					   body.append(getItemInfo('发票抬头','addpt_invoiceHead',''));
+					   body.append(getItemInfo('','addpt_projectTeamId',res[int].addpt_projectTeamId));
+				};	
+				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+				$('.dynamic-form-table').append(setbtn);
+				InitVoiceHead();
+			}
+		}, getContextPath() + '/project/loadTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
+	}
+}
+function InitVoiceHead(){
+	var autoSelectUlNum = $('.autoSelectUl li');
+	var body =$('.setAutoSelectUl');
+    for (var i = 0; i < autoSelectUlNum.length; i++) {
+    	body.append('<li data-id='+$(autoSelectUlNum[i]).text()+'>'+$(autoSelectUlNum[i]).text()+'</li>')
+	}
+    initFormEven();
+}
+
+function getLoadProduceTeamFinanceInfo(){
+	if($('.missinInfo').text()=='【财务】填写付款信息'){
+		noNeed = false;
+		loadData(function(res){
+	       if(res != null && res != undefined && res != ''){
+				var body = $('.dynamic-form-table');
+				for (var int = 0; int < res.length; int++) {
+					   body.append('<br/>');
+					   body.append(getItemInfo('供应商名称','teamName',res[int].addft_teamName));
+					   body.append(getItemInfo('交易流水号','addft_billNo',''));
+					   body.append(getItemInfo('付款时间','addft_payTime',''));
+					   body.append(getItemInfo('交易金额','addft_payPrice',''));
+					   body.append(getItemInfo('描述','addft_description',''));
+					   body.append(getItemInfo('','addft_projectId',$('#projectId').val()));
+				};			
+				dataEven();
+				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+				$('.dynamic-form-table').append(setbtn);
+				initFormEven();
+			}
+		}, getContextPath() + '/project/loadProduceTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
+	}
+}
+
+function getItemInfo(name,dp,value){
+	
+	if(dp == 'addpt_projectTeamId' || dp =='addft_projectId'){
+	var html = [
+		     '<input type="hidden" id="'+dp+'" name="'+dp+'" class="required '+dp+'" value='+value+'>',
+	].join('');
+	}else{
+	var ul ="";	
+	if(dp == "addpt_invoiceHead"){
+		var html = [
+			'<div class="itemCard"><div class="title">发票抬头<span> *</span></div>',
+			    '<input readonly="" class="autoSelect checkInfo" id="'+dp+'">',
+			    '<input type="hidden" class="hideInput" name="pt_invoiceHead">',
+			    '<img class="autoImg" src="/resources/images/flow/selectOrder.png">',
+			    '<ul class="autoSelectUl setAutoSelectUl"></ul>',
+			'</div>',
+			].join('');
+	}else{	
+		    var isRead ='';
+		    var isCheck = 'checkInfo';
+		    var isDate = '';
+		    if(name == '供应商名称') {
+		    	isRead = "readonly";
+		    	isCheck = '';
+		    }
+		    if(name == '付款时间') {
+		    	isDate ='date';
+		    }
+			var html = [
+				     '<div class="itemCard">',
+				     '     <div class="title">'+name+'<span>*</span></div>',
+				     '     <input '+isRead+' type="text" id="'+dp+'" name="'+dp+'" class="'+isDate+' '+isCheck+' required '+dp+'" value='+value+'>',
+				     '     '+ul+'',
+				     '</div>',
+			].join('');
+		}
+	}
+	return html;
+	
+}
+
 var formFieldCreator = {
 'string': function(prop, datas, className) {
 	var addClass ="";
@@ -1332,10 +1468,10 @@ var formFieldCreator = {
 	
 	
 	if(prop.required){	
-		var result = "<div class='title"+addClass+"'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class=' title' "+addClass+"'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
-		var result = "<div class='title "+addClass+"'>" + prop.name + "</div>";
+		var result = "<div class='title' "+addClass+"'>" + prop.name + "</div>";
 		var isCheck = "noCheckInfo";
 	}
 	
@@ -1355,13 +1491,13 @@ var formFieldCreator = {
 			return result;
 		}
 		if(prop.id == "pt_teamName"){
-			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput '"+isCheck+"' '" + className + "'  value='" + prop.value + "' />";
 			result += "<ul class='utoInfo'></ul>";
 			return result;
 		}
 		
 		if(prop.id =="pt_teamId"){
-			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' />";
+			result += "<input class='hide' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput '"+isCheck+"' '" + className + "'  value='" + prop.value + "' />";
 			return result;
 		}
 		
@@ -1383,12 +1519,12 @@ var formFieldCreator = {
 	     }
 		
 		if(isWhat == "file"){
-			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + "' value='" + prop.value + "' placeholder='" + prop.value + "'    />";
+			result += "<input class='longInput checkInfo' readonly type='text' id='file' data-title='" + prop.name + "' data-name='" + prop.id + "'  name='" + prop.id + "' class='uploadInput '"+isCheck+"' '" + className + "' '      />";
 			result += " <div id='picker' class='upload picker '>上传</div>";
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
-		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' value='" + prop.value + "' />";
+		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "'  value=' "+ prop.value +"'   />";
 	} else {
 		result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
@@ -1401,7 +1537,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
@@ -1427,7 +1563,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
@@ -1437,9 +1573,9 @@ var formFieldCreator = {
 	var isRead = prop.id.indexOf('info');
 	
 	if (prop.writable === true && isRead != 0) {
-		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class=' "+isCheck+" " + className + " '" + prop.id + "'' value='" + prop.value + "'/>";
+		result += "<input type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' />";
 	} else {
-		result += "<input class='" + prop.id + "' name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
+		result += "<input name='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' />";
 	}
 	return result;
 },
@@ -1449,7 +1585,7 @@ var formFieldCreator = {
 	}
 	
 	if(prop.required){
-		var result = "<div class='title'>" + prop.name + "<span> *</span></div>";
+		var result = "<div id='getInfoTitle' class='title'>" + prop.name + "<span> *</span></div>";
 		var isCheck = "checkInfo";
 	}else{
 		var result = "<div class='title'>" + prop.name + "</div>";
@@ -1554,7 +1690,6 @@ function dataEven(){
 		language: 'zh',
 		dateFormat:'yyyy-MM-dd'
      });
-	
 }
 
 //提示
@@ -1731,7 +1866,6 @@ function createTalkInfo(res){
 		'   </div>',
 		'<span class="errorSpan"></span>',
 		'</div>',
-
 	].join('');
 	return html;
 }
@@ -1966,7 +2100,6 @@ function createNoInfo(res){
 }
 
 function createOption(value,text,price){
-	
 	var html = '<li data-price="'+ price +'" data-id="'+ value +'">'+text+'</li>';
 	return html;
 }
@@ -1976,7 +2109,8 @@ function shareEven(){
 	$('.share').off('click').on('click',function(){
 		$('.btnShare').text('复制链接');
 		$('.modelCard .btnShare').css('background','#fe5453');
-	    $('.modelCard .btnShare').addClass('btn-c-r');	
+	    $('.modelCard .btnShare').addClass('btn-c-r');
+	    $(window.parent.parent.parent.document).find('html').scrollTop(0);
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#isCopy').show();
 		var url = $(this).attr('data-content');
@@ -2079,6 +2213,228 @@ function autoTeamMakeLi(){
 		  $('#prLink').val(linkman);
 		  $('#prTel').val(phone);
 	});
+}
+
+
+function provNewInit(){
+	createProv();
+	delProv();
+}
+//删除供应商
+function delProv(){
+	$('.delPro').off('click').on('click',function(){
+		$('#errorDelProv').show();
+		 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+		var proId = $(this).attr('data-idp');
+		initDelProv(proId,$(this));
+	});
+}
+
+function initDelProv(proId,item){
+	var ss = item.attr('data-idp');
+	$('#cancleProveReason').val('');
+	$('#errorProveReason').text('');
+	$('#checkReasopnProv').off('click').on('click',function(){
+		var setValue = $('#cancleProveReason').val();
+		if(setValue!=""&&setValue!=null&&setValue!=undefined){
+			loadData(function(res){
+				if(res.result){
+					$('#errorDelProv').hide();
+					item.parent().parent().find('.item').find('.'+proId+'').css('color','#fe5453');
+					item.parent().parent().find('.item').find('.'+proId+'').text('已删除')
+				}else{
+					$('#errorProveReason').text(res.err);
+				}
+			}, getContextPath() + '/project/delete/produce/team',$.toJSON({
+				projectTeamId:proId,
+				projectId:$('#projectId').val(),
+				reason:$('#cancleProveReason').val()
+			}));
+		}else{
+			$('#errorProveReason').text('请填写删除原因');
+		}
+	});
+	
+}
+
+//新增供应商
+function createProv(){
+	$('.addPro').off('click').on('click',function(){
+		  var id = $(this).parent().parent().find('.contentTeamId').val();
+		  $('#prov_teamId').val(id);
+		  $('#createProivder').show();		
+		  $(window.parent.parent.parent.document).find('body').scrollTop(0);
+		  $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		  autoInputCreateProv();
+		  dataEven();
+		  $('.checkProvError').val('');
+		  $('.checkProvErrorP').val('');
+		  $('.checkProvErrorEmail').val('');
+		  $('#checkCprov').off('click').on('click',function(){
+			  if(checkCreateProvider()){
+				  addSubmitProv();
+			  }
+		  });
+	});
+}
+
+//自动联动客户信息
+function autoInputCreateProv(){
+	$('#prov_teamName').bind('input propertychange', function() {
+		 $('#prov_teamId').val("");
+		var theName = $(this).val();
+		 findAutoInfoCreateProv(theName);
+		 $('.createUi').show();
+		 if(theName == null || theName == ""){
+			 $('.createUi').hide();
+		 }
+	});
+}
+
+function findAutoInfoCreateProv(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('.createUi');
+		body.html('');
+		if(res != null && res != undefined){
+			for (var int = 0; int < res.length; int++) {
+				   var html =createUserInfo(res[int].teamId,res[int].teamName,res[int].linkman,res[int].phoneNumber);
+				   body.append(html);
+			};
+			autoLiCreateProv();
+		}
+	}, getContextPath() + '/team/listByName/'+userName,null);
+}
+
+function autoLiCreateProv(){
+	
+	$('.createUi li').off('click').on('click',function(){
+		  $('.createUi').hide();
+		  var name = $(this).text();
+		  var id = $(this).attr('data-id');
+		  var linkman = $(this).attr('data-linkman');
+		  var phone = $(this).attr('data-phone');
+		  $(this).parent().parent().find('input').val(name);
+		  $('#prov_teamId').val(id);
+		  $('#prov_linkman').val(linkman);
+		  $('#prov_telephone').val(phone);
+		  
+	});
+}
+
+function checkCreateProvider(){
+    var error = $('.checkProvError');
+    var errorP = $('.checkProvErrorP');
+    $('.errorItem').attr('data-content','');
+    for (var i = 0; i < error.length; i++) {
+	    	 var word = $(error[i]).val();
+	    	 if(word == undefined || word == "" || word ==null ){
+	    		 $(error[i]).parent().attr('data-content','内容不能为空');
+	 			return false;
+	 		}
+	   }
+    for (var i = 0; i < errorP.length; i++) {
+   	 var phone = $(errorP[i]).val();
+   	 if(!checkMobile(phone)){
+   		$(errorP[i]).parent().attr('data-content','电话格式不正确');
+		return false;
+		}
+    }
+    
+    if(!checkEmail($('.checkProvErrorEmail').val())){
+    	$('.checkProvErrorEmail').parent().attr('data-content','邮箱格式不正确');
+    	return false;
+    }
+    
+    return true;
+}
+
+function loadProvCard(){
+	loadData(function(res){
+		if(res != null && res != undefined){
+		   console.info(res);
+		}
+	}, getContextPath() + '/project/getProduceTeamInfo/'+$('#projectId').val(),'');
+}
+
+
+function addSubmitProv(){
+	
+	var prov_teamId =   $('#prov_teamId').val();
+	var prov_teamName = $('#prov_teamName').val();
+	var prov_linkman =  $('#prov_linkman').val();
+	var prov_telephone =  $('#prov_telephone').val();
+	var prov_budget =   $('#prov_budget').val();
+	var prov_makeContent =   $('#prov_makeContent').val();
+	var prov_makeTime =   $('#prov_makeTime').val();
+	var comment  = $('#comment').val();
+	var email  = $('#prov_email').val();
+	loadData(function(res){
+		initLastTime(res.projectCycle,res.createDate);
+		if(res != null && res != undefined){
+			   var html = [
+					'<div class="item">',
+				    '   <div>供应商名称</div>',
+				    '     <div>',
+				    '        '+prov_teamName+'',
+				    '     </div>',
+				    '</div> ',
+				    '<div class="item">',
+				    '   <div>供应商联系人</div>',
+				    '     <div>',
+				    '        '+prov_linkman+'',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item">',
+				    '   <div>供应商联系电话</div>',
+				    '     <div>',
+				    '         '+prov_telephone+'',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item smallItem">',
+				    '   <div>状态</div>',
+				    '     <div class="status" style="color:green">',
+				    '         正常',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item smallItem">',
+				    '   <div>操作</div>',
+				    '     <div class="delPro" data-idp='+res+'>',
+				    '         删除',
+				    '     </div>',
+				    '</div> ',
+				    '<div class="item">',
+				    '   <div>供应商制作邮箱</div>',
+				    '     <div>',
+				    '         '+email+'',
+				    '     </div>',
+				    '</div> ', 
+				    '<div class="item">',
+				    '   <div>供应商制作内容</div>',
+				    '     <div>',
+				    '         '+prov_makeContent+'',
+				    '     </div>',
+				    '</div> ', 
+				].join('');
+			   $('#createProivder').hide();
+			   $('#makeProvItem').show();
+			   $('#makeProvItem').append(html);
+		}
+	}, getContextPath() + '/project/add/produce/team/',$.toJSON({
+		projectId:$('#projectId').val(),
+		teamId:prov_teamId,
+		teamName:prov_teamName,
+		linkman:prov_linkman,
+		telephone:prov_telephone,
+		budget:prov_budget,
+		makeContent:prov_makeContent,
+		makeTime:prov_makeTime,
+		budget:prov_budget,
+		comment:comment,
+		email:email
+	}));
+	
 }
 
 

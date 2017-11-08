@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.activiti.engine.impl.form.TaskFormDataImpl;
-import org.activiti.engine.impl.persistence.entity.TaskEntity;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
@@ -16,6 +13,7 @@ import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
+import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
 import com.paipianwang.pat.workflow.entity.ProjectCycleItem;
 
 public interface ProjectWorkFlowService {
@@ -237,4 +235,39 @@ public interface ProjectWorkFlowService {
 	public Map<String, Object> getSchemeTeamInfo(String projectId);
 	
 	public Map<String,Object> getCurentTask(String processInstanceId, String activitiUserId);
+
+	/**
+	 * 在 【供应商管家填写制作供应商结算信息】 
+	 * 获取 供应商实际价格、发票抬头
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> loadTeamFinanceInfo(String projectId, final String taskId, final String teamType);
+
+	public void updateTeamInformation(Map<String, String[]> addTeamProperties);
+
+	public List<Map<String, Object>> loadProduceTeamFinanceInfo(String projectId, String taskId, String code);
+
+	/**
+	 * 新增供应商财务数据
+	 * @param financeProperties
+	 */
+	public void saveFinaceByProduceTeam(Map<String, String[]> financeProperties);
+
+	public Long saveProduceTeam(PmsProjectTeam team);
+
+	/**
+	 * 逻辑删除
+	 * flag 0 -> 1
+	 * @param projectTeamId
+	 * @return
+	 */
+	public boolean deleteProduceTeam(final PmsProjectTeam team);
+
+	/**
+	 * 检测项目的制作供应商是否剩下一个
+	 * @param projectTeamId
+	 */
+	public boolean checkProduceTeamIsOnly(String projectId);
+	
 }

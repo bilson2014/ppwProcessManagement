@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.identity.Group;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -21,12 +20,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component
-public class AuditCounterSignCompleteListener implements TaskListener {
+public class AuditCounterSignCompleteListener extends BaseTaskListener {
 
 	private static final long serialVersionUID = 6164221672207305686L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		// 审核判断
 		String approved = (String) delegateTask.getVariable("approved");
         if (approved.equals("true")) {

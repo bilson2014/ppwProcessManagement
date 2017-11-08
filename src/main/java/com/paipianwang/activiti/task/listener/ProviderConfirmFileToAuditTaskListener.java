@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.TaskListener;
 import org.activiti.engine.form.FormProperty;
 import org.activiti.engine.impl.form.TaskFormDataImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -28,12 +27,12 @@ import com.paipianwang.pat.workflow.facade.PmsProjectSynergyFacade;
  *
  */
 @Component("providerConfirmFileToAuditTaskListener")
-public class ProviderConfirmFileToAuditTaskListener implements TaskListener {
+public class ProviderConfirmFileToAuditTaskListener extends BaseTaskListener{
 
 	private static final long serialVersionUID = -9037097182002871515L;
 
 	@Override
-	public void notify(DelegateTask delegateTask) {
+	public void execute(DelegateTask delegateTask) {
 		final String projectId = delegateTask.getExecution().getProcessBusinessKey();
 		final String taskId = delegateTask.getId();
 		final List<String> users = new ArrayList<String>();

@@ -11,26 +11,26 @@ import com.paipianwang.activiti.mq.email.service.BaseMQService;
 import com.paipianwang.activiti.service.MessageService;
 
 /**
- * 向客户发送项目启动函
+ * 向监制发送通知邮件
  * @author jacky
  *
  */
-public class SendProjectStartEmailToUser implements JavaDelegate, Serializable {
+public class SendMailToScheme implements JavaDelegate, Serializable {
 
-	private static final long serialVersionUID = 4146202871425208996L;
+	private static final long serialVersionUID = -3120317489553962672L;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		System.err.println("向客户发送项目启动函");
-		
+
+		System.out.println("向监制发送通知邮件");
 		String projectId = execution.getProcessBusinessKey();
 		ApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
-		BaseMQService projectInfoLetterMQService = (BaseMQService) context.getBean("projectInfoLetterMQService");
-		projectInfoLetterMQService.sendMessage(projectId);
+		BaseMQService emailInformationMQService = (BaseMQService) context.getBean("emailInformationMQService");
+		emailInformationMQService.sendMessage(projectId);
 		
 		//留言
 		MessageService messageService=(MessageService) context.getBean("messageService");
-		messageService.insertSystemMessage(projectId, "向客户发送项目启动函");
+		messageService.insertSystemMessage(projectId, "向监制发送通知邮件");
 	}
 
 }

@@ -21,30 +21,6 @@
 		</attribute>
 	</tag>
 	
-	<!-- 三个参数的URL -->
-	<!-- <tag>
-		<name>multPermission</name>
-		<tag-class>com.paipianwang.activiti.taglib.SecurityTagMultipleParam</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>uri</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>uri2</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		
-		<attribute>
-			<name>uri3</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag> -->
-	
 	<!-- 当前角色 -->
 	<tag>
 		<name>identity</name>
@@ -95,20 +71,6 @@
 		<body-content>JSP</body-content>
 	</tag>
 	
-	<!-- 没有分级 -->
-	<!-- <tag>
-		<name>noLevel</name>
-		<tag-class>com.paipianwang.activiti.taglib.JudgeLevelTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag> -->
-	
-	<!-- 供应商未审核 -->
-	<!-- <tag>
-		<name>noIdentification</name>
-		<tag-class>com.paipianwang.activiti.taglib.JudgeProviderNoIndentityTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag> -->
-	
 	<!-- 输出登录名 -->
 	<tag>
 		<name>outName</name>
@@ -121,5 +83,17 @@
 		<name>outImg</name>
 		<tag-class>com.paipianwang.activiti.taglib.OutImgTag</tag-class>
 		<body-content>JSP</body-content>
+	</tag>
+	
+	<!-- 判断是否可以添加制作供应商 -->
+	<tag>
+		<name>addProductTeam</name>
+		<tag-class>com.paipianwang.activiti.taglib.CheckAddProduceTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>projectId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 </taglib>
