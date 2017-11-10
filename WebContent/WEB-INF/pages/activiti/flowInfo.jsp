@@ -328,10 +328,11 @@
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">供应商信息</div>
 	                                 <div class="time"></div>
-
-	                                 <r:addProductTeam projectId="${projectId}">
-	                                     <div class="addPro">新增</div>
-	                                 </r:addProductTeam >
+	                                 <r:group role="teamProvider" role2="teamDirector">
+		                                 <r:addProductTeam projectId="${projectId}">
+		                                     <div class="addPro">新增</div>
+		                                 </r:addProductTeam >
+	                                 </r:group>
 	                                 <r:group role="teamProvider" role2="teamDirector">
 	                                 <div class="update btn-c-r" id="openProvider">更新</div>
 	                                 </r:group>
@@ -412,12 +413,17 @@
 							                                           </c:if>
 									                             </div>
 								                             </c:if>
-								                           <c:if test="${product['flag'] == 0}">
+								    <r:group role="teamProvider" role2="teamDirector">
+		                                 <r:addProductTeam projectId="${projectId}">
+		                                     <c:if test="${product['flag'] == 0}">
 							                                  <div class="item smallItem">
 							                                          <div>操作</div>
 							                                          <div class="delPro" data-id='${product["teamId"]}' data-idp='${product["projectTeamId"]}' >删除</div>
 									                          </div>                                       
-						                                   </c:if>
+						                     </c:if>
+		                                 </r:addProductTeam >
+	                                 </r:group>
+								                          
 						                                   <c:if test="${not empty product['email']}">
 									                             <div class="item">
 								                                          <div>供应商邮箱</div>

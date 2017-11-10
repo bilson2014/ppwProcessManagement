@@ -861,15 +861,15 @@ function openProviderInfo(){
                         
                         var body = $('.setHideTop');
 		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
-		                        body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+		                        body.append('<input type="hidden" name="pt_teamId" value="'+teamId+'">'); 
 	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
 	                    		body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
 	                    		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
 	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
 	                    	var html = [
 	            				'<div class="itemTime itemLong">',
-	            					'<div class="title">修改原因</div>',
-	            					'<textarea></textarea>',
+	            					'<div class="title">修改原因<span class="errorTitle" style="color:#fe5453;font-size:12px"></span></div>',
+	            					'<textarea class="errorLong"></textarea>',
 	            				'</div>'
 	            			].join('');
 	                    	body.append(html);
@@ -887,20 +887,20 @@ function openProviderInfo(){
 	  		    		 var pt_telephone = produce[i].pt_telephone;
 	  		    		 var scId = produce[i].pt_projectTeamId;
                          var teamId = produce[i].pt_teamId;
-                         var pt_email = scheme[i].pt_email;
+                         var pt_email = produce[i].pt_email;
                          
 		                         var body = $('.setHideBot');
 		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+scId+'">');
-		                         body.append('<input type="hidden" name="pt_projectTeamId" value="'+teamId+'">'); 
+		                         body.append('<input type="hidden" name="pt_teamId" value="'+teamId+'">'); 
 	                        	body.append(createUpdateCard('供应商团队',pt_teamName,'pt_teamName','readonly',1));
 	                        	body.append(createUpdateCard('供应商联系人',pt_linkman,'pt_linkman','',1));
 	                       		body.append(createUpdateCard('供应商联系电话',pt_telephone,'pt_telephone','',0));
 	                    		body.append(createUpdateCard('供应商邮箱',pt_email,'pt_email','',1));
 	                       	var html = [
-	            				'<div class="itemTime itemLong">',
-	            					'<div class="title">修改原因</div>',
-	            					'<textarea></textarea>',
-	            				'</div>'
+	                         '<div class="itemTime itemLong">',
+            					'<div class="title">修改原因<span class="errorTitle" style="color:#fe5453;font-size:12px"></span></div>',
+            					'<textarea class="errorLong"></textarea>',
+            				'</div>'
 	            			].join('');
 	                       	body.append(html);
 	                       	body.append('<br/>');
@@ -939,7 +939,9 @@ function clearProvi(){
 function checkProvider(){           	
     var error = $('.checkError');
     var errorP = $('.checkErrorP');
+    var errorLong = $('.errorLong');
     $('.errorItem').attr('data-content','');
+    $('.errorTitle').text();
     for (var i = 0; i < error.length; i++) {
 	    	 var word = $(error[i]).val();
 	    	 if(word == undefined || word == "" || word ==null ){
@@ -954,6 +956,17 @@ function checkProvider(){
 		return false;
 		}
     }
+    
+    for (var i = 0; i < errorLong.length; i++) {
+      	 var reason = $(errorLong[i]).val();
+      	if(reason == undefined || reason == "" || word ==null ){
+   		 $(errorLong[i]).parent().find('.title').find('.errorTitle').text('请填写');
+			return false;
+		}
+       }
+    
+    
+    
     return true;
 }
 var checkClick = true;
@@ -1395,7 +1408,7 @@ function getLoadProduceTeamFinanceInfo(){
 					   body.append(getItemInfo('交易金额','addft_payPrice',''));
 					   body.append(getItemInfo('描述','addft_description',''));
 					   body.append(getItemInfo('','addft_projectId',$('#projectId').val()));
-					   body.append(getItemInfo('','addft_projectTeamId',res[int].addft_teamName)));
+					   body.append(getItemInfo('','addft_projectTeamId',res[int].addft_teamName));
 				};			
 				dataEven();
 				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
