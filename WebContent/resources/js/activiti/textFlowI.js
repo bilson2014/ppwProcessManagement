@@ -1395,6 +1395,7 @@ function getLoadProduceTeamFinanceInfo(){
 					   body.append(getItemInfo('交易金额','addft_payPrice',''));
 					   body.append(getItemInfo('描述','addft_description',''));
 					   body.append(getItemInfo('','addft_projectId',$('#projectId').val()));
+					   body.append(getItemInfo('','addft_projectTeamId',res[int].addft_teamName)));
 				};			
 				dataEven();
 				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
@@ -1407,7 +1408,7 @@ function getLoadProduceTeamFinanceInfo(){
 
 function getItemInfo(name,dp,value){
 	
-	if(dp == 'addpt_projectTeamId' || dp =='addft_projectId'){
+	if(dp == 'addpt_projectTeamId' || dp =='addft_projectId' || dp =='addft_projectTeamId'){
 	var html = [
 		     '<input type="hidden" id="'+dp+'" name="'+dp+'" class="required '+dp+'" value='+value+'>',
 	].join('');
