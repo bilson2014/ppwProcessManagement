@@ -2432,7 +2432,8 @@ function addSubmitProv(){
 		makeContent:prov_makeContent,
 		makeTime:prov_makeTime,
 		budget:prov_budget,
-		comment:comment
+		comment:comment,
+		email:email
 	}));
 	
 }
