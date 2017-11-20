@@ -57,17 +57,17 @@
 	<input type="hidden" id="storage_node" value="${file_locate_storage_path }" />
 	    <div class="pages">
 	     <div class="infoTitle">
-	                     <div class="titleName" >${projectName}</div>
+	               <div class="titleName" >${projectName}</div>
 	                     <c:if test="${!empty projectGrade || !empty userLevel}">
 		                     <div class="point">
 	                              <div class="showPoint">${projectGrade}${userLevel}</div>
 	                              <div class="showDeil showDownDeil">
 	                               <c:if test="${!empty projectGrade}">
 	                                    <div class="proPoint">项目评级<span>${projectGrade}</span></div>
-	                                    </c:if>
-	                                     <c:if test="${!empty userLevel}">
+	                               </c:if>
+	                               <c:if test="${!empty userLevel}">
 	                                    <div class="cusPoint">客户评级<span>${userLevel}</span></div>
-	                                    </c:if>
+	                               </c:if>
 	                              </div>
 		                     </div>
 	                     </c:if>
@@ -92,7 +92,10 @@
 	                            <div class="missinName">待办任务 : </div>
 	                            <div class="missinInfo" id="taskName">${taskName}</div>
 	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>-->
-	                            <div class="missinTime" ><img src="/resources/images/flow/lastTime.png"><div id="missinTime">${dueDate}</div></div> 
+	                            <div class="missinTime" >
+	                            	<img src="/resources/images/flow/lastTime.png">
+	                            	<div id="missinTime">${dueDate}</div>
+	                            </div> 
 	                            <div class="contentDiv">
 	                               <div class="setContent">
 	                                    <div class="redContent hide"></div>
@@ -104,7 +107,6 @@
 	                               </div>
 	                            </div>
 	                       </div>
-	                 
 	                   </div>    
                      </div>
 	                   <div class="productInfo secondProduct">    
@@ -124,11 +126,11 @@
 	                            </div>
 	                        </div>
 	                       <div class="setListDiv">
-	                               <div class="ListTop">
-	                                     <div class="startTime" >阶段起始时间 : <span id="startTime"></span></div>
-	                                     <div class="endTime hide">阶段计划完成时间<span></span></div>
-	                               </div>
-	                               <div class="listContent" id="listContent"></div>
+	                             <div class="ListTop">
+	                                  <div class="startTime" >阶段起始时间 : <span id="startTime"></span></div>
+	                                  <div class="endTime hide">阶段计划完成时间<span></span></div>
+	                             </div>
+	                             <div class="listContent" id="listContent"></div>
 	                       </div>
 	                       <c:if test="${!empty synergyList}"> 
 	                         <div class="getInfoItem">
@@ -138,7 +140,7 @@
 	                            </div>
 	                            <div class="getInfoItemContent">
 	                            <c:forEach var="item" items="${synergyList}"> 
-											  <div class="imgItem">
+									<div class="imgItem">
 										  <c:if test="${!empty item.imgUrl}"> 
 	                                          <img src="${file_locate_storage_path }${item.imgUrl}">
 	                                      </c:if>
@@ -155,13 +157,13 @@
 	                            </div>
 	                         </div>   
 	                       </c:if>
-	                        <c:if test="${not empty flow_info}"> 
+	                       <c:if test="${not empty flow_info}"> 
 	                       <div class="getInfoItem">
 	                            <div class="getInfoItemTop">
 	                                 <div class="controlOpen"></div>
 	                                 <div class="info">项目信息</div>
 	                                 <r:group role="sale" role2="saleDirector">
-	                                 <div class="update btn-c-r" id="openProjectInfo">更新</div>
+	                                 		<div class="update btn-c-r" id="openProjectInfo">更新</div>
 	                                 </r:group>
 	                            </div>
 	                            <div class="getInfoItemContent">
@@ -287,7 +289,6 @@
 			                                          <div>客户名称</div>
 			                                          <div>${user_info["userName"]}</div>
 				                                  </div>
-				                                 
 		                                  		</c:if>
 		                                  		
 		                                  		<c:if test="${not empty user_info['userLevel']}">
@@ -305,17 +306,17 @@
 			                                  </c:if>
 			                                  
 			                                  <c:if test="${not empty user_info['telephone']}">
-			                                  	<div class="item">
-		                                          <div>客户电话</div>
-		                                          <div>${user_info["telephone"]}</div>
-			                                    </div>
+			                                  		<div class="item">
+		                                          		<div>客户电话</div>
+		                                          		<div>${user_info["telephone"]}</div>
+			                                    	</div>
 			                                  </c:if>
 			                                  
 			                                  <c:if test="${not empty user_info['email']}">
-			                                  	<div class="item">
-		                                          <div>邮箱地址</div>
-		                                          <div>${user_info["email"]}</div>
-			                                    </div>
+			                                  		<div class="item">
+		                                          		<div>邮箱地址</div>
+		                                          		<div>${user_info["email"]}</div>
+			                                    	</div>
 			                                  </c:if>
 		                                  </div>
 		                            </div>
