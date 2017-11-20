@@ -176,8 +176,16 @@
     </userTask>
     <sequenceFlow id="sid-442B9319-EC4D-43AE-8AD4-289818FA5686" sourceRef="sid-F1A0E47B-28F8-441A-BBE1-BCA17BF2BE83" targetRef="sid-2F07B2EB-5814-40AC-890B-696C5740555B"></sequenceFlow>
     <sequenceFlow id="sid-2F55F184-B6F7-48FC-9A56-17F468327A96" sourceRef="sid-2F07B2EB-5814-40AC-890B-696C5740555B" targetRef="sid-1D4B60EC-8E6F-460F-9D9B-469CE146EBA6"></sequenceFlow>
-    <userTask id="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526" name="【销售】确认成片无误" activiti:assignee="${applyUserId}"></userTask>
-    <userTask id="sid-ED17751D-4D1B-4EB6-BCD3-1D0716FEA54E" name="【供应商管家】工程文件审核" activiti:assignee="${teamProviderId}"></userTask>
+    <userTask id="sid-F69A0857-7D5E-4362-A3FA-E2C601BD1526" name="【销售】确认成片无误" activiti:assignee="${applyUserId}">
+      <extensionElements>
+        <activiti:taskListener event="complete" delegateExpression="${confirmFinalFilmTaskListener}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <userTask id="sid-ED17751D-4D1B-4EB6-BCD3-1D0716FEA54E" name="【供应商管家】工程文件审核" activiti:assignee="${teamProviderId}">
+      <extensionElements>
+        <activiti:taskListener event="complete" delegateExpression="${confirmProjectDocumentTaskListener}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
     <userTask id="sid-F57B084C-9AFE-4F5B-A5FE-9D45C58F3A3A" name="【财务】填写付款信息" activiti:assignee="${financeId}">
       <extensionElements>
         <activiti:formProperty id="info_produce_finance_teamName" name="供应商名称" type="string" default="${pt_teamName}"></activiti:formProperty>

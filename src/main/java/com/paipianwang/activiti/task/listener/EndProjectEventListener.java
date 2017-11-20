@@ -40,8 +40,8 @@ public class EndProjectEventListener implements JavaDelegate,Serializable {
 		metaData.put("finishedDate", new Date());
 		flowFacade.update(metaData, projectId, processInstanceId);
 		
-//		MessageService messageService = (MessageService) context.getBean("messageService");
-//		messageService.insertSystemMessage(projectId, "项目结束");
+		MessageService messageService = (MessageService) context.getBean("messageService");
+		messageService.insertSystemMessage(projectId, "项目结束");
 	}
 
 }
