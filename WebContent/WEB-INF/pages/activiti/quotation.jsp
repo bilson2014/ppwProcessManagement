@@ -3,6 +3,7 @@
 
 <!-- css  -->
 <spring:url value="/resources/css/activiti/quotation.css" var="quotationCss"/>
+<spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
 <!-- js -->
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
@@ -10,7 +11,8 @@
 <spring:url value="/resources/js/activiti/tablesMergeCell.js" var="tablesMergeCellJs"/>
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
-<spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -38,6 +40,7 @@
 <script type="text/javascript" src="${tablesMergeCellJs}"></script>
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 
 <spring:url value="/resources/images" var="imgPath" />
 

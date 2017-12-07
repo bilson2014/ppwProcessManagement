@@ -44,6 +44,7 @@ function clickEven(){
 			$('#submitCheck').hide();
 		});
 		if(finalAsc[0] != undefined){
+			console.info(finalAsc);
 			submitDate();
 		}
 	});
@@ -191,13 +192,14 @@ var costFunction = {
 			$('.updateDay').blur(function(){
 				var nowIndex = $(this).attr('data-id');
 				var changeVue = $(this).val();
-				$(this).parent().parent().find('.cost').text('100');
-				finalAsc[nowIndex].day = changeVue;
-				finalAsc[nowIndex].costPrice = 100;
+				var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+				var newPrice = (changeVue * costPrice);
+				$(this).parent().parent().find('.cost').text(newPrice);
+				finalAsc[nowIndex].days = changeVue;
+				finalAsc[nowIndex].sum = newPrice;
 				costFunction.finalCost();
 			});
 		},
-		
 		delItem:function(){
 			$('.delTable div').off('click').on('click',function(){
 				var nowIndex = $(this).attr('data-id');
@@ -357,7 +359,7 @@ function createMultOption(item,index){
  		    		'<td>'+item.description+'</td>',
  		    		'<td class="dayTd"><input data-id='+index+' class="updateDay" value="'+item.days+'"></td>',
  		    		'<td class="dayTd">'+item.quantity+'</td>',
- 		    		'<td class="payCost">'+item.unitPrice+'</td>',
+ 		    		'<td class="payCost payBaseCost">'+item.unitPrice+'</td>',
  		    		'<td class="cost payCost">'+item.sum+'</td>',
  		    		'<td class="delTable"><div data-id='+index+'>删除</div></td>',
 		    		'</tr>'
