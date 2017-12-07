@@ -83,22 +83,6 @@ public class QuotationServiceImpl implements QuotationService {
 			result.setErr("请选择报价明细");
 		}
 		
-		//todo 排序：grade
-		
-		List<PmsQuotationItem> parent=new ArrayList<>();
-		for(PmsQuotationItem type:items){
-			if(type.getGrade()==1){
-				parent.add(type);
-			}
-			if(type.getGrade()==1 || type.getGrade()==2){
-				for(PmsQuotationItem item:items){
-					if(type.getTypeId()==item.getParentId()){
-						type.getChildren().add(item);
-					}
-				}
-			}
-		}
-		pmsQuotation.setItems(parent);
 		//校验计算结果
 		PmsResult validate=vadalitCompute(pmsQuotation);
 		if(validate!=null){
