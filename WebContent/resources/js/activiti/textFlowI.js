@@ -2292,6 +2292,7 @@ function createProv(){
 		  $('.checkProvError').val('');
 		  $('.checkProvErrorP').val('');
 		  $('.checkProvErrorEmail').val('');
+		  $('#comment').val('');
 		  $('#checkCprov').off('click').on('click',function(){
 			  if(checkCreateProvider()){
 				  addSubmitProv();
@@ -2441,6 +2442,7 @@ function addSubmitProv(){
 			   $('#createProivder').hide();
 			   $('#makeProvItem').show();
 			   $('#makeProvItem').append(html);
+			   delProv();
 		}
 	}, getContextPath() + '/project/add/produce/team/',$.toJSON({
 		projectId:$('#projectId').val(),
