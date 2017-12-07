@@ -1370,6 +1370,7 @@ function getLoadTeamFinanceInfo(){
 		noNeed = false;
 		loadData(function(res){
 			if(res != null && res != undefined && res != ''){
+				
 				var body = $('.dynamic-form-table');
 				for (var int = 0; int < res.length; int++) {
 					   body.append('<br/>');
@@ -1378,10 +1379,10 @@ function getLoadTeamFinanceInfo(){
 					   body.append(getItemInfo('发票抬头','addpt_invoiceHead',''));
 					   body.append(getItemInfo('','addpt_projectTeamId',res[int].addpt_projectTeamId));
 				};	
-				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
-				$('.dynamic-form-table').append(setbtn);
-				InitVoiceHead();
 			}
+			var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+			$('.dynamic-form-table').append(setbtn);
+			InitVoiceHead();
 		}, getContextPath() + '/project/loadTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
 	}
 }
@@ -1399,6 +1400,7 @@ function getLoadProduceTeamFinanceInfo(){
 		noNeed = false;
 		loadData(function(res){
 	       if(res != null && res != undefined && res != ''){
+	    	    
 				var body = $('.dynamic-form-table');
 				for (var int = 0; int < res.length; int++) {
 					   body.append('<br/>');
@@ -1411,10 +1413,10 @@ function getLoadProduceTeamFinanceInfo(){
 					   body.append(getItemInfo('','addft_projectTeamId',res[int].addft_teamName));
 				};			
 				dataEven();
-				var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
-				$('.dynamic-form-table').append(setbtn);
-				initFormEven();
 			}
+	        var setbtn = '<div class="btnInput" id="btnInput"><input id="toSubmitForm" class="btn-c-r" type="button" value="提交"/></div>';
+			$('.dynamic-form-table').append(setbtn);
+			initFormEven();
 		}, getContextPath() + '/project/loadProduceTeamFinanceInfo/' + $('#projectId').val()+'/'+ $('#currentTaskId').val(),null);
 	}
 }
@@ -1538,7 +1540,12 @@ var formFieldCreator = {
 		/*	result += " <div id='uploadVideo' class='uploadVideo'>上传</div>";*/
 			return result;
 		}
-		result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "'  value=' "+ prop.value +"'   />";
+		if(prop.value !=null && prop.value !=""){
+			result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "'  value=' "+prop.value+"'   />";
+		}else{
+			result += "<input id='" + prop.id + "' type='text' id='" + prop.id + "' name='" + prop.id + "' class='uploadInput "+isCheck+" " + className + " " + prop.id + "' />";
+		}
+	
 	} else {
 		result += "<input id='" + prop.id + "' class='" + prop.id + "' value='" + prop.value + "' readonly placeholder='" + prop.value + "' name='" + prop.id + "'/>";
 	}
