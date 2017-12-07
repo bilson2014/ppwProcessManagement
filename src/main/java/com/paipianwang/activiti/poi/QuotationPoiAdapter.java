@@ -135,7 +135,7 @@ public class QuotationPoiAdapter {
 	//报价单明细
 	public int createDataItem(XSSFWorkbook xssfWorkbook,XSSFSheet sheet,int rowIndex,PmsQuotation quotation){
 		// 样式
-		XSSFCellStyle cs = getCenterCellStyle(xssfWorkbook);
+		/*XSSFCellStyle cs = getCenterCellStyle(xssfWorkbook);
 
 		XSSFCellStyle typeCs=getTypeCellStyle(xssfWorkbook);
 		
@@ -208,7 +208,7 @@ public class QuotationPoiAdapter {
 			xssfCell.setCellValue(type.getTypeName());
 			
 			
-		}
+		}*/
 
 		return rowIndex;
 	}

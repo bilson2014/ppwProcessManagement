@@ -85,7 +85,7 @@ public class QuotationServiceImpl implements QuotationService {
 		
 		//todo 排序：grade
 		
-		List<PmsQuotationItem> parent=new ArrayList<>();
+	/*	List<PmsQuotationItem> parent=new ArrayList<>();
 		for(PmsQuotationItem type:items){
 			if(type.getGrade()==1){
 				parent.add(type);
@@ -97,8 +97,8 @@ public class QuotationServiceImpl implements QuotationService {
 					}
 				}
 			}
-		}
-		pmsQuotation.setItems(parent);
+		}*/
+		//pmsQuotation.setItems(parent);
 		//校验计算结果
 		PmsResult validate=vadalitCompute(pmsQuotation);
 		if(validate!=null){
