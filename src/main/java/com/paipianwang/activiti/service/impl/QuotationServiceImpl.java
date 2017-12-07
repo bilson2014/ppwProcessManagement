@@ -99,6 +99,7 @@ public class QuotationServiceImpl implements QuotationService {
 			}
 		}*/
 		//pmsQuotation.setItems(parent);
+
 		//校验计算结果
 		PmsResult validate=vadalitCompute(pmsQuotation);
 		if(validate!=null){
