@@ -1,5 +1,6 @@
 package com.paipianwang.activiti.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -113,6 +114,9 @@ public class ProjectResourceServiceImpl implements ProjectResourceService {
 	public List<PmsProjectResource> getResourceList(String projectId, List<String> roleTypes) {
 		List<PmsProjectResource> resources = pmsProjectResourceFacade.getValidResourceByProjectIdAndRole(projectId,
 				roleTypes);
+		if(resources==null){
+			return new ArrayList<PmsProjectResource>();
+		}
 		for (PmsProjectResource resource : resources) {
 			// 资源类型
 			for (FileType type : FileType.values()) {
