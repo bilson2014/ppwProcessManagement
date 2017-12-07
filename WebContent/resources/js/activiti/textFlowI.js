@@ -342,22 +342,22 @@ function createStageInfo(res,state){
 }
 
 function getStageInfo(stage){	
-			var keys = stage;
-			var resMap = "";			
-			if(resMap == ""){
-				loadData(function(res){
-					initLastTime(res.projectCycle,res.createDate);
-					if(res != null && res != undefined){
-					    resMap = res;
-						var sethtml="";
-						var resKey = res[keys];
-						getStageCard(keys,resKey);
-					}
-				}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
-			}else{
-				var resKey = resMap[keys];
+	var keys = stage;
+	var resMap = "";			
+	if(resMap == ""){
+		loadData(function(res){
+			initLastTime(res.projectCycle,res.createDate);
+			if(res != null && res != undefined){
+				resMap = res;
+				var sethtml="";
+				var resKey = res[keys];
 				getStageCard(keys,resKey);
 			}
+		}, getContextPath() + '/project/project-task/'+$('#projectId').val(),$.toJSON({projectName:keys}));
+	}else{
+	var resKey = resMap[keys];
+	getStageCard(keys,resKey);
+	}
 }
 
 function getStageCard(keys,resKey){

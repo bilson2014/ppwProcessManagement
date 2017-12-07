@@ -70,7 +70,7 @@
 	                <c:if test="${!empty gTasks}">
 	               
 	                <div class="setCard" id="setCard">
-							<c:forEach items="${gTasks }" var="staff" varStatus="status">
+						<c:forEach items="${gTasks}" var="staff" varStatus="status">
 						   <div class="waitCard cardNum">
 						       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId }?task">
 	                             <div class="cardH">
@@ -93,29 +93,7 @@
 	                             </div>
 	                            </a>  
 	                        </div>
-							</c:forEach>
-					
-	                       <!--  <div class="waitCard">
-	                             <div class="cardH">
-	                                 <div class="title">这里是卡片的标题啊啊啊啊</div>
-	                                 <div class="point">
-	                                      <div class="showPoint">SA</div>
-	                                      <div class="showDeil">
-	                                            <div class="proPoint">项目评级<span>S</span></div>
-	                                            <div class="cusPoint">客户评级<span>A</span></div>
-	                                      </div>
-	                                 </div>
-	                                 <div class="your">负责人<span>她她她</span></div>
-	                             </div>
-	                             <div class="cardContent">
-	                                  <img src="/resources/images/flow/demoY.png">
-	                                  <div class="setContent">
-	                                      <div class="listName">上传周期表</div>
-	                                      <div class="lastTime">已超时 24h 5min 45s</div>
-	                                  </div>
-	                             </div>
-	                        </div> -->
-	                     
+							</c:forEach>	                     
 	                </div>
 	          </c:if>
 	           <div class="cardLine"><div></div></div>
@@ -150,39 +128,37 @@
 		                                      <div class="listName">${staff.task.name}</div>
 		                                      <div class="lastTime otherTime">${staff.task.dueDate}</div>		                                    
 		                                      <c:if test="${staff.isPrincipal == 1}">
-		                                    <div class="your">${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>
-		                                  <c:if test="${staff.isPrincipal == 0}">
-		                                     <div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
-		                                  </c:if>		                                  
+		                                      		<div class="your">${staff.pmsProjectFlow.principalName}</div>
+		                                  	  </c:if>
+		                                  	  <c:if test="${staff.isPrincipal == 0}">
+		                                     		<div class="user">负责人:${staff.pmsProjectFlow.principalName}</div>
+		                                  	  </c:if>		                                  
 		                                  </div>
 		                                  <c:if test="${staff.taskStage == '沟通阶段'}">
-		                                  <img src="/resources/images/flow/isTalk.png">
+		                                  		<img src="/resources/images/flow/isTalk.png">
 		                                  </c:if>
 		                                  <c:if test="${ staff.taskStage == '方案阶段'}">
-		                                  <img src="/resources/images/flow/isFang.png">
+		                                  		<img src="/resources/images/flow/isFang.png">
 		                                  </c:if>
 		                                  <c:if test="${ staff.taskStage == '商务阶段'}">
-		                                  <img src="/resources/images/flow/isPrice.png">
+		                                  		<img src="/resources/images/flow/isPrice.png">
 		                                  </c:if>
 		                                  <c:if test="${ staff.taskStage == '制作阶段'}">
-		                                  <img src="/resources/images/flow/isMake.png">
+		                                  		<img src="/resources/images/flow/isMake.png">
 		                                  </c:if>
 		                                  <c:if test="${staff.taskStage == '交付阶段'}">
-		                                  <img src="/resources/images/flow/isPay.png">
+		                                  		<img src="/resources/images/flow/isPay.png">
 		                                  </c:if>
 		                             </div>
 		                            </a> 
 		                        </div>
 							</c:forEach>
 					</c:if>
-
 	           </div>   
-	            </div>    
-	</div> 
-	
+	     </div>    
+	</div> 	
 </div>	  
-	<!-- video-->
+
 </body>
 
 </html>
