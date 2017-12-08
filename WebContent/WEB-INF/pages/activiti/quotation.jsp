@@ -6,6 +6,7 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/css/datepicker.min.css" var="datepickerCss" />
 <!-- js -->
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
+<spring:url value="/resources/lib/jquery/jquery.table2excel.js" var="table2excelJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
 <spring:url value="/resources/js/activiti/quotation.js" var="quotationJs"/>
 <spring:url value="/resources/js/activiti/tablesMergeCell.js" var="tablesMergeCellJs"/>
@@ -28,13 +29,14 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="" content="" />
-<title></title>
+<title>报价单生成器</title>
 <!-- css -->
 <link rel="stylesheet" href="${quotationCss}">
 <link rel="stylesheet" href="${datepickerCss}">
 
 <!-- js -->
 <script type="text/javascript" src="${jqueryJs}"></script>
+<script type="text/javascript" src="${table2excelJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${quotationJs}"></script>
 <script type="text/javascript" src="${tablesMergeCellJs}"></script>
@@ -89,7 +91,7 @@
 
      
      <div class='banner'>
-         		<span></span>
+         		<span>报价单生成器</span>
      </div>
    
    <div class="pages">

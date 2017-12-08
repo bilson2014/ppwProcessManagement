@@ -8,6 +8,15 @@ $().ready(function() {
 		$('.oredrMultSelect').removeClass('selectColor');
 	});
      init();     
+     
+/*     $("#suppliers").table2excel({
+         exclude: ".noExl",
+         name: "Worksheet Name",
+         filename: "xxxxx表" ,
+         exclude_img: true,
+         exclude_links: true,
+         exclude_inputs: true
+     });*/
 });
 
 function init(){
@@ -193,9 +202,21 @@ var costFunction = {
 				var nowIndex = $(this).attr('data-id');
 				var changeVue = $(this).val();
 				var costPrice = $(this).parent().parent().find('.payBaseCost').text();
-				var newPrice = (changeVue * costPrice);
+				var costNum = $(this).parent().parent().find('.dayTd').find('.updateNum').val();
+				var newPrice = (changeVue * costPrice *costNum);
 				$(this).parent().parent().find('.cost').text(newPrice);
 				finalAsc[nowIndex].days = changeVue;
+				finalAsc[nowIndex].sum = newPrice;
+				costFunction.finalCost();
+			});
+			$('.updateNum').blur(function(){
+				var nowIndex = $(this).attr('data-id');
+				var changeVue = $(this).val();
+				var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+				var costDay = $(this).parent().parent().find('.dayTd').find('.updateDay').val();
+				var newPrice = (changeVue * costPrice * costDay);
+				$(this).parent().parent().find('.cost').text(newPrice);
+				finalAsc[nowIndex].quantity = changeVue;
 				finalAsc[nowIndex].sum = newPrice;
 				costFunction.finalCost();
 			});
@@ -358,7 +379,7 @@ function createMultOption(item,index){
  		    		'<td>'+item.detailName+'</td>',
  		    		'<td>'+item.description+'</td>',
  		    		'<td class="dayTd"><input data-id='+index+' class="updateDay" value="'+item.days+'"></td>',
- 		    		'<td class="dayTd">'+item.quantity+'</td>',
+ 		    		'<td class="dayTd"><input data-id='+index+' class="updateNum" value="'+item.quantity+'"></td>',
  		    		'<td class="payCost payBaseCost">'+item.unitPrice+'</td>',
  		    		'<td class="cost payCost">'+item.sum+'</td>',
  		    		'<td class="delTable"><div data-id='+index+'>删除</div></td>',
