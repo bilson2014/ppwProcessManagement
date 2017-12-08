@@ -81,24 +81,8 @@ public class QuotationServiceImpl implements QuotationService {
 		if(!ValidateUtil.isValid(items)){
 			result.setResult(false);
 			result.setErr("请选择报价明细");
+			return result;
 		}
-		
-		//todo 排序：grade
-		
-	/*	List<PmsQuotationItem> parent=new ArrayList<>();
-		for(PmsQuotationItem type:items){
-			if(type.getGrade()==1){
-				parent.add(type);
-			}
-			if(type.getGrade()==1 || type.getGrade()==2){
-				for(PmsQuotationItem item:items){
-					if(type.getTypeId()==item.getParentId()){
-						type.getChildren().add(item);
-					}
-				}
-			}
-		}*/
-		//pmsQuotation.setItems(parent);
 
 		//校验计算结果
 		PmsResult validate=vadalitCompute(pmsQuotation);
@@ -107,9 +91,9 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		
 		if(pmsQuotation.getQuotationId()==null){
-			pmsQuotationFacade.insert(pmsQuotation);
+			result=pmsQuotationFacade.insert(pmsQuotation);
 		}else{
-			pmsQuotationFacade.update(pmsQuotation);
+			result=pmsQuotationFacade.update(pmsQuotation);
 		}
 		return result;
 	}

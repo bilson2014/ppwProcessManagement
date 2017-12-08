@@ -64,15 +64,23 @@ public class QuotationController extends BaseController {
 		PmsResult result=new PmsResult();
 		//数据保存
 		result=quotationService.saveOrUpdateQuotation(pmsQuotation);
-		if(!result.isResult()){
-			return result;
-		}
+		
+		return result;
+	}
+	/**
+	 * 导出
+	 * @param quotationId 报价单id
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/export/{quotationId}")
+	public void export(@PathVariable("quotationId")Long quotationId,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
 		try {
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("application/octet-stream");
-			String filename = "《"+pmsQuotation.getProjectName()+"》报价单.xlsx";
+			String filename = "《测测》报价单.xlsx";
 			
 			//---处理文件名
 			String userAgent = request.getHeader("User-Agent"); 
@@ -84,16 +92,14 @@ public class QuotationController extends BaseController {
 			}
 			
 			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"\r\n");
-
+		
 			outputStream = response.getOutputStream();
 			
-			quotationService.export(pmsQuotation.getProjectId(), outputStream,request);
+			quotationService.export("", outputStream,request);
 			
 			outputStream.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
-			result.setResult(false);
-			result.setErr(e.getMessage());
 		} finally {
 			if (outputStream != null) {
 				try {
@@ -104,7 +110,6 @@ public class QuotationController extends BaseController {
 			}
 		}
 		
-		return result;
+//		return result;
 	}
-	
 }
