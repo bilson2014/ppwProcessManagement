@@ -163,7 +163,7 @@ var controlArray = {
 		},
 		
 		createTable:function(){
-		     setTitle = "";
+			 titleTr = "";
 		     $('.setTr').html('');
 		     for (var int = 0; int < finalAsc.length; int++) {
 		         $('.setTr').append(createMultOption(finalAsc[int],int));
@@ -236,7 +236,7 @@ var costFunction = {
 				 totalPrice = parseInt(totalPrice) + parseInt($(cost[i]).text());
 			 }
 			 $('#localPrice').text(totalPrice);
-			 var setTax = parseFloat(totalPrice*(1-tax/100) - free);
+			 var setTax = parseFloat(totalPrice*(1 + tax/100) - free);
 			 finalPrice =  (Math.round(setTax*100))/100;
 			$('#setFinalCost').text(finalPrice);
 		},
