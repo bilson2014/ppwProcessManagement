@@ -243,7 +243,7 @@ public class QuotationPoiAdapter {
 		xssfCell = xssfRow.createCell(5);
 		xssfCell.setCellStyle(cs);
 		if(ValidateUtil.isValid(quotation.getTaxRate())){
-			xssfCell.setCellValue(Double.parseDouble(quotation.getTaxRate())*100+"%");
+			xssfCell.setCellValue(quotation.getTaxRate()+"%");
 		}
 		
 		createNullCell(xssfRow, cs, 6, 1);
