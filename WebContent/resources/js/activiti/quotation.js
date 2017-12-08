@@ -2,13 +2,13 @@
  var finalAsc = new Array();
  var titleTr = "";
 $().ready(function() {
+	//document.domain = getUrl();
 	$('body').off('click').on('click',function(){
 		$('ul').slideUp();
 		$('.oredrTypeSelect').removeClass('selectColor');
 		$('.oredrMultSelect').removeClass('selectColor');
 	});
      init();     
-     
 /*     $("#suppliers").table2excel({
          exclude: ".noExl",
          name: "Worksheet Name",
@@ -26,6 +26,22 @@ function init(){
 	controlArray.init();
 	initTypeItem();
 	clickEven();
+	getTableInfo();
+}
+
+function getTableInfo(){
+	loadData(function(res){
+		if(src != null && src !='' && src != undefined ){
+			var src = res;
+			$('#projectId').val(src.projectId);
+			$('#quotationId').val(src.quotationId);
+			$('#tax').val(src.taxRate);
+			$('#projectName').val(src.projectName);
+			$('#dayTime').val(src.updateDate);
+			finalAsc.push(new cTable(src.items[0]));
+			controlArray.createTable();
+		}
+	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 }
 
 
@@ -60,8 +76,18 @@ function clickEven(){
 }
 function submitDate(){
     loadData(function(res){
-    	if(res){
+    	if(res.result){
     		$('#submitCheck').show();
+    		$('#isSuccess').text('生成成功');
+    		$('#successContent').text('请确认文档');
+    		$('#quotationId').val(res.msg);
+    		window.location.href = getContextPath() + "/quotation/export/" + res.msg;
+    		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+    	}else{
+    		$('#submitCheck').show();
+    		$('#isSuccess').text('生成失败');
+    		$('#successContent').text('请确认网络情况');
     	}
 	}, getContextPath() + '/quotation/save',$.toJSON({
 		items : finalAsc,
@@ -199,26 +225,35 @@ var costFunction = {
 		},
 		updateDay :function(){
 			$('.updateDay').blur(function(){
-				var nowIndex = $(this).attr('data-id');
+				
 				var changeVue = $(this).val();
-				var costPrice = $(this).parent().parent().find('.payBaseCost').text();
-				var costNum = $(this).parent().parent().find('.dayTd').find('.updateNum').val();
-				var newPrice = (changeVue * costPrice *costNum);
-				$(this).parent().parent().find('.cost').text(newPrice);
-				finalAsc[nowIndex].days = changeVue;
-				finalAsc[nowIndex].sum = newPrice;
-				costFunction.finalCost();
+				var nowIndex = $(this).attr('data-id');
+				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000){
+					$(this).val(finalAsc[nowIndex].days);
+				}else{
+					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+					var costNum = $(this).parent().parent().find('.dayTd').find('.updateNum').val();
+					var newPrice = (changeVue * costPrice *costNum);
+					$(this).parent().parent().find('.cost').text(newPrice);
+					finalAsc[nowIndex].days = changeVue;
+					finalAsc[nowIndex].sum = newPrice;
+					costFunction.finalCost();
+				}
 			});
 			$('.updateNum').blur(function(){
 				var nowIndex = $(this).attr('data-id');
 				var changeVue = $(this).val();
-				var costPrice = $(this).parent().parent().find('.payBaseCost').text();
-				var costDay = $(this).parent().parent().find('.dayTd').find('.updateDay').val();
-				var newPrice = (changeVue * costPrice * costDay);
-				$(this).parent().parent().find('.cost').text(newPrice);
-				finalAsc[nowIndex].quantity = changeVue;
-				finalAsc[nowIndex].sum = newPrice;
-				costFunction.finalCost();
+				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000){
+					$(this).val(finalAsc[nowIndex].quantity);
+				}else{
+					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+					var costDay = $(this).parent().parent().find('.dayTd').find('.updateDay').val();
+					var newPrice = (changeVue * costPrice * costDay);
+					$(this).parent().parent().find('.cost').text(newPrice);
+					finalAsc[nowIndex].quantity = changeVue;
+					finalAsc[nowIndex].sum = newPrice;
+					costFunction.finalCost();
+				}
 			});
 		},
 		delItem:function(){

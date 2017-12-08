@@ -13,6 +13,7 @@
 <spring:url value="/resources/lib/AirDatepicker/dist/js/datepicker.min.js" var="datepickerJs" />
 <spring:url value="/resources/lib/AirDatepicker/dist/js/i18n/datepicker.zh.js" var="datepickerZhJs" />
 <spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs" />
+<spring:url value="/resources/js/common.js" var="commonJs"/>
 
 
 
@@ -43,6 +44,8 @@
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
 <script type="text/javascript" src="${jsonJs}"></script>
+<script type="text/javascript" src="${commonJs}"></script>
+
 
 <spring:url value="/resources/images" var="imgPath" />
 
@@ -78,12 +81,13 @@
 <div class="cusModel" id="submitCheck" >
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">提交成功</div>
+                   <div class="title" id="isSuccess">提交成功</div>
                    <div class="closeModel"></div>
             </div>
             <div class="errorContent">
+                 <div id="successContent" style="text-align: center;"></div>
                  <div class="btnMid" style="text-align: center;">
-                      <div class="btn-c-r sureCheck">确认</div>
+                      <div class="btn-c-r sureCheck" style="margin-right:0px">确认</div>
                  </div>
             </div>
      </div>
