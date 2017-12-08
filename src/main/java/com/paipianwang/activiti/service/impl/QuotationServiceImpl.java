@@ -133,7 +133,7 @@ public class QuotationServiceImpl implements QuotationService {
 			return result;
 		}
 		
-		double total=subTotal*(1+Double.parseDouble(pmsQuotation.getTaxRate()))-Double.parseDouble(pmsQuotation.getDiscount());
+		double total=subTotal*(1+Double.parseDouble(pmsQuotation.getTaxRate())/100)-Double.parseDouble(pmsQuotation.getDiscount());
 		if(Double.parseDouble(pmsQuotation.getTotal())!=total){
 			result.setResult(false);
 			result.setErr("最终结果有误.");
@@ -141,6 +141,7 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		return null;
 	}
+	
 	
 	/*private PmsResult vadalitCompute(PmsQuotation pmsQuotation){
 		PmsResult result=new PmsResult();

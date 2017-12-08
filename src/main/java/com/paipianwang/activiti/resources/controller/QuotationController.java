@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,7 +60,7 @@ public class QuotationController extends BaseController {
 	 * @param pmsQuotation
 	 */
 	@RequestMapping("/save")
-	public PmsResult saveOrUpdateQuotation(final PmsQuotation pmsQuotation,HttpServletRequest request, final HttpServletResponse response){
+	public PmsResult saveOrUpdateQuotation(@RequestBody final PmsQuotation pmsQuotation,HttpServletRequest request, final HttpServletResponse response){
 		PmsResult result=new PmsResult();
 		//数据保存
 		result=quotationService.saveOrUpdateQuotation(pmsQuotation);
