@@ -264,7 +264,7 @@
 		                 </div>
 		                 <div class="smallItem errorItem" id="userLevelError">
 		                       <div class="itemTitle">客户评级<span>*</span></div>
-		                       <input readonly id="pu_userLevel" name="pu_userLevel"/>
+		                       <input readonly id="pu_userLevel" name="pu_userLevel" class='noborder'/>
 		                       <div class="orderSelect hide" >
 					                <div id="userLevel" data-id="S"></div>
 					                <img src="${imgPath}/flow/selectOrder.png">
