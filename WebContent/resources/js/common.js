@@ -7,9 +7,9 @@ var counts = 120; // 间隔函数，1秒执行
 var curCounts = 0; // 当前剩余秒数 - 注册
 var InterValObj; // timer变量，控制时间 - 注册
 
-//var UrlDo = "apaipian.com";
+var UrlDo = "apaipian.com";
 //var UrlDo = "test.apaipian.com";
-var UrlDo = "localhost";
+//var UrlDo = "localhost";
 
 $().ready(function(){
 	getImgUrl();
@@ -357,7 +357,7 @@ var htmlSpecialCharsPlaceHolders = {
  * @param str
  */
 function checkMobile(str) {
-	var reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+	var reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[57])[0-9]{8}$/;
 	if(str.match(reg)){
 		return true;
 	} else{
@@ -841,15 +841,7 @@ function checkDatas(type) {
 	return flag;
 }
 
-// 验证 手机号
-function checkMobile(str) {
-	var reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/;
-	if (str.match(reg)) {
-		return true;
-	} else {
-		return false;
-	}
-}
+
 
 function showError(id, error) {
 	if (error == "" || error == null) {

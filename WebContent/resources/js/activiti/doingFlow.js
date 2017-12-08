@@ -38,8 +38,7 @@ function toSearch(){
 	   	$(this).parent().parent().find('div').text($(this).text());
 	   	$('.productList li').removeClass('checkLi');
 	   	getState(name);
-    });
-	
+    });	
 }
 
 function getAllSearchInfo(search){
