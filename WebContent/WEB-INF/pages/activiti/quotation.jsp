@@ -93,6 +93,23 @@
      </div>
 </div>
 
+<div class="cusModel" id="errorSame" >
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">错误提示</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="errorContent">
+                 <div class="title" style="line-height: 20px;">该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
+                 <div class="btnMid">
+                      <div class="btn-c-g closeWindow">取消</div>
+                      <div class="btn-c-r closeWindow">确认</div>
+                 </div>
+            </div>
+     </div>
+</div>
+
+
      
      <div class='banner'>
          		<span>报价单生成器</span>

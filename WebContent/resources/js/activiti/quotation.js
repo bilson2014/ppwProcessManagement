@@ -44,28 +44,27 @@ function getTableInfo(){
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 }
 
-
-
 function clickEven(){
 	
 	$('.cancle').off('click').on('click',function(){
 		$('#errorModel').hide();
 	});
+	
+	$('.closeWindow').off('click').on('click',function(){
+		$('#errorSame').hide();
+	});
+		
 	$('.sureDel').off('click').on('click',function(){
 		$('#errorModel').hide();
 		var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();
-	});
-	
+	});	
 	$('.closeModel').off('click').on('click',function(){
 		  $('.cusModel').hide();
-	});
-	
+	});	
 	$('.createQuo div').off('click').on('click',function(){
-		
-		
-		$('#sureCheck').off('click').on('click',function(){
+		$('.sureCheck').off('click').on('click',function(){
 			$('#submitCheck').hide();
 		});
 		if(finalAsc[0] != undefined){
@@ -73,6 +72,14 @@ function clickEven(){
 			submitDate();
 		}
 	});
+	$('#dayNum,#needNum').blur(function(){
+		var changeVue = $(this).val();
+		if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 || !isInteger(changeVue)){
+			$(this).val('0');
+		}
+	});
+	
+	
 }
 function submitDate(){
     loadData(function(res){
@@ -103,34 +110,35 @@ function submitDate(){
 	
 }
 
-
 var controlArray = {
 		init:function(){
 			$('#toAdd').off('click').on('click',function(){
 				if(controlArray.checkData()){
-				   controlArray.createArray();
-					$('#projectParent').val('');
-					$('#projectChilden').text('');
-					$('#dayNum').val('');
-					$('#needNum').val('');
-					$('#setDir').text('');
-					$('#type').text('');
-					$('.orderItem').attr('data-content','');
+					
+					if(checkSame()){
+						    controlArray.createArray();
+							$('#projectParent').val('');
+							$('#projectChilden').text('');
+							$('#dayNum').val('');
+							$('#needNum').val('');
+							$('#setDir').text('');
+							$('.orderItem').attr('data-content','');
+					}else{
+						$('#errorSame').show();
+					}
 				}
 			});
 			$('#toClear').off('click').on('click',function(){
-				$('#projectName').val('');
-				$('#dayTime').val('');
 				$('#projectParent').val('');
 				$('#projectChilden').text('');
 				$('#dayNum').val('');
 				$('#needNum').val('');
 				$('#setDir').text('');
 				$('#type').text('');
+				$('#orderCome').html('');
 				$('.orderItem').attr('data-content','');
 			});
-		},
-		
+		},		
 		checkData:function(){
 			var projectName = $('#projectName').val();
 			var dayTime = $('#dayTime').val();
@@ -225,10 +233,9 @@ var costFunction = {
 		},
 		updateDay :function(){
 			$('.updateDay').blur(function(){
-				
 				var changeVue = $(this).val();
 				var nowIndex = $(this).attr('data-id');
-				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000){
+				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 ||!isInteger(changeVue)){
 					$(this).val(finalAsc[nowIndex].days);
 				}else{
 					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
@@ -243,7 +250,7 @@ var costFunction = {
 			$('.updateNum').blur(function(){
 				var nowIndex = $(this).attr('data-id');
 				var changeVue = $(this).val();
-				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000){
+				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 || !isInteger(changeVue)){
 					$(this).val(finalAsc[nowIndex].quantity);
 				}else{
 					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
@@ -268,7 +275,7 @@ var costFunction = {
 				if($(this).val() > 100 || $(this).val() < 0 ){
 					$(this).val(6);
 				}
-				if(!checkRate($(this).val())){
+				if(!checkRate($(this).val())||!isInteger(changeVue)){
 					$(this).val(6);
 				}
 				costFunction.finalCost();
@@ -278,8 +285,7 @@ var costFunction = {
 					$(this).val(0);
 				}
 				costFunction.finalCost();
-			});
-			
+			});			
 		},
 		finalCost : function() {
 			 var cost = $('.cost');
@@ -483,6 +489,24 @@ function delArray(data,n) {　//n表示第几项，从0开始算起。
 	*/
 }
 
+//重复验证
+
+function checkSame(){
+	if(finalAsc.length>0){
+		for (var i = 0; i < finalAsc.length; i++) {
+			var thisItem = finalAsc[i].detailId;
+			var checkValue =  $('#projectChilden').attr('data-id');
+			if(thisItem == checkValue){
+				return false;
+			}
+			return true;
+		}
+	}
+	else{
+		return true;
+	}
+}
+
 //分组排序
 function orderBy(source, orders, type) {
 
@@ -552,3 +576,14 @@ function orderBy(source, orders, type) {
     }
     
   }
+
+
+function isInteger(obj) {
+	if(obj%1 === 0){
+		return true;
+	}else{
+		return false;
+	}
+	return false;
+}
+
