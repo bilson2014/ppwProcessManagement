@@ -22,7 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.common.util.sms.DateUtil;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
 
@@ -81,10 +83,12 @@ public class QuotationPoiAdapter {
 		
 		XSSFCell xssfCell = xssfRow.createCell(0);
 		xssfCell.setCellStyle(cs);
-		xssfCell.setCellValue(quotation.getProjectName()+"("+quotation.getUpdateDate()+")");
+		String date=DateUtils.getDateByFormatStr(DateUtils.getDateByFormat(quotation.getUpdateDate(), "yyyy-MM-dd"), "yyyy.MM.dd");
+		xssfCell.setCellValue(quotation.getProjectName()+"("+date+")");
 		
 		return rowIndex+1;
 	}
+	
 	
 	//生成头部
 	public int createHead(XSSFWorkbook xssfWorkbook,XSSFSheet sheet,int rowIndex){
@@ -138,7 +142,7 @@ public class QuotationPoiAdapter {
 	//报价单明细
 	public int createDataItem(XSSFWorkbook xssfWorkbook, XSSFSheet sheet, int rowIndex, PmsQuotation quotation) {
 		// 样式
-		/*XSSFCellStyle cs = getCenterCellStyle(xssfWorkbook);
+		XSSFCellStyle cs = getCenterCellStyle(xssfWorkbook);
 
 		XSSFCellStyle typeCs = getTypeCellStyle(xssfWorkbook);
 
@@ -201,15 +205,15 @@ public class QuotationPoiAdapter {
 
 				beginMerge = rowIndex;//从下一行开始合并
 			}
-<<<<<<< HEAD
-			//大类名称
+
+			/*//大类名称
 			XSSFRow xssfRow = sheet.getRow(rowIndex-itemRows);
 			XSSFCell xssfCell = xssfRow.createCell(0);
 			xssfCell.setCellStyle(typeCs);
-			xssfCell.setCellValue(type.getTypeName());
+			xssfCell.setCellValue(type.getTypeName());*/
 			
 			
-		}*/
+		}
 
 		return rowIndex;
 	}
@@ -224,7 +228,7 @@ public class QuotationPoiAdapter {
 		XSSFRow xssfRow = sheet.createRow(rowIndex++);
 		XSSFCell xssfCell = xssfRow.createCell(0);
 		xssfCell.setCellStyle(typeCs);
-		xssfCell.setCellValue("合计");
+		xssfCell.setCellValue("税前合计");
 		createNullCell(xssfRow, cs, 1, 4);
 		
 		xssfCell = xssfRow.createCell(5);

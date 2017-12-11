@@ -32,8 +32,8 @@ public class QuotationServiceImpl implements QuotationService {
 	 * 导出报价单
 	 */
 	@Override
-	public void export(String projectId, OutputStream os,HttpServletRequest request) {
-		PmsQuotation quotation = pmsQuotationFacade.getByProjectId(projectId);
+	public void export(PmsQuotation quotation, OutputStream os,HttpServletRequest request) {
+//		PmsQuotation quotation = pmsQuotationFacade.getByProjectId(projectId);
 		// 创建文档
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 		// 创建一个新的页
@@ -125,7 +125,6 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		return null;
 	}
-	
 	
 	/*private PmsResult vadalitCompute(PmsQuotation pmsQuotation){
 		PmsResult result=new PmsResult();
