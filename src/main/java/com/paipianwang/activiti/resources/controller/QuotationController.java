@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.paipianwang.activiti.service.QuotationService;
 import com.paipianwang.pat.common.entity.PmsResult;
@@ -33,6 +35,23 @@ public class QuotationController extends BaseController {
 	private PmsQuotationTypeFacade pmsQuotationTypeFacade;
 	@Autowired
 	private QuotationService quotationService;
+	
+	/**
+	 * 报价单生成器
+	 * @param projectId
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/info")
+	public ModelAndView quotationView(final String projectId,ModelMap model){
+		
+		if(projectId!=null){
+			PmsQuotation quotation=pmsQuotationFacade.getByProjectId(projectId);
+			model.put("quotation", quotation);
+		}
+		
+		return new ModelAndView("activiti/quotation", model);
+	}
 	
 	/**
 	 * 根据id获取下级子节点
@@ -78,9 +97,13 @@ public class QuotationController extends BaseController {
 		//导出
 		OutputStream outputStream=null;
 		try {
+			PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
+			if(quotation==null){
+				
+			}
 			response.setCharacterEncoding("utf-8");
 			response.setContentType("application/octet-stream");
-			String filename = "《测测》报价单.xlsx";
+			String filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
 			
 			//---处理文件名
 			String userAgent = request.getHeader("User-Agent"); 
@@ -95,7 +118,7 @@ public class QuotationController extends BaseController {
 		
 			outputStream = response.getOutputStream();
 			
-			quotationService.export("", outputStream,request);
+			quotationService.export(quotation, outputStream,request);
 			
 			outputStream.flush();
 		} catch (Exception e) {

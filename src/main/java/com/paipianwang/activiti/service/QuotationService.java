@@ -23,5 +23,5 @@ public interface QuotationService {
 	 * @param projectId
 	 * @param os
 	 */
-	public void export(String projectId, OutputStream os,HttpServletRequest request);
+	public void export(PmsQuotation quotation, OutputStream os,HttpServletRequest request);
 }

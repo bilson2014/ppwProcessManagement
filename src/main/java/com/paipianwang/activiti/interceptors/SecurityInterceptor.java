@@ -52,8 +52,10 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		if (info == null) {
 			// 未登录
 			System.err.println("info is null");
-			req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
-			req.getRequestDispatcher("/login").forward(req, resp);
+//			req.setAttribute("message", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
+//			req.getRequestDispatcher("http://localhost:8080/").forward(req, resp);
+			//跳转到Film首页
+			resp.sendRedirect(req.getScheme()+"://"+PublicConfig.FILM_URL);
 			return false;
 		} else {
 			// 判断是否有权限组
@@ -128,13 +130,17 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			final String serviceIP = FastDFSClient.locateSource();
 			String ip = "";
 			final StringBuffer sbf = new StringBuffer();
-			sbf.append("http://");
+			sbf.append(request.getScheme()+"://");
 			
 			if(ValidateUtil.isValid(serviceIP)) {
 				ip = nodeMap.get(serviceIP);
 				if(ValidateUtil.isValid(ip)) {
 					sbf.append(ip);
-					sbf.append(":8888/");
+					if(request.getScheme().equals("http")){
+						sbf.append(":8888/");
+					}else{
+						sbf.append("/");
+					}
 				} else {
 					sbf.append(PublicConfig.FDFS_BACKUP_SERVER_PATH);
 				}

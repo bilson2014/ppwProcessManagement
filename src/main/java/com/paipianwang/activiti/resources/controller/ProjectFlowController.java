@@ -98,7 +98,7 @@ public class ProjectFlowController extends BaseController {
 				properties);
 		redirectAttributes.addFlashAttribute("message", "启动成功，流程ID：" + processInstance.getId());
 
-		return new ModelAndView("redirect:http://" + PublicConfig.HTTP_REFERER + "/project/running");
+		return new ModelAndView("redirect:"+request.getScheme()+"://" + PublicConfig.HTTP_REFERER + "/project/running");
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class ProjectFlowController extends BaseController {
 			String key = entry.getKey();
 			if(key.startsWith("addpt_"))
 				addTeamProperties.put(key, entry.getValue());
-			else if(key.startsWith("addft_"))
+			else if(key.startsWith("addft_") || key.equals("teamName"))
 				financeProperties.put(key, entry.getValue());
 			else
 				formProperties.put(key, entry.getValue()[0]);
