@@ -30,9 +30,8 @@ function init(){
 }
 
 function getTableInfo(){
-	loadData(function(res){
+	loadData(function(src){
 		if(src != null && src !='' && src != undefined ){
-			var src = res;
 			$('#projectId').val(src.projectId);
 			$('#quotationId').val(src.quotationId);
 			$('#tax').val(src.taxRate);
@@ -40,11 +39,10 @@ function getTableInfo(){
 			$('#dayTime').val(src.updateDate);
 			finalAsc.push(new cTable(src.items[0]));
 			controlArray.createTable();
-			dataEven();
-		}else{
-			dataEven();
+			dataEven()
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
+	dataEven();
 }
 
 function clickEven(){
