@@ -2,7 +2,8 @@
  var finalAsc = new Array();
  var titleTr = "";
 $().ready(function() {
-	//document.domain = getUrl();
+	document.domain = getUrl();
+	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 	$('body').off('click').on('click',function(){
 		$('ul').slideUp();
 		$('.oredrTypeSelect').removeClass('selectColor');
@@ -20,7 +21,6 @@ $().ready(function() {
 });
 
 function init(){
-	dataEven();
 	initMultSelect();
 	costFunction.init();
 	controlArray.init();
@@ -40,6 +40,9 @@ function getTableInfo(){
 			$('#dayTime').val(src.updateDate);
 			finalAsc.push(new cTable(src.items[0]));
 			controlArray.createTable();
+			dataEven();
+		}else{
+			dataEven();
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 }
@@ -85,16 +88,16 @@ function submitDate(){
     loadData(function(res){
     	if(res.result){
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成成功');
-    		$('#successContent').text('请确认文档');
+    		$('#isSuccess').text('生成报价单');
+    		$('#successContent').text('成功生成报价单,请查看下载文档');
     		$('#quotationId').val(res.msg);
     		window.location.href = getContextPath() + "/quotation/export/" + res.msg;
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成失败');
-    		$('#successContent').text('请确认网络情况');
+    		$('#isSuccess').text('生成报价单');
+    		$('#successContent').text('报价单生成失败,请重试或联系技术部');
     	}
 	}, getContextPath() + '/quotation/save',$.toJSON({
 		items : finalAsc,
@@ -213,6 +216,7 @@ var controlArray = {
 		     }
 		     costFunction.finalCost();
 		     costFunction.init();
+		 	 $(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 		}
 }
 

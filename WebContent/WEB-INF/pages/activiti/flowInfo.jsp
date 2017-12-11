@@ -102,7 +102,7 @@
 	                                    <div class="simContent">${taskDescription}</div>
 	                                    <div class="setBtn">
 	                                         <div class="redBtn btn-c-r" id="toFinish">任务操作</div>
-	                                         <!-- <div class="redBtn btn-c-r">确认完成</div> -->
+	                                         <div class="redBtn btn-c-r hide" id="toQuo">报价单生成器</div>
 	                                    </div>
 	                               </div>
 	                            </div>

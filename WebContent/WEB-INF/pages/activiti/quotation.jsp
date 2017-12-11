@@ -58,8 +58,8 @@
 
 <body>   
 
-<input type="hidden" id="quotationId">
-<input type="hidden" id="projectId">
+<input type="hidden" id="quotationId" value='${quotationId}'>
+<input type="hidden" id="projectId" value='${quotationId}'>
 
 <!-- 报错 -->
 <div class="cusModel" id="errorModel" >
@@ -69,7 +69,7 @@
                    <div class="closeModel"></div>
             </div>
             <div class="errorContent">
-                 <div class="title">确认删除吗？</div>
+                 <div class="title">确认删除该条数据吗？</div>
                  <div class="btnMid">
                       <div class="btn-c-g cancle">取消</div>
                       <div class="btn-c-r sureDel">确认</div>
@@ -102,8 +102,7 @@
             <div class="errorContent">
                  <div class="title" style="line-height: 20px;">该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
                  <div class="btnMid">
-                      <div class="btn-c-g closeWindow">取消</div>
-                      <div class="btn-c-r closeWindow">确认</div>
+                       <div class="btn-c-r closeWindow" style="margin-right:0px">确认</div>
                  </div>
             </div>
      </div>
@@ -121,7 +120,7 @@
          	
          	<div class="orderItem" id="projectNameError">
 	            <div class="mR8">项目名称</div>
-	            <input value="" id="projectName" style="width:240px">
+	            <input value='${projectName}' id="projectName" style="width:240px">
             </div>
             <div class="orderItem" id="dayTimeError">
 	            <div class="mR8">日期</div>

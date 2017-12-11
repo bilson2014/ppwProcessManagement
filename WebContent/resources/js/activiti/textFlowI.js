@@ -516,6 +516,14 @@ function pageInit(){
 	 $('.icons').addClass('step5Icon');
  }
  
+ if($('#taskName').text() == "【销售】上传报价单"){
+	 $('#toQuo').removeClass('hide');
+	 $('#toQuo').off('click').on('click',function(){
+		  window.location.href = getContextPath() + '/quotation/info?projectId='+$('#projectId').val()+'';
+	 });
+ }
+ 
+ 
     stageEven();
 	openInfoCard();
 	initEvenInfo();
@@ -1994,12 +2002,20 @@ function createFileInfo(res){
 	var url = getDfsHostName() + res.resourcePath;
 	var urls=getDfsHostName() +res.previewPath;
 	var pang=res.previewPath;
+	
+	var setFileType ="";
+	if(res.resourceType == '报价单'){
+		setFileType +='<div class="fileType"><a href="/quotation/info?projectId='+$('#projectId').val()+'"><div style="cursor:pointer">'+res.resourceType+'</div></a></div>';
+	}else{
+		setFileType += '<div class="fileType"><div>'+res.resourceType+'</div></div>';
+	}
+	
 	if(pang==null){
 		var html = [
 			'<div class="filmItem">                                     ',
 	        '<img class="filmImg" src="'+src+'"> ',
 	        '<div class="filmName">'+checkName+'</div>                         ',
-	        '<div class="fileType"><div>'+res.resourceType+'</div></div>            ',
+	        ''+setFileType+'',
 	        '<div class="fileTypeName"><div>'+res.uploaderName+'</div></div>        ',
 	        '<div class="time"><div>'+formatDate((res.createDate).replace("CST","GMT+0800"))+'</div></div>        ',
 	        '<div class="icon">                                         ',
