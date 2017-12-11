@@ -43,13 +43,7 @@ public class QuotationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/info")
-	public ModelAndView quotationView(final String projectId,ModelMap model){
-		
-		if(projectId!=null){
-			PmsQuotation quotation=pmsQuotationFacade.getByProjectId(projectId);
-			model.put("quotation", quotation);
-		}
-		
+	public ModelAndView quotationView(ModelMap model){
 		return new ModelAndView("activiti/quotation", model);
 	}
 	
