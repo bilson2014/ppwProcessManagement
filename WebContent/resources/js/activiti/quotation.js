@@ -277,13 +277,13 @@ var costFunction = {
 				if($(this).val() > 100 || $(this).val() < 0 ){
 					$(this).val(6);
 				}
-				if(!checkRate($(this).val())||!isInteger(changeVue)){
+				if(!checkRate($(this).val())||!isInteger($(this).val())){
 					$(this).val(6);
 				}
 				costFunction.finalCost();
 			});
 			$("#free").blur(function(){
-				if(!checkRate($(this).val())){
+				if(!checkRate($(this).val())||!isInteger($(this).val())){
 					$(this).val(0);
 				}
 				costFunction.finalCost();
