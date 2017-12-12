@@ -215,7 +215,7 @@
     </table>
     
     <div class="tableFoot">
-        <div class="noTax">不含增值税及其他法定税费： ¥ <span id="localPrice">0</span></div>
+        <div class="noTax">不含增值税及其他法定税费的价格： ¥ <span id="localPrice">0</span></div>
         <div class="taxItem">
              <div>税率（%）：</div>
              <input id="tax" value="6">
