@@ -101,8 +101,8 @@
             </div>
             <div class="errorContent">
                  <div class="title" style="line-height: 20px;">该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
-                 <div class="btnMid">
-                       <div class="btn-c-r closeWindow" style="margin-right:0px">确认</div>
+                 <div class="btnMid" style="text-align: center;">
+                       <div class="btn-c-r closeWindow">确认</div>
                  </div>
             </div>
      </div>

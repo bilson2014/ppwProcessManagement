@@ -90,7 +90,7 @@
 	                <div class="waitMission" id="waitMission">
 	                       <div class="missionTop">
 	                            <div class="missinName">待办任务 : </div>
-	                            <div class="missinInfo" id="taskName">${taskName}</div>
+	                            <div class="missinInfo" id="">${taskName}</div>
 	<!--                             <div class="missinState"><img src="/resources/images/provider/toWait.png"><div>进行中</div></div>-->
 	                            <div class="missinTime" >
 	                            	<img src="/resources/images/flow/lastTime.png">

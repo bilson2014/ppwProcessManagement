@@ -39,7 +39,7 @@ function getTableInfo(){
 			$('#dayTime').val(src.updateDate);
 			finalAsc.push(new cTable(src.items[0]));
 			controlArray.createTable();
-			dataEven()
+			dataEven();
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 	dataEven();
@@ -472,6 +472,8 @@ function initMultSelect(){
 		$('#projectParent').attr('data-id',parentId);
 		$('#setDir').text($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
+		$('#dayNum').val('');
+		$('#needNum').val('');	
 		e.stopPropagation();
 	});
 }
