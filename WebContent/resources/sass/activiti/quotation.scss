@@ -53,7 +53,7 @@
                 .orderItem {
                     display: inline-block;
                     vertical-align: top;
-                    margin-top: 15px;
+                    margin-top: 20px;
                     margin-right: 10px;
                     position: relative;
                     div {
@@ -77,7 +77,7 @@
                         font-size: 1.2rem;
                         position: absolute;
                         left: 70px;
-                        top: 31px
+                        top: 35px
                     }
                 }
                 .orderSelect {
@@ -306,7 +306,7 @@
 -----------------------------------------------------------------------------*/
 
             .tableTitle {
-                background: $f0;
+                background: $f0 !important;
                 th {
                     font-size: $font-size-base!important;
                     color: $gray-dark !important;
@@ -341,6 +341,7 @@
                 word-wrap: break-word;
                 word-break: break-all;
                 vertical-align: middle;
+                 background: $f0!important;
                 td {
                     background: $f0!important;
                     font-size: $font-size-base!important;
@@ -360,12 +361,16 @@
             }
 
             .dayTd {
-                background: $e3;
+                background: $e3 !important;
                 width: 80px;
                 input {
                     background: none;
                     border: none;
                     width: 40px;
+                }
+                &:hover{
+                	 background: white !important;
+                	 box-shadow: inset 0px 0px 0px 5px rgba(254,84,83,1);
                 }
             }
 
@@ -378,11 +383,20 @@
                 color: #666;
                 vertical-align: middle;
                 height: 40px;
+               
             }
 
-            tr:nth-child(2n) td {
-                background: #F6F9F9;
+            tr:nth-child(2n) {
+            	    background: #f8f8f8;
             }
+
+            tr{
+
+             &:hover{
+            	   background: #F6F9F9 !important;
+                }
+            }
+            
 
             .tb td:last-child {
                 width: 75px !important;
@@ -499,7 +513,6 @@
                     }
 
                     div:last-child {
-                        width: 100px;
                         color: $red-base;
                         font-size: 24px;
                         text-align: left;

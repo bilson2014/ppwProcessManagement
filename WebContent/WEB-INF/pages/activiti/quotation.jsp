@@ -78,6 +78,25 @@
      </div>
 </div>
 
+
+<div class="cusModel" id="submitCheckBtn" >
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">报价单</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="errorContent">
+                 <div class="title" id="setCheck">确认删除该条数据吗？</div>
+                 <div class="btnMid">
+                      <div class="btn-c-g cancle">取消</div>
+                      <div class="btn-c-r submitCheckBtn">确认</div>
+                 </div>
+            </div>
+     </div>
+</div>
+
+
+
 <div class="cusModel" id="submitCheck" >
      <div class="modelCard">
             <div class="cardTop">
@@ -193,10 +212,6 @@
              <div class="dir">项目描述 ：<span id="setDir"></span></div> 
          </div>
 
-
-
-
-
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
         <thead>
         <tr class="tableTitle">
@@ -215,7 +230,7 @@
     </table>
     
     <div class="tableFoot">
-        <div class="noTax">不含增值税及其他法定税费的价格： ¥ <span id="localPrice">0</span></div>
+        <div class="noTax">不含税价格： ¥ <span id="localPrice">0</span></div>
         <div class="taxItem">
              <div>税率（%）：</div>
              <input id="tax" value="6">

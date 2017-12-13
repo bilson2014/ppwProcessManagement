@@ -7,7 +7,7 @@ $().ready(function() {
 	$('body').off('click').on('click',function(){
 		$('ul').slideUp();
 		$('.oredrTypeSelect').removeClass('selectColor');
-		$('.oredrMultSelect').removeClass('selectColor');
+		$('.orderMultSelect ').removeClass('selectColor');
 	});
      init();     
 /*     $("#suppliers").table2excel({
@@ -30,6 +30,8 @@ function init(){
 }
 
 function getTableInfo(){
+	var project = $('#projectId').val();
+	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){
 		if(src != null && src !='' && src != undefined ){
 			$('#projectId').val(src.projectId);
@@ -42,7 +44,9 @@ function getTableInfo(){
 			dataEven();
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
-	dataEven();
+	}else{
+		dataEven();
+	}
 }
 
 function clickEven(){
@@ -55,12 +59,12 @@ function clickEven(){
 		$('#errorSame').hide();
 	});
 		
-	$('.sureDel').off('click').on('click',function(){
+	/*$('.sureDel').off('click').on('click',function(){
 		$('#errorModel').hide();
 		var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();
-	});	
+	});	*/
 	$('.closeModel').off('click').on('click',function(){
 		  $('.cusModel').hide();
 	});	
@@ -69,19 +73,43 @@ function clickEven(){
 			$('#submitCheck').hide();
 		});
 		if(finalAsc[0] != undefined){
-			console.info(finalAsc);
-			submitDate();
+			if((controlArray.checkData(1))){
+				submitCheck();
+			}
 		}
-	});
-	$('#dayNum,#needNum').blur(function(){
-		var changeVue = $(this).val();
-		if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 || !isInteger(changeVue)){
-			$(this).val('0');
-		}
-	});
-	
+	});	
 	
 }
+
+function submitCheck(){
+	
+    loadData(function(res){
+    	if(res.result){
+    		$('#submitCheckBtn').show();
+    		$('#setCheck').text('该项目已存在，是否仍然生成报价单？');
+    	}else{
+    		$('#submitCheckBtn').show();
+    		$('#setCheck').text('该项目不存在，是否仍然生成报价单？');
+    		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+    		submitDate();
+    	}
+	}, getContextPath() + '/quotation/validate/'+$('#projectName')+'','');
+	
+}
+
+function initCheckBtn(){
+	
+	$('#submitCheckBtn').off('click').on('click',function(){
+		$('#submitCheckBtn').hide();
+		submitDate();
+	});
+	$('.cancle').off('click').on('click',function(){
+		$('#submitCheckBtn').hide();
+	});
+	
+}
+
 function submitDate(){
     loadData(function(res){
     	if(res.result){
@@ -114,7 +142,7 @@ function submitDate(){
 var controlArray = {
 		init:function(){
 			$('#toAdd').off('click').on('click',function(){
-				if(controlArray.checkData()){
+				if(controlArray.checkData(0)){
 					
 					if(checkSame()){
 						    controlArray.createArray();
@@ -140,7 +168,7 @@ var controlArray = {
 				$('.orderItem').attr('data-content','');
 			});
 		},		
-		checkData:function(){
+		checkData:function(num){
 			var projectName = $('#projectName').val();
 			var dayTime = $('#dayTime').val();
 			var type = $('#type').text();
@@ -148,29 +176,41 @@ var controlArray = {
 			var dayNum = $('#dayNum').val();
 			var needNum = $('#needNum').val();
 			$('.orderItem').attr('data-content','');
-			if(projectName == null || projectName == "" || projectName == undefined){
-				$('#projectNameError').attr('data-content','项目名称未填写');
-				return false;
-			}
-			if(dayTime == null || dayTime == "" || dayTime == undefined){
-				$('#dayTimeError').attr('data-content','日期异常');
-				return false;
-			}
-			if(type == null || type == "" || type == undefined){
-				$('#typeError').attr('data-content','类别未选择');
-				return false;
-			}
-			if(projectChilden == null || projectChilden == "" || projectChilden == undefined){
-				$('#projectChildenError').attr('data-content','项目未选择');
-				return false;
-			}
-			if(dayNum == null || dayNum == "" || dayNum == undefined){
-				$('#dayNumError').attr('data-content','天数未填写');
-				return false;
-			}
-			if(needNum == null || needNum == "" || needNum == undefined){
-				$('#needNumError').attr('data-content','数量未填写');
-				return false;
+			if(num == 1){
+				if(projectName == null || projectName == "" || projectName == undefined){
+					$('#projectNameError').attr('data-content','项目名称未填写');
+					return false;
+				}
+			}else{
+						if(dayTime == null || dayTime == "" || dayTime == undefined){
+							$('#dayTimeError').attr('data-content','日期异常');
+							return false;
+						}
+						if(type == null || type == "" || type == undefined){
+							$('#typeError').attr('data-content','类别未选择');
+							return false;
+						}
+						if(projectChilden == null || projectChilden == "" || projectChilden == undefined){
+							$('#projectChildenError').attr('data-content','项目未选择');
+							return false;
+						}
+						if(dayNum == null || dayNum == "" || dayNum == undefined){
+							$('#dayNumError').attr('data-content','天数未填写');
+							return false;
+						}
+						if(!checkRate(dayNum) ||  !isInteger(dayNum)){
+							$('#dayNumError').attr('data-content','请输入整数');
+							return false;
+						}
+						if(needNum == null || needNum == "" || needNum == undefined){
+							$('#needNumError').attr('data-content','数量未填写');
+							return false;
+						}
+						if(!checkRate(needNum) ||  !isInteger(needNum)){
+							$('#dayNumError').attr('data-content','请输入整数');
+							return false;
+						}
+						
 			}
 			return true;
 		},
@@ -268,8 +308,10 @@ var costFunction = {
 		delItem:function(){
 			$('.delTable div').off('click').on('click',function(){
 				var nowIndex = $(this).attr('data-id');
-				$('.sureDel').attr('data-id',nowIndex);
-				$('#errorModel').show();
+				finalAsc =  delArray(finalAsc,parseInt(nowIndex));
+				controlArray.createTable();
+				/*$('.sureDel').attr('data-id',nowIndex);
+				$('#errorModel').show();*/
 			});
 		},
 		setCostEven : function(){
@@ -503,8 +545,8 @@ function checkSame(){
 			if(thisItem == checkValue){
 				return false;
 			}
-			return true;
 		}
+		return true;
 	}
 	else{
 		return true;
