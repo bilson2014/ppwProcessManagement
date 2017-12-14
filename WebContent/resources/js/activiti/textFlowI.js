@@ -519,7 +519,7 @@ function pageInit(){
  if($('.missinInfo').text() == "【销售】上传报价单"){
 	 $('#toQuo').removeClass('hide');
 	 $('#toQuo').off('click').on('click',function(){
-		  window.open(getContextPath() + '/info?projectId='+$('#projectId').val()+'');
+		  window.open(getContextPath() + '/quotation/info?projectId='+$('#projectId').val()+'');
 	 });
  }
  

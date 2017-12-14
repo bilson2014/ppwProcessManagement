@@ -231,10 +231,10 @@
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
             </div>
             </br>
-            <div  class="orderItem" id="dayNumError">
+       <!--      <div  class="orderItem" id="dayNumError">
 	            <div class="mR8">整包价</div>
 	            <input id="checkbox"  type="checkbox" value="">
-            </div>
+            </div> -->
             </br>
              <div class="dir">项目描述 ：<span id="setDir"></span></div> 
          </div>

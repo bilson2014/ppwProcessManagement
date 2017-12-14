@@ -112,7 +112,6 @@ function allPackClear(){
 	$('#needNum').removeClass('noBorder');
 }
 
-
 function submitCheck(){
 	
     loadData(function(res){
@@ -120,7 +119,6 @@ function submitCheck(){
     		$('#submitCheckBtn').show();
     		$('#setCheck').text('该项目已存在，是否仍然生成报价单？');
     		initCheckBtn();
-    	
     	}else{
     		$('#submitCheckBtn').show();
     		$('#setCheck').text('该项目不存在，是否仍然生成报价单？');
@@ -135,7 +133,6 @@ function submitCheck(){
 }
 
 function initCheckBtn(){
-	
 	$('.submitCheckBtn').off('click').on('click',function(){
 		$('#submitCheckBtn').hide();
 		submitDate();
@@ -143,7 +140,6 @@ function initCheckBtn(){
 	$('.cancle').off('click').on('click',function(){
 		$('#submitCheckBtn').hide();
 	});
-	
 }
 
 function submitDate(){
@@ -174,7 +170,6 @@ function submitDate(){
         updateDate : $('#dayTime').val(),
         projectName : $('#projectName').val()	
 	}));
-	
 }
 
 var controlArray = {
@@ -192,7 +187,6 @@ var controlArray = {
 			});
 			$('#toClear').off('click').on('click',function(){
 				$('#errorModel').show();
-                     
 			});
 		},		
 		checkData:function(num){
@@ -222,9 +216,8 @@ var controlArray = {
 							return false;
 						}
 						
-						var checkPack = $('#checkbox')[0].checked;
-						
-						if(!checkPack){
+						var checkPack = $('#projectChilden').attr('data-full');
+						if(checkPack != 0 ){
 							if(dayNum == null || dayNum == "" || dayNum == undefined){
 								$('#dayNumError').attr('data-content','天数未填写');
 								return false;
@@ -256,20 +249,17 @@ var controlArray = {
 			var projectParentId = $('#projectParent').attr('data-id');
 			var projectChilden = $('#projectChilden').text();
 			var projectChildenId = $('#projectChilden').attr('data-id');
+			var projectFull =  $('#projectChilden').attr('data-full');
 			var dayNum = $('#dayNum').val();
 			var needNum = $('#needNum').val();
 			var dir = $('#setDir').text();
 			var unitPrice = $('#projectChilden').attr('data-price');
-			var fullJob ;
-			var checkbox = $('#checkbox')[0].checked;			
-			if(checkbox){
-				fullJob = 0;
+			if(projectFull != 1){
+				var sum = dayNum * needNum * unitPrice;
+			}else{
 				dayNum = '整包';
 				needNum = '整包';
 				var sum = unitPrice;
-			}else{
-				fullJob = 1;
-				var sum = dayNum * needNum * unitPrice;
 			}
 			var map = {};
 			map['typeId'] = typeId;
@@ -283,7 +273,6 @@ var controlArray = {
 			map['unitPrice'] = unitPrice;
 			map['sum'] = sum;
 			map['description'] = dir;
-			map['fullJob'] = fullJob;
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
 			controlArray.createTable();
@@ -485,7 +474,6 @@ function cTable(map) {
 	//总额
 	this.sum = map.sum;
 	
-	this.fullJob = map.fullJob;
 }
 
 function getTrTitle(item){
@@ -503,7 +491,7 @@ function createMultOption(item,index){
     
     var hasTitle = getTrTitle(item);
     var hasRead = "";
-    if(item.fullJob == 0){
+    if(item.days == '整包'){
     	hasRead = 'readonly';
     }
 		var html = [
@@ -525,9 +513,8 @@ function createMultOption(item,index){
 function createDetail(item){ 
 	var setChildren = "";
 	for (var i = 0; i < item.children.length; i++) {
-		setChildren += ' <div data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
+		setChildren += ' <div data-full="'+item.children[i].fullJob+'" data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
 	}
-
 		var html = [
 					  ' <li>                                                   ',
 				      '   <div class="multSelect">                             ',
@@ -558,16 +545,18 @@ function initMultSelect(){
 		$('#projectChilden').text($(this).text());
 		$('#projectChilden').attr('data-id',$(this).attr('data-id'));
 		$('#projectChilden').attr('data-price',$(this).attr('data-price'));
+		$('#projectChilden').attr('data-full',$(this).attr('data-full'));
 		var parentText = $(this).parent().parent().find('.multTitle').find('div').text();
 		var parentId = $(this).parent().parent().find('.multTitle').find('div').attr('data-id');
 		$('#projectParent').val(parentText);
 		$('#projectParent').attr('data-id',parentId);
 		$('#setDir').text($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
-		if(!$('#checkbox').checked){
-			$('#dayNum').val('');
-			$('#needNum').val('');	
-		}
+	    if($(this).attr('data-full') == 1){
+	    	allPackClear();
+	    }else{
+	    	allPack();
+	    }
 		e.stopPropagation();
 	});
 }
