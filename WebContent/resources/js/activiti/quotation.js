@@ -58,13 +58,15 @@ function clickEven(){
 	$('.closeWindow').off('click').on('click',function(){
 		$('#errorSame').hide();
 	});
-		
-	/*$('.sureDel').off('click').on('click',function(){
+	$('.sureDel').off('click').on('click',function(){
 		$('#errorModel').hide();
-		var nowIndex = $(this).attr('data-id');
+		$('.setTr').html('');
+        finalAsc = new Array();
+        console.info(finalAsc);
+		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
-		controlArray.createTable();
-	});	*/
+		controlArray.createTable();*/
+	});	
 	$('.closeModel').off('click').on('click',function(){
 		  $('.cusModel').hide();
 	});	
@@ -72,14 +74,44 @@ function clickEven(){
 		$('.sureCheck').off('click').on('click',function(){
 			$('#submitCheck').hide();
 		});
-		if(finalAsc[0] != undefined){
-			if((controlArray.checkData(1))){
+	    if((controlArray.checkData(1))){
+				if(finalAsc[0] != undefined){
 				submitCheck();
-			}
+			    }
+				else{
+					$('#submitCheck').show();
+		    		$('#isSuccess').text('生成报价单');
+		    		$('#errorImg').show();
+		    		$('#successContent').text('报价单生成失败,请填写表格数据');
+				}
+		}
+	});	
+	
+	$('#checkbox').off('click').on('click',function(){
+		if(this.checked){
+			allPack();
+		}else{
+			allPackClear();
 		}
 	});	
 	
 }
+
+function allPack(){
+	$('#dayNum').attr('readonly','true');
+	$('#dayNum').addClass('noBorder');
+	$('#dayNum').val('');
+	$('#needNum').attr('readonly','true');
+	$('#needNum').addClass('noBorder');
+	$('#needNum').val('');
+}
+function allPackClear(){
+	$('#dayNum').removeAttr('readonly');
+	$('#dayNum').removeClass('noBorder');
+	$('#needNum').removeAttr('readonly');
+	$('#needNum').removeClass('noBorder');
+}
+
 
 function submitCheck(){
 	
@@ -117,12 +149,14 @@ function submitDate(){
     		$('#isSuccess').text('生成报价单');
     		$('#successContent').text('成功生成报价单,请查看下载文档');
     		$('#quotationId').val(res.msg);
+    		$('#errorImg').hide();
     		window.location.href = getContextPath() + "/quotation/export/" + res.msg;
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
     	}else{
     		$('#submitCheck').show();
     		$('#isSuccess').text('生成报价单');
+    		$('#errorImg').show();
     		$('#successContent').text('报价单生成失败,请重试或联系技术部');
     	}
 	}, getContextPath() + '/quotation/save',$.toJSON({
@@ -143,29 +177,18 @@ var controlArray = {
 		init:function(){
 			$('#toAdd').off('click').on('click',function(){
 				if(controlArray.checkData(0)){
-					
 					if(checkSame()){
 						    controlArray.createArray();
-							$('#projectParent').val('');
-							$('#projectChilden').text('');
-							$('#dayNum').val('');
-							$('#needNum').val('');
-							$('#setDir').text('');
-							$('.orderItem').attr('data-content','');
+							allPackClear();
+							$('#checkbox')[0].checked = false;
 					}else{
 						$('#errorSame').show();
 					}
 				}
 			});
 			$('#toClear').off('click').on('click',function(){
-				$('#projectParent').val('');
-				$('#projectChilden').text('');
-				$('#dayNum').val('');
-				$('#needNum').val('');
-				$('#setDir').text('');
-				$('#type').text('');
-				$('#orderCome').html('');
-				$('.orderItem').attr('data-content','');
+				$('#errorModel').show();
+                     
 			});
 		},		
 		checkData:function(num){
@@ -194,21 +217,26 @@ var controlArray = {
 							$('#projectChildenError').attr('data-content','项目未选择');
 							return false;
 						}
-						if(dayNum == null || dayNum == "" || dayNum == undefined){
-							$('#dayNumError').attr('data-content','天数未填写');
-							return false;
-						}
-						if(!checkRate(dayNum) ||  !isInteger(dayNum)){
-							$('#dayNumError').attr('data-content','请输入整数');
-							return false;
-						}
-						if(needNum == null || needNum == "" || needNum == undefined){
-							$('#needNumError').attr('data-content','数量未填写');
-							return false;
-						}
-						if(!checkRate(needNum) ||  !isInteger(needNum)){
-							$('#dayNumError').attr('data-content','请输入整数');
-							return false;
+						
+						var checkPack = $('#checkbox')[0].checked;
+						
+						if(!checkPack){
+							if(dayNum == null || dayNum == "" || dayNum == undefined){
+								$('#dayNumError').attr('data-content','天数未填写');
+								return false;
+							}
+							if(!checkRate(dayNum) ||  !isInteger(dayNum)){
+								$('#dayNumError').attr('data-content','请输入整数');
+								return false;
+							}
+							if(needNum == null || needNum == "" || needNum == undefined){
+								$('#needNumError').attr('data-content','数量未填写');
+								return false;
+							}
+							if(!checkRate(needNum) ||  !isInteger(needNum)){
+								$('#dayNumError').attr('data-content','请输入整数');
+								return false;
+							}
 						}
 						
 			}
@@ -228,7 +256,17 @@ var controlArray = {
 			var needNum = $('#needNum').val();
 			var dir = $('#setDir').text();
 			var unitPrice = $('#projectChilden').attr('data-price');
-			var sum = dayNum * needNum * unitPrice;
+			var fullJob ;
+			var checkbox = $('#checkbox')[0].checked;			
+			if(checkbox){
+				fullJob = 0;
+				dayNum = '整包';
+				needNum = '整包';
+				var sum = unitPrice;
+			}else{
+				fullJob = 1;
+				var sum = dayNum * needNum * unitPrice;
+			}
 			var map = {};
 			map['typeId'] = typeId;
 			map['typeName'] = type;
@@ -241,6 +279,7 @@ var controlArray = {
 			map['unitPrice'] = unitPrice;
 			map['sum'] = sum;
 			map['description'] = dir;
+			map['fullJob'] = fullJob;
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
 			controlArray.createTable();
@@ -441,6 +480,8 @@ function cTable(map) {
 	this.days = map.days;
 	//总额
 	this.sum = map.sum;
+	
+	this.fullJob = map.fullJob;
 }
 
 function getTrTitle(item){
@@ -457,14 +498,18 @@ function getTrTitle(item){
 function createMultOption(item,index){
     
     var hasTitle = getTrTitle(item);
+    var hasRead = "";
+    if(item.fullJob == 0){
+    	hasRead = 'readonly';
+    }
 		var html = [
 			        ''+hasTitle+'',
 		    	    '<tr>',
  		    		'<td>'+item.itemName+'</td>',
  		    		'<td>'+item.detailName+'</td>',
  		    		'<td>'+item.description+'</td>',
- 		    		'<td class="dayTd"><input data-id='+index+' class="updateDay" value="'+item.days+'"></td>',
- 		    		'<td class="dayTd"><input data-id='+index+' class="updateNum" value="'+item.quantity+'"></td>',
+ 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateDay" value="'+item.days+'"></td>',
+ 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateNum" value="'+item.quantity+'"></td>',
  		    		'<td class="payCost payBaseCost">'+item.unitPrice+'</td>',
  		    		'<td class="cost payCost">'+item.sum+'</td>',
  		    		'<td class="delTable"><div data-id='+index+'>删除</div></td>',
@@ -478,6 +523,7 @@ function createDetail(item){
 	for (var i = 0; i < item.children.length; i++) {
 		setChildren += ' <div data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
 	}
+
 		var html = [
 					  ' <li>                                                   ',
 				      '   <div class="multSelect">                             ',
@@ -514,8 +560,10 @@ function initMultSelect(){
 		$('#projectParent').attr('data-id',parentId);
 		$('#setDir').text($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
-		$('#dayNum').val('');
-		$('#needNum').val('');	
+		if(!$('#checkbox').checked){
+			$('#dayNum').val('');
+			$('#needNum').val('');	
+		}
 		e.stopPropagation();
 	});
 }

@@ -61,15 +61,31 @@
 <input type="hidden" id="quotationId" value='${quotationId}'>
 <input type="hidden" id="projectId" value='${quotationId}'>
 
+<div class="cusModel" id="errorSame">
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">错误提示</div>
+	                   <div class="closeModel"></div>
+	            </div>
+               <div class="infoWarn">
+                   <img src="${imgPath}/index/waring.png">
+                   <div>该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
+               </div>
+               <div class="btnMid">
+			           <div class="btn-c-r closeWindow" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
 <!-- 报错 -->
 <div class="cusModel" id="errorModel" >
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">删除数据</div>
+                   <div class="title">清空表单</div>
                    <div class="closeModel"></div>
             </div>
             <div class="errorContent">
-                 <div class="title">确认删除该条数据吗？</div>
+                 <div class="title">确认清空表单吗？</div>
                  <div class="btnMid">
                       <div class="btn-c-g cancle">取消</div>
                       <div class="btn-c-r sureDel">确认</div>
@@ -79,14 +95,17 @@
 </div>
 
 
-<div class="cusModel" id="submitCheckBtn" >
+<div class="cusModel" id="submitCheckBtn" style="position:block">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">报价单</div>
                    <div class="closeModel"></div>
             </div>
+            <div class="infoWarn">
+                   <img src="${imgPath}/index/waring.png">
+                   <div id="setCheck">确认删除该条数据吗？</div>
+               </div>
             <div class="errorContent">
-                 <div class="title" id="setCheck">确认删除该条数据吗？</div>
                  <div class="btnMid">
                       <div class="btn-c-g cancle">取消</div>
                       <div class="btn-c-r submitCheckBtn">确认</div>
@@ -103,6 +122,9 @@
                    <div class="title" id="isSuccess">提交成功</div>
                    <div class="closeModel"></div>
             </div>
+             <div class="infoWarn">
+                   <img id="errorImg" src="${imgPath}/index/waring.png">
+             </div>
             <div class="errorContent">
                  <div id="successContent" style="text-align: center;"></div>
                  <div class="btnMid" style="text-align: center;">
@@ -112,7 +134,7 @@
      </div>
 </div>
 
-<div class="cusModel" id="errorSame" >
+<!-- <div class="cusModel" id="errorSame" >
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">错误提示</div>
@@ -125,7 +147,7 @@
                  </div>
             </div>
      </div>
-</div>
+</div> -->
 
 
      
@@ -143,7 +165,7 @@
             </div>
             <div class="orderItem" id="dayTimeError">
 	            <div class="mR8">日期</div>
-	            <input class="time" readonly id="dayTime" name="time" value="">
+	            <input class="time noBorder" readonly id="dayTime" name="time" value="">
 	        </div>
 	          <br/>  
 	          
@@ -205,8 +227,13 @@
 	            <input class="shortDiv" id="needNum"  value="">
             </div>
              <div class="orderItem" style="position: static;"> 
-	            <div class=" searchBtn" id="toAdd">添加</div>
-	            <div class=" searchBtn" id="toClear">清空</div>
+	            <div class=" searchBtn" id="toAdd">添加表单</div>
+	            <div class=" searchBtn"  id="toClear">清空表单</div>
+            </div>
+            </br>
+            <div  class="orderItem" id="dayNumError">
+	            <div class="mR8">整包价</div>
+	            <input id="checkbox"  type="checkbox" value="">
             </div>
             </br>
              <div class="dir">项目描述 ：<span id="setDir"></span></div> 
