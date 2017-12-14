@@ -119,20 +119,24 @@ function submitCheck(){
     	if(res.result){
     		$('#submitCheckBtn').show();
     		$('#setCheck').text('该项目已存在，是否仍然生成报价单？');
+    		initCheckBtn();
+    	
     	}else{
     		$('#submitCheckBtn').show();
     		$('#setCheck').text('该项目不存在，是否仍然生成报价单？');
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
-    		submitDate();
+    		initCheckBtn();
     	}
-	}, getContextPath() + '/quotation/validate/'+$('#projectName')+'','');
+	}, getContextPath() + '/quotation/validate/project-name',$.toJSON({
+        projectName : $('#projectName').val()	
+	}));
 	
 }
 
 function initCheckBtn(){
 	
-	$('#submitCheckBtn').off('click').on('click',function(){
+	$('.submitCheckBtn').off('click').on('click',function(){
 		$('#submitCheckBtn').hide();
 		submitDate();
 	});

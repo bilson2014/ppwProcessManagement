@@ -2,6 +2,7 @@ package com.paipianwang.activiti.resources.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paipianwang.activiti.service.QuotationService;
 import com.paipianwang.pat.common.entity.PmsResult;
+import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
+import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationTypeFacade;
 
@@ -35,6 +39,8 @@ public class QuotationController extends BaseController {
 	private PmsQuotationTypeFacade pmsQuotationTypeFacade;
 	@Autowired
 	private QuotationService quotationService;
+	@Autowired
+	private PmsProjectFlowFacade pmsProjectFlowFacade;
 	
 	/**
 	 * 报价单生成器
@@ -43,7 +49,14 @@ public class QuotationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/info")
-	public ModelAndView quotationView(ModelMap model){
+	public ModelAndView quotationView(final String projectId,ModelMap model){
+		List<String> metaData=new ArrayList<>();
+		metaData.add("projectName");
+		PmsProjectFlow flow=pmsProjectFlowFacade.getProjectFlowByProjectId(metaData, projectId);
+		if(flow!=null){
+			model.put("projectName", flow.getProjectName());
+		}
+		model.put("projectId", projectId);
 		return new ModelAndView("activiti/quotation", model);
 	}
 	
@@ -69,6 +82,25 @@ public class QuotationController extends BaseController {
 	}
 	
 	/**
+	 * 校验
+	 * @param pmsQuotation
+	 * @return
+	 */
+	@RequestMapping("/validate/project-name")
+	public PmsResult validateProjectExist(@RequestBody final PmsQuotation pmsQuotation ){
+		PmsResult result=new PmsResult();
+		List<PmsProjectFlow> flows=pmsProjectFlowFacade.getByName(pmsQuotation.getProjectName());
+		
+		if(ValidateUtil.isValid(flows)){
+			//存在
+			return result;
+		}
+		//不存在
+		result.setResult(false);
+		return result;
+	}
+	
+	/**
 	 * 保存/更新报价单
 	 * @param pmsQuotation
 	 */
@@ -90,31 +122,31 @@ public class QuotationController extends BaseController {
 	public void export(@PathVariable("quotationId")Long quotationId,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
+		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
 		try {
-			PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
-			if(quotation==null){
+			if(quotation!=null){
+				response.setCharacterEncoding("utf-8");
+				response.setContentType("application/octet-stream");
+				String filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
 				
+				//---处理文件名
+				String userAgent = request.getHeader("User-Agent"); 
+				//针对IE或者以IE为内核或Microsoft Edge的浏览器：
+				if (userAgent.contains("MSIE")||userAgent.contains("Trident") ||userAgent.contains("Edge")) {
+					filename = java.net.URLEncoder.encode(filename, "UTF-8");
+				} else {
+					filename = new String(filename.getBytes("UTF-8"),"ISO-8859-1");
+				}
+				
+				response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"\r\n");
+			
+				outputStream = response.getOutputStream();
+				
+				quotationService.export(quotation, outputStream,request);
+				
+				outputStream.flush();
 			}
-			response.setCharacterEncoding("utf-8");
-			response.setContentType("application/octet-stream");
-			String filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
 			
-			//---处理文件名
-			String userAgent = request.getHeader("User-Agent"); 
-			//针对IE或者以IE为内核或Microsoft Edge的浏览器：
-			if (userAgent.contains("MSIE")||userAgent.contains("Trident") ||userAgent.contains("Edge")) {
-				filename = java.net.URLEncoder.encode(filename, "UTF-8");
-			} else {
-				filename = new String(filename.getBytes("UTF-8"),"ISO-8859-1");
-			}
-			
-			response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"\r\n");
-		
-			outputStream = response.getOutputStream();
-			
-			quotationService.export(quotation, outputStream,request);
-			
-			outputStream.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -125,8 +157,14 @@ public class QuotationController extends BaseController {
 					e.printStackTrace();
 				}
 			}
+			//判断项目是否存在--不存在，则删除临时持久化数据
+			if(quotation!=null && !ValidateUtil.isValid(quotation.getProjectId())){
+//				List<PmsProjectFlow> flows=pmsProjectFlowFacade.getByName(quotation.getProjectName());
+//				if(!ValidateUtil.isValid(flows)){
+				pmsQuotationFacade.delete(quotationId);
+//				}
+			}
 		}
 		
-//		return result;
 	}
 }
