@@ -76,7 +76,7 @@ function clickEven(){
 		});
 	    if((controlArray.checkData(1))){
 				if(finalAsc[0] != undefined){
-				submitCheck();
+				    submitCheck();
 			    }
 				else{
 					$('#submitCheck').show();
@@ -198,6 +198,7 @@ var controlArray = {
 			if(num == 1){
 				if(projectName == null || projectName == "" || projectName == undefined){
 					$('#projectNameError').attr('data-content','项目名称未填写');
+					$('#projectName').focus();
 					return false;
 				}
 			}else{
