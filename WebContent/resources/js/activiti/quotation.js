@@ -76,7 +76,7 @@ function clickEven(){
 		});
 	    if((controlArray.checkData(1))){
 				if(finalAsc[0] != undefined){
-				submitCheck();
+				    submitCheck();
 			    }
 				else{
 					$('#submitCheck').show();
@@ -178,8 +178,6 @@ var controlArray = {
 				if(controlArray.checkData(0)){
 					if(checkSame()){
 						    controlArray.createArray();
-							allPackClear();
-							$('#checkbox')[0].checked = false;
 					}else{
 						$('#errorSame').show();
 					}
@@ -200,6 +198,7 @@ var controlArray = {
 			if(num == 1){
 				if(projectName == null || projectName == "" || projectName == undefined){
 					$('#projectNameError').attr('data-content','项目名称未填写');
+					$('#projectName').focus();
 					return false;
 				}
 			}else{
@@ -217,7 +216,7 @@ var controlArray = {
 						}
 						
 						var checkPack = $('#projectChilden').attr('data-full');
-						if(checkPack != 0 ){
+						if(checkPack != 1 ){
 							if(dayNum == null || dayNum == "" || dayNum == undefined){
 								$('#dayNumError').attr('data-content','天数未填写');
 								return false;
@@ -257,8 +256,8 @@ var controlArray = {
 			if(projectFull != 1){
 				var sum = dayNum * needNum * unitPrice;
 			}else{
-				dayNum = '整包';
-				needNum = '整包';
+				dayNum = -1;
+				needNum = -1;
 				var sum = unitPrice;
 			}
 			var map = {};
@@ -273,6 +272,7 @@ var controlArray = {
 			map['unitPrice'] = unitPrice;
 			map['sum'] = sum;
 			map['description'] = dir;
+			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
 			controlArray.createTable();
@@ -474,6 +474,7 @@ function cTable(map) {
 	//总额
 	this.sum = map.sum;
 	
+	this.fullJob = map.fullJob;
 }
 
 function getTrTitle(item){
@@ -491,8 +492,12 @@ function createMultOption(item,index){
     
     var hasTitle = getTrTitle(item);
     var hasRead = "";
-    if(item.days == '整包'){
+    var days = item.days;
+    var quantity = item.quantity;
+    if(item.days == '-1'){
     	hasRead = 'readonly';
+    	days = '整包';
+    	quantity = '整包';
     }
 		var html = [
 			        ''+hasTitle+'',
@@ -500,8 +505,8 @@ function createMultOption(item,index){
  		    		'<td>'+item.itemName+'</td>',
  		    		'<td>'+item.detailName+'</td>',
  		    		'<td>'+item.description+'</td>',
- 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateDay" value="'+item.days+'"></td>',
- 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateNum" value="'+item.quantity+'"></td>',
+ 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateDay" value="'+days+'"></td>',
+ 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateNum" value="'+quantity+'"></td>',
  		    		'<td class="payCost payBaseCost">'+item.unitPrice+'</td>',
  		    		'<td class="cost payCost">'+item.sum+'</td>',
  		    		'<td class="delTable"><div data-id='+index+'>删除</div></td>',
@@ -553,9 +558,9 @@ function initMultSelect(){
 		$('#setDir').text($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
 	    if($(this).attr('data-full') == 1){
-	    	allPackClear();
-	    }else{
 	    	allPack();
+	    }else{
+	    	allPackClear();
 	    }
 		e.stopPropagation();
 	});
