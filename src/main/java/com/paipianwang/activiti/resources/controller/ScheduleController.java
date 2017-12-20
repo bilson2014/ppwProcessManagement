@@ -52,7 +52,7 @@ public class ScheduleController extends BaseController {
 			model.put("projectName", flow.getProjectName());
 		}
 		model.put("projectId", projectId);
-		return new ModelAndView("activiti/schedule", model);
+		return new ModelAndView("activiti/timebox", model);
 	}
 	
 	/**
