@@ -43,7 +43,7 @@
 <script type="text/javascript" src="${tablesMergeCellJs}"></script>
 <script type="text/javascript" src="${datepickerJs}"></script>
 <script type="text/javascript" src="${datepickerZhJs}"></script>
-<script type="text/javascript" src="${jsonJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script> 
 <script type="text/javascript" src="${commonJs}"></script>
 
 
@@ -152,13 +152,11 @@
 
      
      <div class='banner'>
-         		<span>报价单生成器</span>
+         <span>报价单生成器</span>
      </div>
    
    <div class="pages">
      <div class="searchInfo">
-         <!-- cxx -->
-         	
          	<div class="orderItem" id="projectNameError">
 	            <div class="mR8">项目名称</div>
 	            <input value='${projectName}' id="projectName" style="width:240px">

@@ -1,0 +1,125 @@
+ @import "common";
+ @import "buttons";
+ @import "mixins/indexScreen";
+ @import "normalize";
+ .hide {
+     display: none;
+ }
+ 
+ .bordercolor {
+     border: 1px solid #FE5453;
+ }
+ 
+ .show {
+     display: block;
+ }
+ 
+ html {
+     background-color: #fff;
+ }
+ 
+ body {
+     height: 1000px;
+ }
+ 
+ //弹框信息
+ /* 手机端-作者页 */
+ 
+ .webuploader-element-invisible {
+     display: none;
+ }
+ 
+ @import "compass/css3";
+ @import "common";
+ //每个表格的内部样式
+ .fc-grid .much {
+     width: 100%;
+     height: 20px;
+     background: url(../../images/one.png) no-repeat;
+     cursor: pointer;
+ }
+ 
+ .fc-week .fc-day .menu {
+     width: 100%;
+     max-height: 100px;
+     list-style-type: none;
+     padding-left: 0;
+     overflow: auto;
+ }
+ 
+ .orderSelect {
+     position: absolute;
+     width: 124px;
+     height: 30px;
+ }
+ 
+ .orderSelect ul {
+     position: absolute;
+     width: 100%;
+     top: 100%;
+     left: 0;
+     display: none;
+     z-index: 3;
+     background: white;
+     cursor: pointer;
+     border: 1px solid #999;
+     border-top: 1px solid #979797;
+     max-height: 300px;
+     border-radius: 4px;
+     overflow: auto;
+ }
+ 
+ .orderSelect ul li {
+     width: 100%;
+     height: 36px;
+     text-align: center;
+     line-height: 36px;
+     color: #666;
+     font-size: 1.4rem;
+ }
+ 
+ //下拉框样式修改
+ .city-select .city-info {
+     width: 100%;
+     overflow: auto;
+     max-height: 69px;
+ }
+ 
+ .city-select .city-cont dd {
+     width: 100%;
+ }
+ 
+ .city-select .city-cont {
+     overflow: auto
+ }
+ 
+ .city-select .city-pavilion {
+     width: 100%;
+     z-index: 20;
+ }
+ 
+ .city-select {
+     width: 100%;
+ }
+ 
+ //生成排期表
+ .last {
+     margin-top: 64px;
+     .best {
+         width: 10%;
+         margin: 0 auto;
+         height: 40px;
+         background: #FE5453;
+         border-radius: 4px;
+         color: #fff;
+         line-height: 40px;
+         font-size: 14px;
+     }
+ }
+ 
+ //textarea 修改
+ .matter {
+     width: 100%;
+     min-height: 78px;
+     padding: 6px 6px;
+ }
