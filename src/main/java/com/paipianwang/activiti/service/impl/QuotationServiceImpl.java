@@ -19,6 +19,7 @@ import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
+import com.paipianwang.pat.workflow.entity.PmsQuotationType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
 
@@ -126,12 +127,17 @@ public class QuotationServiceImpl implements QuotationService {
 		PmsResult result=new PmsResult();
 		BigDecimal subTotal=new BigDecimal(0.0);
 		for(PmsQuotationItem item:pmsQuotation.getItems()){
-			double sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
-			if(sum!=Double.parseDouble(item.getSum())){
-				result.setResult(false);
-				result.setErr(item.getTypeName()+"结果有误.");
-				return result;
+			double sum=Double.parseDouble(item.getSum());
+			if(item.getFullJob()==PmsQuotationType.FULLJOB_NO){
+				//非整包
+				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
+				if(sum!=Double.parseDouble(item.getSum())){
+					result.setResult(false);
+					result.setErr(item.getTypeName()+"结果有误.");
+					return result;
+				}
 			}
+			
 			subTotal=subTotal.add(new BigDecimal(sum));
 		}
 		if(subTotal.compareTo(new BigDecimal(pmsQuotation.getSubTotal()))!=0){

@@ -170,11 +170,11 @@ public class QuotationPoiAdapter {
 
 			xssfCell = xssfRow.createCell(2);
 			xssfCell.setCellStyle(cs);
-			xssfCell.setCellValue(type.getDays() == null ? "/" : type.getDays() + "");
+			xssfCell.setCellValue(type.getDays() == null ? "/" :(type.getDays()==-1?"整包": type.getDays() + ""));
 
 			xssfCell = xssfRow.createCell(3);
 			xssfCell.setCellStyle(cs);
-			xssfCell.setCellValue(type.getQuantity());
+			xssfCell.setCellValue(type.getQuantity()==-1?"整包": type.getQuantity() + "");
 
 			xssfCell = xssfRow.createCell(4);
 			xssfCell.setCellStyle(cs);
