@@ -87,6 +87,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 			return;
 		}	
 		
+		schedulePPTPoiAdapter.setImgPath(request.getServletContext().getRealPath("/resources/images/pptTitle.png"));
+		
 		XMLSlideShow ppt = new XMLSlideShow();
 		// 设置幻灯片大小
 		ppt.setPageSize(new Dimension(1900, 1100));

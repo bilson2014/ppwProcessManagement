@@ -30,6 +30,8 @@ import com.paipianwang.pat.workflow.entity.PmsScheduleItem;
 @Aspect
 public class SchedulePPTPoiAdapter {
 
+	private String imgPath;
+	
 	public void createTitle(XSLFSlide slide, PmsSchedule schedule) {
 		// 创建文本框
 		XSLFTextBox textBox = slide.createTextBox();
@@ -42,7 +44,6 @@ public class SchedulePPTPoiAdapter {
 		xslfTextRun.setFontColor(Color.DARK_GRAY);
 		xslfTextRun.setFontSize(48.0);
 		xslfTextRun.setFontFamily("Lato");
-		
 		//横线
 		
 		/*XSLFShape shape;
@@ -70,7 +71,8 @@ public class SchedulePPTPoiAdapter {
 
 	public void createPic(XMLSlideShow ppt, XSLFSlide slide) throws Exception {
 		// 插入图片
-		byte[] pictureData = IOUtils.toByteArray(new FileInputStream("F://paipianwang.png"));
+		byte[] pictureData = IOUtils.toByteArray(new FileInputStream(imgPath));
+				//"F://paipianwang.png"));
 		/** 添加图片,返回索引 **/
 
 		XSLFPictureData pictureIndex = ppt.addPicture(pictureData, PictureType.PNG);
@@ -157,6 +159,14 @@ public class SchedulePPTPoiAdapter {
 		tableCell.setBorderColor(BorderEdge.top, Color.LIGHT_GRAY);
 		tableCell.setBorderColor(BorderEdge.right, Color.LIGHT_GRAY);
 		// tableCell.setBorderBottom(1);
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 
