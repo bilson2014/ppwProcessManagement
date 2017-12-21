@@ -69,15 +69,25 @@
     </style>
 </head>
 <body>
-<input type="hidden" id="scheduleId" value='33'><!--唯一标记  -->
-<%-- <input type="hidden" id="scheduleId" value='${scheduleId}'><!--唯一标记  --> --%>
+
+<input type="hidden" id="scheduleId" value='${scheduleId}'><!--唯一标记  -->
 <input type="hidden" id="projectId" value='${projectId}'><!--项目id  -->
-<input type="hidden" id="projectName" value='${projectName}'><!--项目名称  -->
+<%-- <input type="hidden" id="projectName" value='${projectName}'><!--项目名称  -->
 <input type="hidden" id="updateDate" value='${updateDate}'><!--更新时间  -->
-<input type="hidden" id="jobContent" value='${jobContent}'><!--工作内容  -->
+<input type="hidden" id="jobContent" value='${jobContent}'><!--工作内容  --> --%>
 
 
-  <div class="pages" style="height: 900px;">      
+  <div class="pages" style="height: 900px;">   
+  
+  <div class="orderItem" id="projectNameError">
+	   <div class="mR8">项目名称</div>
+	   <input value='${projectName}' id="projectName" style="width:240px">
+	   <p class='proerr'><p>
+ </div>
+ <div class="orderItem" id="dayTimeError">
+	   <div class="mR8">日期</div>
+	   <input class="time noBorder" readonly id="updateDate" name="time" value="${updateDate}">
+  </div>   
 	<div id='calendar'></div>
  	<div class='last'><div class='best'>生成排期表</div></div>
  </div>

@@ -123,3 +123,20 @@
      min-height: 78px;
      padding: 6px 6px;
  }
+ 
+ //头部的样式
+ .orderItem {
+     text-align: left;
+     .mR8 {
+         width: 90px;
+         display: inline-block;
+         line-height: 47px;
+     }
+     input {
+         width: 240px;
+         display: inline-block;
+     }
+     .proerr {
+         color: red;
+     }
+ }

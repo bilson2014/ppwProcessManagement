@@ -12,41 +12,14 @@ $().ready(function() {
 	document.domain = getUrl();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
     var date = new Date();
+//    console.log(date);
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
-    var one,two;
-    one= '江山如画';
-    two='少女时代';
-    loadData(function(res){
-	    console.log(res);
-	}, getContextPath() + '/schedule/save',$.toJSON({
-		scheduleId: '888',
-		projectId: 'sss',
-		projectName: "项目名称",
-		updateDate: "2017-12-19 10:37:52.0",
-		items:[
-	        {
-	            "jobContent": "客户约见 \r需求沟通.",
-	            "start": "2017-12-14"
-	        },
-	        {
-	            "jobContent": "lslslsls",
-	            "start": "2017-12-14"
-	        }
-	    ]
-	}));
-
+    m=m+1;
+    $('#updateDate').val(y+'-'+m+'-'+d);
     
-//    items : finalAsc,
-//	quotationId : $('#quotationId').val(),
-//	projectId : $('#projectId').val(),
-//	taxRate: $('#tax').val(),
-//	discount:$('#free').val(),
-//	subTotal:$('#localPrice').text(),
-//    total: $('#setFinalCost').text(),
-//    updateDate : $('#dayTime').val(),
-//    projectName : $('#projectName').val()	
+
 //    var dayData = [{
 //        title: one,
 //        start: new Date(y, m, 1),
@@ -108,35 +81,50 @@ function bestthings() {
     $('.best').on('click', function() {
     	sun();
     	var end=$(".fc-week td");
-    	console.log(end);
     	var gamething=[];
     	end.each(function(){
     		var kou=$(this).find('.matter').text();
     		if(kou){
     			var nowtime=$(this).attr('data-date');
-    			var jsonthing='{"jobContent":"'+kou+'","start":"'+nowtime+'"},';		
+    			if (gamething.length>0){
+    				var jsonthing=',{"jobContent":"'+kou+'","start":"'+nowtime+'"}';		
+    			}else {
+    				var jsonthing='{"jobContent":"'+kou+'","start":"'+nowtime+'"}';
+    			}
+    				
     			gamething+=jsonthing;	
     		}
     	})
     	gamething="["+ gamething+"]";
-    	console.log( gamething);
+    	gamething=JSON.parse(gamething);
+    	var projectName = $('#projectName').val();  	
+    	if(projectName== null || projectName == "" || projectName == undefined){
+    		$('.proerr').text('项目名称未填写');
+			$('#projectName').focus();
+			return false;
+    	}else {
+    		loadData(function(res){
+    	    	if (res.result){
+    	    		console.log('成功了');
+    	    		window.location.href = getContextPath() + "/schedule/export/" + res.msg;
+    	    	}else {
+    	    		console.log('失败了');
+    	    	}
+    	    	console.log(res);
+    		}, getContextPath() + '/schedule/save',$.toJSON({
+    			scheduleId:$('#scheduleId').val(), 
+    			projectId: $('#projectId').val(),
+    			projectName: $('#projectName').val(),
+    			updateDate:  $('#updateDate').val(),
+    			items:gamething
+    		    
+    		}));
+    	}
+    	  
     	
+    	  
     	
-    	
-    	
-    	 
-//    	 loadData(function(res){
-//    	    	if(res.result){
-//    	    		
-//    	    	}else{
-//    	    		
-//    	    	}
-//    		}, getContextPath() + '/quotation/save',$.toJSON({
-//    			items : finalAsc,
-//    			
-//    	        projectName : $('#projectName').val()	
-//    		}));
-//    	 
+
     	 
     	 
     	 
