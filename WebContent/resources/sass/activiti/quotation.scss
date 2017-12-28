@@ -8,16 +8,16 @@
             .pages {
                 padding-right: 20px;
                 padding-left: 20px;
-                min-width: 960px;
+                min-width: 750px;
                 min-height: 600px;
-                background:white !important;
+                background: white !important;
             }
 
-             
-            .noBorder{
-            	background: transparent !important;
-            	border:none !important; 
-            } 
+
+            .noBorder {
+                background: transparent !important;
+                border: none !important;
+            }
 
             .mR8 {
                 margin-right: 15px;
@@ -42,6 +42,20 @@
                 }
             }
 
+            .changeitem {
+                color: red;
+                @media screen and (min-width: 775px) and (max-width:1025px) {
+                    color: blue;
+                }
+                @media screen and (max-width: 775px) {
+                    color: green;
+                }
+                @media screen and (max-width: 1000px) {
+                    color: orange;
+                    display: block!important;
+                }
+            }
+
             .searchInfo {
                 #sUserCompany {
                     width: 240px !important;
@@ -58,7 +72,6 @@
                     display: inline-block;
                     vertical-align: top;
                     margin-top: 20px;
-                    margin-right: 10px;
                     position: relative;
                     div {
                         font-size: $font-size-sm;
@@ -80,7 +93,7 @@
                         color: $red-base;
                         font-size: 1.2rem;
                         position: absolute;
-                        left: 70px;
+                        left: 25px;
                         top: 35px
                     }
                 }
@@ -100,7 +113,7 @@
                 }
 
                 .shortDiv {
-                    width: 80px;
+                    width: 40px;
                 }
 
                 .time {
@@ -112,7 +125,8 @@
                     vertical-align: middle;
                     height: 30px;
                     line-height: 30px;
-                    padding-left: 10px;
+                    padding-left: 5px;
+                    padding-right: 5px;
                     font-size: $font-size-sm;
                     color: $gray;
                     border-radius: 4px;
@@ -129,6 +143,9 @@
                 font-size: $font-size-sm;
                 color: $gray-light;
                 margin-top: 20px;
+                width: 238px;
+                display: inline-block;
+                vertical-align: top;
             }
 
 
@@ -144,8 +161,8 @@
                 border-radius: 4px;
                 border: 1px solid #999;
                 position: absolute;
-                   top: 62px;
-                 right: 80px;
+                top: 62px;
+                right: 80px;
                 cursor: pointer;
                 &:hover {
                     color: #333;
@@ -340,12 +357,12 @@
             }
 
             .titleTr {
-                line-height: 40px;
+                line-height: 20px;
                 border-bottom: 1px solid #d1d1d1;
                 word-wrap: break-word;
                 word-break: break-all;
                 vertical-align: middle;
-                 background: $f0!important;
+                background: $f0!important;
                 td {
                     background: $f0!important;
                     font-size: $font-size-base!important;
@@ -356,6 +373,7 @@
 
             .tb th {
                 padding-left: 20px;
+                padding-right: 20px;
                 border-top: 1px solid #ccc;
                 border-bottom: 1px solid #ccc;
                 line-height: 20px;
@@ -372,35 +390,39 @@
                     border: none;
                     width: 40px;
                 }
-                &:hover{
-                	 background: white !important;
-                	 box-shadow: inset 0px 0px 0px 5px rgba(254,84,83,1);
+                &:hover {
+                    background: white !important;
+                    box-shadow: inset 0px 0px 0px 5px rgba(254, 84, 83, 1);
                 }
             }
 
             .tb td {
                 padding-left: 20px;
-                line-height: 40px;
+                padding-right: 20px;
+                line-height: 20px;
                 border-bottom: 1px solid #d1d1d1;
                 word-wrap: break-word;
                 word-break: break-all;
                 color: #666;
                 vertical-align: middle;
                 height: 40px;
-               
             }
 
             tr:nth-child(2n) {
-            	    background: #f8f8f8;
+                background: #f8f8f8;
             }
 
-            tr{
+            tr {
 
-             &:hover{
-            	   background: #F6F9F9 !important;
+                &:hover {
+                    background: #F6F9F9 !important;
                 }
             }
-            
+
+            tr {
+                width: 85px;
+            }
+
 
             .tb td:last-child {
                 width: 75px !important;
@@ -587,32 +609,32 @@
                     max-height: 500px;
 
 
-                     .submitTitle {
-            width: 100%;
-            height: 61px;
-            line-height: 60px;
-            font-size: $font-size;
-            color: $gray-dark;
-            padding-left: 30px;
-            text-align: left !important;
-            border-bottom: 1px solid $border-line;
-        }
-        .infoWarn {
-            margin-top: 30px;
-            margin-bottom: 20px;
-            text-align: center;
-            div {
-                width: 100%;
-                font-size: $font-size;
-                color: $red-base;
-                line-height: 30px;
-            }
-            img {
-                width: 85px;
-                height: 85px;
-                margin-bottom: 20px;
-            }
-        }
+                    .submitTitle {
+                        width: 100%;
+                        height: 61px;
+                        line-height: 60px;
+                        font-size: $font-size;
+                        color: $gray-dark;
+                        padding-left: 30px;
+                        text-align: left !important;
+                        border-bottom: 1px solid $border-line;
+                    }
+                    .infoWarn {
+                        margin-top: 30px;
+                        margin-bottom: 20px;
+                        text-align: center;
+                        div {
+                            width: 100%;
+                            font-size: $font-size;
+                            color: $red-base;
+                            line-height: 30px;
+                        }
+                        img {
+                            width: 85px;
+                            height: 85px;
+                            margin-bottom: 20px;
+                        }
+                    }
 
 
                     .closeModel {
@@ -657,5 +679,3 @@
                     }
                 }
             }
-
-

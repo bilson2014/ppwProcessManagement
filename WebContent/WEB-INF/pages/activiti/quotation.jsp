@@ -170,7 +170,7 @@
 	          <br/>  
 	          
              <div class="orderItem" id="typeError"> 
-		            <div class="mR8">类别</div>
+		            <div class="mR8">收费类</div>
 		            <div class="orderSelect oredrTypeSelect"  >
 		                <div id="type"></div>
 		                <img src="${imgPath}/index/select.png">
@@ -181,53 +181,28 @@
 			        </div>
 			  </div>  
 			  
-			   <div class="orderItem" id="projectChildenError"> 
-		            <div class="mR8">项目</div>
-		            <div class="orderSelect orderMultSelect" >
+			   <div class="orderItem" id="projectChildenError" > 
+		            <div class="mR8">收费项</div>
+		            <div class="orderSelect orderMultSelect" style="width: 250px !important;">
 		                <input type="hidden" id="projectParent"/>
 		                <div id="projectChilden"></div>
 		                <img src="${imgPath}/index/select.png">
 		                <ul class="setMultSelect" id="orderCome">
-		                       <li>
-						         <div class="multSelect">
-						              <div class="multTitle">
-						                  <img src="${imgPath}/index/quoIcon.png" >
-						                  <div class="title">测试</div>
-						              </div>           
-							          <div class="productList" id="productList">
-						                  <div data-id="测试">进行中</div>
-						                  <div data-id="测试">暂停</div>
-						                  <div data-id="测试">完成/取消</div>
-						              </div>
-						         </div> 
-						      </li>
-						      <li>
-						         <div class="multSelect">
-						              <div class="multTitle">
-						                  <img src="${imgPath}/index/quoIcon.png" >
-						                  <div class="title">测试</div>
-						              </div>           
-							          <div class="productList" id="productList">
-						                  <div data-id="测试">进行中</div>
-						                  <div data-id="测试">暂停</div>
-						                  <div data-id="测试">完成/取消</div>
-						              </div>
-						         </div> 
-						      </li>         
+		                      
 		                </ul>    
 			        </div>
 			  </div>    
 	      
-	        <div  class="orderItem" id="dayNumError">
-	            <div class="mR8">天数</div>
+	        <div  class="orderItem changeitem" id="dayNumError">
+	            <div class="mR8" id="dayT">天数</div>
 	            <input class="shortDiv" id="dayNum"  value="">
             </div>
-            <div  class="orderItem" id="needNumError">
-	            <div class="mR8">数量</div>
-	            <input class="shortDiv" id="needNum"  value="">
+            <div  class="orderItem changeitem" id="needNumError">
+	            <div class="mR8" id="needT">数量</div>
+	            <input class="shortDiv" id="needNum" value="">
             </div>
-             <div class="orderItem" style="position: static;"> 
-	            <div class=" searchBtn" id="toAdd">添加表单</div>
+             <div class="orderItem " style="position: static;"> 
+	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
             </div>
             </br>
@@ -236,7 +211,8 @@
 	            <input id="checkbox"  type="checkbox" value="">
             </div> -->
             </br>
-             <div class="dir">项目描述 ：<span id="setDir"></span></div> 
+             <div class="dir">单价 ：<span id="setCost"></span></div> 
+             <div class="dir">收费项描述 ：<span id="setDir"></span></div> 
          </div>
 
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
