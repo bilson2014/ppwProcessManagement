@@ -119,13 +119,14 @@ public class SchedulePPTPoiAdapter {
 			tableRow2.setHeight(120);
 			for (PmsScheduleItem item : itemList) {
 				if(item==null){
-					break;
+					//空样式
+					item=new PmsScheduleItem();
 				}
 				// 日期
 				XSLFTableCell tableCell = tableRow1.addCell();
 				XSLFTextParagraph p = tableCell.addNewTextParagraph();
 				XSLFTextRun tr = p.addNewTextRun();
-				tr.setText(item.getDay() + "");
+				tr.setText(item.getDay()==null?"":item.getDay() + "");
 
 				tr.setFontSize(30.0);
 				tr.setFontFamily("Lato");

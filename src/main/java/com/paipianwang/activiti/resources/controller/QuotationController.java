@@ -3,7 +3,6 @@ package com.paipianwang.activiti.resources.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -170,6 +169,13 @@ public class QuotationController extends BaseController {
 		
 	}
 	
+	/**
+	 * 排序：保留原大类、子类顺序；子类相同的排序归一起
+	 * @param quotation
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/order")
 	public List<PmsQuotationItem> orderQuotation(@RequestBody final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
 		
