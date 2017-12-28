@@ -281,6 +281,7 @@ var controlArray = {
 			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
+			reLoadItem(finalAsc);
 			controlArray.createTable();
 			
 		},
@@ -438,6 +439,14 @@ function initTypeItem(){
 		}
 	}, getContextPath() + '/quotation/select/type?typeId=',null);
 
+}
+//排序
+function reLoadItem(item){
+		loadData(function(res){
+		var ress = res;
+		}, getContextPath() + '/quotation/order',$.toJSON({
+	        item : item
+		}));
 }
 
 function createType(item){ 
