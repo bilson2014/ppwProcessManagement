@@ -162,7 +162,7 @@
 	            <input value='${projectName}' id="projectName" style="width:240px">
             </div>
             <div class="orderItem" id="dayTimeError">
-	            <div class="mR8">日期</div>
+	            <div class="mR8">更新于</div>
 	            <input class="time noBorder" readonly id="dayTime" name="time" value="">
 	        </div>
 	          <br/>  

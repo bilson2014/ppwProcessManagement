@@ -443,9 +443,10 @@ function initTypeItem(){
 //排序
 function reLoadItem(item){
 		loadData(function(res){
-		var ress = res;
+			finalAsc = res;
+			controlArray.createTable();
 		}, getContextPath() + '/quotation/order',$.toJSON({
-	        item : item
+	        items : item
 		}));
 }
 
