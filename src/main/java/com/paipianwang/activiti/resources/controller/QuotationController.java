@@ -3,6 +3,7 @@ package com.paipianwang.activiti.resources.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
+import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
@@ -166,5 +168,30 @@ public class QuotationController extends BaseController {
 			}
 		}
 		
+	}
+	
+	/**
+	 * 排序：子类相同的排在一起
+	 * @param quotation
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/order")
+	public List<PmsQuotationItem> orderQuotation(@RequestBody final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
+		
+		quotation.getItems().sort(new Comparator<PmsQuotationItem>() {
+
+			@Override
+			public int compare(PmsQuotationItem o1, PmsQuotationItem o2) {
+				if(o1.getTypeId().equals(o2.getTypeId())){
+					//大类相同，子类排序
+					return o1.getItemName().compareTo(o2.getItemName());
+				}
+				return 0;
+			}
+		});
+		
+		return quotation.getItems();
 	}
 }
