@@ -39,10 +39,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.paipianwang.activiti.domin.TaskVO;
+import com.paipianwang.activiti.mq.email.service.BaseMQService;
 import com.paipianwang.activiti.service.MessageService;
 import com.paipianwang.activiti.service.ProjectWorkFlowService;
 import com.paipianwang.pat.common.constant.PmsConstant;
@@ -133,6 +135,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 
 	@Autowired
 	private PmsProjectGroupResourceUpdateFacade resourceUpdateFacade = null;
+	
+	@Autowired
+	@Qualifier("projectProductAddMQService")
+	private BaseMQService projectProductAddMQService;
+
+	@Autowired
+	@Qualifier("projectProductCancelMQService")
+	private BaseMQService projectProductCancelMQService;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1737,7 +1747,14 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				String[] values = entry.getValue();
 				if (values != null) {
 					for (int index = 0; index < values.length; index++) {
-						param.get(index).put(entryKey.split("_")[1], values[index]);
+						if(entryKey.contains("teamName")){
+							param.get(index).put("userName", values[index]);
+						}else if(entryKey.contains("addft_projectTeamId")){
+							param.get(index).put("userId", values[index]);
+						}else{
+							param.get(index).put(entryKey.split("_")[1], values[index]);
+						}
+						
 					}
 				}
 			}
@@ -1760,9 +1777,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 						dealLog.setProjectName(projectFlow.getProjectName());
 
 						// 获取客户ID
-						PmsProjectUser user = projectUserFacade.getProjectUserByProjectId(projectId);
-						dealLog.setUserId(user.getProjectUserId());
-						dealLog.setUserName(user.getUserName());
+//						PmsProjectUser user = projectUserFacade.getProjectUserByProjectId(projectId);
+//						dealLog.setUserId(user.getProjectUserId());
+//						dealLog.setUserName(user.getUserName());
+						
 						financeFacade.save(dealLog);
 					}
 					
@@ -1780,6 +1798,7 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				team.setTeamType(ProjectTeamType.produce.getCode());
 				long result = projectTeamFacade.insert(team);
 				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
+//				projectProductAddMQService.sendMessage(projectId,result+"");
 				return result;
 			}
 		}
@@ -1797,7 +1816,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 				metaData.put("reason", team.getReason());
 				final long result = projectTeamFacade.update(metaData, projectTeamId);
 				// TODO 发送邮件给供应商、销售总监、监制、监制总监、供应商、供应商总监
-				return result > -1 ? true : false;
+				if(result > -1){
+//					projectProductCancelMQService.sendMessage(team.getProjectId(),projectTeamId+"");
+					return true;
+				}
 			}
 		}
 		return false;
@@ -1810,5 +1832,10 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 			return count > 1 ? true : false;
 		}
 		return false;
+	}
+
+	@Override
+	public List<PmsProjectFlow> getSelfProjectByName(String projectName, Long reqiureId) {
+		return flowFacade.getSynerteticProjectByName(reqiureId,projectName);
 	}
 }

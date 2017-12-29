@@ -11,6 +11,7 @@ import org.activiti.engine.task.Task;
 import com.paipianwang.activiti.domin.TaskVO;
 import com.paipianwang.pat.common.entity.KeyValue;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlowResult;
 import com.paipianwang.pat.workflow.entity.PmsProjectSynergy;
 import com.paipianwang.pat.workflow.entity.PmsProjectTeam;
@@ -269,5 +270,13 @@ public interface ProjectWorkFlowService {
 	 * @param projectTeamId
 	 */
 	public boolean checkProduceTeamIsOnly(String projectId);
+
+	/**
+	 * 根据项目名称获取参与项目信息
+	 * @param projectName
+	 * @param reqiureId
+	 * @return
+	 */
+	public List<PmsProjectFlow> getSelfProjectByName(String projectName, Long reqiureId);
 	
 }

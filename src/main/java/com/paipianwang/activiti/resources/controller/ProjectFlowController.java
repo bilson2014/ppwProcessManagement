@@ -923,5 +923,9 @@ public class ProjectFlowController extends BaseController {
 		}
 		return result;
 	}
-	
+	@PostMapping("/synergetic/listByName")
+	public List<PmsProjectFlow> getByName(@RequestBody final PmsProjectFlow pmsProjectFlow,final HttpServletRequest request){
+		SessionInfo session=getCurrentInfo(request);
+		return projectWorkFlowService.getSelfProjectByName(pmsProjectFlow.getProjectName(),session.getReqiureId());
+	}
 }
