@@ -6,16 +6,16 @@
             .pages {
                 padding-right: 20px;
                 padding-left: 20px;
-                min-width: 960px;
+                min-width: 750px;
                 min-height: 600px;
                 background: white !important;
             }
-            
+
             .noBorder {
                 background: transparent !important;
                 border: none !important;
             }
-            
+
             .mR8 {
                 margin-right: 15px;
                 width: 50px;
@@ -38,7 +38,23 @@
                     left: 20px;
                 }
             }
-            
+
+
+            .changeitem {
+                color: red;
+                @media screen and (min-width: 775px) and (max-width:1025px) {
+                    color: blue;
+                }
+                @media screen and (max-width: 775px) {
+                    color: green;
+                }
+                @media screen and (max-width: 1000px) {
+                    color: orange;
+                    display: block!important;
+                }
+            }
+
+
             .searchInfo {
                 #sUserCompany {
                     width: 240px !important;
@@ -55,7 +71,6 @@
                     display: inline-block;
                     vertical-align: top;
                     margin-top: 20px;
-                    margin-right: 10px;
                     position: relative;
                     div {
                         font-size: $font-size-sm;
@@ -77,7 +92,7 @@
                         color: $red-base;
                         font-size: 1.2rem;
                         position: absolute;
-                        left: 70px;
+                        left: 25px;
                         top: 35px
                     }
                 }
@@ -96,7 +111,7 @@
                     }
                 }
                 .shortDiv {
-                    width: 80px;
+                    width: 40px;
                 }
                 .time {
                     width: 160px!important;
@@ -107,7 +122,8 @@
                     vertical-align: middle;
                     height: 30px;
                     line-height: 30px;
-                    padding-left: 10px;
+                    padding-left: 5px;
+                    padding-right: 5px;
                     font-size: $font-size-sm;
                     color: $gray;
                     border-radius: 4px;
@@ -124,6 +140,9 @@
                 font-size: $font-size-sm;
                 color: $gray-light;
                 margin-top: 20px;
+                width: 238px;
+                display: inline-block;
+                vertical-align: top;
             }
             
             #toClear {
@@ -329,7 +348,7 @@
             }
             
             .titleTr {
-                line-height: 40px;
+                line-height: 20px;
                 border-bottom: 1px solid #d1d1d1;
                 word-wrap: break-word;
                 word-break: break-all;
@@ -345,6 +364,7 @@
             
             .tb th {
                 padding-left: 20px;
+                padding-right: 20px;
                 border-top: 1px solid #ccc;
                 border-bottom: 1px solid #ccc;
                 line-height: 20px;
@@ -363,13 +383,17 @@
                 }
                 &:hover {
                     background: white !important;
-                    box-shadow: inset 0px 0px 0px 5px rgba(254, 84, 83, 1);
+
+
+                    box-shadow: inset 0px 0px 0px 2px rgba(254, 84, 83, 1);
+
                 }
             }
             
             .tb td {
                 padding-left: 20px;
-                line-height: 40px;
+                padding-right: 20px;
+                line-height: 20px;
                 border-bottom: 1px solid #d1d1d1;
                 word-wrap: break-word;
                 word-break: break-all;
@@ -381,13 +405,23 @@
             tr:nth-child(2n) {
                 background: #f8f8f8;
             }
-            
+
+
             tr {
+
+
                 &:hover {
                     background: #F6F9F9 !important;
                 }
             }
-            
+
+
+            tr {
+                width: 85px;
+            }
+
+
+
             .tb td:last-child {
                 width: 75px !important;
             }
@@ -563,6 +597,7 @@
                     top: 100px;
                     margin-left: -332px;
                     max-height: 500px;
+
                     .submitTitle {
                         width: 100%;
                         height: 61px;
@@ -589,6 +624,7 @@
                             margin-bottom: 20px;
                         }
                     }
+
                     .closeModel {
                         position: absolute;
                         right: 30px;

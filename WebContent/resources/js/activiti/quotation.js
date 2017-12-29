@@ -101,15 +101,21 @@ function allPack(){
 	$('#dayNum').attr('readonly','true');
 	$('#dayNum').addClass('noBorder');
 	$('#dayNum').val('');
+	$('#dayT').hide();
 	$('#needNum').attr('readonly','true');
 	$('#needNum').addClass('noBorder');
-	$('#needNum').val('');
+	$('#needNum').val('整包');
+	$('#needT').hide();
 }
 function allPackClear(){
 	$('#dayNum').removeAttr('readonly');
 	$('#dayNum').removeClass('noBorder');
+	$('#dayNum').val('');
+	$('#dayT').show();
 	$('#needNum').removeAttr('readonly');
 	$('#needNum').removeClass('noBorder');
+	$('#needNum').val('');
+	$('#needT').show();
 }
 
 function submitCheck(){
@@ -230,7 +236,7 @@ var controlArray = {
 								return false;
 							}
 							if(!checkRate(needNum) ||  !isInteger(needNum)){
-								$('#dayNumError').attr('data-content','请输入整数');
+								$('#needNumError').attr('data-content','请输入整数');
 								return false;
 							}
 						}
@@ -275,7 +281,9 @@ var controlArray = {
 			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
+			reLoadItem(finalAsc);
 			controlArray.createTable();
+			
 		},
 		
 		createTable:function(){
@@ -312,7 +320,7 @@ var costFunction = {
 				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 ||!isInteger(changeVue)){
 					$(this).val(finalAsc[nowIndex].days);
 				}else{
-					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+					var costPrice = $(this).parent().parent().find('.payBaseCost').find('input').val();
 					var costNum = $(this).parent().parent().find('.dayTd').find('.updateNum').val();
 					var newPrice = (changeVue * costPrice *costNum);
 					$(this).parent().parent().find('.cost').text(newPrice);
@@ -327,12 +335,34 @@ var costFunction = {
 				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 1000 || !isInteger(changeVue)){
 					$(this).val(finalAsc[nowIndex].quantity);
 				}else{
-					var costPrice = $(this).parent().parent().find('.payBaseCost').text();
+					var costPrice = $(this).parent().parent().find('.payBaseCost').find('input').val();
 					var costDay = $(this).parent().parent().find('.dayTd').find('.updateDay').val();
 					var newPrice = (changeVue * costPrice * costDay);
 					$(this).parent().parent().find('.cost').text(newPrice);
 					finalAsc[nowIndex].quantity = changeVue;
 					finalAsc[nowIndex].sum = newPrice;
+					costFunction.finalCost();
+				}
+			});
+			$('.updateBase').blur(function(){
+				var nowIndex = $(this).attr('data-id');
+				var changeVue = $(this).val();
+				if(changeVue <=0 || !checkRate(changeVue) || changeVue > 10000000 || !isInteger(changeVue)){
+					$(this).val(finalAsc[nowIndex].quantity);
+				}else{
+					var costPrice = $(this).parent().parent().find('.dayTd').find('.updateNum').val();
+					var costDay = $(this).parent().parent().find('.dayTd').find('.updateDay').val();
+					if(costPrice == undefined||costDay == undefined){
+						finalAsc[nowIndex].unitPrice = changeVue;
+						finalAsc[nowIndex].sum = changeVue;
+						$(this).parent().parent().find('.cost').text(changeVue);
+					}else{
+						var newPrice = (changeVue * costPrice * costDay);
+						$(this).parent().parent().find('.cost').text(newPrice);
+						finalAsc[nowIndex].unitPrice = changeVue;
+						finalAsc[nowIndex].sum = newPrice;
+					}
+					
 					costFunction.finalCost();
 				}
 			});
@@ -410,6 +440,15 @@ function initTypeItem(){
 	}, getContextPath() + '/quotation/select/type?typeId=',null);
 
 }
+//排序
+function reLoadItem(item){
+		loadData(function(res){
+			finalAsc = res;
+			controlArray.createTable();
+		}, getContextPath() + '/quotation/order',$.toJSON({
+	        items : item
+		}));
+}
 
 function createType(item){ 
 		var html = [
@@ -433,6 +472,13 @@ function initMultType(){
 		$('#type').attr("data-id",$(this).attr('data-id'));
 		$('#orderType').slideUp();
 		var typeId = $(this).attr('data-id');
+		$('#projectChilden').text('');
+		$('#projectChilden').attr('data-id','');
+		$('#projectChilden').attr('data-price','');
+		$('#projectChilden').attr('data-full','');
+		$('#setDir').text('');
+		$('#setCost').text('');
+		$('#orderCome').html('');
 		loadData(function(res){
 			var src = res;
 			var body = $('#orderCome');
@@ -492,12 +538,11 @@ function createMultOption(item,index){
     
     var hasTitle = getTrTitle(item);
     var hasRead = "";
-    var days = item.days;
-    var quantity = item.quantity;
+    var days = '<input '+hasRead+' data-id='+index+' class="updateDay" value="'+item.days+'">';
+    var quantity = '<input '+hasRead+' data-id='+index+' class="updateNum" value="'+item.quantity+'">';
     if(item.days == '-1'){
-    	hasRead = 'readonly';
-    	days = '整包';
-    	quantity = '整包';
+    	days = '<div  data-id='+index+' class="updateDay">整包</div>';
+    	quantity = '<div  data-id='+index+' class="updateDay">整包</div>';
     }
 		var html = [
 			        ''+hasTitle+'',
@@ -505,10 +550,10 @@ function createMultOption(item,index){
  		    		'<td>'+item.itemName+'</td>',
  		    		'<td>'+item.detailName+'</td>',
  		    		'<td>'+item.description+'</td>',
- 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateDay" value="'+days+'"></td>',
- 		    		'<td class="dayTd" ><input '+hasRead+' data-id='+index+' class="updateNum" value="'+quantity+'"></td>',
- 		    		'<td class="payCost payBaseCost">'+item.unitPrice+'</td>',
- 		    		'<td class="cost payCost">'+item.sum+'</td>',
+ 		    		'<td class="dayTd" >'+days+'</td>',
+ 		    		'<td class="dayTd" >'+quantity+'</td>',
+ 		    		'<td class="payCost payBaseCost dayTd"><input class="updateBase" data-id='+index+' style="width:80px" value='+item.unitPrice+'></td>',
+ 		    		'<td class="cost payCost ">'+item.sum+'</td>',
  		    		'<td class="delTable"><div data-id='+index+'>删除</div></td>',
 		    		'</tr>'
 		    	].join('');
@@ -555,8 +600,10 @@ function initMultSelect(){
 		var parentId = $(this).parent().parent().find('.multTitle').find('div').attr('data-id');
 		$('#projectParent').val(parentText);
 		$('#projectParent').attr('data-id',parentId);
-		$('#setDir').text($(this).attr('data-content'));
+		$('#setDir').html($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
+		var unitPrice = $('#projectChilden').attr('data-price');
+		$('#setCost').text(unitPrice);
 	    if($(this).attr('data-full') == 1){
 	    	allPack();
 	    }else{
