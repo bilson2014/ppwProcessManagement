@@ -2461,10 +2461,7 @@
 
 
                 "</div>" +
-                // "<div class='matter' time-content=''></div>" +
-                // "<textarea class='matter' time-content='' style='display: none; height:auto;width: 98%;margin: 0 auto;'></textarea>" +
-
-                "<textarea  class='matter' placeholder='Type/paste/shout content&hellip;' style='display: none; height:auto;width: 98%;margin: 0 auto;'></textarea>" +
+                "<textarea  class='matter' placeholder='添加或粘贴内容' style='display: none; height:auto;width: 98%;margin: 0 auto;'></textarea>" +
                 "</div>" +
                 "</td>";
 

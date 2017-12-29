@@ -19,7 +19,14 @@
  }
  
  body {
-     height: 1000px;
+     margin-top: 0 !important;
+     background-color: #fff;
+ }
+ 
+ .pages {
+     position: relative;
+     background: #fff;
+     height: 1080px;
  }
  
  //弹框信息
@@ -35,8 +42,12 @@
  .fc-grid .much {
      width: 100%;
      height: 20px;
-     background: url(../../images/one.png) no-repeat;
+     background: url(../../images/timebox/one.png) no-repeat;
      cursor: pointer;
+ }
+ 
+ .fc-grid .much:hover {
+     background-position-y: -20px;
  }
  
  .fc-week .fc-day .menu {
@@ -103,10 +114,16 @@
  }
  
  //生成排期表
+ .advice {
+     padding-left: 20px;
+     font-size: 12px;
+     color: #666666;
+ }
+ 
  .last {
-     margin-top: 64px;
+     margin-top: 41px;
      .best {
-         width: 10%;
+         width: 18%;
          margin: 0 auto;
          height: 40px;
          background: #FE5453;
@@ -114,29 +131,245 @@
          color: #fff;
          line-height: 40px;
          font-size: 14px;
+         text-align: center;
      }
  }
  
  //textarea 修改
  .matter {
      width: 100%;
-     min-height: 78px;
+     height: auto;
+     min-height: 60px;
      padding: 6px 6px;
+     margin-top: 8px;
+     margin-bottom: 8px;
+     @media screen and (max-width: 775px) {
+         min-height: 40px;
+         margin-top: 0px;
+         margin-bottom: 0px;
+     }
  }
  
  //头部的样式
  .orderItem {
+     width: 30%;
      text-align: left;
+     display: inline-block;
+     position: absolute;
+     margin-top: 12px;
      .mR8 {
-         width: 90px;
+         width: 50px;
          display: inline-block;
          line-height: 47px;
+         font-size: 12px;
+         color: #666666;
      }
      input {
-         width: 240px;
+         border: 1px solid #D1D1D1;
          display: inline-block;
+         width: 240px !important;
+         height: 30px;
+         margin-left: 8px;
+         border-radius: 4px;
+         padding-left: 10px;
+         @media screen and (max-width: 775px) {
+             width: 127px !important;
+         }
+         @media screen and (min-width: 775px) and (max-width: 1025px) {
+             width: 197px !important;
+         }
      }
      .proerr {
          color: red;
+         margin-left: 60px;
+         font-size: 12px;
+         margin-top: -4px;
+     }
+ }
+ 
+ #projectNameError {
+     left: 22px;
+ }
+ 
+ #dayTimeError {
+     left: 31%;
+     @media screen and (max-width: 775px) {
+         left: 29%;
+     }
+     @media screen and (min-width: 775px) and (max-width: 1025px) {
+         left: 29%;
+     }
+     .mR8 {
+         width: 25px;
+     }
+ }
+ 
+ //修改排期表原有样式的叠加
+ .fc-view {
+     height: 860px;
+     @media screen and (max-width: 775px) {
+         height: 609px !important;
+     }
+ }
+ 
+ //报价单title部分
+ .titles {
+     height: 54px;
+     border-bottom: 1px solid #D1D1D1;
+     span {
+         width: 100%;
+         text-align: left;
+         font-size: 16px;
+         font-weight: bold;
+         display: inline-block;
+         line-height: 21px;
+         padding-left: 22px;
+         padding-top: 16px;
+     }
+ }
+ 
+ //表格插件样式修改
+ #calendar {
+     width: 1068px !important;
+     margin: 0 auto;
+     margin-top: 69px !important;
+     @media screen and (max-width: 775px) {
+         width: 720px !important;
+     }
+     @media screen and (min-width: 775px) and (max-width: 1025px) {
+         width: 972px !important;
+     }
+     tbody {
+         tr {
+             position: relative;
+             .fc-header-left {
+                 position: absolute;
+                 right: 2rem;
+                 width: 150px;
+                 top: 73px;
+             }
+             .fc-header-center {
+                 position: absolute;
+                 right: 320px;
+                 top: 73px;
+                 line-height: 33px;
+                 .fc-header-title h2 {
+                     font-weight: bold;
+                     position: absolute;
+                     right: -10rem;
+                 }
+             }
+             .fc-state-default.fc-corner-left {
+                 width: 28px;
+                 height: 28px;
+                 background: url(../../images/timebox/start.png) no-repeat;
+                 background-size: 28px;
+                 background-position-y: -28px;
+                 border: 1px solid #E3E3E3;
+                 border-radius: 4px;
+                 .fc-text-arrow {
+                     display: none;
+                 }
+             }
+             .fc-state-default.fc-corner-left:hover {
+                 background-position-y: 0px;
+             }
+             .fc-state-default.fc-corner-right {
+                 width: 28px;
+                 height: 28px;
+                 background: url(../../images/timebox/end.png) no-repeat;
+                 background-size: 28px;
+                 background-position-y: -28px;
+                 border: 1px solid #E3E3E3;
+                 border-radius: 4px;
+                 margin-left: 6px;
+                 .fc-text-arrow {
+                     display: none;
+                 }
+             }
+             .fc-state-default.fc-corner-right:hover {
+                 background-position-y: 0px;
+             }
+             .fc-button-today {
+                 width: 60px !important;
+                 background: none !important;
+                 font-size: 12px;
+                 color: #999;
+                 line-height: 28px;
+             }
+             .fc-button-today:hover {
+                 color: #666;
+             }
+         }
+     }
+     thead .fc-first {
+         line-height: 32px;
+         .fc-sun {
+             background: #E3E3E3;
+         }
+         .fc-sat {
+             background: #E3E3E3;
+         }
+         .fc-fri,
+         .fc-thu,
+         .fc-wed,
+         .fc-tue,
+         .fc-mon {
+             background: #F0F2F5;
+         }
+     }
+     tbody .fc-first .fc-other-month {
+         background: #F8F8F8;
+     }
+     tbody .fc-last .fc-other-month {
+         background: #F8F8F8;
+     }
+     tbody .fc-day-number {
+         width: 32px;
+         height: 32px;
+         text-align: center;
+         line-height: 32px;
+         font-size: 20px;
+         color: #999;
+         margin-top: 16px;
+         margin-right: 15px;
+         @media screen and (max-width: 775px) {
+             margin-top: 6px;
+             margin-right: 5px;
+             width: 28px;
+             height: 28px;
+             line-height: 28px;
+             font-size: 17px;
+         }
+     }
+     tbody .fc-state-highlight {
+         background: none;
+     }
+     tbody .fc-day {
+         width: 154px;
+         height: 130px;
+         @media screen and (max-width: 775px) {
+             height: 85px;
+         }
+     }
+     .city-select .city-cont {
+         padding-top: 15px !important;
+         padding-left: 0px;
+     }
+     .city-select .city-cont dd a.active {
+         background: #F0F2F5 !important;
+         color: #000 !important;
+     }
+     .city-select .city-cont dd a {
+         width: 100% !important;
+         padding-left: 15px !important;
+         line-height: 36px !important;
+         margin: 0;
+     }
+     .city-select .city-cont dd {
+         padding-bottom: 0;
+     }
+     .city-select .city-info {
+         background-color: #fff;
      }
  }

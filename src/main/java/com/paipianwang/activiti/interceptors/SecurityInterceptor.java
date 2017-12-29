@@ -57,6 +57,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			//跳转到Film首页
 			resp.sendRedirect(req.getScheme()+"://"+PublicConfig.FILM_URL);
 			return false;
+//			return true;
 		} else {
 			// 判断是否有权限组
 			List<String> groupIds = info.getActivitGroups();
