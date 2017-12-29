@@ -2,6 +2,11 @@ package com.paipianwang.activiti.service.impl;
 
 import java.awt.Dimension;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +53,32 @@ public class ScheduleServiceImpl implements ScheduleService {
 				// 存在
 				pmsSchedule.setProjectId(flows.get(0).getProjectId());
 			}
+		}
+		if(ValidateUtil.isValid(pmsSchedule.getItems())){
+			//按日期排序
+			
+			pmsSchedule.getItems().sort(new Comparator<PmsScheduleItem>() {
+				@Override
+				public int compare(PmsScheduleItem o1, PmsScheduleItem o2) {
+					try {
+						Date next=new SimpleDateFormat("yyyy-MM-dd").parse(o1.getStart());
+						Date current=new SimpleDateFormat("yyyy-MM-dd").parse(o2.getStart());
+						return next.compareTo(current);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					return 0;
+				}
+			});
+			
+			//日期去重
+			for(int i=0;i<pmsSchedule.getItems().size();i++){
+				if(i<pmsSchedule.getItems().size()-1 && pmsSchedule.getItems().get(i).getStart().equals(pmsSchedule.getItems().get(i+1).getStart())){
+					pmsSchedule.getItems().remove(i);
+					i--;
+				}
+			}
+			
 		}
 
 		// 项目报价单是否存在，存在则更新，否则插入
