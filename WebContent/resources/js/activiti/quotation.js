@@ -63,6 +63,8 @@ function clickEven(){
 		$('#errorModel').hide();
 		$('.setTr').html('');
         finalAsc = new Array();
+        $('#localPrice').val(0);
+        $('#setFinalCost').val(0);
 		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();*/

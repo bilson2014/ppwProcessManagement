@@ -191,7 +191,7 @@
 		            <div class="orderSelect oredrTypeSelect"  >
 		                <div id="type"></div>
 		                <img src="${imgPath}/index/select.png">
-		                <ul class="oSelect searchSelect" id="orderType">
+		                <ul class="oSelect searchSelect" id="">
 		                    <li data-id="">全部</li>
 		                    <li data-id="5">线下-直销</li>
 		                </ul>    
@@ -236,8 +236,7 @@
 		                <div id="type"></div>
 		                <img src="${imgPath}/index/select.png">
 		                <ul class="oSelect searchSelect" id="orderType">
-		                    <li data-id="">全部</li>
-		                    <li data-id="5">线下-直销</li>
+		                   
 		                </ul>    
 			        </div>
 			  </div>  
