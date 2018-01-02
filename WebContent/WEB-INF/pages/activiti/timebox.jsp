@@ -54,7 +54,7 @@
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
     <![endif]-->
-      <style>
+     <!--  <style>
         body {
             margin-top: 40px;
             text-align: center;
@@ -66,7 +66,7 @@
             width: 900px;
             margin: 0 auto;
         }
-    </style>
+    </style> -->
 </head>
 <body>
 
@@ -77,8 +77,13 @@
 <input type="hidden" id="jobContent" value='${jobContent}'><!--工作内容  --> --%>
 
 
-  <div class="pages" style="height: 900px;">   
+ <!--  <div class="pages" style="height: 900px;">   --> 
+  <div class="pages" >   
   
+  <div class='titles'>
+  	<span>报价单生成器</span>
+  	<!-- <div class='line'></div> -->
+  </div>
   <div class="orderItem" id="projectNameError">
 	   <div class="mR8">项目名称</div>
 	   <input value='${projectName}' id="projectName" style="width:240px">
@@ -89,6 +94,7 @@
 	   <input class="time noBorder" readonly id="updateDate" name="time" value="${updateDate}">
   </div>   
 	<div id='calendar'></div>
+	<div class='advice'>*本时间表为预排，基于每个环节的按时确认可顺利执行，否则制作进度都会受确认环节或其他不可抗因素的变化相应的变化。</div>
  	<div class='last'><div class='best'>生成排期表</div></div>
  </div>
  <script>

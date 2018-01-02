@@ -15,7 +15,7 @@
 	
 	<mvc:view-controller path="quotation" view-name="/activiti/quotation" />
 	<!--排期表生成器  -->
-	<mvc:view-controller path="/schedule/info" view-name="/activiti/timebox" />
+	<mvc:view-controller path="/schedule/info1" view-name="/activiti/timebox" />
 	<!--项目列表  -->
 	<mvc:view-controller path="/pf" view-name="/phoneActiviti/pFlowList" />
 	<!--待办任务  -->
