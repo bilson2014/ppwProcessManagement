@@ -21,6 +21,7 @@ $().ready(function() {
 });
 
 function init(){
+	projectName();
 	initMultSelect();
 	costFunction.init();
 	controlArray.init();
@@ -62,7 +63,6 @@ function clickEven(){
 		$('#errorModel').hide();
 		$('.setTr').html('');
         finalAsc = new Array();
-        console.info(finalAsc);
 		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();*/
@@ -281,7 +281,8 @@ var controlArray = {
 			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
-			reLoadItem(finalAsc);
+			finalAsc = orderByTwo();
+			//reLoadItem(finalAsc);
 			controlArray.createTable();
 			
 		},
@@ -440,6 +441,107 @@ function initTypeItem(){
 	}, getContextPath() + '/quotation/select/type?typeId=',null);
 
 }
+//选项目
+function projectName(){
+	
+	$('#projectName').bind('input propertychange', function() {
+		var theName = $(this).val();
+		$('#projectId').val('');
+		findAutoInfo(theName);
+	});
+
+	$('#projectName').on('blur', function() {
+		console.info(1);
+		var setTr = $('.setTr tr').length;
+		var ps = $('#productSelect li').length;
+		var productId = $('#productId').val();
+		if(ps <= 0){
+			if(productId == undefined || productId == ''){			
+				if(setTr > 0){
+					$('#setTableTitle').text('已存在报表信息是否清空');
+				  	clearTable();
+				}
+			}
+		}
+	});
+	
+}
+
+function clearTable(){
+	$('#clearTable').show();
+	$('.sureClear').off('click').on('click',function(){
+		$('.setTr').html('');
+		finalAsc = new Array();
+		$('#clearTable').hide();
+	});
+	$('.cancle').off('click').on('click',function(){
+		$('#clearTable').hide();
+	});
+}
+
+function findAutoInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('#productSelect');
+		body.html('');
+		if(res != null && res != undefined){
+			$('#productSelect').show();
+			for (var int = 0; int < res.length; int++) {
+				   var html =createProduct(res[int]);
+				   body.append(html);
+			};
+			initAutoChoose();
+		}else{
+			$('#productSelect').hide();
+		}
+	}, getContextPath() + '/project/synergetic/listByName', $.toJSON({
+		projectName : userName
+	}));
+}
+
+function createProduct(item){ 
+	var html = [
+	    		'<li data-id="'+item.projectId+'">'+item.projectName+'</li>'
+	    	].join('');
+	    	return html;
+}
+
+function initAutoChoose(){
+	$('#productSelect li').off('click').on('click',function(e){
+		 var name = $(this).text();
+		 var id = $(this).attr('data-id');
+		 $('#projectName').val(name);
+		 $('#projectId').val(id);
+		 $('#productSelect').hide();
+		 var setTr = $('.setTr tr').length;
+				if(id != undefined && id != '' && id != null){			
+					if(setTr > 0){
+						$('#clearTable').show();
+						$('#setTableTitle').html('是否加载已存在报价单</br>如选是当前数据將被覆盖,如选否继续编辑当前报价单');
+						$('.sureClear').off('click').on('click',function(){
+							 finalAsc = new Array();
+							 getTableInfo();
+							 $('#clearTable').hide();
+						});
+						$('.cancle').off('click').on('click',function(){							  
+						    $('#quotationId').val('');
+						    $('#projectId').val('');
+						    $('#projectName').val('');
+						    var nowDate = new Date();
+					    	var   year=nowDate.getFullYear();     
+					    	var   month=nowDate.getMonth()+1;     
+					    	var   date=nowDate.getDate();      
+					    	$('#dayTime').val(year+"-"+month+"-"+date);
+					    	$('#clearTable').hide();
+						});
+					}else{
+						getTableInfo();
+					}
+				}
+	});
+}
+
+
 //排序
 function reLoadItem(item){
 		loadData(function(res){
@@ -725,4 +827,32 @@ function isInteger(obj) {
 	}
 	return false;
 }
+
+
+function orderByTwo(){
+		var item;
+		var size=finalAsc.length;
+		var items = finalAsc;
+		for(var  i=0;i<size;i++){
+			if(i<2){
+				continue;
+			}
+			item=items[i];
+			//向上找到跟他相同的 typeId+itemId 插入
+			for(var j=i-2;j>=0;j--){
+				if(item.typeId == (items[j].typeId)){
+					if(item.itemId ==(items[j].itemId)){
+						items = delArray(items,i);
+						items.splice(j+1,0,item);  
+						break;
+					}			
+				}else{
+					break;
+				}
+			}
+		}
+		return items;
+}
+
+
 
