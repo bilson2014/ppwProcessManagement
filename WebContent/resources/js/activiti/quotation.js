@@ -10,6 +10,7 @@ $().ready(function() {
 		$('.orderMultSelect ').removeClass('selectColor');
 	});
      init();     
+     productLineEven();
 /*     $("#suppliers").table2excel({
          exclude: ".noExl",
          name: "Worksheet Name",
@@ -54,6 +55,15 @@ function clickEven(){
 	
 	$('.cancle').off('click').on('click',function(){
 		$('#errorModel').hide();
+	});
+	
+	$('#toModel').off('click').on('click',function(){
+		$('#productWindow').show();
+		$('.modelContent').html('');
+	    $('.tap').removeClass('active');
+		$('#myModel').addClass('active');
+		$('#delProduct').show();
+		loadProdcut();
 	});
 	
 	$('.closeWindow').off('click').on('click',function(){
@@ -519,7 +529,7 @@ function initAutoChoose(){
 				if(id != undefined && id != '' && id != null){			
 					if(setTr > 0){
 						$('#clearTable').show();
-						$('#setTableTitle').html('是否加载已存在报价单</br>如选是当前数据將被覆盖,如选否继续编辑当前报价单');
+						$('#setTableTitle').html('是否加载已存在报价单</br>是否保存当前报价单数据，并加载新报价单？');
 						$('.sureClear').off('click').on('click',function(){
 							 finalAsc = new Array();
 							 getTableInfo();
@@ -854,6 +864,60 @@ function orderByTwo(){
 			}
 		}
 		return items;
+}
+
+
+//产品线
+
+function productLineEven(){
+		
+	$('#myModel').off('click').on('click',function(){
+		 $('.tap').removeClass('active');
+		 $(this).addClass('active');
+	});
+	
+    $('#productLine').off('click').on('click',function(){
+    	$('.tap').removeClass('active');
+		$(this).addClass('active');
+	});
+    
+    $('.modelItem').off('click').on('click',function(){
+    	$('.modelItem').removeClass('modelActive');
+		$(this).addClass('modelActive');
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+}
+
+function loadProdcut(num){
+	
+	loadData(function(res){
+
+	  var result;
+	  var body = $('.modelContent');
+	  if(num == 0 ){
+		  result = res.person;
+	  }else{
+		  result = res.chanpin;
+	  }
+	  
+	  for (var i = 0; i < result.length; i++) {
+		  body.append('<div class="modelItem" data-id="'+res.person[i].id+'">'+res.person[i].name+'</div>')
+	  }
+			
+	}, getContextPath() + '/quotation/temp/list',null);
+	
 }
 
 

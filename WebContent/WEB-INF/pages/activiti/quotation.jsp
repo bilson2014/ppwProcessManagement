@@ -153,20 +153,28 @@
 
 
 
-<!-- <div class="cusModel" id="errorSame" >
+ <div class="cusModel" id="productWindow" style="display:block" >
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">错误提示</div>
+                   <div class="title">选择产品线模板或个人模板</div>
                    <div class="closeModel"></div>
             </div>
-            <div class="errorContent">
-                 <div class="title" style="line-height: 20px;">该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
-                 <div class="btnMid" style="text-align: center;">
-                       <div class="btn-c-r closeWindow" style="margin-right:0px!important">确认</div>
-                 </div>
+            <div class="modelBanner">
+                <div class="tap" id="productLine">产品线模板</div>
+                <div class="tap active" id="myModel">个人模板</div> 
             </div>
+            <div class="modelContent">
+                 <div class="modelItem">内容</div>
+                 <div class="modelItem">内容</div>
+            </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleProduct">取消</div>
+                 <div style="background: #BABABA;" id="delProduct">删除</div>
+                 <div class="btn-c-r" id="loadProduct">加载</div>
+            </div>
+        
      </div>
-</div> -->
+</div> 
 
 
      
@@ -224,6 +232,7 @@
              <div class="orderItem " style="position: static;"> 
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
+	            <div class=" searchBtn"  id="toModel">选择模板</div>
             </div>
             </br>
        <!--      <div  class="orderItem" id="dayNumError">
