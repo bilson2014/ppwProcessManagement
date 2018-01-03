@@ -249,16 +249,7 @@ public class QuotationController extends BaseController {
 				person.add(new QuotationTemplateSelectVO(temp.getTemplateId()+"", temp.getTemplateName()));
 			}else{
 				//产品线
-				QuotationTemplateSelectVO parent=new QuotationTemplateSelectVO(temp.getChanpinId()+"", temp.getChanpinName());
-				for(QuotationTemplateSelectVO each:chanpin){
-					if(each.getId().equals(temp.getChanpinId())){
-						parent=each;
-						break;
-					}
-				}
-				chanpin.add(parent);
-				parent.getChildren().add(new QuotationTemplateSelectVO(temp.getTemplateId()+"", temp.getChanpinconfigName()));
-				//TODO 测试产品线id和模板id相同会出现什么 
+				chanpin.add(new QuotationTemplateSelectVO(temp.getTemplateId()+"", temp.getTemplateName()));
 			}
 		}
 		
