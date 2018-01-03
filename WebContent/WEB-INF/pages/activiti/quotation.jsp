@@ -176,47 +176,7 @@
    
    <div class="pages">
      <div class="searchInfo">
-     
-     
-     
-            <div class="cusModel" id="" >
-     <div class="modelCard">
-            <div class="cardTop">
-                   <div class="title" id="isSuccess">提交成功</div>
-                   <div class="closeModel"></div>
-            </div>
-            
-             <div class="orderItem" id="typeError"> 
-		            <div class="mR8">收费类</div>
-		            <div class="orderSelect oredrTypeSelect"  >
-		                <div id="type"></div>
-		                <img src="${imgPath}/index/select.png">
-		                <ul class="oSelect searchSelect" id="">
-		                    <li data-id="">全部</li>
-		                    <li data-id="5">线下-直销</li>
-		                </ul>    
-			        </div>
-			  </div>  
-			  
-			   <div class="orderItem" id="projectChildenError" > 
-		            <div class="mR8">收费项</div>
-		            <div class="orderSelect orderMultSelect" style="width: 250px !important;">
-		                <input type="hidden" id="projectParent"/>
-		                <div id="projectChilden"></div>
-		                <img src="${imgPath}/index/select.png">
-		                <ul class="setMultSelect" id="orderCome"></ul>    
-			        </div>
-			  </div>
-             
-            <div class="errorContent">
-                 <div id="successContent" style="text-align: center;"></div>
-                 <div class="btnMid" style="text-align: center;">
-                      <div class="btn-c-r sureCheck" style="margin-right:0px!important">确认</div>
-                 </div>
-            </div>
-     </div>
-</div>
-     
+          
          	<div class="orderItem" id="projectNameError">
 	                <div class="mR8">项目名称</div>
 		            <div class="orderSelect oredrProduct"  >

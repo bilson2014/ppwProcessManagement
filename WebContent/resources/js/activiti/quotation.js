@@ -63,8 +63,8 @@ function clickEven(){
 		$('#errorModel').hide();
 		$('.setTr').html('');
         finalAsc = new Array();
-        $('#localPrice').val(0);
-        $('#setFinalCost').val(0);
+        $('#localPrice').text(0);
+        $('#setFinalCost').text(0);
 		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();*/
@@ -125,11 +125,11 @@ function submitCheck(){
     loadData(function(res){
     	if(res.result){
     		$('#submitCheckBtn').show();
-    		$('#setCheck').text('该项目已存在，是否仍然生成报价单？');
+    		$('#setCheck').text('该项目已存在，是否仍然更新并生成报价单？');
     		initCheckBtn();
     	}else{
     		$('#submitCheckBtn').show();
-    		$('#setCheck').text('该项目不存在，是否仍然生成报价单？');
+    		$('#setCheck').text('该项目不存在，不能持久化报价单，是否依然继续生成报价单？');
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
     		initCheckBtn();
