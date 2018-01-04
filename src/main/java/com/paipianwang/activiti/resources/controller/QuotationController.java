@@ -317,6 +317,7 @@ public class QuotationController extends BaseController {
 			result.setResult(false);
 			result.setErr("只允许删除个人模板");
 		}
+		long count=pmsQuotationTemplateFacade.delete(templateId);
 		
 		return result;
 	}
