@@ -1,42 +1,3 @@
-//$().ready(function(){
-//	document.domain = getUrl();
-//	$(window.parent.document).find('.frame').css('height',$('.infos').height() + 300);
-//    var dayData = [{
-//        title: one,
-//        start: new Date(y, m, 1),
-//        allDay: false
-//    },
-//    {
-//    	 title: two,
-//         start: new Date(y, m, 1),
-//         allDay: false
-//    },
-//    {
-//         title: 'All Day Event2',
-//         start: new Date(y, m, 1),
-//         allDay: false
-//    },
-//    {
-//        title: 'Lunch',
-//        start: new Date(y, m, d, 12, 0),
-//        end: new Date(y, m, d, 14, 0),
-//        allDay: false
-//    },
-//    {
-//        title: 'Gee',
-//        start: new Date(yy,mm,dd),
-//        end: new Date(2017,11,1),
-//        allDay: false
-//    },
-//    {
-//        title: 'values.name',
-//        start: new Date(y, m, 28),
-//        end: new Date(y, m, 29),
-//        url: 'http://google.com/'
-//    }
-//
-//];
-//});
 var count=0;
 var time,matter,whenval, times,chengnums;
 var chengnums='';
@@ -51,7 +12,6 @@ $().ready(function() {
 	document.domain = getUrl();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
     var date = new Date();
-//    console.log(date);
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
@@ -92,10 +52,31 @@ function colorthing(){
 }
 //双击事件和失去焦点事件文本框的显示
 function dbmatter(){
-	 $('.fc-day').dblclick(function(){
+//	$('#calendar .city-select .city-cont dd a').click(function(){
+//		var magic=$('.matter').val();
+//		magic.each(function(){
+//    		var magics=$(this).val();
+//    		console.log(magics);
+//    		
+//    	})
+//		
+////		shdfjashfkajshfkja
+////		$('.matter').attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
+//	});
+	$('.orderSelect').click(function(){
+		$('.matter').blur();		
+	});
+	$('.fc-day').click(function(){
+	    $(this).find(".matter").attr('disabled', 'true'); 
+	    $('.matter').blur();	
+	 });
+
+	 $('.fc-day').dblclick(function(){   
 	    $(this).find(".matter").attr('style', 'display: block;');
+	    $(this).find(".matter").removeAttr('disabled', 'true');
 	    $(this).find(".matter").focus();
-	 }) ;
+	    $(this).parent().parent().siblings().find('.matter').blur();
+	 });
 	 $(".matter").blur(function(){
 		var matbur= $(this).val();
 		if(matbur== null || matbur == "" || matbur == undefined){
@@ -103,66 +84,40 @@ function dbmatter(){
 		}else{
 			$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
 		}
-		
-		
-		
+	    $('tbody .fc-other-month .matter').attr('style','display: none;');
 		var end=$(".fc-week td");
     	var gamethings=[];
     	end.each(function(){
     		var kous=$(this).find('.matter').val();
     		if(kous){
     			var nowtimes=$(this).attr('data-date');
-//    			if (gamethings.length>0){
-//    				var jsonthings=',{"jobContent":"'+kous+'","start":"'+nowtimes+'"}';		
-//    			}else {
-//    				var jsonthings='{"jobContent":"'+kous+'","start":"'+nowtimes+'"}';
-//    			}
     			var jsonthings='{"jobContent":"'+kous+'","start":"'+nowtimes+'"}';	
     			gamethings+=jsonthings;	
     		}
     	})
-//    	gamethings="["+ gamethings+"]";
-//    	gamethings=JSON.parse(gamethings);
-//		console.log(gamethings);
-//    	chengnum=gamethings;
-    	
-    	
-//    	gamethings="["+ gamethings+"]";
-//    	gamethings=JSON.parse(gamethings);
-//		console.log(gamethings);
     	chengnum=gamethings;
-//    	console.log(chengnum);
-    	
 	 });
 	 $('.fc-day').click(function(){
 		 $(this).attr('style', 'background: #F6F9F9;');
 		 $(this).siblings().attr('style', 'background: ;');
 		 $(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');
-		 
 		 $(this).parent().siblings().find('.matter').blur();
-
 	 })	 
 }
 //回显功能
 function timebook(){
 	var timebook= blackbox;
-	
-//	gamethings="["+ gamethings+"]";
-//	gamethings=JSON.parse(gamethings);
-//	chengnum="["+ chengnum+"]";
-//	chengnums=JSON.parse(chengnums);
-	
-//	chengnum="["+chengnum+"]";
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
 	var chengnumsw='';
 	chengnumsw='['+chengnums+']';
-	console.log(chengnumsw);
+//									console.log(chengnumsw);
 	
 	timebook=JSON.parse(chengnumsw.replace(/\n/g,'\\\\n'));
 //	.replace(/\r/g,'\\\\r')
 //	timebook=JSON.parse(chengnumsw);//将json字符串转换成json对象
-	console.log(timebook);
+	                         console.log(timebook);
+	                         
 //	timebook=JSON.stringify(timebook); //可以将json对象转换成json对符串 
 //	timebook='['+chengnums+']';
 //	timebook=
@@ -171,9 +126,9 @@ function timebook(){
 	
 //	timebook=chengnums;
 
-	console.log(timebook);
+//	console.log(timebook);
 	chenggame=timebook;
-	console.log(chenggame);
+//	console.log(chenggame);
 //	var timebook=[{"jobContent":"啥地方是非得失","start":"2017-12-11"},{"jobContent":"斯蒂芬斯蒂芬","start":"2017-12-12"},{"jobContent":"啥地方是非得失","start":"2017-12-11"},{"jobContent":"斯蒂芬斯蒂芬","start":"2017-12-12"}];
 //	timebook= timebook;
 	
@@ -191,38 +146,34 @@ function timebook(){
 				$(this).find('textarea').attr('style',"display: block;");
 				$(this).find('textarea').val(timebook[k].jobContent);
 				$(this).find('textarea').text(timebook[k].jobContent);
+				var meiyi=timebook[k].jobContent;
+				
+				meiyi=meiyi.replace(/n/g,'\\\r');
+				meiyi=meiyi.replace(/\\/g,'  ');
+//				meiyi=meiyi.replace('需求','xxxx');
+				console.log(meiyi);
+				
+				$(this).find('textarea').val(meiyi);
+				$(this).find('textarea').text(meiyi);
+//				if ()
+//				String cyu="name\\nname";  
+//				console.log("检测c",cyu);  
+//				console.log("检测c",cyu.replace("\\n","\n"));  
+//				
 			}
 		}		
 	});
-
-	
+//	timebook=JSON.parse(chengnumsw.replace(/\n/g,'\\\\n'));
+//	timebook=JSON.parse(chengnumsw.replace('\n','\\n'));
+//    console.log(timebook);
 }
 
 //生成排期表
 function bestthings() {
     $('.best').on('click', function() {
-//    	$('.matter').blur();
     	sun();
     	timebook();
-    	var end=$(".fc-week td");
-    	
-//    	var gamething=[];
-////    	end.each(function(){
-////    		var kou=$(this).find('.matter').val();
-////    		if(kou){
-////    			var nowtime=$(this).attr('data-date');
-////    			if (gamething.length>0){
-////    				var jsonthing=',{"jobContent":"'+kou+'","start":"'+nowtime+'"}';		
-////    			}else {
-////    				var jsonthing='{"jobContent":"'+kou+'","start":"'+nowtime+'"}';
-////    			}
-////    				
-////    			gamething+=jsonthing;	
-////    		}
-////    	})
-//    	gamething="["+ gamething+"]";
-//    	gamething=JSON.parse(gamething);
-//    	
+    	var end=$(".fc-week td");  	
     	var projectName = $('#projectName').val();  	
     	if(projectName== null || projectName == "" || projectName == undefined){
     		$('.proerr').text('项目名称未填写');
@@ -239,14 +190,15 @@ function bestthings() {
     	    		console.log('失败了');
     	    	}
     	    	console.log(res);
+    	    	
+    	    	//提交之后的 处理
+    	    	 $('.matter').blur();
     		}, getContextPath() + '/schedule/save',$.toJSON({
     			scheduleId:$('#scheduleId').val(), 
     			projectId: $('#projectId').val(),
     			projectName: $('#projectName').val(),
     			updateDate:  $('#updateDate').val(),
-//    			items:gamething
-    			items:chenggame
-    		    
+    			items:chenggame    		    
     		}));
     	}
     });
@@ -300,47 +252,21 @@ function sun(){
             		var countext =  $(this).text()+ '\n' ;
             		shus+=countext;
             	});
-            	//处理换行数据
-//            	shus=shus.replace(/\n/g, '\n');
-//            	
-//            	chengnums = chengnums.replace(/}{/g, '},{');
-            	
 //            	添加当前的内容到当前时间下面            	
-            	$(".fc-week td[data-date="+time+"]").find(".matter").val(shus);
+//            	console.log($(".fc-week td[data-date="+time+"]").find(".matter").val());
+            	$(".fc-week td[data-date="+time+"]").find(".matter").val($(".fc-week td[data-date="+time+"]").find(".matter").val()+shus);
+//            	console.log($(".fc-week td[data-date="+time+"]").find(".matter").val());           	
             	whenval=$(".fc-week td[data-date="+time+"]").find(".matter").val();   
             	$(".fc-week td[data-date="+time+"]").find(".matter").val(whenval);           	
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
-//            	
-
-//            	var change=values.name.toString();//数据形式的转换
-//            	var jsonstring="{'jobContent':'"+values.name+"','start':'"+time+"'}"; 
-//            	times=time;
-//            	console.log(time);
-//            	
-//            	console.log(times);
-//            	if (time==times){
-//            		textval=jsonstring;
-//            	}else {
-//            		textval=jsonstring+textval;
-//            	}
-//            	   
-            	
-            	
-//            	console.log(textval);
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
             	console.log('没有数据可以添加');
             }
             delselc();
-        }
-        
+        }        
     });
-
-
-    // 多选设置城市接口
-//    MulticitySelect1.setCityVal('少女时代,啦的范德萨发啦');
-
 }
 //刪除框数据的同步 
 function delselc(){
@@ -357,8 +283,8 @@ function delselc(){
 function leftbtn() {
     $('tbody .fc-other-month .much').attr('style', 'display: none;');
     $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
-    $('tbody .fc-other-month .matter').attr('style', 'display: none;');
-    $('.fc-header-left .fc-button').on('click', function() {
+    $('tbody .fc-other-month .matter').attr('style','display: none;');
+    $('.fc-header-left .fc-button').on('click', function() {  	
     	initSelect();
     	sun();
     	getday();
@@ -368,9 +294,10 @@ function leftbtn() {
         $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
         
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
-        console.log(chengnum);
+//        console.log(chengnum);
         timebook();
         $('tbody .fc-other-month .matter').attr('style', 'display: none;');
+        $('.matter').blur();
     })
     $('.fc-header-left .fc-button-today').on('click', function() {
     	initSelect();
@@ -388,15 +315,19 @@ function leftbtn() {
         }
         console.log(chengnum);
         timebook();
+        $('.matter').blur();
     })
-
     $('.fc-header-right').hide();
-   
 }
-
-
 //自定义复选框
 function initSelect() {
+	var wuding=$('.fc-header-title h2').text();
+	$('.fc-header-title h2').attr('style', 'display:none');
+	if(wuding.length==7){
+		$('.divine').text(wuding.substring(3,7)+"年"+wuding.substring(0,3));
+	}else {
+		$('.divine').text(wuding.substring(4,8)+"年"+wuding.substring(0,4));
+	}
 	$('.city-select').slideUp();
     $('.orderSelect').off('click').on('click', function(e) {
 //    	$(this).find(".matter").focus();
@@ -412,7 +343,6 @@ function initSelect() {
         	$(this).parent().parent().find('.city-select').removeAttr('style', 'display: none;');
         	$(this).parent().parent().find('.city-select').slideUp();
             $(this).removeClass('selectColor');
-
         } else {
         	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
         	$(this).parent().parent().find('.boxs').prepend( "<div class='city-select' id=''></div>" );
@@ -424,5 +354,4 @@ function initSelect() {
         }
         e.stopPropagation();
     });
-
 } 
