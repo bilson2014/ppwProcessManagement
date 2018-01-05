@@ -136,13 +136,13 @@ public class ProjectWorkFlowServiceImpl implements ProjectWorkFlowService {
 	@Autowired
 	private PmsProjectGroupResourceUpdateFacade resourceUpdateFacade = null;
 	
-	/*@Autowired
+	@Autowired
 	@Qualifier("projectProductAddMQService")
 	private BaseMQService projectProductAddMQService;
 
 	@Autowired
 	@Qualifier("projectProductCancelMQService")
-	private BaseMQService projectProductCancelMQService;*/
+	private BaseMQService projectProductCancelMQService;
 
 	@SuppressWarnings("unchecked")
 	@Override
