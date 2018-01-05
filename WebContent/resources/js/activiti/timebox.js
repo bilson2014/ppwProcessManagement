@@ -46,7 +46,7 @@ function colorthing(){
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		if ( $(this).hasClass('fc-state-highlight')){
-			$(this).find('.fc-day-number').attr('style',"color:#fff !important;background:#FE5453 !important;border-radius:50% !important;");
+			$(this).find('.fc-day-number').attr('style',"color:#fff !important;background:#FE5453 !important;border-radius:50% !important;width: 30px;height: 30px;");
 		}		
 	});
 
