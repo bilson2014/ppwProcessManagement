@@ -37,10 +37,8 @@ $().ready(function() {
     textareval();
     dbmatter();
     timebook();
-    colorthing();
-   
+    colorthing();  
 });
-
 //日期样式添加事件 
 function colorthing(){
 	var tibo=$('.fc-day');
@@ -49,7 +47,6 @@ function colorthing(){
 			$(this).find('.fc-day-number').attr('style',"color:#fff !important;background:#FE5453 !important;border-radius:50% !important;width: 30px;height: 30px;");
 		}		
 	});
-
 }
 //双击事件和失去焦点事件文本框的显示
 function dbmatter(){
@@ -61,10 +58,14 @@ function dbmatter(){
 	    $('.matter').blur();	
 	 });
 	 $('.fc-day').dblclick(function(){
-	    $(this).find(".matter").attr('style', 'display: block;');
-	    $(this).find(".matter").removeAttr('disabled', 'true');
-	    $(this).find(".matter").focus();
-	    $(this).parent().parent().siblings().find('.matter').blur();
+		if ($(this).hasClass('fc-other-month')){
+			 $(this).find(".matter").attr('style', 'display: none;');
+		}else {
+			$(this).find(".matter").attr('style', 'display: block;');
+		    $(this).find(".matter").removeAttr('disabled', 'true');
+		    $(this).find(".matter").focus();
+		    $(this).parent().parent().siblings().find('.matter').blur();
+		}
 	 }) ;
 	 $(".matter").blur(function(){
 		var matbur= $(this).val();
@@ -96,69 +97,36 @@ function dbmatter(){
 //回显功能
 function timebook(){
 	var timebook= blackbox;
-	
-//	gamethings="["+ gamethings+"]";
-//	gamethings=JSON.parse(gamethings);
-//	chengnum="["+ chengnum+"]";
-//	chengnums=JSON.parse(chengnums);
-	
-//	chengnum="["+chengnum+"]";
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
 	var chengnumsw='';
-	chengnumsw='['+chengnums+']';
-	console.log(chengnumsw);
-	
+	chengnumsw='['+chengnums+']';	
 	timebook=JSON.parse(chengnumsw.replace(/\n/g,'\\\\n'));
-//	.replace(/\r/g,'\\\\r')
-//	timebook=JSON.parse(chengnumsw);//将json字符串转换成json对象
-	console.log(timebook);
-//	timebook=JSON.stringify(timebook); //可以将json对象转换成json对符串 
-//	timebook='['+chengnums+']';
-//	timebook=
-//	chengnums = chengnums.replace(/{/g , '[{');
-//	timebook = chengnums.replace(/}/g , '[{');
-	
-//	timebook=chengnums;
-
-	console.log(timebook);
 	chenggame=timebook;
-	console.log(chenggame);
-//	var timebook=[{"jobContent":"啥地方是非得失","start":"2017-12-11"},{"jobContent":"斯蒂芬斯蒂芬","start":"2017-12-12"},{"jobContent":"啥地方是非得失","start":"2017-12-11"},{"jobContent":"斯蒂芬斯蒂芬","start":"2017-12-12"}];
-//	timebook= timebook;
-	
 	var keys=[];
 	var value=[];
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		var countext =  $(this).attr('data-date');
-//		console.log(countext);
 		for (var k in timebook){
-//			console.log(timebook[k].start);
 			keys.push(k);
 			value.push(timebook[k]);
 			if (countext==timebook[k].start){
 				$(this).find('textarea').attr('style',"display: block;");
 				$(this).find('textarea').val(timebook[k].jobContent);
-				$(this).find('textarea').text(timebook[k].jobContent);
-				
-				var meiyi=timebook[k].jobContent;
-				
+				$(this).find('textarea').text(timebook[k].jobContent);				
+				var meiyi=timebook[k].jobContent;				
 				meiyi=meiyi.replace(/n/g,'\\\r');
 				meiyi=meiyi.replace(/\\/g,'  ');
 				$(this).find('textarea').val(meiyi);
 				$(this).find('textarea').text(meiyi);
 			}
 		}		
-	});
-
-	
+	});	
 }
-
 //生成排期表
 function bestthings() {
     $('.best').on('click', function() {
-//    	$('.matter').blur();
     	sun();
     	timebook();
     	var end=$(".fc-week td");
@@ -177,7 +145,7 @@ function bestthings() {
     	    	}else {
     	    		console.log('失败了');
     	    	}
-    	    	console.log(res);
+//    	    	console.log(res);
     	    	//提交之后的 处理
    	    	 	$('.matter').blur();
     		}, getContextPath() + '/schedule/save',$.toJSON({
@@ -185,8 +153,7 @@ function bestthings() {
     			projectId: $('#projectId').val(),
     			projectName: $('#projectName').val(),
     			updateDate:  $('#updateDate').val(),
-    			items:chenggame
-    		    
+    			items:chenggame   		    
     		}));
     	}
     });
@@ -234,7 +201,6 @@ function sun(){
             if (matter){
             	var bestval=$(".fc-week td[data-date="+time+"]").find(".city-info span");
             	var shus='';
-            	
             	bestval.each(function(){
             		var countext =  $(this).text()+ '\n' ;
             		shus+=countext;
@@ -244,21 +210,16 @@ function sun(){
             	whenval=$(".fc-week td[data-date="+time+"]").find(".matter").val();   
             	$(".fc-week td[data-date="+time+"]").find(".matter").val(whenval);           	
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
-
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
             	console.log('没有数据可以添加');
             }
             delselc();
-        }
-        
+        }       
     });
-
-
     // 多选设置城市接口
 //    MulticitySelect1.setCityVal('少女时代,啦的范德萨发啦');
-
 }
 //刪除框数据的同步 
 function delselc(){
@@ -283,8 +244,7 @@ function leftbtn() {
     	dbmatter();
     	colorthing();
         $('tbody .fc-other-month .much').attr('style', 'display: none;');
-        $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
-        
+        $('tbody .fc-other-month .boxs').attr('style', 'display: none;');       
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
         console.log(chengnum);
         timebook();
@@ -305,16 +265,11 @@ function leftbtn() {
         } else {
             $('.fc-header-left .fc-button-today').attr('style', 'pointer-events: none;');
         }
-        console.log(chengnum);
         timebook();
         $('.matter').blur();
     })
-
-    $('.fc-header-right').hide();
-   
+    $('.fc-header-right').hide();  
 }
-
-
 //自定义复选框
 function initSelect() {
 	var wuding=$('.fc-header-title h2').text();
@@ -326,20 +281,15 @@ function initSelect() {
 	}
 	$('.city-select').slideUp();
     $('.orderSelect').off('click').on('click', function(e) {
-//    	$(this).find(".matter").focus();
-    	
-//    	$(this).parent().parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');
     	$('.boxs .city-select').remove('.city-select');
     	//添加append() - 在被选元素的结尾插入内容
     	//prepend() - 在被选元素的开头插入内容
     	//empty() - 从被选元素中删除子元素
-        
         if ($(this).hasClass('selectColor')) {    
         	$(this).parent().parent().find('.boxs .city-select').remove('.city-select');         	
         	$(this).parent().parent().find('.city-select').removeAttr('style', 'display: none;');
         	$(this).parent().parent().find('.city-select').slideUp();
             $(this).removeClass('selectColor');
-
         } else {
         	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
         	$(this).parent().parent().find('.boxs').prepend( "<div class='city-select' id=''></div>" );
@@ -351,5 +301,4 @@ function initSelect() {
         }
         e.stopPropagation();
     });
-
 } 
