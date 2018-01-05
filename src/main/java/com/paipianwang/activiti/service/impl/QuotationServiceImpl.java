@@ -130,7 +130,7 @@ public class QuotationServiceImpl implements QuotationService {
 			double sum=Double.parseDouble(item.getSum());
 			if(item.getFullJob()==PmsQuotationType.FULLJOB_NO){
 				//非整包
-				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
+//				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
 				if(sum!=Double.parseDouble(item.getSum())){
 					result.setResult(false);
 					result.setErr(item.getTypeName()+"结果有误.");
