@@ -3,7 +3,11 @@ package com.paipianwang.activiti.resources.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,15 +20,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paipianwang.activiti.domin.QuotationTemplateSelectVO;
 import com.paipianwang.activiti.service.QuotationService;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
+import com.paipianwang.pat.workflow.entity.PmsQuotationTemplate;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
+import com.paipianwang.pat.workflow.facade.PmsQuotationTemplateFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationTypeFacade;
 
 /**
@@ -42,6 +49,8 @@ public class QuotationController extends BaseController {
 	private QuotationService quotationService;
 	@Autowired
 	private PmsProjectFlowFacade pmsProjectFlowFacade;
+	@Autowired
+	private PmsQuotationTemplateFacade pmsQuotationTemplateFacade;
 	
 	/**
 	 * 报价单生成器
@@ -215,6 +224,111 @@ public class QuotationController extends BaseController {
 		}
 		
 		return quotation.getItems();
+	}
+	/**
+	 * 获取报价单模板列表
+	 * 	个人：集合
+	 * 	产品线：树形集合
+	 * @return
+	 */
+	@RequestMapping("/temp/list")
+	public Map<String,Object> listTemplate(){
+		Map<String,Object> result=new HashMap<>();
+		
+		List<PmsQuotationTemplate> list=pmsQuotationTemplateFacade.listSelect();
+		
+		List<QuotationTemplateSelectVO> person=new ArrayList<>();
+		Set<QuotationTemplateSelectVO> chanpin=new HashSet<>();
+		
+		result.put("person", person);
+		result.put("chanpin", chanpin);
+	
+		for(PmsQuotationTemplate temp:list){
+			//个人
+			if(temp.getType()==PmsQuotationTemplate.TYPE_SELF){
+				person.add(new QuotationTemplateSelectVO(temp.getTemplateId()+"", temp.getTemplateName()));
+			}else{
+				//产品线
+				chanpin.add(new QuotationTemplateSelectVO(temp.getTemplateId()+"", temp.getTemplateName()));
+			}
+		}
+		
+		return result;
+	}
+	/**
+	 * 校验名称唯一性
+	 * @param template
+	 * @return
+	 */
+	@RequestMapping("/temp/validate-name")
+	public PmsResult validateName(@RequestBody final PmsQuotationTemplate template){
+		//个人类型 名称是否存在
+		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),PmsQuotationTemplate.TYPE_SELF);
+		PmsResult result=new PmsResult();
+		if(count>0){
+			result.setResult(false);
+			result.setErr("模板名称已存在");
+		}
+		return result;
+	}
+	/**
+	 * 保存/更新
+	 * @param template
+	 * @return
+	 */
+	@RequestMapping("/temp/save")
+	public PmsResult saveTemplate(@RequestBody final PmsQuotationTemplate template){
+		PmsResult result=new PmsResult();
+		//个人
+		template.setType(PmsQuotationTemplate.TYPE_SELF);
+		//TODO 校验
+		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),template.getType());
+		if(count>0){
+			if(template.getTemplateId()!=null){
+				result.setResult(false);
+				result.setErr("模板名称已存在");
+				return result;
+			}else{
+				//更新
+				List<PmsQuotationTemplate> exists=pmsQuotationTemplateFacade.listByName(template.getTemplateName(), template.getTemplateId(),template.getType());
+				template.setTemplateId(exists.get(0).getTemplateId());
+			}
+		}
+		
+		if(template.getTemplateId()!=null){
+			pmsQuotationTemplateFacade.update(template);
+		}else{
+			pmsQuotationTemplateFacade.insert(template);
+		}
+		
+		result.setMsg(template.getTemplateId()+"");
+		return result;
+	}
+	/**
+	 * 删除模板
+	 * @param templateId
+	 * @return
+	 */
+	@RequestMapping("/temp/delete/{templateId}")
+	public PmsResult deleteTemplate(@PathVariable final long templateId){
+		PmsResult result=new PmsResult();
+		PmsQuotationTemplate template=pmsQuotationTemplateFacade.getById(templateId);
+		if(template!=null && template.getType()==PmsQuotationTemplate.TYPE_PRODUCT){
+			result.setResult(false);
+			result.setErr("只允许删除个人模板");
+		}
+		long count=pmsQuotationTemplateFacade.delete(templateId);
+		
+		return result;
+	}
+	/**
+	 * 获取模板
+	 * @param templateId
+	 * @return
+	 */
+	@RequestMapping("/temp/get/{templateId}")
+	public PmsQuotationTemplate getTemplate(@PathVariable final long templateId){
+		return pmsQuotationTemplateFacade.getById(templateId);
 	}
 	
 }

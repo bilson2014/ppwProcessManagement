@@ -38,8 +38,90 @@
                     left: 20px;
                 }
             }
+//产品线
+            .modelBanner{
+                height: 38px;
+                width: 100%;
+                border-top: 2px solid $border-line;
+                border-bottom: 3px solid $border-line;
+                font-size: 0;
+                .active{
+                    background: $e3;
+                    color:$gray !important;
+                }
 
+                .tap{
+                    width: 50%;
+                    height: 100%;
+                    position: relative;
+                    display: inline-block;
+                    vertical-align: top;
+                    line-height: 34px;
+                    font-size: $font-size-base;
+                    color: $gray-dark;
+                    text-align: center;
+                    cursor: pointer;
+                    div{
+                        height: 100%;
+                        width: 1px;
+                        position: absolute;
+                        top:0;
+                        right:0;
+                        background: $border-line;
+                    }
+                }
+            }
 
+            .modelContent{
+                height: 322px;
+                border-bottom: 3px solid $border-line;
+                overflow: auto;
+            }
+
+            .modelItem{
+                height: 40px;
+                line-height: 40px;
+                padding-left: 30px;
+                cursor: pointer;
+                &:hover{
+                    background: #F6F9F9;
+                }
+            }
+            .modelActive{
+                background: $f8;
+            }
+            .modelControl{
+                height: 65px;
+                font-size: 0;
+                width: 400px;
+                text-align: center;
+                margin: 0 auto;
+                margin-top: 20px;
+                div{
+                    width: 120px;
+                    height: 36px;
+                    line-height: 36px;
+                    border-radius: 4px;
+                    display: inline-block;
+                    vertical-align: top;
+                    text-align: center;
+                    font-size: $font-size-base;
+                    color: white;
+                    cursor: pointer;
+                }
+                div:nth-child(1){
+                    margin-right: 10px;
+                }
+                div:nth-child(2){
+                    margin-right: 10px;
+                    margin-left: 10px;
+                }
+                div:nth-child(3){
+                    margin-left: 10px;
+                }
+            }
+
+//产品线end
             .changeitem {
                 color: red;
                 @media screen and (min-width: 775px) and (max-width:1025px) {
@@ -54,6 +136,13 @@
                 }
             }
 
+            #projectName{
+                   height: 28px;
+                   border:none;
+            }
+            #productSelect{
+                 z-index: 20;
+            }
 
             .searchInfo {
                 #sUserCompany {
@@ -143,6 +232,25 @@
                 width: 238px;
                 display: inline-block;
                 vertical-align: top;
+            }
+
+            #toModel {
+                width: 65px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                margin-left: 10px;
+                margin-top: 17px;
+                color: #666;
+                border-radius: 4px;
+                border: 1px solid #999;
+                position: absolute;
+                top: 62px;
+                right: 160px;
+                cursor: pointer;
+                &:hover {
+                    color: #333;
+                }
             }
             
             #toClear {
@@ -382,6 +490,7 @@
                     width: 40px;
                 }
                 &:hover {
+                    
                     background: white !important;
 
 
@@ -665,3 +774,5 @@
                     }
                 }
             }
+
+

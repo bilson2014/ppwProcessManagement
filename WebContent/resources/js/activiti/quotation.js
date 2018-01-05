@@ -10,6 +10,7 @@ $().ready(function() {
 		$('.orderMultSelect ').removeClass('selectColor');
 	});
      init();     
+     productLineEven();
 /*     $("#suppliers").table2excel({
          exclude: ".noExl",
          name: "Worksheet Name",
@@ -21,6 +22,7 @@ $().ready(function() {
 });
 
 function init(){
+	projectName();
 	initMultSelect();
 	costFunction.init();
 	controlArray.init();
@@ -55,6 +57,15 @@ function clickEven(){
 		$('#errorModel').hide();
 	});
 	
+	$('#toModel').off('click').on('click',function(){
+		$('#productWindow').show();
+		$('.modelContent').html('');
+	    $('.tap').removeClass('active');
+		$('#myModel').addClass('active');
+		$('#delProduct').show();
+		loadProdcut();
+	});
+	
 	$('.closeWindow').off('click').on('click',function(){
 		$('#errorSame').hide();
 	});
@@ -62,7 +73,8 @@ function clickEven(){
 		$('#errorModel').hide();
 		$('.setTr').html('');
         finalAsc = new Array();
-        console.info(finalAsc);
+        $('#localPrice').text(0);
+        $('#setFinalCost').text(0);
 		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();*/
@@ -123,11 +135,11 @@ function submitCheck(){
     loadData(function(res){
     	if(res.result){
     		$('#submitCheckBtn').show();
-    		$('#setCheck').text('该项目已存在，是否仍然生成报价单？');
+    		$('#setCheck').text('该项目已存在，是否仍然更新并生成报价单？');
     		initCheckBtn();
     	}else{
     		$('#submitCheckBtn').show();
-    		$('#setCheck').text('该项目不存在，是否仍然生成报价单？');
+    		$('#setCheck').text('该项目不存在，不能持久化报价单，是否依然继续生成报价单？');
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
     		initCheckBtn();
@@ -281,7 +293,8 @@ var controlArray = {
 			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
 			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
-			reLoadItem(finalAsc);
+			finalAsc = orderByTwo();
+			//reLoadItem(finalAsc);
 			controlArray.createTable();
 			
 		},
@@ -440,6 +453,107 @@ function initTypeItem(){
 	}, getContextPath() + '/quotation/select/type?typeId=',null);
 
 }
+//选项目
+function projectName(){
+	
+	$('#projectName').bind('input propertychange', function() {
+		var theName = $(this).val();
+		$('#projectId').val('');
+		findAutoInfo(theName);
+	});
+
+	$('#projectName').on('blur', function() {
+		console.info(1);
+		var setTr = $('.setTr tr').length;
+		var ps = $('#productSelect li').length;
+		var productId = $('#productId').val();
+		if(ps <= 0){
+			if(productId == undefined || productId == ''){			
+				if(setTr > 0){
+					$('#setTableTitle').text('已存在报表信息是否清空');
+				  	clearTable();
+				}
+			}
+		}
+	});
+	
+}
+
+function clearTable(){
+	$('#clearTable').show();
+	$('.sureClear').off('click').on('click',function(){
+		$('.setTr').html('');
+		finalAsc = new Array();
+		$('#clearTable').hide();
+	});
+	$('.cancle').off('click').on('click',function(){
+		$('#clearTable').hide();
+	});
+}
+
+function findAutoInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('#productSelect');
+		body.html('');
+		if(res != null && res != undefined){
+			$('#productSelect').show();
+			for (var int = 0; int < res.length; int++) {
+				   var html =createProduct(res[int]);
+				   body.append(html);
+			};
+			initAutoChoose();
+		}else{
+			$('#productSelect').hide();
+		}
+	}, getContextPath() + '/project/synergetic/listByName', $.toJSON({
+		projectName : userName
+	}));
+}
+
+function createProduct(item){ 
+	var html = [
+	    		'<li data-id="'+item.projectId+'">'+item.projectName+'</li>'
+	    	].join('');
+	    	return html;
+}
+
+function initAutoChoose(){
+	$('#productSelect li').off('click').on('click',function(e){
+		 var name = $(this).text();
+		 var id = $(this).attr('data-id');
+		 $('#projectName').val(name);
+		 $('#projectId').val(id);
+		 $('#productSelect').hide();
+		 var setTr = $('.setTr tr').length;
+				if(id != undefined && id != '' && id != null){			
+					if(setTr > 0){
+						$('#clearTable').show();
+						$('#setTableTitle').html('是否加载已存在报价单</br>是否保存当前报价单数据，并加载新报价单？');
+						$('.sureClear').off('click').on('click',function(){
+							 finalAsc = new Array();
+							 getTableInfo();
+							 $('#clearTable').hide();
+						});
+						$('.cancle').off('click').on('click',function(){							  
+						    $('#quotationId').val('');
+						    $('#projectId').val('');
+						    $('#projectName').val('');
+						    var nowDate = new Date();
+					    	var   year=nowDate.getFullYear();     
+					    	var   month=nowDate.getMonth()+1;     
+					    	var   date=nowDate.getDate();      
+					    	$('#dayTime').val(year+"-"+month+"-"+date);
+					    	$('#clearTable').hide();
+						});
+					}else{
+						getTableInfo();
+					}
+				}
+	});
+}
+
+
 //排序
 function reLoadItem(item){
 		loadData(function(res){
@@ -725,4 +839,86 @@ function isInteger(obj) {
 	}
 	return false;
 }
+
+
+function orderByTwo(){
+		var item;
+		var size=finalAsc.length;
+		var items = finalAsc;
+		for(var  i=0;i<size;i++){
+			if(i<2){
+				continue;
+			}
+			item=items[i];
+			//向上找到跟他相同的 typeId+itemId 插入
+			for(var j=i-2;j>=0;j--){
+				if(item.typeId == (items[j].typeId)){
+					if(item.itemId ==(items[j].itemId)){
+						items = delArray(items,i);
+						items.splice(j+1,0,item);  
+						break;
+					}			
+				}else{
+					break;
+				}
+			}
+		}
+		return items;
+}
+
+
+//产品线
+
+function productLineEven(){
+		
+	$('#myModel').off('click').on('click',function(){
+		 $('.tap').removeClass('active');
+		 $(this).addClass('active');
+	});
+	
+    $('#productLine').off('click').on('click',function(){
+    	$('.tap').removeClass('active');
+		$(this).addClass('active');
+	});
+    
+    $('.modelItem').off('click').on('click',function(){
+    	$('.modelItem').removeClass('modelActive');
+		$(this).addClass('modelActive');
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+    $('#cancleProduct').off('click').on('click',function(){
+    	$('#productWindow').hide();
+	});
+    
+}
+
+function loadProdcut(num){
+	
+	loadData(function(res){
+
+	  var result;
+	  var body = $('.modelContent');
+	  if(num == 0 ){
+		  result = res.person;
+	  }else{
+		  result = res.chanpin;
+	  }
+	  
+	  for (var i = 0; i < result.length; i++) {
+		  body.append('<div class="modelItem" data-id="'+res.person[i].id+'">'+res.person[i].name+'</div>')
+	  }
+			
+	}, getContextPath() + '/quotation/temp/list',null);
+	
+}
+
+
 

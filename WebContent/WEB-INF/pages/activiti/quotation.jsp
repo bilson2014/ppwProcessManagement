@@ -59,7 +59,7 @@
 <body>   
 
 <input type="hidden" id="quotationId" value='${quotationId}'>
-<input type="hidden" id="projectId" value='${quotationId}'>
+<input type="hidden" id="projectId" value='${projectId}'>
 
 <div class="cusModel" id="errorSame">
            <div class="modelCard" >
@@ -89,6 +89,23 @@
                  <div class="btnMid">
                       <div class="btn-c-g cancle">取消</div>
                       <div class="btn-c-r sureDel">确认</div>
+                 </div>
+            </div>
+     </div>
+</div>
+
+
+<div class="cusModel" id="clearTable" >
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title" >报表信息</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="errorContent">
+                 <div class="title" id="setTableTitle" style="line-height: 24px;"></div>
+                 <div class="btnMid">
+                      <div class="btn-c-g cancle">取消</div>
+                      <div class="btn-c-r sureClear">确认</div>
                  </div>
             </div>
      </div>
@@ -134,20 +151,30 @@
      </div>
 </div>
 
-<!-- <div class="cusModel" id="errorSame" >
+
+
+ <div class="cusModel" id="productWindow" style="display:block" >
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">错误提示</div>
+                   <div class="title">选择产品线模板或个人模板</div>
                    <div class="closeModel"></div>
             </div>
-            <div class="errorContent">
-                 <div class="title" style="line-height: 20px;">该项目已存在，不能重复添加</br>请修改相应天数和数量</div>
-                 <div class="btnMid" style="text-align: center;">
-                       <div class="btn-c-r closeWindow" style="margin-right:0px!important">确认</div>
-                 </div>
+            <div class="modelBanner">
+                <div class="tap" id="productLine">产品线模板</div>
+                <div class="tap active" id="myModel">个人模板</div> 
             </div>
+            <div class="modelContent">
+                 <div class="modelItem">内容</div>
+                 <div class="modelItem">内容</div>
+            </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleProduct">取消</div>
+                 <div style="background: #BABABA;" id="delProduct">删除</div>
+                 <div class="btn-c-r" id="loadProduct">加载</div>
+            </div>
+        
      </div>
-</div> -->
+</div> 
 
 
      
@@ -157,24 +184,27 @@
    
    <div class="pages">
      <div class="searchInfo">
+          
          	<div class="orderItem" id="projectNameError">
-	            <div class="mR8">项目名称</div>
-	            <input value='${projectName}' id="projectName" style="width:240px">
+	                <div class="mR8">项目名称</div>
+		            <div class="orderSelect oredrProduct"  >
+		                <input value='${projectName}' id="projectName">
+		                <ul class="oSelect" id="productSelect">
+		                </ul>    
+			        </div>
             </div>
             <div class="orderItem" id="dayTimeError">
 	            <div class="mR8">更新于</div>
 	            <input class="time noBorder" readonly id="dayTime" name="time" value="">
 	        </div>
 	          <br/>  
-	          
              <div class="orderItem" id="typeError"> 
 		            <div class="mR8">收费类</div>
 		            <div class="orderSelect oredrTypeSelect"  >
 		                <div id="type"></div>
 		                <img src="${imgPath}/index/select.png">
 		                <ul class="oSelect searchSelect" id="orderType">
-		                    <li data-id="">全部</li>
-		                    <li data-id="5">线下-直销</li>
+		                   
 		                </ul>    
 			        </div>
 			  </div>  
@@ -202,6 +232,7 @@
              <div class="orderItem " style="position: static;"> 
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
+	            <div class=" searchBtn"  id="toModel">选择模板</div>
             </div>
             </br>
        <!--      <div  class="orderItem" id="dayNumError">
