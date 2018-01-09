@@ -8,11 +8,13 @@ var mm;
 var dd;
 var blackbox;
 var chenggame='';
+var season;
+var num;
+var clickNumber =0;
 $().ready(function() {
 	document.domain = getUrl();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
     var date = new Date();
-//    console.log(date);
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
@@ -37,7 +39,9 @@ $().ready(function() {
     textareval();
     dbmatter();
     timebook();
-    colorthing();  
+    colorthing();
+    
+ 	
 });
 //日期样式添加事件 
 function colorthing(){
@@ -50,23 +54,54 @@ function colorthing(){
 }
 //双击事件和失去焦点事件文本框的显示
 function dbmatter(){
+
+
+	
+//	
 	$('.orderSelect').click(function(){
-		$('.matter').blur();		
+		$(this).parent().parent().addClass('wolf');
+		
+		
+		
+		$(this).parent().parent().parent().siblings().removeClass('wolf');
+		$(this).parent().parent().parent().parent().parent().find('.fc-day').removeClass('wolf');
+		$(this).parent().parent().parent().addClass('wolf');
+		
+		
+//		if ($('.fc-day').hasClass('cheng')){
+//			$('.fc-day').unbind('click');
+//			$(this).parent().parent().find('.matter').blur();
+//
+//		}
+		
+		season=$(this).parent().parent().find(".matter").val();
+		
+		$(this).parent().parent().parent().siblings().removeClass('cheng');
+		$(this).parent().parent().parent().parent().parent().find('.fc-day').removeClass('cheng');
+		$(this).parent().parent().parent().addClass('cheng');
+		
+		
+		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
+		//获取焦点
+		$(this).parent().parent().find('.matter').focus();	
+		
+		$(this).parent().parent().parent().focus();	
+		$(this).parent().parent().parent().siblings().find('.fc-day').blur();
+		$(this).parent().parent().parent().parent().find('.fc-day').blur();
+		
+		$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
+		$(this).parent().parent().parent().siblings().attr('style', 'background: ;');
+		$(this).parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
+		$(this).parent().parent().parent().parent().siblings().find('.matter').blur();
+		
+		
+		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
+	    $(this).parent().parent().find(".matter").focus();
+   	    $(this).parent().parent().parent().parent().siblings().find('.matter').blur();
+   	    $(this).parent().parent().find(".matter").attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
 	});
-	$('.fc-day').click(function(){
-	    $(this).find(".matter").attr('disabled', 'true'); 
-	    $('.matter').blur();	
-	 });
-	 $('.fc-day').dblclick(function(){
-		if ($(this).hasClass('fc-other-month')){
-			 $(this).find(".matter").attr('style', 'display: none;');
-		}else {
-			$(this).find(".matter").attr('style', 'display: block;');
-		    $(this).find(".matter").removeAttr('disabled', 'true');
-		    $(this).find(".matter").focus();
-		    $(this).parent().parent().siblings().find('.matter').blur();
-		}
-	 }) ;
+	
+
 	 $(".matter").blur(function(){
 		var matbur= $(this).val();
 		if(matbur== null || matbur == "" || matbur == undefined){
@@ -87,12 +122,96 @@ function dbmatter(){
     	})
     	chengnum=gamethings;
 	 });
+	 $('.fc-day .xuan .boxs').click(function(){
+		 $(this).parent().addClass('wolf');
+		console.log('nihao');	 
+	 })
+//	  $('.fc-day .xuan ').click(function(){
+//		 $(this).addClass('wolf');
+//		console.log('是幾點開始大幅加快了手機ao');	 
+//	 })
+	 $('.fc-day .xuan').removeClass('wolf'); 
+	console.log($('.fc-day .xuan').hasClass('wolf'));
+	
 	 $('.fc-day').click(function(){
-		 $(this).attr('style', 'background: #F6F9F9;');
-		 $(this).siblings().attr('style', 'background: ;');
-		 $(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
-		 $(this).parent().siblings().find('.matter').blur();
-	 })	 
+	
+		if (!$(this).find('.xuan').hasClass('wolf')&&$('.fc-day .xuan').hasClass('wolf')){
+			console.log('哈哈哈哈哈');
+			$(this).siblings().find('.xuan').removeClass('wolf');
+			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
+//			$(this).find('.xuan').addClass('wolf');	
+//			$(this).find('.xuan').removeClass('wolf');
+			
+			$(this).addClass('onlyul');
+			setTimeout($(this).removeClass('onlyul'),1000);
+		}
+		 
+		else if ($('.fc-day').hasClass('wolf')||$('.fc-day .xuan').hasClass('wolf')){
+			console.log($('.fc-day').hasClass('wolf'));
+			console.log($('.fc-day .xuan').hasClass('wolf'));
+			console.log('阻止了');
+
+			$(this).find('.matter').blur();					
+			$(this).removeClass('cheng');	
+			
+			$(this).siblings().removeClass('cheng');
+			$(this).parent().parent().find('.fc-day').removeClass('cheng');
+			$(this).addClass('cheng');
+			
+			
+			$(this).removeClass('wolf');				
+			$(this).siblings().removeClass('wolf');
+			$(this).parent().parent().find('.fc-day').removeClass('wolf');
+			
+						
+//			$(this).siblings().find('.xuan').removeClass('wolf');
+//			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
+//			$(this).find('.xuan').addClass('wolf');	
+//			$(this).find('.xuan').removeClass('wolf');
+			
+			$(this).addClass('onlyul');
+			setTimeout($(this).removeClass('onlyul'),1000);
+			
+		
+			
+		}else {
+//			$(this).removeClass('onlyul');
+//			$(this).siblings().removeClass('onlyul');
+//			$(this).parent().parent().find('.fc-day').removeClass('onlyul');
+			console.log('不阻止');
+
+			$(this).siblings().removeClass('cheng');
+			$(this).parent().parent().find('.fc-day').removeClass('cheng');
+			$(this).addClass('cheng');
+
+			$('.matter').blur();
+			if($('.boxs').html()){
+				$(this).siblings().find('.boxs').remove('.city-select');
+				$(this).parent().siblings().find('.boxs').remove('.city-select');
+				$(this).attr('style', 'background: ;');
+				
+			}else {
+				$(this).attr('style', 'background: #F6F9F9;');
+				$('.matter').blur();
+				$(this).siblings().attr('style', 'background: ;');
+				$(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
+				$(this).parent().siblings().find('.matter').blur();
+				//排除其余月份的 显示textarea框
+				if ($(this).hasClass('fc-other-month')){
+					$(this).find(".matter").attr('style', 'display: none;');
+				}else {
+					$(this).find(".matter").attr('style', 'display: block;');
+				    $(this).find(".matter").focus();
+			   	    $(this).parent().parent().siblings().find('.matter').blur();
+				}	 
+			}
+		}
+		
+
+		
+		
+	 });
+	 
 }
 //回显功能
 function timebook(){
@@ -167,6 +286,7 @@ function textareval(){
 //获取事件的时间
 function getday(){
 	$('.fc-event-time').text('');//清空插件中时间限制
+//	$('.fc-week td,.fc-week td .orderSelect').on('click',function(){
 	$('.fc-week td').on('click',function(){
 		time=$(this).attr('data-date');
 		//获取时间2017-11-28 时间格式处理
@@ -174,7 +294,7 @@ function getday(){
 		yy=times.substr(1,4);//年
 		mm=times.substr(6,2);//月
 		dd=times.substr(9,2);//日
-	})
+	})	
 }
 
 //下拉框
@@ -197,20 +317,44 @@ function sun(){
         },
         //选择城市后的回调
         onCallerAfter: function(target, values) {
+        	
+        	
+//        	console.log(values.name);
+        	var shaonv=JSON.stringify(values.name);
+        	//获取选中日期的 时间
+        	var demo = $('#calendar').find('.cheng').attr('data-date');	
             matter=JSON.stringify(values);
-            if (matter){
-            	var bestval=$(".fc-week td[data-date="+time+"]").find(".city-info span");
-            	var shus='';
-            	bestval.each(function(){
-            		var countext =  $(this).text()+ '\n' ;
-            		shus+=countext;
-            	});     	
-//            	添加当前的内容到当前时间下面            	
-             	$(".fc-week td[data-date="+time+"]").find(".matter").val($(".fc-week td[data-date="+time+"]").find(".matter").val()+shus);
-            	whenval=$(".fc-week td[data-date="+time+"]").find(".matter").val();   
-            	$(".fc-week td[data-date="+time+"]").find(".matter").val(whenval);           	
-            	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
+            if (matter){            	
+            	var bestval=$(".fc-week td[data-date="+time+"]").find(".city-info span");       
+            	if (bestval.length==0){
+            		console.log(1);
+            		
+            		$('.caller').click(function(){
+                		console.log('添加了1111');
+                	})
+                	
+                	
+            		var shus='';
+            		shus=shaonv.substring(2,shaonv.length-2);
+                   	$(".fc-week td[data-date="+demo+"]").find(".matter").val(season+shus);                	
+//            		whenval=$(".fc-week td[data-date="+demo+"]").find(".matter").val();   
+//                	$(".fc-week td[data-date="+demo+"]").find(".matter").val(whenval);           	
+                	$(".fc-week td[data-date="+demo+"]").find(".matter").attr('style', 'display:block;');
+            	}else {
+            		console.log(2);
+            		var shus='';
+                	bestval.each(function(){
+                		var countext =  $(this).text()+ '\n' ;
+                		shus+=countext;
+                	}); 
+//                	添加当前的内容到当前时间下面            	
+                 	$(".fc-week td[data-date="+time+"]").find(".matter").val(season+shus);                    	    
+//                	whenval=$(".fc-week td[data-date="+time+"]").find(".matter").val();   
+//                	$(".fc-week td[data-date="+time+"]").find(".matter").val(whenval);           	
+                	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
+            	}
             }else{
+            	 console.log(22);
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
             	console.log('没有数据可以添加');
@@ -223,6 +367,7 @@ function sun(){
 }
 //刪除框数据的同步 
 function delselc(){
+
 	$('.city-info i').on('click',function(){
 		var deltext=$(this).parent().parent().parent().find(".city-info span");
 		if (deltext.length==1){
@@ -281,6 +426,16 @@ function initSelect() {
 	}
 	$('.city-select').slideUp();
     $('.orderSelect').off('click').on('click', function(e) {
+    	$(this).parent().parent().parent().siblings().attr('style', 'background: ;');
+    	$(this).parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');
+    	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
+    	
+    	
+//	    $(this).find(".matter").attr('disabled', 'true'); 
+    	
+	    $('.matter').blur();
+	    
+	    
     	$('.boxs .city-select').remove('.city-select');
     	//添加append() - 在被选元素的结尾插入内容
     	//prepend() - 在被选元素的开头插入内容
@@ -291,7 +446,7 @@ function initSelect() {
         	$(this).parent().parent().find('.city-select').slideUp();
             $(this).removeClass('selectColor');
         } else {
-        	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
+//        	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
         	$(this).parent().parent().find('.boxs').prepend( "<div class='city-select' id=''></div>" );
         	sun();
             $('.orderSelect').removeClass('selectColor');

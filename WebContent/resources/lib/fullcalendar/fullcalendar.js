@@ -2296,17 +2296,10 @@
                 html +=
                     "<th class='fc-day-header fc-" + dayIDs[date.getDay()] + " " + headerClass + "'>" +
                     htmlEscape(formatDate(date, colFormat)) +
-                    // formatDate(date, colFormat) +
-                    // '周一' +
+
                     "</th>";
 
-                // $('thead .fc-sun').text('星期日');
-                // $('thead .fc-mon').text('星期一');
-                // $('thead .fc-tue').text('星期二');
-                // $('thead .fc-wed').text('星期三');
-                // $('thead .fc-thu').text('星期四');
-                // $('thead .fc-fri').text('星期五');
-                // $('thead .fc-sat').text('星期六');
+
             }
 
             html += "</tr></thead>";
@@ -2383,66 +2376,14 @@
                 " class='" + classNames.join(' ') + "'" +
                 " data-date='" + formatDate(date, 'yyyy-MM-dd') + "'" +
                 ">" +
-                "<div>";
+                "<div class='xuan'>";
 
             if (showNumbers) {
                 html += "<div class='fc-day-number'>" + date.getDate() + "</div>";
                 html += "<div class='much '>" +
 
                     "<div class='orderSelect dropdown'>" +
-                    // "<ul class='oSelect uCustomerType menu' id='uCustomerType' style='display: block;'>" +
 
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-                    // "<li data-id='12'>4A</li><li data-id='18'>直客-线下-直销</li>" +
-
-
-
-
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>676需求沟通</span>" +
-                    // " </li>" +
-
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>方案/解说词沟通及制作</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>确认方案/解说词</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-                    // "<li  class='dmenu'>" +
-                    // "<span class='text'>需求沟通</span>" +
-                    // " </li>" +
-
-                    // "</ul> "+
                     "</div>" +
                     "</div>";
             }
@@ -2454,10 +2395,6 @@
 
                 //添加的结果
                 "<div class='boxs'>" +
-                // "<div class='city-select  oSelect' id='multi-select-1'></div>" +
-                // "<div class='city-select' id=''></div>" +
-                // "<span class='name'>添加结果</span>" +
-                // "<span class='close'>X </span>" +
 
 
                 "</div>" +

@@ -10,6 +10,7 @@ var InterValObj; // timer变量，控制时间 - 注册
 //var UrlDo = "apaipian.com";
 //var UrlDo = "test.apaipian.com";
 var UrlDo = "localhost";
+//var UrlDo = "192.168.0.147";
 
 $().ready(function(){
 	getImgUrl();
