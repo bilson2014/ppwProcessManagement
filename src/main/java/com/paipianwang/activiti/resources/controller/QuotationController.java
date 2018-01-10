@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.paipianwang.activiti.domin.QuotationTemplateSelectVO;
 import com.paipianwang.activiti.service.QuotationService;
 import com.paipianwang.pat.common.entity.PmsResult;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
@@ -128,11 +129,11 @@ public class QuotationController extends BaseController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("/export/{quotationId}")
-	public void export(@PathVariable("quotationId")Long quotationId,HttpServletRequest request, final HttpServletResponse response){
+	@RequestMapping("/export")
+	public void export(@RequestBody final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
-		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
+//		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
 		try {
 			if(quotation!=null){
 				response.setCharacterEncoding("utf-8");
@@ -168,14 +169,25 @@ public class QuotationController extends BaseController {
 				}
 			}
 			//判断项目是否存在--不存在，则删除临时持久化数据
-			if(quotation!=null && !ValidateUtil.isValid(quotation.getProjectId())){
+			/*if(quotation!=null && !ValidateUtil.isValid(quotation.getProjectId())){
 //				List<PmsProjectFlow> flows=pmsProjectFlowFacade.getByName(quotation.getProjectName());
 //				if(!ValidateUtil.isValid(flows)){
 				pmsQuotationFacade.delete(quotationId);
 //				}
-			}
+			}*/
 		}
 		
+	}
+	/**
+	 * 获取用户参与过的进行中的项目的报价单
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/list/synergetic")
+	public List<PmsQuotation> getSynergeticQuotation(HttpServletRequest request, final HttpServletResponse response){
+		SessionInfo info = getCurrentInfo(request);
+		return pmsQuotationFacade.getSynergeticQuotationProject(info.getReqiureId());
 	}
 	
 	/**
@@ -187,18 +199,6 @@ public class QuotationController extends BaseController {
 	 */
 	@RequestMapping("/order")
 	public List<PmsQuotationItem> orderQuotation(@RequestBody final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
-		
-//		quotation.getItems().sort(new Comparator<PmsQuotationItem>() {
-//
-//			@Override
-//			public int compare(PmsQuotationItem o1, PmsQuotationItem o2) {
-//				if(o1.getTypeId().equals(o2.getTypeId())){
-//					//大类相同，子类排序
-//					return o1.getItemName().compareTo(o2.getItemName());
-//				}
-//				return 0;
-//			}
-//		});
 		
 		List<PmsQuotationItem> items=quotation.getItems();
 		PmsQuotationItem item=new PmsQuotationItem();
@@ -216,6 +216,7 @@ public class QuotationController extends BaseController {
 						//插入
 						items.remove(item);
 						items.add(j+1, item);
+						continue;
 					}
 				}else{
 					break;
@@ -225,6 +226,7 @@ public class QuotationController extends BaseController {
 		
 		return quotation.getItems();
 	}
+	
 	/**
 	 * 获取报价单模板列表
 	 * 	个人：集合
@@ -317,6 +319,7 @@ public class QuotationController extends BaseController {
 			result.setResult(false);
 			result.setErr("只允许删除个人模板");
 		}
+		long count=pmsQuotationTemplateFacade.delete(templateId);
 		
 		return result;
 	}

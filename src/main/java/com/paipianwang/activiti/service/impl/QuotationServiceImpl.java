@@ -30,8 +30,6 @@ public class QuotationServiceImpl implements QuotationService {
 	private PmsQuotationFacade pmsQuotationFacade;
 	@Autowired
 	private QuotationPoiAdapter quotationPoiAdapter;
-	@Autowired
-	private PmsProjectFlowFacade pmsProjectFlowFacade;
 	
 
 	/**
@@ -96,17 +94,23 @@ public class QuotationServiceImpl implements QuotationService {
 			return validate;
 		}
 		
-		//对应项目id
 		if(!ValidateUtil.isValid(pmsQuotation.getProjectId())){
+			result.setResult(false);
+			result.setErr("请选择项目");
+			return result;
+		}
+		
+		//对应项目id
+		/*if(!ValidateUtil.isValid(pmsQuotation.getProjectId())){
 			List<PmsProjectFlow> flows=pmsProjectFlowFacade.getByName(pmsQuotation.getProjectName());
 			if(ValidateUtil.isValid(flows)){
 				//存在
 				pmsQuotation.setProjectId(flows.get(0).getProjectId());
 			}
-		}
+		}*/
 		
 		//项目报价单是否存在，存在则更新，否则插入
-		if(!ValidateUtil.isValid(pmsQuotation.getProjectId())){
+		/*if(!ValidateUtil.isValid(pmsQuotation.getProjectId())){
 			//临时插入
 			result=pmsQuotationFacade.insert(pmsQuotation);
 		}else{
@@ -118,6 +122,11 @@ public class QuotationServiceImpl implements QuotationService {
 			}else{
 				result=pmsQuotationFacade.insert(pmsQuotation);
 			}
+		}*/
+		if(ValidateUtil.isValid(pmsQuotation.getQuotationId())){
+			result=pmsQuotationFacade.update(pmsQuotation);
+		}else{
+			result=pmsQuotationFacade.insert(pmsQuotation);
 		}
 		
 		return result;
@@ -130,7 +139,8 @@ public class QuotationServiceImpl implements QuotationService {
 			double sum=Double.parseDouble(item.getSum());
 			if(item.getFullJob()==PmsQuotationType.FULLJOB_NO){
 				//非整包
-				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
+//				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
+
 				if(sum!=Double.parseDouble(item.getSum())){
 					result.setResult(false);
 					result.setErr(item.getTypeName()+"结果有误.");
@@ -156,33 +166,5 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		return null;
 	}
-	
-	/*private PmsResult vadalitCompute(PmsQuotation pmsQuotation){
-		PmsResult result=new PmsResult();
-		double subTotal=0.0;
-		BigDecimal subTotal=new BigDecimal(0.0)
-		for(PmsQuotationItem item:pmsQuotation.getItems()){
-			double sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
-			if(sum!=Double.parseDouble(item.getSum())){
-				result.setResult(false);
-				result.setErr(item.getTypeName()+"结果有误.");
-				return result;
-			}
-			subTotal+=sum;
-		}
-		if(subTotal!=Double.parseDouble(pmsQuotation.getSubTotal())){
-			result.setResult(false);
-			result.setErr("合计结果有误.");
-			return result;
-		}
-		
-		double total=subTotal*(1+Double.parseDouble(pmsQuotation.getTaxRate()))-Double.parseDouble(pmsQuotation.getDiscount());
-		if(Double.parseDouble(pmsQuotation.getTotal())!=total){
-			result.setResult(false);
-			result.setErr("最终结果有误.");
-			return result;
-		}
-		return null;
-	}*/
 
 }
