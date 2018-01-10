@@ -170,6 +170,7 @@
      display: inline-block;
      position: absolute;
      margin-top: 12px;
+     line-height: 3rem;
      .mR8 {
          width: 50px;
          display: inline-block;
@@ -204,7 +205,7 @@
      font-weight: bold;
      position: absolute;
      right: 47.2%;
-     margin-top: 2.4rem;
+     margin-top: 28px;
      @media screen and (max-width: 775px) {
          right: 46%;
      }
@@ -272,7 +273,8 @@
                  position: absolute;
                  right: 43%;
                  width: 150px;
-                 top: 73px;
+                 margin-top: -51px;
+                 z-index: 2;
                  @media screen and (max-width: 775px) {
                      right: 40%;
                  }

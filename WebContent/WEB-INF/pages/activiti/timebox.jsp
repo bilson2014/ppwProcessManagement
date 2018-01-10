@@ -72,14 +72,7 @@
 
 <input type="hidden" id="scheduleId" value='${scheduleId}'><!--唯一标记  -->
 <input type="hidden" id="projectId" value='${projectId}'><!--项目id  -->
-<%-- <input type="hidden" id="projectName" value='${projectName}'><!--项目名称  -->
-<input type="hidden" id="updateDate" value='${updateDate}'><!--更新时间  -->
-<input type="hidden" id="jobContent" value='${jobContent}'><!--工作内容  --> --%>
-
-
- <!--  <div class="pages" style="height: 900px;">   --> 
   <div class="pages" >   
-  
   <div class='titles'>
   	<span>报价单生成器</span>
   	<!-- <div class='line'></div> -->
@@ -89,8 +82,7 @@
 	   <input value='${projectName}' id="projectName" style="width:240px">
 	   <p class='proerr'><p>
  </div>
- <div class='divine'></div>
- 
+ <div class='divine'></div> 
 <%--  <div class="orderItem" id="dayTimeError">
 	   <div class="mR8">日期</div>
 	   <input class="time noBorder" readonly id="updateDate" name="time" value="${updateDate}">
@@ -99,10 +91,5 @@
 	<div class='advice'>*本时间表为预排，基于每个环节的按时确认可顺利执行，否则制作进度都会受确认环节或其他不可抗因素的变化相应的变化。</div>
  	<div class='last'><div class='best'>生成排期表</div></div>
  </div>
- <script>
-        $(function() {
-            /* $('#content').flexText(); */
-        });
- </script>
 </body>
 </html>
