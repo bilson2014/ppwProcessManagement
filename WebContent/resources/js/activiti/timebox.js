@@ -64,6 +64,7 @@ function dbmatter(){
 		$(this).parent().parent().parent().addClass('cheng');
 		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
 		//获取焦点
+		$('.matter').blur();
 		$(this).parent().parent().find('.matter').focus();	
 		$(this).parent().parent().parent().focus();	
 		$(this).parent().parent().parent().siblings().find('.fc-day').blur();
@@ -101,13 +102,35 @@ function dbmatter(){
 		 $(this).parent().addClass('wolf');	 
 	 })
 	 $('.fc-day .xuan').removeClass('wolf'); 
+	
+	 $('.pages').click(function(){
+		 $(this).find('.boxs .city-select').remove('.city-select');
+		 $(this).find('.orderSelect').removeClass('selectColor');
+	 })
+ 
 	 $('.fc-day').click(function(){
+		 if (!$(this).hasClass('cheng')){
+			$(this).parent().find('.boxs .city-select').remove('.city-select');
+			$(this).parent().siblings().find('.boxs .city-select').remove('.city-select');
+		}
+		 $(this).parent().find('.matter').blur();	
+		 $(this).parent().parent().siblings().find('.matter').blur();
+		 $(this).attr('style', 'background: #F6F9F9;');
+		 $(this).siblings().attr('style', 'background: ;');
+		 $(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');
+		 $(this).siblings().removeClass('cheng');
+		 $(this).parent().parent().find('.fc-day').removeClass('cheng');
+		 $(this).addClass('cheng');
+ 
 		if (!$(this).find('.xuan').hasClass('wolf')&&$('.fc-day .xuan').hasClass('wolf')){
-			console.log('哈哈哈哈哈');
 			$(this).siblings().find('.xuan').removeClass('wolf');
 			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
 			$(this).addClass('onlyul');
 			setTimeout($(this).removeClass('onlyul'),1000);
+			console.log('one');
+			//移除box的 内容
+			$('.boxs .city-select').remove('.city-select');
+			$('.orderSelect').removeClass('selectColor');
 		}
 		else if ($('.fc-day').hasClass('wolf')||$('.fc-day .xuan').hasClass('wolf')){
 			$(this).find('.matter').blur();					
@@ -115,19 +138,23 @@ function dbmatter(){
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
 			$(this).addClass('cheng');
+			$(this).find(".matter").attr('style', 'display: block;');			
+			$(this).find('.matter').focus();			
 			$(this).removeClass('wolf');				
 			$(this).siblings().removeClass('wolf');
 			$(this).parent().parent().find('.fc-day').removeClass('wolf');
 			$(this).addClass('onlyul');
-			setTimeout($(this).removeClass('onlyul'),1000);		
+			setTimeout($(this).removeClass('onlyul'),1000);	
+//			console.log('two');
 		}else {
+//			console.log('three');
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
-			$(this).addClass('cheng');
+			$(this).addClass('cheng');			
 			$('.matter').blur();
 			if($('.boxs').html()){
-				$(this).siblings().find('.boxs').remove('.city-select');
-				$(this).parent().siblings().find('.boxs').remove('.city-select');
+				$(this).siblings().find('.boxs .city-select').remove('.city-select');
+				$(this).parent().siblings().find('.boxs .city-select').remove('.city-select');
 				$(this).attr('style', 'background: ;');		
 			}else {
 				$(this).attr('style', 'background: #F6F9F9;');
