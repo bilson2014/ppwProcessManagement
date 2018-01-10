@@ -30,7 +30,7 @@
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="" content="" />
-<title>报价单生成器</title>
+<title>报价单生成器1</title>
 <!-- css -->
 <link rel="stylesheet" href="${quotationCss}">
 <link rel="stylesheet" href="${datepickerCss}">
@@ -60,6 +60,50 @@
 
 <input type="hidden" id="quotationId" value='${quotationId}'>
 <input type="hidden" id="projectId" value='${projectId}'>
+<input type="hidden" id="templateId" value=''>
+
+<div class="cusModel" id="showModelName" >
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">填写模板名</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="modelName"><input id="modelName" /></div>
+               <div class="btnMid">
+			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
+<div class="cusModel" id="showProductName" >
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">填写项目名</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="modelName"><input id="toSetProductName" /></div>
+               <div class="btnMid">
+			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
+<div class="cusModel" id="errorProduct">
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">错误提示</div>
+	                   <div class="closeModel"></div>
+	            </div>
+               <div class="infoWarn">
+                   <img src="${imgPath}/index/waring.png">
+                   <div>该模板已经存在</div>
+               </div>
+               <div class="btnMid">
+			           <div class="btn-c-r closeWindow" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
 
 <div class="cusModel" id="errorSame">
            <div class="modelCard" >
@@ -95,7 +139,7 @@
 </div>
 
 
-<div class="cusModel" id="clearTable" >
+<div class="cusModel" id="clearTable" style="z-index:1000" >
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title" >报表信息</div>
@@ -112,7 +156,7 @@
 </div>
 
 
-<div class="cusModel" id="submitCheckBtn" style="position:block">
+<div class="cusModel" id="submitCheckBtn" style="z-index:1000">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">报价单</div>
@@ -130,8 +174,6 @@
             </div>
      </div>
 </div>
-
-
 
 <div class="cusModel" id="submitCheck" >
      <div class="modelCard">
@@ -153,7 +195,7 @@
 
 
 
- <div class="cusModel" id="productWindow" style="display:block" >
+ <div class="cusModel" id="productWindow">
      <div class="modelCard">
             <div class="cardTop">
                    <div class="title">选择产品线模板或个人模板</div>
@@ -164,8 +206,6 @@
                 <div class="tap active" id="myModel">个人模板</div> 
             </div>
             <div class="modelContent">
-                 <div class="modelItem">内容</div>
-                 <div class="modelItem">内容</div>
             </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleProduct">取消</div>
@@ -177,15 +217,34 @@
 </div> 
 
 
+ <div class="cusModel" id="loadProductModel">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">报价单</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="modelBanner">
+                <div class="tap active" id="productLine" style="width:100%">加载报价单</div>
+            </div>
+            <div class="modelProductContent"> </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleLoadProduct">取消</div>
+                 <div class="btn-c-r" id="CheckloadProduct">加载</div>
+            </div>     
+     </div>
+</div> 
+
+
      
      <div class='banner'>
          <span>报价单生成器</span>
+         <span id="projectName">${projectName}</span>
      </div>
    
    <div class="pages">
      <div class="searchInfo">
           
-         	<div class="orderItem" id="projectNameError">
+         <%-- 	<div class="orderItem" id="projectNameError">
 	                <div class="mR8">项目名称</div>
 		            <div class="orderSelect oredrProduct"  >
 		                <input value='${projectName}' id="projectName">
@@ -197,7 +256,7 @@
 	            <div class="mR8">更新于</div>
 	            <input class="time noBorder" readonly id="dayTime" name="time" value="">
 	        </div>
-	          <br/>  
+	          <br/>  --%> 
              <div class="orderItem" id="typeError"> 
 		            <div class="mR8">收费类</div>
 		            <div class="orderSelect oredrTypeSelect"  >
@@ -229,18 +288,16 @@
 	            <div class="mR8" id="needT">数量</div>
 	            <input class="shortDiv" id="needNum" value="">
             </div>
+             <div class="dir">单价 ：<span id="setCost"></span></div> 
              <div class="orderItem " style="position: static;"> 
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
-	            <div class=" searchBtn"  id="toModel">选择模板</div>
+	            <div class=" searchBtn"  id="toModel">加载模板</div>
+	            <div class=" searchBtn"  id="openFrom">加载报价单</div>
             </div>
+ 
             </br>
-       <!--      <div  class="orderItem" id="dayNumError">
-	            <div class="mR8">整包价</div>
-	            <input id="checkbox"  type="checkbox" value="">
-            </div> -->
-            </br>
-             <div class="dir">单价 ：<span id="setCost"></span></div> 
+            
              <div class="dir">收费项描述 ：<span id="setDir"></span></div> 
          </div>
 
@@ -272,7 +329,7 @@
              <input id="free" value="0">
         </div>
          <div class="hasTax"><div>含税总价格</div>  <div>¥</div> <div id="setFinalCost">0</div></div>
-         <div class="createQuo"><div class="btn-c-r">生成报价单</div></div>
+         <div class="createQuo"><div class="btn-c-r createFrom">生成报价单</div><div class="btn-c-r createModel">生成模板</div><div class="btn-c-r createFromTable">打开报价单</div></div>
     </div>
   </div>  
 
