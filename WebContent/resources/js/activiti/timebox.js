@@ -209,11 +209,22 @@ function bestthings() {
     $('.best').on('click', function() {
     	sun();
     	timebook();
+    	$('#calendar').find('.boxs .city-select').remove('.city-select');
+    	$('#calendar').find('.fc-day').removeClass('cheng');
+    	$('#calendar').find('.fc-day').attr('style', 'background: ;');
+    	$('#calendar').find('.matter').blur();	 
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
     	if(projectName== null || projectName == "" || projectName == undefined){
     		$('.proerr').text('项目名称未填写');
 			$('#projectName').focus();
+			//提交之后 边框的 消失  
+			var xiu=$('#calendar').find('.fc-day .matter');
+			xiu.each(function(){
+				if($(this).attr('style')=="display: block;"){
+					$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');	
+				} 				
+			})
 			return false;
     	}else {
     		$('.proerr').text('');

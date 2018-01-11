@@ -74,7 +74,7 @@
 <input type="hidden" id="projectId" value='${projectId}'><!--项目id  -->
   <div class="pages" >   
   <div class='titles'>
-  	<span>报价单生成器</span>
+  	<span>排期表生成器</span>
   	<!-- <div class='line'></div> -->
   </div>
   <div class="orderItem" id="projectNameError">
