@@ -1112,7 +1112,7 @@ function loadProductEven(){
 		    		$('#clearTable').show();
 					$('#setTableTitle').html('已存在报价单，是否覆盖报价单？');
 					$('.sureClear').off('click').on('click',function(){
-						loadProductTable(thisId);
+						getTableInfo();
 						$('#clearTable').hide();
 						$('#loadProductModel').hide();
 					});
@@ -1120,7 +1120,7 @@ function loadProductEven(){
 				    	$('#clearTable').hide();
 					});
 		    	}else{
-		    		loadProductTable(thisId);
+		    		getTableInfo();
 		    		$('#loadProductModel').hide();
 		    	}
 	    	}
