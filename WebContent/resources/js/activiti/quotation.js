@@ -100,11 +100,13 @@ function clickEven(){
 		var setTr = $('.setTr tr').length;
 		if(setTr > 0){
 			$('#showModelName').show();
+			$('#tempNameError').attr('data-content','');
 			$('#modelName').val('');
 			$('#saveModelName').off('click').on('click',function(){
-				var modelName = $('#modelName').val();
+				var modelName = $('#getModelName').val();
 				if(modelName == '' || modelName == undefined || modelName == null){
-					$('#modelName').focus();
+					$('#getModelName').focus();
+					$('#tempNameError').attr('data-content','未填写项目名');
 				}else{
 					checkProduct();
 				}
@@ -1055,7 +1057,7 @@ function checkProduct(){
 		}
 	}, getContextPath() + '/quotation/save/validate-name',$.toJSON({
         templateId : $('#templateId').val(),
-        templateName : $('#modelName').val()	
+        templateName : $('#getModelName').val()	
 	}));
 	
 }
@@ -1232,8 +1234,8 @@ function initAutoModelChoose(){
 	$('#tempSelect li').off('click').on('click',function(e){
 		 var name = $(this).text();
 		 var id = $(this).attr('data-id');
-		 $('#toSetProductName').text(name);
-		 $('#projectId').val(id);
+		 $('#getModelName').val(name);
+		 $('#templateId').val(id);
 		 $('#productSelect').hide();				
 	});
 }
