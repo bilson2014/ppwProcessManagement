@@ -88,6 +88,21 @@
                     top:40px !important;
                 }
 
+                .modelNameTitle{
+                    font-size: $font-size;
+                    margin-right: 10px;
+                        display: inline-block;
+                }
+
+                .modelNameInput{
+                    width: 260px;
+                    height: 36px;
+                    line-height: 36px;
+                    border:none;
+                    border:1px solid $border-line;
+                    border-radius: 8px;
+                }
+
                 #toSetProductName{
                     width: 100% !important;
                     border: none;
@@ -198,7 +213,7 @@
 
             .changePos {
                 display: inline-block;
-                @media screen and (max-width: 1000px) {
+                @media screen and (max-width: 1200px) {
                     display: block!important;
                 }
             }
@@ -332,8 +347,8 @@
                 border-radius: 4px;
                 border: 1px solid #999;
                 position: absolute;
-                 top: 62px;
-                right: 51px;
+                    top: -5px;
+    right: 111px;
                 cursor: pointer;
                 &:hover {
                     color: #333;
@@ -351,7 +366,7 @@
                 border-radius: 4px;
                 border: 1px solid #999;
                 position: absolute;
-                top: -5px;
+                top: 107px;
                 right: 31px;
                
                 cursor: pointer;
@@ -370,7 +385,7 @@
                 border-radius: 4px;
                 border: 1px solid #999;
                 position: absolute;
-                top: 107px;
+                top: 65px;
                 right: 31px;
                 cursor: pointer;
                 &:hover {

@@ -68,7 +68,10 @@
 	                   <div class="title">填写模板名</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="modelName"><input id="modelName" /></div>
+	            <div class="modelName">
+	                <div class="modelNameTitle">模板名</div>
+	                <input class="modelNameInput" id="modelName" />
+	            </div>
                <div class="btnMid">
 			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
@@ -78,11 +81,12 @@
 <div class="cusModel" id="showProductName" >
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">填写项目名</div>
+	                   <div class="title">选择项目名</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
 		            <div class="orderItem" id="projectNameError">
+		                <div class="modelNameTitle">模板名</div>
 			            <div class="orderSelect oredrProduct tomid"  >
 			                <div id="toSetProductName"></div>
 			                <ul class="oSelect" id="productSelect">
