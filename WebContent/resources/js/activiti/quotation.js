@@ -122,7 +122,8 @@ function clickEven(){
          
          if(hasId == null || hasId == '' || hasId == undefined){
         	 $('#showProductName').show();
-             $('#toSetProductName').val($('#projectName').text());
+        	 projectName();
+           //  $('#toSetProductName').val($('#projectName').text());
         	 $('#savesProductName').off('click').on('click',function(){
         		 hasId = $('#projectId').val();
             	 if(hasId == null || hasId == '' || hasId == undefined){
@@ -513,12 +514,14 @@ function initTypeItem(){
 //选项目
 function projectName(){
 	
-	$('#toSetProductName').bind('input propertychange', function() {
+/*	$('#toSetProductName').bind('input propertychange', function() {
 		var theName = $(this).val();
 		$('#projectId').val('');
 		findAutoInfo(theName);
+	});*/
+	$('#toSetProductName').off('click').on('click',function(){
+		findAutoInfo('');
 	});
-
 	/*$('#toSetProductName').on('blur', function() {
 		var setTr = $('.setTr tr').length;
 		var ps = $('#productSelect li').length;
@@ -578,7 +581,7 @@ function initAutoChoose(){
 	$('#productSelect li').off('click').on('click',function(e){
 		 var name = $(this).text();
 		 var id = $(this).attr('data-id');
-		 $('#toSetProductName').val(name);
+		 $('#toSetProductName').text(name);
 		 $('#projectId').val(id);
 		 $('#productSelect').hide();
 		/* var setTr = $('.setTr tr').length;

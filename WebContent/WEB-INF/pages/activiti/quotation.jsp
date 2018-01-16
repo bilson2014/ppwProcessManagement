@@ -84,7 +84,7 @@
 	            <div class="modelName">
 		            <div class="orderItem" id="projectNameError">
 			            <div class="orderSelect oredrProduct tomid"  >
-			                <input id="toSetProductName">
+			                <div id="toSetProductName"></div>
 			                <ul class="oSelect" id="productSelect">
 			                </ul>    
 				        </div>
