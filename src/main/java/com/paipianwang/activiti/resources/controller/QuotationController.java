@@ -130,7 +130,7 @@ public class QuotationController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping("/export")
-	public void export(@RequestBody final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
+	public void export( final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
 //		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
