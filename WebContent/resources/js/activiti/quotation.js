@@ -214,9 +214,9 @@ function submitDate(){
 	$('#sprojectId').val($('#projectId').val());
 	$('#staxRate').val($('#tax').val());
 	$('#discount').val($('#free').val());
-	$('#subTotal').val($('#localPrice').text());
-	$('#total').val($('#setFinalCost').text());
-	$('#projectName').val($('#projectName').text());
+	$('#ssubTotal').val($('#localPrice').text());
+	$('#stotal').val($('#setFinalCost').text());
+	$('#sprojectName').val($('#projectName').text());
 	$('#toListForm').submit();
 	
 /*    loadData(function(res){
