@@ -81,9 +81,17 @@
 	                   <div class="title">填写项目名</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="modelName"><input id="toSetProductName" /></div>
+	            <div class="modelName">
+		            <div class="orderItem" id="projectNameError">
+			            <div class="orderSelect oredrProduct tomid"  >
+			                <input id="toSetProductName">
+			                <ul class="oSelect" id="productSelect">
+			                </ul>    
+				        </div>
+	           		 </div>
+	            </div>
                <div class="btnMid">
-			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+			           <div class="btn-c-r closeWindow" id="savesProductName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
 </div>
@@ -279,7 +287,8 @@
 		                </ul>    
 			        </div>
 			  </div>    
-	      
+			  
+	      <div class="changePos">
 	        <div  class="orderItem changeitem" id="dayNumError">
 	            <div class="mR8" id="dayT">天数</div>
 	            <input class="shortDiv" id="dayNum"  value="">
@@ -288,7 +297,8 @@
 	            <div class="mR8" id="needT">数量</div>
 	            <input class="shortDiv" id="needNum" value="">
             </div>
-             <div class="dir">单价 ：<span id="setCost"></span></div> 
+             <div class="dir" style="margin-top: 29px;margin-left: 20px;">单价 ：<span id="setCost"></span></div> 
+          </div>   
              <div class="orderItem " style="position: static;"> 
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
 	            <div class=" searchBtn"  id="toClear">清空表单</div>
@@ -329,9 +339,26 @@
              <input id="free" value="0">
         </div>
          <div class="hasTax"><div>含税总价格</div>  <div>¥</div> <div id="setFinalCost">0</div></div>
-         <div class="createQuo"><div class="btn-c-r createFrom">生成报价单</div><div class="btn-c-r createModel">生成模板</div><div class="btn-c-r createFromTable">打开报价单</div></div>
+         <div class="createQuo">
+                 <div class="btn-c-r createFrom">生成报价单</div>
+                 <div class="btn-c-r createModel">生成模板</div>
+                 <div class="btn-c-r createFromTable">保存报价单</div>
+         </div>
     </div>
-  </div>  
+  </div> 
+  
+ <form method="post" action="/quotation/export/" id="toListForm" class="hide">
+			            <input type='hidden' name="items" id="sitems" />
+			            <input type='hidden' name="quotationId" id="squotationId"/>
+			            <input type='hidden' name="projectId" id="sprojectId"/>
+			            <input type='hidden' name="taxRate" id="staxRate"/>
+			            <input type='hidden' name="discount" id="sdiscount"/>
+			            <input type='hidden' name="subTotal" id="ssubTotal"/>
+			            <input type='hidden' name="total" id="stotal"/>
+			            <input type='hidden' name="projectName" id="sprojectName"/>
+</form> 
+
+        
 
 </body>
 

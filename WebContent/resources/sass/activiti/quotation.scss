@@ -38,7 +38,7 @@
                     left: 20px;
                 }
 
-                span:nth-child(2){
+                span:nth-child(2) {
                     color: #333;
                     font-size: $font-size-base;
                     font-weight: 500;
@@ -46,9 +46,7 @@
                     top: 20px;
                     left: 150px;
                 }
-            }
-
-            //产品线
+            } //产品线
             .modelBanner {
                 height: 38px;
                 width: 100%;
@@ -81,27 +79,66 @@
                     }
                 }
             }
+            
 
             .modelName {
                 text-align: center;
                 margin-top: 60px;
+
                 input {
-                    width: 240px;
-                    height: 30px;
-                    border-radius: 4px;
-                    padding-left: 5px;
+                    width: 100% !important;
                     border: none;
-                    border:1px solid $border-line;
+                    padding-left: 5px;
+                    height: 36px;
+                    line-height: 36px;
+                    background: transparent;
+                    font-size: $font-size-base;
+                }
+                .orderItem:before{
+                    top:40px !important;
+                }
+
+                .orderItem {
+                    display: inline-block;
+                    vertical-align: top;
+                    margin-top: 20px;
+                    position: relative;
+                    margin: 0 auto;
+                    div {
+                        font-size: $font-size-sm;
+                        color: $gray;
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                    span {
+                        display: inline-block;
+                        vertical-align: middle;
+                        font-size: $font-size-sm;
+                        color: $gray;
+                        margin-left: 7px;
+                        margin-right: 7px;
+                        margin-top: 20px;
+                    }
+                    &:before {
+                        content: attr(data-content);
+                        color: $red-base;
+                        font-size: 1.2rem;
+                        position: absolute;
+                        left: px;
+                        top: 35px
+                    }
                 }
             }
 
-            .modelContent,.modelProductContent {
+            .modelContent,
+            .modelProductContent {
                 height: 322px;
                 border-bottom: 3px solid $border-line;
                 overflow: auto;
             }
 
-            .modelItem,.modelProItem {
+            .modelItem,
+            .modelProItem {
                 height: 40px;
                 line-height: 40px;
                 padding-left: 30px;
@@ -111,7 +148,8 @@
                 }
             }
 
-            .modelActive,.modelPActive {
+            .modelActive,
+            .modelPActive {
                 background: $f8;
             }
 
@@ -144,9 +182,7 @@
                 div:nth-child(3) {
                     margin-left: 10px;
                 }
-            }
-
-            //产品线end
+            } //产品线end
             .changeitem {
                 color: red;
                 @media screen and (min-width: 775px) and (max-width:1025px) {
@@ -157,6 +193,12 @@
                 }
                 @media screen and (max-width: 1000px) {
                     color: orange;
+                }
+            }
+
+            .changePos {
+                display: inline-block;
+                @media screen and (max-width: 1000px) {
                     display: block!important;
                 }
             }
@@ -254,10 +296,10 @@
             .dir {
                 font-size: $font-size-sm;
                 color: $gray-light;
-                margin-top: 20px;
                 width: 238px;
                 display: inline-block;
                 vertical-align: top;
+                margin-top: 20px;
             }
 
             #toModel {
@@ -279,7 +321,7 @@
                 }
             }
 
-             #openFrom {
+            #openFrom {
                 width: 65px;
                 height: 30px;
                 line-height: 30px;
@@ -710,7 +752,7 @@
                     .createModel {
                         right: 240px !important;
                     }
-                    .createFromTable{
+                    .createFromTable {
                         right: 480px !important;
                     }
                 }
@@ -825,4 +867,8 @@
                         }
                     }
                 }
+            }
+
+            .tomid {
+                margin: 0 auto;
             }
