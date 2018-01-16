@@ -207,8 +207,8 @@ function initCheckBtn(){
 }
 
 function submitDate(){
-	
-	$('#items').val(finalAsc);
+	var jsonStr=JSON.stringify(finalAsc);
+	$('#sitems').val(jsonStr);
 	$('#squotationId').val($('#quotationId').val());
 	$('#sprojectId').val($('#projectId').val());
 	$('#staxRate').val($('#tax').val());

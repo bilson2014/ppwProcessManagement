@@ -348,7 +348,7 @@
   </div> 
   
  <form method="post" action="/quotation/export/" id="toListForm" class="hide">
-			            <input type='hidden' name="items" id="sitems" />
+			            <input type='hidden' name="itemContent" id="sitems" />
 			            <input type='hidden' name="quotationId" id="squotationId"/>
 			            <input type='hidden' name="projectId" id="sprojectId"/>
 			            <input type='hidden' name="taxRate" id="staxRate"/>
