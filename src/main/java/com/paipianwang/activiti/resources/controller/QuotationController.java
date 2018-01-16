@@ -24,6 +24,7 @@ import com.paipianwang.activiti.domin.QuotationTemplateSelectVO;
 import com.paipianwang.activiti.service.QuotationService;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.entity.SessionInfo;
+import com.paipianwang.pat.common.util.JsonUtil;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
@@ -130,7 +131,7 @@ public class QuotationController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping("/export")
-	public void export( final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
+	public void export(final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
 //		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
@@ -138,7 +139,10 @@ public class QuotationController extends BaseController {
 			if(quotation!=null){
 				response.setCharacterEncoding("utf-8");
 				response.setContentType("application/octet-stream");
-				String filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
+				String filename ="报价单.xlsx";
+				if(ValidateUtil.isValid(quotation.getProjectName())){
+					filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
+				}
 				
 				//---处理文件名
 				String userAgent = request.getHeader("User-Agent"); 
@@ -152,6 +156,14 @@ public class QuotationController extends BaseController {
 				response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"\r\n");
 			
 				outputStream = response.getOutputStream();
+				
+				if(!ValidateUtil.isValid(quotation.getItems())){
+					try {
+						quotation.setItems(JsonUtil.fromJsonArray(quotation.getItemContent(), PmsQuotationItem.class));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 				
 				quotationService.export(quotation, outputStream,request);
 				
@@ -234,10 +246,12 @@ public class QuotationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/temp/list")
-	public Map<String,Object> listTemplate(){
+	public Map<String,Object> listTemplate(HttpServletRequest request){
 		Map<String,Object> result=new HashMap<>();
 		
-		List<PmsQuotationTemplate> list=pmsQuotationTemplateFacade.listSelect();
+		SessionInfo sessionInfo=getCurrentInfo(request);
+		
+		List<PmsQuotationTemplate> list=pmsQuotationTemplateFacade.listSelect(sessionInfo.getReqiureId());
 		
 		List<QuotationTemplateSelectVO> person=new ArrayList<>();
 		Set<QuotationTemplateSelectVO> chanpin=new HashSet<>();
@@ -263,9 +277,10 @@ public class QuotationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/temp/validate-name")
-	public PmsResult validateName(@RequestBody final PmsQuotationTemplate template){
+	public PmsResult validateName(@RequestBody final PmsQuotationTemplate template,HttpServletRequest request){
 		//个人类型 名称是否存在
-		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),PmsQuotationTemplate.TYPE_SELF);
+		SessionInfo info = getCurrentInfo(request);
+		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),PmsQuotationTemplate.TYPE_SELF,info.getReqiureId());
 		PmsResult result=new PmsResult();
 		if(count>0){
 			result.setResult(false);
@@ -279,12 +294,13 @@ public class QuotationController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/temp/save")
-	public PmsResult saveTemplate(@RequestBody final PmsQuotationTemplate template){
+	public PmsResult saveTemplate(@RequestBody final PmsQuotationTemplate template,HttpServletRequest request){
 		PmsResult result=new PmsResult();
+		SessionInfo info = getCurrentInfo(request);
 		//个人
 		template.setType(PmsQuotationTemplate.TYPE_SELF);
 		//TODO 校验
-		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),template.getType());
+		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),template.getType(),info.getReqiureId());
 		if(count>0){
 			if(template.getTemplateId()!=null){
 				result.setResult(false);
@@ -292,7 +308,7 @@ public class QuotationController extends BaseController {
 				return result;
 			}else{
 				//更新
-				List<PmsQuotationTemplate> exists=pmsQuotationTemplateFacade.listByName(template.getTemplateName(), template.getTemplateId(),template.getType());
+				List<PmsQuotationTemplate> exists=pmsQuotationTemplateFacade.listByName(template.getTemplateName(), template.getTemplateId(),template.getType(),info.getReqiureId());
 				template.setTemplateId(exists.get(0).getTemplateId());
 			}
 		}
@@ -331,6 +347,21 @@ public class QuotationController extends BaseController {
 	@RequestMapping("/temp/get/{templateId}")
 	public PmsQuotationTemplate getTemplate(@PathVariable final long templateId){
 		return pmsQuotationTemplateFacade.getById(templateId);
+	}
+	/**
+	 * 根据名称模糊查询个人模板
+	 * @param pmsQuotationTemplate
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/temp/listByName")
+	public List<PmsQuotationTemplate> listTemplateByName(@RequestBody PmsQuotationTemplate pmsQuotationTemplate,HttpServletRequest request){
+		
+		SessionInfo sessionInfo=getCurrentInfo(request);
+		
+		List<PmsQuotationTemplate> list=pmsQuotationTemplateFacade.listLikeName(pmsQuotationTemplate.getTemplateName(), PmsQuotationTemplate.TYPE_SELF, sessionInfo.getReqiureId());
+		
+		return list;
 	}
 	
 }
