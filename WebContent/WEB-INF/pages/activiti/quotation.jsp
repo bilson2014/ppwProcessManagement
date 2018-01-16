@@ -69,8 +69,17 @@
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
-	                <div class="modelNameTitle">模板名称</div>
-	                <input class="modelNameInput" id="modelName" />
+		            <div class="orderItem" id="projectNameError">
+			                <div class="modelNameTitle">模板名称</div>
+				            <div class="orderSelect oredrProduct tomid"  >
+				                 <input class="modelNameInput" id="getModelName" />
+				                 <img src="${imgPath}/index/select.png">
+				                <ul class="oSelect" id="tempSelect">
+				                </ul>    
+					        </div>
+		           		 </div>
+	                <!-- <div class="modelNameTitle">模板名称</div>
+	                <input class="modelNameInput" id="modelName" /> -->
 	            </div>
                <div class="btnMid">
 			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
@@ -302,7 +311,7 @@
 	            <div class="mR8" id="needT">数量</div>
 	            <input class="shortDiv" id="needNum" value="">
             </div>
-             <div class="dir" style="margin-top: 29px;margin-left: 20px;">单价 ：<span id="setCost"></span></div> 
+             <div class="dir" style="margin-top: 29px;margin-left: 20px;width:100px;">单价 ：<span id="setCost"></span></div> 
           </div>   
              <div class="orderItem " style="position: static;"> 
                 <div class=" searchBtn"  id="toClear">清空表单</div>
@@ -320,9 +329,8 @@
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
         <thead>
         <tr class="tableTitle">
-            <th>项目组</th>
-            <th>项目</th>
-            <th>描述</th>
+            <th>收费类</th>
+            <th>收费项</th>
             <th>天数</th>
             <th>数量</th>
             <th>单价(元)</th>

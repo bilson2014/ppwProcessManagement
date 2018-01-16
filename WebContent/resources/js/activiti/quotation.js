@@ -13,6 +13,7 @@ $().ready(function() {
 });
 
 function init(){
+	findModelNames();
 	projectName();
 	initMultSelect();
 	costFunction.init();
@@ -57,9 +58,9 @@ function clickEven(){
 		$('#productWindow').show();
 		$('.modelContent').html('');
 	    $('.tap').removeClass('active');
-		$('#myModel').addClass('active');
+		$('#productLine').addClass('active');
 		$('#delProduct').show();
-		loadProdcut(0);
+		loadProdcut(1);
 	});
 	
 	$('.closeWindow').off('click').on('click',function(){
@@ -722,7 +723,6 @@ function createMultOption(item,index){
 		    	    '<tr>',
  		    		'<td>'+item.itemName+'</td>',
  		    		'<td>'+item.detailName+'</td>',
- 		    		'<td>'+item.description+'</td>',
  		    		'<td class="dayTd" >'+days+'</td>',
  		    		'<td class="dayTd" >'+quantity+'</td>',
  		    		'<td class="payCost payBaseCost dayTd"><input class="updateBase" data-id='+index+' style="width:80px" value='+item.unitPrice+'></td>',
@@ -957,6 +957,7 @@ function productLineEven(){
     	var setTr = $('.setTr tr').length;
     	var thisId = $('.modelActive').attr('data-id');
     	$('#templateId').val(thisId);
+    	var thisName = $('.modelActive').text();
     	if(thisId>0){
 	    	if(setTr > 0){
 	    		$('#clearTable').show();
@@ -965,6 +966,7 @@ function productLineEven(){
 					loadProductTable(thisId);
 					$('#clearTable').hide();
 				    $('#productWindow').hide();
+				    $('#projectName').text(thisName);
 				});
 				$('.cancle').off('click').on('click',function(){							  
 			    	$('#clearTable').hide();
@@ -977,6 +979,7 @@ function productLineEven(){
 	        	$('#productWindow').hide();
 	        	$('#quotationId').val('');
 				$('#projectId').val('');
+				$('#projectName').text(thisName);
 	    	}
     	}
 
@@ -1112,6 +1115,7 @@ function loadProductEven(){
 			$('#projectId').val($('.modelPActive').attr('data-pid'));
 			var setTr = $('.setTr tr').length;
 	    	var thisId = $('.modelPActive').attr('data-id');
+	    	var thisName = $('.modelPActive').text();
 	    	if(thisId>0){
 		    	if(setTr > 0){
 		    		$('#clearTable').show();
@@ -1120,6 +1124,7 @@ function loadProductEven(){
 						getTableInfo();
 						$('#clearTable').hide();
 						$('#loadProductModel').hide();
+						$('#projectName').text(thisName);
 					});
 					$('.cancle').off('click').on('click',function(){							  
 				    	$('#clearTable').hide();
@@ -1127,6 +1132,7 @@ function loadProductEven(){
 		    	}else{
 		    		getTableInfo();
 		    		$('#loadProductModel').hide();
+		    		$('#projectName').text(thisName);
 		    	}
 	    	}
 	});	
@@ -1154,19 +1160,24 @@ function submitDateMyDate(){
     loadData(function(res){
     	if(res.result){
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
-    		$('#successContent').text('成功生成报价单');
+    		$('#isSuccess').text('保存为项目报价单');
+    		$('#successContent').text('成功保存为项目报价单');
     		$('#quotationId').val(res.msg);
     		$('#errorImg').hide();
     		$(window.parent.parent.parent.document).find('html').scrollTop(0);
     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    			$('.cusModel').hide();
+    		});
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
+    		$('#isSuccess').text('保存为项目报价单');
     		$('#errorImg').show();
     		$('#successContent').text(res.err);
     		$('.sureCheck').off('click').on('click',function(){
     			$('#submitCheck').hide();
+    			$('.cusModel').hide();
     		});
     	}
 	}, getContextPath() + '/quotation/save',$.toJSON({
@@ -1182,7 +1193,50 @@ function submitDateMyDate(){
 	}));
 }
 
+function findModelNames(){
+	$('#getModelName').bind('input propertychange', function() {
+		var theName = $(this).val();
+		$('#projectId').val('');
+		findAutoInfo(theName);
+	});
+}
 
+function findAutoInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('#tempSelect');
+		body.html('');
+		if(res != null && res != undefined){
+			$('#tempSelect').show();
+			for (var int = 0; int < res.length; int++) {
+				   var html =createModelProduct(res[int]);
+				   body.append(html);
+			};
+			initAutoModelChoose();
+		}else{
+			$('#tempSelect').hide();
+		}
+	}, getContextPath() + '/quotation/temp/listByName', $.toJSON({
+		templateName : userName
+	}));
+}
+
+function createModelProduct(item){ 
+	var html = [
+	    		'<li data-id="'+item.templateId+'">'+item.templateName+'</li>'
+	    	].join('');
+	    	return html;
+}
+
+function initAutoModelChoose(){
+	$('#tempSelect li').off('click').on('click',function(e){
+		 var name = $(this).text();
+		 var id = $(this).attr('data-id');
+		 $('#toSetProductName').text(name);
+		 $('#projectId').val(id);
+		 $('#productSelect').hide();				
+	});
+}
 
 
 
