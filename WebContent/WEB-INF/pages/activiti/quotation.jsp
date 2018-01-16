@@ -308,7 +308,8 @@
  
             </br>
             
-             <div class="dir">收费项描述 ：<span id="setDir"></span></div> 
+             <div class="dir" style="width: 75%;
+    line-height: 15px;">收费项描述 ：<span id="setDir"></span></div> 
          </div>
 
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
