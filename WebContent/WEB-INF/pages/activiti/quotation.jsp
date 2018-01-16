@@ -69,7 +69,7 @@
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
-	                <div class="modelNameTitle">模板名</div>
+	                <div class="modelNameTitle">模板名称</div>
 	                <input class="modelNameInput" id="modelName" />
 	            </div>
                <div class="btnMid">
@@ -86,9 +86,10 @@
 	            </div>
 	            <div class="modelName">
 		            <div class="orderItem" id="projectNameError">
-		                <div class="modelNameTitle">模板名</div>
+		                <div class="modelNameTitle">项目名称</div>
 			            <div class="orderSelect oredrProduct tomid"  >
 			                <div id="toSetProductName"></div>
+			                 <img src="${imgPath}/index/select.png">
 			                <ul class="oSelect" id="productSelect">
 			                </ul>    
 				        </div>
@@ -282,7 +283,7 @@
 			  
 			   <div class="orderItem" id="projectChildenError" > 
 		            <div class="mR8">收费项</div>
-		            <div class="orderSelect orderMultSelect" style="width: 250px !important;">
+		            <div class="orderSelect orderMultSelect" style="width: 220px !important;">
 		                <input type="hidden" id="projectParent"/>
 		                <div id="projectChilden"></div>
 		                <img src="${imgPath}/index/select.png">
