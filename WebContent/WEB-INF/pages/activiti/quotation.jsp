@@ -300,8 +300,8 @@
              <div class="dir" style="margin-top: 29px;margin-left: 20px;">单价 ：<span id="setCost"></span></div> 
           </div>   
              <div class="orderItem " style="position: static;"> 
+                <div class=" searchBtn"  id="toClear">清空表单</div>
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
-	            <div class=" searchBtn"  id="toClear">清空表单</div>
 	            <div class=" searchBtn"  id="toModel">加载模板</div>
 	            <div class=" searchBtn"  id="openFrom">加载报价单</div>
             </div>
@@ -341,8 +341,8 @@
          <div class="hasTax"><div>含税总价格</div>  <div>¥</div> <div id="setFinalCost">0</div></div>
          <div class="createQuo">
                  <div class="btn-c-r createFrom">生成报价单</div>
-                 <div class="btn-c-r createModel">生成模板</div>
-                 <div class="btn-c-r createFromTable">保存报价单</div>
+                 <div class="btn-c-r createModel">保存为个人模板</div>
+                 <div class="btn-c-r createFromTable">保存为项目报价单单</div>
          </div>
     </div>
   </div> 

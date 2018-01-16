@@ -963,15 +963,20 @@ function productLineEven(){
 				$('#setTableTitle').html('已存在报价单，是否覆盖报价单？');
 				$('.sureClear').off('click').on('click',function(){
 					loadProductTable(thisId);
-					 $('#clearTable').hide();
+					$('#clearTable').hide();
 				    $('#productWindow').hide();
 				});
 				$('.cancle').off('click').on('click',function(){							  
 			    	$('#clearTable').hide();
 				});
+				$('#quotationId').val('');
+				$('#projectId').val('');
+				
 	    	}else{
 	    		loadProductTable(thisId);
 	        	$('#productWindow').hide();
+	        	$('#quotationId').val('');
+				$('#projectId').val('');
 	    	}
     	}
 
