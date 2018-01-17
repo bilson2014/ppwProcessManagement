@@ -59,7 +59,7 @@ function clickEven(){
 		$('.modelContent').html('');
 	    $('.tap').removeClass('active');
 		$('#productLine').addClass('active');
-		$('#delProduct').show();
+		$('#delProduct').hide();
 		loadProdcut(1);
 	});
 	
@@ -98,6 +98,7 @@ function clickEven(){
 	
 	$('.createQuo .createModel').off('click').on('click',function(){		
 		var setTr = $('.setTr tr').length;
+		$('#templateId').val('');
 		if(setTr > 0){
 			$('#showModelName').show();
 			$('#tempNameError').attr('data-content','');
@@ -992,7 +993,7 @@ function productLineEven(){
     	$('#templateId').val(thisId);
     	if(thisId>0){
     		$('#submitCheckBtn').show();
-    		$('#submitCheckBtn').off('click').on('click',function(){
+    		$('.submitCheckBtn').off('click').on('click',function(){
     			delProduct(thisId);
     		});
     		
@@ -1107,9 +1108,9 @@ function delProduct(id){
     		$('.modelActive').remove();
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
+    		$('#isSuccess').text('删除模板');
     		$('#errorImg').show();
-    		$('#successContent').text('报价单生成失败,请重试或联系技术部');
+    		$('#successContent').text('模板删除失败,请重试或联系技术部');
     	}
 	}, getContextPath() + '/quotation/temp/delete/'+id,'');
 	
@@ -1212,7 +1213,7 @@ function submitDateMyDate(){
 function findModelNames(){
 	$('#getModelName').bind('input propertychange', function() {
 		var theName = $(this).val();
-		$('#projectId').val('');
+		$('#templateId').val('');
 		findAutoInfo(theName);
 	});
 }
