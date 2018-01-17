@@ -1087,6 +1087,9 @@ function saveProduct(){
     		$('#isSuccess').text('生成模板');
     		$('#errorImg').show();
     		$('#successContent').text(res.err);
+    		$('#sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    		});
     	}
 	}, getContextPath() + '/quotation/temp/save',$.toJSON({
 		items : finalAsc,
