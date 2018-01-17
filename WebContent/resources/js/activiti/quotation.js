@@ -1061,7 +1061,7 @@ function checkProduct(){
 	}));
 	
 }
-/quotation/save/validate-name
+
 
 function saveProduct(){
 	
