@@ -1051,15 +1051,28 @@ function loadProductTable(id){
 }
 
 function checkProduct(){
-	loadData(function(res){
-		if(res){
+	/*loadData(function(res){
+		if(res.result){
 			saveProduct();			
+		}else{
+			
 		}
 	}, getContextPath() + '/quotation/temp/validate-name',$.toJSON({
         templateId : $('#templateId').val(),
         templateName : $('#getModelName').val()	
-	}));
-	
+	}));*/
+	var getModelName = $('#getModelName').val();
+	var list = $('#tempSelect li');
+	if(list.length > 0){
+		for (var int = 0; int < list.length; int++) {
+			if($(list[int]).text() == getModelName){
+				$('#templateId').val($(list[int]).attr('data-id'));
+			}
+			saveProduct();	
+		}
+	}else{
+		saveProduct();	
+	}
 }
 
 
@@ -1070,9 +1083,9 @@ function saveProduct(){
     		$('#showModelName').hide();
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
+    		$('#isSuccess').text('生成模板');
     		$('#errorImg').show();
-    		$('#successContent').text('报价单生成失败,请重试或联系技术部');
+    		$('#successContent').text(res.err);
     	}
 	}, getContextPath() + '/quotation/temp/save',$.toJSON({
 		items : finalAsc,
@@ -1081,7 +1094,7 @@ function saveProduct(){
 		subTotal:$('#localPrice').text(),
         total: $('#setFinalCost').text(),
         templateId : $('#templateId').val(),
-        templateName : $('#modelName').val()	
+        templateName : $('#getModelName').val()	
 	}));
 	
 }

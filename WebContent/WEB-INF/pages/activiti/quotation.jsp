@@ -71,7 +71,7 @@
 	            <div class="modelName">
 		            <div class="orderItem" id="tempNameError">
 			                <div class="modelNameTitle">模板名称</div>
-				            <div class="orderSelect oredrProduct tomid"  >
+				            <div class="orderSelect oredrProduct tomid" >
 				                 <input class="modelNameInput" id="getModelName" />
 				                 <img src="${imgPath}/index/select.png">
 				                <ul class="oSelect" id="tempSelect">
