@@ -997,7 +997,7 @@ function productLineEven(){
     		});
     		
     		$('.cancle').off('click').on('click',function(){
-    			delProduct(thisId);
+    			$('#submitCheckBtn').hide();
     		});
     		
     	}
@@ -1055,12 +1055,13 @@ function checkProduct(){
 		if(res){
 			saveProduct();			
 		}
-	}, getContextPath() + '/quotation/save/validate-name',$.toJSON({
+	}, getContextPath() + '/quotation/temp/validate-name',$.toJSON({
         templateId : $('#templateId').val(),
         templateName : $('#getModelName').val()	
 	}));
 	
 }
+/quotation/save/validate-name
 
 function saveProduct(){
 	
