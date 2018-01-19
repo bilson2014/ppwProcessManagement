@@ -65,15 +65,14 @@
 <div class="cusModel" id="showModelName" >
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">填写模板名</div>
+	                   <div class="title">填写个人模板名</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
 		            <div class="orderItem" id="tempNameError">
-			                <div class="modelNameTitle">模板名称</div>
+			                <div class="modelNameTitle">个人模板名称</div>
 				            <div class="orderSelect oredrProduct tomid" >
 				                 <input class="modelNameInput" id="getModelName" />
-				                 <img src="${imgPath}/index/select.png">
 				                <ul class="oSelect" id="tempSelect">
 				                </ul>    
 					        </div>
@@ -356,12 +355,12 @@
          <div class="createQuo">
                  <div class="btn-c-r createFrom">生成报价单</div>
                  <div class="btn-c-r createModel">保存为个人模板</div>
-                 <div class="btn-c-r createFromTable">保存为项目报价单单</div>
+                 <div class="btn-c-r createFromTable">保存为项目报价单</div>
          </div>
     </div>
   </div> 
   
- <form method="post" action="/quotation/export/" id="toListForm" class="hide">
+<form method="post" action="/quotation/export/" id="toListForm" class="hide">
 			            <input type='hidden' name="itemContent" id="sitems" />
 			            <input type='hidden' name="quotationId" id="squotationId"/>
 			            <input type='hidden' name="projectId" id="sprojectId"/>

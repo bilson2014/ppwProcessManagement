@@ -37,6 +37,7 @@ function getTableInfo(){
 			$('#quotationId').val(src.quotationId);
 			$('#tax').val(src.taxRate);
 			$('#projectName').val(src.projectName);
+			$('#free').val(src.discount);
 		//	$('#dayTime').val(src.updateDate);
 			finalAsc.push(new cTable(src.items[0]));
 			controlArray.createTable();
@@ -112,6 +113,14 @@ function clickEven(){
 					checkProduct();
 				}
 			});
+		}else{
+				$('#submitCheck').show();
+	    		$('#isSuccess').text('保存个人模板  ');
+	    		$('#errorImg').show();
+	    		$('#successContent').text('保存个人模板失败，请填写数据后再进行保存');
+	    		$('.sureCheck').off('click').on('click',function(){
+	    			$('#submitCheck').hide();
+	    		});
 		}
 	});
 	
@@ -524,6 +533,10 @@ function projectName(){
 		findAutoInfo(theName);
 	});*/
 	$('#toSetProductName').off('click').on('click',function(){
+		findAutoInfo('');
+	});
+	
+	$('#toSetProductName').parent().find('img').off('click').on('click',function(){
 		findAutoInfo('');
 	});
 	/*$('#toSetProductName').on('blur', function() {
@@ -1044,8 +1057,13 @@ function loadProdcut(num){
 }
 
 function loadProductTable(id){
-	loadData(function(res){
-			 finalAsc = res.items;
+	loadData(function(src){
+			$('#templateId').val(src.templateId);
+			$('#quotationId').val(src.quotationId);
+			$('#tax').val(src.taxRate);
+			$('#projectName').val(src.projectName);
+			$('#free').val(src.discount);
+			 finalAsc = src.items;
 			 controlArray.createTable();
 		     $('#productWindow').hide();
 		}, getContextPath() + '/quotation/temp/get/'+id,null);
@@ -1087,7 +1105,7 @@ function saveProduct(){
     		$('#isSuccess').text('生成模板');
     		$('#errorImg').show();
     		$('#successContent').text(res.err);
-    		$('#sureCheck').off('click').on('click',function(){
+    		$('.sureCheck').off('click').on('click',function(){
     			$('#submitCheck').hide();
     		});
     	}
@@ -1141,6 +1159,7 @@ function loadProductEven(){
 		    		$('#clearTable').show();
 					$('#setTableTitle').html('已存在报价单，是否覆盖报价单？');
 					$('.sureClear').off('click').on('click',function(){
+						finalAsc = new Array();
 						getTableInfo();
 						$('#clearTable').hide();
 						$('#loadProductModel').hide();
@@ -1150,6 +1169,7 @@ function loadProductEven(){
 				    	$('#clearTable').hide();
 					});
 		    	}else{
+		    		finalAsc = new Array();
 		    		getTableInfo();
 		    		$('#loadProductModel').hide();
 		    		$('#projectName').text(thisName);
@@ -1217,11 +1237,11 @@ function findModelNames(){
 	$('#getModelName').bind('input propertychange', function() {
 		var theName = $(this).val();
 		$('#templateId').val('');
-		findAutoInfo(theName);
+		findAutoModelInfo(theName);
 	});
 }
 
-function findAutoInfo(userName){
+function findAutoModelInfo(userName){
 	loadData(function(res){
 		var res = res;
 		var body = $('#tempSelect');
