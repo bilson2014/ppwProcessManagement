@@ -242,11 +242,11 @@
  <div class="cusModel" id="loadProductModel">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">报价单</div>
+                   <div class="title">项目报价单</div>
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
-                <div class="tap active" id="productLine" style="width:100%">加载报价单</div>
+                <div class="tap active" id="productLine" style="width:100%">打开项目报价单</div>
             </div>
             <div class="modelProductContent"> </div>
             <div class="modelControl">
