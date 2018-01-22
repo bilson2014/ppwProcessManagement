@@ -69,6 +69,14 @@ function clickEven(){
 		loadProdcut(1);
 	});
 	
+	$('#dayNum').on('blur',function(){
+		$('#dayNumError').attr('data-content','');
+	});
+	
+	$('#needNum').on('blur',function(){
+		$('#needNumError').attr('data-content','');
+	});
+	
 	$('.closeWindow').off('click').on('click',function(){
 		$('#errorSame').hide();
 	});

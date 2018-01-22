@@ -69,7 +69,7 @@
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
-	                <div class="modelWarn">输入新模板名称或输入关键词并选择更新已存在模板</div>
+	                <div class="modelWarn">输入新模板名称，或输入关键词并选择更新已存在模板</div>
 		            <div class="orderItem" id="tempNameError">
 			                <div class="modelNameTitle">个人模板名称</div>
 				            <div class="orderSelect oredrProduct tomid" >
