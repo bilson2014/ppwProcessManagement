@@ -86,6 +86,15 @@
             .modelName {
                 text-align: center;
                 margin-top: 60px;
+
+                .modelWarn{
+                    font-size: $font-size-base;
+                    color:$red-base;
+                    text-align: center;
+                    position: relative;
+                    top: -20px;
+                }
+
                 .orderItem:before{
                     top:40px !important;
                 }
@@ -93,7 +102,7 @@
                 .modelNameTitle{
                     font-size: $font-size-base !important;
                     margin-right: 10px;
-                        display: inline-block;
+                    display: inline-block;
                 }
 
                 .modelNameInput{
@@ -203,6 +212,11 @@
                 }
             } //产品线end
             .changeitem {
+
+                &:before{
+
+                }
+
                 color: red;
                 @media screen and (min-width: 775px) and (max-width:1025px) {
                     color: blue;
@@ -334,7 +348,26 @@
                 border: 1px solid #999;
                 position: absolute;
                 top: 107px;
-                right: 115px;
+                right: 180px;
+                cursor: pointer;
+                &:hover {
+                    color: #333;
+                }
+            }
+
+            .createModel{
+                width: 65px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                margin-left: 10px;
+                margin-top: 17px;
+                color: #666;
+                border-radius: 4px;
+                border: 1px solid #999;
+                position: absolute;
+                top: 107px;
+                right: 105px;
                 cursor: pointer;
                 &:hover {
                     color: #333;
@@ -772,10 +805,10 @@
                         text-align: center;
                     }
                     .createModel {
-                        right: 240px !important;
+                     //   right: 240px !important;
                     }
                     .createFromTable {
-                        right: 480px !important;
+                        right: 240px !important;
                     }
                 }
 
@@ -897,5 +930,5 @@
 
 
             #needNumError:before,#dayNumError:before{
-                 left:40 !important;
+                 left:40px !important;
             }

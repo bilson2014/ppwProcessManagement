@@ -82,6 +82,11 @@ function clickEven(){
 		$('#projectChilden').attr('data-price','');
 		$('#projectChilden').attr('data-full','');
         $('.orderItem').attr('data-content','');
+        $('#dayNum').val('');
+        $('#needNum').val('');
+        $('#setCost').text('');  
+        $('#setDir').text('');
+        
         finalAsc = new Array();
         $('#localPrice').text(0);
         $('#setFinalCost').text(0);
@@ -109,9 +114,10 @@ function clickEven(){
 		}
 	});	
 	
-	$('.createQuo .createModel').off('click').on('click',function(){		
+	$('.createModel').off('click').on('click',function(){		
 		var setTr = $('.setTr tr').length;
 		$('#templateId').val('');
+		$('#getModelName').val('');
 		if(setTr > 0){
 			$('#showModelName').show();
 			$('#tempNameError').attr('data-content','');
@@ -138,6 +144,7 @@ function clickEven(){
 	
     $('.createQuo .createFromTable').off('click').on('click',function(){
          $('#projectNameError').attr('data-content','');
+         $('#toSetProductName').text('');
          var hasId = $('#projectId').val();
          
          $('.closeModel').off('click').on('click',function(){

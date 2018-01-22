@@ -69,6 +69,7 @@
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
+	                <div class="modelWarn">输入新模板名称或输入关键词并选择更新已存在模板</div>
 		            <div class="orderItem" id="tempNameError">
 			                <div class="modelNameTitle">个人模板名称</div>
 				            <div class="orderSelect oredrProduct tomid" >
@@ -314,15 +315,15 @@
           </div>   
              <div class="orderItem " style="position: static;"> 
                 <div class=" searchBtn"  id="toClear">清空表单</div>
-	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
+	            <div class=" searchBtn btn-c-r" style="text-align:center;border:none;color:white" id="toAdd" >添加</div>
 	            <div class=" searchBtn"  id="toModel">打开模板</div>
+	            <div class=" searchBtn createModel">保存模板</div>
 	            <div class=" searchBtn"  id="openFrom">打开项目</div>
             </div>
  
             </br>
             
-             <div class="dir" style="width: 75%;
-    line-height: 15px;">收费项描述 ：<span id="setDir"></span></div> 
+             <div class="dir" style="width: 75%;line-height: 15px;">收费项描述 ：<span id="setDir"></span></div> 
          </div>
 
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
@@ -347,15 +348,15 @@
              <div>税率（%）：</div>
              <input id="tax" value="6">
         </div>
-         <div class="taxItem">
+        <div class="taxItem">
              <div>优惠（元）：</div>
              <input id="free" value="0">
         </div>
          <div class="hasTax"><div>含税总价格</div>  <div>¥</div> <div id="setFinalCost">0</div></div>
          <div class="createQuo">
-                 <div class="btn-c-r createFrom">生成报价单</div>
-                 <div class="btn-c-r createModel">保存为个人模板</div>
-                 <div class="btn-c-r createFromTable">保存为项目报价单</div>
+                 <div class="btn-c-r createFrom">导出</div>
+                 <!-- <div class="btn-c-r createModel">保存为个人模板</div> -->
+                 <div class="btn-c-r createFromTable">保存至项目</div>
          </div>
     </div>
   </div> 
@@ -370,8 +371,6 @@
 			            <input type='hidden' name="total" id="stotal"/>
 			            <input type='hidden' name="projectName" id="sprojectName"/>
 </form> 
-
-        
 
 </body>
 
