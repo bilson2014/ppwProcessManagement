@@ -152,7 +152,7 @@
             <div class="errorContent">
                  <div class="title">确认清空表单吗？</div>
                  <div class="btnMid">
-                      <div class="btn-c-g cancle">取消</div>
+                      <div class="btn-c-g cancle" id="surCancleBtn">取消</div>
                       <div class="btn-c-r sureDel">确认</div>
                  </div>
             </div>
@@ -310,13 +310,13 @@
 	            <div class="mR8" id="needT">数量</div>
 	            <input class="shortDiv" id="needNum" value="">
             </div>
-             <div class="dir" style="margin-top: 29px;margin-left: 20px;width:100px;">单价 ：<span id="setCost"></span></div> 
+             <div class="dir" style="margin-top: 29px;margin-left: 20px;width:100px;color:#666">单价 ：<span id="setCost"></span></div> 
           </div>   
              <div class="orderItem " style="position: static;"> 
                 <div class=" searchBtn"  id="toClear">清空表单</div>
 	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
-	            <div class=" searchBtn"  id="toModel">加载模板</div>
-	            <div class=" searchBtn"  id="openFrom">加载报价单</div>
+	            <div class=" searchBtn"  id="toModel">打开模板</div>
+	            <div class=" searchBtn"  id="openFrom">打开项目</div>
             </div>
  
             </br>
