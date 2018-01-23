@@ -24,6 +24,8 @@ function init(){
 	var pro = $('#projectName').text();
 	if(pro == null || pro == undefined || pro == ''){
 		$('#projectName').text('未命名项目');
+	}else{
+		$('#openFrom').hide();
 	}	
 }
 
@@ -155,7 +157,6 @@ function clickEven(){
          
          $('.closeModel').off('click').on('click',function(){
         	 $('.cusModel').hide();
-        	 $('#projectId').val('');
          });
          
          if(hasId == null || hasId == '' || hasId == undefined){
@@ -1231,7 +1232,6 @@ function submitDateMyDate(num){
     			$('.cusModel').hide();
     		});
     		$('#productSelect').html('');
-    		$('#projectId').val('');
     	}else{
     		$('#submitCheck').show();
     		$('#isSuccess').text('保存为项目报价单');
@@ -1242,7 +1242,6 @@ function submitDateMyDate(num){
     			$('.cusModel').hide();
     		});
     		$('#productSelect').html('');
-    		$('#projectId').val('');
     	}
 	}, getContextPath() + '/quotation/save',$.toJSON({
 		items : finalAsc,
