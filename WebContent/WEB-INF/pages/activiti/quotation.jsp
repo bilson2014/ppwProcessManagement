@@ -69,7 +69,7 @@
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
-	                <div class="modelWarn">输入新模板名称，或输入关键词并选择更新已存在模板</div>
+	                <div class="modelWarn">输入新模板名称，或选择已存在的模板</div>
 		            <div class="orderItem" id="tempNameError">
 			                <div class="modelNameTitle">个人模板名称</div>
 				            <div class="orderSelect oredrProduct tomid" >
@@ -87,7 +87,25 @@
            </div>
 </div>
 
-<div class="cusModel" id="showProductName" >
+
+ <div class="cusModel" id="showProductName">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">选择项目名</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="modelBanner">
+                <div class="tap active" id="productLine" style="width:100%">项目名称</div>
+            </div>
+            <div class="modelProductContent" id="productSelect"> </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleSavesProductName">取消</div>
+                 <div class="btn-c-r" id="savesProductName">加载</div>
+            </div>     
+     </div>
+</div>
+
+<%-- <div class="cusModel" id="showProductName" >
            <div class="modelCard" >
 	           <div class="cardTop">
 	                   <div class="title">选择项目名</div>
@@ -108,7 +126,7 @@
 			           <div class="btn-c-r closeWindow" id="savesProductName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
-</div>
+</div> --%>
 
 <div class="cusModel" id="errorProduct">
            <div class="modelCard" >
@@ -122,6 +140,22 @@
                </div>
                <div class="btnMid">
 			           <div class="btn-c-r closeWindow" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
+<div class="cusModel" id="errorSaveModel">
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">模板提示</div>
+	                   <div class="closeModel"></div>
+	            </div>
+               <div class="infoWarn">
+                   <img src="${imgPath}/index/waring.png">
+                   <div>保存会覆盖</div>
+               </div>
+               <div class="btnMid">
+			           <div class="btn-c-r SaveModelBtn" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
 </div>
@@ -246,7 +280,7 @@
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
-                <div class="tap active" id="productLine" style="width:100%">打开项目报价单</div>
+                <div class="tap active" id="productLine" style="width:100%">您正在参与进行中的项目</div>
             </div>
             <div class="modelProductContent"> </div>
             <div class="modelControl">
@@ -254,7 +288,9 @@
                  <div class="btn-c-r" id="CheckloadProduct">加载</div>
             </div>     
      </div>
-</div> 
+</div>
+
+ 
 
 
      

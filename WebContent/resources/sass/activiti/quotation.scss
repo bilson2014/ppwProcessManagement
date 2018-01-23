@@ -166,7 +166,8 @@
             }
 
             .modelItem,
-            .modelProItem {
+            .modelProItem,
+            .modelMItem {
                 height: 40px;
                 line-height: 40px;
                 padding-left: 30px;
@@ -177,7 +178,8 @@
             }
 
             .modelActive,
-            .modelPActive {
+            .modelPActive,
+            .modelMActive {
                 background: #E2F2F2;
             }
 
