@@ -111,7 +111,11 @@ public class ScheduleController extends BaseController {
 			if(pmsSchedule!=null){
 				response.setCharacterEncoding("utf-8");
 				response.setContentType("application/octet-stream");
-				String filename ="《"+ pmsSchedule.getProjectName()+"》排期表.pptx";
+				
+				String filename ="《"+ pmsSchedule.getProjectName()+"》排期表.zip";
+				if(!ValidateUtil.isValid(pmsSchedule.getProjectName()) || pmsSchedule.getProjectName().equals("未命名项目")){
+					filename ="项目排期表.zip";
+				}
 				
 				//---处理文件名
 				String userAgent = request.getHeader("User-Agent"); 

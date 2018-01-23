@@ -320,6 +320,12 @@
 			<version>0.9</version>
 		</dependency>
 		<!-- Zookeeper relation jar end -->
+		
+		<dependency>
+    		<groupId>org.apache.poi</groupId>
+    		<artifactId>poi-scratchpad</artifactId>
+    		<version>3.15</version>
+		</dependency>	
 	</dependencies>
 
 	<build>

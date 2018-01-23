@@ -134,14 +134,14 @@ public class QuotationController extends BaseController {
 	public void export(final PmsQuotation quotation,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
-//		PmsQuotation quotation = pmsQuotationFacade.getById(quotationId);
 		try {
 			if(quotation!=null){
 				response.setCharacterEncoding("utf-8");
 				response.setContentType("application/octet-stream");
-				String filename ="报价单.xlsx";
-				if(ValidateUtil.isValid(quotation.getProjectName())){
-					filename ="《"+ quotation.getProjectName()+"》报价单.xlsx";
+				
+				String filename ="《"+ quotation.getProjectName()+"》报价单.zip";
+				if(!ValidateUtil.isValid(quotation.getProjectName()) || quotation.getProjectName().equals("未命名项目")){
+					filename ="项目报价单.zip";
 				}
 				
 				//---处理文件名
@@ -162,6 +162,21 @@ public class QuotationController extends BaseController {
 						quotation.setItems(JsonUtil.fromJsonArray(quotation.getItemContent(), PmsQuotationItem.class));
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+				}
+				
+				//评估人信息
+				SessionInfo sessionInfo=this.getCurrentInfo(request);
+				quotation.setUpdateUser(sessionInfo.getRealName());
+				quotation.setUpdateUserTel(sessionInfo.getTelephone());
+				//项目信息
+				if(ValidateUtil.isValid(quotation.getProjectId())){
+					List<String> metaData=new ArrayList<>();
+					metaData.add("productName");
+					metaData.add("productConfigLevelName");
+					PmsProjectFlow flow=pmsProjectFlowFacade.getProjectFlowByProjectId(metaData, quotation.getProjectId());
+					if(flow!=null){
+						quotation.setProductName(flow.getProductName()+flow.getProductConfigLevelName());
 					}
 				}
 				
@@ -299,7 +314,22 @@ public class QuotationController extends BaseController {
 		SessionInfo info = getCurrentInfo(request);
 		//个人
 		template.setType(PmsQuotationTemplate.TYPE_SELF);
-		//TODO 校验
+		//校验
+		if(!ValidateUtil.isValid(template.getTemplateName())){
+			result.setResult(false);
+			result.setErr("模板名称不允许为空");
+			return result;
+		}
+		if(!ValidateUtil.isValid(template.getItems())){
+			result.setResult(false);
+			result.setErr("请选择报价明细");
+			return result;
+		}
+		if(!ValidateUtil.isValid(template.getTotal()) || !ValidateUtil.isValid(template.getSubTotal())){
+			result.setResult(false);
+			result.setErr("请录入价格信息");
+			return result;
+		}
 		long count=pmsQuotationTemplateFacade.checkExistName(template.getTemplateName(), template.getTemplateId(),template.getType(),info.getReqiureId());
 		if(count>0){
 			if(template.getTemplateId()!=null){
@@ -312,8 +342,16 @@ public class QuotationController extends BaseController {
 				template.setTemplateId(exists.get(0).getTemplateId());
 			}
 		}
+		template.setCreateId(info.getReqiureId());
 		
 		if(template.getTemplateId()!=null){
+			//校验数据过期
+			PmsQuotationTemplate old=pmsQuotationTemplateFacade.getById(template.getTemplateId());
+			if(old==null){
+				result.setResult(false);
+				result.setErr("数据已过期");
+				return result;
+			}
 			pmsQuotationTemplateFacade.update(template);
 		}else{
 			pmsQuotationTemplateFacade.insert(template);
