@@ -1,5 +1,7 @@
 package com.paipianwang.activiti.service;
 
+import java.io.File;
+
 import com.paipianwang.pat.workflow.entity.PmsProjectResource;
 
 public interface OnlineDocService {
@@ -17,4 +19,5 @@ public interface OnlineDocService {
 
 	public String convertFile(PmsProjectResource pmsProjectResource);
 	
+	public void convertToPdf(File sourceFile,String pdfPath);
 }

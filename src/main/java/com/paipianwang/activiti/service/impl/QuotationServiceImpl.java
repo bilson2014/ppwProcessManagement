@@ -1,9 +1,14 @@
 package com.paipianwang.activiti.service.impl;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,14 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paipianwang.activiti.poi.QuotationPoiAdapter;
+import com.paipianwang.activiti.service.OnlineDocService;
 import com.paipianwang.activiti.service.QuotationService;
+import com.paipianwang.activiti.utils.HttpUtil;
+import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.entity.PmsResult;
+import com.paipianwang.pat.common.util.FileUtils;
+import com.paipianwang.pat.common.util.PathFormatUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
-import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
-import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
 
 @Service("quotationService")
@@ -30,46 +38,92 @@ public class QuotationServiceImpl implements QuotationService {
 	private PmsQuotationFacade pmsQuotationFacade;
 	@Autowired
 	private QuotationPoiAdapter quotationPoiAdapter;
+	@Autowired
+	private OnlineDocService onlineDocService;
 	
 
 	/**
 	 * 导出报价单
 	 */
 	@Override
-	public void export(PmsQuotation quotation, OutputStream os,HttpServletRequest request) {
-//		PmsQuotation quotation = pmsQuotationFacade.getByProjectId(projectId);
+	public void export(PmsQuotation quotation, OutputStream os, HttpServletRequest request) {
 		// 创建文档
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 		// 创建一个新的页
 		XSSFSheet sheet = xssfWorkbook.createSheet("项目报价单");
-		// 不显示网格线
-		sheet.setDisplayGridlines(false);
-		sheet.setDefaultColumnWidth(15 * 256);
-		sheet.setDefaultRowHeight((short) (20 * 20));
 
 		int rowIndex = 0;
-		//生成图片头
-		try {
-			rowIndex=quotationPoiAdapter.createHeaderImg(xssfWorkbook, sheet, rowIndex, request.getServletContext().getRealPath("/resources/images/priceSheet.png"));
-		} catch (Exception e) {
-			return ;
-		}
 		// 生成项目信息
 		rowIndex = quotationPoiAdapter.createProjectInfo(xssfWorkbook, sheet, rowIndex, quotation);
+		// 分类
+		Map<String, List<PmsQuotationItem>> types = new HashMap();
+		for (PmsQuotationItem item : quotation.getItems()) {
+			if (!types.containsKey(item.getTypeName())) {
+				types.put(item.getTypeName(), new ArrayList<>());
+			}
+			types.get(item.getTypeName()).add(item);
+		}
+		// 各明细
+		int num = 1;
+		for (int i = 0; i < quotationPoiAdapter.head.length; i++) {
+			if (types.containsKey(quotationPoiAdapter.head[i][0])) {
+				rowIndex = quotationPoiAdapter.createHead(xssfWorkbook, sheet, rowIndex, i, num);
+				rowIndex = quotationPoiAdapter.createDataItem(xssfWorkbook, sheet, rowIndex,
+						types.get(quotationPoiAdapter.head[i][0]));
+				//小计金额
+				BigDecimal sum=new BigDecimal(0.0);
+				for(PmsQuotationItem item:types.get(quotationPoiAdapter.head[i][0])){
+					sum=sum.add(new BigDecimal(item.getSum()));
+				}
+				rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "小计", sum.toString());
+				rowIndex++;
+				num++;
+				continue;
+			}
+		}
 
-		// 生成头部信息
-		rowIndex = quotationPoiAdapter.createHead(xssfWorkbook, sheet, rowIndex);
-		// 生成数据
-		rowIndex = quotationPoiAdapter.createDataItem(xssfWorkbook, sheet, rowIndex, quotation);
-		// 生成合计
-		rowIndex = quotationPoiAdapter.createDataInfo(xssfWorkbook, sheet, rowIndex, quotation);
+		rowIndex = rowIndex + 2;
+		// 合计
+		rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "不含税总价(元)",
+				quotation.getSubTotal());
+		
+		rowIndex = quotationPoiAdapter.createTaxRate(xssfWorkbook, sheet, rowIndex, "税率", quotation.getTaxRate());
+		rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "优惠(元)", quotation.getDiscount());
+		rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "总价(元)", quotation.getTotal());
 
-		// 数据导出
+		String projectName=quotation.getProjectName();
+		if(!ValidateUtil.isValid(projectName) || projectName.equals("未命名项目") || projectName.equals("null")){
+			projectName="";
+		}
+		String name=projectName+"报价单"+PathFormatUtils.parse("{yy}{mm}{dd}{hh}{ii}{ss}");
+		String basePath=PublicConfig.DOC_TEMP_PATH+File.separator+"temp"+File.separator;
+		File sourceFile=new File(basePath+name+".xlsx");
+		String pdfPath=basePath+name+".pdf";
+		String destPath=basePath+name+".zip";
+		File pdfFile=new File(pdfPath);
+		File zipFile=new File(destPath);
+		
 		try {
-			xssfWorkbook.write(os);
+			xssfWorkbook.write(new FileOutputStream(sourceFile));
 			xssfWorkbook.close();
-		} catch (IOException e) {
+			//转pdf
+			onlineDocService.convertToPdf(sourceFile,pdfPath);
+			//数据压缩
+			FileUtils.zipFile(destPath, sourceFile,pdfFile);
+			// 数据导出
+			HttpUtil.saveTo(new FileInputStream(zipFile), os);
+		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			if(sourceFile.exists()){
+				sourceFile.delete();
+			}
+			if(pdfFile.exists()){
+				pdfFile.delete();
+			}
+			if(zipFile.exists()){
+				zipFile.delete();
+			}
 		}
 	}
 
@@ -80,6 +134,18 @@ public class QuotationServiceImpl implements QuotationService {
 	@Override
 	public PmsResult saveOrUpdateQuotation(PmsQuotation pmsQuotation) {
 		PmsResult result=new PmsResult();
+		//校验
+		if(!ValidateUtil.isValid(pmsQuotation.getProjectName())){
+			result.setResult(false);
+			result.setErr("项目名称不允许为空");
+			return result;
+		}
+		
+		if(!ValidateUtil.isValid(pmsQuotation.getTotal()) || !ValidateUtil.isValid(pmsQuotation.getSubTotal())){
+			result.setResult(false);
+			result.setErr("请录入价格信息");
+			return result;
+		}
 		//数据格式转换
 		List<PmsQuotationItem> items=pmsQuotation.getItems();
 		if(!ValidateUtil.isValid(items)){
@@ -123,6 +189,11 @@ public class QuotationServiceImpl implements QuotationService {
 				result=pmsQuotationFacade.insert(pmsQuotation);
 			}
 		}*/
+		PmsQuotation old=pmsQuotationFacade.getByProjectId(pmsQuotation.getProjectId());
+		if(old!=null){
+			//项目作为唯一标记
+			pmsQuotation.setQuotationId(old.getQuotationId());
+		}
 		if(ValidateUtil.isValid(pmsQuotation.getQuotationId())){
 			result=pmsQuotationFacade.update(pmsQuotation);
 		}else{
@@ -139,6 +210,7 @@ public class QuotationServiceImpl implements QuotationService {
 			double sum=Double.parseDouble(item.getSum());
 			if(item.getFullJob()==PmsQuotationType.FULLJOB_NO){
 				//非整包
+				sum=(item.getDays()==null?1:Integer.parseInt(item.getDays()))*Integer.parseInt(item.getQuantity())*item.getUnitPrice();
 //				sum=(item.getDays()==null?1:item.getDays())*item.getQuantity()*item.getUnitPrice();
 
 				if(sum!=Double.parseDouble(item.getSum())){
