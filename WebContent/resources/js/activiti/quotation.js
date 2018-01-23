@@ -24,8 +24,7 @@ function init(){
 	var pro = $('#projectName').val();
 	if(pro == null || pro == undefined || pro == ''){
 		$('#projectName').text('未命名项目');
-	}
-	
+	}	
 }
 
 function getTableInfo(){

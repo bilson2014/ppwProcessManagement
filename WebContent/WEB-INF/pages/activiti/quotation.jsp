@@ -280,7 +280,7 @@
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
-                <div class="tap active" id="productLine" style="width:100%">您正在参与进行中的项目</div>
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
             </div>
             <div class="modelProductContent"> </div>
             <div class="modelControl">
@@ -301,7 +301,6 @@
    
    <div class="pages">
      <div class="searchInfo">
-          
          <%-- 	<div class="orderItem" id="projectNameError">
 	                <div class="mR8">项目名称</div>
 		            <div class="orderSelect oredrProduct"  >
