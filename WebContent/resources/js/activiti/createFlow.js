@@ -456,7 +456,7 @@ function getSynInfo(){
 
 // 获取客户评级
 function getValue(id){	
-	var levelName = '';
+	var levelName = 'E';
 	if(id == 0)
 		levelName = 'S';
 	else if(id == 1)
