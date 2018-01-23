@@ -147,12 +147,12 @@
 <div class="cusModel" id="errorSaveModel">
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">模板提示</div>
+	                   <div class="title">更新项目报价单</div>
 	                   <div class="closeModel"></div>
 	            </div>
                <div class="infoWarn">
                    <img src="${imgPath}/index/waring.png">
-                   <div>保存会覆盖</div>
+                   <div>是否更新该项目报价单？</div>
                </div>
                <div class="btnMid">
 			           <div class="btn-c-r SaveModelBtn" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>

@@ -1215,7 +1215,7 @@ function submitDateMyDate(num){
 	}
 	
 	if(proId == null || proId == '' || proId == undefined){
-		proId = $('#projectId');
+		proId = $('#projectId').val();
 	}
 	
     loadData(function(res){
@@ -1233,7 +1233,6 @@ function submitDateMyDate(num){
     		});
     		$('#productSelect').html('');
     		$('#projectId').val('');
-    		
     	}else{
     		$('#submitCheck').show();
     		$('#isSuccess').text('保存为项目报价单');

@@ -36,7 +36,6 @@ import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.paipianwang.activiti.test.SchedulePPTTest;
 import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.util.JsonUtil;
 import com.paipianwang.pat.common.util.PathFormatUtils;
