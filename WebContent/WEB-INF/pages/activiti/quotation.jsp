@@ -91,16 +91,16 @@
  <div class="cusModel" id="showProductName">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">选择项目名</div>
+                   <div class="title">保存项目</div>
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
-                <div class="tap active" id="productLine" style="width:100%">项目名称</div>
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
             </div>
             <div class="modelProductContent" id="productSelect"> </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleSavesProductName">取消</div>
-                 <div class="btn-c-r" id="savesProductName">加载</div>
+                 <div class="btn-c-r" id="savesProductName">保存</div>
             </div>     
      </div>
 </div>
@@ -265,7 +265,7 @@
             </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleProduct">取消</div>
-                 <div style="background: #BABABA;" id="delProduct">删除</div>
+                 <div class="btn-c-g"  id="delProduct">删除</div>
                  <div class="btn-c-r" id="loadProduct">加载</div>
             </div>
         

@@ -40,7 +40,9 @@ function getTableInfo(){
 			$('#projectName').val(src.projectName);
 			$('#free').val(src.discount);
 		//	$('#dayTime').val(src.updateDate);
-			finalAsc.push(new cTable(src.items[0]));
+			for (var int = 0; int < src.items.length; int++) {
+				finalAsc.push(new cTable(src.items[int]));
+			}
 			controlArray.createTable();
 			dataEven();
 			$('.orderItem').attr('data-content','');
@@ -142,7 +144,7 @@ function clickEven(){
 			});
 		}else{
 				$('#submitCheck').show();
-	    		$('#isSuccess').text('保存个人模板  ');
+	    		$('#isSuccess').text('保存至项目 ');
 	    		$('#errorImg').show();
 	    		$('#successContent').text('保存个人模板失败，请填写数据后再进行保存');
 	    		$('.sureCheck').off('click').on('click',function(){
@@ -154,34 +156,45 @@ function clickEven(){
     $('.createQuo .createFromTable').off('click').on('click',function(){
 
          var hasId = $('#projectId').val();
+         var setTr = $('.setTr tr').length;
          
          $('.closeModel').off('click').on('click',function(){
         	 $('.cusModel').hide();
          });
          
-         if(hasId == null || hasId == '' || hasId == undefined){
-        	 $('#showProductName').show();
-        	 projectName();
-           //  $('#toSetProductName').val($('#projectName').text());
-        	 $('#savesProductName').off('click').on('click',function(){
-        		 hasId = $('.modelMActive').attr('data-id');
-        		 $('#projectId').val(hasId);
-            	 if(hasId == null || hasId == '' || hasId == undefined){
-            		// $('#projectNameError').attr('data-content','请选择项目');
-            	 }else{
-            		 submitDateMyDate(0);           		 
-            	 }
-             });
-        	 $('#cancleSavesProductName').off('click').on('click',function(){
-        		 $('#showProductName').hide();
-             });
-    	 }else{
-    		 
-    		 $('#errorSaveModel').show();
-    		 $('.SaveModelBtn').off('click').on('click',function(){
-    			 submitDateMyDate(1);
-    		 });
-    	 }
+         if(setTr > 0){
+             if(hasId == null || hasId == '' || hasId == undefined){
+            	 $('#showProductName').show();
+            	 projectName();
+               //  $('#toSetProductName').val($('#projectName').text());
+            	 $('#savesProductName').off('click').on('click',function(){
+            		 hasId = $('.modelMActive').attr('data-id');
+            		 $('#projectId').val(hasId);
+                	 if(hasId == null || hasId == '' || hasId == undefined){
+                		// $('#projectNameError').attr('data-content','请选择项目');
+                	 }else{
+                		 submitDateMyDate(0);           		 
+                	 }
+                 });
+            	 $('#cancleSavesProductName').off('click').on('click',function(){
+            		 $('#showProductName').hide();
+                 });
+        	 }else{
+        		 $('#errorSaveModel').show();
+        		 $('.SaveModelBtn').off('click').on('click',function(){
+        			 submitDateMyDate(1);
+        		 });
+        	 }
+         }else{
+        	 $('#submitCheck').show();
+        	 $('#isSuccess').text('保存项目');
+     		$('#errorImg').show();
+     		$('#successContent').text('不能保存空报价单，请添加数据后再保存至项目');
+     		$('.sureCheck').off('click').on('click',function(){
+     			$('#submitCheck').hide();
+     		});
+         }
+    
     		 
 	});
 	
@@ -999,13 +1012,11 @@ function productLineEven(){
 			    	$('#clearTable').hide();
 				});
 				$('#quotationId').val('');
-				$('#projectId').val('');
 				
 	    	}else{
 	    		loadProductTable(thisId);
 	        	$('#productWindow').hide();
 	        	$('#quotationId').val('');
-				$('#projectId').val('');
 			//	$('#projectName').text(thisName);
 	    	}
     	}

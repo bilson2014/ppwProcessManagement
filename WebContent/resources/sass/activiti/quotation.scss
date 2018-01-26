@@ -607,7 +607,7 @@
                 background: $f0!important;
                 td {
                     background: $f0!important;
-                    font-size: $font-size-base!important;
+                    font-size: $font-size-sm!important;
                     color: $gray-dark !important;
                     font-weight: 500;
                 }
@@ -651,6 +651,7 @@
                 color: #666;
                 vertical-align: middle;
                 height: 40px;
+                font-size: $font-size-sm;
             }
 
             tr:nth-child(2n) {
