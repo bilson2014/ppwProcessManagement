@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -269,7 +268,7 @@ public class QuotationController extends BaseController {
 		List<PmsQuotationTemplate> list=pmsQuotationTemplateFacade.listSelect(sessionInfo.getReqiureId());
 		
 		List<QuotationTemplateSelectVO> person=new ArrayList<>();
-		Set<QuotationTemplateSelectVO> chanpin=new HashSet<>();
+		LinkedHashSet<QuotationTemplateSelectVO> chanpin=new LinkedHashSet<>();
 		
 		result.put("person", person);
 		result.put("chanpin", chanpin);

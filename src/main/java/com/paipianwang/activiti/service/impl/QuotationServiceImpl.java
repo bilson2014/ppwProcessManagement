@@ -56,7 +56,7 @@ public class QuotationServiceImpl implements QuotationService {
 		// 生成项目信息
 		rowIndex = quotationPoiAdapter.createProjectInfo(xssfWorkbook, sheet, rowIndex, quotation);
 		// 分类
-		Map<String, List<PmsQuotationItem>> types = new HashMap();
+		Map<String, List<PmsQuotationItem>> types = new HashMap<>();
 		for (PmsQuotationItem item : quotation.getItems()) {
 			if (!types.containsKey(item.getTypeName())) {
 				types.put(item.getTypeName(), new ArrayList<>());
