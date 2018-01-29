@@ -1,25 +1,32 @@
 package com.paipianwang.activiti.service.impl;
 
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.paipianwang.activiti.poi.ScheduleDateUtil;
 import com.paipianwang.activiti.poi.SchedulePPTPoiAdapter;
+import com.paipianwang.activiti.service.OnlineDocService;
 import com.paipianwang.activiti.service.ScheduleService;
+import com.paipianwang.activiti.utils.HttpUtil;
+import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.entity.PmsResult;
+import com.paipianwang.pat.common.util.FileUtils;
+import com.paipianwang.pat.common.util.PathFormatUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.PmsSchedule;
@@ -39,6 +46,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private PmsProjectFlowFacade pmsProjectFlowFacade;
 	@Autowired
 	private SchedulePPTPoiAdapter schedulePPTPoiAdapter;
+	@Autowired
+	private OnlineDocService onlineDocService;
 
 	/**
 	 * 保存/更新
@@ -104,10 +113,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 */
 	@Override
 	public void export(PmsSchedule schedule, OutputStream os, HttpServletRequest request) throws Exception{
-
 		//格式化排期明细
+		List<PmsScheduleItem[][]> items=null;
 		try {
-			ScheduleDateUtil.formatScheduleItem(schedule);
+			items=ScheduleDateUtil.formatScheduleItemIndex(schedule);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("数据格式异常");
@@ -120,37 +129,60 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 		schedulePPTPoiAdapter.setImgPath(request.getServletContext().getRealPath("/resources/images/pptTitle.png"));
 		
-		XMLSlideShow ppt = new XMLSlideShow();
+		HSLFSlideShow ppt = new HSLFSlideShow();
 		// 设置幻灯片大小
 		ppt.setPageSize(new Dimension(1900, 1100));
+		
 		// 理解为ppt里的每一页
-		XSLFSlide slide = ppt.createSlide();// 创建幻灯片
+		HSLFSlide  slide = ppt.createSlide();// 创建幻灯片
+		
 
 		// 表头
 		schedulePPTPoiAdapter.createTitle(slide, schedule);
 		// 图片
 		schedulePPTPoiAdapter.createPic(ppt, slide);
 		
-		List<PmsScheduleItem[]> lists=schedule.getItemLists();
-		// 表格
-		int begin=0;
-		int end=0;
-		do {
-			schedulePPTPoiAdapter.createMsg(slide);
-			end=begin+5;
-			if(end>=lists.size()){
-				schedulePPTPoiAdapter.createTable(slide, schedule.getItemLists().subList(begin,lists.size()));
-			}else{
-				schedulePPTPoiAdapter.createTable(slide, schedule.getItemLists().subList(begin,end));
+		for(int i=0;i<items.size();i++){
+			
+			PmsScheduleItem[][] month=items.get(i);
+			if(i!=0){
 				slide = ppt.createSlide();// 创建幻灯片
 			}
-			begin=end;
-		} while (begin<lists.size());
-		
+			schedulePPTPoiAdapter.createMsg(slide);
+			schedulePPTPoiAdapter.createTable(slide, month);
+		}
+		String projectName=schedule.getProjectName();
+		if(!ValidateUtil.isValid(projectName) || projectName.equals("未命名项目") || projectName.equals("null")){
+			projectName="";
+		}
+		String name=projectName+"排期表"+PathFormatUtils.parse("{yy}{mm}{dd}{hh}{ii}{ss}");
+		String basePath=PublicConfig.DOC_TEMP_PATH+File.separator+"temp"+File.separator;
+		File sourceFile=new File(basePath+name+".ppt");
+		String pdfPath=basePath+name+".pdf";
+		String destPath=basePath+name+".zip";
+		File pdfFile=new File(pdfPath);
+		File zipFile=new File(destPath);
 		try {
-			ppt.write(os);
-		} catch (Exception e) {
+			ppt.write(new FileOutputStream(sourceFile));
 			
+			//转pdf
+			onlineDocService.convertToPdf(sourceFile,pdfPath);
+			//数据压缩
+			FileUtils.zipFile(destPath, sourceFile,pdfFile);
+			// 数据导出
+			HttpUtil.saveTo(new FileInputStream(zipFile), os);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			if(sourceFile.exists()){
+				sourceFile.delete();
+			}
+			if(pdfFile.exists()){
+				pdfFile.delete();
+			}
+			if(zipFile.exists()){
+				zipFile.delete();
+			}
 		}
 	
 	}

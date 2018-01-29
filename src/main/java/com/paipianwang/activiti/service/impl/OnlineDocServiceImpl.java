@@ -91,4 +91,28 @@ public class OnlineDocServiceImpl implements OnlineDocService {
 
 		return "";
 	}
+
+	@Override
+	public void convertToPdf(File sourceFile, String pdfPath) {
+		try {
+			//TODO 
+			String CONVERSION_URL = PublicConfig.FILE_CONVERTION_SERVER + "/FileConversion/convertPdf";
+//			String CONVERSION_URL = "http://localhost:8086/FileConversion/convertPdf";
+				// 构建模拟表单
+				MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+				multipartEntityBuilder.addBinaryBody("file", sourceFile);
+				InputStream stream = HttpUtil.httpPostFileForm(CONVERSION_URL, multipartEntityBuilder);
+				
+				File temp1=new File(pdfPath);
+				FileOutputStream fos = new FileOutputStream(temp1);
+				try {
+					HttpUtil.saveTo(stream, fos);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

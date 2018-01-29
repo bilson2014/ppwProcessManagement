@@ -65,28 +65,68 @@
 <div class="cusModel" id="showModelName" >
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">填写模板名</div>
+	                   <div class="title">填写个人模板名</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="modelName"><input id="modelName" /></div>
+	            <div class="modelName">
+	                <div class="modelWarn">输入新模板名称，或选择已存在的模板</div>
+		            <div class="orderItem" id="tempNameError">
+			                <div class="modelNameTitle">个人模板名称</div>
+				            <div class="orderSelect oredrProduct tomid" >
+				                 <input class="modelNameInput" id="getModelName" />
+				                <ul class="oSelect" id="tempSelect">
+				                </ul>    
+					        </div>
+		           		 </div>
+	                <!-- <div class="modelNameTitle">模板名称</div>
+	                <input class="modelNameInput" id="modelName" /> -->
+	            </div>
                <div class="btnMid">
 			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
 </div>
 
-<div class="cusModel" id="showProductName" >
+
+ <div class="cusModel" id="showProductName">
+     <div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">保存项目</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="modelBanner">
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
+            </div>
+            <div class="modelProductContent" id="productSelect"> </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleSavesProductName">取消</div>
+                 <div class="btn-c-r" id="savesProductName">保存</div>
+            </div>     
+     </div>
+</div>
+
+<%-- <div class="cusModel" id="showProductName" >
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">填写项目名</div>
+	                   <div class="title">选择项目名</div>
 	                   <div class="closeModel"></div>
 	            </div>
-	            <div class="modelName"><input id="toSetProductName" /></div>
+	            <div class="modelName">
+		            <div class="orderItem" id="projectNameError">
+		                <div class="modelNameTitle">项目名称</div>
+			            <div class="orderSelect oredrProduct tomid"  >
+			                <div id="toSetProductName"></div>
+			                 <img src="${imgPath}/index/select.png">
+			                <ul class="oSelect" id="productSelect">
+			                </ul>    
+				        </div>
+	           		 </div>
+	            </div>
                <div class="btnMid">
-			           <div class="btn-c-r closeWindow" id="saveModelName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+			           <div class="btn-c-r closeWindow" id="savesProductName" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
-</div>
+</div> --%>
 
 <div class="cusModel" id="errorProduct">
            <div class="modelCard" >
@@ -100,6 +140,22 @@
                </div>
                <div class="btnMid">
 			           <div class="btn-c-r closeWindow" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
+
+<div class="cusModel" id="errorSaveModel">
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">更新项目报价单</div>
+	                   <div class="closeModel"></div>
+	            </div>
+               <div class="infoWarn">
+                   <img src="${imgPath}/index/waring.png">
+                   <div>是否更新该项目报价单？</div>
+               </div>
+               <div class="btnMid">
+			           <div class="btn-c-r SaveModelBtn" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
 		       </div>
            </div>
 </div>
@@ -131,7 +187,7 @@
             <div class="errorContent">
                  <div class="title">确认清空表单吗？</div>
                  <div class="btnMid">
-                      <div class="btn-c-g cancle">取消</div>
+                      <div class="btn-c-g cancle" id="surCancleBtn">取消</div>
                       <div class="btn-c-r sureDel">确认</div>
                  </div>
             </div>
@@ -209,7 +265,7 @@
             </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleProduct">取消</div>
-                 <div style="background: #BABABA;" id="delProduct">删除</div>
+                 <div class="btn-c-g"  id="delProduct">删除</div>
                  <div class="btn-c-r" id="loadProduct">加载</div>
             </div>
         
@@ -220,11 +276,11 @@
  <div class="cusModel" id="loadProductModel">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">报价单</div>
+                   <div class="title">项目报价单</div>
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
-                <div class="tap active" id="productLine" style="width:100%">加载报价单</div>
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
             </div>
             <div class="modelProductContent"> </div>
             <div class="modelControl">
@@ -232,7 +288,9 @@
                  <div class="btn-c-r" id="CheckloadProduct">加载</div>
             </div>     
      </div>
-</div> 
+</div>
+
+ 
 
 
      
@@ -243,7 +301,6 @@
    
    <div class="pages">
      <div class="searchInfo">
-          
          <%-- 	<div class="orderItem" id="projectNameError">
 	                <div class="mR8">项目名称</div>
 		            <div class="orderSelect oredrProduct"  >
@@ -270,7 +327,7 @@
 			  
 			   <div class="orderItem" id="projectChildenError" > 
 		            <div class="mR8">收费项</div>
-		            <div class="orderSelect orderMultSelect" style="width: 250px !important;">
+		            <div class="orderSelect orderMultSelect" style="width: 220px !important;">
 		                <input type="hidden" id="projectParent"/>
 		                <div id="projectChilden"></div>
 		                <img src="${imgPath}/index/select.png">
@@ -279,7 +336,8 @@
 		                </ul>    
 			        </div>
 			  </div>    
-	      
+			  
+	      <div class="changePos">
 	        <div  class="orderItem changeitem" id="dayNumError">
 	            <div class="mR8" id="dayT">天数</div>
 	            <input class="shortDiv" id="dayNum"  value="">
@@ -288,25 +346,26 @@
 	            <div class="mR8" id="needT">数量</div>
 	            <input class="shortDiv" id="needNum" value="">
             </div>
-             <div class="dir">单价 ：<span id="setCost"></span></div> 
+             <div class="dir" style="margin-top: 29px;margin-left: 20px;width:100px;color:#666">单价 ：<span id="setCost"></span></div> 
+          </div>   
              <div class="orderItem " style="position: static;"> 
-	            <div class=" searchBtn" style="text-align:center" id="toAdd">添加</div>
-	            <div class=" searchBtn"  id="toClear">清空表单</div>
-	            <div class=" searchBtn"  id="toModel">加载模板</div>
-	            <div class=" searchBtn"  id="openFrom">加载报价单</div>
+                <div class=" searchBtn"  id="toClear">清空表单</div>
+	            <div class=" searchBtn btn-c-r" style="text-align:center;border:none;color:white" id="toAdd" >添加</div>
+	            <div class=" searchBtn"  id="toModel">打开模板</div>
+	            <div class=" searchBtn createModel">保存模板</div>
+	            <div class=" searchBtn"  id="openFrom">打开项目</div>
             </div>
  
             </br>
             
-             <div class="dir">收费项描述 ：<span id="setDir"></span></div> 
+             <div class="dir" style="width: 75%;line-height: 15px;">收费项描述 ：<span id="setDir"></span></div> 
          </div>
 
      <table id="process-demo-1" class="tb tb-b c-100 c-t-center">
         <thead>
         <tr class="tableTitle">
-            <th>项目组</th>
-            <th>项目</th>
-            <th>描述</th>
+            <th>收费类</th>
+            <th>收费项</th>
             <th>天数</th>
             <th>数量</th>
             <th>单价(元)</th>
@@ -324,14 +383,29 @@
              <div>税率（%）：</div>
              <input id="tax" value="6">
         </div>
-         <div class="taxItem">
+        <div class="taxItem">
              <div>优惠（元）：</div>
              <input id="free" value="0">
         </div>
          <div class="hasTax"><div>含税总价格</div>  <div>¥</div> <div id="setFinalCost">0</div></div>
-         <div class="createQuo"><div class="btn-c-r createFrom">生成报价单</div><div class="btn-c-r createModel">生成模板</div><div class="btn-c-r createFromTable">打开报价单</div></div>
+         <div class="createQuo">
+                 <div class="btn-c-r createFrom">导出</div>
+                 <!-- <div class="btn-c-r createModel">保存为个人模板</div> -->
+                 <div class="btn-c-r createFromTable">保存至项目</div>
+         </div>
     </div>
-  </div>  
+  </div> 
+  
+<form method="post" action="/quotation/export/" id="toListForm" class="hide">
+			            <input type='hidden' name="itemContent" id="sitems" />
+			            <input type='hidden' name="quotationId" id="squotationId"/>
+			            <input type='hidden' name="projectId" id="sprojectId"/>
+			            <input type='hidden' name="taxRate" id="staxRate"/>
+			            <input type='hidden' name="discount" id="sdiscount"/>
+			            <input type='hidden' name="subTotal" id="ssubTotal"/>
+			            <input type='hidden' name="total" id="stotal"/>
+			            <input type='hidden' name="projectName" id="sprojectName"/>
+</form> 
 
 </body>
 

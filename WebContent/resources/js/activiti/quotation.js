@@ -2,7 +2,6 @@
  var finalAsc = new Array();
  var titleTr = "";
 $().ready(function() {
-	alert(1);
 	document.domain = getUrl();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 	$('body').off('click').on('click',function(){
@@ -14,6 +13,7 @@ $().ready(function() {
 });
 
 function init(){
+	findModelNames();
 	projectName();
 	initMultSelect();
 	costFunction.init();
@@ -21,11 +21,12 @@ function init(){
 	initTypeItem();
 	clickEven();
 	getTableInfo();
-	var pro = $('#projectName').val();
+	var pro = $('#projectName').text();
 	if(pro == null || pro == undefined || pro == ''){
-		$('#projectName').text('未命名');
-	}
-	
+		$('#projectName').text('未命名项目');
+	}else{
+		$('#openFrom').hide();
+	}	
 }
 
 function getTableInfo(){
@@ -37,10 +38,14 @@ function getTableInfo(){
 			$('#quotationId').val(src.quotationId);
 			$('#tax').val(src.taxRate);
 			$('#projectName').val(src.projectName);
+			$('#free').val(src.discount);
 		//	$('#dayTime').val(src.updateDate);
-			finalAsc.push(new cTable(src.items[0]));
+			for (var int = 0; int < src.items.length; int++) {
+				finalAsc.push(new cTable(src.items[int]));
+			}
 			controlArray.createTable();
 			dataEven();
+			$('.orderItem').attr('data-content','');
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 	}else{
@@ -54,13 +59,25 @@ function clickEven(){
 		$('#errorModel').hide();
 	});
 	
+	$('#surCancleBtn').off('click').on('click',function(){
+		$('#errorModel').hide();
+	});
+	
 	$('#toModel').off('click').on('click',function(){
 		$('#productWindow').show();
 		$('.modelContent').html('');
 	    $('.tap').removeClass('active');
-		$('#myModel').addClass('active');
-		$('#delProduct').show();
-		loadProdcut(0);
+		$('#productLine').addClass('active');
+		$('#delProduct').hide();
+		loadProdcut(1);
+	});
+	
+	$('#dayNum').on('blur',function(){
+		$('#dayNumError').attr('data-content','');
+	});
+	
+	$('#needNum').on('blur',function(){
+		$('#needNumError').attr('data-content','');
 	});
 	
 	$('.closeWindow').off('click').on('click',function(){
@@ -69,6 +86,18 @@ function clickEven(){
 	$('.sureDel').off('click').on('click',function(){
 		$('#errorModel').hide();
 		$('.setTr').html('');
+		$('#type').text('');
+		$('#type').attr('data-id','');
+		$('#projectChilden').text('');
+		$('#projectChilden').attr('data-id','');
+		$('#projectChilden').attr('data-price','');
+		$('#projectChilden').attr('data-full','');
+        $('.orderItem').attr('data-content','');
+        $('#dayNum').val('');
+        $('#needNum').val('');
+        $('#setCost').text('');  
+        $('#setDir').text('');
+        
         finalAsc = new Array();
         $('#localPrice').text(0);
         $('#setFinalCost').text(0);
@@ -96,25 +125,77 @@ function clickEven(){
 		}
 	});	
 	
-	$('.createQuo .createModel').off('click').on('click',function(){		
+	$('.createModel').off('click').on('click',function(){		
 		var setTr = $('.setTr tr').length;
+		$('#templateId').val('');
+		$('#getModelName').val('');
 		if(setTr > 0){
 			$('#showModelName').show();
+			$('#tempNameError').attr('data-content','');
 			$('#modelName').val('');
 			$('#saveModelName').off('click').on('click',function(){
-				var modelName = $('#modelName').val();
+				var modelName = $('#getModelName').val();
 				if(modelName == '' || modelName == undefined || modelName == null){
-					$('#modelName').focus();
+					$('#getModelName').focus();
+					$('#tempNameError').attr('data-content','未填写项目名');
 				}else{
 					checkProduct();
 				}
 			});
+		}else{
+				$('#submitCheck').show();
+	    		$('#isSuccess').text('保存至项目 ');
+	    		$('#errorImg').show();
+	    		$('#successContent').text('保存个人模板失败，请填写数据后再进行保存');
+	    		$('.sureCheck').off('click').on('click',function(){
+	    			$('#submitCheck').hide();
+	    		});
 		}
 	});
 	
     $('.createQuo .createFromTable').off('click').on('click',function(){
-         $('#showProductName').show();
-         $('#toSetProductName').val($('#projectName').val());
+
+         var hasId = $('#projectId').val();
+         var setTr = $('.setTr tr').length;
+         
+         $('.closeModel').off('click').on('click',function(){
+        	 $('.cusModel').hide();
+         });
+         
+         if(setTr > 0){
+             if(hasId == null || hasId == '' || hasId == undefined){
+            	 $('#showProductName').show();
+            	 projectName();
+               //  $('#toSetProductName').val($('#projectName').text());
+            	 $('#savesProductName').off('click').on('click',function(){
+            		 hasId = $('.modelMActive').attr('data-id');
+            		 $('#projectId').val(hasId);
+                	 if(hasId == null || hasId == '' || hasId == undefined){
+                		// $('#projectNameError').attr('data-content','请选择项目');
+                	 }else{
+                		 submitDateMyDate(0);           		 
+                	 }
+                 });
+            	 $('#cancleSavesProductName').off('click').on('click',function(){
+            		 $('#showProductName').hide();
+                 });
+        	 }else{
+        		 $('#errorSaveModel').show();
+        		 $('.SaveModelBtn').off('click').on('click',function(){
+        			 submitDateMyDate(1);
+        		 });
+        	 }
+         }else{
+        	 $('#submitCheck').show();
+        	 $('#isSuccess').text('保存项目');
+     		$('#errorImg').show();
+     		$('#successContent').text('不能保存空报价单，请添加数据后再保存至项目');
+     		$('.sureCheck').off('click').on('click',function(){
+     			$('#submitCheck').hide();
+     		});
+         }
+    
+    		 
 	});
 	
 	$('#checkbox').off('click').on('click',function(){
@@ -155,8 +236,9 @@ function allPackClear(){
 }
 
 function submitCheck(){
-	
-    loadData(function(res){
+
+	submitDate();
+  /*  loadData(function(res){
     	if(res.result){
     		$('#submitCheckBtn').show();
     		$('#setCheck').text('该项目已存在，是否仍然更新并生成报价单？');
@@ -169,8 +251,8 @@ function submitCheck(){
     		initCheckBtn();
     	}
 	}, getContextPath() + '/quotation/validate/project-name',$.toJSON({
-        projectName : $('#projectName').val()	
-	}));
+        projectName : $('#projectName').text()	
+	}));*/
 	
 }
 
@@ -185,7 +267,18 @@ function initCheckBtn(){
 }
 
 function submitDate(){
-    loadData(function(res){
+	var jsonStr=JSON.stringify(finalAsc);
+	$('#sitems').val(jsonStr);
+	$('#squotationId').val($('#quotationId').val());
+	$('#sprojectId').val($('#projectId').val());
+	$('#staxRate').val($('#tax').val());
+	$('#sdiscount').val($('#free').val());
+	$('#ssubTotal').val($('#localPrice').text());
+	$('#stotal').val($('#setFinalCost').text());
+	$('#sprojectName').val($('#projectName').text());
+	$('#toListForm').submit();
+	
+/*    loadData(function(res){
     	if(res.result){
     		$('#submitCheck').show();
     		$('#isSuccess').text('生成报价单');
@@ -210,8 +303,8 @@ function submitDate(){
 		subTotal:$('#localPrice').text(),
         total: $('#setFinalCost').text(),
         updateDate : '',
-        projectName : $('#projectName').val()	
-	}));
+        projectName : $('#projectName').text()	
+	}));*/
 }
 
 var controlArray = {
@@ -230,7 +323,7 @@ var controlArray = {
 			});
 		},		
 		checkData:function(num){
-			var projectName = $('#projectName').val();
+			var projectName = $('#projectName').text();
 		//	var dayTime = $('#dayTime').val();
 			var type = $('#type').text();
 			var projectChilden = $('#projectChilden').text();
@@ -282,7 +375,7 @@ var controlArray = {
 		},
 		
 		createArray:function(){
-			var projectName = $('#projectName').val();
+			var projectName = $('#projectName').text();
 			var dayTime = $('#dayTime').val();
 			var type = $('#type').text();
 			var typeId = $('#type').attr('data-id');
@@ -336,7 +429,7 @@ var controlArray = {
 }
 
 function checkRate(input) {
-  　　var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字     //判断正整数 /^[1-9]+[0-9]*]*$/  
+  　var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字     //判断正整数 /^[1-9]+[0-9]*]*$/  
  　　if (!re.test(input)) {
       　　　　return false;
   　　}
@@ -480,14 +573,20 @@ function initTypeItem(){
 //选项目
 function projectName(){
 	
-	$('#projectName').bind('input propertychange', function() {
+/*	$('#toSetProductName').bind('input propertychange', function() {
 		var theName = $(this).val();
 		$('#projectId').val('');
 		findAutoInfo(theName);
+	});*/
+	findAutoInfo('');
+/*	$('#toSetProductName').off('click').on('click',function(){
+		findAutoInfo('');
 	});
-
-	$('#projectName').on('blur', function() {
-
+	
+	$('#toSetProductName').parent().find('img').off('click').on('click',function(){
+		findAutoInfo('');
+	});*/
+	/*$('#toSetProductName').on('blur', function() {
 		var setTr = $('.setTr tr').length;
 		var ps = $('#productSelect li').length;
 		var productId = $('#productId').val();
@@ -499,7 +598,7 @@ function projectName(){
 				}
 			}
 		}
-	});
+	});*/
 	
 }
 
@@ -538,43 +637,16 @@ function findAutoInfo(userName){
 
 function createProduct(item){ 
 	var html = [
-	    		'<li data-id="'+item.projectId+'">'+item.projectName+'</li>'
+	    		'<div class="modelMItem" data-id="'+item.projectId+'">'+item.projectName+'</div>'
 	    	].join('');
 	    	return html;
 }
 
 function initAutoChoose(){
-	$('#productSelect li').off('click').on('click',function(e){
-		 var name = $(this).text();
-		 var id = $(this).attr('data-id');
-		 $('#projectName').val(name);
-		 $('#projectId').val(id);
-		 $('#productSelect').hide();
-		 var setTr = $('.setTr tr').length;
-				if(id != undefined && id != '' && id != null){			
-					if(setTr > 0){
-						$('#clearTable').show();
-						$('#setTableTitle').html('是否加载已存在报价单</br>是否保存当前报价单数据，并加载新报价单？');
-						$('.sureClear').off('click').on('click',function(){
-							 finalAsc = new Array();
-							 getTableInfo();
-							 $('#clearTable').hide();
-						});
-						$('.cancle').off('click').on('click',function(){							  
-						    $('#quotationId').val('');
-						    $('#projectId').val('');
-						    $('#projectName').val('');
-						    var nowDate = new Date();
-					    	var   year=nowDate.getFullYear();     
-					    	var   month=nowDate.getMonth()+1;     
-					    	var   date=nowDate.getDate();      
-					    	//$('#dayTime').val(year+"-"+month+"-"+date);
-					    	$('#clearTable').hide();
-						});
-					}else{
-						getTableInfo();
-					}
-				}
+
+	 $('.modelMItem').off('click').on('click',function(){
+			$('.modelMItem').removeClass('modelMActive');
+			$(this).addClass('modelMActive');
 	});
 }
 
@@ -618,6 +690,7 @@ function initMultType(){
 		$('#setDir').text('');
 		$('#setCost').text('');
 		$('#orderCome').html('');
+		$('#typeError').attr('data-content','');
 		loadData(function(res){
 			var src = res;
 			var body = $('#orderCome');
@@ -688,7 +761,6 @@ function createMultOption(item,index){
 		    	    '<tr>',
  		    		'<td>'+item.itemName+'</td>',
  		    		'<td>'+item.detailName+'</td>',
- 		    		'<td>'+item.description+'</td>',
  		    		'<td class="dayTd" >'+days+'</td>',
  		    		'<td class="dayTd" >'+quantity+'</td>',
  		    		'<td class="payCost payBaseCost dayTd"><input class="updateBase" data-id='+index+' style="width:80px" value='+item.unitPrice+'></td>',
@@ -727,6 +799,9 @@ function initMultSelect(){
 			$(this).find('.setMultSelect').slideDown();
 			$(this).addClass('selectColor');
 		}
+		$('#projectChildenError').attr('data-content','');
+		$('#dayNumError').attr('data-content','');
+		$('#needNumError').attr('data-content','');
 		e.stopPropagation();
 	});
 	$('.productList div').off('click').on('click',function(e){
@@ -923,21 +998,27 @@ function productLineEven(){
     	var setTr = $('.setTr tr').length;
     	var thisId = $('.modelActive').attr('data-id');
     	$('#templateId').val(thisId);
+    	var thisName = $('.modelActive').text();
     	if(thisId>0){
 	    	if(setTr > 0){
 	    		$('#clearTable').show();
-				$('#setTableTitle').html('已存在报价单，是否覆盖报价单？');
+				$('#setTableTitle').html('报价单编辑中，是否加载并覆盖当前报价单?');
 				$('.sureClear').off('click').on('click',function(){
 					loadProductTable(thisId);
-					 $('#clearTable').hide();
+					$('#clearTable').hide();
 				    $('#productWindow').hide();
+				  //  $('#projectName').text(thisName);
 				});
 				$('.cancle').off('click').on('click',function(){							  
 			    	$('#clearTable').hide();
 				});
+				$('#quotationId').val('');
+				
 	    	}else{
 	    		loadProductTable(thisId);
 	        	$('#productWindow').hide();
+	        	$('#quotationId').val('');
+			//	$('#projectName').text(thisName);
 	    	}
     	}
 
@@ -948,12 +1029,12 @@ function productLineEven(){
     	$('#templateId').val(thisId);
     	if(thisId>0){
     		$('#submitCheckBtn').show();
-    		$('#submitCheckBtn').off('click').on('click',function(){
+    		$('.submitCheckBtn').off('click').on('click',function(){
     			delProduct(thisId);
     		});
     		
     		$('.cancle').off('click').on('click',function(){
-    			delProduct(thisId);
+    			$('#submitCheckBtn').hide();
     		});
     		
     	}
@@ -999,25 +1080,43 @@ function loadProdcut(num){
 }
 
 function loadProductTable(id){
-	loadData(function(res){
-			 finalAsc = res.items;
+	loadData(function(src){
+			$('#templateId').val(src.templateId);
+			$('#quotationId').val(src.quotationId);
+			$('#tax').val(src.taxRate);
+			$('#projectName').val(src.projectName);
+			$('#free').val(src.discount);
+			 finalAsc = src.items;
 			 controlArray.createTable();
 		     $('#productWindow').hide();
 		}, getContextPath() + '/quotation/temp/get/'+id,null);
 }
 
 function checkProduct(){
-	loadData(function(res){
-		if(res){
-			saveProduct();
+	/*loadData(function(res){
+		if(res.result){
+			saveProduct();			
+		}else{
 			
 		}
 	}, getContextPath() + '/quotation/temp/validate-name',$.toJSON({
         templateId : $('#templateId').val(),
-        templateName : $('#modelName').val()	
-	}));
-	
+        templateName : $('#getModelName').val()	
+	}));*/
+	var getModelName = $('#getModelName').val();
+	var list = $('#tempSelect li');
+	if(list.length > 0){
+		for (var int = 0; int < list.length; int++) {
+			if($(list[int]).text() == getModelName){
+				$('#templateId').val($(list[int]).attr('data-id'));
+			}
+			saveProduct();	
+		}
+	}else{
+		saveProduct();	
+	}
 }
+
 
 function saveProduct(){
 	
@@ -1026,9 +1125,12 @@ function saveProduct(){
     		$('#showModelName').hide();
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
+    		$('#isSuccess').text('生成模板');
     		$('#errorImg').show();
-    		$('#successContent').text('报价单生成失败,请重试或联系技术部');
+    		$('#successContent').text(res.err);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    		});
     	}
 	}, getContextPath() + '/quotation/temp/save',$.toJSON({
 		items : finalAsc,
@@ -1037,7 +1139,7 @@ function saveProduct(){
 		subTotal:$('#localPrice').text(),
         total: $('#setFinalCost').text(),
         templateId : $('#templateId').val(),
-        templateName : $('#modelName').val()	
+        templateName : $('#getModelName').val()	
 	}));
 	
 }
@@ -1050,9 +1152,9 @@ function delProduct(id){
     		$('.modelActive').remove();
     	}else{
     		$('#submitCheck').show();
-    		$('#isSuccess').text('生成报价单');
+    		$('#isSuccess').text('删除模板');
     		$('#errorImg').show();
-    		$('#successContent').text('报价单生成失败,请重试或联系技术部');
+    		$('#successContent').text('模板删除失败,请重试或联系技术部');
     	}
 	}, getContextPath() + '/quotation/temp/delete/'+id,'');
 	
@@ -1060,11 +1162,8 @@ function delProduct(id){
 
 
 function initLoadProduct(){
-	
-	getLoadProduct();
-	
-	
-	
+		getLoadProduct();
+		projectName();
 }
 
 function loadProductEven(){
@@ -1073,33 +1172,146 @@ function loadProductEven(){
 		$('#loadProductModel').hide();
 	});
 	
-	$('#"CheckloadProduct"').off('click').on('click',function(){
-		$('#projectId').val($('.modelPActive').attr('data-pid'));
-		getTableInfo();
-		$('#loadProductModel').hide();
+	$('#CheckloadProduct').off('click').on('click',function(){
+			$('#projectId').val($('.modelPActive').attr('data-pid'));
+			var setTr = $('.setTr tr').length;
+	    	var thisId = $('.modelPActive').attr('data-id');
+	    	var thisName = $('.modelPActive').text();
+	    	if(thisId>0){
+		    	if(setTr > 0){
+		    		$('#clearTable').show();
+					$('#setTableTitle').html('报价单编辑中，是否加载并覆盖当前报价单?');
+					$('.sureClear').off('click').on('click',function(){
+						finalAsc = new Array();
+						getTableInfo();
+						$('#clearTable').hide();
+						$('#loadProductModel').hide();
+						$('#projectName').text(thisName);
+					});
+					$('.cancle').off('click').on('click',function(){							  
+				    	$('#clearTable').hide();
+					});
+		    	}else{
+		    		finalAsc = new Array();
+		    		getTableInfo();
+		    		$('#loadProductModel').hide();
+		    		$('#projectName').text(thisName);
+		    	}
+	    	}
 	});	
 	 $('.modelProItem').off('click').on('click',function(){
-			$('.modelItem').removeClass('modelPActive');
+			$('.modelProItem').removeClass('modelPActive');
 			$(this).addClass('modelPActive');
 	});
-	
+	 	
 }
-
-
 
 //加载报价单
 
 function getLoadProduct(){
+	var body = $('.modelProductContent');
+	body.html('');
 	loadData(function(res){
-		  var body = $('.modelProductContent');
 		  for (var i = 0; i < res.length; i++) {
-			  body.append('<div class="modelProItem" data-id="'+res[i].quotationId+' data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+			  body.append('<div class="modelProItem" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
 		  }
 		  loadProductEven();
 	}, getContextPath() + '/quotation/list/synergetic','');
 }
 
+function submitDateMyDate(num){
+	var proName = $('.modelMActive').text();
+	var proId = $('.modelMActive').attr('data-id');
+	if(num == 1){
+		proName = $('#projectName').text();
+	}
+	
+	if(proId == null || proId == '' || proId == undefined){
+		proId = $('#projectId').val();
+	}
+	
+    loadData(function(res){
+    	if(res.result){
+    		$('#submitCheck').show();
+    		$('#isSuccess').text('保存至项目报价单');
+    		$('#successContent').text('成功保存为项目报价单');
+    		$('#quotationId').val(res.msg);
+    		$('#errorImg').hide();
+    		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    			$('.cusModel').hide();
+    		});
+    		$('#productSelect').html('');
+    	}else{
+    		$('#submitCheck').show();
+    		$('#isSuccess').text('保存为项目报价单');
+    		$('#errorImg').show();
+    		$('#successContent').text(res.err);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    			$('.cusModel').hide();
+    		});
+    		$('#productSelect').html('');
+    	}
+	}, getContextPath() + '/quotation/save',$.toJSON({
+		items : finalAsc,
+		quotationId : $('#quotationId').val(),
+		projectId : proId,
+		taxRate: $('#tax').val(),
+		discount:$('#free').val(),
+		subTotal:$('#localPrice').text(),
+        total: $('#setFinalCost').text(),
+        updateDate : '',
+        projectName : proName
+	}));
+}
 
+function findModelNames(){
+	$('#getModelName').bind('input propertychange', function() {
+		var theName = $(this).val();
+		$('#templateId').val('');
+		findAutoModelInfo(theName);
+	});
+}
+
+function findAutoModelInfo(userName){
+	loadData(function(res){
+		var res = res;
+		var body = $('#tempSelect');
+		body.html('');
+		if(res != null && res != undefined){
+			$('#tempSelect').show();
+			for (var int = 0; int < res.length; int++) {
+				   var html =createModelProduct(res[int]);
+				   body.append(html);
+			};
+			initAutoModelChoose();
+		}else{
+			$('#tempSelect').hide();
+		}
+	}, getContextPath() + '/quotation/temp/listByName', $.toJSON({
+		templateName : userName
+	}));
+}
+
+function createModelProduct(item){ 
+	var html = [
+	    		'<li data-id="'+item.templateId+'">'+item.templateName+'</li>'
+	    	].join('');
+	    	return html;
+}
+
+function initAutoModelChoose(){
+	$('#tempSelect li').off('click').on('click',function(e){
+		 var name = $(this).text();
+		 var id = $(this).attr('data-id');
+		 $('#getModelName').val(name);
+		 $('#templateId').val(id);
+		 $('#productSelect').hide();				
+	});
+}
 
 
 
