@@ -517,6 +517,7 @@ function clearTable(){
 
 function findAutoInfo(userName){
 	loadData(function(res){
+		console.log(res);
 		var res = res;
 		var body = $('#productSelect');
 		body.html('');

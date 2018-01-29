@@ -253,6 +253,17 @@
          padding-left: 22px;
          padding-top: 16px;
      }
+     span:nth-child(2) {
+         color: #333;
+         font-size: 1.4rem;
+         font-weight: 500;
+         position: absolute;
+         top: 20px;
+         left: 0px;
+         width: 100%;
+         text-align: center;
+         line-height: 0;
+     }
  }
  
  //表格插件样式修改

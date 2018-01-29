@@ -75,13 +75,13 @@
   <div class="pages" >   
   <div class='titles'>
   	<span>排期表生成器</span>
-  	<!-- <div class='line'></div> -->
+  	<span id="projectName">${projectName}</span>
   </div>
-  <div class="orderItem" id="projectNameError">
+<%--   <div class="orderItem" id="projectNameError">
 	   <div class="mR8">项目名称</div>
 	   <input value='${projectName}' id="projectName" style="width:240px">
 	   <p class='proerr'><p>
- </div>
+ </div> --%>
  <div class='divine'></div> 
 <%--  <div class="orderItem" id="dayTimeError">
 	   <div class="mR8">日期</div>

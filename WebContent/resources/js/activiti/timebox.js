@@ -40,6 +40,9 @@ $().ready(function() {
     dbmatter();
     timebook();
     colorthing();
+    
+    findtimeboxs($('#projectId').val());
+    
 	
 });
 //日期样式添加事件 
@@ -127,7 +130,6 @@ function dbmatter(){
 			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
 			$(this).addClass('onlyul');
 			setTimeout($(this).removeClass('onlyul'),1000);
-			console.log('one');
 			//移除box的 内容
 			$('.boxs .city-select').remove('.city-select');
 			$('.orderSelect').removeClass('selectColor');
@@ -145,9 +147,7 @@ function dbmatter(){
 			$(this).parent().parent().find('.fc-day').removeClass('wolf');
 			$(this).addClass('onlyul');
 			setTimeout($(this).removeClass('onlyul'),1000);	
-//			console.log('two');
 		}else {
-//			console.log('three');
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
 			$(this).addClass('cheng');			
@@ -206,6 +206,7 @@ function timebook(){
 }
 //生成排期表
 function bestthings() {
+	
     $('.best').on('click', function() {
     	sun();
     	timebook();
@@ -215,7 +216,7 @@ function bestthings() {
     	$('#calendar').find('.matter').blur();	 
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
-    	if(projectName== null || projectName == "" || projectName == undefined){
+    	/*if(projectName== null || projectName == "" || projectName == undefined){
     		$('.proerr').text('项目名称未填写');
 			$('#projectName').focus();
 			//提交之后 边框的 消失  
@@ -226,13 +227,13 @@ function bestthings() {
 				} 				
 			})
 			return false;
-    	}else {
+    	}else {*/
     		$('.proerr').text('');
     		loadData(function(res){
     	    	if (res.result){
     	    		console.log('成功了');
     	    		window.location.href = getContextPath() + "/schedule/export/" + res.msg;
-    	    		 $('tbody .fc-other-month .matter').attr('style', 'display: none;');
+    	    		$('tbody .fc-other-month .matter').attr('style', 'display: none;');
     	    	}else {
     	    		console.log('失败了');
     	    	}
@@ -245,8 +246,23 @@ function bestthings() {
     			updateDate:  $('#updateDate').val(),
     			items:chenggame   		    
     		}));
-    	}
+    	/*}*/
     });
+ 
+}
+
+
+//根据项目名称数据回显	
+function findtimeboxs(projectname){
+//知道项目名称之后 数据的 回显
+    
+    loadData(function(res){
+    	console.log(res);
+	}, getContextPath() + '/schedule/save',$.toJSON({	
+		projectName: projectname
+		 		    
+	}));
+    
 }
 //实时获取textare的数据
 function textareval(){
@@ -321,7 +337,6 @@ function sun(){
 }
 //刪除框数据的同步 
 function delselc(){
-
 	$('.city-info i').on('click',function(){
 		var deltext=$(this).parent().parent().parent().find(".city-info span");
 		if (deltext.length==1){
@@ -345,7 +360,6 @@ function leftbtn() {
         $('tbody .fc-other-month .much').attr('style', 'display: none;');
         $('tbody .fc-other-month .boxs').attr('style', 'display: none;');       
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
-        console.log(chengnum);
         timebook();
         $('tbody .fc-other-month .matter').attr('style', 'display: none;');
         $('.matter').blur();
@@ -403,4 +417,8 @@ function initSelect() {
         }
         e.stopPropagation();
     });
+    var pro = $('#projectName').val();
+	if(pro == null || pro == undefined || pro == ''){
+		$('#projectName').text('未命名');
+	}
 } 

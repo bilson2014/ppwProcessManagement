@@ -73,12 +73,6 @@
 		                <%--   <img src="${imgPath}/flow/more.png"> --%>
 		             </div>
 	              </a>
-<!-- 	              <ul class="productList" id="orderList">
-	                  <li>处理中</li>
-	                  <li>已提交</li>
-	                  <li>无效订单</li>
-	              </ul> -->
-
 
 	              <div class="treeitem">
 	              <a class="treeA" href="${url}running?save">

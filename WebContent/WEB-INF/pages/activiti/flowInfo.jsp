@@ -102,7 +102,9 @@
 	                                    <div class="simContent">${taskDescription}</div>
 	                                    <div class="setBtn">
 	                                         <div class="redBtn btn-c-r" id="toFinish">任务操作</div>
-	                                         <div class="redBtn btn-c-r hide" id="toQuo">生成报价单</div>
+	                                         <div class="redBtn btn-c-r hide" id="toQuo" style="margin-right: 20px;">生成报价单</div>
+	                                         <!--排期表的 入口  -->
+	                                         <div class="redBtn btn-c-r hide" id="sche">生成排期表</div>
 	                                    </div>
 	                               </div>
 	                            </div>
