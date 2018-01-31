@@ -40,9 +40,10 @@ $().ready(function() {
     dbmatter();
     timebook();
     colorthing();
-    
-    findtimeboxs($('#projectId').val());
-    
+    loadProductEven();
+//    
+//    findtimeboxs($('#projectId').val());
+//    
 	
 });
 //日期样式添加事件 
@@ -203,10 +204,306 @@ function timebook(){
 			}
 		}		
 	});	
+	//加载报价单的时候
+	$('.closeModel').on('click',function(){
+		  $('.cusModel').hide();
+	});	
+	//打开项目
+	$('#openFrom').on('click',function(){
+	   $('#loadProductModel').show();
+//	       getLoadProduct();
+	       
+	   	var body = $('.modelProductContent');
+	   	body.html('');
+	   	loadData(function(res){
+	   		console.log (res);
+	   		  for (var i = 0; i < res.length; i++) {
+	   			  body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+	   		  }
+	   		  loadProductEven();
+	   	}, getContextPath() + '/schedule/list/synergetic','');
+	   
+	
+	
+	       loadProductEven();
+	});	
+	
 }
+//选中项目的 回显
+function getBoxInfo(){
+	var tibo=$('.fc-day');
+	tibo.each(function(){
+		$(this).find('textarea').val('');
+		$(this).find('textarea').text('');
+		$(this).find('textarea').attr('style','display:none;')
+	});
+	
+	var project = $('#projectId').val();
+	if(project != null && project !='' && project != undefined ){
+	loadData(function(src){
+		var objectbox=src.items;
+		var tibo=$('.fc-day');
+		chengnum='';
+
+		tibo.each(function(){
+			var countext =  $(this).attr('data-date');
+			for(var k in objectbox){
+//				console.log(k);
+//				console.log(objectbox[k].jobContent);
+//				console.log(objectbox[k].start);
+				if (countext==objectbox[k].start){
+					$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
+					$(this).find('textarea').val(objectbox[k].jobContent);
+					$(this).find('textarea').text(objectbox[k].jobContent);
+				
+				}
+				
+			}
+		})
+
+	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
+	}
+//	else{
+//		dataEven();
+//	}
+	
+	
+}
+
+//加载事件
+function loadProductEven(){
+	$('#cancleLoadProduct').on('click',function(){
+		$('#loadProductModel').hide();
+
+	});
+	//项目加载的时候回显
+	$('#CheckloadProduct').off('click').on('click',function(){
+//		$('#projectName').text($('.modelPActive').attr('projectname'));		
+		$('#projectNames').val($('.modelPActive').attr('projectname'));		
+		$('#projectId').val($('.modelPActive').attr('data-pid'));
+//		var setTr = $('.setTr tr').length;
+//    	var thisId = $('.modelPActive').attr('data-id');
+    	var thisName = $('.modelPActive').text();
+//    	findtimeboxs($('.modelPActive').attr('data-pid'));
+//		console.log(chengnum);
+//		console.log(chengnum.length);
+		//覆盖提示信息modelProItem
+		if ($('.modelProItem').hasClass('modelPActive')){
+			if (chengnum.length>0){
+				$('#clearTable').show();
+				$('#setTableTitle').html('排期表编辑中，是否加载并覆盖当前排期表?');
+				$('.sureClear').off('click').on('click',function(){
+//					finalAsc = new Array();
+					getBoxInfo();
+					$('#clearTable').hide();
+					$('#loadProductModel').hide();
+					$('#projectName').text(thisName);
+				});
+				$('.cancle').off('click').on('click',function(){							  
+			    	$('#clearTable').hide();
+				});
+			}else{
+				$('#loadProductModel').hide();
+				$('#projectName').text(thisName);
+				//此处要打开 选中项目的 日程
+				getBoxInfo();	    	
+			}
+		}
+
+		
+		
+    	
+    	
+	});	
+	//项目选择的 时候 样式
+	 $('.modelProItem').off('click').on('click',function(){
+			$('.modelProItem').removeClass('modelPActive');
+			$(this).addClass('modelPActive');			
+	});
+	 //导出项目lslslsls
+/*	 $('.createQuo .createFrom').off('click').on('click',function(){
+			$('.sureCheck').off('click').on('click',function(){
+				$('#submitCheck').hide();
+			});
+		    if((controlArray.checkData(1))){
+					if(finalAsc[0] != undefined){
+					    submitCheck();
+				    }
+					else{
+						$('#submitCheck').show();
+			    		$('#isSuccess').text('生成报价单');
+			    		$('#errorImg').show();
+			    		$('#successContent').text('报价单生成失败,请填写表格数据');
+					}
+			}
+	});*/
+	//保存至项目
+	 $('.createQuo .createFromTable').off('click').on('click',function(){
+         $('.closeModel').off('click').on('click',function(){
+        	 $('.cusModel').hide();
+         }); 
+      
+      	 console.log(chengnum);
+         if (chengnum.length>0){
+        	 if($('#projectName').text()=='未命名'){
+        		console.log('未命名');
+        		 $('#showProductName').show();
+        		 findAutoInfo('');
+//            	 projectName();
+               //  $('#toSetProductName').val($('#projectName').text());
+            	 $('#savesProductName').off('click').on('click',function(){
+            		 var hasId = $('.modelMActive').attr('data-id');
+            		 $('#projectId').val(hasId);
+            		 var hasname= $('.modelMActive').text();
+            		 $('#projectNames').val(hasname);
+            		 submitDateMyDate(0,chengnum); 
+            		 $('#showProductName').hide();               	 
+                 });
+            	 $('#cancleSavesProductName').off('click').on('click',function(){
+            		 $('#showProductName').hide();
+                 });
+        	 }else{
+        		 $('#errorSaveModel').show();
+        		 $('.SaveModelBtn').off('click').on('click',function(){
+        			 submitDateMyDate(1,chengnum);
+        			 
+        		 });
+        	 }
+         }else {
+        	 console.log('没有 任何更改');
+        	  //弹出新的窗口,显示提示项目内容不能为空  啦啦啦啦
+             $('#submitCheck').show();
+             $('#isSuccess').text('保存项目');
+           	 $('#errorImg').show();
+           	 $('#successContent').text('不能保存空排，请添加数据后再保存至项目');
+           	 $('.sureCheck').off('click').on('click',function(){
+           		 $('#submitCheck').hide();
+           	 });
+           	
+         }
+   
+         
+	});
+	 
+	 
+	 
+}
+function submitDateMyDate(num,chengnum){
+	chengnum=JSON.stringify(chengnum);
+//	chengnum="["+chengnum+"]";
+	console.log(chengnum);
+	chengnum = chengnum.replace(/}{/g, '},{');
+	chengnum=$.parseJSON(chengnum);
+	chengnum='['+chengnum+']';
+	console.log(chengnum);
+	$('#items').val(chengnum);
+	console.log('静安寺等哈看汇顶科技安徽大科技大厦抠脚大汉');
+	var proName = $('.modelMActive').text();
+	var proId = $('.modelMActive').attr('data-id');
+	if(num == 1){
+		proName = $('#projectName').text();
+	}
+	
+	if(proId == null || proId == '' || proId == undefined){
+		proId = $('#projectId').val();
+	}
+	
+	
+	loadData(function(res){
+	    if (res.result){
+	    	console.log('成功了');
+	    	
+	    	console.log(chengnum);
+	    	$('#projectName').text($('#projectNames').val());
+	    	$('#errorSaveModel').hide();
+	    	$('#submitCheck').show();
+    		$('#isSuccess').text('保存至项目排期表');
+    		$('#successContent').text('成功保存为项目排期表');
+    		$('#quotationId').val(res.msg);
+    		$('#errorImg').hide();
+    		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    			$('.cusModel').hide();
+    		});
+    		$('#productSelect').html('');
+	    }else {
+	    	console.log('失败了');
+	    	$('#errorSaveModel').hide();
+	    	$('#submitCheck').show();
+    		$('#isSuccess').text('保存为失败了');
+    		$('#errorImg').show();
+    		$('#successContent').text(res.err);
+    		$('.sureCheck').off('click').on('click',function(){
+    			$('#submitCheck').hide();
+    			$('.cusModel').hide();
+    		});
+    		$('#productSelect').html('');
+	    }
+	    	//提交之后的 处理
+  	 	$('.matter').blur();
+	}, getContextPath() + '/schedule/save',$.toJSON({
+		scheduleId:$('#scheduleId').val(), 
+		projectId: $('#projectId').val(),
+		projectName: $('#projectNames').val(),
+		updateDate:  $('#updateDate').val(),
+		itemContent:$('#items').val(),
+	}));
+	  
+   
+}
+//加载所有项目 为保存排期表
+function findAutoInfo(userName){
+	loadData(function(res){
+//		console.log(res);
+		console.log(1);
+		var res = res;
+		var body = $('#productSelect');
+		body.html('');
+		if(res != null && res != undefined){
+			$('#productSelect').show();
+			for (var int = 0; int < res.length; int++) {
+				   var html =createProduct(res[int]);
+				   body.append(html);
+			};
+			initAutoChoose();
+		}else{
+			$('#productSelect').hide();
+		}
+	}, getContextPath() + '/project/synergetic/listByName', $.toJSON({
+		projectName : userName
+	}));
+}
+function createProduct(item){ 
+	console.log(12);
+	var html = [
+	    		'<div class="modelMItem" data-id="'+item.projectId+'">'+item.projectName+'</div>'
+	    	].join('');
+	    	return html;
+}
+function initAutoChoose(){
+	console.log(123);
+	 $('.modelMItem').off('click').on('click',function(){
+			$('.modelMItem').removeClass('modelMActive');
+			$(this).addClass('modelMActive');
+	});
+}
+//加载有排期表项目
+function getLoadProduct(){
+	var body = $('.modelProductContent');
+	body.html('');
+	loadData(function(res){
+		console.log (res);
+		  for (var i = 0; i < res.length; i++) {
+			  body.append('<div class="modelProItem" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+		  }
+		  loadProductEven();
+	}, getContextPath() + '/schedule/list/synergetic','');
+}
+
 //生成排期表
 function bestthings() {
-	
     $('.best').on('click', function() {
     	sun();
     	timebook();
@@ -228,12 +525,19 @@ function bestthings() {
 			})
 			return false;
     	}else {*/
-    		$('.proerr').text('');
-    		loadData(function(res){
+    	$('#projectNames').val($('#projectName').text());
+    	submitDate();
+    	$('.proerr').text('');
+    	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
+    	$('.matter').blur();
+    	
+    		/*loadData(function(res){
     	    	if (res.result){
     	    		console.log('成功了');
-    	    		window.location.href = getContextPath() + "/schedule/export/" + res.msg;
-    	    		$('tbody .fc-other-month .matter').attr('style', 'display: none;');
+    	    		
+    	    	
+//    	    window.location.href = getContextPath() + "/schedule/export/" + res.msg;
+
     	    	}else {
     	    		console.log('失败了');
     	    	}
@@ -245,25 +549,52 @@ function bestthings() {
     			projectName: $('#projectName').val(),
     			updateDate:  $('#updateDate').val(),
     			items:chenggame   		    
-    		}));
+    		}));*/
     	/*}*/
     });
  
 }
+//表单提交
+function submitDate(){
+	console.log(chengnum);
+	chengnum=JSON.stringify(chengnum);
+//	chengnum="["+chengnum+"]";
+	console.log(chengnum);
+	chengnum = chengnum.replace(/}{/g, '},{');
+	chengnum=$.parseJSON(chengnum);
+	chengnum='['+chengnum+']';
+	console.log(chengnum);
+	
+	
+//	var chenggame=JSON.stringify(chengnum);
+	$('#toListForm #items').val(chengnum);
 
-
-//根据项目名称数据回显	
-function findtimeboxs(projectname){
-//知道项目名称之后 数据的 回显
-    
-    loadData(function(res){
-    	console.log(res);
-	}, getContextPath() + '/schedule/save',$.toJSON({	
-		projectName: projectname
-		 		    
-	}));
-    
+	$('#toListForm #scheduleId').val($('#scheduleId').val());
+//	$('#toListForm #projectId').val($('#projectId').val());	
+	$('#toListForm #projectId').val('110');	
+//	$('#toListForm #projectName').val($('#projectId').val());	
+	$('#toListForm #projectName').val('下完這場雨');
+	$('#toListForm #updateDate').val($('#updateDate').val());
+	$('#toListForm').submit();
+	
+	
 }
+
+
+
+//
+////根据项目名称数据回显	
+//function findtimeboxs(projectname){
+////知道项目名称之后 数据的 回显
+//    console.log(projectname);
+//    loadData(function(res){
+//    	console.log(res);
+//	}, getContextPath() + '/schedule/save',$.toJSON({	
+//		projectName: projectname
+//		 		    
+//	}));
+//    
+//}
 //实时获取textare的数据
 function textareval(){
 	 $("textarea").blur(function(){
