@@ -26,6 +26,7 @@ import com.paipianwang.activiti.utils.HttpUtil;
 import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.FileUtils;
+import com.paipianwang.pat.common.util.JsonUtil;
 import com.paipianwang.pat.common.util.PathFormatUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -113,6 +114,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 	 */
 	@Override
 	public void export(PmsSchedule schedule, OutputStream os, HttpServletRequest request) throws Exception{
+		if(ValidateUtil.isValid(schedule.getItemContent())){
+			schedule.setItems(JsonUtil.fromJsonArray(schedule.getItemContent(), PmsScheduleItem.class));
+		}
 		//格式化排期明细
 		List<PmsScheduleItem[][]> items=null;
 		try {
