@@ -291,6 +291,12 @@
                  @media screen and (min-width: 775px) and (max-width: 1025px) {
                      right: 42%;
                  }
+                 @media screen and (min-width: 1200px) {
+                     right: 43.8%;
+                 }
+                 @media screen and (min-width: 1600px) {
+                     right: 44.8%;
+                 }
              }
              .fc-header-center {
                  position: absolute;
@@ -633,10 +639,11 @@
  
  //保存至项目 与导出
  .createQuo {
-     width: 100%;
+     width: 96%;
      height: 40px;
      position: relative;
      margin-bottom: 70px;
+     margin-top: 20px;
      div {
          position: absolute;
          right: 0px;

@@ -41,11 +41,70 @@ $().ready(function() {
     timebook();
     colorthing();
     loadProductEven();
-//    
-//    findtimeboxs($('#projectId').val());
-//    
-	
+    if ( inthings()){
+    	inthings();
+    }  
+  
 });
+
+//初始化获取地址
+function inthings(){
+	if  ($('#projectNames').val()){
+		$('#projectName').text($('#projectNames').val());
+	}
+	//接受URL地址参数 
+    function getQueryString(name) {                                      
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");     
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;						
+    } 
+    var urls=getQueryString('projectId');
+    if ( urls== null || urls== "" || urls== undefined){
+    	$('#openFrom').show();
+    	return false;
+    }else {
+    	loadProductTable(urls);
+    	$('#openFrom').hide();
+    	return true;   	
+    }  
+}
+function loadProductTable(id){
+	loadData(function(src){
+		$('#scheduleId').val(src.scheduleId);
+		$('#projectId').val(src.projectId);
+		$('#projectNames').val(src.projectName);
+		$('#updateDate').val(src.updateDate);
+		$('#projectName').text(src.projectName);
+		
+		var xiao=JSON.stringify(src.items);
+		xiao = xiao.replace(/}{/g, '},{');
+		xiao='['+xiao+']';
+		xiao=xiao.replace(/\n/g,'\\\\n');
+		$('#items').val(xiao);
+
+		var objectbox=src.items;
+//		console.log(objectbox);
+		var tibo=$('.fc-day');
+		chengnum='';
+		tibo.each(function(){
+			var countext =  $(this).attr('data-date');
+			for(var k in objectbox){
+				if (countext==objectbox[k].start){
+					if (!$(this).hasClass('fc-other-month')){
+						$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
+						$(this).find('textarea').val(objectbox[k].jobContent);
+						$(this).find('textarea').text(objectbox[k].jobContent);	
+					}
+					
+									
+				}	
+				
+			}
+		})
+	}, getContextPath() + '/schedule/get/'+id,null);
+
+}
+
 //日期样式添加事件 
 function colorthing(){
 	var tibo=$('.fc-day');
@@ -210,21 +269,17 @@ function timebook(){
 	});	
 	//打开项目
 	$('#openFrom').on('click',function(){
-	   $('#loadProductModel').show();
-//	       getLoadProduct();
-	       
+	   $('#loadProductModel').show();     
 	   	var body = $('.modelProductContent');
 	   	body.html('');
 	   	loadData(function(res){
-	   		console.log (res);
+//	   		console.log (res);
 	   		  for (var i = 0; i < res.length; i++) {
 	   			  body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
 	   		  }
 	   		  loadProductEven();
 	   	}, getContextPath() + '/schedule/list/synergetic','');
-	   
-	
-	
+	 
 	       loadProductEven();
 	});	
 	
@@ -244,29 +299,19 @@ function getBoxInfo(){
 		var objectbox=src.items;
 		var tibo=$('.fc-day');
 		chengnum='';
-
 		tibo.each(function(){
 			var countext =  $(this).attr('data-date');
 			for(var k in objectbox){
-//				console.log(k);
-//				console.log(objectbox[k].jobContent);
-//				console.log(objectbox[k].start);
 				if (countext==objectbox[k].start){
 					$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
 					$(this).find('textarea').val(objectbox[k].jobContent);
-					$(this).find('textarea').text(objectbox[k].jobContent);
-				
-				}
-				
+					$(this).find('textarea').text(objectbox[k].jobContent);				
+				}				
 			}
 		})
 
 	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
 	}
-//	else{
-//		dataEven();
-//	}
-	
 	
 }
 
@@ -281,12 +326,7 @@ function loadProductEven(){
 //		$('#projectName').text($('.modelPActive').attr('projectname'));		
 		$('#projectNames').val($('.modelPActive').attr('projectname'));		
 		$('#projectId').val($('.modelPActive').attr('data-pid'));
-//		var setTr = $('.setTr tr').length;
-//    	var thisId = $('.modelPActive').attr('data-id');
     	var thisName = $('.modelPActive').text();
-//    	findtimeboxs($('.modelPActive').attr('data-pid'));
-//		console.log(chengnum);
-//		console.log(chengnum.length);
 		//覆盖提示信息modelProItem
 		if ($('.modelProItem').hasClass('modelPActive')){
 			if (chengnum.length>0){
@@ -309,48 +349,25 @@ function loadProductEven(){
 				getBoxInfo();	    	
 			}
 		}
-
-		
-		
-    	
-    	
+				
 	});	
 	//项目选择的 时候 样式
 	 $('.modelProItem').off('click').on('click',function(){
 			$('.modelProItem').removeClass('modelPActive');
 			$(this).addClass('modelPActive');			
 	});
-	 //导出项目lslslsls
-/*	 $('.createQuo .createFrom').off('click').on('click',function(){
-			$('.sureCheck').off('click').on('click',function(){
-				$('#submitCheck').hide();
-			});
-		    if((controlArray.checkData(1))){
-					if(finalAsc[0] != undefined){
-					    submitCheck();
-				    }
-					else{
-						$('#submitCheck').show();
-			    		$('#isSuccess').text('生成报价单');
-			    		$('#errorImg').show();
-			    		$('#successContent').text('报价单生成失败,请填写表格数据');
-					}
-			}
-	});*/
 	//保存至项目
 	 $('.createQuo .createFromTable').off('click').on('click',function(){
          $('.closeModel').off('click').on('click',function(){
         	 $('.cusModel').hide();
          }); 
       
-      	 console.log(chengnum);
+//      	 console.log(chengnum);
          if (chengnum.length>0){
         	 if($('#projectName').text()=='未命名'){
-        		console.log('未命名');
+//        		console.log('未命名');
         		 $('#showProductName').show();
         		 findAutoInfo('');
-//            	 projectName();
-               //  $('#toSetProductName').val($('#projectName').text());
             	 $('#savesProductName').off('click').on('click',function(){
             		 var hasId = $('.modelMActive').attr('data-id');
             		 $('#projectId').val(hasId);
@@ -375,29 +392,22 @@ function loadProductEven(){
              $('#submitCheck').show();
              $('#isSuccess').text('保存项目');
            	 $('#errorImg').show();
-           	 $('#successContent').text('不能保存空排，请添加数据后再保存至项目');
+           	 $('#successContent').text('排期表未更新，请添加数据后再保存至项目');
            	 $('.sureCheck').off('click').on('click',function(){
            		 $('#submitCheck').hide();
-           	 });
-           	
+           	 });          	
          }
-   
-         
+        
 	});
-	 
-	 
 	 
 }
 function submitDateMyDate(num,chengnum){
 	chengnum=JSON.stringify(chengnum);
-//	chengnum="["+chengnum+"]";
-	console.log(chengnum);
 	chengnum = chengnum.replace(/}{/g, '},{');
 	chengnum=$.parseJSON(chengnum);
 	chengnum='['+chengnum+']';
-	console.log(chengnum);
 	$('#items').val(chengnum);
-	console.log('静安寺等哈看汇顶科技安徽大科技大厦抠脚大汉');
+
 	var proName = $('.modelMActive').text();
 	var proId = $('.modelMActive').attr('data-id');
 	if(num == 1){
@@ -406,14 +416,12 @@ function submitDateMyDate(num,chengnum){
 	
 	if(proId == null || proId == '' || proId == undefined){
 		proId = $('#projectId').val();
-	}
-	
-	
+	}	
 	loadData(function(res){
 	    if (res.result){
-	    	console.log('成功了');
+//	    	console.log('成功了');
 	    	
-	    	console.log(chengnum);
+//	    	console.log(chengnum);
 	    	$('#projectName').text($('#projectNames').val());
 	    	$('#errorSaveModel').hide();
 	    	$('#submitCheck').show();
@@ -429,7 +437,7 @@ function submitDateMyDate(num,chengnum){
     		});
     		$('#productSelect').html('');
 	    }else {
-	    	console.log('失败了');
+//	    	console.log('失败了');
 	    	$('#errorSaveModel').hide();
 	    	$('#submitCheck').show();
     		$('#isSuccess').text('保存为失败了');
@@ -457,7 +465,7 @@ function submitDateMyDate(num,chengnum){
 function findAutoInfo(userName){
 	loadData(function(res){
 //		console.log(res);
-		console.log(1);
+//		console.log(1);
 		var res = res;
 		var body = $('#productSelect');
 		body.html('');
@@ -476,14 +484,14 @@ function findAutoInfo(userName){
 	}));
 }
 function createProduct(item){ 
-	console.log(12);
+//	console.log(12);
 	var html = [
 	    		'<div class="modelMItem" data-id="'+item.projectId+'">'+item.projectName+'</div>'
 	    	].join('');
 	    	return html;
 }
 function initAutoChoose(){
-	console.log(123);
+//	console.log(123);
 	 $('.modelMItem').off('click').on('click',function(){
 			$('.modelMItem').removeClass('modelMActive');
 			$(this).addClass('modelMActive');
@@ -513,88 +521,35 @@ function bestthings() {
     	$('#calendar').find('.matter').blur();	 
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
-    	/*if(projectName== null || projectName == "" || projectName == undefined){
-    		$('.proerr').text('项目名称未填写');
-			$('#projectName').focus();
-			//提交之后 边框的 消失  
-			var xiu=$('#calendar').find('.fc-day .matter');
-			xiu.each(function(){
-				if($(this).attr('style')=="display: block;"){
-					$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');	
-				} 				
-			})
-			return false;
-    	}else {*/
     	$('#projectNames').val($('#projectName').text());
     	submitDate();
     	$('.proerr').text('');
     	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
     	$('.matter').blur();
     	
-    		/*loadData(function(res){
-    	    	if (res.result){
-    	    		console.log('成功了');
-    	    		
-    	    	
-//    	    window.location.href = getContextPath() + "/schedule/export/" + res.msg;
-
-    	    	}else {
-    	    		console.log('失败了');
-    	    	}
-    	    	//提交之后的 处理
-   	    	 	$('.matter').blur();
-    		}, getContextPath() + '/schedule/save',$.toJSON({
-    			scheduleId:$('#scheduleId').val(), 
-    			projectId: $('#projectId').val(),
-    			projectName: $('#projectName').val(),
-    			updateDate:  $('#updateDate').val(),
-    			items:chenggame   		    
-    		}));*/
-    	/*}*/
     });
  
 }
 //表单提交
 function submitDate(){
-	console.log(chengnum);
+//	console.log(chengnum);
 	chengnum=JSON.stringify(chengnum);
 //	chengnum="["+chengnum+"]";
-	console.log(chengnum);
+//	console.log(chengnum);
 	chengnum = chengnum.replace(/}{/g, '},{');
 	chengnum=$.parseJSON(chengnum);
 	chengnum='['+chengnum+']';
-	console.log(chengnum);
-	
-	
-//	var chenggame=JSON.stringify(chengnum);
 	$('#toListForm #items').val(chengnum);
 
 	$('#toListForm #scheduleId').val($('#scheduleId').val());
-//	$('#toListForm #projectId').val($('#projectId').val());	
-	$('#toListForm #projectId').val('110');	
-//	$('#toListForm #projectName').val($('#projectId').val());	
-	$('#toListForm #projectName').val('下完這場雨');
+	$('#toListForm #projectId').val($('#projectId').val());	
+	$('#toListForm #projectName').val($('#projectId').val());	
 	$('#toListForm #updateDate').val($('#updateDate').val());
 	$('#toListForm').submit();
 	
 	
 }
 
-
-
-//
-////根据项目名称数据回显	
-//function findtimeboxs(projectname){
-////知道项目名称之后 数据的 回显
-//    console.log(projectname);
-//    loadData(function(res){
-//    	console.log(res);
-//	}, getContextPath() + '/schedule/save',$.toJSON({	
-//		projectName: projectname
-//		 		    
-//	}));
-//    
-//}
 //实时获取textare的数据
 function textareval(){
 	 $("textarea").blur(function(){
@@ -616,6 +571,9 @@ function getday(){
 
 //下拉框
 function sun(){
+	if (inthings()){
+    	inthings();
+    }
     // 多选
     var MulticitySelect1 = $('.city-select').citySelect({
         dataJson: cityData,//json 数据 是HTML显示的列表数据
