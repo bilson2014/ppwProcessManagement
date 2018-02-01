@@ -461,6 +461,9 @@
      right: 31px;
      font-size: 1.2rem;
      cursor: pointer;
+     &:hover {
+         color: #333;
+     }
  }
  
  //打开项目的遮罩
@@ -654,6 +657,7 @@
          color: white;
          line-height: 40px;
          text-align: center;
+         font-weight: 500;
      }
      .createFromTable {
          right: 240px !important;

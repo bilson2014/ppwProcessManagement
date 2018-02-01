@@ -652,6 +652,7 @@ function leftbtn() {
     	getday();
     	dbmatter();
     	colorthing();
+    	getBoxInfo();
         $('tbody .fc-other-month .much').attr('style', 'display: none;');
         $('tbody .fc-other-month .boxs').attr('style', 'display: none;');       
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
@@ -665,6 +666,7 @@ function leftbtn() {
     	getday();
     	dbmatter();
     	colorthing();
+    	getBoxInfo();
         if (!$('.fc-header-left .fc-button-today').hasClass('fc-state-disabled')) {
             $('tbody .fc-other-month .much').attr('style', 'display: none;');
             $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
