@@ -94,11 +94,8 @@ function loadProductTable(id){
 						$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
 						$(this).find('textarea').val(objectbox[k].jobContent);
 						$(this).find('textarea').text(objectbox[k].jobContent);	
-					}
-					
-									
-				}	
-				
+					}					
+				}					
 			}
 		})
 	}, getContextPath() + '/schedule/get/'+id,null);
@@ -297,15 +294,26 @@ function getBoxInfo(){
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){
 		var objectbox=src.items;
+//		console.log(src.items);
+
+		var xiaos=JSON.stringify(src.items);
+		xiaos = xiaos.replace(/}{/g, '},{');
+		xiaos='['+xiaos+']';
+		xiaos=xiaos.replace(/\n/g,'\\\\n');
+		$('#items').val(xiaos);
+		
 		var tibo=$('.fc-day');
 		chengnum='';
 		tibo.each(function(){
 			var countext =  $(this).attr('data-date');
 			for(var k in objectbox){
-				if (countext==objectbox[k].start){
-					$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
-					$(this).find('textarea').val(objectbox[k].jobContent);
-					$(this).find('textarea').text(objectbox[k].jobContent);				
+				if (countext==objectbox[k].start){					
+					if (!$(this).hasClass('fc-other-month')){
+						$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
+						$(this).find('textarea').val(objectbox[k].jobContent);
+						$(this).find('textarea').text(objectbox[k].jobContent);	
+					}
+								
 				}				
 			}
 		})
@@ -322,8 +330,7 @@ function loadProductEven(){
 
 	});
 	//项目加载的时候回显
-	$('#CheckloadProduct').off('click').on('click',function(){
-//		$('#projectName').text($('.modelPActive').attr('projectname'));		
+	$('#CheckloadProduct').off('click').on('click',function(){	
 		$('#projectNames').val($('.modelPActive').attr('projectname'));		
 		$('#projectId').val($('.modelPActive').attr('data-pid'));
     	var thisName = $('.modelPActive').text();
@@ -333,7 +340,6 @@ function loadProductEven(){
 				$('#clearTable').show();
 				$('#setTableTitle').html('排期表编辑中，是否加载并覆盖当前排期表?');
 				$('.sureClear').off('click').on('click',function(){
-//					finalAsc = new Array();
 					getBoxInfo();
 					$('#clearTable').hide();
 					$('#loadProductModel').hide();
