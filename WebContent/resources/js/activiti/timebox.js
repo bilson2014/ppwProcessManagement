@@ -74,16 +74,13 @@ function loadProductTable(id){
 		$('#projectId').val(src.projectId);
 		$('#projectNames').val(src.projectName);
 		$('#updateDate').val(src.updateDate);
-		$('#projectName').text(src.projectName);
-		
+		$('#projectName').text(src.projectName);		
 		var xiao=JSON.stringify(src.items);
 		xiao = xiao.replace(/}{/g, '},{');
 		xiao='['+xiao+']';
 		xiao=xiao.replace(/\n/g,'\\\\n');
 		$('#items').val(xiao);
-
 		var objectbox=src.items;
-//		console.log(objectbox);
 		var tibo=$('.fc-day');
 		chengnum='';
 		tibo.each(function(){
@@ -99,9 +96,7 @@ function loadProductTable(id){
 			}
 		})
 	}, getContextPath() + '/schedule/get/'+id,null);
-
 }
-
 //日期样式添加事件 
 function colorthing(){
 	var tibo=$('.fc-day');
@@ -169,19 +164,18 @@ function dbmatter(){
 	 })
  
 	 $('.fc-day').click(function(){
-		 if (!$(this).hasClass('cheng')){
+		if (!$(this).hasClass('cheng')){
 			$(this).parent().find('.boxs .city-select').remove('.city-select');
 			$(this).parent().siblings().find('.boxs .city-select').remove('.city-select');
 		}
-		 $(this).parent().find('.matter').blur();	
-		 $(this).parent().parent().siblings().find('.matter').blur();
-		 $(this).attr('style', 'background: #F6F9F9;');
-		 $(this).siblings().attr('style', 'background: ;');
-		 $(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');
-		 $(this).siblings().removeClass('cheng');
-		 $(this).parent().parent().find('.fc-day').removeClass('cheng');
-		 $(this).addClass('cheng');
- 
+		$(this).parent().find('.matter').blur();	
+		$(this).parent().parent().siblings().find('.matter').blur();
+		$(this).attr('style', 'background: #F6F9F9;');
+		$(this).siblings().attr('style', 'background: ;');
+		$(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');
+		$(this).siblings().removeClass('cheng');
+		$(this).parent().parent().find('.fc-day').removeClass('cheng');
+		$(this).addClass('cheng');
 		if (!$(this).find('.xuan').hasClass('wolf')&&$('.fc-day .xuan').hasClass('wolf')){
 			$(this).siblings().find('.xuan').removeClass('wolf');
 			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
@@ -270,14 +264,12 @@ function timebook(){
 	   	var body = $('.modelProductContent');
 	   	body.html('');
 	   	loadData(function(res){
-//	   		console.log (res);
-	   		  for (var i = 0; i < res.length; i++) {
-	   			  body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
-	   		  }
-	   		  loadProductEven();
+	   		for (var i = 0; i < res.length; i++) {
+	   			 body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+	   		 }
+	   		 loadProductEven();
 	   	}, getContextPath() + '/schedule/list/synergetic','');
-	 
-	       loadProductEven();
+	    loadProductEven();
 	});	
 	
 }
@@ -288,20 +280,16 @@ function getBoxInfo(){
 		$(this).find('textarea').val('');
 		$(this).find('textarea').text('');
 		$(this).find('textarea').attr('style','display:none;')
-	});
-	
+	});	
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){
 		var objectbox=src.items;
-//		console.log(src.items);
-
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
 		xiaos='['+xiaos+']';
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
-		$('#items').val(xiaos);
-		
+		$('#items').val(xiaos);		
 		var tibo=$('.fc-day');
 		chengnum='';
 		tibo.each(function(){
@@ -359,19 +347,16 @@ function loadProductEven(){
 	});	
 	//项目选择的 时候 样式
 	 $('.modelProItem').off('click').on('click',function(){
-			$('.modelProItem').removeClass('modelPActive');
-			$(this).addClass('modelPActive');			
+		$('.modelProItem').removeClass('modelPActive');
+		$(this).addClass('modelPActive');			
 	});
 	//保存至项目
 	 $('.createQuo .createFromTable').off('click').on('click',function(){
          $('.closeModel').off('click').on('click',function(){
         	 $('.cusModel').hide();
          }); 
-      
-//      	 console.log(chengnum);
          if (chengnum.length>0){
         	 if($('#projectName').text()=='未命名'){
-//        		console.log('未命名');
         		 $('#showProductName').show();
         		 findAutoInfo('');
             	 $('#savesProductName').off('click').on('click',function(){
@@ -402,10 +387,8 @@ function loadProductEven(){
            	 $('.sureCheck').off('click').on('click',function(){
            		 $('#submitCheck').hide();
            	 });          	
-         }
-        
-	});
-	 
+         }        
+	});	 
 }
 function submitDateMyDate(num,chengnum){
 	chengnum=JSON.stringify(chengnum);
@@ -413,21 +396,16 @@ function submitDateMyDate(num,chengnum){
 	chengnum=$.parseJSON(chengnum);
 	chengnum='['+chengnum+']';
 	$('#items').val(chengnum);
-
 	var proName = $('.modelMActive').text();
 	var proId = $('.modelMActive').attr('data-id');
 	if(num == 1){
 		proName = $('#projectName').text();
-	}
-	
+	}	
 	if(proId == null || proId == '' || proId == undefined){
 		proId = $('#projectId').val();
 	}	
 	loadData(function(res){
 	    if (res.result){
-//	    	console.log('成功了');
-	    	
-//	    	console.log(chengnum);
 	    	$('#projectName').text($('#projectNames').val());
 	    	$('#errorSaveModel').hide();
 	    	$('#submitCheck').show();
@@ -440,10 +418,11 @@ function submitDateMyDate(num,chengnum){
     		$('.sureCheck').off('click').on('click',function(){
     			$('#submitCheck').hide();
     			$('.cusModel').hide();
+    			
+    			getBoxInfo();
     		});
     		$('#productSelect').html('');
 	    }else {
-//	    	console.log('失败了');
 	    	$('#errorSaveModel').hide();
 	    	$('#submitCheck').show();
     		$('#isSuccess').text('保存为失败了');
@@ -455,7 +434,7 @@ function submitDateMyDate(num,chengnum){
     		});
     		$('#productSelect').html('');
 	    }
-	    	//提交之后的 处理
+	//提交之后的 处理
   	 	$('.matter').blur();
 	}, getContextPath() + '/schedule/save',$.toJSON({
 		scheduleId:$('#scheduleId').val(), 
@@ -463,15 +442,11 @@ function submitDateMyDate(num,chengnum){
 		projectName: $('#projectNames').val(),
 		updateDate:  $('#updateDate').val(),
 		itemContent:$('#items').val(),
-	}));
-	  
-   
+	}));  
 }
 //加载所有项目 为保存排期表
 function findAutoInfo(userName){
 	loadData(function(res){
-//		console.log(res);
-//		console.log(1);
 		var res = res;
 		var body = $('#productSelect');
 		body.html('');
@@ -490,17 +465,15 @@ function findAutoInfo(userName){
 	}));
 }
 function createProduct(item){ 
-//	console.log(12);
 	var html = [
 	    		'<div class="modelMItem" data-id="'+item.projectId+'">'+item.projectName+'</div>'
 	    	].join('');
 	    	return html;
 }
 function initAutoChoose(){
-//	console.log(123);
 	 $('.modelMItem').off('click').on('click',function(){
-			$('.modelMItem').removeClass('modelMActive');
-			$(this).addClass('modelMActive');
+		$('.modelMItem').removeClass('modelMActive');
+		$(this).addClass('modelMActive');
 	});
 }
 //加载有排期表项目
@@ -508,11 +481,10 @@ function getLoadProduct(){
 	var body = $('.modelProductContent');
 	body.html('');
 	loadData(function(res){
-		console.log (res);
-		  for (var i = 0; i < res.length; i++) {
-			  body.append('<div class="modelProItem" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
-		  }
-		  loadProductEven();
+		for (var i = 0; i < res.length; i++) {
+			body.append('<div class="modelProItem" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+		 }
+		 loadProductEven();
 	}, getContextPath() + '/schedule/list/synergetic','');
 }
 
@@ -531,29 +503,21 @@ function bestthings() {
     	submitDate();
     	$('.proerr').text('');
     	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
-    	$('.matter').blur();
-    	
+    	$('.matter').blur();  	
     });
- 
 }
 //表单提交
 function submitDate(){
-//	console.log(chengnum);
 	chengnum=JSON.stringify(chengnum);
-//	chengnum="["+chengnum+"]";
-//	console.log(chengnum);
 	chengnum = chengnum.replace(/}{/g, '},{');
 	chengnum=$.parseJSON(chengnum);
 	chengnum='['+chengnum+']';
 	$('#toListForm #items').val(chengnum);
-
 	$('#toListForm #scheduleId').val($('#scheduleId').val());
 	$('#toListForm #projectId').val($('#projectId').val());	
 	$('#toListForm #projectName').val($('#projectId').val());	
 	$('#toListForm #updateDate').val($('#updateDate').val());
-	$('#toListForm').submit();
-	
-	
+	$('#toListForm').submit();	
 }
 
 //实时获取textare的数据
