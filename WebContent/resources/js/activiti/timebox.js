@@ -2,6 +2,7 @@ var count=0;
 var time,matter,whenval, times,chengnums;
 var chengnums='';
 var chengnum=[];
+var jiafei='';
 var textval='';
 var yy;
 var mm;
@@ -152,6 +153,7 @@ function dbmatter(){
     		}
     	})
     	chengnum=gamethings;
+    	jiafei=+gamethings
 	 });
 	 $('.fc-day .xuan .boxs').click(function(){
 		 $(this).parent().addClass('wolf');	 
@@ -227,6 +229,15 @@ function dbmatter(){
 }
 //回显功能
 function timebook(){
+	console.log('回显的 功能');
+//	console.log(chengnum);
+//	var zhuan=chengnum;
+//	chengnum+=zhuan;
+//	console.log('功能');
+//	console.log(chengnum);
+	
+	
+	
 	var timebook= blackbox;
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
@@ -234,6 +245,31 @@ function timebook(){
 	chengnumsw='['+chengnums+']';	
 	timebook=JSON.parse(chengnumsw.replace(/\n/g,'\\\\n'));
 	chenggame=timebook;
+
+	
+
+	var timebookss;
+	timebookss=JSON.stringify(timebook);
+	timebookss = timebookss.replace(/}{/g, '},{');
+//	timebookss=$.parseJSON(timebookss);
+//	timebookss='['+timebookss+']';
+	if (timebookss.length>0){
+		$('#toListForm #items').val(timebookss);
+		console.log('获取的 数据 啦啦啦啦啦啦666666666666666666666666666666');
+		console.log($('#items').val());
+		
+	}else {
+		console.log('获取')
+		console.log($('#items').val());
+		/*chengnum=JSON.stringify(chengnum);
+		chengnum = chengnum.replace(/}{/g, '},{');
+		chengnum=$.parseJSON(chengnum);
+		chengnum='['+chengnum+']';
+		$('#toListForm #items').val(chengnum);*/
+	}
+	
+	
+	
 	var keys=[];
 	var value=[];
 	var tibo=$('.fc-day');
@@ -275,6 +311,8 @@ function timebook(){
 }
 //选中项目的 回显
 function getBoxInfo(){
+	
+//	console.log('回显');
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		$(this).find('textarea').val('');
@@ -284,6 +322,7 @@ function getBoxInfo(){
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){
+//		console.log(src.items);
 		var objectbox=src.items;
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
@@ -508,11 +547,17 @@ function bestthings() {
 }
 //表单提交
 function submitDate(){
-	chengnum=JSON.stringify(chengnum);
+	console.log('提交前的数据  目前 有问题');
+	
+	console.log(chengnum);
+	console.log('33333333333333333333333333333333333');
+	console.log($('#toListForm #items').val());
+	
+	/*chengnum=JSON.stringify(chengnum);
 	chengnum = chengnum.replace(/}{/g, '},{');
 	chengnum=$.parseJSON(chengnum);
 	chengnum='['+chengnum+']';
-	$('#toListForm #items').val(chengnum);
+	$('#toListForm #items').val(chengnum);*/
 	$('#toListForm #scheduleId').val($('#scheduleId').val());
 	$('#toListForm #projectId').val($('#projectId').val());	
 	$('#toListForm #projectName').val($('#projectId').val());	
@@ -582,6 +627,7 @@ function sun(){
 //                	添加当前的内容到当前时间下面            	
                  	$(".fc-week td[data-date="+time+"]").find(".matter").val(season+shus);                    	            	
                 	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
+                
             	}
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
@@ -611,6 +657,13 @@ function leftbtn() {
     $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
     $('tbody .fc-other-month .matter').attr('style', 'display: none;');
     $('.fc-header-left .fc-button').on('click', function() {
+    	
+//    	var zhuan=chengnum;
+////    	chengnum+=zhuan;
+//    	console.log('ahsdkjdhskjadha');
+//     	console.log('['+jiafei+']');
+//     	$('#items').val('['+chengnum+']');     	
+     	
     	initSelect();
     	sun();
     	getday();
