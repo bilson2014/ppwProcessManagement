@@ -64,7 +64,16 @@ public class ScheduleController extends BaseController {
 	 */
 	@RequestMapping("/get/{projectId}")
 	public PmsSchedule getByProjectId(@PathVariable("projectId")String projectId){
-		return pmsScheduleFacade.getByProjectId(projectId);
+		PmsSchedule schedule=null;
+		if(ValidateUtil.isValid(projectId)){
+			schedule= pmsScheduleFacade.getByProjectId(projectId);
+		}
+		
+		if(schedule==null){
+			schedule=new PmsSchedule();
+			schedule.setProjectName("未命名");
+		}
+		return schedule;
 	}
 	
 	/**
