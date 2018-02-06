@@ -1,11 +1,5 @@
 package com.paipianwang.activiti.poi.entity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import com.paipianwang.activiti.utils.RegexUtils; 
-
-
 public class QuotationTableCell {
 
 	private Object value;
