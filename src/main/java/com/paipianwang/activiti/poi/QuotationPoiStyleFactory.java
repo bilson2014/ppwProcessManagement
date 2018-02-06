@@ -4,14 +4,12 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
-import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -190,7 +188,7 @@ public class QuotationPoiStyleFactory {
 
 	public XSSFCellStyle getMoneyCellStyle() {
 		XSSFCellStyle style = getTableItemCellStyle((short) 9);
-		XSSFDataFormat format = xssfWorkbook.createDataFormat();
+//		XSSFDataFormat format = xssfWorkbook.createDataFormat();
 //		style.setDataFormat(format.getFormat("¥#,##0"));
 		return style;
 	}
