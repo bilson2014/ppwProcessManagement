@@ -410,19 +410,25 @@ function getBoxInfo(){
 function loadProductEven(){
 	$('#cancleLoadProduct').on('click',function(){
 		$('#loadProductModel').hide();
-
 	});
 	//项目加载的时候回显
-	$('#CheckloadProduct').off('click').on('click',function(){	
-		$('#projectNames').val($('.modelPActive').attr('projectname'));		
-		$('#projectId').val($('.modelPActive').attr('data-pid'));
+	$('#CheckloadProduct').off('click').on('click',function(){			
     	var thisName = $('.modelPActive').text();
 		//覆盖提示信息modelProItem
 		if ($('.modelProItem').hasClass('modelPActive')){
-			if (chengnum.length>0){
+			if ($('#projectId').val()== null || $('#projectId').val() == '' ||$('#projectId').val() == undefined){
+				$('#loadProductModel').hide();
+				$('#projectName').text(thisName);
+				//此处要打开 选中项目的 日程
+				$('#projectNames').val($('.modelPActive').attr('projectname'));		
+				$('#projectId').val($('.modelPActive').attr('data-pid'));
+				getBoxInfo();	 				
+			}else{
 				$('#clearTable').show();
 				$('#setTableTitle').html('排期表编辑中，是否加载并覆盖当前排期表?');
 				$('.sureClear').off('click').on('click',function(){
+					$('#projectNames').val($('.modelPActive').attr('projectname'));		
+					$('#projectId').val($('.modelPActive').attr('data-pid'));
 					getBoxInfo();
 					$('#clearTable').hide();
 					$('#loadProductModel').hide();
@@ -430,12 +436,7 @@ function loadProductEven(){
 				});
 				$('.cancle').off('click').on('click',function(){							  
 			    	$('#clearTable').hide();
-				});
-			}else{
-				$('#loadProductModel').hide();
-				$('#projectName').text(thisName);
-				//此处要打开 选中项目的 日程
-				getBoxInfo();	    	
+				});   	
 			}
 		}				
 	});	
@@ -450,7 +451,7 @@ function loadProductEven(){
         	 $('.cusModel').hide();
          }); 
          if (chengnum.length>0){
-        	 if($('#projectName').text()=='未命名'){
+        	 if($('#projectName').text()=='未命名项目'){
         		 $('#showProductName').show();
         		 findAutoInfo('');
             	 $('#savesProductName').off('click').on('click',function(){
@@ -831,6 +832,6 @@ function initSelect() {
     });
     var pro = $('#projectName').val();
 	if(pro == null || pro == undefined || pro == ''){
-		$('#projectName').text('未命名');
+		$('#projectName').text('未命名项目');
 	}
 } 

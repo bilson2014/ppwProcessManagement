@@ -276,7 +276,7 @@
  <div class="cusModel" id="loadProductModel">
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title">项目报价单</div>
+                   <div class="title">打开项目报价单</div>
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
@@ -285,7 +285,7 @@
             <div class="modelProductContent"> </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleLoadProduct">取消</div>
-                 <div class="btn-c-r" id="CheckloadProduct">加载</div>
+                 <div class="btn-c-r" id="CheckloadProduct">打开</div>
             </div>     
      </div>
 </div>

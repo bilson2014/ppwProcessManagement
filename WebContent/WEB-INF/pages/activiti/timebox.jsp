@@ -70,27 +70,17 @@
 </head>
 <body>
 
-<%-- <input type="hidden" id="scheduleId" value='${scheduleId}'><!--唯一标记  -->
-<input type="hidden" id="projectId" value='${projectId}'><!--项目id  --> --%>
-  <div class="pages" >   
-  <div class='titles'>
-  	<span>排期表生成器</span>
-  	<span id="projectName">${projectName}</span>
-  	<div class='searchBtn' id='openFrom'>打开项目</div>
-  </div>
-<%--   <div class="orderItem" id="projectNameError">
-	   <div class="mR8">项目名称</div>
-	   <input value='${projectName}' id="projectName" style="width:240px">
-	   <p class='proerr'><p>
- </div> --%>
- <div class='divine'></div> 
-<%--  <div class="orderItem" id="dayTimeError">
-	   <div class="mR8">日期</div>
-	   <input class="time noBorder" readonly id="updateDate" name="time" value="${updateDate}">
-  </div>   --%> 
+  	<div class="pages" >   
+  	<div class='titles'>
+  		<span>排期表生成器</span>
+  		<span id="projectName">${projectName}</span>
+  		<div class='searchBtn' id='openFrom'>打开项目</div>
+ 	</div>
+
+ 	<div class='divine'></div> 
 	<div id='calendar' onClick="event.cancelBubble = true"></div>
 	<div class='advice'>*本时间表为预排，基于每个环节的按时确认可顺利执行，否则制作进度都会受确认环节或其他不可抗因素的变化相应的变化。</div>
- 	<!-- <div class='last'><div class='best'>生成排期表</div></div> -->
+
  	
  	<div class="createQuo">
          <div class="btn-c-r createFrom best">导出</div>
@@ -100,7 +90,7 @@
  	<div class="cusModel" id="loadProductModel">
      	<div class="modelCard">
             <div class="cardTop">
-                   <div class="title">项目排期表</div>
+                   <div class="title">打开项目排期表</div>
                    <div class="closeModel"></div>
             </div>
             <div class="modelBanner">
@@ -109,7 +99,7 @@
             <div class="modelProductContent"> </div>
             <div class="modelControl">
                  <div class="btn-c-g" id="cancleLoadProduct">取消</div>
-                 <div class="btn-c-r" id="CheckloadProduct">加载</div>
+                 <div class="btn-c-r" id="CheckloadProduct">打开</div>
             </div>     
     	</div>
 	</div>
@@ -191,7 +181,7 @@
 	</form> 
 	<!--跳板隐藏的数据  -->
 	<input type='hidden' name='chengnum' id='pumpum'/>
-	<input type='hidden' name='chengnum' id='pums'/>    
+	 
  </div>
 </body>
 </html>

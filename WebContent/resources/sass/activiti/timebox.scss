@@ -125,10 +125,18 @@
  
  //生成排期表
  .advice {
-     margin-top: -140px;
      padding-left: 20px;
      font-size: 12px;
      color: #666666;
+     width: 1068px !important;
+     margin: 0 auto;
+     margin-top: -140px !important;
+     @media screen and (max-width: 775px) {
+         width: 720px !important;
+     }
+     @media screen and (min-width: 775px) and (max-width: 1025px) {
+         width: 972px !important;
+     }
  }
  
  //  .last {
@@ -643,11 +651,18 @@
  
  //保存至项目 与导出
  .createQuo {
-     width: 96%;
      height: 40px;
      position: relative;
      margin-bottom: 70px;
+     width: 1068px !important;
+     margin: 0 auto;
      margin-top: 20px;
+     @media screen and (max-width: 775px) {
+         width: 720px !important;
+     }
+     @media screen and (min-width: 775px) and (max-width: 1025px) {
+         width: 972px !important;
+     }
      div {
          position: absolute;
          right: 0px;
