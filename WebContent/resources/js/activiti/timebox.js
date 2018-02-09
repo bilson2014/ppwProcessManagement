@@ -13,7 +13,7 @@ var season;
 var num;
 var clickNumber =0;
 var arrobject=[];
-//var arrobject = new Object(); 
+// var arrobject = new Object();
 var myxuan=new Array();
 $().ready(function() {
 	document.domain = getUrl();
@@ -31,7 +31,7 @@ $().ready(function() {
             right: 'month,basicWeek,basicDay'
         },
         editable: true,
-//        events: dayData,
+// events: dayData,
     });
     leftbtn();
     initSelect();
@@ -51,12 +51,12 @@ $().ready(function() {
   
 });
 
-//初始化获取地址
+// 初始化获取地址
 function inthings(){
 	if  ($('#projectNames').val()){
 		$('#projectName').text($('#projectNames').val());
 	}
-	//接受URL地址参数 
+	// 接受URL地址参数
     function getQueryString(name) {                                      
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");     
         var r = window.location.search.substr(1).match(reg);
@@ -74,38 +74,38 @@ function inthings(){
 }
 function loadProductTable(id){
 	loadData(function(src){
-		$('#scheduleId').val(src.scheduleId);
-		$('#projectId').val(src.projectId);
-		$('#projectNames').val(src.projectName);
-		$('#updateDate').val(src.updateDate);
-//		$('#projectName').text(src.projectName);	//
-
-		arrobject=src.items;
-
-		var xiao=JSON.stringify(src.items);
-		xiao = xiao.replace(/}{/g, '},{');
-//		xiao=xiao.replace(/\n/g,'\\\\n');
-		$('#items').val(xiao);//最初获取的数据
-
-		
-		var objectbox=src.items;
-		var tibo=$('.fc-day');
-		chengnum='';
-		tibo.each(function(){
-			var countext =  $(this).attr('data-date');
-			for(var k in objectbox){
-				if (countext==objectbox[k].start){
-					if (!$(this).hasClass('fc-other-month')){
-						$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
-						$(this).find('textarea').val(objectbox[k].jobContent);
-						$(this).find('textarea').text(objectbox[k].jobContent);	
+		if (src.scheduleId!=null && src.scheduleId!="" && src.scheduleId!=undefined){
+			$('#scheduleId').val(src.scheduleId);
+			$('#projectId').val(src.projectId);
+			$('#projectNames').val(src.projectName);
+			$('#updateDate').val(src.updateDate);
+			$('#projectName').text(src.projectName);	
+			arrobject=src.items;
+			var xiao=JSON.stringify(src.items);
+			xiao = xiao.replace(/}{/g, '},{');
+			$('#items').val(xiao);// 最初获取的数据
+			var objectbox=src.items;
+			var tibo=$('.fc-day');
+			chengnum='';
+			tibo.each(function(){
+				var countext =  $(this).attr('data-date');
+				for(var k in objectbox){
+					if (countext==objectbox[k].start){
+						if (!$(this).hasClass('fc-other-month')){
+							$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
+							$(this).find('textarea').val(objectbox[k].jobContent);
+							$(this).find('textarea').text(objectbox[k].jobContent);	
+						}					
 					}					
-				}					
-			}
-		})
+				}
+			})
+		}else {
+			$('#projectId').val(id);
+			$('#projectNames').val($('#projectName').text());	
+		}	
 	}, getContextPath() + '/schedule/get/'+id,null);
 }
-//日期样式添加事件 
+// 日期样式添加事件
 function colorthing(){
 	var tibo=$('.fc-day');
 	tibo.each(function(){
@@ -114,7 +114,7 @@ function colorthing(){
 		}		
 	});
 }
-//双击事件和失去焦点事件文本框的显示
+// 双击事件和失去焦点事件文本框的显示
 function dbmatter(){
 	$('.orderSelect').click(function(){
 		$(this).parent().parent().addClass('wolf');
@@ -126,7 +126,7 @@ function dbmatter(){
 		$(this).parent().parent().parent().parent().parent().find('.fc-day').removeClass('cheng');
 		$(this).parent().parent().parent().addClass('cheng');
 		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
-		//获取焦点
+		// 获取焦点
 		$('.matter').blur();
 		$(this).parent().parent().find('.matter').focus();	
 		$(this).parent().parent().parent().focus();	
@@ -190,7 +190,7 @@ function dbmatter(){
 			$(this).parent().parent().find('.fc-day .xuan').removeClass('wolf');
 			$(this).addClass('onlyul');
 			setTimeout($(this).removeClass('onlyul'),1000);
-			//移除box的 内容
+			// 移除box的 内容
 			$('.boxs .city-select').remove('.city-select');
 			$('.orderSelect').removeClass('selectColor');
 		}
@@ -222,7 +222,7 @@ function dbmatter(){
 				$(this).siblings().attr('style', 'background: ;');
 				$(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
 				$(this).parent().siblings().find('.matter').blur();
-				//排除其余月份的 显示textarea框
+				// 排除其余月份的 显示textarea框
 				if ($(this).hasClass('fc-other-month')){
 					$(this).find(".matter").attr('style', 'display: none;');
 				}else {
@@ -234,10 +234,10 @@ function dbmatter(){
 		}	
 	 });	 
 }
-//回显功能
+// 回显功能
 function timebook(){
 	var timebook;
-//	console.log();
+// console.log();
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
 	var chengnumsw='';
@@ -246,14 +246,14 @@ function timebook(){
 	chenggame=timebook;
 	var timebookss;
 	timebookss=JSON.stringify(timebook);
-//完整的对象
-	//字符串的
+// 完整的对象
+	// 字符串的
 
-//	console.log('未去重的数据');
-//	console.log(timebook);
-//	console.log(timebook.length);
-	//timebook 去重
-	var allArr = [];//新数组
+// console.log('未去重的数据');
+// console.log(timebook);
+// console.log(timebook.length);
+	// timebook 去重
+	var allArr = [];// 新数组
 	for(var i=0;i<timebook.length;i++){
 	　　var flag = true;
 	　　for(var j=0;j<allArr.length;j++){
@@ -266,27 +266,34 @@ function timebook(){
 	　　};
 	};
 
-	//此后的 timebook  换成allAll
+	// 此后的 timebook 换成allAll
 	timebook=allArr;
-//	console.log('去重数据');
-//	console.log(timebook);
-//	console.log('项目原有的数据');
-//	console.log(arrobject);
-	//timebook与 arrobject 数据合并修改 
+// console.log('去重数据');
+// console.log(timebook);
+// console.log('项目原有的数据');
+// console.log(arrobject);
+	// timebook与 arrobject 数据合并修改
 	for(var i in timebook){
 		for (var j in arrobject){
 			if (timebook[i].start==arrobject[j].start){				
-				//对项目原有的数据与修改的数据进行比较得出比较的  修改新的数据
+				// 对项目原有的数据与修改的数据进行比较得出比较的 修改新的数据
 				arrobject[j].jobContent=timebook[i].jobContent;
 			}			
 		}	
-		arrobject.push(timebook[i]);
+		
+// if(arrobject==null){
+// var arrobject=[];
+// arrobject.push(timebook[i]);
+// }else {
+// arrobject.push(timebook[i]);
+// }
+		arrobject.push(timebook[i]);	
 	}
 
-//	console.log('项目数据和 添加数据的合并');
-//	console.log(arrobject);
+// console.log('项目数据和 添加数据的合并');
+// console.log(arrobject);
 
-	var allArr = [];//新数组
+	var allArr = [];// 新数组
 	for(var i=0;i<arrobject.length;i++){
 	　　var flag = true;
 	　　for(var j=0;j<allArr.length;j++){
@@ -298,29 +305,29 @@ function timebook(){
 	　　　　allArr.push(arrobject[i]);
 	　　};
 	};
-//	console.log('对合并后的数据去重');
+// console.log('对合并后的数据去重');
 	arrobject=allArr;
-//	console.log(arrobject);
+// console.log(arrobject);
 
-//	当导出的时候 取该处的值 导出即可
+// 当导出的时候 取该处的值 导出即可
 	var chaunqi=JSON.stringify(arrobject);
-//	console.log('开始了');
+// console.log('开始了');
 	chaunqi = chaunqi.replace(/}{/g, '},{');
-//	console.log(chaunqi);
+// console.log(chaunqi);
 
-//	console.log('传奇传奇');
+// console.log('传奇传奇');
 	chaunqi = chaunqi.replace(/\\n/g,'111');	
 	chaunqi = chaunqi.replace(/\\111/g,'/n');
 	chaunqi = chaunqi.replace(/111/g,'/n');
-//	console.log('转换了');
-//	console.log(chaunqi);
+// console.log('转换了');
+// console.log(chaunqi);
 
 	console.log(chaunqi.length);
 	for (var i=0;i<chaunqi.length;i++){
 		chaunqi = chaunqi.replace('/n','\\n');
 	}
-//	chaunqi = chaunqi.replace('/n','******');
-//	console.log(chaunqi);
+// chaunqi = chaunqi.replace('/n','******');
+// console.log(chaunqi);
 	$('#pumpum').val(chaunqi);
 
 	var keys=[];
@@ -336,18 +343,18 @@ function timebook(){
 				$(this).find('textarea').val(timebook[k].jobContent);
 				$(this).find('textarea').text(timebook[k].jobContent);				
 				var meiyi=timebook[k].jobContent;				
-				meiyi=meiyi.replace(/n/g,'\\\n');//加了\
+				meiyi=meiyi.replace(/n/g,'\\\n');// 加了\
 				meiyi=meiyi.replace(/\\/g,'  ');
 				$(this).find('textarea').val(meiyi);
 				$(this).find('textarea').text(meiyi);
 			}
 		}		
 	});	
-	//加载报价单的时候
+	// 加载报价单的时候
 	$('.closeModel').on('click',function(){
 		  $('.cusModel').hide();
 	});	
-	//打开项目
+	// 打开项目
 	$('#openFrom').on('click',function(){
 	   $('#loadProductModel').show();     
 	   	var body = $('.modelProductContent');
@@ -362,7 +369,7 @@ function timebook(){
 	});	
 	
 }
-//选中项目的 回显
+// 选中项目的 回显
 function getBoxInfo(){
 	var tibo=$('.fc-day');
 	tibo.each(function(){
@@ -373,21 +380,20 @@ function getBoxInfo(){
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){	
-	/*	$('#scheduleId').val(src.scheduleId);
+		$('#scheduleId').val(src.scheduleId);
 		$('#projectId').val(src.projectId);
 		$('#projectNames').val(src.projectName);
 		$('#updateDate').val(src.updateDate);
 		$('#projectName').text(src.projectName);	
-		*/
-//		console.log(src);
-		var objectbox=src.items;
 		
-		arrobject=src.items;
-		
+// console.log(src);
+		var objectbox=src.items;	
+		console.log(src.items);
+		arrobject=src.items;		
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
-//		xiaos=xiaos.replace('/n','\\\\n');
+// xiaos=xiaos.replace('/n','\\\\n');
 		$('#items').val(xiaos);	
 			
 
@@ -412,20 +418,20 @@ function getBoxInfo(){
 	
 }
 
-//加载事件
+// 加载事件
 function loadProductEven(){
 	$('#cancleLoadProduct').on('click',function(){
 		$('#loadProductModel').hide();
 	});
-	//项目加载的时候回显
+	// 项目加载的时候回显
 	$('#CheckloadProduct').off('click').on('click',function(){			
     	var thisName = $('.modelPActive').text();
-		//覆盖提示信息modelProItem
+		// 覆盖提示信息modelProItem
 		if ($('.modelProItem').hasClass('modelPActive')){
 			if ($('#projectId').val()== null || $('#projectId').val() == '' ||$('#projectId').val() == undefined){
 				$('#loadProductModel').hide();
 				$('#projectName').text(thisName);
-				//此处要打开 选中项目的 日程
+				// 此处要打开 选中项目的 日程
 				$('#projectNames').val($('.modelPActive').attr('projectname'));		
 				$('#projectId').val($('.modelPActive').attr('data-pid'));
 				getBoxInfo();	 				
@@ -446,12 +452,12 @@ function loadProductEven(){
 			}
 		}				
 	});	
-	//项目选择的 时候 样式
+	// 项目选择的 时候 样式
 	 $('.modelProItem').off('click').on('click',function(){
 		$('.modelProItem').removeClass('modelPActive');
 		$(this).addClass('modelPActive');			
 	});
-	//保存至项目
+	// 保存至项目
 	 $('.createQuo .createFromTable').off('click').on('click',function(){
          $('.closeModel').off('click').on('click',function(){
         	 $('.cusModel').hide();
@@ -481,7 +487,7 @@ function loadProductEven(){
         			 popo='['+popo+']';
         			 popo=JSON.parse(popo.replace(/\n/g,'\\\\n'));
         	
-        			 //對象
+        			 // 對象
         			 popo=JSON.stringify(popo);
         			 console.log(popo);
         			 
@@ -492,7 +498,7 @@ function loadProductEven(){
         	 }
          }else {
         	 console.log('没有 任何更改');
-        	  //弹出新的窗口,显示提示项目内容不能为空  啦啦啦啦
+        	  // 弹出新的窗口,显示提示项目内容不能为空 啦啦啦啦
              $('#submitCheck').show();
              $('#isSuccess').text('保存项目');
            	 $('#errorImg').show();
@@ -504,13 +510,13 @@ function loadProductEven(){
 	});	 
 }
 function submitDateMyDate(num){
-//	chengnum=JSON.stringify(chengnum);
-//	chengnum = chengnum.replace(/}{/g, '},{');
-//	chengnum=$.parseJSON(chengnum);
-////	chengnum='['+chengnum+']';
+// chengnum=JSON.stringify(chengnum);
+// chengnum = chengnum.replace(/}{/g, '},{');
+// chengnum=$.parseJSON(chengnum);
+// // chengnum='['+chengnum+']';
 	timebook();
 
-	//最后确定了 之后在把要修改的 值赋给要保存的 数据
+	// 最后确定了 之后在把要修改的 值赋给要保存的 数据
 	$('#items').val($('#pumpum').val());
 	
 	
@@ -540,6 +546,9 @@ function submitDateMyDate(num){
     			$('.cusModel').hide();
     			$('#items').val($('#pumpum').val());
     			getBoxInfo();
+    			
+    			
+// asdjakdjkasdj
     		});
     		$('#productSelect').html('');
 	    }else {
@@ -554,7 +563,7 @@ function submitDateMyDate(num){
     		});
     		$('#productSelect').html('');
 	    }
-	//提交之后的 处理
+	// 提交之后的 处理
   	 	$('.matter').blur();
 	}, getContextPath() + '/schedule/save',$.toJSON({
 		scheduleId:$('#scheduleId').val(), 
@@ -564,7 +573,7 @@ function submitDateMyDate(num){
 		itemContent:$('#items').val(),
 	}));  
 }
-//加载所有项目 为保存排期表
+// 加载所有项目 为保存排期表
 function findAutoInfo(userName){
 	loadData(function(res){
 		var res = res;
@@ -596,7 +605,7 @@ function initAutoChoose(){
 		$(this).addClass('modelMActive');
 	});
 }
-//加载有排期表项目
+// 加载有排期表项目
 function getLoadProduct(){
 	var body = $('.modelProductContent');
 	body.html('');
@@ -608,7 +617,7 @@ function getLoadProduct(){
 	}, getContextPath() + '/schedule/list/synergetic','');
 }
 
-//生成排期表
+// 生成排期表
 function bestthings() {
     $('.best').on('click', function() {
     	sun();
@@ -621,25 +630,25 @@ function bestthings() {
     	var projectName = $('#projectName').val();  	
     	$('#projectNames').val($('#projectName').text());
 //    	
-//    	if($('#pumpum').val().length>2){
-//    		console.log('有');
-//    		$('#submitCheck').show();   		 
-//             $('#isSuccess').text('保存项目');
-//           	 $('#errorImg').show();
-//           	 $('#successContent').text('排期表未保存，请保存至项目再导出');
-//           	 $('.sureCheck').off('click').on('click',function(){
-//           		 $('#submitCheck').hide();
-//           	 });
+// if($('#pumpum').val().length>2){
+// console.log('有');
+// $('#submitCheck').show();
+// $('#isSuccess').text('保存项目');
+// $('#errorImg').show();
+// $('#successContent').text('排期表未保存，请保存至项目再导出');
+// $('.sureCheck').off('click').on('click',function(){
+// $('#submitCheck').hide();
+// });
     		
     		
-//    		$('#toListForm #items').val($('#pumpum').val());
+// $('#toListForm #items').val($('#pumpum').val());
     	
-//    	submitDate();   
+// submitDate();
     	
-//    	}else{
-//    		console.log('无');
-//    		submitDate();
-//    	}
+// }else{
+// console.log('无');
+// submitDate();
+// }
     	submitDate();
     	
     	$('.proerr').text('');
@@ -647,20 +656,20 @@ function bestthings() {
     	$('.matter').blur();  	
     });
 }
-//表单提交
+// 表单提交
 function submitDate(){
-//	console.log('提交前的数据  目前 有问题');
+// console.log('提交前的数据 目前 有问题');
 	
-//	console.log(chengnum);
-//	console.log('33333333333333333333333333333333333');
-//	console.log($('#toListForm #items').val());
+// console.log(chengnum);
+// console.log('33333333333333333333333333333333333');
+// console.log($('#toListForm #items').val());
 //	
 //	
-//	chengnum=JSON.stringify(chengnum);
-//	chengnum = chengnum.replace(/}{/g, '},{');
-//	chengnum=$.parseJSON(chengnum);
-//	chengnum='['+chengnum+']';
-	$('#toListForm #items').val($('#pumpum').val());//早晚要注释的
+// chengnum=JSON.stringify(chengnum);
+// chengnum = chengnum.replace(/}{/g, '},{');
+// chengnum=$.parseJSON(chengnum);
+// chengnum='['+chengnum+']';
+	$('#toListForm #items').val($('#pumpum').val());// 早晚要注释的
 	
 	
 	
@@ -675,50 +684,50 @@ function submitDate(){
 	$('#toListForm').submit();	
 }
 
-//实时获取textare的数据
+// 实时获取textare的数据
 function textareval(){
 	 $("textarea").blur(function(){
 		 $(this).text($(this).val());
 	 });
 }
-//获取事件的时间
+// 获取事件的时间
 function getday(){
-	$('.fc-event-time').text('');//清空插件中时间限制
+	$('.fc-event-time').text('');// 清空插件中时间限制
 	$('.fc-week td').on('click',function(){
 		time=$(this).attr('data-date');
-		//获取时间2017-11-28 时间格式处理
+		// 获取时间2017-11-28 时间格式处理
 		var times=JSON.stringify(time);
-		yy=times.substr(1,4);//年
-		mm=times.substr(6,2);//月
-		dd=times.substr(9,2);//日
+		yy=times.substr(1,4);// 年
+		mm=times.substr(6,2);// 月
+		dd=times.substr(9,2);// 日
 	})	
 }
 
-//下拉框
+// 下拉框
 function sun(){
 	if (inthings()){
     	inthings();
     }
     // 多选
     var MulticitySelect1 = $('.city-select').citySelect({
-        dataJson: cityData,//json 数据 是HTML显示的列表数据
-        multiSelect: true,//多选设置,默认不开启
-        multiMaximum: 30,//允许能选择几个 ，默认5，只用于多选
-        search: false,//开启搜索功能，默认是true ，开启
+        dataJson: cityData,// json 数据 是HTML显示的列表数据
+        multiSelect: true,// 多选设置,默认不开启
+        multiMaximum: 30,// 允许能选择几个 ，默认5，只用于多选
+        search: false,// 开启搜索功能，默认是true ，开启
         placeholder: '请选择任务',
-        onInit: function() {//插件初始化的回调
-//            console.log(this)
+        onInit: function() {// 插件初始化的回调
+// console.log(this)
         },
-        onForbid: function() {//插件禁止后再点击的回调
-//            console.log(this)
+        onForbid: function() {// 插件禁止后再点击的回调
+// console.log(this)
         },
-        onTabsAfter: function(target) {//点击tabs切换显示城市后的回调
-//            console.log(event)
+        onTabsAfter: function(target) {// 点击tabs切换显示城市后的回调
+// console.log(event)
         },
-        //选择城市后的回调
+        // 选择城市后的回调
         onCallerAfter: function(target, values) {
         	var shaonv=JSON.stringify(values.name);
-        	//获取选中日期的 时间
+        	// 获取选中日期的 时间
         	var demo = $('#calendar').find('.cheng').attr('data-date');	
             matter=JSON.stringify(values);
             if (matter){            	
@@ -734,7 +743,7 @@ function sun(){
                 		var countext =  $(this).text()+ '\n' ;
                 		shus+=countext;
                 	}); 
-//                	添加当前的内容到当前时间下面            	
+// 添加当前的内容到当前时间下面
                  	$(".fc-week td[data-date="+time+"]").find(".matter").val(season+shus);                    	            	
                 	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
                 
@@ -742,20 +751,20 @@ function sun(){
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
-//            	console.log('没有数据可以添加');
+// console.log('没有数据可以添加');
             }
             delselc();
         }       
     });
     // 多选设置城市接口
-//    MulticitySelect1.setCityVal('少女时代,啦的范德萨发啦');
+// MulticitySelect1.setCityVal('少女时代,啦的范德萨发啦');
 }
-//刪除框数据的同步 
+// 刪除框数据的同步
 function delselc(){
 	$('.city-info i').on('click',function(){
 		var deltext=$(this).parent().parent().parent().find(".city-info span");
 		if (deltext.length==1){
-//			通过删除都删掉了
+// 通过删除都删掉了
 			$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
         	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
 		}
@@ -802,7 +811,7 @@ function leftbtn() {
     })
     $('.fc-header-right').hide();  
 }
-//自定义复选框
+// 自定义复选框
 function initSelect() {
 	var wuding=$('.fc-header-title h2').text();
 	$('.fc-header-title h2').attr('style', 'display:none');
@@ -818,9 +827,9 @@ function initSelect() {
     	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
 	    $('.matter').blur();
     	$('.boxs .city-select').remove('.city-select');
-    	//添加append() - 在被选元素的结尾插入内容
-    	//prepend() - 在被选元素的开头插入内容
-    	//empty() - 从被选元素中删除子元素
+    	// 添加append() - 在被选元素的结尾插入内容
+    	// prepend() - 在被选元素的开头插入内容
+    	// empty() - 从被选元素中删除子元素
         if ($(this).hasClass('selectColor')) {    
         	$(this).parent().parent().find('.boxs .city-select').remove('.city-select');         	
         	$(this).parent().parent().find('.city-select').removeAttr('style', 'display: none;');
