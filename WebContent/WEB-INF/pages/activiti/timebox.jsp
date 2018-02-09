@@ -189,8 +189,9 @@
 		<input type='hidden' name="updateDate" id="updateDate"/>		
 		<input type='hidden' name="itemContent" id="items"/>
 	</form> 
-	
-	    
+	<!--跳板隐藏的数据  -->
+	<input type='hidden' name='chengnum' id='pumpum'/>
+	<input type='hidden' name='chengnum' id='pums'/>    
  </div>
 </body>
 </html>

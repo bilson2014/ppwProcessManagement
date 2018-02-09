@@ -12,6 +12,9 @@ var chenggame='';
 var season;
 var num;
 var clickNumber =0;
+var arrobject=[];
+//var arrobject = new Object(); 
+var myxuan=new Array();
 $().ready(function() {
 	document.domain = getUrl();
 	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
@@ -75,12 +78,16 @@ function loadProductTable(id){
 		$('#projectId').val(src.projectId);
 		$('#projectNames').val(src.projectName);
 		$('#updateDate').val(src.updateDate);
-		$('#projectName').text(src.projectName);		
+		$('#projectName').text(src.projectName);	
+		
+		arrobject=src.items;
+
 		var xiao=JSON.stringify(src.items);
 		xiao = xiao.replace(/}{/g, '},{');
-		xiao='['+xiao+']';
-		xiao=xiao.replace(/\n/g,'\\\\n');
-		$('#items').val(xiao);
+//		xiao=xiao.replace(/\n/g,'\\\\n');
+		$('#items').val(xiao);//最初获取的数据
+
+		
 		var objectbox=src.items;
 		var tibo=$('.fc-day');
 		chengnum='';
@@ -229,47 +236,93 @@ function dbmatter(){
 }
 //回显功能
 function timebook(){
-	console.log('回显的 功能');
-//	console.log(chengnum);
-//	var zhuan=chengnum;
-//	chengnum+=zhuan;
-//	console.log('功能');
-//	console.log(chengnum);
-	
-	
-	
-	var timebook= blackbox;
+	var timebook;
+//	console.log();
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
 	var chengnumsw='';
 	chengnumsw='['+chengnums+']';	
 	timebook=JSON.parse(chengnumsw.replace(/\n/g,'\\\\n'));
 	chenggame=timebook;
-
-	
-
 	var timebookss;
 	timebookss=JSON.stringify(timebook);
-	timebookss = timebookss.replace(/}{/g, '},{');
-//	timebookss=$.parseJSON(timebookss);
-//	timebookss='['+timebookss+']';
-	if (timebookss.length>0){
-		$('#toListForm #items').val(timebookss);
-		console.log('获取的 数据 啦啦啦啦啦啦666666666666666666666666666666');
-		console.log($('#items').val());
-		
-	}else {
-		console.log('获取')
-		console.log($('#items').val());
-		/*chengnum=JSON.stringify(chengnum);
-		chengnum = chengnum.replace(/}{/g, '},{');
-		chengnum=$.parseJSON(chengnum);
-		chengnum='['+chengnum+']';
-		$('#toListForm #items').val(chengnum);*/
+//完整的对象
+	//字符串的
+
+//	console.log('未去重的数据');
+//	console.log(timebook);
+//	console.log(timebook.length);
+	//timebook 去重
+	var allArr = [];//新数组
+	for(var i=0;i<timebook.length;i++){
+	　　var flag = true;
+	　　for(var j=0;j<allArr.length;j++){
+	　　　　if(timebook[i].start == allArr[j].start){
+	　　　　　　flag = false;
+	　　　　};
+	　　}; 
+	　　if(flag){
+	　　　　allArr.push(timebook[i]);
+	　　};
+	};
+
+	//此后的 timebook  换成allAll
+	timebook=allArr;
+//	console.log('去重数据');
+//	console.log(timebook);
+//	console.log('项目原有的数据');
+//	console.log(arrobject);
+	//timebook与 arrobject 数据合并修改 
+	for(var i in timebook){
+		for (var j in arrobject){
+			if (timebook[i].start==arrobject[j].start){				
+				//对项目原有的数据与修改的数据进行比较得出比较的  修改新的数据
+				arrobject[j].jobContent=timebook[i].jobContent;
+			}			
+		}	
+		arrobject.push(timebook[i]);
 	}
-	
-	
-	
+
+//	console.log('项目数据和 添加数据的合并');
+//	console.log(arrobject);
+
+	var allArr = [];//新数组
+	for(var i=0;i<arrobject.length;i++){
+	　　var flag = true;
+	　　for(var j=0;j<allArr.length;j++){
+	　　　　if(arrobject[i].start == allArr[j].start){
+	　　　　　　flag = false;
+	　　　　};
+	　　}; 
+	　　if(flag){
+	　　　　allArr.push(arrobject[i]);
+	　　};
+	};
+//	console.log('对合并后的数据去重');
+	arrobject=allArr;
+//	console.log(arrobject);
+
+//	当导出的时候 取该处的值 导出即可
+	var chaunqi=JSON.stringify(arrobject);
+//	console.log('开始了');
+	chaunqi = chaunqi.replace(/}{/g, '},{');
+//	console.log(chaunqi);
+
+//	console.log('传奇传奇');
+	chaunqi = chaunqi.replace(/\\n/g,'111');	
+	chaunqi = chaunqi.replace(/\\111/g,'/n');
+	chaunqi = chaunqi.replace(/111/g,'/n');
+//	console.log('转换了');
+//	console.log(chaunqi);
+
+	console.log(chaunqi.length);
+	for (var i=0;i<chaunqi.length;i++){
+		chaunqi = chaunqi.replace('/n','\\n');
+	}
+//	chaunqi = chaunqi.replace('/n','******');
+//	console.log(chaunqi);
+	$('#pumpum').val(chaunqi);
+
 	var keys=[];
 	var value=[];
 	var tibo=$('.fc-day');
@@ -283,7 +336,7 @@ function timebook(){
 				$(this).find('textarea').val(timebook[k].jobContent);
 				$(this).find('textarea').text(timebook[k].jobContent);				
 				var meiyi=timebook[k].jobContent;				
-				meiyi=meiyi.replace(/n/g,'\\\r');
+				meiyi=meiyi.replace(/n/g,'\\\n');//加了\
 				meiyi=meiyi.replace(/\\/g,'  ');
 				$(this).find('textarea').val(meiyi);
 				$(this).find('textarea').text(meiyi);
@@ -311,8 +364,6 @@ function timebook(){
 }
 //选中项目的 回显
 function getBoxInfo(){
-	
-//	console.log('回显');
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		$(this).find('textarea').val('');
@@ -321,14 +372,19 @@ function getBoxInfo(){
 	});	
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
-	loadData(function(src){
-//		console.log(src.items);
+	loadData(function(src){	
+		
 		var objectbox=src.items;
+		
+		arrobject=src.items;
+		
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
-		xiaos='['+xiaos+']';
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
-		$('#items').val(xiaos);		
+//		xiaos=xiaos.replace('/n','\\\\n');
+		$('#items').val(xiaos);	
+			
+
 		var tibo=$('.fc-day');
 		chengnum='';
 		tibo.each(function(){
@@ -381,8 +437,7 @@ function loadProductEven(){
 				//此处要打开 选中项目的 日程
 				getBoxInfo();	    	
 			}
-		}
-				
+		}				
 	});	
 	//项目选择的 时候 样式
 	 $('.modelProItem').off('click').on('click',function(){
@@ -403,7 +458,7 @@ function loadProductEven(){
             		 $('#projectId').val(hasId);
             		 var hasname= $('.modelMActive').text();
             		 $('#projectNames').val(hasname);
-            		 submitDateMyDate(0,chengnum); 
+            		 submitDateMyDate(0); 
             		 $('#showProductName').hide();               	 
                  });
             	 $('#cancleSavesProductName').off('click').on('click',function(){
@@ -412,7 +467,19 @@ function loadProductEven(){
         	 }else{
         		 $('#errorSaveModel').show();
         		 $('.SaveModelBtn').off('click').on('click',function(){
-        			 submitDateMyDate(1,chengnum);
+        			
+        			 var popo;
+        			 popo=chengnum;
+        			 popo=popo.replace(/}{/g,'},{');
+        			 popo='['+popo+']';
+        			 popo=JSON.parse(popo.replace(/\n/g,'\\\\n'));
+        	
+        			 //對象
+        			 popo=JSON.stringify(popo);
+        			 console.log(popo);
+        			 
+        		
+        			 submitDateMyDate(1);
         			 
         		 });
         	 }
@@ -429,12 +496,19 @@ function loadProductEven(){
          }        
 	});	 
 }
-function submitDateMyDate(num,chengnum){
-	chengnum=JSON.stringify(chengnum);
-	chengnum = chengnum.replace(/}{/g, '},{');
-	chengnum=$.parseJSON(chengnum);
-	chengnum='['+chengnum+']';
-	$('#items').val(chengnum);
+function submitDateMyDate(num){
+//	chengnum=JSON.stringify(chengnum);
+//	chengnum = chengnum.replace(/}{/g, '},{');
+//	chengnum=$.parseJSON(chengnum);
+////	chengnum='['+chengnum+']';
+	timebook();
+
+	//最后确定了 之后在把要修改的 值赋给要保存的 数据
+	$('#items').val($('#pumpum').val());
+	
+	
+	
+	
 	var proName = $('.modelMActive').text();
 	var proId = $('.modelMActive').attr('data-id');
 	if(num == 1){
@@ -457,7 +531,7 @@ function submitDateMyDate(num,chengnum){
     		$('.sureCheck').off('click').on('click',function(){
     			$('#submitCheck').hide();
     			$('.cusModel').hide();
-    			
+    			$('#items').val($('#pumpum').val());
     			getBoxInfo();
     		});
     		$('#productSelect').html('');
@@ -539,7 +613,28 @@ function bestthings() {
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
     	$('#projectNames').val($('#projectName').text());
+//    	
+//    	if($('#pumpum').val().length>2){
+//    		console.log('有');
+//    		$('#submitCheck').show();   		 
+//             $('#isSuccess').text('保存项目');
+//           	 $('#errorImg').show();
+//           	 $('#successContent').text('排期表未保存，请保存至项目再导出');
+//           	 $('.sureCheck').off('click').on('click',function(){
+//           		 $('#submitCheck').hide();
+//           	 });
+    		
+    		
+//    		$('#toListForm #items').val($('#pumpum').val());
+    	
+//    	submitDate();   
+    	
+//    	}else{
+//    		console.log('无');
+//    		submitDate();
+//    	}
     	submitDate();
+    	
     	$('.proerr').text('');
     	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
     	$('.matter').blur();  	
@@ -547,17 +642,25 @@ function bestthings() {
 }
 //表单提交
 function submitDate(){
-	console.log('提交前的数据  目前 有问题');
+//	console.log('提交前的数据  目前 有问题');
 	
-	console.log(chengnum);
-	console.log('33333333333333333333333333333333333');
+//	console.log(chengnum);
+//	console.log('33333333333333333333333333333333333');
+//	console.log($('#toListForm #items').val());
+//	
+//	
+//	chengnum=JSON.stringify(chengnum);
+//	chengnum = chengnum.replace(/}{/g, '},{');
+//	chengnum=$.parseJSON(chengnum);
+//	chengnum='['+chengnum+']';
+	$('#toListForm #items').val($('#pumpum').val());//早晚要注释的
+	
+	
+	
+	console.log('点击导出的时候传入后台的数据');
 	console.log($('#toListForm #items').val());
 	
-	/*chengnum=JSON.stringify(chengnum);
-	chengnum = chengnum.replace(/}{/g, '},{');
-	chengnum=$.parseJSON(chengnum);
-	chengnum='['+chengnum+']';
-	$('#toListForm #items').val(chengnum);*/
+	
 	$('#toListForm #scheduleId').val($('#scheduleId').val());
 	$('#toListForm #projectId').val($('#projectId').val());	
 	$('#toListForm #projectName').val($('#projectId').val());	
@@ -658,12 +761,7 @@ function leftbtn() {
     $('tbody .fc-other-month .matter').attr('style', 'display: none;');
     $('.fc-header-left .fc-button').on('click', function() {
     	
-//    	var zhuan=chengnum;
-////    	chengnum+=zhuan;
-//    	console.log('ahsdkjdhskjadha');
-//     	console.log('['+jiafei+']');
-//     	$('#items').val('['+chengnum+']');     	
-     	
+  	
     	initSelect();
     	sun();
     	getday();
