@@ -272,6 +272,7 @@ function timebook(){
 // console.log(timebook);
 // console.log('项目原有的数据');
 // console.log(arrobject);
+	
 	// timebook与 arrobject 数据合并修改
 	for(var i in timebook){
 		for (var j in arrobject){
@@ -281,18 +282,20 @@ function timebook(){
 			}			
 		}	
 		
-// if(arrobject==null){
-// var arrobject=[];
-// arrobject.push(timebook[i]);
-// }else {
-// arrobject.push(timebook[i]);
-// }
-		arrobject.push(timebook[i]);	
+		if(arrobject==null||arrobject==undefined||arrobject==''){
+			arrobject=[];
+			
+		}
+		arrobject.push(timebook[i]);
+//		else {
+//			arrobject.push(timebook[i]);
+//		}
+//		arrobject.push(timebook[i]);	
 	}
 
 // console.log('项目数据和 添加数据的合并');
-// console.log(arrobject);
-
+ console.log(arrobject.length);
+ console.log(allArr.length);
 	var allArr = [];// 新数组
 	for(var i=0;i<arrobject.length;i++){
 	　　var flag = true;
@@ -380,13 +383,12 @@ function getBoxInfo(){
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){	
-		$('#scheduleId').val(src.scheduleId);
-		$('#projectId').val(src.projectId);
-		$('#projectNames').val(src.projectName);
-		$('#updateDate').val(src.updateDate);
-		$('#projectName').text(src.projectName);	
+//		$('#scheduleId').val(src.scheduleId);
+//		$('#projectId').val(src.projectId);
+//		$('#projectNames').val(src.projectName);
+//		$('#updateDate').val(src.updateDate);
+//		$('#projectName').text(src.projectName);	
 		
-// console.log(src);
 		var objectbox=src.items;	
 		console.log(src.items);
 		arrobject=src.items;		
@@ -395,8 +397,6 @@ function getBoxInfo(){
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
 // xiaos=xiaos.replace('/n','\\\\n');
 		$('#items').val(xiaos);	
-			
-
 		var tibo=$('.fc-day');
 		chengnum='';
 		tibo.each(function(){
@@ -412,10 +412,8 @@ function getBoxInfo(){
 				}				
 			}
 		})
-
 	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
-	}
-	
+	}	
 }
 
 // 加载事件
