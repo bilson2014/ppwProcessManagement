@@ -78,8 +78,8 @@ function loadProductTable(id){
 		$('#projectId').val(src.projectId);
 		$('#projectNames').val(src.projectName);
 		$('#updateDate').val(src.updateDate);
-		$('#projectName').text(src.projectName);	
-		
+//		$('#projectName').text(src.projectName);	//
+
 		arrobject=src.items;
 
 		var xiao=JSON.stringify(src.items);
@@ -373,7 +373,13 @@ function getBoxInfo(){
 	var project = $('#projectId').val();
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){	
-		
+	/*	$('#scheduleId').val(src.scheduleId);
+		$('#projectId').val(src.projectId);
+		$('#projectNames').val(src.projectName);
+		$('#updateDate').val(src.updateDate);
+		$('#projectName').text(src.projectName);	
+		*/
+//		console.log(src);
 		var objectbox=src.items;
 		
 		arrobject=src.items;
@@ -830,7 +836,7 @@ function initSelect() {
         }
         e.stopPropagation();
     });
-    var pro = $('#projectName').val();
+    var pro = $('#projectName').text();
 	if(pro == null || pro == undefined || pro == ''){
 		$('#projectName').text('未命名项目');
 	}
