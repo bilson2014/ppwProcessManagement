@@ -2,17 +2,12 @@ package com.paipianwang.activiti.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +21,11 @@ import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.FileUtils;
 import com.paipianwang.pat.common.util.PathFormatUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.workflow.entity.PmsProjectUser;
 import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsQuotationItem;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
+import com.paipianwang.pat.workflow.facade.PmsProjectUserFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationFacade;
 
 @Service("quotationService")
@@ -36,10 +33,12 @@ public class QuotationServiceImpl implements QuotationService {
 
 	@Autowired
 	private PmsQuotationFacade pmsQuotationFacade;
-	@Autowired
-	private QuotationPoiAdapter quotationPoiAdapter;
+//	@Autowired
+//	private QuotationPoiAdapter quotationPoiAdapter;
 	@Autowired
 	private OnlineDocService onlineDocService;
+	@Autowired
+	private PmsProjectUserFacade pmsProjectUserFacade;
 	
 
 	/**
@@ -49,14 +48,17 @@ public class QuotationServiceImpl implements QuotationService {
 	public void export(PmsQuotation quotation, OutputStream os, HttpServletRequest request) {
 		// 创建文档
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
+		
+		String imgPath=request.getServletContext().getRealPath("/resources/images/excelTitle.png");
+		
 		// 创建一个新的页
-		XSSFSheet sheet = xssfWorkbook.createSheet("项目报价单");
+		/*XSSFSheet sheet = xssfWorkbook.createSheet("项目报价单");
 
 		int rowIndex = 0;
 		// 生成项目信息
 		rowIndex = quotationPoiAdapter.createProjectInfo(xssfWorkbook, sheet, rowIndex, quotation);
 		// 分类
-		Map<String, List<PmsQuotationItem>> types = new HashMap();
+		Map<String, List<PmsQuotationItem>> types = new HashMap<>();
 		for (PmsQuotationItem item : quotation.getItems()) {
 			if (!types.containsKey(item.getTypeName())) {
 				types.put(item.getTypeName(), new ArrayList<>());
@@ -90,31 +92,40 @@ public class QuotationServiceImpl implements QuotationService {
 		rowIndex = quotationPoiAdapter.createTaxRate(xssfWorkbook, sheet, rowIndex, "税率", quotation.getTaxRate());
 		rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "优惠(元)", quotation.getDiscount());
 		rowIndex = quotationPoiAdapter.createPriceTotal(xssfWorkbook, sheet, rowIndex, "总价(元)", quotation.getTotal());
-
+*/
+		
+		//客户信息
+		String userName="";
+		if(ValidateUtil.isValid(quotation.getProjectId())){
+			PmsProjectUser user=pmsProjectUserFacade.getProjectUserByProjectId(quotation.getProjectId());
+			if(user!=null){
+				userName=user.getUserName();
+			}
+		}
+		
 		String projectName=quotation.getProjectName();
 		if(!ValidateUtil.isValid(projectName) || projectName.equals("未命名项目") || projectName.equals("null")){
 			projectName="";
 		}
 		String name=projectName+"报价单"+PathFormatUtils.parse("{yy}{mm}{dd}{hh}{ii}{ss}");
 		String basePath=PublicConfig.DOC_TEMP_PATH+File.separator+"temp"+File.separator;
+		
+		QuotationPoiAdapter qa=new QuotationPoiAdapter(xssfWorkbook, imgPath);
+		
 		File sourceFile=new File(basePath+name+".xlsx");
 		String pdfPath=basePath+name+".pdf";
 		String destPath=basePath+name+".zip";
 		File pdfFile=new File(pdfPath);
 		File zipFile=new File(destPath);
-		
 		try {
-			xssfWorkbook.write(new FileOutputStream(sourceFile));
-			xssfWorkbook.close();
+			qa.createFile(quotation,userName, basePath+name+".xlsx");
 			//转pdf
 			onlineDocService.convertToPdf(sourceFile,pdfPath);
 			//数据压缩
 			FileUtils.zipFile(destPath, sourceFile,pdfFile);
 			// 数据导出
 			HttpUtil.saveTo(new FileInputStream(zipFile), os);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
+		} catch (Exception e1) {
 			if(sourceFile.exists()){
 				sourceFile.delete();
 			}
@@ -125,6 +136,7 @@ public class QuotationServiceImpl implements QuotationService {
 				zipFile.delete();
 			}
 		}
+
 	}
 
 	/**

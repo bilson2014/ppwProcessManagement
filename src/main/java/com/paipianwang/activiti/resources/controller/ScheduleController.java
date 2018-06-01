@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paipianwang.activiti.service.ScheduleService;
 import com.paipianwang.pat.common.entity.PmsResult;
+import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
+import com.paipianwang.pat.workflow.entity.PmsQuotation;
 import com.paipianwang.pat.workflow.entity.PmsSchedule;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsScheduleFacade;
@@ -62,7 +64,16 @@ public class ScheduleController extends BaseController {
 	 */
 	@RequestMapping("/get/{projectId}")
 	public PmsSchedule getByProjectId(@PathVariable("projectId")String projectId){
-		return pmsScheduleFacade.getByProjectId(projectId);
+		PmsSchedule schedule=null;
+		if(ValidateUtil.isValid(projectId)){
+			schedule= pmsScheduleFacade.getByProjectId(projectId);
+		}
+		
+		if(schedule==null){
+			schedule=new PmsSchedule();
+			schedule.setProjectName("未命名");
+		}
+		return schedule;
 	}
 	
 	/**
@@ -102,11 +113,10 @@ public class ScheduleController extends BaseController {
 	 * @param request
 	 * @param response
 	 */
-	@RequestMapping("/export/{scheduleId}")
-	public void export(@PathVariable("scheduleId")Long scheduleId,HttpServletRequest request, final HttpServletResponse response){
+	@RequestMapping("/export")
+	public void export(final PmsSchedule pmsSchedule,HttpServletRequest request, final HttpServletResponse response){
 		//导出
 		OutputStream outputStream=null;
-		PmsSchedule pmsSchedule = pmsScheduleFacade.getById(scheduleId);
 		try {
 			if(pmsSchedule!=null){
 				response.setCharacterEncoding("utf-8");
@@ -145,11 +155,18 @@ public class ScheduleController extends BaseController {
 					e.printStackTrace();
 				}
 			}
-			//判断项目是否存在--不存在，则删除临时持久化数据
-			if(pmsSchedule!=null && !ValidateUtil.isValid(pmsSchedule.getProjectId())){
-
-			}
 		}
-		
+	}
+	
+	/**
+	 * 获取用户参与过的进行中的项目的报价单
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/list/synergetic")
+	public List<PmsSchedule> getSynergeticSchedule(HttpServletRequest request, final HttpServletResponse response){
+		SessionInfo info = getCurrentInfo(request);
+		return pmsScheduleFacade.getSynergeticQuotationProject(info.getReqiureId());
 	}
 }

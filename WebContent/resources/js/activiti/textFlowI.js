@@ -499,29 +499,42 @@ function pageInit(){
 	 if(isStage == "沟通阶段"){
 		 $('.icons').addClass('stepIcon');
 	 }
- if(isStage == "方案阶段"){
+	 if(isStage == "方案阶段"){
 		 $('.flowIcon').addClass('step2');
 		 $('.icons').addClass('step2Icon');
 	 }
- if(isStage == "商务阶段"){
-	 $('.flowIcon').addClass('step3');
-	 $('.icons').addClass('step3Icon');
- }
- if(isStage == "制作阶段"){
-	 $('.flowIcon').addClass('step4');
-	 $('.icons').addClass('step4Icon');
- }
- if(isStage == "交付阶段"){
-	 $('.flowIcon').addClass('step5');
-	 $('.icons').addClass('step5Icon');
- }
+	 if(isStage == "商务阶段"){
+		 $('.flowIcon').addClass('step3');
+		 $('.icons').addClass('step3Icon');
+	 }
+ 	if(isStage == "制作阶段"){
+ 		$('.flowIcon').addClass('step4');
+ 		$('.icons').addClass('step4Icon');
+ 	}
+ 	if(isStage == "交付阶段"){
+ 		$('.flowIcon').addClass('step5');
+ 		$('.icons').addClass('step5Icon');
+ 	}
  
- if($('.missinInfo').text() == "【销售】上传报价单"){
-	 $('#toQuo').removeClass('hide');
-	 $('#toQuo').off('click').on('click',function(){
-		  window.open(getContextPath() + '/quotation/info?projectId='+$('#projectId').val()+'');
-	 });
- }
+ 	if($('.missinInfo').text() == "【销售】上传报价单"){
+ 		$('#toQuo').removeClass('hide');
+ 		$('#toQuo').off('click').on('click',function(){
+		   window.open(getContextPath() + '/quotation/info?projectId='+$('#projectId').val()+'');
+	 	});
+ 	}
+ 		
+	 if($('.missinInfo').text() == "【销售】上传项目排期"){
+		 $('#sche').removeClass('hide');
+		 $('#sche').off('click').on('click',function(){
+		window.open(getContextPath() + '/schedule/info?projectId='+$('#projectId').val()+'');
+			 console.log($('#projectId').val());
+			 
+			
+		});
+	 } 
+	 
+	 
+ 
  
  
     stageEven();

@@ -70,26 +70,118 @@
 </head>
 <body>
 
-<input type="hidden" id="scheduleId" value='${scheduleId}'><!--唯一标记  -->
-<input type="hidden" id="projectId" value='${projectId}'><!--项目id  -->
-  <div class="pages" >   
-  <div class='titles'>
-  	<span>排期表生成器</span>
-  	<!-- <div class='line'></div> -->
-  </div>
-  <div class="orderItem" id="projectNameError">
-	   <div class="mR8">项目名称</div>
-	   <input value='${projectName}' id="projectName" style="width:240px">
-	   <p class='proerr'><p>
- </div>
- <div class='divine'></div> 
-<%--  <div class="orderItem" id="dayTimeError">
-	   <div class="mR8">日期</div>
-	   <input class="time noBorder" readonly id="updateDate" name="time" value="${updateDate}">
-  </div>   --%> 
+  	<div class="pages" >   
+  	<div class='titles'>
+  		<span>排期表生成器</span>
+  		<span id="projectName">${projectName}</span>
+  		<div class='searchBtn' id='openFrom'>打开项目</div>
+ 	</div>
+
+ 	<div class='divine'></div> 
 	<div id='calendar' onClick="event.cancelBubble = true"></div>
 	<div class='advice'>*本时间表为预排，基于每个环节的按时确认可顺利执行，否则制作进度都会受确认环节或其他不可抗因素的变化相应的变化。</div>
- 	<div class='last'><div class='best'>生成排期表</div></div>
+
+ 	
+ 	<div class="createQuo">
+         <div class="btn-c-r createFrom best">导出</div>
+         <div class="btn-c-r createFromTable">保存至项目</div>
+    </div>
+ 	<!--遮罩打开项目  -->
+ 	<div class="cusModel" id="loadProductModel">
+     	<div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">打开项目排期表</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="modelBanner">
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
+            </div>
+            <div class="modelProductContent"> </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleLoadProduct">取消</div>
+                 <div class="btn-c-r" id="CheckloadProduct">打开</div>
+            </div>     
+    	</div>
+	</div>
+	
+	<!--确认覆盖的 遮罩  -->
+	<div class="cusModel" id="clearTable" style="z-index:1000" >
+     	<div class="modelCard">
+            <div class="cardTop">
+                <div class="title" >排期表信息</div>
+                <div class="closeModel"></div>
+            </div>
+            <div class="errorContent">
+                 <div class="title" id="setTableTitle" style="line-height: 24px;"></div>
+                 <div class="btnMid">
+                      <div class="btn-c-g cancle">取消</div>
+                      <div class="btn-c-r sureClear">确认</div>
+                 </div>
+            </div>
+     	</div>
+	</div>
+	<!--保存项目确认  -->
+	<div class="cusModel" id="submitCheck" >
+     	<div class="modelCard">
+            <div class="cardTop">
+                <div class="title" id="isSuccess">提交成功</div>
+                <div class="closeModel"></div>
+            </div>
+            <div class="infoWarn">
+                  <img style="margin: 0 auto;" id="errorImg" src="${imgPath}/index/waring.png">
+            </div>
+            <div class="errorContent">
+                 <div id="successContent" style="text-align: center;"></div>
+                 <div class="btnMid" style="text-align: center;">
+                     <div class="btn-c-r sureCheck" style="margin-right:0px!important">确认</div>
+                 </div>
+            </div>
+    	</div>
+	</div>
+	<!--更新项目排期表表  -->
+	<div class="cusModel" id="errorSaveModel">
+        <div class="modelCard" >
+	        <div class="cardTop">
+	           <div class="title">更新项目排期表</div>
+	           <div class="closeModel"></div>
+	        </div>
+            <div class="infoWarn">
+               <img src="${imgPath}/index/waring.png" style="margin: 0 auto;">
+               <div>是否更新该项目排期表？</div>
+            </div>
+            <div class="btnMid">
+			    <div class="btn-c-r SaveModelBtn" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		    </div>
+        </div>
+	</div>
+	<!--保存至项目的时候   -->
+ 	<div class="cusModel" id="showProductName">
+    	<div class="modelCard">
+            <div class="cardTop">
+                   <div class="title">保存项目</div>
+                   <div class="closeModel"></div>
+            </div>
+            <div class="modelBanner">
+                <div class="tap active" id="" style="width:100%">您正在参与进行中的项目</div>
+            </div>
+            <div class="modelProductContent" id="productSelect"> </div>
+            <div class="modelControl">
+                 <div class="btn-c-g" id="cancleSavesProductName">取消</div>
+                 <div class="btn-c-r" id="savesProductName">保存</div>
+            </div>     
+     	</div>
+	</div>
+	<!--提交的数据  -->
+	<form method="post" action="/schedule/export" id="toListForm" class="hide">
+		<input type='hidden' name="scheduleId" id="scheduleId" />
+		<input type='hidden' name="projectId" id="projectId"/>
+		<input type='hidden' name="projectName" id="projectNames"/>
+		<input type='hidden' name="updateDate" id="updateDate"/>		
+		<input type='hidden' name="itemContent" id="items"/>
+	</form> 
+	<!--跳板隐藏的数据  -->
+	<input type='hidden' name='chengnum' id='pumpum'/>
+	 
  </div>
 </body>
 </html>
