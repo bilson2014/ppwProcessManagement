@@ -64,6 +64,8 @@ function clickEven(){
 	});
 	
 	$('#toModel').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#productWindow').show();
 		$('.modelContent').html('');
 	    $('.tap').removeClass('active');
@@ -114,15 +116,19 @@ function clickEven(){
 		});
 	    if((controlArray.checkData(1))){
 				if(finalAsc[0] != undefined){
-				    submitCheck();
+					if(checkModelDay(0)){
+						 submitCheck();
+					}
 			    }
 				else{
+					$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 					$('#submitCheck').show();
 		    		$('#isSuccess').text('生成报价单');
 		    		$('#errorImg').show();
 		    		$('#successContent').text('报价单生成失败,请填写表格数据');
 				}
-		}
+		    }
 	});	
 	
 	$('.createModel').off('click').on('click',function(){		
@@ -130,6 +136,8 @@ function clickEven(){
 		$('#templateId').val('');
 		$('#getModelName').val('');
 		if(setTr > 0){
+			$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 			$('#showModelName').show();
 			$('#tempNameError').attr('data-content','');
 			$('#modelName').val('');
@@ -143,6 +151,8 @@ function clickEven(){
 				}
 			});
 		}else{
+			$(window.parent.parent.parent.document).find('html').scrollTop(0);
+    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 				$('#submitCheck').show();
 	    		$('#isSuccess').text('保存至项目 ');
 	    		$('#errorImg').show();
@@ -162,9 +172,13 @@ function clickEven(){
         	 $('.cusModel').hide();
          });
          
+         
+         if(checkModelDay(1)){
          if(setTr > 0){
              if(hasId == null || hasId == '' || hasId == undefined){
             	 $('#showProductName').show();
+            	 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+         		$(window.parent.parent.parent.document).find('body').scrollTop(0);
             	 projectName();
                //  $('#toSetProductName').val($('#projectName').text());
             	 $('#savesProductName').off('click').on('click',function(){
@@ -180,12 +194,16 @@ function clickEven(){
             		 $('#showProductName').hide();
                  });
         	 }else{
+        		 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+         		$(window.parent.parent.parent.document).find('body').scrollTop(0);
         		 $('#errorSaveModel').show();
         		 $('.SaveModelBtn').off('click').on('click',function(){
         			 submitDateMyDate(1);
         		 });
         	 }
          }else{
+        	 $(window.parent.parent.parent.document).find('html').scrollTop(0);
+     		$(window.parent.parent.parent.document).find('body').scrollTop(0);
         	 $('#submitCheck').show();
         	 $('#isSuccess').text('保存项目');
      		$('#errorImg').show();
@@ -194,10 +212,9 @@ function clickEven(){
      			$('#submitCheck').hide();
      		});
          }
-    
-    		 
-	});
-	
+        }
+	 });
+ 
 	$('#checkbox').off('click').on('click',function(){
 		if(this.checked){
 			allPack();
@@ -207,6 +224,8 @@ function clickEven(){
 	});
 	
 	$('#openFrom').off('click').on('click',function(){
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 	       $('#loadProductModel').show();
 	       initLoadProduct();
 	       loadProductEven();
@@ -314,6 +333,8 @@ var controlArray = {
 					if(checkSame()){
 						    controlArray.createArray();
 					}else{
+						$(window.parent.parent.parent.document).find('html').scrollTop(0);
+			    		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 						$('#errorSame').show();
 					}
 				}
@@ -356,6 +377,10 @@ var controlArray = {
 								$('#dayNumError').attr('data-content','天数未填写');
 								return false;
 							}
+							if(dayNum == 0){
+								$('#dayNumError').attr('data-content','天数不正确');
+								return false;
+							}
 							if(!checkRate(dayNum) ||  !isInteger(dayNum)){
 								$('#dayNumError').attr('data-content','请输入整数');
 								return false;
@@ -364,10 +389,18 @@ var controlArray = {
 								$('#needNumError').attr('data-content','数量未填写');
 								return false;
 							}
+							if(needNum == 0){
+								$('#needNumError').attr('data-content','数量未填写');
+								return false;
+							}
 							if(!checkRate(needNum) ||  !isInteger(needNum)){
 								$('#needNumError').attr('data-content','请输入整数');
 								return false;
 							}
+						}
+						
+						if(checkPack == 0 ){
+							
 						}
 						
 			}
@@ -409,9 +442,10 @@ var controlArray = {
 			map['description'] = dir;
 			map['fullJob'] = projectFull;		
 			finalAsc.push(new cTable(map));
-			finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
-			finalAsc = orderByTwo();
+			/*finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
+			finalAsc = orderByTwo();*/
 			//reLoadItem(finalAsc);
+			sortItem(finalAsc);
 			controlArray.createTable();
 			
 		},
@@ -429,11 +463,11 @@ var controlArray = {
 }
 
 function checkRate(input) {
-  　var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字     //判断正整数 /^[1-9]+[0-9]*]*$/  
- 　　if (!re.test(input)) {
-      　　　　return false;
-  　　}
- return true;
+	 var re = /^[0-9]+.?[0-9]*$/;   //判断字符串是否为数字     //判断正整数 /^[1-9]+[0-9]*]*$/  
+	 if (!re.test(input)) {
+     return false;
+ }
+	 return true;
 }
 
 var costFunction = {
@@ -604,6 +638,7 @@ function projectName(){
 
 function clearTable(){
 	$('#clearTable').show();
+	$('#formTitle').html('报表信息');
 	$('.sureClear').off('click').on('click',function(){
 		$('.setTr').html('');
 		finalAsc = new Array();
@@ -1086,6 +1121,9 @@ function loadProductTable(id){
 			$('#projectName').val(src.projectName);
 			$('#free').val(src.discount);
 			 finalAsc = src.items;
+		/*	 finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
+			 finalAsc = orderByTwo()*/;
+			 sortItem(finalAsc);
 			 controlArray.createTable();
 		     $('#productWindow').hide();
 		}, getContextPath() + '/quotation/temp/get/'+id,null);
@@ -1310,6 +1348,63 @@ function initAutoModelChoose(){
 		 $('#templateId').val(id);
 		 $('#productSelect').hide();				
 	});
+}
+
+function checkModelDay(num){
+	var dayTd = $('.dayTd');
+	for (var int = 0; int < dayTd.length; int++) {
+		  var checkPoint = $(dayTd[int]).find('input').val();
+		  if(checkPoint =='' || checkPoint ==null || checkPoint== undefined){
+			  var checkPoints = $(dayTd[int]).find('.updateDay').text();
+			  if(checkPoints =='' || checkPoints ==null || checkPoints== undefined){
+				  $('#submitCheck').show();
+				  $(window.parent.parent.parent.document).find('html').scrollTop(0);
+		    	  $(window.parent.parent.parent.document).find('body').scrollTop(0);
+				  if(num == 1){
+					  $('#isSuccess').html('保存至项目');
+					  $('#successContent').html('报价单保存至项目失败，天数或数量不能为空');
+				  }else{
+					  $('#isSuccess').html('导出报价单');
+					  $('#successContent').html('导出报价单失败，天数或数量不能为空');
+				  }
+	              $('.sureCheck').off('click').on('click',function(){
+	            	  $('#submitCheck').hide();
+				  });
+				  return false;
+			  }
+			
+		  }
+	}
+	return true;
+}
+
+//新排序
+function sortItem(resources){
+	var temp;
+	for(var i=0;i<resources.length;i++){
+		for(var j=i;j<resources.length;j++){
+			if(compare(resources[i],resources[j])>0){
+				temp=resources[i];
+				resources[i]=resources[j];
+				resources[j]=temp;
+			}
+		}
+	}
+}
+
+function compare(nodeA,nodeB){
+	if(nodeA.typeId > nodeB.typeId){
+		return 1;
+	}else if(nodeA.typeId < nodeB.typeId){
+		return -1;
+	}else{
+		if(nodeA.itemId > nodeB.itemId){
+			return 1;
+		}else if(nodeA.itemId < nodeB.itemId){
+			return -1;
+		}
+	}
+	return 0;
 }
 
 

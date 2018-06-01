@@ -198,7 +198,7 @@
 <div class="cusModel" id="clearTable" style="z-index:1000" >
      <div class="modelCard">
             <div class="cardTop">
-                   <div class="title" >报表信息</div>
+                   <div class="title" id="formTitle">报表信息</div>
                    <div class="closeModel"></div>
             </div>
             <div class="errorContent">
