@@ -299,6 +299,16 @@ function getDfsHostName(){
 	var rPath = $('#storage_node').val();
 	return rPath == undefined ? "http://resource.apaipian.com/resource/" : rPath;
 }
+
+/**
+ * 获取图片地址
+ */
+function getResourcesName(){
+	//var rPath = "http://resource.apaipian.com/resource/";
+	var rPath = "https://file1.apaipian.com:8000/";
+	return rPath;
+}
+
 /**
  * 数据加分隔符
  * @param number
