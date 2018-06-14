@@ -24,6 +24,7 @@ import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.common.web.file.FastDFSClient;
 import com.paipianwang.pat.common.web.file.utils.GenerateFileByTemplate;
 import com.paipianwang.pat.workflow.entity.PmsContinuity;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
@@ -119,18 +120,26 @@ public class ContinuityController extends BaseController {
 			if(old!=null) {
 				pmsContinuity.setId(old.getId());
 				result = pmsContinuityFacade.update(pmsContinuity);
-				return result;
-			}
-			
-			List<String> metaData = new ArrayList<>();
-			metaData.add("projectName");
-			Map<String, Object> projectName = pmsProjectFlowFacade.getProjectFlowColumnByProjectId(metaData,
-					pmsContinuity.getProjectId());
-			if (ValidateUtil.isValid(projectName)) {
-				pmsContinuity.setProjectName(projectName.get("projectName") + "");
-			}
+				
+			}else {
+				List<String> metaData = new ArrayList<>();
+				metaData.add("projectName");
+				Map<String, Object> projectName = pmsProjectFlowFacade.getProjectFlowColumnByProjectId(metaData,
+						pmsContinuity.getProjectId());
+				if (ValidateUtil.isValid(projectName)) {
+					pmsContinuity.setProjectName(projectName.get("projectName") + "");
+				}
 
-			result = pmsContinuityFacade.insert(pmsContinuity);
+				result = pmsContinuityFacade.insert(pmsContinuity);
+			}
+		}
+		//删除图片
+		String delImgs=pmsContinuity.getDelImgs();
+		if(ValidateUtil.isValid(delImgs)) {
+			String[] delImgList=delImgs.split(";");
+			for(String delImg:delImgList) {
+				FastDFSClient.deleteFile(delImg);
+			}
 		}
 
 		return result;
