@@ -26,6 +26,7 @@ import com.paipianwang.pat.facade.product.entity.PmsDimension;
 import com.paipianwang.pat.facade.product.entity.PmsProductModule;
 import com.paipianwang.pat.facade.product.service.PmsChanPinConfigurationFacade;
 import com.paipianwang.pat.facade.product.service.PmsChanPinFacade;
+import com.paipianwang.pat.facade.product.service.PmsDimensionFacade;
 
 @RestController
 public class ChanPinController {
@@ -34,7 +35,8 @@ public class ChanPinController {
 	private PmsChanPinFacade pmsChanPinFacade;
 	@Autowired
 	private PmsChanPinConfigurationFacade pmsChanPinConfigurationFacade;
-	
+	@Autowired
+	private PmsDimensionFacade pmsDimensionFacade;
 	/**
 	 * 产品线价格计算
 	 * @param json
@@ -195,5 +197,30 @@ public class ChanPinController {
 				dimension.add(new ChanpinSelection(pmsDimension.getDimensionId()+"", pmsDimension.getRowName(),type,pmsDimension.getRowValue()));
 			}
 		}
+	}
+	
+	@RequestMapping("/product/dimension/{chanpinId}")
+	public BaseMsg getDimensionSelection(@PathVariable("chanpinId") Long chanpinId) {
+		BaseMsg baseMsg = new BaseMsg();
+		baseMsg.setCode(BaseMsg.NORMAL);
+		Map<String,Object> result=new HashMap<>();
+		baseMsg.setResult(result);
+		
+		List<PmsChanPinConfiguration> allConfig = pmsChanPinConfigurationFacade.getSimpleChanPinConfigurationByChanPinId(chanpinId);
+		
+		//获取产品第一个配置的维度配置
+		if(ValidateUtil.isValid(allConfig)) {
+			List<PmsDimension> dimensionList=pmsDimensionFacade.getDimensionByConfigId(allConfig.get(0).getChanpinconfigurationId());
+
+			List<ChanpinSelection> dimension=new ArrayList<>();
+			if(ValidateUtil.isValid(dimensionList)) {
+				for(PmsDimension each:dimensionList) {
+					dimension.add(new ChanpinSelection(each.getDimensionId()+"",each.getRowName()));
+				}
+			}			
+			result.put("dimension", dimension);
+		}
+			
+		return baseMsg;
 	}
 }
