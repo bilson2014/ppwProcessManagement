@@ -180,6 +180,8 @@ function optEntity( type,picture,description){
 
 function getValue(projectId,who){
 		
+	
+	setData = new Array();
 	var imgItem = $('.imgItem');
 	for (var int = 0; int < imgItem.length; int++) {
 		 var type = $(imgItem[int]).find('.checkImgType').attr('data-id');
