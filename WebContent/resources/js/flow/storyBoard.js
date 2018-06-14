@@ -22,13 +22,54 @@ $().ready(function() {
 	document.domain = getUrl();
 	initOption();
 	
+	
+	
+	
+	$('.toHide').off('click').on('click',function(){
+		/*$('#showNumLoad').show();*/
+		
+		$('#topBtn').addClass('topBtn');
+		$('#botBtn').addClass('botBtn');
+		$('#info').addClass('showInfoWord');
+		$('.toHide').hide();
+		
+		$('#topBtn').off('click').on('click',function(){
+			$('#picker .webuploader-element-invisible').click();
+			returnOld();
+		});
+		$('#botBtn').off('click').on('click',function(){
+			$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:'',text:'',file:'/resources/images/flow/def.jpg',path:''}));
+			initOption();
+			returnOld();
+
+		});
+		
+		/* $(".addItem").mouseover(function(){
+			  
+	     }).mouseout(function(){
+	    	 returnOld();
+	     })*/
+
+		
+	});	
+		
 });
+
+function returnOld(){
+	
+	$('#topBtn').removeClass('topBtn');
+	$('#botBtn').removeClass('botBtn');
+	$('#info').removeClass('showInfoWord');
+	$('.toHide').show();
+	
+}
 
 //打开项目
 function openProjectModel(){
 	
 	$('#loadProductModel').show();
 	$(".modelProductContent").html('');
+	$('#CheckloadProduct').text('打开');
 	loadData(function(src){
 		
 		for (var int = 0; int < src.length; int++) {
@@ -60,11 +101,17 @@ function setReShow(item){
 	$('#projectName').text(item.projectName);
 	$('#id').val(item.id);
 	$('#projectId').val(item.projectId);
+	$('#createTime').val(item.createTime);	
 	var imgItem = item.scripts;
 	$(".imgItem ").remove();
 	for (var int = 0; int < imgItem.length; int++) {
 		var path = imgItem[int].picture;
 		var imgPath = getResourcesName() + path;
+		
+		if(path == ''){
+			path = '/resources/imagess/flow.jpg';
+		}
+		
 		var text = imgItem[int].type;
 		var des  = imgItem[int].type;
 		$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:des,text:text,file:imgPath,path:path}));
@@ -102,7 +149,7 @@ function setReShow(item){
 			}
 		}
 	}
-	
+	initImgSize();
 	initOption();
 	$('#loadProductModel').hide();
 		
@@ -113,16 +160,32 @@ function setReShow(item){
 function getMyProject(){	
 	$('#loadProductModel').show();
 	$(".modelProductContent").html('');
+	$('#CheckloadProduct').text('保存');
 	loadData(function(item){
-
 		for (var int = 0; int < item.length; int++) {
 			$(".modelProductContent").append(juicer(videoList_tpl.project_Tpl,{file:item[int]}));
 		}
 		initCheckProject();
 		$('#CheckloadProduct').off('click').on('click',function(){
 			var modelVal = $('.modelProductContent .modelPActive');
-			if(modelVal.length>0){				   
-				   getValue(modelVal.attr('data-id'),0);
+			if(modelVal.length>0){		
+				loadData(function(result){
+				   
+					if(result){
+						 getValue(modelVal.attr('data-id'),0);
+					}else{
+                         $('#sameProject').show();
+                         $('#toSame').off('click').on('click',function(){
+                        	 getValue(modelVal.attr('data-id'),0);
+                         });
+                         $('#toCSame').off('click').on('click',function(){
+                        	 $('#loadProductModel').hide();
+                         });
+                         $('.closeBtn').off('click').on('click',function(){
+                        	 $('#loadProductModel').hide();
+                         });
+					}
+				}, getContextPath() + '	/continuity/validate/'+modelVal.attr('data-id'),'');
 			}
 		});
 	}, getContextPath() + '/continuity/synergetic/listByName', $.toJSON({
@@ -180,7 +243,6 @@ function optEntity( type,picture,description){
 
 function getValue(projectId,who){
 		
-	
 	setData = new Array();
 	var imgItem = $('.imgItem');
 	for (var int = 0; int < imgItem.length; int++) {
@@ -266,15 +328,17 @@ function initImgSize(){
 		$(this).load(function(){
 			var realHeight = $(this).height();
 			var realWidth  = $(this).width();			
-			if(realHeight >= realWidth){				
+		/*	if(realHeight >= realWidth){				
 				$(this).css('height',needHeight).css('width','auto');
 			}
 			else{
-				$(this).css('height','auto').css('width',needWidth);
+				$(this).css('height','auto').css('width',needWidth);*/
 				if(realWidth/realHeight < (16/9)){
-					$(this).css('height','auto').css('width',needHeight);
+					$(this).css('height',needHeight).css('width','auto');
+				}else{
+					$(this).css('height','auto').css('width',needWidth);
 				}
-			}
+			//}
 		});
     });
 }
@@ -512,7 +576,6 @@ var imgUpdate = {
 						nowEven.find('.backgroundImg').attr('src',imgPath);
 						nowEven.attr('data-id',path);
 						initImgSize();
-						console.log(delImgGroup);
 				}else{
 					successToolTipShow('图片获取失败');
 				}

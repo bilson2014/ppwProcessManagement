@@ -68,10 +68,20 @@
 	             <div class="openTool">打开</div>
 	       </div>
 	       <div class="setImg" id="setImg">
-	              <div class="addItem" id="picker">
-	                    <img src="/resources/images/flow/addImg.png">
-	                    <div>点击添加镜头</div>
-	                    <div>可上传JPG、PNG格式的文件，文件大小不能超过1M。</div>
+	              <div class="addItem" id="showUpModel">
+	                    <div class="toHide">
+	                           <img src="/resources/images/flow/addImg.png">
+	                           <div class="addTitle">点击添加镜头</div>
+	                    </div>
+	                   <div class="info" id="info"><div>(支持JPG、JPEG或PNG格式，大小不能超过1M)</div></div>
+	                    <div class="aniBtn" id="topBtn">
+	                                    <img src="/resources/images/flow/moreImg.png">
+	                                    <div>上传单张或多张分镜图片</div>
+	                    </div>
+	                    <div class="aniBtn" id="botBtn">
+	                                    <img src="/resources/images/flow/nullImg.png">
+	                                    <div>创建空镜头分镜</div>
+	                    </div>
 	              </div>
 	       </div>
 	       
@@ -225,8 +235,39 @@
 			   </div>
            </div>
       </div>
+      
+       <div class="cusModel" id="sameProject">
+           <div class="successModel">
+               <div class="closeBtn"></div>
+			   <div class="oSContent">
+			        <div class="tdDes" style="padding-top:80px;">存在镜头脚本是否覆盖?</div>
+			        <div class="sureBtn" style="padding-top:40px;">
+			           <div class="btn-c-r" id="toSame">确定</div>
+			           <div class="btn-c-g" id="toCSame">取消</div>
+			        </div>
+			   </div>
+           </div>
+      </div>
+      
+      
+      <div class="cusModel" id="showNumLoad" >
+	     <div class="modelCard">
+	            <div class="cardTop">
+	                   <div class="title">镜头添加</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="modelBanner">
+	                <div class="tap" id="" style="width:100%">您可以选择</div>
+	            </div>
+	            <div class="modelProductContent"></div>
+	            <div class="modelControl">
+	                 <div class="btn-c-g" id="addMore">取消</div>
+	                 <div class="btn-c-r" id="addNullImg">加载</div>
+	            </div>     
+	     </div>
+	</div>
 	
-	<div class="tooltip-success-show"></div>
+	
 	
 	<!-- photo Modal start -->
 	<div class="cusModel" id="mymodal">
@@ -252,7 +293,11 @@
 			</div>
 		</div>
 	</div>
+	
 	<!-- photo Modal end -->
+	<div id="picker" class="hide"></div>
+	
+	<div class="tooltip-success-show"></div>
 	
 	<form method="post" action="/continuity/export" id="toListForm" class="hide">
                         <input type="hidden" id="name" name="name" value="">
@@ -261,6 +306,7 @@
                         <input type="hidden" id="dimensionId" name="dimensionId" value="">
                         <input type="hidden" id="scriptContent" name="scriptContent" value="">
                         <input type="hidden" id="projectId" name="projectId" value="${projectId}">
+                        <input type="hidden" id="createTime" name="createTime" value="${projectId}">
      </form> 
     
 	
