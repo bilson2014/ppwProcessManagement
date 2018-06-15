@@ -45,5 +45,9 @@
 	<!--供应商服务接口 -->
 	<dubbo:reference interface="com.paipianwang.pat.facade.team.service.PmsTeamFacade" id="pmsTeamFacade" check="false" timeout="15000" />
 	
+	<!-- 分镜脚本 -->
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsContinuityFacade" id="pmsContinuityFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsDimensionFacade" id="pmsDimensionFacade" check="false" timeout="5000" />
+	
 </beans>
 

@@ -61,7 +61,7 @@ public class ContinuityController extends BaseController {
 	@RequestMapping("/info")
 	public ModelAndView quotationView(final String projectId, ModelMap model) {
 		model.put("projectId", projectId);
-		return new ModelAndView("", model);
+		return new ModelAndView("/flow/storyBoard", model);
 	}
 
 	/**
@@ -118,8 +118,17 @@ public class ContinuityController extends BaseController {
 		} else {
 			PmsContinuity old=pmsContinuityFacade.getByProjectId(pmsContinuity.getProjectId());
 			if(old!=null) {
+				//覆盖
 				pmsContinuity.setId(old.getId());
 				result = pmsContinuityFacade.update(pmsContinuity);
+				//old 图片删除
+				if(ValidateUtil.isValid(old.getScripts())) {
+					for(PmsContinuity.ShootingScript script:old.getScripts()) {
+						if(ValidateUtil.isValid(script.getPicture())) {
+							FastDFSClient.deleteFile(script.getPicture());
+						}
+					}
+				}
 				
 			}else {
 				List<String> metaData = new ArrayList<>();
@@ -208,33 +217,29 @@ public class ContinuityController extends BaseController {
 		}
 
 		// 第一页
-		data.put("videoTypeName",
-				ValidateUtil.isValid(pmsContinuity.getProjectName()) ? pmsContinuity.getProjectName() : pmsContinuity.getName());
-		data.put("projectId", pmsContinuity.getProjectId());	
-		data.put("year", DateUtils.getYear(null));
-		data.put("month", DateUtils.getMonth(null));
-		data.put("day", DateUtils.getDay(null));
-		data.put("week", DateUtils.getWeekDay(null));
+		data.put("videoTypeName",pmsContinuity.getProjectName());
+		data.put("projectId", ValidateUtil.isValid(pmsContinuity.getProjectId())?"项目ID："+pmsContinuity.getProjectId():"");	
+		data.put("year", DateUtils.getYear(null)+"");
+		data.put("month", DateUtils.getMonth(null)+"");
+		data.put("day", DateUtils.getDay(null)+"");
+		data.put("week", DateUtils.getWeekDay(null)+"");
 
 		// 表格
-		data.put("name", pmsContinuity.getName());
+//		data.put("name", pmsContinuity.getName());
 		
 		ContinuityPictureRatio ratio=ContinuityPictureRatio.getEnum(pmsContinuity.getPictureRatio());
-		data.put("pictureRatioName", ratio.getRatio());
-		data.put("resolutionName", ratio.getResolution());
+		data.put("pictureRatioName", ratio==null?"":ratio.getRatio());
+		data.put("resolutionName", ratio==null?"":ratio.getResolution());
 		
-		ContinuityTimeLength dimension=ContinuityTimeLength.getEnum(pmsContinuity.getDimensionId().intValue());
-		data.put("dimensionValue", dimension.getText());
-		
-		data.put("structure", dimension.getStructure());
+		data.put("dimensionValue", pmsContinuity.getDimensionId()==null?"":pmsContinuity.getDimensionId()+"秒");		
 
 		Date createTime=null;
 		if(ValidateUtil.isValid(pmsContinuity.getCreateTime())) {
 			createTime=DateUtils.getDateByFormat(pmsContinuity.getCreateTime(), "yyyy-MM-dd HH:mm:ss");
 		}
-		data.put("cyear", DateUtils.getYear(createTime));
-		data.put("cmonth", DateUtils.getMonth(createTime));
-		data.put("cday",  DateUtils.getDay(createTime));
+		data.put("cyear", DateUtils.getYear(createTime)+"");
+		data.put("cmonth", DateUtils.getMonth(createTime)+"");
+		data.put("cday",  DateUtils.getDay(createTime)+"");
 
 		// 分镜
 		List<Map<String, Object>> questions = new ArrayList<>();
@@ -249,7 +254,7 @@ public class ContinuityController extends BaseController {
 			PmsContinuity.ShootingScript script = pmsContinuity.getScripts().get(i);
 			Map<String, Object> item = new HashMap<>();
 			item.put("num", i + 1);
-			item.put("title", ContinuityScriptType.getEnum(script.getType()).getText());
+			item.put("title",script.getType()==null?"": ContinuityScriptType.getEnum(script.getType()).getText());
 			item.put("des", script.getDescription());
 			
 			item.put("img",ValidateUtil.isValid(script.getPicture())?GenerateFileByTemplate.getFullImgPath(script.getPicture()):"defaultImg.jpg");
@@ -265,6 +270,13 @@ public class ContinuityController extends BaseController {
 			e1.printStackTrace();
 		}
 		data.put("videoStyleName", style == null ? "" : style.getText());
+		
+		//处理一遍空值
+		for(String each:data.keySet()) {
+			if(data.get(each)==null) {
+				data.put(each, "");
+			}
+		}
 
 	}
 
