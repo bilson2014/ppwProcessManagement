@@ -113,6 +113,9 @@ function setReShow(item){
 		
 		var text = imgItem[int].type;
 		var des  = imgItem[int].description;
+		if(des == null){
+			des = '';
+		}
 		$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:des,text:text,file:imgPath,path:path}));
 	}
 	
@@ -274,6 +277,9 @@ function getValue(projectId,who){
 		 var type = $(imgItem[int]).find('.checkImgType').attr('data-id');
 		 var image = $(imgItem[int]).find('.loadImg').attr('data-id');
 		 var text = $(imgItem[int]).find('.checkImgText').val();
+		 if(text == ""){
+			 text = null;
+		 }
 		 setData.push(new optEntity(type,image,text));
 	}
 	
@@ -644,9 +650,6 @@ var imgUpdate = {
 			});
 			
 			upload_Update.on('filesQueued', function(file) {
-				console.info(file.length);
-				console.info(file.size);
-				console.table(file);
 				if(file.length > 1){
 					successToolTipShow('只能选择一张分镜');
 					upload_Update.reset();
