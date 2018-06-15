@@ -296,7 +296,7 @@
      
      <div class='banner' style="border-bottom: 1px solid #eee;">
          <span>报价单生成器</span>
-         <span id="projectName">${projectName}</span>
+         <span id="projectName" style="    color: #666;">${projectName}</span>
      </div>
    
    <div class="pages">
