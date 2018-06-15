@@ -113,9 +113,7 @@ function setReShow(item){
 		
 		var text = imgItem[int].type;
 		var des  = imgItem[int].description;
-		if(des == null){
-			des = '';
-		}
+
 		$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:des,text:text,file:imgPath,path:path}));
 	}
 	
@@ -277,8 +275,8 @@ function getValue(projectId,who){
 		 var type = $(imgItem[int]).find('.checkImgType').attr('data-id');
 		 var image = $(imgItem[int]).find('.loadImg').attr('data-id');
 		 var text = $(imgItem[int]).find('.checkImgText').val();
-		 if(text == ""){
-			 text = null;
+		 if(type == ""){
+			 type = null;
 		 }
 		 setData.push(new optEntity(type,image,text));
 	}
