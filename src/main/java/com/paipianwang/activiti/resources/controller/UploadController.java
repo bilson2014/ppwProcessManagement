@@ -79,7 +79,8 @@ public class UploadController extends BaseController{
 				}
 				break;
 			case 2: // other
-				throw new RuntimeException("file type error ...");
+//				throw new RuntimeException("file type error ...");
+				return new BaseMsg(4, "文件格式不正确");
 			}
 			return new BaseMsg(0, "齐活");
 		}
