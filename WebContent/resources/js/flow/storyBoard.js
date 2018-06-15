@@ -96,7 +96,7 @@ function reShow(proId){
 }
 
 function setReShow(item){
-	
+	$('.boxItem').removeClass('active');
 	$('#projectName').text(item.projectName);
 	$('#id').val(item.id);
 	$('#projectId').val(item.projectId);
@@ -158,6 +158,7 @@ function setReShow(item){
 	}
 	initImgSize();
 	initOption();
+	initSortable();
 	$('#loadProductModel').hide();
 			
 }
@@ -185,6 +186,7 @@ function getMyProject(){
                          $('#toSame').off('click').on('click',function(){
                         	 getValue(modelVal.attr('data-id'),0);
                         	 $('#sameProject').hide();
+                        	 $('#projectName').text($(this).text());
                          });
                          $('#toCSame').off('click').on('click',function(){
                         	 $('#sameProject').hide();
@@ -224,7 +226,7 @@ function initOption(){
 	delImgEven();
 	reUpdate();
 	
-	/*$('#setSecond').bind(' input propertychange ',function(){
+	$('#setSecond').bind(' input propertychange ',function(){
 		
 			if(isNumber($(this).val())){
 				$(this).val($(this).val());
@@ -235,7 +237,7 @@ function initOption(){
 				$(this).parent().attr('data-id',inputNum);
 			}
 		
-	});*/
+	});
 }
 
 //保存到项目
@@ -274,9 +276,9 @@ function getValue(projectId,who){
 		 var type = $(imgItem[int]).find('.checkImgType').attr('data-id');
 		 var image = $(imgItem[int]).find('.loadImg').attr('data-id');
 		 var text = $(imgItem[int]).find('.checkImgText').val();
-		 if(type == ""){
+/*		 if(type == ""){
 			 type = null;
-		 }
+		 }*/
 		 setData.push(new optEntity(type,image,text));
 	}
 	

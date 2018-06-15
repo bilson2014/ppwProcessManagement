@@ -2,17 +2,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- import CSS --%>
-<spring:url value="/resources/css/activiti/storyBoard.css" var="storyBoardCss"/>
-<spring:url value="/resources/lib/webuploader/webuploader.css"
-	var="webuploaderCss" />
+<spring:url value="/resources/css/flow/storyBoard.css" var="storyBoardCss"/>
+<spring:url value="/resources/lib/webuploader/webuploader.css" var="webuploaderCss" />
+<spring:url value="/resources/lib/jcrop/jquery.Jcrop.min.css" var="jcropCss"/>
 <%-- import JS --%>
 <spring:url value="/resources/lib/jquery/jquery-2.0.3.min.js" var="jqueryJs"/>
 <spring:url value="/resources/lib/jqueryui/jquery-ui.min.js" var="jqueryuiJs"/>
 <spring:url value="/resources/js/common.js" var="commonJs"/>
-<spring:url value="/resources/js/activiti/storyBoard.js" var="storyBoardJs"/>
+<spring:url value="/resources/js/flow/storyBoard.js" var="storyBoardJs"/>
 <spring:url value="/resources/lib/webuploader/webuploader.js" var="webuploaderJs" />
 <spring:url value="/resources/lib/jquery/ajaxfileupload.js" var="ajaxfileuploadJs"/>
 <spring:url value="/resources/js/juicer.js" var="juicerJs" />
+<spring:url value="/resources/lib/jcrop/jquery.Jcrop.min.js" var="jcropJs"/>
+<spring:url value="/resources/lib/jcrop/jquery.color.js" var="jcropColorJs"/>
+<spring:url value="/resources/lib/jquery.json/jquery.json-2.4.min.js" var="jsonJs"/>
 <spring:url value="/resources/images" var="imgPath" />
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -20,6 +23,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
+
 <!--<![endif]-->
 
 <head>
@@ -37,10 +41,17 @@
 <script type="text/javascript" src="${webuploaderJs}"></script>
 <script type="text/javascript" src="${ajaxfileuploadJs}"></script>
 <script type="text/javascript" src="${juicerJs}"></script>
+<script type="text/javascript" src="${jcropJs}"></script>
+<script type="text/javascript" src="${jcropColorJs}"></script>
+<script type="text/javascript" src="${jsonJs}"></script>
 
 <link rel="stylesheet" href="${storyBoardCss}">
 <link rel="stylesheet" href="${webuploaderCss}">
+<link rel="stylesheet" href="${jcropCss}">
+
 <link rel="shortcut icon" href="${imgPath }/favicon.ico" >
+ <input type="hidden" id="id" value="${id}">
+
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -51,127 +62,26 @@
 <body>
 	
 	<div class="page">
-	       <div class="toolsHead">
-	             <div>测试标题</div>
+	       <div class="toolsHead" >
+	             <div id="projectName">未命名</div>
 	             <div class="toolTitle">分镜工具</div>
-	             <div class="openTool">打开</div>
+	             <div class="openTool">打开项目分镜</div>
 	       </div>
 	       <div class="setImg" id="setImg">
-	       
-	        <div class="imgItem">
-	                    <div class="orderSelect" id="isOther">
-				                <div class="imgType checkImgType">请选择镜头</div>
-				                <img src="/resources/images/activiti/selectS.png">
-				                <ul class="oSelect" id="orderCome" style="display: none;">
-				                   <li data-id="0">全部</li>
-				                   <li data-id="1">沟通阶段</li>
-				                   <li data-id="2">方案阶段</li>
-				                   <li data-id="3">商务阶段</li>
-				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">交付阶段</li>
-				                </ul>    
-					     </div>
-					     <div class="loadImg">
-					            <div class="updateImg">重新上传</div>
-					            <img class="delLoadImg" src="/resources/images/activiti/del.png">
-					            <img class="backgroundImg" src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1527740495&di=f2c42a682f917b686de966d95944627d&src=http://img5.duitang.com/uploads/item/201411/04/20141104171337_xaMXx.jpeg">
-					     </div>
-					     <textarea class="checkImgText" placeholder="请输入镜头要求..."></textarea>
-	             </div>
-	       
-	             <div class="imgItem">
-	                    <div class="orderSelect" id="isOther">
-				                <div class="imgType checkImgType">请选择镜头</div>
-				                <img src="/resources/images/activiti/selectS.png">
-				                <ul class="oSelect" id="orderCome" style="display: none;">
-				                   <li data-id="0">全部</li>
-				                   <li data-id="1">沟通阶段</li>
-				                   <li data-id="2">方案阶段</li>
-				                   <li data-id="3">商务阶段</li>
-				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">交付阶段</li>
-				                </ul>    
-					     </div>
-					     <div class="loadImg">
-					            <div class="updateImg">重新上传</div>
-					            <img class="delLoadImg" src="/resources/images/activiti/del.png">
-					            <img class="backgroundImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528279592&di=fc4f3c06aa8ddd220b71df6f83582273&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F59%2F15%2F54f58PICMis_1024.png">
-					     </div>
-					     <textarea class="checkImgText" placeholder="请输入镜头要求..."></textarea>
-	             </div>
-	             
-	             <div class="imgItem">
-	                    <div class="orderSelect" id="isOther">
-				                <div class="imgType checkImgType">请选择镜头</div>
-				                <img src="/resources/images/activiti/selectS.png">
-				                <ul class="oSelect" id="orderCome" style="display: none;">
-				                   <li data-id="0">全部</li>
-				                   <li data-id="1">沟通阶段</li>
-				                   <li data-id="2">方案阶段</li>
-				                   <li data-id="3">商务阶段</li>
-				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">交付阶段</li>
-				                </ul>    
-					     </div>
-					     <div class="loadImg">
-					            <div class="updateImg">重新上传</div>
-					            <img class="delLoadImg" src="/resources/images/activiti/del.png">
-					            <img class="backgroundImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527507228707&di=5e7521e976e53da5ace3e221447a1a74&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01635d571ed29832f875a3994c7836.png%40900w_1l_2o_100sh.jpg">
-					     </div>
-					     <textarea class="checkImgText" placeholder="请输入镜头要求..."></textarea>
-	             </div>
-	             
-	             <div class="imgItem">
-	                    <div class="orderSelect" id="isOther">
-				                <div class="imgType checkImgType">请选择镜头</div>
-				                <img src="/resources/images/activiti/selectS.png">
-				                <ul class="oSelect" id="orderCome" style="display: none;">
-				                   <li data-id="0">全部</li>
-				                   <li data-id="1">沟通阶段</li>
-				                   <li data-id="2">方案阶段</li>
-				                   <li data-id="3">商务阶段</li>
-				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">交付阶段</li>
-				                </ul>    
-					     </div>
-					     <div class="loadImg">
-					            <div class="updateImg">重新上传</div>
-					            <img class="delLoadImg" src="/resources/images/activiti/del.png">
-					            <img class="backgroundImg" src="/resources/images/supplier/55.png">
-					     </div>
-					     <textarea class="checkImgText" placeholder="请输入镜头要求..."></textarea>
-	             </div>
-	             
-	             <div class="imgItem">
-	                    <div class="orderSelect" id="isOther">
-				                <div class="imgType checkImgType">请选择镜头</div>
-				                <img src="/resources/images/activiti/selectS.png">
-				                <ul class="oSelect" id="orderCome" style="display: none;">
-				                   <li data-id="0">全部</li>
-				                   <li data-id="1">沟通阶段</li>
-				                   <li data-id="2">方案阶段</li>
-				                   <li data-id="3">商务阶段</li>
-				                   <li data-id="4">制作阶段</li>
-				                   <li data-id="5">交付阶段</li>
-				                </ul>    
-					     </div>
-					     <div class="loadImg">
-					            <div class="updateImg">重新上传</div>
-					            <img class="delLoadImg" src="/resources/images/activiti/del.png">
-					            <img class="backgroundImg" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1527834028519&di=fd505b7fd5af5167e6badbbf6752947e&imgtype=0&src=http%3A%2F%2Fimg1.bitautoimg.com%2FVideo%2F2013%2F10%2F27%2Fc923b604726f80c51.jpg">
-					     </div>
-					     <textarea class="checkImgText" placeholder="请输入镜头要求..."></textarea>
-	             </div>
-	             
-	             
-	             
-	             
-	             
-             
-	              <div class="addItem" id="picker">
-	                    <img src="/resources/images/flow/addImg.png">
-	                    <div>点击添加图片</div>
-	                    <div>可上传JPG、GIF或PNG格式的文件，文件大小不能超过2M。</div>
+	              <div class="addItem" id="showUpModel">
+	                    <div class="toHide">
+	                           <img src="/resources/images/flow/addImg.png">
+	                           <div class="addTitle">点击添加镜头</div>
+	                    </div>
+	                   <div class="info" id="info"><div>(支持JPG、JPEG或PNG格式，大小不能超过1M)</div></div>
+	                    <div class="aniBtn" id="topBtn">
+	                                    <img src="/resources/images/flow/moreImg.png">
+	                                    <div>上传单张或多张分镜图片</div>
+	                    </div>
+	                    <div class="aniBtn" id="botBtn">
+	                                    <img src="/resources/images/flow/nullImg.png">
+	                                    <div>创建空镜头分镜</div>
+	                    </div>
 	              </div>
 	       </div>
 	       
@@ -180,15 +90,15 @@
 	       </div>
 	       
 	       <div class="otherInfo">
-	                 <div class="otherItem">
+	                <!--  <div class="otherItem">
 	                       <div class="otherTitle">分镜脚本名称</div>
 	                       <input id="storyName">
-	                 </div>
-	                 <div class="otherItem">
+	                 </div> -->
+	               <!--   <div class="otherItem">
 	                       <div class="otherTitle">产品线</div>
 	                        <div class="orderSelect selectLine" id="isOther">
 				                <div class="imgType" id="productLine">请选择产品</div>
-				                <img src="/resources/images/activiti/selectS.png">
+				                <img src="/resources/images/flow/selectS.png">
 				                <ul class="oSelect selectUl"  style="display: none;">
 				                   <li data-id="0">全部</li>
 				                   <li data-id="1">沟通阶段</li>
@@ -200,7 +110,7 @@
 					     </div>
 					      <div class="orderSelect" id="isOther">
 				                <div class="imgType" id="productType">请选择视频类型</div>
-				                <img src="/resources/images/activiti/selectS.png">
+				                <img src="/resources/images/flow/selectS.png">
 				                <ul class="oSelect" id="orderCome" style="display: none;">
 				                   <li data-id="0">全部</li>
 				                   <li data-id="1">沟通阶段</li>
@@ -210,82 +120,95 @@
 				                   <li data-id="5">交付阶段</li>
 				                </ul>    
 					     </div>
-	                 </div>
-	                  <div class="otherItem onebox" id="time">
+	                 </div> -->
+	                  <div class="otherItem onebox" id="time" style="margin-bottom: -10px;">
 	                       <div class="otherTitle oneboxTilte">视频时长</div>
 	                       <div class="killDiv diy">
-		                       <div class="boxItem">
+		                       <div class="boxItem" data-id="30">
 		                            <div class="box"></div>
 		                            <div class="des">30秒</div>
 		                       </div>
-		                       <div class="boxItem">
+		                       <div class="boxItem" data-id="60">
 		                            <div class="box"></div>
-		                            <div class="des">30秒30秒30秒30秒30秒30秒</div>
+		                            <div class="des">60秒</div>
+		                       </div>
+		                        <div class="boxItem" data-id="120">
+		                            <div class="box"></div>
+		                            <div class="des">2分钟</div>
+		                       </div>
+		                        <div class="boxItem" data-id="180">
+		                            <div class="box"></div>
+		                            <div class="des">3分钟</div>
+		                       </div>
+		                        <div class="boxItem" data-id="300">
+		                            <div class="box"></div>
+		                            <div class="des">5分钟</div>
+		                       </div>
+		                        <div class="boxItem" data-id="600">
+		                            <div class="box"></div>
+		                            <div class="des">10分钟</div>
+		                       </div>
+		                        <div class="boxItem" data-id="" id="setother">
+		                            <div class="box" style="position: relative;top: -5px;"></div>
+		                            <div class="des" style="vertical-align: top !important;position: relative;top: 1px;">其它(秒)</div>
+		                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="setSecond">
 		                       </div>
 		                    </div>   
 	                 </div>
 	                  <div class="otherItem onebox" id="videoType">
 	                       <div class="otherTitle oneboxTilte">画幅比例</div>
 	                       <div class="killDiv diy">
-		                       <div class="boxItem">
+		                       <div class="boxItem" data-id="0">
 		                            <div class="box"></div>
-		                            <div class="des">30秒</div>
+		                            <div class="des">16:9&nbsp&nbsp(1920x1080)</div>
 		                       </div>
-		                       <div class="boxItem">
+		                       <div class="boxItem" data-id="1">
 		                            <div class="box"></div>
-		                            <div class="des">30秒30秒30秒30秒30秒30秒</div>
+		                            <div class="des">1:1&nbsp&nbsp(1024x1024)</div>
 		                       </div>
-		                       <div class="boxItem">
+		                       <div class="boxItem" data-id="2">
 		                            <div class="box"></div>
-		                            <div class="des">30秒30秒30秒30秒30秒30秒</div>
-		                       </div>
-		                       <div class="boxItem">
-		                            <div class="box"></div>
-		                            <div class="des">30秒30秒30秒30秒30秒30秒</div>
-		                       </div>
-		                       <div class="boxItem">
-		                            <div class="box"></div>
-		                            <div class="des">30秒30秒30秒30秒30秒30秒</div>
+		                            <div class="des">3:4&nbsp&nbsp(810x1080)</div>
 		                       </div>
 		                    </div>   
 	                 </div>
 	                 
-	                 <div class="otherItem onebox a" id="videoStyle">
-	                       <div class="otherTitle lastTitle">影片风格</div>
+	                 <div class="otherItem onebox a" id="videoStyleS">
+	                       <div class="otherTitle lastTitle" style="top: 25px;">影片风格</div>
 	                       <div class="killDiv">
 		                         <div class="killItem">
-		                               <img> 
-				                       <div class="boxItem">
+		                               <img src="/resources/images/flow/vStyle1.png"> 
+				                       <div class="boxItem" data-id="0">
 				                            <div class="box"></div>
-				                            <div class="des">30秒</div>
+				                            <div class="des">亚洲小清新</div>
 				                       </div>
 			                      </div> 
-			                       <div class="killItem">
-		                               <img> 
-				                       <div class="boxItem">
+			                       <div class="killItem" >
+		                               <img src="/resources/images/flow/vStyle2.png"> 
+				                       <div class="boxItem" data-id="1">
 				                            <div class="box"></div>
-				                            <div class="des">30秒</div>
+				                            <div class="des">韩国时尚风</div>
 				                       </div>
 			                      </div> 
-			                       <div class="killItem">
-		                               <img> 
-				                       <div class="boxItem">
+			                       <div class="killItem" >
+		                               <img src="/resources/images/flow/vStyle3.png"> 
+				                       <div class="boxItem" data-id="2">
 				                            <div class="box"></div>
-				                            <div class="des">30秒</div>
+				                            <div class="des">科技工业感</div>
 				                       </div>
 			                      </div> 
-			                       <div class="killItem">
-		                               <img> 
-				                       <div class="boxItem">
+			                       <div class="killItem" >
+		                               <img src="/resources/images/flow/vStyle4.png"> 
+				                       <div class="boxItem" data-id="3">
 				                            <div class="box"></div>
-				                            <div class="des">30秒</div>
+				                            <div class="des">复古时尚志</div>
 				                       </div>
 			                      </div> 
-			                       <div class="killItem">
-		                               <img> 
-				                       <div class="boxItem">
+			                       <div class="killItem" >
+		                               <img src="/resources/images/flow/vStyle5.png"> 
+				                       <div class="boxItem" data-id="4">
 				                            <div class="box"></div>
-				                            <div class="des">30秒</div>
+				                            <div class="des">欧美电影感</div>
 				                       </div>
 			                      </div> 
 		                    </div>   
@@ -307,16 +230,13 @@
 	<div class="cusModel" id="loadProductModel">
 	     <div class="modelCard">
 	            <div class="cardTop">
-	                   <div class="title">项目报价单</div>
+	                   <div class="title">项目分镜</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelBanner">
 	                <div class="tap" id="" style="width:100%">您正在参与进行中的项目</div>
 	            </div>
-	            <div class="modelProductContent"> 
-	            <div class="modelProItem" data-id="40" data-pid="20171207164928889 ">未命名项目</div>
-	            <div class="modelProItem" data-id="40" data-pid="20171207164928889 ">未命名项目</div>
-	            </div>
+	            <div class="modelProductContent"></div>
 	            <div class="modelControl">
 	                 <div class="btn-c-g" id="cancleLoadProduct">取消</div>
 	                 <div class="btn-c-r" id="CheckloadProduct">加载</div>
@@ -328,16 +248,90 @@
            <div class="successModel">
                <div class="closeBtn"></div>
 			   <div class="oSContent">
-			        <div class="tdDes">确认删除镜头吗?</div>
-			        <div class="sureBtn">
+			        <div class="tdDes" style="padding-top:80px;">确认删除镜头吗?</div>
+			        <div class="sureBtn" style="padding-top:40px;">
 			           <div class="btn-c-r" id="tModel">确定</div>
 			           <div class="btn-c-g" id="cModel">取消</div>
 			        </div>
 			   </div>
            </div>
       </div>
+      
+       <div class="cusModel" id="sameProject">
+           <div class="successModel">
+               <div class="closeBtn"></div>
+			   <div class="oSContent">
+			        <div class="tdDes" style="padding-top:80px;">存在镜头脚本是否覆盖?</div>
+			        <div class="sureBtn" style="padding-top:40px;">
+			           <div class="btn-c-r" id="toSame">确定</div>
+			           <div class="btn-c-g" id="toCSame">取消</div>
+			        </div>
+			   </div>
+           </div>
+      </div>
+      
+      
+      <div class="cusModel" id="showNumLoad" >
+	     <div class="modelCard">
+	            <div class="cardTop">
+	                   <div class="title">镜头添加</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="modelBanner">
+	                <div class="tap" id="" style="width:100%">您可以选择</div>
+	            </div>
+	            <div class="modelProductContent"></div>
+	            <div class="modelControl">
+	                 <div class="btn-c-g" id="addMore">取消</div>
+	                 <div class="btn-c-r" id="addNullImg">加载</div>
+	            </div>     
+	     </div>
+	</div>
+	
+	
+	
+	<!-- photo Modal start -->
+	<div class="cusModel" id="mymodal">
+		<div class="modal-dialog">
+			<div class="modal-content model-distance">
+				<div class="modal-header model-no-border">
+				          请选择照片区域
+					<div class="closeBtn" id="closePhone"></div>
+				</div>
+				<div class="modal-body">
+					<div class="modal-left">
+						<div class="modal-original">
+							<img id="modal-original-img">
+						</div>
+					</div>
+					<div class="modal-right">
+						<div class="modal-preview-container">
+							<img alt="" src="" id="modal-preview">
+						</div>
+						<button class="btn btn-primary" type="button" id="uploadConfirmBt">确认</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- photo Modal end -->
+	<div id="picker" class="hide"></div>
+	<div id="updateImg" class="hide"></div>
 	
 	<div class="tooltip-success-show"></div>
+	
+	<form method="post" action="/continuity/export" id="toListForm" class="hide">
+                        <input type="hidden" id="videoStyle" name="videoStyle" value="">
+                        <input type="hidden" id="pictureRatio" name="pictureRatio" value="">
+                        <input type="hidden" id="dimensionId" name="dimensionId" value="">
+                        <input type="hidden" id="scriptContent" name="scriptContent" value="">
+                        <input type="hidden" id="projectId" name="projectId" value="${projectId}">
+                        <input type="hidden" id="createTime" name="createTime" value="${projectId}">
+     </form> 
+    
+	
+	
 </body>
 <script type="text/javascript" src="${storyBoardJs}"></script>
 </html>
