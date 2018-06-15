@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,6 @@ import com.paipianwang.pat.workflow.entity.PmsContinuity;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.enums.ContinuityPictureRatio;
 import com.paipianwang.pat.workflow.enums.ContinuityScriptType;
-import com.paipianwang.pat.workflow.enums.ContinuityTimeLength;
 import com.paipianwang.pat.workflow.enums.ContinuityVideoStyle;
 import com.paipianwang.pat.workflow.facade.PmsContinuityFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
@@ -173,7 +171,7 @@ public class ContinuityController extends BaseController {
 				response.setCharacterEncoding("utf-8");
 				response.setContentType("application/octet-stream");
 
-				String filename = "《" + data.get("videoTypeName") + "》分镜脚本.pdf";
+				String filename = data.get("videoTypeName") + "分镜脚本.pdf";
 
 				// ---处理文件名
 				String userAgent = request.getHeader("User-Agent");
@@ -217,7 +215,7 @@ public class ContinuityController extends BaseController {
 		}
 
 		// 第一页
-		data.put("videoTypeName",pmsContinuity.getProjectName());
+		data.put("videoTypeName",pmsContinuity.getProjectName()==null?"":"《"+pmsContinuity.getProjectName()+"》");
 		data.put("projectId", ValidateUtil.isValid(pmsContinuity.getProjectId())?"项目ID："+pmsContinuity.getProjectId():"");	
 		data.put("year", DateUtils.getYear(null)+"");
 		data.put("month", DateUtils.getMonth(null)+"");
@@ -255,7 +253,7 @@ public class ContinuityController extends BaseController {
 			Map<String, Object> item = new HashMap<>();
 			item.put("num", i + 1);
 			item.put("title",script.getType()==null?"": ContinuityScriptType.getEnum(script.getType()).getText());
-			item.put("des", script.getDescription());
+			item.put("des", script.getDescription()==null?"":script.getDescription());
 			
 			item.put("img",ValidateUtil.isValid(script.getPicture())?GenerateFileByTemplate.getFullImgPath(script.getPicture()):"defaultImg.jpg");
 			questions.add(item);
