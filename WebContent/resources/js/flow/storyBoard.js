@@ -17,7 +17,7 @@ var timer = null;
 var loadTime = 0;
 //头像裁剪参数 end
 var delImgGroup = '';
-
+var inputNum = '';
 $().ready(function() {
 	document.domain = getUrl();
 	initOption();
@@ -135,7 +135,14 @@ function setReShow(item){
 	var pictureRatio = item.pictureRatio;
 	var videoStyle = item.videoStyle;
 	
-	getActiveVal($('#time .boxItem'),dimensionId);
+    
+	if(dimensionId == 30 || dimensionId == 60 ||  dimensionId == 120 ||  dimensionId == 180 ||  dimensionId == 300 ||  dimensionId == 600){
+		getActiveVal($('#time .boxItem'),dimensionId);
+	}else{
+        $('#setother').attr('data-id',dimensionId);	
+        $('#setother').find('input').val(dimensionId);
+        $('#setother').addClass('active');
+	}
 	getActiveVal($('#videoType .boxItem'),pictureRatio);
 	getActiveVal($('#videoStyleS .boxItem'),videoStyle);
 		
@@ -151,7 +158,7 @@ function setReShow(item){
 	initImgSize();
 	initOption();
 	$('#loadProductModel').hide();
-		
+			
 }
 
 
@@ -211,6 +218,20 @@ function initOption(){
 	});
 	delImgEven();
 	reUpdate();
+	
+	$('#setSecond').bind(' input propertychange ',function(){
+		
+		if($(this).val().length > 1){
+			if(isNumber($(this).val())){
+				$(this).val($(this).val());
+				$(this).parent().attr('data-id',$(this).val());
+				inputNum = $(this).val();
+			}else{
+				$(this).val(inputNum);
+				$(this).parent().attr('data-id',inputNum);
+			}
+		}
+	});
 }
 
 //保存到项目
@@ -353,7 +374,7 @@ function initSortable(){
 }
 
 function initCheckBox(){
-	getBox($('#time .boxItem'));
+	getBoxHasInput($('#time .boxItem'));
 	getBox($('#videoType .boxItem'));
 	
 	$('.killItem').off('click').on('click',function(){
@@ -367,11 +388,21 @@ function initCheckBox(){
 			$(this).addClass('active');
 		})
 	}
+	
+	function getBoxHasInput(id){
+		id.on('click',function(){
+			id.removeClass('active');
+			$(this).addClass('active');
+			$('#setSecond').val('');
+			$('#setother').attr('data-id','');
+		})
+	}
+	
 }
 
 function checkError(){
 		
-	var checkImgType = $('.checkImgType');
+	/*var checkImgType = $('.checkImgType');
 	if(checkImgType.length>0){
 		for (var int = 0; int < checkImgType.length; int++) {
 			  var val = $(checkImgType[int]).attr('data-id');
@@ -383,7 +414,7 @@ function checkError(){
 	}else{
 		successToolTipShow('镜头未添加');
 		return false;
-	}
+	}*/
 	
 	var checkImgText = $('.checkImgText');
 	if(checkImgText.length>0){
@@ -422,6 +453,17 @@ function checkError(){
 	if(!time.length > 0){
 		successToolTipShow('视频时长未选择');
 		return false;
+	}
+	
+	var hasother = $('#setSecond');
+	
+	if(hasother.parent().hasClass('active')){
+		
+		if(hasother.val()=='' ||hasother.val()==null||hasother.val()==undefined){
+			successToolTipShow('视频时长未填写');
+			return false;
+		}
+		
 	}
 	
 	var videoType = $('#videoType .killDiv  .active');
@@ -635,4 +677,12 @@ var videoList_tpl = {
         project_Tpl:[
              "<div class='modelProItem' data-showId='${file.id}' data-id='${file.projectId}'>${file.projectName}</div>"
     		].join("")
+}
+
+function  isNumber(number){ // 是否是数字
+	reg = /^[1-9]+[0-9]*]*$/;
+	if(number.match(reg))
+		return true;
+	else
+		return false;
 }

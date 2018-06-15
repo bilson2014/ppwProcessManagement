@@ -121,7 +121,7 @@
 				                </ul>    
 					     </div>
 	                 </div> -->
-	                  <div class="otherItem onebox" id="time">
+	                  <div class="otherItem onebox" id="time" style="margin-bottom: -10px;">
 	                       <div class="otherTitle oneboxTilte">视频时长</div>
 	                       <div class="killDiv diy">
 		                       <div class="boxItem" data-id="30">
@@ -131,6 +131,27 @@
 		                       <div class="boxItem" data-id="60">
 		                            <div class="box"></div>
 		                            <div class="des">60秒</div>
+		                       </div>
+		                        <div class="boxItem" data-id="120">
+		                            <div class="box"></div>
+		                            <div class="des">2分</div>
+		                       </div>
+		                        <div class="boxItem" data-id="180">
+		                            <div class="box"></div>
+		                            <div class="des">3分</div>
+		                       </div>
+		                        <div class="boxItem" data-id="300">
+		                            <div class="box"></div>
+		                            <div class="des">5分</div>
+		                       </div>
+		                        <div class="boxItem" data-id="600">
+		                            <div class="box"></div>
+		                            <div class="des">10分</div>
+		                       </div>
+		                        <div class="boxItem" data-id="" id="setother">
+		                            <div class="box" style="position: relative;top: -5px;"></div>
+		                            <div class="des" style="vertical-align: top !important;position: relative;top: 1px;">其它(秒)</div>
+		                            <input id="setSecond">
 		                       </div>
 		                    </div>   
 	                 </div>
