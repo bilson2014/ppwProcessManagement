@@ -21,13 +21,14 @@ var delImgGroup = '';
 $().ready(function() {
 	document.domain = getUrl();
 	initOption();
+	initPos();
+	imgUpload.init();
+	imgUpdate.init();
+});
+
+function initPos(){
 	
-	
-	
-	
-	$('.toHide').off('click').on('click',function(){
-		/*$('#showNumLoad').show();*/
-		
+	$('.toHide').off('click').on('click',function(){		
 		$('#topBtn').addClass('topBtn');
 		$('#botBtn').addClass('botBtn');
 		$('#info').addClass('showInfoWord');
@@ -41,19 +42,16 @@ $().ready(function() {
 			$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:'',text:'',file:'/resources/images/flow/def.jpg',path:''}));
 			initOption();
 			returnOld();
+		});	
+	});		
+	
+	$(".addItem").hover(function(){
+	},function(){
+		returnOld();
+	});
+	
+}
 
-		});
-		
-		/* $(".addItem").mouseover(function(){
-			  
-	     }).mouseout(function(){
-	    	 returnOld();
-	     })*/
-
-		
-	});	
-		
-});
 
 function returnOld(){
 	
@@ -80,6 +78,7 @@ function openProjectModel(){
 			var modelVal = $('.modelProductContent .modelPActive');
 			if(modelVal.length>0){
 				reShow(modelVal.attr('data-id'));
+				$('#loadProductModel').hide();
 			}
 		});
 		
@@ -109,11 +108,11 @@ function setReShow(item){
 		var imgPath = getResourcesName() + path;
 		
 		if(path == ''){
-			path = '/resources/imagess/flow.jpg';
+			imgPath = '/resources/images/flow/def.jpg';
 		}
 		
 		var text = imgItem[int].type;
-		var des  = imgItem[int].type;
+		var des  = imgItem[int].description;
 		$(".addItem").before(juicer(videoList_tpl.upload_Tpl,{textarea:des,text:text,file:imgPath,path:path}));
 	}
 	
@@ -130,7 +129,7 @@ function setReShow(item){
 		}
 	}
 	
-	$('#storyName').val(item.name);
+	//$('#storyName').val(item.name);
 	
 	var dimensionId = item.dimensionId; 
 	var pictureRatio = item.pictureRatio;
@@ -169,20 +168,21 @@ function getMyProject(){
 		$('#CheckloadProduct').off('click').on('click',function(){
 			var modelVal = $('.modelProductContent .modelPActive');
 			if(modelVal.length>0){		
-				loadData(function(result){
+				loadData(function(res){
 				   
-					if(result){
+					if(res.result){
 						 getValue(modelVal.attr('data-id'),0);
 					}else{
                          $('#sameProject').show();
                          $('#toSame').off('click').on('click',function(){
                         	 getValue(modelVal.attr('data-id'),0);
+                        	 $('#sameProject').hide();
                          });
                          $('#toCSame').off('click').on('click',function(){
-                        	 $('#loadProductModel').hide();
+                        	 $('#sameProject').hide();
                          });
                          $('.closeBtn').off('click').on('click',function(){
-                        	 $('#loadProductModel').hide();
+                        	 $('#sameProject').hide();
                          });
 					}
 				}, getContextPath() + '	/continuity/validate/'+modelVal.attr('data-id'),'');
@@ -196,7 +196,6 @@ function getMyProject(){
 function initOption(){
 	
 	$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
-	imgUpload.init();
 	newSelectCheck();
 	initSelect();
 	initCheckBox();
@@ -211,6 +210,7 @@ function initOption(){
 		getValue('',1); 
 	});
 	delImgEven();
+	reUpdate();
 }
 
 //保存到项目
@@ -260,7 +260,7 @@ function getValue(projectId,who){
 
 	if(who == 1){
 		
-	    $('#name').val(storyName);
+	//    $('#name').val(storyName);
 		$('#dimensionId').val(dimensionId);
 		$('#videoStyle').val(videoStyle);
 		$('#pictureRatio').val(pictureRatio);
@@ -281,7 +281,7 @@ function getValue(projectId,who){
 				}
 			}, getContextPath() + '/continuity/save', $.toJSON({
 				 scripts:setData,
-				 name:storyName,
+				// name:storyName,
 				 delImgs:delImgGroup,
 				 videoStyle:videoStyle,
 				 pictureRatio:pictureRatio,
@@ -399,11 +399,11 @@ function checkError(){
 		return false;
 	}
 		
-	var storyName = $('#storyName').val();
+	/*var storyName = $('#storyName').val();
 	if(storyName == '' || storyName == null || storyName ==undefined){
 		successToolTipShow('脚本名称未填写');
 		return false;
-	}
+	}*/
 	
 	//附加
 	/*var howManyBox = $('.onebox');
@@ -495,7 +495,7 @@ var imgUpload = {
 						delImgEven();	
 						initSelect();
 						initCheckBox();
-						imgUpdate.init();
+						reUpdate();
 						$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 				}else{
 					successToolTipShow('图片获取失败');
@@ -539,6 +539,16 @@ function delImgEven(){
 	
 }
 
+//删除图片
+function reUpdate(){
+	
+	$('.updateImg').off('click').on('click',function(){
+		$(this).addClass('hasUpdate');
+		$('#updateImg .webuploader-element-invisible').click();
+	})
+	
+}
+
 //图片更新
 var imgUpdate = {
 		init : function() {
@@ -547,7 +557,7 @@ var imgUpdate = {
 		},
 		uploadFile:function(){
 			upload_Update && upload_Update.destroy();
-			var picker =$('.updateImg'); 
+			var picker =$('#updateImg'); 
 			upload_Update = WebUploader.create({
 				auto:true,
 				swf : '/resources/lib/webuploader/Uploader.swf',
@@ -567,7 +577,8 @@ var imgUpdate = {
 			
 			upload_Update.on('uploadSuccess', function(file,response) {
 				var uploaderId = '#rt_'+file.source.ruid;
-				var nowEven = $(uploaderId).parent().parent();
+			//	var nowEven = $(uploaderId).parent().parent();
+				var nowEven = $('.hasUpdate').parent();
 				var delImg = nowEven.attr('data-id');	
 				if(response.code == 0){
 					    delImgGroup += delImg +';';
@@ -576,6 +587,7 @@ var imgUpdate = {
 						nowEven.find('.backgroundImg').attr('src',imgPath);
 						nowEven.attr('data-id',path);
 						initImgSize();
+						$('.updateImg').removeClass('hasUpdate');
 				}else{
 					successToolTipShow('图片获取失败');
 				}

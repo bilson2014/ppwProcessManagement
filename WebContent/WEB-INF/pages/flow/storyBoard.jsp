@@ -90,10 +90,10 @@
 	       </div>
 	       
 	       <div class="otherInfo">
-	                 <div class="otherItem">
+	                <!--  <div class="otherItem">
 	                       <div class="otherTitle">分镜脚本名称</div>
 	                       <input id="storyName">
-	                 </div>
+	                 </div> -->
 	               <!--   <div class="otherItem">
 	                       <div class="otherTitle">产品线</div>
 	                        <div class="orderSelect selectLine" id="isOther">
@@ -124,11 +124,11 @@
 	                  <div class="otherItem onebox" id="time">
 	                       <div class="otherTitle oneboxTilte">视频时长</div>
 	                       <div class="killDiv diy">
-		                       <div class="boxItem" data-id="0">
+		                       <div class="boxItem" data-id="30">
 		                            <div class="box"></div>
 		                            <div class="des">30秒</div>
 		                       </div>
-		                       <div class="boxItem" data-id="1">
+		                       <div class="boxItem" data-id="60">
 		                            <div class="box"></div>
 		                            <div class="des">60秒</div>
 		                       </div>
@@ -296,11 +296,11 @@
 	
 	<!-- photo Modal end -->
 	<div id="picker" class="hide"></div>
+	<div id="updateImg" class="hide"></div>
 	
 	<div class="tooltip-success-show"></div>
 	
 	<form method="post" action="/continuity/export" id="toListForm" class="hide">
-                        <input type="hidden" id="name" name="name" value="">
                         <input type="hidden" id="videoStyle" name="videoStyle" value="">
                         <input type="hidden" id="pictureRatio" name="pictureRatio" value="">
                         <input type="hidden" id="dimensionId" name="dimensionId" value="">
