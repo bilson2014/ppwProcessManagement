@@ -214,7 +214,11 @@ function initOption(){
 		openProjectModel();
 	});
 	$('.download').off('click').on('click',function(){
-		getValue('',1); 
+		
+		if(checkError()){
+			getValue('',1); 
+		}
+		
 	});
 	delImgEven();
 	reUpdate();
@@ -416,7 +420,7 @@ function checkError(){
 		return false;
 	}*/
 	
-	var checkImgText = $('.checkImgText');
+/*	var checkImgText = $('.checkImgText');
 	if(checkImgText.length>0){
 		for (var int = 0; int < checkImgText.length; int++) {
 			  var val = $(checkImgText[int]).val();
@@ -428,7 +432,7 @@ function checkError(){
 	}else{
 		successToolTipShow('镜头未添加');
 		return false;
-	}
+	}*/
 		
 	/*var storyName = $('#storyName').val();
 	if(storyName == '' || storyName == null || storyName ==undefined){
@@ -638,6 +642,17 @@ var imgUpdate = {
 			upload_Update.on('uploadError', function(file,reason) {
 				successToolTipShow(reason);
 			});
+			
+			upload_Update.on('filesQueued', function(file) {
+				console.info(file.length);
+				console.info(file.size);
+				console.table(file);
+				if(file.length > 1){
+					successToolTipShow('只能选择一张分镜');
+					upload_Update.reset();
+				}
+			});
+			
 			upload_Update.on('error', function(type) {
 				 if (type=="Q_TYPE_DENIED"){
 					 	successToolTipShow('请上传正确格式的图片');

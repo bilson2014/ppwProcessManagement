@@ -65,7 +65,7 @@
 	       <div class="toolsHead">
 	             <div id="projectName">未命名</div>
 	             <div class="toolTitle">分镜工具</div>
-	             <div class="openTool">打开</div>
+	             <div class="openTool">打开项目分镜</div>
 	       </div>
 	       <div class="setImg" id="setImg">
 	              <div class="addItem" id="showUpModel">
@@ -134,19 +134,19 @@
 		                       </div>
 		                        <div class="boxItem" data-id="120">
 		                            <div class="box"></div>
-		                            <div class="des">2分</div>
+		                            <div class="des">2分钟</div>
 		                       </div>
 		                        <div class="boxItem" data-id="180">
 		                            <div class="box"></div>
-		                            <div class="des">3分</div>
+		                            <div class="des">3分钟</div>
 		                       </div>
 		                        <div class="boxItem" data-id="300">
 		                            <div class="box"></div>
-		                            <div class="des">5分</div>
+		                            <div class="des">5分钟</div>
 		                       </div>
 		                        <div class="boxItem" data-id="600">
 		                            <div class="box"></div>
-		                            <div class="des">10分</div>
+		                            <div class="des">10分钟</div>
 		                       </div>
 		                        <div class="boxItem" data-id="" id="setother">
 		                            <div class="box" style="position: relative;top: -5px;"></div>
@@ -230,7 +230,7 @@
 	<div class="cusModel" id="loadProductModel">
 	     <div class="modelCard">
 	            <div class="cardTop">
-	                   <div class="title">项目报价单</div>
+	                   <div class="title">项目分镜</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelBanner">
