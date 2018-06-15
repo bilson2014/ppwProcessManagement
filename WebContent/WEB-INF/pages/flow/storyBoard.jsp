@@ -62,7 +62,7 @@
 <body>
 	
 	<div class="page">
-	       <div class="toolsHead">
+	       <div class="toolsHead" >
 	             <div id="projectName">未命名</div>
 	             <div class="toolTitle">分镜工具</div>
 	             <div class="openTool">打开项目分镜</div>
@@ -151,7 +151,7 @@
 		                        <div class="boxItem" data-id="" id="setother">
 		                            <div class="box" style="position: relative;top: -5px;"></div>
 		                            <div class="des" style="vertical-align: top !important;position: relative;top: 1px;">其它(秒)</div>
-		                            <input id="setSecond">
+		                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="setSecond">
 		                       </div>
 		                    </div>   
 	                 </div>
@@ -174,7 +174,7 @@
 	                 </div>
 	                 
 	                 <div class="otherItem onebox a" id="videoStyleS">
-	                       <div class="otherTitle lastTitle">影片风格</div>
+	                       <div class="otherTitle lastTitle" style="top: 25px;">影片风格</div>
 	                       <div class="killDiv">
 		                         <div class="killItem">
 		                               <img src="/resources/images/flow/vStyle1.png"> 

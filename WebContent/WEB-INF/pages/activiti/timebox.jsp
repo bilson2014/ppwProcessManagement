@@ -73,7 +73,7 @@
   	<div class="pages" >   
   	<div class='titles'>
   		<span>排期表生成器</span>
-  		<span id="projectName">${projectName}</span>
+  		<span id="projectName" style="top: 11px;">${projectName}</span>
   		<div class='searchBtn' id='openFrom'>打开项目</div>
  	</div>
 
