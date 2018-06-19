@@ -151,7 +151,7 @@
 		                        <div class="boxItem" data-id="" id="setother">
 		                            <div class="box" style="position: relative;top: -5px;"></div>
 		                            <div class="des" style="vertical-align: top !important;position: relative;top: 1px;">其它(秒)</div>
-		                            <input onkeyup="value=value.replace(/[^\d]/g)" id="setSecond">
+		                            <input onkeyup="value=value.replace(/[^\d]/g,'')" id="setSecond">
 		                       </div>
 		                    </div>   
 	                 </div>
