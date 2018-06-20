@@ -297,13 +297,24 @@ function getValue(projectId,who){
 		   var createTime = $('#createTime').val();
 		   var url = getContextPath() + '/continuity/export';
 		   var xhr = new XMLHttpRequest();
-		   var form = new FormData();
+		  /* var form = new FormData();
 		   form.append('dimensionId',dimensionId);
 		   form.append('videoStyle',videoStyle);
 		   form.append('pictureRatio',pictureRatio);
 		   form.append('scriptContent',setArray);
 		   form.append('projectId',projectId);
-		   form.append('createTime',createTime);
+		   form.append('createTime',createTime);*
+		   /
+		    */
+		   var form = $.toJSON({
+				 scripts:setData,
+				 projectName:storyName,
+				 delImgs:delImgGroup,
+				 videoStyle:videoStyle,
+				 pictureRatio:pictureRatio,
+				 dimensionId:dimensionId,
+				 projectId:projectId,
+			});
 		   xhr.open('POST', url, true);        // 也可以使用POST方式，根据接口
 		   xhr.responseType = "blob";    // 返回类型blob
 		   // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
@@ -338,6 +349,7 @@ function getValue(projectId,who){
 		   };
 		   // 发送ajax请求
 		   xhr.send(form)
+		   
 	}else{
 			loadData(function(src){
 				if(src.result){
@@ -424,6 +436,7 @@ function initSortable(){
 }
 
 function initCheckBox(){
+	
 	getBoxHasInput($('#time .boxItem'));
 	getBox($('#videoType .boxItem'));
 	
