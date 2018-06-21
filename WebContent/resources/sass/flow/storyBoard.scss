@@ -1,0 +1,709 @@
+    @import "common";
+    @import "compass/typography/text/ellipsis";
+    @import "normalize";
+    @import "orderSelect";
+
+
+
+    input {
+        outline: none;
+        padding-left: 5px;
+    }
+
+    textarea {
+        outline: none;
+    }
+
+
+    .webuploader-pick {
+        background: transparent !important;
+    }
+
+    .page {
+        top: 0px !important;
+    }
+
+
+    .toolsHead {
+
+        position: relative;
+        height: 50px;
+        line-height: 50px;
+        font-size: $font-size-base;
+        color: $gray-dark;
+        border-bottom: 1px solid #EEEEEE;
+        text-align: center;
+
+        .sWord {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            font-size: $font-size-sm !important;
+            font-weight: bold;
+        }
+
+        .toolTitle {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            font-size: $font-size !important;
+            font-weight: bold;
+        }
+
+        .openTool {
+            position: absolute;
+            right: 40px;
+            top: 8px;
+            width: 65px;
+            height: 30px;
+            border: 1px solid $gray-light;
+            border-radius: 4px;
+            font-size: $font-size-sm !important;
+            color: $gray !important;
+            line-height: 30px !important;
+            cursor: pointer;
+        }
+    }
+
+    .orderSelect {
+        img {
+            width: 8px !important;
+            height: 14px !important;
+        }
+    }
+
+    .setImg {
+        width: 100%;
+        padding: 0px 0 30px 40px;
+        font-size: 0;
+        .imgItem {
+            width: 160px;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 30px;
+            margin-top: 20px;
+            .orderSelect {
+                width: 100% !important;
+                height: 30px !important;
+                line-height: 30px !important;
+                img {
+                    width: 8px !important;
+                    height: 14px !important;
+                }
+            }
+            textarea {
+                resize: none;
+                width: 100%;
+                height: 80px;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                font-size: $font-size-sm;
+                color: $gray-light;
+            }
+            .loadImg {
+                width: 100%;
+                height: 90px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                position: relative;
+                text-align: center;
+                background: #e3e3e3;
+                overflow: hidden;
+                &:hover {
+                    .updateImg {
+                        height: 26px !important;
+                        opacity: 1 !important;
+                    }
+                    .delLoadImg {
+                        display: block !important;
+                    }
+                }
+                .updateImg {
+                    width: 100%;
+                    height: 0px;
+                    line-height: 26px;
+                    font-size: $font-size-sm;
+                    color: white;
+                    text-align: center;
+                    background: rgba(0, 0, 0, 0.50);
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    cursor: pointer;
+                    transition: all .3s;
+                    -webkit-transition: all .3s;
+                    opacity: 0;
+                    z-index: 10;
+
+                    .webuploader-pick {
+                        position: absolute;
+                        width: 100%;
+                        height: 26px;
+                        top: 0;
+                        left: 0;
+                        padding: 0 !important;
+                    }
+                }
+                .delLoadImg {
+                    position: absolute;
+                    top: 15px;
+                    right: 15px;
+                    cursor: pointer;
+                    z-index: 10;
+                    display: none;
+                }
+                .backgroundImg {
+                    width: 100%;
+                    margin: auto;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                }
+            }
+        }
+
+        .addItem {
+            width: 160px;
+            height: 222px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            padding: 40px 10px 0 10px;
+            font-size: 12px;
+            background: #F2F2F2;
+            border-radius: 4px;
+            margin-right: 30px;
+            margin-top: 20px;
+            div:nth-child(2) {
+                color: $gray-light;
+                margin-top: 10px;
+                margin-bottom: 30px;
+            }
+            div:nth-child(3) {
+                color: #bdbdbd;
+                line-height: 15px;
+            }
+        }
+    }
+
+    .active {
+        .box {
+            border: 3px solid #fe5453 !important;
+        }
+    } //其它信息
+    .otherInfo {
+        padding-left: 40px;
+        font-size: 0;
+        .otherItem {
+
+            .oneboxTilte {
+                position: relative;
+                top: 26px;
+            }
+
+            .lastTitle {
+                vertical-align: top !important;
+                position: relative;
+                top: 25px;
+            }
+
+            .otherTitle {
+                display: inline-block;
+                vertical-align: inherit;
+                font-size: 12px;
+                color: #666666;
+                width: 75px;
+                margin-right: 10px;
+                text-align: right;
+            }
+            input {
+                width: 200px;
+                height: 30px;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                color: #666;
+                font-size: 14px;
+                display: inline-block;
+                margin-top: 20px;
+            }
+
+            .orderSelect {
+                width: 160px !important;
+                height: 30px !important;
+                line-height: 30px !important;
+                display: inline-block;
+                margin-top: 20px;
+            }
+
+            .orderSelect:nth-child(2) {
+                margin-right: 30px;
+            }
+
+
+            .killDiv {
+                display: inline-block;
+                width: 80%;
+            }
+
+            .diy .boxItem {
+                margin-top: 15px;
+            }
+
+            .boxItem {
+                vertical-align: top;
+                position: relative;
+                top: 1px;
+            }
+
+            .boxItem {
+                display: inline-block;
+                margin-right: 25px;
+                .des {
+                    vertical-align: bottom;
+                }
+                div {
+                    display: inline-block;
+                    font-size: 12px;
+                    color: #666666;
+                }
+                .box {
+                    width: 14px;
+                    height: 14px;
+                    border: 1px solid #D1D1D1;
+                    border-radius: 100%;
+                    margin-right: 5px;
+                    cursor: pointer;
+                }
+            }
+
+            .killItem {
+                display: inline-block;
+                text-align: center;
+                margin-right: 20px;
+                margin-top: 25px;
+                img {
+                    width: 200px;
+                    height: 112.5px;
+                }
+                .boxItem {
+                    display: block !important;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+
+    .toolBtn {
+        margin-top: 50px;
+        margin-left: 120px;
+        font-size: 0;
+        div {
+            display: inline-block;
+            width: 220px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            background: #FE5453;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #FFFFFF;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    } //弹窗
+    .cusModel {
+        width: 100%;
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 999;
+        display: none;
+        .modelCard {
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 664px;
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            margin-left: -332px;
+            max-height: 500px;
+        }
+
+        .cardTop {
+            height: 50px;
+            border-bottom: 1px solid $border-line;
+            position: relative;
+            .title {
+                vertical-align: top;
+                display: inline-block;
+                font-size: $font-size;
+                color: $gray-dark;
+                padding-left: 30px;
+                line-height: 50px;
+                span {
+                    color: $red-base;
+                    margin-left: 10px;
+                    font-size: $font-size-sm;
+                }
+            }
+        }
+    } //产品线
+    .modelBanner {
+        height: 38px;
+        width: 100%;
+        border-top: 0px solid $border-line;
+        border-bottom: 1px solid $border-line;
+        font-size: 0;
+        .active {
+            background: $e3;
+            color: $gray !important;
+        }
+
+        .tap {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            line-height: 34px;
+            font-size: $font-size-base;
+            color: $gray-dark;
+            text-align: center;
+            cursor: pointer;
+            div {
+                height: 100%;
+                width: 1px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: $border-line;
+            }
+        }
+    }
+
+
+    .modelName {
+        text-align: center;
+        margin-top: 60px;
+
+        .modelWarn {
+            font-size: $font-size-base;
+            color: $gray;
+            text-align: center;
+            position: relative;
+            top: -20px;
+        }
+
+        .orderItem:before {
+            top: 40px !important;
+        }
+
+        .modelNameTitle {
+            font-size: $font-size-base !important;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        .modelNameInput {
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            padding-left: 10px;
+        }
+
+        #toSetProductName {
+            width: 100% !important;
+            border: none;
+            padding-left: 5px;
+            height: 36px;
+            line-height: 36px;
+            background: transparent;
+            font-size: $font-size-base;
+            text-align: left;
+        }
+
+        .orderItem {
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 20px;
+            position: relative;
+            margin: 0 auto;
+            div {
+                font-size: $font-size-sm;
+                color: $gray;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            span {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: $font-size-sm;
+                color: $gray;
+                margin-left: 7px;
+                margin-right: 7px;
+                margin-top: 20px;
+            }
+            &:before {
+                content: attr(data-content);
+                color: $red-base;
+                font-size: 1.2rem;
+                position: absolute;
+                left: px;
+                top: 35px
+            }
+        }
+    }
+
+    .modelContent,
+    .modelProductContent {
+        height: 322px;
+        border-bottom: 3px solid $border-line;
+        overflow: auto;
+    }
+
+    .modelItem,
+    .modelProItem,
+    .modelMItem {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 30px;
+        cursor: pointer;
+        &:hover {
+            background: #F6F9F9;
+        }
+    }
+
+    .modelActive,
+    .modelPActive,
+    .modelMActive {
+        background: #E2F2F2;
+    }
+
+    .modelControl {
+        height: 65px;
+        font-size: 0;
+        width: 400px;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 20px;
+        div {
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            font-size: $font-size-base;
+            color: white;
+            cursor: pointer;
+        }
+        div:nth-child(1) {
+            margin-right: 10px;
+        }
+        div:nth-child(2) {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        div:nth-child(3) {
+            margin-left: 10px;
+        }
+    }
+
+    .closeModel {
+        position: absolute;
+        right: 30px;
+        top: 18px;
+        width: 14px;
+        height: 14px;
+        background: url(/resources/images/flow/closeModel.png);
+        background-size: 14px 28px;
+        &:hover {
+            background-position-y: 14px;
+        }
+    }
+
+    .tooltip-success-show {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: $red-base;
+        color: white;
+        font-size: 14px;
+        line-height: 50px;
+        text-align: center;
+        display: none;
+    } //产品线end
+    //确认删除
+    .successModel {
+        width: 450px;
+        height: 310px;
+        position: absolute;
+        top: 270px;
+        left: 50%;
+        margin-top: -155px;
+        margin-left: -225px;
+        border-radius: 4px;
+        background: white;
+        padding-top: 30px;
+        text-align: center;
+        .closeBtn {
+            width: 12px;
+            height: 12px;
+            background: url(/resources/images/common/close.png) no-repeat;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+        }
+        .oSContent {
+
+            .tdDes {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                text-align: center;
+                color: $gray-dark;
+                font-size: $font-size;
+            }
+            .tDes {
+                padding-bottom: 50px;
+                text-align: center;
+                color: $gray-dark;
+                font-size: $font-size;
+            }
+        }
+    }
+
+    .sureBtn {
+        font-size: 0;
+        padding-top: 20px;
+        width: 265px;
+        margin: 0 auto;
+        #mptModel {
+            margin: 0 auto;
+        }
+        div {
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            color: white;
+            border: 4px;
+            font-size: $font-size-base;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+        }
+        div:nth-child(1) {
+            margin-right: 20px;
+        }
+    } //裁剪图片
+    .modal-dialog {
+        position: relative;
+        width: 772px;
+        height: 443px;
+        margin: 0 auto;
+    }
+
+    .model-distance {
+        position: relative;
+        top: 120px;
+    }
+
+    .modal-body {
+        height: 340px;
+    }
+
+    .modal-left {
+        position: relative;
+        float: left;
+        left: 30px;
+    }
+
+    .modal-right {
+        float: right;
+        position: relative;
+        right: 31px;
+    }
+
+    .modal-preview-container {
+        margin-bottom: 30px;
+        width: 136px;
+        height: 136px;
+        overflow: hidden;
+    }
+
+    .modal-preview-container img {
+        width: 320px;
+        height: 180px;
+    }
+
+    .model-no-border {
+        height: 60px;
+        border-bottom: 1px solid #e5e5e5;
+        text-align: center;
+        line-height: 60px;
+        font-size: 16px;
+        color: #333333;
+        position: relative;
+        padding: 0 !important;
+        .closeBtn {
+            width: 12px;
+            height: 12px;
+            background: url(/resources/images/common/close.png) no-repeat;
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            cursor: pointer;
+        }
+    }
+
+    .modal-original {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        background: #e3e3e3;
+        position: relative;
+        .jcrop-holder {
+            margin: auto;
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        #modal-original-img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .modal-preview-container {
+        width: 320px;
+        height: 180px;
+        overflow: hidden;
+        background: #e3e3e3;
+    }
+
+    .modal {
+        width: 100%;
+    }
+
+
+    #uploadConfirmBt {
+        width: 320px !important;
+        height: 36px !important;
+        font-size: 14px;
+        color: #FFFFFF;
+        padding: 0;
+        line-height: 36px;
+    }

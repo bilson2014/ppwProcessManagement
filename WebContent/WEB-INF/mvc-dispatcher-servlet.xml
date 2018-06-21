@@ -47,8 +47,8 @@
 	<mvc:view-controller path="/pfi" view-name="/phoneActiviti/pFlowItem" />
 	
 	<mvc:view-controller path="/project/phone/pfs" view-name="/phoneActiviti/pFlowSearch" />
-
-
+	
+	<mvc:view-controller path="/storyBoard" view-name="/flow/storyBoard" />
 
 	<context:annotation-config />
 
