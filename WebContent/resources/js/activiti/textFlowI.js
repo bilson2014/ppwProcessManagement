@@ -532,11 +532,6 @@ function pageInit(){
 			
 		});
 	 } 
-	 
-	 
- 
- 
- 
     stageEven();
 	openInfoCard();
 	initEvenInfo();

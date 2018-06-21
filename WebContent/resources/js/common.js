@@ -588,11 +588,7 @@ function playVideo() {
 							var $body = ' <div class="openVideo" title="双击关闭视频" id="playVideo">'
 								    +   '<div class="openVideoCommon"></div>'
 									+ '<div id="videoRoata"><div class="videoClose" id="commonCloseVideo"></div><video autoplay controls loop poster="/resources/images/banner/moreInfo.JPG"  name="media" id="header3Video"> '
-									+
-									// '<source
-									// src="/product/video/paipianwangMovie.mp4"
-									// id="source" type="video/mp4">' +
-									'<source  src="http://www.apaipian.com/product/video/paipianwangMovie.mp4"  id="source" type="video/mp4">'
+									+'<source  src="http://www.apaipian.com/product/video/paipianwangMovie.mp4"  id="source" type="video/mp4">'
 									+ '</video></div>';
 							$body += '</div>';
 							$("body").append($body);
