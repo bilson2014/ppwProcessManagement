@@ -49,6 +49,8 @@
 	<mvc:view-controller path="/project/phone/pfs" view-name="/phoneActiviti/pFlowSearch" />
 	
 	<mvc:view-controller path="/storyBoard" view-name="/flow/storyBoard" />
+	
+	<mvc:view-controller path="/makeProduct" view-name="/flow/makeProduct" />
 
 	<context:annotation-config />
 

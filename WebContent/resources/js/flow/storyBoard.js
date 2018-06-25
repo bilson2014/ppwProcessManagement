@@ -296,6 +296,7 @@ function getValue(projectId,who){
 			$('#pictureRatio').val(pictureRatio);
 			$('#scriptContent').val(setArray);
 			$('#toListForm').submit();
+			
 		}else{
 			
 		   var projectId = $('#projectId').val();

@@ -1,0 +1,866 @@
+    @import "common";
+    @import "compass/typography/text/ellipsis";
+    @import "normalize";
+    @import "orderSelect";
+
+    .tooltip-success-show {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: $red-base;
+        color: white;
+        font-size: 14px;
+        line-height: 50px;
+        text-align: center;
+        display: none;
+    }
+
+    .noImg {
+        position: absolute;
+        width: 500px;
+        top: 100px;
+        left: 50%;
+        margin-left: -250px;
+    }
+
+    body {
+        background-color: white !important;
+    }
+
+    .page {
+        top: 0px !important;
+        background: white !important;
+        font-size: 0;
+        min-height: 800px;
+    }
+
+
+    .toolBtn:nth-child(1) {
+        margin-left: 40px;
+    }
+
+    .toolBtn {
+
+        width: 220px;
+        height: 40px;
+        font-size: 14px;
+        color: #FFFFFF;
+        letter-spacing: 1px;
+        line-height: 40px;
+        border-radius: 4px;
+        margin-right: 20px;
+        margin-bottom: 40px;
+        margin-top: 40px;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        display: none;
+    }
+
+
+    .toolsHead {
+
+        position: relative;
+        height: 54px;
+        line-height: 54px;
+        font-size: $font-size-base;
+        color: $gray-dark;
+        border-bottom: 1px solid #EEEEEE;
+        text-align: center;
+
+        .sWord {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            font-size: $font-size-sm !important;
+            font-weight: bold;
+        }
+
+        .toolTitle {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            font-size: $font-size !important;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .delP {
+            padding-left: 30px !important;
+            &:after {
+                content: "";
+                position: absolute;
+                background: url(/resources/images/flow/delP.png) no-repeat;
+                background-size: 14px 14px;
+                height: 14px;
+                width: 14px;
+                top: 7px;
+                left: 8px;
+            }
+        }
+
+        .addP {
+            padding-left: 30px !important;
+            &:after {
+                content: "";
+                position: absolute;
+                background: url(/resources/images/flow/addP.png) no-repeat;
+                background-size: 14px 14px;
+                height: 14px;
+                width: 14px;
+                top: 7px;
+                left: 8px;
+            }
+        }
+
+        .openTool {
+            position: absolute;
+            right: 40px;
+            top: 12px;
+            width: auto;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 30px;
+            border: 1px solid $gray-light;
+            border-radius: 4px;
+            font-size: $font-size-base !important;
+            color: $gray-dark !important;
+            line-height: 29px !important;
+            cursor: pointer;
+        }
+    }
+
+    .setProductInfo {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .BigItem {
+        width: 1030px;
+        margin: 0 auto;
+        border-bottom: 3px solid #F0F2F5;
+        .titleB {
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #333333;
+            font-weight: 500;
+            position: relative;
+            left: -30px;
+        }
+    }
+
+    .MidActive {
+        .titleM {
+            color: black !important;
+            div {
+                background-position-y: 0px !important;
+            }
+        }
+    }
+
+
+    $bigDiv: 1030px;
+    $midDiv: 1022px;
+    $smallDiv: 770px;
+    $padding: 20px;
+
+
+
+    .MidItem {
+
+        .titleM {
+            font-size: 12px;
+            color: #666666;
+            margin-bottom: 20px;
+            height: 40px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            div {
+                height: 7px;
+                width: 14px;
+                display: inline-flex;
+                background: url(/resources/images/flow/downIcon.png) no-repeat;
+                background-size: 14px 14px;
+                background-position-y: -7px;
+                position: relative;
+                left: 10px;
+            }
+        }
+
+        .itemCommonRed {
+            .checkRed {
+                display: block !important;
+            }
+        }
+
+        .itemContent {
+            display: none;
+            .checkRed {
+                width: 26px !important;
+                z-index: 99 !important;
+                display: none;
+            }
+
+            .itemContentFive {
+                width: ($bigDiv - $padding*4)/5;
+                height: ($bigDiv - $padding*4)/5/3*4;
+                @media screen and (max-width: 1030px) {
+                    width: ($midDiv - $padding*4)/5;
+                    height: ($midDiv - $padding*4)/5/3*4;
+                }
+
+                @media screen and (max-width: 775px) {
+                    width: ($smallDiv - $padding*4)/5;
+                    height: ($smallDiv - $padding*4)/5/3*4;
+                }
+            }
+
+            .itemContentFour {
+                width: ($bigDiv - $padding*4)/4;
+                height: ($bigDiv - $padding*4)/4/16*9;
+                @media screen and (max-width: 1030px) {
+                    width: ($bigDiv - $padding*4)/4;
+                    height: ($bigDiv - $padding*4)/4/16*9;
+                }
+
+                @media screen and (max-width: 775px) {
+                    width: ($bigDiv - $padding*4)/4;
+                    height: ($bigDiv - $padding*4)/4/16*9;
+                }
+            }
+
+            .itemCommon {
+                background: red;
+                margin-right: 20px;
+                display: inline-block;
+                vertical-align: top;
+                margin-bottom: 20px;
+                position: relative;
+                background: black;
+                overflow: hidden;
+                &:hover {
+                    .showTool {
+                        display: block;
+                    }
+                }
+                img {
+                    width: 100%;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    z-index: 0;
+                }
+
+                .showTool {
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.6);
+                    position: absolute;
+                    z-index: 5;
+                    display: none;
+
+                    .toolDiv {
+                        width: 80px;
+                        height: 80px;
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -30px;
+                        left: 50%;
+                        margin-left: -40px;
+                        div:nth-child(1) {
+                            margin-bottom: 20px;
+                        }
+                        div {
+                            width: 80px;
+                            height: 30px;
+                            border: 1px solid #FFFFFF;
+                            border-radius: 4px;
+                            color: white;
+                            font-size: 12px;
+                            text-align: center;
+                            line-height: 30px;
+                            cursor: pointer;
+                            &:hover {
+                                border: none;
+                                background: $red-base;
+                            }
+                        }
+                    }
+                }
+
+                .info {
+                    position: absolute;
+                    width: 100%;
+                    height: 30px;
+                    font-size: 12px;
+                    color: #333333;
+                    background: rgba(255, 255, 255, 0.80);
+                    bottom: 0;
+                    left: 0;
+                    z-index: 1;
+                    div:nth-child(1) {
+                        position: absolute;
+                        top: 10px;
+                        left: 15px;
+                    }
+                    div:nth-child(2) {
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                    }
+                }
+            }
+            .itemContentFive:nth-child(5n) {
+                margin-right: 0;
+            }
+        }
+    } //弹出框
+    .cusModel {
+        width: 100%;
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 999;
+        display: none;
+        .modelCard {
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 664px;
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            margin-left: -332px;
+            max-height: 500px;
+        }
+        .cardTop {
+            height: 50px;
+            border-bottom: 1px solid $border-line;
+            position: relative;
+            .title {
+                vertical-align: top;
+                display: inline-block;
+                font-size: $font-size;
+                color: $gray-dark;
+                padding-left: 30px;
+                line-height: 50px;
+                span {
+                    color: $red-base;
+                    margin-left: 10px;
+                    font-size: $font-size-sm;
+                }
+            }
+        }
+    }
+
+    .modelBanner {
+        height: 38px;
+        width: 100%;
+        border-top: 0px solid $border-line;
+        border-bottom: 1px solid $border-line;
+        font-size: 0;
+        .active {
+            background: $e3;
+            color: $gray !important;
+        }
+
+        .tap {
+            width: 50%;
+            height: 100%;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            line-height: 34px;
+            font-size: $font-size-base;
+            color: $gray-dark;
+            text-align: center;
+            cursor: pointer;
+            div {
+                height: 100%;
+                width: 1px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: $border-line;
+            }
+        }
+    }
+
+    .modelContent,
+    .modelProductContent {
+        height: 322px;
+        border-bottom: 3px solid $border-line;
+        overflow: auto;
+    }
+
+    .modelItem,
+    .modelProItem,
+    .modelMItem {
+        height: 40px;
+        line-height: 40px;
+        padding-left: 30px;
+        cursor: pointer;
+        &:hover {
+            background: #F6F9F9;
+        }
+    }
+
+    .modelActive,
+    .modelPActive,
+    .modelMActive {
+        background: #E2F2F2;
+    }
+
+    .modelControl {
+        height: 65px;
+        font-size: 0;
+        width: 400px;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 20px;
+        div {
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            font-size: $font-size-base;
+            color: white;
+            cursor: pointer;
+        }
+        div:nth-child(1) {
+            margin-right: 10px;
+        }
+        div:nth-child(2) {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+        div:nth-child(3) {
+            margin-left: 10px;
+        }
+    }
+
+    .closeModel {
+        position: absolute;
+        right: 30px;
+        top: 18px;
+        width: 14px;
+        height: 14px;
+        background: url(/resources/images/flow/closeModel.png);
+        background-size: 14px 28px;
+        &:hover {
+            background-position-y: 14px;
+        }
+    } //确认删除
+    .successModel {
+        width: 450px;
+        height: 310px;
+        position: absolute;
+        top: 270px;
+        left: 50%;
+        margin-top: -155px;
+        margin-left: -225px;
+        border-radius: 4px;
+        background: white;
+        padding-top: 30px;
+        text-align: center;
+        .closeBtn {
+            width: 12px;
+            height: 12px;
+            background: url(/resources/images/common/close.png) no-repeat;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+        }
+        .oSContent {
+
+            .tdDes {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                text-align: center;
+                color: $gray-dark;
+                font-size: $font-size;
+            }
+            .tDes {
+                padding-bottom: 50px;
+                text-align: center;
+                color: $gray-dark;
+                font-size: $font-size;
+            }
+        }
+    }
+
+    .sureBtn {
+        font-size: 0;
+        padding-top: 20px;
+        width: 265px;
+        margin: 0 auto;
+        #mptModel {
+            margin: 0 auto;
+        }
+        div {
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            color: white;
+            border: 4px;
+            font-size: $font-size-base;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+        }
+        div:nth-child(1) {
+            margin-right: 20px;
+        }
+    }
+
+
+    .showInfoModel {
+        width: 600px;
+        position: absolute;
+        top: 270px;
+        left: 50%;
+        margin-top: -155px;
+        margin-left: -225px;
+        border-radius: 4px;
+        background: white;
+        padding-top: 20px;
+
+        .infoTitle {
+            height: 30px;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            margin-bottom: 20px;
+            .closeBtn {
+                width: 12px;
+                height: 12px;
+                background: url(/resources/images/common/close.png) no-repeat;
+                position: absolute;
+                right: 20px;
+                top: -2px;
+                cursor: pointer;
+            }
+        }
+
+        .titleMargin {
+            margin-top: 30px;
+        }
+
+        .type2 {
+            .setInfoImg {
+                width: 260px !important;
+                top: 44px !important;
+                right: 54px !important;
+            }
+
+            .setShowImg {
+                width: 495px;
+                margin: 0 auto;
+                font-size: 0;
+                img {
+                    width: 156px !important;
+                    margin-right: 5px !important;
+                    margin-bottom: 5px !important;
+                }
+                img:nth-child(4n) {
+                    margin-right: 5px !important;
+                }
+            }
+        }
+
+        .showInfoContent {
+            position: relative;
+            padding-bottom: 40px;
+            max-height: 600px;
+            overflow: auto;
+            .title {
+                font-size: 16px;
+                color: #333333;
+                padding-left: 50px;
+                margin-bottom: 30px;
+            }
+
+            .setShowImg {
+                width: 495px;
+                margin: 0 auto;
+                font-size: 0;
+                img {
+                    width: 110px;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                }
+                img:nth-child(4n) {
+                    margin-right: 0px;
+                }
+            }
+
+            .setInfoImg {
+                width: 190px;
+                position: absolute;
+                top: 20px;
+                right: 90px;
+            }
+
+            .contentItem:last-child {
+                margin-bottom: 40px !important;
+            }
+
+            .contentItem {
+                padding-left: 60px;
+                margin-bottom: 15px;
+                div {
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+
+            .itemTitle {
+                font-size: 14px;
+                color: #666666;
+                width: 80px;
+            }
+            .itemInfo {
+                font-size: 14px;
+                color: #333333;
+                width: 150px;
+                font-weight: 500;
+                line-height: 18px;
+            }
+            .noteInfo {
+                width: 500px;
+                min-height: 120px;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                font-size: 14px;
+                color: #666666;
+                margin: 0 auto;
+                padding: 10px 10px 10px 10px;
+            }
+        }
+    } //添加
+    .addModel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        z-index: 1;
+        font-size: 0;
+        display: none;
+
+        .addContent {
+            padding: 20px 40px 20px 40px;
+            position: relative;
+            .search {
+                position: absolute;
+                right: 40px;
+                top: 20px;
+                width: auto;
+                padding-left: 15px;
+                padding-right: 15px;
+                height: 30px;
+                border: 1px solid $gray-light;
+                border-radius: 4px;
+                font-size: $font-size-base !important;
+                color: $gray-dark !important;
+                line-height: 29px !important;
+                cursor: pointer;
+            }
+        }
+
+        .optionItem {
+            margin-right: 20px;
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 15px;
+            .title {
+                display: inline-block;
+                font-size: 12px;
+                color: #666666;
+                margin-right: 10px;
+                vertical-align: top;
+                position: relative;
+                top: 10px;
+            }
+
+            .nomalInput {
+                width: 140px;
+                height: 30px;
+                display: inline-block;
+                line-height: 30px;
+                font-size: 12px;
+                color: #666666;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                padding-left: 10px;
+            }
+
+            .fu {
+                font-size: 12px;
+                color: #666666;
+                display: inline-block;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+            .numInput {
+                width: 50px;
+                height: 30px;
+                display: inline-block;
+                line-height: 30px;
+                font-size: 12px;
+                color: #666666;
+                border: 1px solid #D1D1D1;
+                border-radius: 4px;
+                padding-left: 10px;
+            }
+
+            .orderSelect {
+
+                width: 140px;
+                height: 30px;
+                display: inline-block;
+                line-height: 30px;
+                font-size: 12px;
+                color: #666666;
+                img {
+                    width: 8px;
+                }
+            }
+        }
+    }
+
+
+    .setMultSelect li {
+        height: auto !important;
+        &:hover {
+            background: transparent !important;
+        }
+        div {
+            overflow: hidden;
+        }
+    }
+
+    .multSelect {
+        width: 100%;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        margin-top: 5px;
+        .multTitle {
+            position: relative;
+            height: 30px;
+            width: 100%;
+            img {
+                width: 14px;
+                height: 14px;
+                position: absolute;
+                left: 12px;
+                top: 16px;
+            }
+            .title {
+                font-size: $font-size-base;
+                color: $gray;
+                width: 100px;
+                position: absolute;
+                top: 0px;
+                left: 50px;
+                margin-top: 0;
+                padding: 0;
+                margin: 0;
+                text-align: left;
+            }
+        }
+    }
+
+    .productList {
+        font-size: 0;
+        padding-left: 17px !important;
+        padding-top: 5px;
+        position: relative !important;
+        display: block !important;
+        border: none !important;
+        div {
+            color: $gray-dark;
+            font-size: $font-size-base;
+            height: 36px;
+            line-height: 36px;
+            position: relative;
+            padding-left: 30px;
+            border-left: 1px solid $border-line;
+            position: relative;
+            cursor: pointer;
+            display: block !important;
+            text-align: left;
+            padding-left: 30px;
+            &:hover {
+                background: $f8!important;
+            }
+            &:after {
+                content: '';
+                width: 10px;
+                height: 1px;
+                position: absolute;
+                left: 0;
+                top: 17px;
+                background: $border-line;
+            }
+        }
+        div:first-child {
+            &:before {
+                content: '';
+                width: 1px;
+                height: 20px;
+                position: absolute;
+                left: -1px;
+                top: -5px;
+                background: $border-line;
+            }
+        }
+        div:last-child {
+            border: none !important;
+            &:before {
+                content: '';
+                width: 1px;
+                height: 18px;
+                position: absolute;
+                left: 0;
+                top: 0px;
+                background: $border-line;
+            }
+        }
+    }
+
+    #orderCome {
+        overflow-x: hidden;
+        min-height: 300px;
+        max-height: 500px;
+        background: white !important;
+        li {
+            height: auto !important;
+            background: transparent !important;
+        }
+        .quoIcon {
+            width: 14px !important;
+        }
+    }
+
+    #orderCome li:nth-child(1) {
+        text-align: center;
+        padding-left: 0px;
+    }
+
+
+    #orderCome li:nth-child {
+        text-align: left !important;
+        padding-left: 20px;
+    }
