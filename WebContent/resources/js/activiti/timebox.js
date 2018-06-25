@@ -13,7 +13,6 @@ var season;
 var num;
 var clickNumber =0;
 var arrobject=[];
-// var arrobject = new Object();
 var myxuan=new Array();
 $().ready(function() {
 	document.domain = getUrl();
@@ -47,10 +46,8 @@ $().ready(function() {
     loadProductEven();
     if ( inthings()){
     	inthings();
-    }  
-  
+    }   
 });
-
 // 初始化获取地址
 function inthings(){
 	if  ($('#projectNames').val()){
@@ -165,13 +162,11 @@ function dbmatter(){
 	 $('.fc-day .xuan .boxs').click(function(){
 		 $(this).parent().addClass('wolf');	 
 	 })
-	 $('.fc-day .xuan').removeClass('wolf'); 
-	
+	 $('.fc-day .xuan').removeClass('wolf'); 	
 	 $('.pages').click(function(){
 		 $(this).find('.boxs .city-select').remove('.city-select');
 		 $(this).find('.orderSelect').removeClass('selectColor');
 	 })
- 
 	 $('.fc-day').click(function(){
 		if (!$(this).hasClass('cheng')){
 			$(this).parent().find('.boxs .city-select').remove('.city-select');
@@ -237,7 +232,6 @@ function dbmatter(){
 // 回显功能
 function timebook(){
 	var timebook;
-// console.log();
 	chengnums+=chengnum;
 	chengnums = chengnums.replace(/}{/g, '},{');
 	var chengnumsw='';
@@ -247,12 +241,7 @@ function timebook(){
 	var timebookss;
 	timebookss=JSON.stringify(timebook);
 // 完整的对象
-	// 字符串的
-
-// console.log('未去重的数据');
-// console.log(timebook);
-// console.log(timebook.length);
-	// timebook 去重
+	// 字符串的 timebook 去重
 	var allArr = [];// 新数组
 	for(var i=0;i<timebook.length;i++){
 	　　var flag = true;
@@ -265,14 +254,8 @@ function timebook(){
 	　　　　allArr.push(timebook[i]);
 	　　};
 	};
-
 	// 此后的 timebook 换成allAll
-	timebook=allArr;
-// console.log('去重数据');
-// console.log(timebook);
-// console.log('项目原有的数据');
-// console.log(arrobject);
-	
+	timebook=allArr;	
 	// timebook与 arrobject 数据合并修改
 	for(var i in timebook){
 		for (var j in arrobject){
@@ -280,22 +263,12 @@ function timebook(){
 				// 对项目原有的数据与修改的数据进行比较得出比较的 修改新的数据
 				arrobject[j].jobContent=timebook[i].jobContent;
 			}			
-		}	
-		
+		}			
 		if(arrobject==null||arrobject==undefined||arrobject==''){
-			arrobject=[];
-			
+			arrobject=[];			
 		}
 		arrobject.push(timebook[i]);
-//		else {
-//			arrobject.push(timebook[i]);
-//		}
-//		arrobject.push(timebook[i]);	
 	}
-
-// console.log('项目数据和 添加数据的合并');
- console.log(arrobject.length);
- console.log(allArr.length);
 	var allArr = [];// 新数组
 	for(var i=0;i<arrobject.length;i++){
 	　　var flag = true;
@@ -308,31 +281,17 @@ function timebook(){
 	　　　　allArr.push(arrobject[i]);
 	　　};
 	};
-// console.log('对合并后的数据去重');
 	arrobject=allArr;
-// console.log(arrobject);
-
 // 当导出的时候 取该处的值 导出即可
 	var chaunqi=JSON.stringify(arrobject);
-// console.log('开始了');
 	chaunqi = chaunqi.replace(/}{/g, '},{');
-// console.log(chaunqi);
-
-// console.log('传奇传奇');
 	chaunqi = chaunqi.replace(/\\n/g,'111');	
 	chaunqi = chaunqi.replace(/\\111/g,'/n');
 	chaunqi = chaunqi.replace(/111/g,'/n');
-// console.log('转换了');
-// console.log(chaunqi);
-
-	console.log(chaunqi.length);
 	for (var i=0;i<chaunqi.length;i++){
 		chaunqi = chaunqi.replace('/n','\\n');
 	}
-// chaunqi = chaunqi.replace('/n','******');
-// console.log(chaunqi);
 	$('#pumpum').val(chaunqi);
-
 	var keys=[];
 	var value=[];
 	var tibo=$('.fc-day');
@@ -387,15 +346,13 @@ function getBoxInfo(){
 //		$('#projectId').val(src.projectId);
 //		$('#projectNames').val(src.projectName);
 //		$('#updateDate').val(src.updateDate);
-//		$('#projectName').text(src.projectName);	
-		
+//		$('#projectName').text(src.projectName);		
 		var objectbox=src.items;	
 		console.log(src.items);
 		arrobject=src.items;		
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
-// xiaos=xiaos.replace('/n','\\\\n');
 		$('#items').val(xiaos);	
 		var tibo=$('.fc-day');
 		chengnum='';
@@ -407,15 +364,13 @@ function getBoxInfo(){
 						$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
 						$(this).find('textarea').val(objectbox[k].jobContent);
 						$(this).find('textarea').text(objectbox[k].jobContent);	
-					}
-								
+					}			
 				}				
 			}
 		})
 	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
 	}	
 }
-
 // 加载事件
 function loadProductEven(){
 	$('#cancleLoadProduct').on('click',function(){
@@ -477,25 +432,18 @@ function loadProductEven(){
                  });
         	 }else{
         		 $('#errorSaveModel').show();
-        		 $('.SaveModelBtn').off('click').on('click',function(){
-        			
+        		 $('.SaveModelBtn').off('click').on('click',function(){      			
         			 var popo;
         			 popo=chengnum;
         			 popo=popo.replace(/}{/g,'},{');
         			 popo='['+popo+']';
         			 popo=JSON.parse(popo.replace(/\n/g,'\\\\n'));
-        	
         			 // 對象
         			 popo=JSON.stringify(popo);
-        			 console.log(popo);
-        			 
-        		
-        			 submitDateMyDate(1);
-        			 
+        			 submitDateMyDate(1); 
         		 });
         	 }
          }else {
-        	 console.log('没有 任何更改');
         	  // 弹出新的窗口,显示提示项目内容不能为空 啦啦啦啦
              $('#submitCheck').show();
              $('#isSuccess').text('保存项目');
@@ -508,18 +456,9 @@ function loadProductEven(){
 	});	 
 }
 function submitDateMyDate(num){
-// chengnum=JSON.stringify(chengnum);
-// chengnum = chengnum.replace(/}{/g, '},{');
-// chengnum=$.parseJSON(chengnum);
-// // chengnum='['+chengnum+']';
 	timebook();
-
 	// 最后确定了 之后在把要修改的 值赋给要保存的 数据
-	$('#items').val($('#pumpum').val());
-	
-	
-	
-	
+	$('#items').val($('#pumpum').val());	
 	var proName = $('.modelMActive').text();
 	var proId = $('.modelMActive').attr('data-id');
 	if(num == 1){
@@ -544,9 +483,6 @@ function submitDateMyDate(num){
     			$('.cusModel').hide();
     			$('#items').val($('#pumpum').val());
     			getBoxInfo();
-    			
-    			
-// asdjakdjkasdj
     		});
     		$('#productSelect').html('');
 	    }else {
@@ -627,28 +563,7 @@ function bestthings() {
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
     	$('#projectNames').val($('#projectName').text());
-//    	
-// if($('#pumpum').val().length>2){
-// console.log('有');
-// $('#submitCheck').show();
-// $('#isSuccess').text('保存项目');
-// $('#errorImg').show();
-// $('#successContent').text('排期表未保存，请保存至项目再导出');
-// $('.sureCheck').off('click').on('click',function(){
-// $('#submitCheck').hide();
-// });
-    		
-    		
-// $('#toListForm #items').val($('#pumpum').val());
-    	
-// submitDate();
-    	
-// }else{
-// console.log('无');
-// submitDate();
-// }
-    	submitDate();
-    	
+    	submitDate();	
     	$('.proerr').text('');
     	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
     	$('.matter').blur();  	
@@ -656,25 +571,7 @@ function bestthings() {
 }
 // 表单提交
 function submitDate(){
-// console.log('提交前的数据 目前 有问题');
-	
-// console.log(chengnum);
-// console.log('33333333333333333333333333333333333');
-// console.log($('#toListForm #items').val());
-//	
-//	
-// chengnum=JSON.stringify(chengnum);
-// chengnum = chengnum.replace(/}{/g, '},{');
-// chengnum=$.parseJSON(chengnum);
-// chengnum='['+chengnum+']';
-	$('#toListForm #items').val($('#pumpum').val());// 早晚要注释的
-	
-	
-	
-	console.log('点击导出的时候传入后台的数据');
-	console.log($('#toListForm #items').val());
-	
-	
+	$('#toListForm #items').val($('#pumpum').val());// 早晚要注释的	
 	$('#toListForm #scheduleId').val($('#scheduleId').val());
 	$('#toListForm #projectId').val($('#projectId').val());	
 	$('#toListForm #projectName').val($('#projectId').val());	
@@ -774,8 +671,6 @@ function leftbtn() {
     $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
     $('tbody .fc-other-month .matter').attr('style', 'display: none;');
     $('.fc-header-left .fc-button').on('click', function() {
-    	
-  	
     	initSelect();
     	sun();
     	getday();
