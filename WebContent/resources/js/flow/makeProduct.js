@@ -257,10 +257,10 @@ function initOption(){
 	});
 			
 	delItem();
-	initSelect();
 	chooseType();
 	openAddDiv();
 	saveToproject();
+	searchInit();
 	
 	//$(".setProductInfo").before(juicer(videoList_tpl.upload_Tpl,{item:''}));
 	
@@ -323,6 +323,7 @@ function initSelectInfo(){
 		for (var int = 0; int < src.length; int++) {
 			 $("#cityUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
 		}
+		chooseType();
 		}, getContextPath() + '/all/citys','');
 	}
 	//导演
@@ -330,9 +331,10 @@ function initSelectInfo(){
 		loadData(function(src){
 		     $("#directorLevelUl").html('');
 		     $("#directorLevelUl").addClass('hasInfo');
-		for (var int = 0; int < src.length; int++) {
-			 $("#directorLevelUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
-		}
+		     for (var int = 0; int < src.length; int++) {
+		    	 $("#directorLevelUl").append(juicer(productList_tpl.mulit_Tpl,{itemInfo:src[int]}));
+			}
+		     chooseType();
 		}, getContextPath() + '/quotation/production/select?productionType=director','');
 	}
 	
@@ -340,9 +342,10 @@ function initSelectInfo(){
 		loadData(function(src){
 		     $("#directorZoneUl").html('');
 		     $("#directorZoneUl").addClass('hasInfo');
-		for (var int = 0; int < src.length; int++) {
-			 $("#directorZoneUl").append('<li data-id='+src[int].value+'>'+src[int].text+'</li>');	 
+		for (var int = 0; int < src.specialtyList.length; int++) {
+			 $("#directorZoneUl").append('<li data-id='+src.specialtyList[int].value+'>'+src.specialtyList[int].text+'</li>');	 
 		}
+		chooseType();
 		}, getContextPath() + '/production/director/parameter','');
 	}
 	
@@ -353,9 +356,10 @@ function initSelectInfo(){
 		loadData(function(src){
 		     $("#zoneUl").html('');
 		     $("#zoneUl").addClass('hasInfo');
-		for (var int = 0; int < src.length; int++) {
-			 $("#zoneUl").append('<li data-id='+src[int].value+'>'+src[int].text+'</li>');	 
+		for (var int = 0; int < src.zoneList.length; int++) {
+			 $("#zoneUl").append('<li data-id='+src.zoneList[int].value+'>'+src.zoneList[int].text+'</li>');	 
 		}
+		chooseType();
 		}, getContextPath() + '/production/actor/parameter','');
 	}
 	
@@ -363,9 +367,12 @@ function initSelectInfo(){
 		loadData(function(src){
 		     $("#actorLevelUl").html('');
 		     $("#actorLevelUl").addClass('hasInfo');
-		for (var int = 0; int < src.length; int++) {
-			 $("#actorLevelUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
-		}
+		     for (var int = 0; int < src.length; int++) {
+		    	 var mainCode = src[int].typeName;
+			     var secondCode = src[int].children;
+		    	 $("#actorLevelUl").append(juicer(productList_tpl.mulit_Tpl,{itemInfo:src[int]}));
+			}
+		chooseType();
 		}, getContextPath() + ' /quotation/production/select?productionType=actor','');
 	}
 	
@@ -375,11 +382,25 @@ function initSelectInfo(){
 		loadData(function(src){
 		     $("#studioUl").html('');
 		     $("#studioUl").addClass('hasInfo');
-		for (var int = 0; int < src.length; int++) {
-			 $("#studioUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+		 for (var int = 0; int < src.length; int++) {
+	    	 $("#studioUl").append(juicer(productList_tpl.mulit_Tpl,{itemInfo:src[int]}));
 		}
+		chooseType();
 		}, getContextPath() + ' /quotation/production/select?productionType=studio','');
 	}
+	
+	//设备
+	if(!$("#deviceTypeUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#deviceTypeUl").html('');
+		     $("#deviceTypeUl").addClass('hasInfo');
+		 for (var int = 0; int < src.length; int++) {
+	    	 $("#deviceTypeUl").append(juicer(productList_tpl.mulit_Tpl,{itemInfo:src[int]}));
+		}
+		chooseType();
+		}, getContextPath() + ' /quotation/production/select?productionType=device','');
+	}
+
 	
 }
 
@@ -413,24 +434,27 @@ function searchInit(){
 
 function searchActor(){
 	
-	var category = $('#productType').text();
-	var city = $('#city').text();
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
 	var sex = $('#sex').text();
 	var beginAge = $('#beginAge').val();
 	var endAge = $('#endAge').val();
-	var zone = $('#zone').val();
-	var typeId = $('#actorLevel').text();
+	var zone = $('#zone').attr('data-id');
+	var typeId = $('#actorLevel').attr('data-id');
 	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
 
-	}, getContextPath() +  '',$.toJSON({
+	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
 		sex:sex,
 		beginAge:beginAge,
 		endAge:endAge,
-		endAge:endAge,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
 		zone:zone,
 		typeId:typeId,
 		name:name,
@@ -439,21 +463,22 @@ function searchActor(){
 
 function searchDirector(){
 	
-	var category = $('#productType').text();
-	var city = $('#city').text();
-	var sex = $('#sex').text();
-	var zone = $('#directorZone').val();
-	var typeId = $('#directorLevel').text();
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
+	var zone = $('#directorZone').attr('data-id');
+	var typeId = $('#directorLevel').attr('data-id');
 	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
 
-	}, getContextPath() +  '',$.toJSON({
+	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
-		sex:sex,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
 		typeId:typeId,
-		specialty:specialty,
 		zone:zone,
 		name:name,
 	}));	
@@ -461,44 +486,50 @@ function searchDirector(){
 
 function searchDevice(){
 	
-	var category = $('#productType').text();
-	var city = $('#city').text();
-	var sex = $('#sex').text();
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
 	var typeId = $('#speName').attr('data-id');
-	var type = $('#deviceType').text();
+	var type = $('#deviceType').attr('data-id');
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
 
-	}, getContextPath() +  '',$.toJSON({
+	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
-		sex:sex,
 		typeId:typeId,
 		type:type,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
 	}));	
 }
 
 function searchStudio(){
 	
-	var category = $('#productType').text();
-	var city = $('#city').text();
-	var sex = $('#sex').text();
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
 	var typeId = $('#speName').attr('data-id');
 	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
 
-	}, getContextPath() +  '',$.toJSON({
+	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
-		sex:sex,
 		typeId:typeId,
 		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
 	}));	
 }
 
 
 function chooseType(){
+	
+	initSelect();
 	
 	$('.orderMultSelect').off('click').on('click',function(e){
 		if(!$('.setMultSelect').hasClass('selectColor')){
@@ -506,6 +537,30 @@ function chooseType(){
 			$(this).find('.setMultSelect').slideDown();
 			$(this).addClass('selectColor');
 		}
+		e.stopPropagation();
+	});
+	
+	$('.multSelectEven div').off('click').on('click',function(e){
+		$('.setMultSelect').slideUp();
+		var parentText = $(this).text();
+		var parentId = $(this).attr('data-id');
+		$(this).parent().parent().parent().parent().parent().find('.imgType').text(parentText);
+		$(this).parent().parent().parent().parent().parent().find('.imgType').attr('data-id',parentId);
+		$('.orderMultSelect').removeClass('selectColor'); 
+		
+		if($(this).parent().parent().parent().parent().hasClass('deviceTypeUl')){
+			if(!$("#speNameUl").hasClass('hasInfo')){
+				loadData(function(src){
+				     $("#speNameUl").html('');
+				     $("#speNameUl").addClass('hasInfo');
+				 for (var int = 0; int < src.length; int++) {
+			    	 $("#speNameUl").append('<li data-id='+src[int].key+'>'+src[int].value+'</li>');
+				}
+				 chooseType();
+				}, getContextPath() + '/quotation/production/children?typeId='+parentId,'');
+			}
+		}
+		
 		e.stopPropagation();
 	});
 	
@@ -524,11 +579,6 @@ function chooseType(){
 				$('.actorLevelUl').append('<li></li>');
 				initSelect();
 			}, getContextPath() +  '/quotationtype/production/select?productionType=actor','');
-			$("#nomalName").on("input propertychange",function(){  
-				loadData(function(src){
-
-				}, getContextPath() +  '','');
-			}) ;
 		}
 		if(parentText == '导演组'){
 			$('.showUnmInfo').hide();
@@ -538,11 +588,7 @@ function chooseType(){
 				$('.directorLevelUl').append('<li></li>');
 				initSelect();
 			}, getContextPath() +  '/quotationtype/production/select?productionType=director','');
-			$("#nomalName").on("input propertychange",function(){  
-				loadData(function(src){
 
-				}, getContextPath() +  '','');
-			}) ;
 		}
 		
 		$('.orderMultSelect').removeClass('selectColor'); 
@@ -579,11 +625,6 @@ function chooseType(){
 				$('.actorLevelUl').append('<li></li>');
 				initSelect();
 			}, getContextPath() +  '/quotationtype/production/select?productionType=director','');
-			$("#nomalName").on("input propertychange",function(){  
-				loadData(function(src){
-
-				}, getContextPath() +  '','');
-			}) ;
 			
 		}
 		e.stopPropagation();
@@ -627,7 +668,22 @@ var productList_tpl = {
 		].join(""),
 		 project_Tpl:[
 		              "<div class='modelProItem' data-showId='${file.id}' data-id='${file.projectId}'>${file.projectName}</div>"
-		     		].join("")
+		 ].join(""),
+		 mulit_Tpl:[
+		              "   <li>"+
+					  "	       <div class='multSelect'>  "+                                   
+					  "	              <div class='multTitle'>"+                                     
+					  "	                   <img class='quoIcon' src='/resources/images/index/quoIcon.png'>"+               
+					  "	                   <div class='title' data-id=''>${itemInfo.typeName}</div>"+                       
+					  "	              </div>"+                                                  
+					  "	              <div class='productList multSelectEven'>"+  
+					  "                   {@each itemInfo.children as children}"+ 
+					  "	                        <div data-id='${children.typeId}' >${children.typeName}</div>"+ 
+					  "                   {@/each}"+
+					  "	              </div>"+   
+					  "	        </div>"+ 
+		              "   </li>"
+		 ].join(""),
 }
 
 //错误提示

@@ -848,9 +848,11 @@
             height: auto !important;
             background: transparent !important;
         }
-        .quoIcon {
+
+    }
+
+    .quoIcon {
             width: 14px !important;
-        }
     }
 
     #orderCome li:nth-child(1) {
@@ -871,8 +873,12 @@
 
     .hoverColor {
         &:hover {
-            background: #f8f8f8;
+            background: #f8f8f8 !important;
         }
     }
 
-    
+    .orderSelect ul li{
+        overflow: hidden;
+    } 
+
+

@@ -390,7 +390,7 @@
 						                                  <div class="title" data-id="">创作团队</div>                       
 						                             </div>                                                  
 						                             <div class="productList" id="productList">            
-							                            <div data-id="actor" >导演组</div> 
+							                            <div data-id="director" >导演组</div> 
 							                            <div data-id="actor" >演员组</div> 
 						                             </div>   
 						                       </div>                                                  
@@ -418,37 +418,37 @@
 						</div>
 						 <div class="optionItem">
 		                     <div class="title">价格</div>
-			              	 <input class="numInput" onkeyup="value=value.replace(/[^\d]/g,'')">
+			              	 <input class="numInput" id="beginPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
 			              	 <div class="fu">~</div>
-			              	 <input class="numInput" onkeyup="value=value.replace(/[^\d]/g,'')">
+			              	 <input class="numInput" id="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
 						</div>   
 						
 						<div class="show1 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">场地类型</div>
-				              	 <div class="orderSelect" id="isOther">
-						                <div class="imgType" id="studioType">请选择场地类型</div>
-						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="studioUl" style="display: none;"></ul>    
-							     </div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="directorLevel">请选择场地类型</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="studioUl" style="display: none;"></ul>    
+							     </div>					              	
 							</div>
 						</div>
 						
 						<div class="show2 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">设备类型</div>
-				              	 <div class="orderSelect" id="isOther">
-						                <div class="imgType" id="deviceType">请选择设备类型</div>
-						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="deviceTypeUl" style="display: none;"></ul>    
-							     </div>
+							     <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="directorLevel">请选择设备类型</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect deviceTypeUl" id="deviceTypeUl" style="display: none;"></ul>    
+							     </div>	
 							</div>
 							<div class="optionItem" id="searchSelectName">
 		                     <div class="title">名称</div>
 			              	 <div class="orderSelect" id="isOther">
 					                <div class="imgType" id="speName"></div>
 					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="oSelect" id="" style="display: none;"></ul>    
+					                <ul class="oSelect" id="speNameUl" style="display: none;"></ul>    
 						     </div>
 						</div> 
 						</div>
@@ -483,21 +483,21 @@
 							</div>
 							<div class="optionItem">
 			                     <div class="title">等级</div>
-				              	 <div class="orderSelect">
-						                <div class="imgType" id="actorLevel">请选择等级</div>
-						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="actorLevelUl" style="display: none;"></ul>    
-							     </div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="directorLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="actorLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
 							</div>
 						</div>
 						
 						<div class="show4 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">等级</div>
-				              	 <div class="orderSelect">
+				              	 <div class="orderSelect orderMultSelect">
 						                <div class="imgType" id="directorLevel">请选择等级</div>
-						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="directorLevelUl" style="display: none;"> </ul>    
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="directorLevelUl" style="display: none;"></ul>    
 							     </div>
 							</div>
 							<div class="optionItem">
@@ -511,6 +511,8 @@
 						</div>
 						   
 		         </div>
+		         
+		         <div class="setProductInfo" id="addSetProductInfo"></div>
 		       
 		    </div>
       </div>
