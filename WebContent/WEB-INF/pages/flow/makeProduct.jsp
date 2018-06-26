@@ -65,7 +65,7 @@
 				       </div>
 				       
 				       <div class="setProductInfo" id="setProduct">
-				                <div class="BigItem">
+				              <!--   <div class="BigItem">
 				                       <div class="titleB">标题分类</div>
 				                       <div class="MidItem MidActive">
 					                       <div class="titleM ">标题分类小<div></div></div>
@@ -147,11 +147,11 @@
 					                       <div class="titleM">标题分类小<div></div></div>
 					                       <div class="itemContent"></div>
 				                       </div>
-				                </div>
+				                </div> -->
 				       </div>
 				       
-				       <div class="toolBtn btn-c-r" id="saveTo">保存至项目</div>
-				       <div class="toolBtn btn-c-r" id="exportTo">导出</div>
+				       <div class="toolBtn hide btn-c-r" id="saveTo" style="margin-left: 40px;">保存至项目</div>
+				       <div class="toolBtn hide btn-c-r" id="exportTo">导出</div>
 				       
 				</div>
     	<!-- 弹窗-->
@@ -512,7 +512,9 @@
 						   
 		         </div>
 		         
-		         <div class="MidItem MidActive controlWidth"  style="border:none;margin-top:20px"></div>
+		         <div class="MidItem controlWidth"   style="border:none;margin-top:20px">
+		            <div class="newItemContent" id="addSetProductInfo" style="display:block !important"></div>
+		         </div>
 
 		         
 		       
