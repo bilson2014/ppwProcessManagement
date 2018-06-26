@@ -306,6 +306,7 @@ function openAddDiv(){
 	
 	$('#openAdd').off('click').on('click',function(){
 		$('.addModel').show();
+		$('#addSetProductInfo').html('');
 		initSelectInfo();
 	});
 	
@@ -446,8 +447,9 @@ function searchActor(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
-
-	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
+		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
 		sex:sex,
@@ -472,8 +474,9 @@ function searchDirector(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
-
-	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
+		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
 		beginPrice:beginPrice,
@@ -494,8 +497,9 @@ function searchDevice(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
-
-	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
+		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
 		typeId:typeId,
@@ -515,8 +519,9 @@ function searchStudio(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
-
-	}, getContextPath() +  '/production/production/resource/list',$.toJSON({
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
 		typeId:typeId,
@@ -524,6 +529,22 @@ function searchStudio(){
 		beginPrice:beginPrice,
 		endPrice:endPrice,
 	}));	
+}
+
+function initAddCanEven(){
+	
+	$('.addImgContent').off('click').on('click',function(){
+		$(this).parent().parent().parent().addClass('itemCommonRed');
+		$(this).hide();
+		$(this).parent().find('.cancelImgContent').show();
+	});
+	
+	$('.cancelImgContent').off('click').on('click',function(){
+		$(this).parent().parent().parent().removeClass('itemCommonRed');
+		$(this).hide();
+		$(this).parent().find('.addImgContent').show();
+	});
+	
 }
 
 
@@ -683,6 +704,23 @@ var productList_tpl = {
 					  "	              </div>"+   
 					  "	        </div>"+ 
 		              "   </li>"
+		 ].join(""),
+		 search_Tpl:[
+		              " {@each itemInfo as item}"+ 
+					  "	<div class='itemContentFive itemCommon' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
+					  "		<div class='info'>"+
+					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
+					  "		        <div class='price'>￥600</div>"+
+					  "		</div>"+
+					  "		<div class='showTool'>"+
+					  "		    <div class='toolDiv'>"+
+					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >取消</div><div>查看详情</div>"+
+					  "		    </div>"+
+					  "		</div>"+
+					  "	</div>"+
+					  "	{@/each}"
 		 ].join(""),
 }
 

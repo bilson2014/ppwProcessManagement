@@ -512,7 +512,22 @@
 						   
 		         </div>
 		         
-		         <div class="setProductInfo" id="addSetProductInfo"></div>
+		         <div class="MidItem MidActive BigItem"  style="border:none;margin-top:20px">
+		                               <div class="itemContent" id="addSetProductInfo">
+					                           <div class="itemContentFive itemCommon">
+					                                  <img src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+					                                  <div class="info">
+					                                          <div class="who">我 / 员工</div>
+					                                          <div class="price">￥600</div>
+					                                  </div>
+					                                  <div class="showTool">
+					                                      <div class="toolDiv">
+					                                      		<div>移除</div><div>查看详情</div>
+					                                      </div>
+					                                  </div>
+					                             </div>
+					                       </div>
+		         </div>
 		       
 		    </div>
       </div>

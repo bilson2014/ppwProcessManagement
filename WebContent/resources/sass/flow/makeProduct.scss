@@ -139,6 +139,13 @@
 
     .BigItem {
         width: 1030px;
+         @media screen and (max-width: 1030px) {
+                      width: 1022px;
+                }
+
+                @media screen and (max-width: 775px) {
+                      width: 770px;
+                }
         margin: 0 auto;
         border-bottom: 3px solid #F0F2F5;
         .titleB {
@@ -316,6 +323,12 @@
             .itemContentFive:nth-child(5n) {
                 margin-right: 0;
             }
+            
+            .cancelImgContent{
+                display: none;
+                margin-bottom:20px;
+            }
+
         }
     } //弹出框
     .cusModel {
