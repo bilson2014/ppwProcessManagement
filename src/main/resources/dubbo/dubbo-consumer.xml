@@ -49,5 +49,13 @@
 	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsContinuityFacade" id="pmsContinuityFacade" retries="1" check="false" timeout="5000" />
 	<dubbo:reference interface="com.paipianwang.pat.facade.product.service.PmsDimensionFacade" id="pmsDimensionFacade" check="false" timeout="5000" />
 	
+	<!-- 制片工具 -->
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProductionInfoFacade" id="pmsProductionInfoFacade" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.facade.team.service.PmsCityFacade" id="pmsCityFacade" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProductionActorFacade" id="pmsProductionActorFacade" retries="1" check="false" timeout="5000" />
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProductionDirectorFacade" id="pmsProductionDirectorFacade" retries="1" check="false" timeout="5000"/>
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProductionStudioFacade" id="pmsProductionStudioFacade" retries="1" check="false" timeout="5000"/>
+	<dubbo:reference interface="com.paipianwang.pat.workflow.facade.PmsProductionDeviceFacade" id="pmsProductionDeviceFacade" retries="1" check="false" timeout="5000"/>
+	
 </beans>
 
