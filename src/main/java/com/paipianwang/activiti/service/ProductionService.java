@@ -12,6 +12,6 @@ public interface ProductionService {
 
 	PmsResult saveOrUpdate(PmsProductionInfo pmsProductionInfo);
 
-	List<PmsProductionInfo.ProductionResource> listResourceByParam(Map<String, Object> paramMap, String type);
+	PmsProductionInfo listResourceByParam(Map<String, Object> paramMap, String type);
 
 }
