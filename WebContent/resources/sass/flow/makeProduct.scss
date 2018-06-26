@@ -137,7 +137,10 @@
         padding-left: 20px;
     }
 
-    .BigItem {
+
+
+
+    .BigItem,.controlWidth {
         width: 1030px;
          @media screen and (max-width: 1030px) {
                       width: 1022px;

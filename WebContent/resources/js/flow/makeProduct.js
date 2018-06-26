@@ -1,4 +1,5 @@
 var successIntervalObj; // timer变量，控制时间
+var setData;
 
 $().ready(function() {
 	
@@ -22,7 +23,7 @@ function openProejct(){
 		$('#CheckloadProduct').text('打开');
 		loadData(function(src){
 			for (var int = 0; int < src.length; int++) {
-				 $(".modelProductContent").append(juicer(videoList_tpl.project_Tpl,{file:src[int]}));	 
+				 $(".modelProductContent").append(juicer(productList_tpl.project_Tpl,{file:src[int]}));	 
 			}
 			initCheckProject();
 			$('#CheckloadProduct').off('click').on('click',function(){
@@ -48,7 +49,91 @@ function reShow(proId){
 	
 }
 
-function setReShow(){}
+function setReShow(item){
+	console.table(item.resources);
+	$('.noImg').hide();
+	$('#setProduct').html('');
+	//生成父节点
+	for (var int = 0; int < item.resources.length; int++) {
+		var theItem = $(item.resources)[int];
+		var hasBigItem = $('.BigItem');
+		if(hasBigItem.length >0){
+			var hasSame = false;
+			for (var int2 = 0; int2 < hasBigItem.length; int2++) {
+				var checkSame = $(hasBigItem[int2]).attr('data-id');
+				if(checkSame == theItem.categoryId){
+					hasSame = true;
+					break;
+				}else{
+					hasSame = false;
+				}
+			}
+			if(!hasSame){
+				$('#setProduct').append('<div class="BigItem" data-id="'+theItem.categoryId+'"><div class="titleB">'+theItem.category+'</</div>')
+			}
+		}else{
+			$('#setProduct').append('<div class="BigItem" data-id="'+theItem.categoryId+'"><div class="titleB">'+theItem.category+'</</div>');
+			
+		}
+	}
+	//生成子节点
+	for (var int = 0; int < item.resources.length; int++) {
+		 var theItem = $(item.resources)[int];
+		 var hasBigItem = $('.BigItem');
+		 var checkMidItem = $('.checkMidItem');
+		 
+		 if(checkMidItem.length > 0){			 
+			    var hasSame = false;
+				for (var int2 = 0; int2 < checkMidItem.length; int2++) {
+					var checkSame = $(checkMidItem[int2]).attr('data-id');
+					if(checkSame == theItem.subTypeId){
+						hasSame = true;
+						break;
+					}else{
+						hasSame = false;
+					}
+				}
+			 for (var int2 = 0; int2 < hasBigItem.length; int2++) {
+					var checkSame = $(hasBigItem[int2]).attr('data-id');
+					if(checkSame == theItem.categoryId){
+						var html = [
+						    		'<div class="MidItem checkMidItem" data-id='+theItem.subTypeId+'><div class="titleM ">'+theItem.subType+'<div></div></div></div>'
+						    	].join('');
+						if(!hasSame){
+							$(hasBigItem[int2]).append(html);
+						}
+						break;
+					}
+				}
+		 }else{			 
+			 for (var int2 = 0; int2 < hasBigItem.length; int2++) {
+					var checkSame = $(hasBigItem[int2]).attr('data-id');
+					if(checkSame == theItem.categoryId){
+						var html = [
+						    		'<div class="MidItem checkMidItem" data-id='+theItem.subTypeId+'><div class="titleM ">'+theItem.subType+'<div></div></div></div>'
+						    	].join('');
+						$(hasBigItem[int2]).append(html);
+						break;
+					}
+				}
+		 }
+	}
+	
+	//生成内容
+	for (var int = 0; int < item.resources.length; int++) {
+		 var theItem = $(item.resources)[int];
+		 var checkMidItem = $('.checkMidItem');
+				for (var int2 = 0; int2 < checkMidItem.length; int2++) {
+					var checkSame = $(checkMidItem[int2]).attr('data-id');
+					if(checkSame == theItem.subTypeId){
+						$(checkMidItem[int2]).append(juicer(productList_tpl.item_Tpl,{itemInfo:theItem}));
+						break;
+					}
+				}
+		 }
+}
+
+/*  */
 
 //获取我的项目
 function getMyProject(){	
@@ -57,7 +142,7 @@ function getMyProject(){
 	$('#CheckloadProduct').text('保存');
 	loadData(function(item){
 		for (var int = 0; int < item.length; int++) {
-			$(".modelProductContent").append(juicer(videoList_tpl.project_Tpl,{file:item[int]}));
+			$(".modelProductContent").append(juicer(productList_tpl.project_Tpl,{file:item[int]}));
 		}
 		initCheckProject();
 		$('#CheckloadProduct').off('click').on('click',function(){
@@ -124,7 +209,7 @@ function openProjectModel(){
 	loadData(function(src){
 		
 		for (var int = 0; int < src.length; int++) {
-			 $(".modelProductContent").append(juicer(videoList_tpl.project_Tpl,{file:src[int]}));
+			 $(".modelProductContent").append(juicer(productList_tpl.project_Tpl,{file:src[int]}));
 		}		
 		initCheckProject();
 		$('#CheckloadProduct').off('click').on('click',function(){
@@ -254,6 +339,10 @@ function initOption(){
 	
 	$('#openProejct').off('click').on('click',function(){
 		openProjectModel();
+	});
+	
+	$('#reToMake').off('click').on('click',function(){
+		 toGetAddItem();
 	});
 			
 	delItem();
@@ -706,8 +795,8 @@ var productList_tpl = {
 		              "   </li>"
 		 ].join(""),
 		 search_Tpl:[
-		              " {@each itemInfo as item}"+ 
-					  "	<div class='itemContentFive itemCommon' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+		              " {@each itemInfo.resources as item}"+ 
+					  "	<div class=' ${itemInfo.resources.picScale} {@if itemInfo.resources.picScale == 2 }itemContentFive{@/if} {@if itemInfo.resources.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${itemInfo.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
@@ -722,6 +811,64 @@ var productList_tpl = {
 					  "	</div>"+
 					  "	{@/each}"
 		 ].join(""),
+		 item_Tpl:[
+					  "	<div class=' ${itemInfo.picScale} {@if itemInfo.picScale == 2 }itemContentFive{@/if} {@if picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${itemInfo.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
+					  "		<div class='info'>"+
+					  "		        <div class='who'>{@if itemInfo.name!=null}${item.name} / {@/if}${itemInfo.typeName}</div>"+
+					  "		        <div class='price'>￥600</div>"+
+					  "		</div>"+
+					  "		<div class='showTool'>"+
+					  "		    <div class='toolDiv'>"+
+					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >取消</div><div>查看详情</div>"+
+					  "		    </div>"+
+					  "		</div>"+
+					  "	</div>"
+		 ].join(""),
+}
+
+
+function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale){
+	this.id =  id;
+	this.type = type;
+	this.price = price;
+	this.name = name;
+	this.mainPhoto = mainPhoto;
+	this.typeId = typeId;
+	this.typeName = typeName;
+	this.categoryId = categoryId;
+	this.category = category;
+	this.subTypeId = subTypeId;
+	this.subType = subType;
+	this.picScale =  picScale;
+}
+
+function toGetAddItem(){
+	
+	var nowItem = new Array();
+	var itemCommonRed = $('.itemCommonRed');
+	
+	for (var int = 0; int < itemCommonRed.length; int++) {
+		var theValue = $(itemCommonRed[int]);
+		var id= theValue.attr('data-id');
+		var type= theValue.attr('data-type');
+		var price= theValue.attr('data-price');
+		var name= theValue.attr('data-name');
+		var mainPhoto= theValue.attr('data-mainPhoto');
+		var typeId= theValue.attr('data-typeId');
+		var typeName= theValue.attr('data-typeName');
+		var categoryId= theValue.attr('data-categoryId');
+		var category= theValue.attr('data-category');
+		var subTypeId= theValue.attr('data-subTypeId');
+		var subType= theValue.attr('data-subType');
+		var picScale= theValue.attr('data-picScale');
+		nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+	}
+	
+	setData = new Array();
+	setData.push(new optEntity($(itemCommonRed[0]).attr('data-picScale'),nowItem));
+		
 }
 
 //错误提示

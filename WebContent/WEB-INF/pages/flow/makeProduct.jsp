@@ -64,7 +64,7 @@
 				             <div class="openTool delP" style="right:20px">清空</div>
 				       </div>
 				       
-				       <div class="setProductInfo">
+				       <div class="setProductInfo" id="setProduct">
 				                <div class="BigItem">
 				                       <div class="titleB">标题分类</div>
 				                       <div class="MidItem MidActive">
@@ -372,7 +372,7 @@
             <div class="toolsHead">
 				             <div id="projectName" style="font-size: 1.4rem;font-weight: 500;color:#666;"></div>
 						     <div class="toolTitle">选择制片资源</div>
-				             <div class="openTool" style="right:40px;padding-left: 20px;padding-right: 20px;">制片表</div>
+				             <div class="openTool" id="reToMake" style="right:40px;padding-left: 20px;padding-right: 20px;">制片表</div>
 		    </div>
 		    <div class="addContent">
 		         <div class="search">搜索</div>
@@ -512,22 +512,9 @@
 						   
 		         </div>
 		         
-		         <div class="MidItem MidActive BigItem"  style="border:none;margin-top:20px">
-		                               <div class="itemContent" id="addSetProductInfo">
-					                           <div class="itemContentFive itemCommon">
-					                                  <img src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
-					                                  <div class="info">
-					                                          <div class="who">我 / 员工</div>
-					                                          <div class="price">￥600</div>
-					                                  </div>
-					                                  <div class="showTool">
-					                                      <div class="toolDiv">
-					                                      		<div>移除</div><div>查看详情</div>
-					                                      </div>
-					                                  </div>
-					                             </div>
-					                       </div>
-		         </div>
+		         <div class="MidItem MidActive controlWidth"  style="border:none;margin-top:20px"></div>
+
+		         
 		       
 		    </div>
       </div>
