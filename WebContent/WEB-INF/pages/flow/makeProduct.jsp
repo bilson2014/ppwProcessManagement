@@ -382,7 +382,7 @@
 			              	 <div class="orderSelect orderMultSelect" id="isOther">
 					                <div class="imgType" id="productType"></div>
 					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="oSelect" id="orderCome" style="display: none;">
+					                <ul class="setMultSelect" id="orderCome" style="display: none;">
 						                    <li>
 						                     <div class="multSelect">                                     
 						                             <div class="multTitle">                                     
@@ -395,34 +395,22 @@
 						                             </div>   
 						                       </div>                                                  
 						                    </li>
-						                    <li><div class="findTYpe" data-id='device'>设备</div></li>                                              
-						                    <li><div class="findTYpe" data-id='studio'>场地</div></li>  
+						                    <li class="hoverColor"><div class="findTYpe" data-id='device'>设备</div></li>                                              
+						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li>  
 					                </ul>    
 						     </div>
 						</div>
 						 <div class="optionItem" id="searchName">
 		                     <div class="title">名称</div>
-			              	  <div class="orderSelect" id="">
-					                <input class="nomalInput" id="nomalName">
-					                <ul class="oSelect" id="" style="display: none;">
-					                </ul>    
-						     </div>
+		                      <input class="nomalInput" id="nomalName" style="border: 1px solid #d1d1d1;">
 						</div>  
-						<div class="optionItem" id="searchSelectName">
-		                     <div class="title">名称</div>
-			              	 <div class="orderSelect" id="isOther">
-					                <div class="imgType" id="speName"></div>
-					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="oSelect" id="" style="display: none;">
-					                </ul>    
-						     </div>
-						</div> 
+						
 						 <div class="optionItem">
 		                     <div class="title">城市</div>
 			              	 <div class="orderSelect" id="isOther">
 					                <div class="imgType" id="city">请选择城市</div>
 					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="oSelect" id= style="display: none;">
+					                <ul class="oSelect" id='cityUl' style="display: none;">
 					                   <li data-id="0">全部</li>
 					                   <li data-id="1">沟通阶段</li>
 					                </ul>    
@@ -441,10 +429,7 @@
 				              	 <div class="orderSelect" id="isOther">
 						                <div class="imgType" id="studioType">请选择场地类型</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="studioUl" style="display: none;"></ul>    
 							     </div>
 							</div>
 						</div>
@@ -455,12 +440,17 @@
 				              	 <div class="orderSelect" id="isOther">
 						                <div class="imgType" id="deviceType">请选择设备类型</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="deviceTypeUl" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="deviceTypeUl" style="display: none;"></ul>    
 							     </div>
 							</div>
+							<div class="optionItem" id="searchSelectName">
+		                     <div class="title">名称</div>
+			              	 <div class="orderSelect" id="isOther">
+					                <div class="imgType" id="speName"></div>
+					                <img src="/resources/images/flow/selectS.png">
+					                <ul class="oSelect" id="" style="display: none;"></ul>    
+						     </div>
+						</div> 
 						</div>
 						
 						<div class="show3 showUnmInfo" style="display:none">
@@ -469,9 +459,9 @@
 				              	 <div class="orderSelect" id="isOther">
 						                <div class="imgType" id="sex">请选择性别</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="orderCome" style="display: none;">
-						                   <li data-id="0">男</li>
-						                   <li data-id="1">女</li>
+						                <ul class="oSelect" id="sexUl" style="display: none;">
+						                    <li data-id='0'>男</li>
+						                    <li data-id='1'>女</li>
 						                </ul>    
 							     </div>
 							</div>
@@ -488,10 +478,7 @@
 				              	 <div class="orderSelect" id="isOther">
 						                <div class="imgType" id="zone">请选择种族</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="orderCome" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="zoneUl" style="display: none;"></ul>    
 							     </div>
 							</div>
 							<div class="optionItem">
@@ -499,10 +486,7 @@
 				              	 <div class="orderSelect">
 						                <div class="imgType" id="actorLevel">请选择等级</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="actorLevelUl" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="actorLevelUl" style="display: none;"></ul>    
 							     </div>
 							</div>
 						</div>
@@ -513,10 +497,7 @@
 				              	 <div class="orderSelect">
 						                <div class="imgType" id="directorLevel">请选择等级</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="directorLevelUl" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="directorLevelUl" style="display: none;"> </ul>    
 							     </div>
 							</div>
 							<div class="optionItem">
@@ -524,10 +505,7 @@
 				              	 <div class="orderSelect" id="isOther">
 						                <div class="imgType" id="directorZone">请选择领域</div>
 						                <img src="/resources/images/flow/selectS.png">
-						                <ul class="oSelect" id="orderCome" style="display: none;">
-						                   <li data-id="0">全部</li>
-						                   <li data-id="1">沟通阶段</li>
-						                </ul>    
+						                <ul class="oSelect" id="directorZoneUl" style="display: none;"></ul>    
 							     </div>
 							</div>
 						</div>

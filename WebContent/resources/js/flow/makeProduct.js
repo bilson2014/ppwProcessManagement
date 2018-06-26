@@ -4,6 +4,11 @@ $().ready(function() {
 	
 	document.domain = getUrl();	
 	initOption();
+	$('body').off('click').on('click',function(){
+		$('ul').slideUp();
+		$('.oredrTypeSelect').removeClass('selectColor');
+		$('.orderMultSelect ').removeClass('selectColor');
+	});
 	
 });
 
@@ -250,7 +255,6 @@ function initOption(){
 	$('#openProejct').off('click').on('click',function(){
 		openProjectModel();
 	});
-	
 			
 	delItem();
 	initSelect();
@@ -302,14 +306,83 @@ function openAddDiv(){
 	
 	$('#openAdd').off('click').on('click',function(){
 		$('.addModel').show();
-		loadData(function(src){
-			for (var int = 0; int < src.length; int++) {
-				 $("#city").append('<li></li>');	 
-			}
-		}, getContextPath() + '/all/citys','');
+		initSelectInfo();
 	});
 	
 }
+
+function initSelectInfo(){
+	
+	
+	//城市
+	
+	if(!$("#cityUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#cityUl").html('');
+		     $("#cityUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#cityUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+		}
+		}, getContextPath() + '/all/citys','');
+	}
+	//导演
+	if(!$("#directorLevelUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#directorLevelUl").html('');
+		     $("#directorLevelUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#directorLevelUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+		}
+		}, getContextPath() + '/quotation/production/select?productionType=director','');
+	}
+	
+	if(!$("#directorZoneUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#directorZoneUl").html('');
+		     $("#directorZoneUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#directorZoneUl").append('<li data-id='+src[int].value+'>'+src[int].text+'</li>');	 
+		}
+		}, getContextPath() + '/production/director/parameter','');
+	}
+	
+	
+	//演员
+	
+	if(!$("#zoneUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#zoneUl").html('');
+		     $("#zoneUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#zoneUl").append('<li data-id='+src[int].value+'>'+src[int].text+'</li>');	 
+		}
+		}, getContextPath() + '/production/actor/parameter','');
+	}
+	
+	if(!$("#actorLevelUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#actorLevelUl").html('');
+		     $("#actorLevelUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#actorLevelUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+		}
+		}, getContextPath() + ' /quotation/production/select?productionType=actor','');
+	}
+	
+	//场地
+	
+	if(!$("#studioUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#studioUl").html('');
+		     $("#studioUl").addClass('hasInfo');
+		for (var int = 0; int < src.length; int++) {
+			 $("#studioUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+		}
+		}, getContextPath() + ' /quotation/production/select?productionType=studio','');
+	}
+	
+}
+
 
 function searchInit(){
 	
@@ -428,16 +501,16 @@ function searchStudio(){
 function chooseType(){
 	
 	$('.orderMultSelect').off('click').on('click',function(e){
-		if(!$('.oSelect').hasClass('selectColor')){
-			$('.oSelect').removeClass('selectColor');
-			$(this).find('.oSelect').slideDown();
+		if(!$('.setMultSelect').hasClass('selectColor')){
+			$('.setMultSelect').removeClass('selectColor');
+			$(this).find('.setMultSelect').slideDown();
 			$(this).addClass('selectColor');
 		}
 		e.stopPropagation();
 	});
 	
-	$('.productList div').off('click').on('click',function(e){
-		$('.oSelect').slideUp();
+	$('#productList div').off('click').on('click',function(e){
+		$('.setMultSelect').slideUp();
 		var parentText = $(this).text();
 		var parentId = $(this).attr('data-id');
 		$('#productType').text(parentText);
@@ -446,8 +519,7 @@ function chooseType(){
 		if(parentText == '演员组'){
 			$('.showUnmInfo').hide();
 			$('.show3').show();
-			$('#searchName').hide();
-			$('#searchSelectName').show();
+			$('#searchName').show();
 			loadData(function(src){
 				$('.actorLevelUl').append('<li></li>');
 				initSelect();
@@ -461,8 +533,7 @@ function chooseType(){
 		if(parentText == '导演组'){
 			$('.showUnmInfo').hide();
 			$('.show4').show();
-			$('#searchName').hide();
-			$('#searchSelectName').show();
+			$('#searchName').show();
 			loadData(function(src){
 				$('.directorLevelUl').append('<li></li>');
 				initSelect();
@@ -479,6 +550,7 @@ function chooseType(){
 	});
 	
 	$('.findTYpe').off('click').on('click',function(e){
+		$('.setMultSelect').slideUp();
 		var parentText = $(this).text();
 		var parentId = $(this).attr('data-id');
 		$('#productType').text(parentText);
@@ -489,7 +561,6 @@ function chooseType(){
 			$('.showUnmInfo').hide();
 			$('.show2').show();
 			$('#searchName').hide();
-			$('#searchSelectName').show();
 			loadData(function(src){
 				$('#speName').append('<li></li>');				
 				initSelect();
@@ -504,7 +575,6 @@ function chooseType(){
 			$('.showUnmInfo').hide();
 			$('.show1').show();
 			$('#searchName').show();
-			$('#searchSelectName').hide();
 			loadData(function(src){
 				$('.actorLevelUl').append('<li></li>');
 				initSelect();
