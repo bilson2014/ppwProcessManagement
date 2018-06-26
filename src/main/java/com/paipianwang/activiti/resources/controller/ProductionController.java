@@ -192,7 +192,7 @@ public class ProductionController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping("/resource/list")
-	public List<PmsProductionInfo.ProductionResource> listResource(@RequestBody final Map<String, Object> paramMap){
+	public PmsProductionInfo listResource(@RequestBody final Map<String, Object> paramMap){
 		
 		Object category=paramMap.get("category");
 		if(category!=null) {
@@ -210,9 +210,9 @@ public class ProductionController extends BaseController{
 			paramMap.remove("category");
 			
 			return productionService.listResourceByParam(paramMap,type);
-			
 		}
-		return new ArrayList<>();
+
+		return new PmsProductionInfo();
 	}
 	
 	/**
