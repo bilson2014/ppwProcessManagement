@@ -191,7 +191,7 @@ public class ProductionController extends BaseController{
 	 * @param paramMap
 	 * @return
 	 */
-	@RequestMapping("/production/resource/list")
+	@RequestMapping("/resource/list")
 	public List<PmsProductionInfo.ProductionResource> listResource(@RequestParam final Map<String, Object> paramMap){
 		
 		Object category=paramMap.get("category");
