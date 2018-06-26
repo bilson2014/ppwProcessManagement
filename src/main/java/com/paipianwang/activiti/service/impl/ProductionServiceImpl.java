@@ -96,6 +96,10 @@ public class ProductionServiceImpl implements ProductionService {
 		if (info != null && ValidateUtil.isValid(info.getResources())) {
 			editQuotationTypeName(info);
 		}
+		
+		for (PmsProductionInfo.ProductionResource resource : info.getResources()) {
+			resource.setPicScale(ProductionResource.getEnum(resource.getType()).getPicScale());
+		}
 		return info;
 	}
 
@@ -130,6 +134,7 @@ public class ProductionServiceImpl implements ProductionService {
 	public PmsProductionInfo listResourceByParam(Map<String, Object> paramMap, String type) {
 		PmsProductionInfo info=new PmsProductionInfo();
 		info.setResources(new ArrayList<>());
+		Integer picScale=null;
 		
 		//根据类型查询数据
 		List<BaseProductionEntity> entities=new ArrayList<>();
@@ -138,37 +143,38 @@ public class ProductionServiceImpl implements ProductionService {
 			if(actors!=null) {
 				entities.addAll(actors);
 			}
-			info.setPicScale(ProductionResource.actor.getPicScale());
+			picScale=ProductionResource.actor.getPicScale();
 			
 		}else if(ProductionResource.director.getKey().equals(type)) {
 			List<PmsProductionDirector> directors=pmsProductionDirectorFacade.listBy(paramMap);
 			if(directors!=null) {
 				entities.addAll(directors);
 			}
-			info.setPicScale(ProductionResource.actor.getPicScale());
+			picScale=ProductionResource.director.getPicScale();
 			
 		}else if(ProductionResource.device.getKey().equals(type)) {
 			List<PmsProductionDevice> devices=pmsProductionDeviceFacade.listBy(paramMap);
 			if(devices!=null) {
 				entities.addAll(devices);
 			}
-			info.setPicScale(ProductionResource.actor.getPicScale());
+			picScale=ProductionResource.device.getPicScale();
 		}else if(ProductionResource.studio.getKey().equals(type)) {
 			List<PmsProductionStudio> studios=pmsProductionStudioFacade.listBy(paramMap);
 			if(studios!=null) {
 				entities.addAll(studios);
 			}		
-			info.setPicScale(ProductionResource.actor.getPicScale());
+			picScale=ProductionResource.studio.getPicScale();
 		}
 		
 		//组装数据
-		
-		entities.forEach(entity->{
+		for(BaseProductionEntity entity:entities) {
+
 			PmsProductionInfo.ProductionResource resource=info.new ProductionResource();
 			resource.setId(entity.getId());
 			resource.setType(type);
 			resource.setPrice(entity.getPrice());
 			resource.setName(entity.getName());
+			resource.setPicScale(picScale);
 			
 			// 主图处理
 			if(ValidateUtil.isValid(entity.getPhoto())) {
@@ -180,7 +186,8 @@ public class ProductionServiceImpl implements ProductionService {
 			
 			resource.setTypeId(entity.getTypeId());
 			info.getResources().add(resource);
-		});
+		
+		}
 		//处理类型名称
 		editQuotationTypeName(info);
 		
