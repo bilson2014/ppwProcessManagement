@@ -251,9 +251,7 @@ function initOption(){
 		openProjectModel();
 	});
 	
-	
-	
-		
+			
 	delItem();
 	initSelect();
 	chooseType();
