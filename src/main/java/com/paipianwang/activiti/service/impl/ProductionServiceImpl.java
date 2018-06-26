@@ -50,6 +50,9 @@ public class ProductionServiceImpl implements ProductionService {
 		}
 		List<PmsQuotationType> types = pmsQuotationTypeFacade.findAll();
 		for (PmsQuotationType type : types) {
+			if(type.getParentId()==null) {
+				continue;
+			}
 			for (PmsQuotationType parent : types) {
 				if (type.getParentId().equals(parent.getTypeId())) {
 					type.setParent(parent);
@@ -72,15 +75,15 @@ public class ProductionServiceImpl implements ProductionService {
 					 * if(ValidateUtil.isValid(resource.getName())) {
 					 * resource.setName(resource.getName()+"/"+type.getTypeName());//TODO
 					 * 去掉，不处理了，自己组装吧 }else {
-					 */
+					 
 					resource.setName(type.getTypeName());
 					// }
-
+*/
 					if (ProductionResource.device.getKey().equals(resource.getType())) {
 						resource.setMainPhoto(type.getPhoto());
 					}
 
-					continue;
+					break;
 				}
 			}
 		}
