@@ -173,6 +173,7 @@ public class ProductionServiceImpl implements ProductionService {
 			}
 			
 			resource.setTypeId(entity.getTypeId());
+			info.getResources().add(resource);
 		});
 		//处理类型名称
 		editQuotationTypeName(info);
