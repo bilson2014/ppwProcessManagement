@@ -209,6 +209,10 @@ public class ProductionController extends BaseController{
 			String type=(String) category;
 			paramMap.remove("category");
 			
+			//只检索审核通过的
+			paramMap.put("status", Integer.parseInt(ProductionConstants.statusList[1].getValue()));
+			
+			
 			return productionService.listResourceByParam(paramMap,type);
 		}
 
