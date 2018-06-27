@@ -346,7 +346,7 @@ function getValue(projectId,who){
 			}, getContextPath() + '/production/save', $.toJSON({
 				 projectId:$('#projectId').val(),
 				 id:$('#id').val(),
-				 resources:setArray
+				 resources:nowItem
 			}));
 	}
 		
