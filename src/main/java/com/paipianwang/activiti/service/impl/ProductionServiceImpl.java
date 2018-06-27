@@ -169,7 +169,7 @@ public class ProductionServiceImpl implements ProductionService {
 		//组装数据
 		for(BaseProductionEntity entity:entities) {
 
-			PmsProductionInfo.ProductionResource resource=info.new ProductionResource();
+			PmsProductionInfo.ProductionResource resource=new PmsProductionInfo.ProductionResource();
 			resource.setId(entity.getId());
 			resource.setType(type);
 			resource.setPrice(entity.getPrice());
