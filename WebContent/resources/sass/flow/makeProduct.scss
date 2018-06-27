@@ -722,7 +722,7 @@
                 height: 30px;
                 border: 1px solid $gray-light;
                 border-radius: 4px;
-                font-size: $font-size-base !important;
+                font-size: $font-size-sm !important;
                 color: $gray-dark !important;
                 line-height: 29px !important;
                 cursor: pointer;
@@ -842,7 +842,7 @@
         border: none !important;
         div {
             color: $gray-dark;
-            font-size: $font-size-base;
+            font-size: $font-size-sm;
             height: 36px;
             line-height: 36px;
             position: relative;
@@ -944,5 +944,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 
+}
+
+.orderSelect ul li{
+   font-size: $font-size-sm !important;
 }
 
