@@ -45,7 +45,9 @@ function openProejct(){
 function reShow(proId){
 	
 	loadData(function(src){
-		setReShow(src.resources,0);		
+		setReShow(src.resources,0);	
+		$('#projectId').val(src.projectId);
+		$('#id').val(src.id);
 	}, getContextPath() + '/production/get/'+proId,'');
 	
 }
@@ -214,12 +216,17 @@ function initCheckProject(){
 //保存到项目
 function saveToproject(){	
 	$('#saveTo').off('click').on('click',function(){
-
-			if($('#id').val()!='' && $('#id').val()!=null && $('#id').val()!= undefined){
-				getValue($('#projectId').val(),0);
-			}else{
-				getMyProject();			
-			}
+            
+		   var imgItem = $('.itemCommon');
+		   if(imgItem.length > 0){
+				if($('#id').val()!='' && $('#id').val()!=null && $('#id').val()!= undefined){
+					getValue($('#projectId').val(),0);
+				}else{
+					getMyProject();			
+				}
+		   }else{
+			   successToolTipShow('无内容保存');
+		   }
 		
 	});
 }
@@ -270,36 +277,24 @@ function getValue(projectId,who){
 		var picScale= $(imgItem[int]).attr('data-picScale');
 		nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
 	}
-	console.table(nowItem);
 	
-	
-	var storyName = $('#storyName').text();
-	var dimensionId = $('#time .active').attr('data-id');	
-	var pictureRatio = $('#videoType .active').attr('data-id');
-	var videoStyle = $('#videoStyleS .active').attr('data-id');
-	var setArray = JSON.stringify(setData);
+	var setArray = JSON.stringify(nowItem);
 
 	if(who == 1){ 
 		
 		if(IEVersion()!= '-1'){
-
-			$('#name').val(storyName);
-			$('#dimensionId').val(dimensionId);
-			$('#videoStyle').val(videoStyle);
-			$('#pictureRatio').val(pictureRatio);
-			$('#scriptContent').val(setArray);
+			$('#resources').val(setArray);
 			$('#toListForm').submit();
-			
 		}else{
 			
 		   var projectId = $('#projectId').val();
-		   var createTime = $('#createTime').val();
-		   var url = getContextPath() + '/continuity/export';
+		   var id = $('#id').val();
+		   var url = getContextPath() + '/production/export';
 		   var xhr = new XMLHttpRequest();
 		   var form = new FormData();
-		   form.append('dimensionId',dimensionId);
-
-
+		   form.append('projectId',projectId);
+		   form.append('id',id);
+		   form.append('resources',setArray);
 		   xhr.open('POST', url, true);        // 也可以使用POST方式，根据接口
 		   xhr.responseType = "blob";    // 返回类型blob
 		   // 定义请求完成的处理函数，请求前也可以增加加载框/禁用下载按钮逻辑
@@ -349,7 +344,9 @@ function getValue(projectId,who){
 					successToolTipShow('保存失败');
 				}
 			}, getContextPath() + '/production/save', $.toJSON({
-				 scripts:setData,
+				 projectId:$('#projectId').val(),
+				 id:$('#id').val(),
+				 resources:setArray
 			}));
 	}
 		
@@ -401,6 +398,9 @@ function delItem(){
 			$('.setProductInfo').html('');
 			$('.noImg').show();
 			$('.toolBtn').addClass('hide');
+			$('#id').val('');
+			$('#projectId').val('');
+			$('#"resources"').val('');
 		});
 	});
 	

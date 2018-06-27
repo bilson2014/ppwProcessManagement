@@ -46,8 +46,7 @@
 
 <body>
 
-<input type="hidden" id="id" name="id">
-<input type="hidden" id="projectId" name="projectId">
+
 <input type="hidden" id="projectName" name="projectName">
 
 
@@ -520,6 +519,12 @@
 		       
 		    </div>
       </div>
+      
+      <form method="post" action="/production/export" id="toListForm" class="hide">
+                       <input type="hidden" id="projectId" name="projectId">
+                       <input type="hidden" id="id" name="id">
+                       <input type="hidden" id="resources" name="resources">
+     </form>
     	
     	
 </body>
