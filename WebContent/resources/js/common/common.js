@@ -2042,35 +2042,4 @@ function include(file) {
 
 //-- 自定义类-结束 --/
 
-//自定义复选框
-function initSelect(){
-	
-	$('.orderSelect').off('click').on('click',function(e){
-		$('.oSelect').hide();
-		if($(this).hasClass('selectColor')){
-			$('.oSelect').slideUp();
-			$(this).removeClass('selectColor');
-		}
-		else
-		{
-			$('.orderSelect').removeClass('selectColor');
-			$(this).find('.oSelect').slideDown();
-			$(this).addClass('selectColor');
-		}
-		e.stopPropagation();
-	});
-	$('.oSelect li').off('click').on('click',function(e){
-		 var id = $(this).attr('data-id');
-	   	 $(this).parent().parent().find('div').text($(this).text());
-	   	 $(this).parent().parent().find('div').attr('data-id',id);
-	   	 $(this).parent().slideUp();
-	   	 $('.orderSelect').removeClass('selectColor');
-	     e.stopPropagation();
-	});
-	$('body').off('click').on('click',function(e){
-		 $('.oSelect').slideUp();
-		 $('.orderSelect').removeClass('selectColor');
-		 e.stopPropagation();
-	});
-	
-}
+

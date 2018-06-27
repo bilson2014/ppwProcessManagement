@@ -3,6 +3,11 @@
     @import "normalize";
     @import "orderSelect";
 
+
+    .orderSelect ul{
+        z-index: 120 !important;
+    }
+
     .tooltip-success-show {
         position: fixed;
         top: 0;
@@ -56,7 +61,6 @@
         display: inline-block;
         vertical-align: top;
         text-align: center;
-        display: none;
     }
 
 
@@ -84,7 +88,7 @@
             top: 0;
             font-size: $font-size !important;
             color: #333;
-            font-weight: 500;
+            font-weight: bold;
         }
 
         .delP {
@@ -125,32 +129,19 @@
             height: 30px;
             border: 1px solid $gray-light;
             border-radius: 4px;
-            font-size: $font-size-base !important;
-            color: $gray-dark !important;
+            font-size: $font-size-sm !important;
+            color: $gray !important;
             line-height: 29px !important;
             cursor: pointer;
         }
     }
 
-    .setProductInfo {
-        padding-right: 20px;
-        padding-left: 20px;
+    .BigItem:last-child{
+        border-bottom: none !important;
     }
 
-
-
-
-    .BigItem,.controlWidth {
-        width: 1030px;
-         @media screen and (max-width: 1030px) {
-                      width: 1022px;
-                }
-
-                @media screen and (max-width: 775px) {
-                      width: 770px;
-                }
-        margin: 0 auto;
-        border-bottom: 3px solid #F0F2F5;
+    .BigItem{
+         border-bottom: 3px solid #F0F2F5;
         .titleB {
             margin-top: 25px;
             margin-bottom: 15px;
@@ -158,8 +149,31 @@
             color: #333333;
             font-weight: 500;
             position: relative;
-            left: -30px;
+            left: 20px;
+              @media screen and (max-width: 775px) {
+                   left: 5px !important;
+            }
+
         }
+
+    }
+
+    .setProductInfo{
+        overflow: hidden;
+    }
+
+
+    .MidItem,.controlWidth {
+        width: 1030px;
+         @media screen and (max-width: 1030px) {
+                      width: 960px;
+                }
+
+                @media screen and (max-width: 775px) {
+                      width: 730px;
+                }
+        margin: 0 auto;
+       
     }
 
     .MidActive {
@@ -173,8 +187,8 @@
 
 
     $bigDiv: 1030px;
-    $midDiv: 1022px;
-    $smallDiv: 770px;
+    $midDiv: 960px;
+    $smallDiv: 730px;
     $padding: 20px;
 
 
@@ -197,6 +211,9 @@
                 background-position-y: -7px;
                 position: relative;
                 left: 10px;
+
+                
+
             }
         }
 
@@ -207,11 +224,32 @@
         }
 
         .itemContent,.newItemContent {
-            display: none;
             .checkRed {
                 width: 26px !important;
                 z-index: 99 !important;
                 display: none;
+            }
+
+
+              @media screen and (min-width:800px) {
+                    .itemContentFive:nth-child(5n) {
+                        margin-right: 0;
+                    }
+
+                    .itemContentFour:nth-child(4n) {
+                        margin-right: 0;
+                    }
+
+            }
+
+             @media screen and (max-width: 775px) {
+                .itemContentFive:nth-child(3n) {
+                    margin-right: 0;
+                }
+
+                .itemContentFour:nth-child(2n) {
+                    margin-right: 0;
+                }
             }
 
             .itemContentFive {
@@ -223,22 +261,22 @@
                 }
 
                 @media screen and (max-width: 775px) {
-                    width: ($smallDiv - $padding*4)/5;
-                    height: ($smallDiv - $padding*4)/5/3*4;
+                    width: ($smallDiv - $padding*2)/3;
+                    height: ($smallDiv - $padding*2)/3/3*4;
                 }
             }
 
             .itemContentFour {
-                width: ($bigDiv - $padding*4)/4;
-                height: ($bigDiv - $padding*4)/4/16*9;
+                width: ($bigDiv - $padding*3)/4;
+                height: ($bigDiv - $padding*3)/4/16*9;
                 @media screen and (max-width: 1030px) {
-                    width: ($bigDiv - $padding*4)/4;
-                    height: ($bigDiv - $padding*4)/4/16*9;
+                    width: ($midDiv - $padding*3)/4;
+                    height: ($midDiv - $padding*3)/4/16*9;
                 }
 
                 @media screen and (max-width: 775px) {
-                    width: ($bigDiv - $padding*4)/4;
-                    height: ($bigDiv - $padding*4)/4/16*9;
+                    width: ($smallDiv - $padding)/2;
+                    height: ($smallDiv - $padding)/2/16*9;
                 }
             }
 
@@ -323,9 +361,7 @@
                     }
                 }
             }
-            .itemContentFive:nth-child(5n) {
-                margin-right: 0;
-            }
+         
             
             .cancelImgContent{
                 display: none;
@@ -669,7 +705,7 @@
         width: 100%;
         height: 100%;
         background: white;
-        z-index: 1;
+        z-index: 101;
         font-size: 0;
         display: none;
 
@@ -885,6 +921,9 @@
     .findTYpe {
         padding-left: 15px;
         text-align: left;
+        &:hover{
+             background: #f8f8f8 !important;
+        }
     }
 
     .hoverColor {
@@ -897,4 +936,13 @@
         overflow: hidden;
     } 
 
+
+.who{
+    
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
 

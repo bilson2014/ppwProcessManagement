@@ -6,11 +6,6 @@ $().ready(function() {
 	
 	document.domain = getUrl();	
 	initOption();
-	$('body').off('click').on('click',function(){
-		$('ul').slideUp();
-		$('.oredrTypeSelect').removeClass('selectColor');
-		$('.orderMultSelect ').removeClass('selectColor');
-	});
 	
 });
 
@@ -103,8 +98,8 @@ function setReShow(item,num){
 					var checkSame = $(hasBigItem[int2]).attr('data-id');
 					if(checkSame == theItem.categoryId){
 						var html = [
-						    		'<div class="MidItem" ><div class="titleM ">'+theItem.subType+'<div></div></div>'+
-						    		'<div class="itemContent checkMidItem" data-id='+theItem.subTypeId+'></div></div>'
+						    		'<div class="MidItem MidActive" ><div class="titleM ">'+theItem.subType+'<div></div></div>'+
+						    		'<div class="itemContent checkMidItem itemCommonRed" data-id='+theItem.subTypeId+'></div></div>'
 						    	].join('');
 						if(!hasSame){
 							$(hasBigItem[int2]).append(html);
@@ -117,8 +112,8 @@ function setReShow(item,num){
 					var checkSame = $(hasBigItem[int2]).attr('data-id');
 					if(checkSame == theItem.categoryId){
 						var html = [
-						    		'<div class="MidItem" ><div class="titleM ">'+theItem.subType+'<div></div></div>'+
-						    		'<div class="itemContent checkMidItem" data-id='+theItem.subTypeId+'></div></div>'
+						    		'<div class="MidItem MidActive" ><div class="titleM ">'+theItem.subType+'<div></div></div>'+
+						    		'<div class="itemContent checkMidItem itemCommonRed" data-id='+theItem.subTypeId+'></div></div>'
 						    	].join('');
 						$(hasBigItem[int2]).append(html);
 						break;
@@ -158,6 +153,9 @@ function setReShow(item,num){
 				}
 		 }
 	initOption();
+	$(window.parent.parent.parent.document).find('html').scrollTop(0);
+	$(window.parent.parent.parent.document).find('body').scrollTop(0);
+	$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
 }
 
 /*  */
@@ -167,6 +165,8 @@ function getMyProject(){
 	$('#loadProductModel').show();
 	$(".modelProductContent").html('');
 	$('#CheckloadProduct').text('保存');
+	$(window.parent.parent.parent.document).find('html').scrollTop(0);
+	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 	loadData(function(item){
 		for (var int = 0; int < item.length; int++) {
 			$(".modelProductContent").append(juicer(productList_tpl.project_Tpl,{file:item[int]}));
@@ -177,16 +177,17 @@ function getMyProject(){
 			if(modelVal.length>0){		
 				loadData(function(res){				   
 					if(res.result){
-						 getValue(modelVal.attr('data-id'),0);
 						 $('#projectName').val(modelVal.text());
                     	 $('#projectId').val(modelVal.attr('data-id'));
+						 getValue(modelVal.attr('data-id'),0);
+						
 					}else{
                          $('#sameProject').show();
                          $('#toSame').off('click').on('click',function(){
-                        	 getValue(modelVal.attr('data-id'),0);
                         	 $('#sameProject').hide();
                         	 $('#projectName').val(modelVal.text());
                         	 $('#projectId').val(modelVal.attr('data-id'));
+                        	 getValue(modelVal.attr('data-id'),0);
                          });
                          $('#toCSame').off('click').on('click',function(){
                         	 $('#sameProject').hide();
@@ -332,6 +333,8 @@ function getValue(projectId,who){
 		}
 		   
 	}else{
+		    
+		    var theId = $('#projectId').val();
 			loadData(function(src){
 				if(src.result){
 					$('#id').val(src.msg);
@@ -367,6 +370,7 @@ function initOption(){
 			$(this).parent().addClass('MidActive');
 			$(this).parent().find('.itemContent').slideDown();
 		}
+		$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
 	});
 	
 	$('#openProejct').off('click').on('click',function(){
@@ -374,7 +378,9 @@ function initOption(){
 	});
 	
 	$('#reToMake').off('click').on('click',function(){
-		 toGetAddItem();
+		// toGetAddItem();
+		$('.addModel').hide();
+		$("#addSetProductInfo").html('');
 	});
 			
 	delItem();
@@ -401,6 +407,7 @@ function delItem(){
 			$('#id').val('');
 			$('#projectId').val('');
 			$('#"resources"').val('');
+			
 		});
 	});
 	
@@ -408,9 +415,13 @@ function delItem(){
 	    var nowItem = $(this);
 		$('#checkSureModel').show();
 		$('.tdDes').text('确认删除吗');
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#tModel').off('click').on('click',function(){
 			$('#checkSureModel').hide();
 			nowItem.parent().parent().parent().remove();
+			successToolTipShow('删除成功');
+			toCleanNullItem();
 		});
 	});
 	
@@ -424,6 +435,32 @@ function delItem(){
 	
 }
 
+function toCleanNullItem(){
+	
+	var itemContent = $('.itemContent');
+	for (var int = 0; int < itemContent.length; int++) {
+		var hasItem = $(itemContent[int]).find('.itemCommon');
+		if(!hasItem.length > 0){
+			$(itemContent[int]).parent().remove();
+		}
+	}
+	
+	var BigItem = $('.BigItem');
+	for (var j = 0; j < BigItem.length; j++) {
+		var hasBigItem = $(BigItem[j]).find('.MidItem');
+		if(!hasBigItem.length > 0){
+			$(BigItem[j]).remove();
+		}
+	}
+	
+	var checkIsNull = $('.BigItem');
+	if(!checkIsNull.length > 0){
+		$('.noImg').show();
+		$('.toolBtn').addClass('hide');
+	}
+	
+}
+
 
 //添加
 
@@ -432,13 +469,48 @@ function openAddDiv(){
 	$('#openAdd').off('click').on('click',function(){
 		$('.addModel').show();
 		$('#addSetProductInfo').html('');
+		$('#productType').text('');
+		$('#productType').attr('data-id','');
+		$('.show1').hide();
+		$('.show2').hide();
+		$('.show3').hide();
+		$('.show4').hide();
+		toCleanAdd();
 		initSelectInfo();
 	});
 	
 }
 
-function initSelectInfo(){
+function toCleanAdd(){
 	
+	$('#nomalName').val('');
+	$('#city').text('');
+	$('#city').attr('data-id','');
+	$('#beginPrice').val('');
+	$('#endPrice').val('');
+	$('#sex').text('');
+	$('#sex').attr('data-id','');
+	$('#beginAge').val('');
+	$('#endAge').val('');
+	$('#zone').text('');
+	$('#zone').attr('data-id','');
+	$('#actorLevel').text('');
+	$('#actorLevel').attr('data-id','');
+	$('#deviceType').text('');
+	$('#deviceType').attr('data-id','');
+	$('#speName').text('');
+	$('#speName').attr('data-id','');
+	$('#studioType').text('');
+	$('#studioType').attr('data-id','');
+	$('#directorLevel').text('');
+	$('#directorLevel').attr('data-id','');
+	$('#directorZone').text('');
+	$('#directorZone').attr('data-id','');
+	
+}
+
+
+function initSelectInfo(){
 	
 	//城市
 	
@@ -447,7 +519,7 @@ function initSelectInfo(){
 		     $("#cityUl").html('');
 		     $("#cityUl").addClass('hasInfo');
 		for (var int = 0; int < src.length; int++) {
-			 $("#cityUl").append('<li data-id='+src[int].cityId+'>'+src[int].city+'</li>');	 
+			 $("#cityUl").append('<li data-id='+src[int].cityID+'>'+src[int].city+'</li>');	 
 		}
 		chooseType();
 		}, getContextPath() + '/all/citys','');
@@ -551,7 +623,7 @@ function searchInit(){
 			searchStudio();
 			break;
 		default:
-			alert('error');
+			successToolTipShow('请选择类别');
 			break;
 		}
 		
@@ -573,7 +645,7 @@ function searchActor(){
 	
 	loadData(function(src){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
-		initAddCanEven();
+		initAddCanEven();		
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -587,6 +659,7 @@ function searchActor(){
 		name:name,
 	}));	
 }
+
 
 function searchDirector(){
 	
@@ -607,7 +680,7 @@ function searchDirector(){
 		beginPrice:beginPrice,
 		endPrice:endPrice,
 		typeId:typeId,
-		zone:zone,
+		specialty:zone,
 		name:name,
 	}));	
 }
@@ -638,7 +711,7 @@ function searchStudio(){
 	
 	var category = $('#productType').attr('data-id');
 	var city = $('#city').attr('data-id');
-	var typeId = $('#speName').attr('data-id');
+	var typeId = $('#studioType').attr('data-id');
 	var name = $('#nomalName').val();
 	var beginPrice = $('#beginPrice').val();
 	var endPrice = $('#endPrice').val();
@@ -656,19 +729,92 @@ function searchStudio(){
 	}));	
 }
 
+
+
+function setCheckRedCommon(){
+	
+	var theAddItem = $('#addSetProductInfo').find('.itemCommon');
+	var subId = $(theAddItem[0]).attr('data-subtypeid');
+	var itemContent  = $('.itemContent');
+	var itemContentNum;
+	for (var int = 0; int < itemContent.length; int++) {
+		var hasSubId = $(itemContent[int]).attr('data-id');
+		if(hasSubId == subId){
+			itemContentNum = $(itemContent[int]).find('.itemCommon');
+			break;
+		}
+	}
+	
+	if(itemContentNum != undefined){
+		for (var int2 = 0; int2 < theAddItem.length; int2++) {
+			 var itemId = $(theAddItem[int2]).attr('data-id');
+			 for (var int3 = 0; int3 < itemContentNum.length; int3++) {
+				 if(itemId == $(itemContentNum[int3]).attr('data-id')){
+					 $(theAddItem[int2]).addClass('itemCommonRed');
+					 $(theAddItem[int2]).find('.addImgContent').hide();
+					 $(theAddItem[int2]).find('.cancelImgContent').show();
+				 }
+			}
+		}
+	}
+	
+}
+
+function setCheckRedDevice(){
+	
+	var theAddItem = $('#addSetProductInfo').find('.itemCommon');
+	for (var int3 = 0; int3 < theAddItem.length; int3++) {
+		var subId = $(theAddItem[int3]).attr('data-subtypeid');
+		var itemContent  = $('.itemContent');
+		var itemContentNum;
+		for (var int = 0; int < itemContent.length; int++) {
+			var hasSubId = $(itemContent[int]).attr('data-id');
+			if(hasSubId == subId){
+				itemContentNum = $(itemContent[int]).find('.itemCommon');
+				if(itemContentNum.length > 0){
+					for (var int2 = 0; int2 < theAddItem.length; int2++) {
+						 var itemId = $(theAddItem[int2]).attr('data-id');
+						 for (var int3 = 0; int3 < itemContentNum.length; int3++) {
+							 if(itemId == $(itemContentNum[int3]).attr('data-id')){
+								 $(theAddItem[int2]).addClass('itemCommonRed');
+							 }
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
 function initAddCanEven(){
 	
 	$('.addImgContent').off('click').on('click',function(){
 		$(this).parent().parent().parent().addClass('itemCommonRed');
+		$(this).parent().parent().parent().addClass('itemCommonRedS');
 		$(this).hide();
 		$(this).parent().find('.cancelImgContent').show();
+		var item = $(this).parent().parent().parent();
+		toGetAddItem(item);
 	});
 	
 	$('.cancelImgContent').off('click').on('click',function(){
 		$(this).parent().parent().parent().removeClass('itemCommonRed');
+		$(this).parent().parent().parent().removeClass('itemCommonRedS');
 		$(this).hide();
 		$(this).parent().find('.addImgContent').show();
+		var item = $(this).parent().parent().parent();
+		toGetDelItem(item);
 	});
+	
+	//标记
+	var productType = $('#productType').attr('data-id');
+	
+	if(productType == 'device'){
+		setCheckRedDevice();
+	}else{
+		setCheckRedCommon();
+	}
 	
 }
 
@@ -676,17 +822,31 @@ function initAddCanEven(){
 function chooseType(){
 	
 	initSelect();
+	$('body').off('click').on('click',function(){
+		$('ul').slideUp();
+		$('.setMultSelect').slideUp();
+		$('.oredrTypeSelect').removeClass('selectColor');
+		$('.orderMultSelect ').removeClass('selectColor');
+		$('.orderSelect ').removeClass('selectColor');
+	});
 	
 	$('.orderMultSelect').off('click').on('click',function(e){
-		if(!$('.setMultSelect').hasClass('selectColor')){
-			$('.setMultSelect').removeClass('selectColor');
+		$('ul').slideUp();
+		$('.orderSelect').removeClass('selectColor');
+		if(!$(this).hasClass('selectColor')){
+			$(this).removeClass('selectColor');
 			$(this).find('.setMultSelect').slideDown();
 			$(this).addClass('selectColor');
+		}else{
+			$(this).addClass('selectColor');
+			$(this).find('.setMultSelect').slideUp();
+			$(this).removeClass('selectColor');
 		}
 		e.stopPropagation();
 	});
 	
 	$('.multSelectEven div').off('click').on('click',function(e){
+		$('ul').slideUp();
 		$('.setMultSelect').slideUp();
 		var parentText = $(this).text();
 		var parentId = $(this).attr('data-id');
@@ -710,7 +870,7 @@ function chooseType(){
 		e.stopPropagation();
 	});
 	
-	$('#productList div').off('click').on('click',function(e){
+/*	$('#productList div').off('click').on('click',function(e){
 		$('.setMultSelect').slideUp();
 		var parentText = $(this).text();
 		var parentId = $(this).attr('data-id');
@@ -721,57 +881,51 @@ function chooseType(){
 			$('.showUnmInfo').hide();
 			$('.show3').show();
 			$('#searchName').show();
-			loadData(function(src){
-				$('.actorLevelUl').append('<li></li>');
-				initSelect();
-			}, getContextPath() +  '/quotationtype/production/select?productionType=actor','');
+			toCleanAdd();
+			
 		}
 		if(parentText == '导演组'){
 			$('.showUnmInfo').hide();
 			$('.show4').show();
 			$('#searchName').show();
-			loadData(function(src){
-				$('.directorLevelUl').append('<li></li>');
-				initSelect();
-			}, getContextPath() +  '/quotationtype/production/select?productionType=director','');
-
+			toCleanAdd();
 		}
 		
 		$('.orderMultSelect').removeClass('selectColor'); 
 		e.stopPropagation();
 	});
-	
+	*/
 	$('.findTYpe').off('click').on('click',function(e){
-		$('.setMultSelect').slideUp();
+		$('.oSelect').slideUp();
 		var parentText = $(this).text();
 		var parentId = $(this).attr('data-id');
 		$('#productType').text(parentText);
 		$('#productType').attr('data-id',parentId);
-		$('.orderMultSelect').removeClass('selectColor'); 
+		$('.orderSelect').removeClass('selectColor'); 
 		$('.oSelect').slideUp();
+		if(parentText == '演员组'){
+			$('.showUnmInfo').hide();
+			$('.show3').show();
+			$('#searchName').show();
+			toCleanAdd();			
+		}
+		if(parentText == '导演组'){
+			$('.showUnmInfo').hide();
+			$('.show4').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}
 		if(parentText == '设备'){
 			$('.showUnmInfo').hide();
 			$('.show2').show();
 			$('#searchName').hide();
-			loadData(function(src){
-				$('#speName').append('<li></li>');				
-				initSelect();
-			}, getContextPath() +  '/quotationtype/production/select?productionType=device&subType=xx','');
-			loadData(function(src){
-				$('#deviceTypeUl').append('<li></li>');				
-				initSelect();
-			}, getContextPath() +  '/quotationtype/production/select?productionType=device','');
-			$('#deviceTypeUl').append('<li></li>');
+			toCleanAdd();
 		}
 		if(parentText == '场地'){
 			$('.showUnmInfo').hide();
 			$('.show1').show();
 			$('#searchName').show();
-			loadData(function(src){
-				$('.actorLevelUl').append('<li></li>');
-				initSelect();
-			}, getContextPath() +  '/quotationtype/production/select?productionType=director','');
-			
+			toCleanAdd();
 		}
 		e.stopPropagation();
 	});
@@ -832,7 +986,7 @@ var productList_tpl = {
 		 ].join(""),
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
-					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if itemInfo.resources.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
@@ -879,10 +1033,76 @@ function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId
 	this.picScale =  picScale;
 }
 
-function toGetAddItem(){
+//同步添加
+function toGetAddItem(item){
 	
+		    nowItem = new Array();
+			var theValue = $(item);
+			var id= theValue.attr('data-id');
+			var type= theValue.attr('data-type');
+			var price= theValue.attr('data-price');
+			var name= theValue.attr('data-name');
+			var mainPhoto= theValue.attr('data-mainPhoto');
+			var typeId= theValue.attr('data-typeId');
+			var typeName= theValue.attr('data-typeName');
+			var categoryId= theValue.attr('data-categoryId');
+			var category= theValue.attr('data-category');
+			var subTypeId= theValue.attr('data-subTypeId');
+			var subType= theValue.attr('data-subType');
+			var picScale= theValue.attr('data-picScale');
+			nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+            setReShow(nowItem,1);
+
 	
-	var itemCommonRed = $('.itemCommonRed');
+}
+//同步删除
+function toGetDelItem(item){
+	
+    nowItem = new Array();
+	var theValue = $(item);
+	var id= theValue.attr('data-id');
+	var type= theValue.attr('data-type');
+	var price= theValue.attr('data-price');
+	var name= theValue.attr('data-name');
+	var mainPhoto= theValue.attr('data-mainPhoto');
+	var typeId= theValue.attr('data-typeId');
+	var typeName= theValue.attr('data-typeName');
+	var categoryId= theValue.attr('data-categoryId');
+	var category= theValue.attr('data-category');
+	var subTypeId= theValue.attr('data-subTypeId');
+	var subType= theValue.attr('data-subType');
+	var picScale= theValue.attr('data-picScale');
+	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+	clearCancelItem(nowItem);
+    toCleanNullItem();
+    
+}
+
+function clearCancelItem(item){
+	for (var int = 0; int < item.length; int++) {
+		 var theItem = $(item)[int];
+		 var checkMidItem = $('.checkMidItem');
+				for (var int2 = 0; int2 < checkMidItem.length; int2++) {
+					var checkSame = $(checkMidItem[int2]).attr('data-id');
+					if(checkSame == theItem.subTypeId){
+						//去重
+						   var cancelSame = $(checkMidItem[int2]).find('.itemCommon');
+						   var hasItem = false;
+							   for (var int3 = 0; int3 < cancelSame.length; int3++) {
+								    var theNum = $(cancelSame[int3]).attr('data-id');
+								    if(theNum == theItem.id){
+								    	$(cancelSame[int3]).remove();
+								    	break;
+								    }
+							   }
+					  }
+				}
+		 }
+}
+
+/*function toGetAddItem(){
+		
+	var itemCommonRed = $('.itemCommonRedS');
 	
 	if(itemCommonRed.length > 0){
 		nowItem = new Array();
@@ -909,7 +1129,7 @@ function toGetAddItem(){
 		$('.addModel').hide();
 		$("#addSetProductInfo").html('');
 	}
-}
+}*/
 
 //错误提示
 function successToolTipShow(error){

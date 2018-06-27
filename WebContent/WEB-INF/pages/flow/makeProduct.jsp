@@ -57,10 +57,10 @@
 				
 				       <div class="toolsHead">
 				             <div id="projectName" style="font-size: 1.4rem;font-weight: 500;color:#666;"></div>
-						     <div class="toolTitle">导演工具</div>
-				             <div class="openTool" style="right:191px" id="openProejct">打开项目</div>
-				             <div class="openTool addP" style="right:98px" id="openAdd"><div></div>选资源</div>
-				             <div class="openTool delP" style="right:20px">清空</div>
+						     <div class="toolTitle">制片工具</div>
+				             <div class="openTool" style="right:247px" id="openProejct">打开项目制片表</div>
+				             <div class="openTool addP" style="right:140px" id="openAdd"><div></div>添加资源</div>
+				             <div class="openTool delP" style="right:20px">清空制片表</div>
 				       </div>
 				       
 				       <div class="setProductInfo" id="setProduct">
@@ -154,7 +154,7 @@
 				       
 				</div>
     	<!-- 弹窗-->
-    <div class="tooltip-success-show"></div>
+    <div class="tooltip-success-show" style="z-index:999"></div>
 	<div class="cusModel" id="loadProductModel" style="">
 	     <div class="modelCard">
 	            <div class="cardTop">
@@ -378,11 +378,11 @@
 		         <div class="setOption">
 		               <div class="optionItem">
 		                     <div class="title">类别</div>
-			              	 <div class="orderSelect orderMultSelect" id="isOther">
+			              	 <div class="orderSelect" id="isOther">
 					                <div class="imgType" id="productType"></div>
 					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="setMultSelect" id="orderCome" style="display: none;">
-						                    <li>
+					                <ul class="oSelect"  style="display: none;">
+						                    <!-- <li>
 						                     <div class="multSelect">                                     
 						                             <div class="multTitle">                                     
 						                                  <img class="quoIcon" src="/resources/images/index/quoIcon.png">               
@@ -393,7 +393,9 @@
 							                            <div data-id="actor" >演员组</div> 
 						                             </div>   
 						                       </div>                                                  
-						                    </li>
+						                    </li> -->
+						                    <li class="hoverColor"><div class="findTYpe" data-id='director'>导演组</div></li>                                              
+						                    <li class="hoverColor"><div class="findTYpe" data-id='actor'>演员组</div></li>
 						                    <li class="hoverColor"><div class="findTYpe" data-id='device'>设备</div></li>                                              
 						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li>  
 					                </ul>    
@@ -409,14 +411,11 @@
 			              	 <div class="orderSelect" id="isOther">
 					                <div class="imgType" id="city">请选择城市</div>
 					                <img src="/resources/images/flow/selectS.png">
-					                <ul class="oSelect" id='cityUl' style="display: none;">
-					                   <li data-id="0">全部</li>
-					                   <li data-id="1">沟通阶段</li>
-					                </ul>    
+					                <ul class="oSelect" id='cityUl' style="display: none;"></ul>    
 						     </div>
 						</div>
 						 <div class="optionItem">
-		                     <div class="title">价格</div>
+		                     <div class="title">价格 (元/天)</div>
 			              	 <input class="numInput" id="beginPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
 			              	 <div class="fu">~</div>
 			              	 <input class="numInput" id="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
@@ -425,8 +424,8 @@
 						<div class="show1 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">场地类型</div>
-			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="directorLevel">请选择场地类型</div>
+			                      <div class="orderSelect orderMultSelect" style="width: 200px;">
+						                <div class="imgType" id="studioType">请选择场地类型</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="studioUl" style="display: none;"></ul>    
 							     </div>					              	
@@ -437,14 +436,14 @@
 							<div class="optionItem">
 			                     <div class="title">设备类型</div>
 							     <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="directorLevel">请选择设备类型</div>
+						                <div class="imgType" id="deviceType">请选择设备类型</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect deviceTypeUl" id="deviceTypeUl" style="display: none;"></ul>    
 							     </div>	
 							</div>
 							<div class="optionItem" id="searchSelectName">
 		                     <div class="title">名称</div>
-			              	 <div class="orderSelect" id="isOther">
+			              	 <div class="orderSelect" id="isOther" style="width:200px;">
 					                <div class="imgType" id="speName"></div>
 					                <img src="/resources/images/flow/selectS.png">
 					                <ul class="oSelect" id="speNameUl" style="display: none;"></ul>    
@@ -483,7 +482,7 @@
 							<div class="optionItem">
 			                     <div class="title">等级</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="directorLevel">请选择等级</div>
+						                <div class="imgType" id="actorLevel">请选择等级</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="actorLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -514,9 +513,7 @@
 		         <div class="MidItem controlWidth"   style="border:none;margin-top:20px">
 		            <div class="newItemContent" id="addSetProductInfo" style="display:block !important"></div>
 		         </div>
-
-		         
-		       
+   
 		    </div>
       </div>
       
@@ -524,7 +521,7 @@
                        <input type="hidden" id="projectId" name="projectId">
                        <input type="hidden" id="id" name="id">
                        <input type="hidden" id="resources" name="resources">
-     </form>
+      </form>
     	
     	
 </body>
