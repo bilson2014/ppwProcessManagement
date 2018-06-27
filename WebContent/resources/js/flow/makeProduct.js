@@ -991,7 +991,7 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>￥600</div>"+
+					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}  </div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
@@ -1007,7 +1007,7 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>￥600</div>"+
+					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}</div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
