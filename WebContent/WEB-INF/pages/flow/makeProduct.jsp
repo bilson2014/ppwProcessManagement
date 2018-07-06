@@ -397,7 +397,20 @@
 						                    <li class="hoverColor"><div class="findTYpe" data-id='director'>导演组</div></li>                                              
 						                    <li class="hoverColor"><div class="findTYpe" data-id='actor'>演员组</div></li>
 						                    <li class="hoverColor"><div class="findTYpe" data-id='device'>设备</div></li>                                              
-						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li>  
+						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li> 
+						                    
+						                    <li class="hoverColor"><div class="findTYpe" data-id='cameraman'>摄影师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='lighter'>灯光师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='editor'>剪辑师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='packer'>包装师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='colorist'>调色师</div></li>  
+						                    <li class="hoverColor"><div class="findTYpe" data-id='propMaster'>道具师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='artist'>美术师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='costumer'>服装师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='dresser'>化妆师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='mixer'>录音师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='clothing'>服装</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='props'>道具</div></li> 
 					                </ul>    
 						     </div>
 						</div>
@@ -507,7 +520,132 @@
 							     </div>
 							</div>
 						</div>
-						   
+						<div class="show5 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="cameramanLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="cameramanLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+							<div class="optionItem">
+			                     <div class="title">特殊技能</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="cameramanSkill">请选择特殊技能</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="cameramanSkillUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
+						<div class="show6 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="lighterLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="lighterLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show7 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="editorLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="editorLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show8 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="packerLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="packerLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show9 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="coloristLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="coloristLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show10 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="propMasterLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="propMasterLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show11 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="artistLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="artistLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show13 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="dresserLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="dresserLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show14 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="mixerLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="mixerLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>					
+						<div class="show15 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">服装类型</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="clothingType">请选择服装类型</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="clothingTypeUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+							<div class="optionItem">
+			                     <div class="title">授权方式</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="clothingAccredit">请选择授权方式</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="clothingAccreditUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
+						<div class="show16 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">授权方式</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="propsAccredit">请选择授权方式</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="propsAccreditUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
 		         </div>
 		         
 		         <div class="MidItem controlWidth"   style="border:none;margin-top:20px">

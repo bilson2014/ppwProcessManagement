@@ -12,16 +12,22 @@ import com.paipianwang.pat.common.entity.BaseProductionEntity;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProductionActor;
+import com.paipianwang.pat.workflow.entity.PmsProductionCameraman;
+import com.paipianwang.pat.workflow.entity.PmsProductionCostume;
 import com.paipianwang.pat.workflow.entity.PmsProductionDevice;
 import com.paipianwang.pat.workflow.entity.PmsProductionDirector;
 import com.paipianwang.pat.workflow.entity.PmsProductionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProductionPersonnel;
 import com.paipianwang.pat.workflow.entity.PmsProductionStudio;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
 import com.paipianwang.pat.workflow.enums.ProductionResource;
 import com.paipianwang.pat.workflow.facade.PmsProductionActorFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionCameramanFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionCostumeFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionDeviceFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionDirectorFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionInfoFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionPersonnelFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionStudioFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationTypeFacade;
@@ -43,6 +49,13 @@ public class ProductionServiceImpl implements ProductionService {
 	private PmsProductionDirectorFacade pmsProductionDirectorFacade;
 	@Autowired
 	private PmsProductionStudioFacade pmsProductionStudioFacade;
+	@Autowired
+	private PmsProductionCameramanFacade pmsProductionCameramanFacade;
+	@Autowired
+	private PmsProductionPersonnelFacade pmsProductionPersonnelFacade;
+	@Autowired
+	private PmsProductionCostumeFacade pmsProductionCostumeFacade;
+	
 
 	private void editQuotationTypeName(PmsProductionInfo info) {
 		if (!ValidateUtil.isValid(info.getResources())) {
@@ -164,6 +177,30 @@ public class ProductionServiceImpl implements ProductionService {
 				entities.addAll(studios);
 			}		
 			picScale=ProductionResource.studio.getPicScale();
+		}else if(ProductionResource.cameraman.getKey().equals(type)) {
+			List<PmsProductionCameraman> cameramans=pmsProductionCameramanFacade.listBy(paramMap);
+			if(cameramans!=null) {
+				entities.addAll(cameramans);
+			}		
+			picScale=ProductionResource.cameraman.getPicScale();
+		}else if(ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
+				||ProductionResource.packer.getKey().equals(type) ||ProductionResource.colorist.getKey().equals(type)
+				||ProductionResource.propMaster.getKey().equals(type) ||ProductionResource.artist.getKey().equals(type)
+				||ProductionResource.costumer.getKey().equals(type) ||ProductionResource.dresser.getKey().equals(type)
+				||ProductionResource.mixer.getKey().equals(type)) {
+			paramMap.put("profession",type);
+			List<PmsProductionPersonnel> personnnels=pmsProductionPersonnelFacade.listBy(paramMap);
+			if(personnnels!=null) {
+				entities.addAll(personnnels);
+			}		
+			picScale=ProductionResource.lighter.getPicScale();
+		}else if(ProductionResource.clothing.getKey().equals(type) || ProductionResource.props.getKey().equals(type)) {
+			paramMap.put("profession",type);
+			List<PmsProductionCostume> costumes=pmsProductionCostumeFacade.listBy(paramMap);
+			if(costumes!=null) {
+				entities.addAll(costumes);
+			}		
+			picScale=ProductionResource.clothing.getPicScale();
 		}
 		
 		//组装数据

@@ -36,7 +36,7 @@ function openProejct(){
 	
 }
 
-//回显
+//回显 
 function reShow(proId){
 	
 	loadData(function(src){
@@ -46,7 +46,6 @@ function reShow(proId){
 	}, getContextPath() + '/production/get/'+proId,'');
 	
 }
-
 function setReShow(item,num){
 	$('.noImg').hide();
 	$('.toolBtn').removeClass('hide');
@@ -204,7 +203,6 @@ function getMyProject(){
 		projectId:$('#projectId').val()
 	}));
 }
-
 function initCheckProject(){
 	
 	 $('.modelProItem').off('click').on('click',function(){
@@ -507,6 +505,33 @@ function toCleanAdd(){
 	$('#directorZone').text('');
 	$('#directorZone').attr('data-id','');
 	
+	
+	$('#cameramanLevel').text('');
+	$('#cameramanLevel').attr('data-id','');
+	$('#cameramanSkill').text('');
+	$('#cameramanSkill').attr('data-id','');
+	$('#lighterLevel').text('');
+	$('#lighterLevel').attr('data-id','');
+	$('#editorLevel').text('');
+	$('#editorLevel').attr('data-id','');
+	$('#packerLevel').text('');
+	$('#packerLevel').attr('data-id','');
+	$('#coloristLevel').text('');
+	$('#coloristLevel').attr('data-id','');
+	$('#propMasterLevel').text('');
+	$('#propMasterLevel').attr('data-id','');
+	$('#artistLevel').text('');
+	$('#artistLevel').attr('data-id','');
+	$('#dresserLevel').text('');
+	$('#dresserLevel').attr('data-id','');
+	$('#mixerLevel').text('');
+	$('#mixerLevel').attr('data-id','');
+	$('#clothingType').text('');
+	$('#clothingType').attr('data-id','');
+	$('#clothingAccredit').text('');
+	$('#clothingAccredit').attr('data-id','');
+	$('#propsAccredit').text('');
+	$('#propsAccredit').attr('data-id','');
 }
 
 
@@ -598,8 +623,75 @@ function initSelectInfo(){
 		chooseType();
 		}, getContextPath() + ' /quotation/production/select?productionType=device','');
 	}
+	//摄影师
+	initLevelSelectInfo('cameraman');
+	if(!$("#cameramanSkillUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#cameramanSkillUl").html('');
+		     $("#cameramanSkillUl").addClass('hasInfo');
+		     for (var int = 0; int < src.specialSkillList.length; int++) {
+		    	 $("#cameramanSkillUl").append('<li data-id='+src.specialSkillList[int].value+'>'+src.specialSkillList[int].text+'</li>');	 
+		     }
+		     chooseType();
+		}, getContextPath() + '/production/cameraman/parameter','');
+	}
+	//灯光师
+	initLevelSelectInfo('lighter');
+	//剪辑师
+	initLevelSelectInfo('editor');
+	//包装师
+	initLevelSelectInfo('packer');
+	//调色师
+	initLevelSelectInfo('colorist');
+	//道具师
+	initLevelSelectInfo('propMaster');
+	//美术师
+	initLevelSelectInfo('artist');
+	//化妆师
+	initLevelSelectInfo('dresser');
+	//录音师
+	initLevelSelectInfo('mixer');
+	//服装
+	if(!$("#clothingTypeUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#clothingTypeUl").html('');
+		     $("#clothingTypeUl").addClass('hasInfo');
+		     for (var int = 0; int < src.clothingTypeList.length; int++) {
+		    	 $("#clothingTypeUl").append('<li data-id='+src.clothingTypeList[int].value+'>'+src.clothingTypeList[int].text+'</li>');	 
+		     }
+		     
+		     $("#clothingAccreditUl").html('');
+		     $("#clothingAccreditUl").addClass('hasInfo');
+		     for (var int = 0; int < src.accreditList.length; int++) {
+		    	 $("#clothingAccreditUl").append('<li data-id='+src.accreditList[int].value+'>'+src.accreditList[int].text+'</li>');	 
+		     }
+		     chooseType();
+		}, getContextPath() + '/production/clothing/parameter','');
+	}
+	//道具
+	if(!$("#propsAccreditUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#propsAccreditUl").html('');
+		     $("#propsAccreditUl").addClass('hasInfo');
+		     for (var int = 0; int < src.accreditList.length; int++) {
+		    	 $("#propsAccreditUl").append('<li data-id='+src.accreditList[int].value+'>'+src.accreditList[int].text+'</li>');	 
+		     }
+		     chooseType();
+		}, getContextPath() + '/production/props/parameter','');
+	}
+}
 
-	
+function initLevelSelectInfo(productionType){
+	if(!$("#"+productionType+"LevelUl").hasClass('hasInfo')){
+		loadData(function(src){
+		     $("#"+productionType+"LevelUl").html('');
+		     $("#"+productionType+"LevelUl").addClass('hasInfo');
+		 for (var int = 0; int < src.length; int++) {
+	    	 $("#"+productionType+"LevelUl").append(juicer(productList_tpl.mulit_Tpl,{itemInfo:src[int]}));
+		}
+		chooseType();
+		}, getContextPath() + ' /quotation/production/select?productionType='+productionType,'');
+	}
 }
 
 
@@ -622,6 +714,43 @@ function searchInit(){
 		case 'studio':
 			searchStudio();
 			break;
+		case 'cameraman':
+			searchCameraman();
+			break;
+		case 'lighter':
+			searchPersonWithType();
+			break;
+		case 'editor':
+			searchPersonWithType();
+			break;
+		case 'packer':
+			searchPersonWithType();
+			break;
+		case 'colorist':
+			searchPersonWithType();
+			break;
+		case 'propMaster':
+			searchPersonWithType();
+			break;
+		case 'artist':
+			searchPersonWithType();
+			break;
+		case 'costumer':
+			searchPerson();
+			break;
+		case 'dresser':
+			searchPersonWithType();
+			break;
+		case 'mixer':
+			searchPersonWithType();
+			break;
+		case 'clothing':
+			searchClothing();
+			break;
+		case 'props':
+			searchProps();
+			break;
+			
 		default:
 			successToolTipShow('请选择类别');
 			break;
@@ -729,6 +858,119 @@ function searchStudio(){
 	}));	
 }
 
+function searchCameraman(){
+	
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
+	var typeId = $('#cameramanLevel').attr('data-id');
+	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
+	
+	var specialSkill=$('#cameramanSkill').attr('data-id');
+	
+	loadData(function(src){
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
+		category:category,
+		city:city,
+		typeId:typeId,
+		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
+		specialSkill:specialSkill,
+	}));	
+}
+
+function searchPersonWithType(){
+	
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
+	var typeId = $('#'+category+'Level').attr('data-id');
+	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
+	
+	loadData(function(src){
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
+		category:category,
+		city:city,
+		typeId:typeId,
+		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
+	}));	
+}
+function searchPerson(){
+	
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');
+	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
+	
+	loadData(function(src){
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
+		category:category,
+		city:city,
+		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
+	}));	
+}
+
+function searchClothing(){
+	
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');	
+	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
+	
+	var type = $('#clothingType').attr('data-id');
+	var accredit = $('#clothingAccredit').attr('data-id');
+	
+	loadData(function(src){
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
+		category:category,
+		city:city,
+		type:type,
+		accredit:accredit,
+		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
+	}));	
+}
+
+function searchProps(){
+	
+	var category = $('#productType').attr('data-id');
+	var city = $('#city').attr('data-id');	
+	var name = $('#nomalName').val();
+	var beginPrice = $('#beginPrice').val();
+	var endPrice = $('#endPrice').val();
+	
+	var accredit = $('#propsAccredit').attr('data-id');
+	
+	loadData(function(src){
+		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
+		 initAddCanEven();
+	}, getContextPath() +  '/production/resource/list',$.toJSON({
+		category:category,
+		city:city,
+		accredit:accredit,
+		name:name,
+		beginPrice:beginPrice,
+		endPrice:endPrice,
+	}));	
+}
 
 
 function setCheckRedCommon(){
@@ -820,7 +1062,6 @@ function initAddCanEven(){
 
 
 function chooseType(){
-	
 	initSelect();
 	$('body').off('click').on('click',function(){
 		$('ul').slideUp();
@@ -908,22 +1149,78 @@ function chooseType(){
 			$('.show3').show();
 			$('#searchName').show();
 			toCleanAdd();			
-		}
-		if(parentText == '导演组'){
+		}else if(parentText == '导演组'){
 			$('.showUnmInfo').hide();
 			$('.show4').show();
 			$('#searchName').show();
 			toCleanAdd();
-		}
-		if(parentText == '设备'){
+		}else if(parentText == '设备'){
 			$('.showUnmInfo').hide();
 			$('.show2').show();
 			$('#searchName').hide();
 			toCleanAdd();
-		}
-		if(parentText == '场地'){
+		}else if(parentText == '场地'){
 			$('.showUnmInfo').hide();
 			$('.show1').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '摄影师'){
+			$('.showUnmInfo').hide();
+			$('.show5').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '灯光师'){
+			$('.showUnmInfo').hide();
+			$('.show6').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '剪辑师'){
+			$('.showUnmInfo').hide();
+			$('.show7').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '包装师'){
+			$('.showUnmInfo').hide();
+			$('.show8').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '调色师'){
+			$('.showUnmInfo').hide();
+			$('.show9').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '道具师'){
+			$('.showUnmInfo').hide();
+			$('.show10').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '美术师'){
+			$('.showUnmInfo').hide();
+			$('.show11').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '服装师'){
+			$('.showUnmInfo').hide();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '化妆师'){
+			$('.showUnmInfo').hide();
+			$('.show13').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '录音师'){
+			$('.showUnmInfo').hide();
+			$('.show14').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '服装'){
+			$('.showUnmInfo').hide();
+			$('.show15').show();
+			$('#searchName').show();
+			toCleanAdd();
+		}else if(parentText == '道具'){
+			$('.showUnmInfo').hide();
+			$('.show16').show();
 			$('#searchName').show();
 			toCleanAdd();
 		}
@@ -987,7 +1284,7 @@ var productList_tpl = {
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
@@ -1003,7 +1300,7 @@ var productList_tpl = {
 		 ].join(""),
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img src="' + getDfsHostName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
