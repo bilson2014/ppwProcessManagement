@@ -2,6 +2,13 @@ var successIntervalObj; // timer变量，控制时间
 var setData;
 var nowItem = new Array();
 
+var citys=[];
+var directorZones=[];
+var actorZones=[];
+var cameramanSkills=[];
+var clothingTypes=[];
+var accredits=[];
+
 $().ready(function() {
 	
 	document.domain = getUrl();	
@@ -386,6 +393,8 @@ function initOption(){
 	openAddDiv();
 	saveToproject();
 	searchInit();
+	detailItem();
+	initSelectInfo();
 	
 	//$(".setProductInfo").before(juicer(videoList_tpl.upload_Tpl,{item:''}));
 	
@@ -433,6 +442,147 @@ function delItem(){
 	
 }
 
+function detailItem(){
+	$('.detailItem').off('click').on('click',function(){
+	    var nowItem = $(this);
+	    
+	    var item = $(this).parent().parent().parent();
+	    var id= item.attr('data-id');
+		var type= item.attr('data-type');	
+		
+		loadData(function(src){
+			if(!src.result){
+				successToolTipShow("查看失败");
+			}
+			var info=$.parseJSON( src.msg );
+			
+			if(info.city!=undefined && info.city!=null && info.city!=''){
+				for(var i=0;i<citys.length;i++){
+					if(info.city==citys[i].cityID){
+						info.city=citys[i].city;
+						break;
+					}
+				}
+			}
+			
+			var detailDialog='';			
+			if(type=='director'){
+				detailDialog='info1';			
+				var specialties=info.specialty.split(",");
+				info.specialty='';
+				for(var i=0;i<specialties.length;i++){
+					info.specialty+=getTextForDetail(specialties[i],directorZones);
+					if(i<specialties.length-1){
+						info.specialty+=','
+					}
+				}
+								
+			}else if(type=='actor'){
+				detailDialog='info2';
+				info.zone=getTextForDetail(info.zone,actorZones);	
+				if(info.sex==0){
+					info.sex='男';
+				}else if(info.sex==1){
+					info.sex='女';
+				}
+			}else if(type=='device'){
+				detailDialog='info3';
+			}else if(type=='studio'){
+				detailDialog='info4';
+				if(info.type=='1'){
+					info.type='内景';
+				}else if(info.type=='2'){
+					info.type='外景';
+				}
+			}else if(type=='cameraman'){
+				detailDialog='info5';
+				info.specialSkill=getTextForDetail(info.specialSkill,cameramanSkills);	
+			}else if(type=='clothing'){
+				detailDialog='info7';
+				info.type=getTextForDetail(info.type,clothingTypes);
+				info.accredit=getTextForDetail(info.accredit,accredits);
+				$("#info7 .infoTitle .title").html('服装信息');
+			}else if(type=='props'){
+				detailDialog='info7';
+				info.accredit=getTextForDetail(info.accredit,accredits);	
+				$("#info7 .infoTitle .title").html('道具信息');
+			}else if(type=='lighter' || type=='editor' || type=='packer'
+				|| type=='colorist' || type=='propMaster' || type=='artist' 
+					|| type=='costumer' || type=='dresser' || type=='mixer'){
+				detailDialog='info6';				
+				$("#info6 .infoTitle .title").html(getTitleByType(type));
+			}
+			
+			if(detailDialog!=''){
+				$('#'+detailDialog).show();
+				var itemInfos=$('#'+detailDialog+' .itemInfo');
+				for(var i=0;i<itemInfos.length;i++){
+					var itemInfo=itemInfos[i];
+					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
+				}
+				
+				$('#'+detailDialog+' .noteInfo').html(info.remark);
+				
+				$("#"+detailDialog+" .setShowImg").html('');
+				$('#'+detailDialog+' .setInfoImg')[0].src='';
+				if(info.mainPhoto!=undefined && info.mainPhoto!=null && info.mainPhoto!=''){
+					$('#'+detailDialog+' .setInfoImg')[0].src=getResourcesName()+(info.mainPhoto);
+					if(info.photo!=undefined && info.photo!=null && info.photo!=''){
+						var photos=info.photo.split(";");
+						for(var i=0;i<photos.length;i++){
+							if(photos[i]!=''){
+								$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+photos[i]+'">');
+							}
+						}
+					}
+				}else if(info.photo!=undefined && info.photo!=null && info.photo!=''){
+					$('#'+detailDialog+' .setInfoImg')[0].src=getResourcesName()+(info.photo.split(";")[0]);
+				}
+			}
+					
+		}, getContextPath() + '/production/get/?type='+type+'&id='+id,null);
+	    
+		
+		
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+		
+	});
+}
+
+function getTitleByType(type){
+	if(type=='lighter'){
+		return "灯光师信息";
+	}else if(type=='editor'){
+		return "剪辑师信息";
+	}else if(type=='packer'){
+		return "包装师信息";
+	}else if( type=='colorist'){
+		return "调色师信息";
+	}else if(type=='propMaster'){
+		return "道具师信息";
+	}else if(type=='artist'){
+		return "美术师信息";
+	}else if(type=='costumer'){
+		return "服装师信息";
+	}else if(type=='dresser'){
+		return "化妆师信息";
+	}else if(type=='mixer'){
+		return "录音师信息";
+	}
+}
+
+function getTextForDetail(value,list){
+	if(value!=undefined && value!=null && value!=''){
+		for(var i=0;i<list.length;i++){
+			if(value==list[i].value){
+				return list[i].text;
+			}
+		}
+	}
+	return value;
+}
+
 function toCleanNullItem(){
 	
 	var itemContent = $('.itemContent');
@@ -474,7 +624,7 @@ function openAddDiv(){
 		$('.show3').hide();
 		$('.show4').hide();
 		toCleanAdd();
-		initSelectInfo();
+//		initSelectInfo();
 	});
 	
 }
@@ -541,6 +691,7 @@ function initSelectInfo(){
 	
 	if(!$("#cityUl").hasClass('hasInfo')){
 		loadData(function(src){
+			citys=src;
 		     $("#cityUl").html('');
 		     $("#cityUl").addClass('hasInfo');
 		for (var int = 0; int < src.length; int++) {
@@ -563,6 +714,7 @@ function initSelectInfo(){
 	
 	if(!$("#directorZoneUl").hasClass('hasInfo')){
 		loadData(function(src){
+			directorZones=src.specialtyList;
 		     $("#directorZoneUl").html('');
 		     $("#directorZoneUl").addClass('hasInfo');
 		for (var int = 0; int < src.specialtyList.length; int++) {
@@ -577,6 +729,7 @@ function initSelectInfo(){
 	
 	if(!$("#zoneUl").hasClass('hasInfo')){
 		loadData(function(src){
+			actorZones=src.zoneList;
 		     $("#zoneUl").html('');
 		     $("#zoneUl").addClass('hasInfo');
 		for (var int = 0; int < src.zoneList.length; int++) {
@@ -627,6 +780,7 @@ function initSelectInfo(){
 	initLevelSelectInfo('cameraman');
 	if(!$("#cameramanSkillUl").hasClass('hasInfo')){
 		loadData(function(src){
+			cameramanSkills=src.specialSkillList;
 		     $("#cameramanSkillUl").html('');
 		     $("#cameramanSkillUl").addClass('hasInfo');
 		     for (var int = 0; int < src.specialSkillList.length; int++) {
@@ -654,6 +808,7 @@ function initSelectInfo(){
 	//服装
 	if(!$("#clothingTypeUl").hasClass('hasInfo')){
 		loadData(function(src){
+			 clothingTypes=src.accreditList;
 		     $("#clothingTypeUl").html('');
 		     $("#clothingTypeUl").addClass('hasInfo');
 		     for (var int = 0; int < src.clothingTypeList.length; int++) {
@@ -671,6 +826,7 @@ function initSelectInfo(){
 	//道具
 	if(!$("#propsAccreditUl").hasClass('hasInfo')){
 		loadData(function(src){
+			 accredits=src.accreditList;
 		     $("#propsAccreditUl").html('');
 		     $("#propsAccreditUl").addClass('hasInfo');
 		     for (var int = 0; int < src.accreditList.length; int++) {
@@ -774,7 +930,8 @@ function searchActor(){
 	
 	loadData(function(src){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
-		initAddCanEven();		
+		initAddCanEven();	
+		detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -803,6 +960,7 @@ function searchDirector(){
 	loadData(function(src){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
+		detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -826,6 +984,7 @@ function searchDevice(){
 	loadData(function(src){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
+		detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -848,6 +1007,7 @@ function searchStudio(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -872,6 +1032,7 @@ function searchCameraman(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -895,6 +1056,7 @@ function searchPersonWithType(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -915,6 +1077,7 @@ function searchPerson(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -938,6 +1101,7 @@ function searchClothing(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -962,6 +1126,7 @@ function searchProps(){
 	loadData(function(src){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
+		 detailItem();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1040,6 +1205,15 @@ function initAddCanEven(){
 		toGetAddItem(item);
 	});
 	
+	$('.cancelImgContent').off('click').on('click',function(){
+		$(this).parent().parent().parent().removeClass('itemCommonRed');
+		$(this).parent().parent().parent().removeClass('itemCommonRedS');
+		$(this).hide();
+		$(this).parent().find('.addImgContent').show();
+		var item = $(this).parent().parent().parent();
+		toGetDelItem(item);
+	});
+	//查看
 	$('.cancelImgContent').off('click').on('click',function(){
 		$(this).parent().parent().parent().removeClass('itemCommonRed');
 		$(this).parent().parent().parent().removeClass('itemCommonRedS');
@@ -1144,12 +1318,12 @@ function chooseType(){
 		$('#productType').attr('data-id',parentId);
 		$('.orderSelect').removeClass('selectColor'); 
 		$('.oSelect').slideUp();
-		if(parentText == '演员组'){
+		if(parentText == '演员'){
 			$('.showUnmInfo').hide();
 			$('.show3').show();
 			$('#searchName').show();
 			toCleanAdd();			
-		}else if(parentText == '导演组'){
+		}else if(parentText == '导演'){
 			$('.showUnmInfo').hide();
 			$('.show4').show();
 			$('#searchName').show();
@@ -1253,7 +1427,7 @@ var productList_tpl = {
 		"	                        </div>"+
 		"	                        <div class='showTool'>"+
 	    "                                <div class='toolDiv'>"+
-	    "			                        <div class='moveItem'>移除</div><div>查看详情</div>"+
+	    "			                        <div class='moveItem'>移除</div><div class='detailItem'>查看详情</div>"+
 	    "                                </div>"+
 	    "                           </div>"+
         "                      </div>"+
@@ -1292,7 +1466,7 @@ var productList_tpl = {
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
-					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >取消</div><div>查看详情</div>"+
+					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >移除</div><div class='detailItem'>查看详情</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"+
@@ -1308,7 +1482,7 @@ var productList_tpl = {
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
-					  "		    		<div class='moveItem'>移除</div><div>查看详情</div>"+
+					  "		    		<div class='moveItem'>移除</div><div class='detailItem'>查看详情</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"

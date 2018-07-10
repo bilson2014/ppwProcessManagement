@@ -12,5 +12,7 @@ public interface ProductionService {
 	PmsResult saveOrUpdate(PmsProductionInfo pmsProductionInfo);
 
 	PmsProductionInfo listResourceByParam(Map<String, Object> paramMap, String type);
+	
+	public Object getInfoById(Long id,String type);
 
 }
