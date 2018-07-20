@@ -393,7 +393,6 @@ function initOption(){
 	
 }
 
-
 function delItem(){
 	
 	$('.delP').off('click').on('click',function(){
@@ -602,7 +601,7 @@ function initSelectInfo(){
 	
 }
 
-
+//查询
 function searchInit(){
 	
 	$('.search').off('click').on('click',function(){
