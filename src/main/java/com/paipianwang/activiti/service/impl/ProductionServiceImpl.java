@@ -12,16 +12,22 @@ import com.paipianwang.pat.common.entity.BaseProductionEntity;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProductionActor;
+import com.paipianwang.pat.workflow.entity.PmsProductionCameraman;
+import com.paipianwang.pat.workflow.entity.PmsProductionCostume;
 import com.paipianwang.pat.workflow.entity.PmsProductionDevice;
 import com.paipianwang.pat.workflow.entity.PmsProductionDirector;
 import com.paipianwang.pat.workflow.entity.PmsProductionInfo;
+import com.paipianwang.pat.workflow.entity.PmsProductionPersonnel;
 import com.paipianwang.pat.workflow.entity.PmsProductionStudio;
 import com.paipianwang.pat.workflow.entity.PmsQuotationType;
 import com.paipianwang.pat.workflow.enums.ProductionResource;
 import com.paipianwang.pat.workflow.facade.PmsProductionActorFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionCameramanFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionCostumeFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionDeviceFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionDirectorFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionInfoFacade;
+import com.paipianwang.pat.workflow.facade.PmsProductionPersonnelFacade;
 import com.paipianwang.pat.workflow.facade.PmsProductionStudioFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 import com.paipianwang.pat.workflow.facade.PmsQuotationTypeFacade;
@@ -43,6 +49,14 @@ public class ProductionServiceImpl implements ProductionService {
 	private PmsProductionDirectorFacade pmsProductionDirectorFacade;
 	@Autowired
 	private PmsProductionStudioFacade pmsProductionStudioFacade;
+	@Autowired
+	private PmsProductionCameramanFacade pmsProductionCameramanFacade;
+	@Autowired
+	private PmsProductionPersonnelFacade pmsProductionPersonnelFacade;
+	@Autowired
+	private PmsProductionCostumeFacade pmsProductionCostumeFacade;
+
+	
 
 	private void editQuotationTypeName(PmsProductionInfo info) {
 		if (!ValidateUtil.isValid(info.getResources())) {
@@ -164,6 +178,30 @@ public class ProductionServiceImpl implements ProductionService {
 				entities.addAll(studios);
 			}		
 			picScale=ProductionResource.studio.getPicScale();
+		}else if(ProductionResource.cameraman.getKey().equals(type)) {
+			List<PmsProductionCameraman> cameramans=pmsProductionCameramanFacade.listBy(paramMap);
+			if(cameramans!=null) {
+				entities.addAll(cameramans);
+			}		
+			picScale=ProductionResource.cameraman.getPicScale();
+		}else if(ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
+				||ProductionResource.packer.getKey().equals(type) ||ProductionResource.colorist.getKey().equals(type)
+				||ProductionResource.propMaster.getKey().equals(type) ||ProductionResource.artist.getKey().equals(type)
+				||ProductionResource.costumer.getKey().equals(type) ||ProductionResource.dresser.getKey().equals(type)
+				||ProductionResource.mixer.getKey().equals(type)) {
+			paramMap.put("profession",type);
+			List<PmsProductionPersonnel> personnnels=pmsProductionPersonnelFacade.listBy(paramMap);
+			if(personnnels!=null) {
+				entities.addAll(personnnels);
+			}		
+			picScale=ProductionResource.lighter.getPicScale();
+		}else if(ProductionResource.clothing.getKey().equals(type) || ProductionResource.props.getKey().equals(type)) {
+			paramMap.put("nature",type);
+			List<PmsProductionCostume> costumes=pmsProductionCostumeFacade.listBy(paramMap);
+			if(costumes!=null) {
+				entities.addAll(costumes);
+			}		
+			picScale=ProductionResource.clothing.getPicScale();
 		}
 		
 		//组装数据
@@ -192,5 +230,71 @@ public class ProductionServiceImpl implements ProductionService {
 		editQuotationTypeName(info);
 		
 		return info;
+	}
+
+	@Override
+	public Object getInfoById(Long id, String type) {
+
+		if (ProductionResource.actor.getKey().equals(type)) {
+			//演员
+			PmsProductionActor actor = pmsProductionActorFacade.getById(id);
+			if (actor != null) {
+				actor.setMainPhoto(actor.getPhoto().split(";")[0]);
+				actor.setPhoto(actor.getPhoto().substring(actor.getPhoto().indexOf(";") + 1));
+			}
+			return setTypeShowName(actor);
+		} else if (ProductionResource.director.getKey().equals(type)) {
+			//导演
+			return setTypeShowName(pmsProductionDirectorFacade.getById(id));
+		} else if (ProductionResource.device.getKey().equals(type)) {
+			//设备
+			PmsProductionDevice device = pmsProductionDeviceFacade.getById(id);
+			if (device != null && ValidateUtil.isValid(device.getType())) {
+				PmsQuotationType deviceType = pmsQuotationTypeFacade.getById(Long.parseLong(device.getType()));
+				device.setTypeName(deviceType.getTypeName());
+//				device.setPhoto(deviceType.getPhoto());
+			}
+			if(device!=null && device.getTypeId()!=null) {
+				PmsQuotationType detailType=pmsQuotationTypeFacade.getById(device.getTypeId());
+				if(detailType!=null)
+				{
+					device.setQuoTypeName(detailType.getTypeName());
+					device.setPhoto(detailType.getPhoto());
+				}
+			}
+			return device;//setTypeShowName(device);
+		} else if (ProductionResource.studio.getKey().equals(type)) {
+			//场地
+			PmsProductionStudio studio = pmsProductionStudioFacade.getById(id);
+			if (studio != null) {
+				studio.setMainPhoto(studio.getPhoto().split(";")[0]);
+				studio.setPhoto(studio.getPhoto().substring(studio.getPhoto().indexOf(";") + 1));
+			}
+			return setTypeShowName(studio);
+		} else if (ProductionResource.cameraman.getKey().equals(type)) {
+			//摄影师
+			return setTypeShowName(pmsProductionCameramanFacade.getById(id));
+		} else if (ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
+				|| ProductionResource.packer.getKey().equals(type) || ProductionResource.colorist.getKey().equals(type)
+				|| ProductionResource.propMaster.getKey().equals(type)
+				|| ProductionResource.artist.getKey().equals(type) || ProductionResource.costumer.getKey().equals(type)
+				|| ProductionResource.dresser.getKey().equals(type) || ProductionResource.mixer.getKey().equals(type)) {
+			//其他职业
+			return setTypeShowName(pmsProductionPersonnelFacade.getById(id));
+		} else if (ProductionResource.clothing.getKey().equals(type)
+				|| ProductionResource.props.getKey().equals(type)) {
+			//服装道具
+			return setTypeShowName(pmsProductionCostumeFacade.getById(id));
+		}
+		return null;
+	}
+	
+	private BaseProductionEntity setTypeShowName(BaseProductionEntity entity) {
+		if(entity!=null && entity.getTypeId()!=null) {
+			PmsQuotationType type=pmsQuotationTypeFacade.getById(entity.getTypeId());
+			if(type!=null)
+				entity.setQuoTypeName(type.getTypeName());
+		}
+		return entity;
 	}
 }

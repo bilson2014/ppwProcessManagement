@@ -200,33 +200,33 @@
       
       <div class="cusModel" id="info1">
            <div class="showInfoModel">
-               <div class="infoTitle"><div class="closeBtn"></div></div>
+               <div class="infoTitle"><div class="title">导演信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
                     <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">擅长领域</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="specialty"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">角色</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="city"></div>
                     </div>
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
-                     <div class="title titleMargin">备注信息</div>
-                     <div class="noteInfo">
+                     <div class="title titleMargin" style="margin-top: 45px;">备注信息</div>
+                     <div class="noteInfo" data-name="remark">
                      </div>
                </div>
            </div>
@@ -234,36 +234,36 @@
       
        <div class="cusModel" id="info2">
            <div class="showInfoModel">
-               <div class="infoTitle"><div class="closeBtn"></div></div>
+               <div class="infoTitle"><div class="title">演员信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
                     <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">性别</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="sex"></div>
                     </div>
                       <div class="contentItem">
                          <div class="itemTitle">年龄</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="age"></div>
                     </div>
                       <div class="contentItem">
                          <div class="itemTitle">种族</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="zone"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">等级</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="city"></div>
                     </div>
                     
                     <div class="setShowImg">
@@ -276,7 +276,7 @@
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin">备注信息</div>
-                     <div class="noteInfo">
+                     <div class="noteInfo" data-name="remark">
                      </div>
                </div>
            </div>
@@ -285,33 +285,33 @@
       
       <div class="cusModel" id="info3">
            <div class="showInfoModel">
-               <div class="infoTitle"><div class="closeBtn"></div></div>
+               <div class="infoTitle"><div class="title">设备信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent type2">
                     <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">名称</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">设备类型</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="typeName"></div>
                     </div>
                       <div class="contentItem">
-                         <div class="itemTitle">报价</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
                     </div>
                       <div class="contentItem">
-                         <div class="itemTitle">数量</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemTitle">库存(套)</div>
+                         <div class="itemInfo" data-name="quantity"></div>
                     </div>
                      <div class="contentItem">
                          <div class="itemTitle">城市</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="city"></div>
                     </div>
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin">备注信息</div>
-                     <div class="noteInfo">
+                     <div class="noteInfo" data-name="remark">
                      </div>
                </div>
            </div>
@@ -319,36 +319,28 @@
       
        <div class="cusModel" id="info4">
            <div class="showInfoModel">
-               <div class="infoTitle"><div class="closeBtn"></div></div>
+               <div class="infoTitle"><div class="title">场地信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent type2">
                     <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="name"></div>
                     </div>
-                     <div class="contentItem">
-                         <div class="itemTitle">性别</div>
-                         <div class="itemInfo">导演</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">场地类型</div>
+                         <div class="itemInfo" data-name="type"></div>
                     </div>
-                      <div class="contentItem">
-                         <div class="itemTitle">年龄</div>
-                         <div class="itemInfo">导演</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">面积</div>
+                         <div class="itemInfo" data-name="area"></div>
                     </div>
-                      <div class="contentItem">
-                         <div class="itemTitle">种族</div>
-                         <div class="itemInfo">导演</div>
-                    </div>
-                     <div class="contentItem">
-                         <div class="itemTitle">报价</div>
-                         <div class="itemInfo">导演</div>
-                    </div>
-                     <div class="contentItem">
-                         <div class="itemTitle">等级</div>
-                         <div class="itemInfo">导演</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
                     </div>
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
-                         <div class="itemInfo">导演</div>
+                         <div class="itemInfo" data-name="city"></div>
                     </div>
                     
                     <div class="setShowImg">
@@ -361,7 +353,114 @@
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin">备注信息</div>
-                     <div class="noteInfo">
+                     <div class="noteInfo" data-name="remark">
+                     </div>
+               </div>
+           </div>
+      </div>
+       <div class="cusModel" id="info5">
+           <div class="showInfoModel">
+               <div class="infoTitle"><div class="title">摄影师信息</div><div class="closeBtn"></div></div>
+               <div class="showInfoContent">
+                    <div class="title">基本信息</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">姓名</div>
+                         <div class="itemInfo" data-name="name"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">特殊技能</div>
+                         <div class="itemInfo" data-name="specialSkill"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">角色</div>
+                         <div class="itemInfo" data-name="quoTypeName"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">城市</div>
+                         <div class="itemInfo" data-name="city"></div>
+                    </div>
+                                     
+                    <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                     <div class="title titleMargin">备注信息</div>
+                     <div class="noteInfo" data-name="remark">
+                     </div>
+               </div>
+           </div>
+      </div>
+       <div class="cusModel" id="info6">
+           <div class="showInfoModel">
+               <div class="infoTitle"><div class="title">人员信息</div><div class="closeBtn"></div></div>
+               <div class="showInfoContent">
+                    <div class="title">基本信息</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">姓名</div>
+                         <div class="itemInfo" data-name="name"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">角色</div>
+                         <div class="itemInfo" data-name="quoTypeName"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">城市</div>
+                         <div class="itemInfo" data-name="city"></div>
+                    </div>
+                                     
+                    <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                     <div class="title titleMargin" style="margin-top: 75px;">备注信息</div>
+                     <div class="noteInfo" data-name="remark">
+                     </div>
+               </div>
+           </div>
+      </div>
+      <div class="cusModel" id="info7">
+           <div class="showInfoModel">
+               <div class="infoTitle"><div class="title">服装道具信息</div><div class="closeBtn"></div></div>
+               <div class="showInfoContent type2">
+                    <div class="title">基本信息</div>
+                    <div class="contentItem">
+                         <div class="itemTitle">姓名</div>
+                         <div class="itemInfo" data-name="name"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">类别</div>
+                         <div class="itemInfo" data-name="type"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">授权方式</div>
+                         <div class="itemInfo" data-name="accredit"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">库存(套)</div>
+                         <div class="itemInfo" data-name="stockNumber"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemInfo" data-name="price"></div>
+                    </div>
+                    <div class="contentItem">
+                         <div class="itemTitle">城市</div>
+                         <div class="itemInfo" data-name="city"></div>
+                    </div>
+                    
+                    <div class="setShowImg">
+                           <img class="setShowInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                           <img class="setShowInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                           <img class="setShowInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                           <img class="setShowInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                           <img class="setShowInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                    </div>
+                                     
+                    <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                     <div class="title titleMargin">备注信息</div>
+                     <div class="noteInfo" data-name="remark">
                      </div>
                </div>
            </div>
@@ -394,10 +493,25 @@
 						                             </div>   
 						                       </div>                                                  
 						                    </li> -->
-						                    <li class="hoverColor"><div class="findTYpe" data-id='director'>导演组</div></li>                                              
-						                    <li class="hoverColor"><div class="findTYpe" data-id='actor'>演员组</div></li>
+						                    <li class="hoverColor"><div class="findTYpe" data-id='director'>导演</div></li>                                              
+						                    <li class="hoverColor"><div class="findTYpe" data-id='actor'>演员</div></li>
+						                    
+						                    
+						                    <li class="hoverColor"><div class="findTYpe" data-id='cameraman'>摄影师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='lighter'>灯光师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='editor'>剪辑师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='packer'>包装师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='colorist'>调色师</div></li>  
+						                    <li class="hoverColor"><div class="findTYpe" data-id='propMaster'>道具师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='artist'>美术师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='costumer'>服装师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='dresser'>化妆师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='mixer'>录音师</div></li> 
+						                    
 						                    <li class="hoverColor"><div class="findTYpe" data-id='device'>设备</div></li>                                              
-						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li>  
+						                    <li class="hoverColor"><div class="findTYpe" data-id='studio'>场地</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='clothing'>服装</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='props'>道具</div></li> 
 					                </ul>    
 						     </div>
 						</div>
@@ -507,7 +621,132 @@
 							     </div>
 							</div>
 						</div>
-						   
+						<div class="show5 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="cameramanLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="cameramanLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+							<div class="optionItem">
+			                     <div class="title">特殊技能</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="cameramanSkill">请选择特殊技能</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="cameramanSkillUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
+						<div class="show6 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="lighterLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="lighterLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show7 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="editorLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="editorLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show8 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="packerLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="packerLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show9 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="coloristLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="coloristLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show10 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="propMasterLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="propMasterLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show11 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="artistLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="artistLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show13 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="dresserLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="dresserLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>
+						<div class="show14 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">等级</div>
+			                      <div class="orderSelect orderMultSelect">
+						                <div class="imgType" id="mixerLevel">请选择等级</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="mixerLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
+						</div>					
+						<div class="show15 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">服装类型</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="clothingType">请选择服装类型</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="clothingTypeUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+							<div class="optionItem">
+			                     <div class="title">授权方式</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="clothingAccredit">请选择授权方式</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="clothingAccreditUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
+						<div class="show16 showUnmInfo" style="display:none">
+							<div class="optionItem">
+			                     <div class="title">授权方式</div>
+				              	 <div class="orderSelect" id="isOther">
+						                <div class="imgType" id="propsAccredit">请选择授权方式</div>
+						                <img src="/resources/images/flow/selectS.png">
+						                <ul class="oSelect" id="propsAccreditUl" style="display: none;"></ul>    
+							     </div>
+							</div>
+						</div>
 		         </div>
 		         
 		         <div class="MidItem controlWidth"   style="border:none;margin-top:20px">

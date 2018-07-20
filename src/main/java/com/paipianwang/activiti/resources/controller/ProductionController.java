@@ -2,7 +2,6 @@ package com.paipianwang.activiti.resources.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,11 +21,11 @@ import com.paipianwang.activiti.service.ProductionService;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
+import com.paipianwang.pat.common.util.JsonUtil;
 import com.paipianwang.pat.common.util.ValidateUtil;
 import com.paipianwang.pat.workflow.entity.PmsProductionInfo;
 import com.paipianwang.pat.workflow.entity.PmsProjectFlow;
 import com.paipianwang.pat.workflow.entity.ProductionConstants;
-import com.paipianwang.pat.workflow.enums.ProductionResource;
 import com.paipianwang.pat.workflow.facade.PmsProductionInfoFacade;
 import com.paipianwang.pat.workflow.facade.PmsProjectFlowFacade;
 
@@ -245,10 +243,41 @@ public class ProductionController extends BaseController{
 		case "studio":
 			// 场地
 			break;
+		case "cameraman":
+			//摄影师
+			ProductionConstants[] specialSkillList = ProductionConstants.specialSkillList;
+			result.put("specialSkillList", specialSkillList);
+			break;
+		case "clothing":
+			//服装
+			ProductionConstants[] clothingTypeList = ProductionConstants.clothingTypeList;
+			result.put("clothingTypeList", clothingTypeList);
+			result.put("accreditList", ProductionConstants.accreditList);
+			break;
+		case "props":
+			//道具
+			result.put("accreditList", ProductionConstants.accreditList);
+			ProductionConstants[] propsTypeList = ProductionConstants.propsTypeList;
+			result.put("propsTypeList", propsTypeList);
+			break;
 		default:
 			break;
 		}
 
+		return result;
+	}
+	
+	@RequestMapping("/get")
+	public PmsResult getInfoById(Long id,String type) {
+		PmsResult result=new PmsResult();
+		
+		Object info=productionService.getInfoById(id, type);
+		if(info!=null) {
+			result.setMsg(JsonUtil.toJson(info));
+		}else {
+			result.setResult(false);
+		}
+		
 		return result;
 	}
 }

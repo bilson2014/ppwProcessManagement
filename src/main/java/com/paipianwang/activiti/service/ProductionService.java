@@ -1,6 +1,5 @@
 package com.paipianwang.activiti.service;
 
-import java.util.List;
 import java.util.Map;
 
 import com.paipianwang.pat.common.entity.PmsResult;
@@ -13,5 +12,7 @@ public interface ProductionService {
 	PmsResult saveOrUpdate(PmsProductionInfo pmsProductionInfo);
 
 	PmsProductionInfo listResourceByParam(Map<String, Object> paramMap, String type);
+	
+	public Object getInfoById(Long id,String type);
 
 }
