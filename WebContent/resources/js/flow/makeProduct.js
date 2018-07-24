@@ -386,6 +386,9 @@ function initOption(){
 		// toGetAddItem();
 		$('.addModel').hide();
 		$("#addSetProductInfo").html('');
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+		$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
 	});
 			
 	delItem();
@@ -412,8 +415,7 @@ function delItem(){
 			$('.toolBtn').addClass('hide');
 			$('#id').val('');
 			$('#projectId').val('');
-			$('#"resources"').val('');
-			
+			$('#"resources"').val('');			
 		});
 	});
 	
@@ -450,9 +452,11 @@ function detailItem(){
 		var type= item.attr('data-type');	
 		
 		loadData(function(src){
+			
 			if(!src.result){
 				successToolTipShow("查看失败");
 			}
+			
 			var info=$.parseJSON( src.msg );
 			
 			if(info.city!=undefined && info.city!=null && info.city!=''){
@@ -653,8 +657,7 @@ function toCleanAdd(){
 	$('#directorLevel').attr('data-id','');
 	$('#directorZone').text('');
 	$('#directorZone').attr('data-id','');
-	
-	
+		
 	$('#cameramanLevel').text('');
 	$('#cameramanLevel').attr('data-id','');
 	$('#cameramanSkill').text('');
@@ -681,6 +684,7 @@ function toCleanAdd(){
 	$('#clothingAccredit').attr('data-id','');
 	$('#propsAccredit').text('');
 	$('#propsAccredit').attr('data-id','');
+	
 }
 
 
@@ -914,6 +918,15 @@ function searchInit(){
 	});	
 }
 
+function setHeight(){
+	
+	$(window.parent.parent.parent.document).find('html').scrollTop(0);
+	$(window.parent.parent.parent.document).find('body').scrollTop(0);
+	$(window.parent.document).find('.frame').css('height',$('.addContent').height() + 300);
+	
+}
+
+
 function searchActor(){
 	
 	var category = $('#productType').attr('data-id');
@@ -931,6 +944,7 @@ function searchActor(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();	
 		detailItem();
+		setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -960,6 +974,7 @@ function searchDirector(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
+		setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -984,6 +999,7 @@ function searchDevice(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
+		setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1007,6 +1023,7 @@ function searchStudio(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1032,6 +1049,7 @@ function searchCameraman(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1056,6 +1074,7 @@ function searchPersonWithType(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1077,6 +1096,7 @@ function searchPerson(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1101,6 +1121,7 @@ function searchClothing(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1126,6 +1147,7 @@ function searchProps(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,

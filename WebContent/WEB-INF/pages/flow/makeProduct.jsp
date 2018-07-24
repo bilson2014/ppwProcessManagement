@@ -44,7 +44,7 @@
 
 </head>
 
-<body>
+<body style="overflow:hidden">
 
 
 <input type="hidden" id="projectName" name="projectName">
@@ -208,7 +208,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -224,10 +224,10 @@
                          <div class="itemInfo" data-name="city"></div>
                     </div>
                                      
-                    <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
+                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin" style="margin-top: 45px;">备注信息</div>
-                     <div class="noteInfo" data-name="remark">
-                     </div>
+                     <div class="noteInfo" data-name="remark"></div>
+                     
                </div>
            </div>
       </div>
@@ -254,7 +254,7 @@
                          <div class="itemInfo" data-name="zone"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -297,7 +297,7 @@
                          <div class="itemInfo" data-name="typeName"></div>
                     </div>
                       <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                       <div class="contentItem">
@@ -335,7 +335,7 @@
                          <div class="itemInfo" data-name="area"></div>
                     </div>
                     <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                     <div class="contentItem">
@@ -368,7 +368,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -401,7 +401,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -442,7 +442,7 @@
                          <div class="itemInfo" data-name="stockNumber"></div>
                     </div>
                     <div class="contentItem">
-                         <div class="itemTitle">报价(元/天)</div>
+                         <div class="itemTitle">报价 (元/天)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                     <div class="contentItem">
