@@ -111,6 +111,7 @@ public class QuotationServiceImpl implements QuotationService {
 		String basePath=PublicConfig.DOC_TEMP_PATH+File.separator+"temp"+File.separator;
 		
 		QuotationPoiAdapter qa=new QuotationPoiAdapter(xssfWorkbook, imgPath);
+		System.out.println("QuotationPoiAdapter");
 		
 		File sourceFile=new File(basePath+name+".xlsx");
 		String pdfPath=basePath+name+".pdf";
@@ -242,7 +243,9 @@ public class QuotationServiceImpl implements QuotationService {
 		
 		
 		BigDecimal total=subTotal.multiply((new BigDecimal(1).add(new BigDecimal(pmsQuotation.getTaxRate()).divide(new BigDecimal(100)))));
-		total=total.subtract(new BigDecimal(pmsQuotation.getDiscount()));
+		if(ValidateUtil.isValid(pmsQuotation.getDiscount())) {
+			total=total.subtract(new BigDecimal(pmsQuotation.getDiscount()));
+		}
 		if(new BigDecimal(pmsQuotation.getTotal()).compareTo(total)!=0){
 			result.setResult(false);
 			result.setErr("最终结果有误.");

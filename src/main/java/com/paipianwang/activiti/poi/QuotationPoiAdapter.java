@@ -444,7 +444,10 @@ public class QuotationPoiAdapter {
 		// TODO main运行下为空的情况
 		BigDecimal tax = new BigDecimal(quotation.getSubTotal()).multiply(new BigDecimal(quotation.getTaxRate()))
 				.divide(new BigDecimal(100), 2, RoundingMode.HALF_UP);
-		BigDecimal sum = new BigDecimal(quotation.getTotal()).add(new BigDecimal(quotation.getDiscount()));
+		BigDecimal sum = new BigDecimal(quotation.getTotal());
+		if(ValidateUtil.isValid(quotation.getDiscount())) {
+			sum = sum.add(new BigDecimal(quotation.getDiscount()));
+		}
 
 		List<List<QuotationTableCell>> cellList = new ArrayList<>();
 		cellList.add(Arrays.asList(new QuotationTableCell("1,2项费用合计"),
@@ -471,9 +474,9 @@ public class QuotationPoiAdapter {
 		List<List<PmsQuotationItem>> typeItems = null;
 		for (int i = 0; i < items.size(); i++) {
 			PmsQuotationItem item = items.get(i);
-			if (i == 0 || (item.getItemId() != items.get(i - 1).getItemId())) {
+			if (i == 0 || !(item.getItemId().equals(items.get(i - 1).getItemId()))) {//第一条或与上面的子类不同，新增一个table，后续明细都放到table中
 				table = new ArrayList<>();
-				if (i == 0 || item.getTypeId() != items.get(i - 1).getTypeId()) {
+				if (i == 0 || !item.getTypeId().equals(items.get(i - 1).getTypeId())) {//第一条或与上面大类不同，新增一个type,后续table都放到type中
 					typeItems = new ArrayList<>();
 					types.put(item.getTypeName(), typeItems);
 				}
