@@ -191,6 +191,24 @@ $smallDiv: 730px;
 $padding: 20px;
 
 
+.showWord{
+	position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #999999;
+    font-weight: 700;
+    top: 46%;
+}
+
+.setSize{
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    margin: auto;
+}
 
 .MidItem {
 
@@ -592,6 +610,9 @@ $padding: 20px;
             font-size: 20px;
             color: black;
             line-height: 14px;
+            width: 100%;
+            padding-left: 0 !important;
+            text-align: center;
         }
 
         .closeBtn {

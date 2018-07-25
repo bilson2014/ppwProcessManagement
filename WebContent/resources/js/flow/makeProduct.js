@@ -16,6 +16,40 @@ $().ready(function() {
 	
 });
 
+function initImgSizeVer(){
+	var needWidth = $('.itemContentFive').css('width');
+	var needHeight = $('.itemContentFive').css('height');	
+	var changeImg = $('.itemContentFive .setSize');
+	$(changeImg).each(function() {
+		$(this).load(function(){
+			var realHeight = $(this).height();
+			var realWidth  = $(this).width();			
+				if(realWidth/realHeight < (4/3)){
+					$(this).css('width',needWidth).css('height','auto');
+				}else{
+					$(this).css('height','auto').css('width',needWidth);
+				}
+		});
+    });
+}
+
+function initImgSizeHor(){
+	var needWidth = $('.itemContentFour').css('width');
+	var needHeight = $('.itemContentFour').css('height');	
+	var changeImg = $('.itemContentFour .setSize');
+	$(changeImg).each(function() {
+		$(this).load(function(){
+			var realHeight = $(this).height();
+			var realWidth  = $(this).width();			
+				if(realWidth/realHeight < (16/9)){
+					$(this).css('height',needHeight).css('width','auto');
+				}else{
+					$(this).css('height','auto').css('width',needWidth);
+				}
+		});
+    });
+}
+
 
 //打开项目
 function openProejct(){
@@ -921,8 +955,10 @@ function searchInit(){
 function setHeight(){
 	
 	$(window.parent.parent.parent.document).find('html').scrollTop(0);
-	$(window.parent.parent.parent.document).find('body').scrollTop(0);
-	$(window.parent.document).find('.frame').css('height',$('.addContent').height() + 300);
+	$(window.parent.parent.parent.document).find('body').scrollTop(0);	
+	$(window.parent.document).find('.frame').css('height',$('.addContent').height() + 600);
+	initImgSizeVer();
+	initImgSizeHor();
 	
 }
 
@@ -931,7 +967,7 @@ function searchActor(){
 	
 	var category = $('#productType').attr('data-id');
 	var city = $('#city').attr('data-id');
-	var sex = $('#sex').text();
+	var sex = $('#sex').attr('data-id');
 	var beginAge = $('#beginAge').val();
 	var endAge = $('#endAge').val();
 	var zone = $('#zone').attr('data-id');
@@ -1479,8 +1515,9 @@ var productList_tpl = {
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
+					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
 					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}  </div>"+
@@ -1495,8 +1532,9 @@ var productList_tpl = {
 		 ].join(""),
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
+					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
 					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}</div>"+
