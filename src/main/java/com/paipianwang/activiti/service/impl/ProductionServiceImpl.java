@@ -11,6 +11,8 @@ import com.paipianwang.activiti.service.ProductionService;
 import com.paipianwang.pat.common.entity.BaseProductionEntity;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.util.ValidateUtil;
+import com.paipianwang.pat.facade.right.entity.PmsEmployee;
+import com.paipianwang.pat.facade.right.service.PmsEmployeeFacade;
 import com.paipianwang.pat.workflow.entity.PmsProductionActor;
 import com.paipianwang.pat.workflow.entity.PmsProductionCameraman;
 import com.paipianwang.pat.workflow.entity.PmsProductionCostume;
@@ -55,6 +57,8 @@ public class ProductionServiceImpl implements ProductionService {
 	private PmsProductionPersonnelFacade pmsProductionPersonnelFacade;
 	@Autowired
 	private PmsProductionCostumeFacade pmsProductionCostumeFacade;
+	@Autowired
+	private PmsEmployeeFacade pmsEmployeeFacade;
 
 	
 
@@ -242,10 +246,10 @@ public class ProductionServiceImpl implements ProductionService {
 				actor.setMainPhoto(actor.getPhoto().split(";")[0]);
 				actor.setPhoto(actor.getPhoto().substring(actor.getPhoto().indexOf(";") + 1));
 			}
-			return setTypeShowName(actor);
+			return setShowName(actor);
 		} else if (ProductionResource.director.getKey().equals(type)) {
 			//导演
-			return setTypeShowName(pmsProductionDirectorFacade.getById(id));
+			return setShowName(pmsProductionDirectorFacade.getById(id));
 		} else if (ProductionResource.device.getKey().equals(type)) {
 			//设备
 			PmsProductionDevice device = pmsProductionDeviceFacade.getById(id);
@@ -270,30 +274,35 @@ public class ProductionServiceImpl implements ProductionService {
 				studio.setMainPhoto(studio.getPhoto().split(";")[0]);
 				studio.setPhoto(studio.getPhoto().substring(studio.getPhoto().indexOf(";") + 1));
 			}
-			return setTypeShowName(studio);
+			return setShowName(studio);
 		} else if (ProductionResource.cameraman.getKey().equals(type)) {
 			//摄影师
-			return setTypeShowName(pmsProductionCameramanFacade.getById(id));
+			return setShowName(pmsProductionCameramanFacade.getById(id));
 		} else if (ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
 				|| ProductionResource.packer.getKey().equals(type) || ProductionResource.colorist.getKey().equals(type)
 				|| ProductionResource.propMaster.getKey().equals(type)
 				|| ProductionResource.artist.getKey().equals(type) || ProductionResource.costumer.getKey().equals(type)
 				|| ProductionResource.dresser.getKey().equals(type) || ProductionResource.mixer.getKey().equals(type)) {
 			//其他职业
-			return setTypeShowName(pmsProductionPersonnelFacade.getById(id));
+			return setShowName(pmsProductionPersonnelFacade.getById(id));
 		} else if (ProductionResource.clothing.getKey().equals(type)
 				|| ProductionResource.props.getKey().equals(type)) {
 			//服装道具
-			return setTypeShowName(pmsProductionCostumeFacade.getById(id));
+			return setShowName(pmsProductionCostumeFacade.getById(id));
 		}
 		return null;
 	}
 	
-	private BaseProductionEntity setTypeShowName(BaseProductionEntity entity) {
+	private BaseProductionEntity setShowName(BaseProductionEntity entity) {
 		if(entity!=null && entity.getTypeId()!=null) {
 			PmsQuotationType type=pmsQuotationTypeFacade.getById(entity.getTypeId());
 			if(type!=null)
 				entity.setQuoTypeName(type.getTypeName());
+		}
+		if(entity!=null && ValidateUtil.isValid(entity.getReferrer())) {
+			PmsEmployee employee=pmsEmployeeFacade.findEmployeeById(Long.parseLong(entity.getReferrer()));
+			if(employee!=null)
+				entity.setReferrerName(employee.getEmployeeRealName());
 		}
 		return entity;
 	}
