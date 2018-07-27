@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paipianwang.activiti.dao.DataCacheDao;
 import com.paipianwang.activiti.dao.StorageLocateDao;
 import com.paipianwang.pat.common.config.PublicConfig;
 import com.paipianwang.pat.common.constant.PmsConstant;
@@ -32,6 +34,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 	private IdentityService identityService = null;
 	@Autowired
 	private final StorageLocateDao storageDao = null;
+	@Autowired
+	private DataCacheDao dataCacheDao;
 
 	private List<String> excludeUrls;
 
@@ -151,11 +155,24 @@ public class SecurityInterceptor implements HandlerInterceptor {
 			mv.addObject(PmsConstant.FILE_LOCATE_STORAGE_PATH, sbf.toString());
 		}
 		
+		//优化--放外面访问太频繁了
+		//校验 TODO save任务不设置；setRedis时就设进去
+		HttpSession session=request.getSession();
+		final SessionInfo info = (SessionInfo) session.getAttribute(PmsConstant.SESSION_INFO);
+		
+		if(info!=null && info.getCacheTab()!=null && info.getCacheTab()>0) {
+			try {
+				dataCacheDao.setExpire(session.getId()+PmsConstant.CACHE_KEYNAME, session.getMaxInactiveInterval());
+			} catch (Exception e) {
+			}
+		}
+		
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+
 		// TODO Auto-generated method stub
 
 	}
