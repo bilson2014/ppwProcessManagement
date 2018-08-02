@@ -5,6 +5,7 @@ var upload_Update;
 var successIntervalObj; // timer变量，控制时间
 var nowPoint = [[1,2,3],[4,5,6]];
 var setData = new Array();
+var setCache = new Array();
 //头像裁剪参数 start
 var jcrop_api;
 var x;
@@ -24,6 +25,8 @@ $().ready(function() {
 	initPos();
 	imgUpload.init();
 	imgUpdate.init();
+	setInterval(autoSave,5000);
+	loadSave();
 });
 
 function initPos(){
@@ -50,6 +53,7 @@ function initPos(){
 	},function(){
 		returnOld();
 	});
+	
 	
 }
 
@@ -131,7 +135,6 @@ function setReShow(item){
 		}
 	}
 	
-	//$('#storyName').val(item.name);
 	
 	var dimensionId = item.dimensionId; 
 	var pictureRatio = item.pictureRatio;
@@ -783,4 +786,107 @@ function  isNumber(number){ // 是否是数字
 		return true;
 	else
 		return false;
+}
+
+//缓存
+
+function autoSave(){
+		
+		setData = new Array();
+		var imgItem = $('.imgItem');
+		var isDiffer = false;
+		for (var int = 0; int < imgItem.length; int++) {
+			 var type = $(imgItem[int]).find('.checkImgType').attr('data-id');
+			 var image = $(imgItem[int]).find('.loadImg').attr('data-id');
+			 var text = $(imgItem[int]).find('.checkImgText').val();
+			 setData.push(new optEntity(type,image,text));
+			 
+			 if(setCache.length > 0){
+				 if(setCache[0].scripts.length != imgItem.length){
+					 isDiffer = true;
+				 }
+
+				 else if(setCache[0].scripts[int].type!=type || setCache[0].scripts[int].picture!=image || setCache[0].scripts[int].description!=text){					 
+					 isDiffer = true;
+				 }
+			 }
+		}
+		var storyName = $('#storyName').text();
+		var projectId =$('#projectId').val();
+		var id = $('#id').val();
+		var createTime = $('#createTime').val();
+		var projectName = $('#projectName').text();
+		var dimensionId = $('#time .active').attr('data-id');	
+        if(dimensionId == undefined){
+        	dimensionId = "";
+        }
+		var pictureRatio = $('#videoType .active').attr('data-id');
+		 if(pictureRatio == undefined){
+			 pictureRatio = "";
+	        }
+		var videoStyle = $('#videoStyleS .active').attr('data-id');
+		 if(videoStyle == undefined){
+			 videoStyle = "";
+	        }
+			 
+		 if(setCache.length > 0){
+			 if(setCache[0].createTime != createTime || setCache[0].projectName != projectName || setCache[0].projectId != projectId || setCache[0].id != id ||setCache[0].storyName != storyName || setCache[0].dimensionId != dimensionId || setCache[0].pictureRatio != pictureRatio || setCache[0].videoStyle != videoStyle  ){
+				 isDiffer = true;
+			 }		
+		 }
+		
+		 
+		 if(setCache.length == 0){
+			setCache = new Array();
+			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime));
+			saveCache();
+		 }
+		 else if (isDiffer){
+			setCache = new Array();
+			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime));
+			saveCache();
+		 }
+				
+}
+
+function cacheEntity(setImg,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime){
+	this.scripts =  setImg;
+	this.storyName = storyName;
+	this.dimensionId = dimensionId;
+	this.pictureRatio = pictureRatio;
+	this.videoStyle = videoStyle;
+	this.id = id;
+	this.projectId = projectId;
+	this.projectName = projectName;
+	this.createTime = createTime;
+}
+
+function saveCache(){
+	
+    var jsonStr = JSON.stringify(setCache);
+	
+	loadData(function(item){
+		
+		console.log('缓存成功');
+		
+	}, getContextPath() + '/cache/save', $.toJSON({
+		type:2,
+		dataContent:jsonStr
+	}));
+		
+}
+
+function loadSave(){
+		
+		loadData(function(res){		
+			if(res.result){
+				var itemRes = jQuery.parseJSON(res.msg);
+				$('#projectId').val(itemRes[0].projectId);
+				$('#id').val(itemRes[0].id);
+				setReShow(itemRes[0]);	
+			}
+		}, getContextPath() + '/cache/get',$.toJSON({
+			type:2
+		}));
+		
 }

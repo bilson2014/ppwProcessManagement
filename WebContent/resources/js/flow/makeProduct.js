@@ -1,6 +1,8 @@
 var successIntervalObj; // timer变量，控制时间
 var setData;
 var nowItem = new Array();
+var cacheItem = new Array();
+var lastItem = new Array();
 
 var citys=[];
 var directorZones=[];
@@ -13,8 +15,93 @@ $().ready(function() {
 	
 	document.domain = getUrl();	
 	initOption();
-	
+	loadSave();
+    setInterval(autoSave,5000);
+    
 });
+
+function loadSave(){
+	
+	
+		loadData(function(res){		
+			if(res.result){
+				var itemRes = jQuery.parseJSON(res.msg);
+				$('#projectId').val(itemRes[0].projectId);
+				$('#id').val(itemRes[0].id);
+				setReShow(itemRes[0].item,0);	
+			}
+		}, getContextPath() + '/cache/get',$.toJSON({
+			type:3
+		}));
+	
+}
+
+function autoSave(){
+	
+	var imgItem = $('.itemCommon');
+	if(imgItem.length >= 1){
+		getCacheSave();
+	}
+
+}
+
+function getCacheSave(){
+		
+	cacheItem = new Array();
+	var imgItem = $('#setProduct .itemCommon');
+	var isDiffer = false;
+	for (var int = 0; int < imgItem.length; int++) {
+		var id= $(imgItem[int]).attr('data-id');
+		var type= $(imgItem[int]).attr('data-type');
+		var price= $(imgItem[int]).attr('data-price');
+		var name= $(imgItem[int]).attr('data-name');
+		var mainPhoto= $(imgItem[int]).attr('data-mainPhoto');
+		var typeId= $(imgItem[int]).attr('data-typeId');
+		var typeName= $(imgItem[int]).attr('data-typeName');
+		var categoryId= $(imgItem[int]).attr('data-categoryId');
+		var category= $(imgItem[int]).attr('data-category');
+		var subTypeId= $(imgItem[int]).attr('data-subTypeId');
+		var subType= $(imgItem[int]).attr('data-subType');
+		var picScale= $(imgItem[int]).attr('data-picScale');
+				
+		if(lastItem.length >0){
+			if(lastItem[0].item.length != imgItem.length){
+				isDiffer = true;
+				console.info('不同1');
+			}else if(id != lastItem[0].item[int].id || type != lastItem[0].item[int].type||lastItem[0].id != $('#id').val()||lastItem[0].projectId != $('#projectId').val()){
+				isDiffer = true;
+				console.info('不同2');
+			}
+		}
+		cacheItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+	}
+	   
+	    if(lastItem.length == 0){
+	    	lastItem = new Array();
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()));
+			saveCache();
+	    }else if(isDiffer){
+	    	lastItem = new Array();
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()));
+			saveCache();
+	    }
+	    
+}
+
+function saveCache(){
+	
+    var jsonStr = JSON.stringify(lastItem);
+	
+	loadData(function(item){
+		
+		console.log('缓存成功');
+		
+	}, getContextPath() + '/cache/save', $.toJSON({
+		type:3,
+		dataContent:jsonStr
+	}));
+		
+}
 
 function initImgSizeVer(){
 	var needWidth = $('.itemContentFive').css('width');
@@ -87,6 +174,7 @@ function reShow(proId){
 	}, getContextPath() + '/production/get/'+proId,'');
 	
 }
+
 function setReShow(item,num){
 	$('.noImg').hide();
 	$('.toolBtn').removeClass('hide');
@@ -371,7 +459,9 @@ function getValue(projectId,who){
 		   xhr.send(form);
 		}
 		   
-	}else{
+	}
+		
+	else{
 		    
 		    var theId = $('#projectId').val();
 			loadData(function(src){
@@ -449,7 +539,9 @@ function delItem(){
 			$('.toolBtn').addClass('hide');
 			$('#id').val('');
 			$('#projectId').val('');
-			$('#"resources"').val('');			
+			$('#resources').val('');	
+			lastItem = new Array();
+			saveCache();
 		});
 	});
 	
@@ -759,8 +851,7 @@ function initSelectInfo(){
 		}
 		chooseType();
 		}, getContextPath() + '/production/director/parameter','');
-	}
-	
+	}	
 	
 	//演员
 	
@@ -1561,6 +1652,12 @@ function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId
 	this.subTypeId = subTypeId;
 	this.subType = subType;
 	this.picScale =  picScale;
+}
+
+function cacheEntity(item,id,projectId){
+	this.item =  item;
+	this.id = id;
+	this.projectId = projectId;
 }
 
 //同步添加

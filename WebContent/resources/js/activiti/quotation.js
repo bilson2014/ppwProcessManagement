@@ -1,5 +1,7 @@
 // var setTableData = new Array();
  var finalAsc = new Array();
+ var lastAsc = new Array();
+ var cacheTable = new Array();
  var titleTr = "";
 $().ready(function() {
 	document.domain = getUrl();
@@ -9,10 +11,13 @@ $().ready(function() {
 		$('.oredrTypeSelect').removeClass('selectColor');
 		$('.orderMultSelect ').removeClass('selectColor');
 	});
-    init();     
+    init();
+    setInterval(autoSave,5000);
+    loadSave(); 
 });
 
 function init(){
+	
 	findModelNames();
 	projectName();
 	initMultSelect();
@@ -27,6 +32,7 @@ function init(){
 	}else{
 		$('#openFrom').hide();
 	}	
+	
 }
 
 function getTableInfo(){
@@ -106,6 +112,8 @@ function clickEven(){
 		/*var nowIndex = $(this).attr('data-id');
 		finalAsc =  delArray(finalAsc,parseInt(nowIndex));
 		controlArray.createTable();*/
+        lastAsc = new Array();
+        saveCache();
 	});	
 	$('.closeModel').off('click').on('click',function(){
 		  $('.cusModel').hide();
@@ -863,19 +871,31 @@ function initMultSelect(){
 	});
 }
 
-//删除数组
+/*//删除数组
 function delArray(data,n) {　//n表示第几项，从0开始算起。
 	//prototype为对象原型，注意这里为对象增加自定义方法的方法。
 	　if(n<0)　//如果n<0，则不进行任何操作。
 	return data;
 	　else
 	return data.slice(0,n).concat(data.slice(n+1,data.length));
-	/*
+	
 	　concat方法：返回一个新数组，这个新数组是由两个或更多数组组合而成的。
 	　这里就是返回this.slice(0,n)/this.slice(n+1,this.length)
 	 组成的新数组，这中间，刚好少了第n项。
 	　slice方法： 返回一个数组的一段，两个参数，分别指定开始和结束的位置。
-	*/
+	
+}*/
+
+//删除数组
+function delArray(data,n) {
+	
+    if(n<0){
+    	return data;
+	}
+	else{
+		return data.slice(0,n).concat(data.slice(n+1,data.length));
+	}
+	
 }
 
 //重复验证
@@ -896,7 +916,7 @@ function checkSame(){
 	}
 }
 
-//分组排序
+/*//分组排序
 function orderBy(source, orders, type) {
 
     if (source instanceof Array && orders instanceof Array && orders.length > 0) {
@@ -956,15 +976,15 @@ function orderBy(source, orders, type) {
 
       grouporder(source, ordersc, totalSum);
       return results;
-    /* 返回多种形式 return {
+     返回多种形式 return {
         results: results,
         totalSum: totalSum
-      };*/
+      };
     } else {
       return source;
     }
     
-  }
+  }*/
 
 
 function isInteger(obj) {
@@ -1410,8 +1430,186 @@ function compare(nodeA,nodeB){
 }
 
 
+//缓存
 
+function autoSave(){
+	
+	
+	var isDiffer = false;
+	//表格不同
+	if(lastAsc.length > 0){
+		if(lastAsc[0].cacheTable.length != finalAsc.length){
+			isDiffer = true;
+			console.info('不同1');
+		}else {
+			
+			for (var int = 0; int < finalAsc.length; int++) {
+				var last = lastAsc[0].cacheTable[int];
+				var finalS = finalAsc[int];
+				if(last.typeId != finalS.typeId || last.typeName != finalS.typeName ||
+				   last.itemId != finalS.itemId || last.itemName != finalS.itemName ||	
+				   last.detailId != finalS.detailId || last.detailName != finalS.detailName ||
+				   last.description != finalS.description || last.unitPrice != finalS.unitPrice ||	           
+				   last.quantity != finalS.quantity || last.days != finalS.days ||
+				   last.sum != finalS.sum || last.fullJob != finalS.fullJob 
+				){
+					isDiffer = true;
+					console.info('不同2');
+				}
+				
+     		}
+		}
+	}
+	
+	
+	var type = $('#type').text();
+	var typeId = $('#type').attr('data-id');
+	if(typeId == undefined){
+		typeId = '';
+	}
+	
+	var projectParentId = $('#projectParentId').attr('data-id');
+	if(projectParentId == undefined){
+		projectParentId = '';
+	}	
+	var projectParent = $('#projectParent').val();
+	
+	var projectChildenId = $('#projectChildenId').attr('data-id');
+	if(projectChildenId == undefined){
+	   projectChildenId = '';
+	}
+	var projectChilden = $('#projectChilden').text();
+	var dayNum = $('#dayNum').val();
+	var needNum = $('#needNum').val();
+	var setCost = $('#setCost').text();
+	var tax = $('#tax').val();
+	var free = $('#free').val();
+	var setDir = $('#setDir').text();
+	
+	if(lastAsc.length > 0){
+		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
+				||  tax != lastAsc[0].tax	||  free != lastAsc[0].free	
+		){
+			isDiffer = true;
+			console.info('不同3');
+		}
+	}
+	
+	if(lastAsc.length == 0){
+		getcacheTable();
+		lastAsc = new Array();
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir));
+		saveCache();
+	}else if(isDiffer){
+		getcacheTable();
+		lastAsc = new Array();
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir));
+		saveCache();
+	}
+	
+}
 
+function saveCache(){
+	
+    var jsonStr = JSON.stringify(lastAsc);
+	
+	loadData(function(item){
+		
+		console.log('缓存成功');
+		
+	}, getContextPath() + '/cache/save', $.toJSON({
+		type:0,
+		dataContent:jsonStr
+	}));
+		
+}
 
+function getcacheTable(){
+	
+	cacheTable = new Array();
+	
+	for (var int = 0; int < finalAsc.length; int++) {
 
+		var map = {};
+		map['typeId'] = finalAsc[int].typeId;
+		map['typeName'] = finalAsc[int].typeName;
+		map['itemId'] = finalAsc[int].itemId;
+		map['itemName'] = finalAsc[int].itemName; 
+		map['detailId'] = finalAsc[int].detailId; 
+		map['detailName'] = finalAsc[int].detailName; 
+		map['quantity'] = finalAsc[int].quantity; 
+		map['days'] = finalAsc[int].days; 
+		map['unitPrice'] = finalAsc[int].unitPrice;
+		map['sum'] = finalAsc[int].sum;
+		map['description'] = finalAsc[int].description;
+		map['fullJob'] = finalAsc[int].fullJob;		
+		cacheTable.push(new cTable(map));
+		
+	}
+	
+}
+
+function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir){
+	
+	this.cacheTable = cacheTable;
+	this.type = type;
+	this.typeId = typeId;
+	this.projectParentId = projectParentId;
+	this.projectParent = projectParent;
+	this.projectChildenId = projectChildenId;
+	this.projectChilden = projectChilden;
+	this.dayNum = dayNum;
+	this.needNum = needNum;
+	this.setCost = setCost;
+	this.tax = tax;
+	this.free = free;
+	this.setDir = setDir
+	
+}
+
+function loadSave(){
+	//开关	
+		loadData(function(res){		
+			if(res.result){
+				var itemRes = jQuery.parseJSON(res.msg);
+				$('#type').text(itemRes[0].type);
+				$('#type').attr('data-id',itemRes[0].typeId);
+                $('#projectParent').attr('data-id',itemRes[0].projectParentId);
+				$('#projectParent').val(itemRes[0].projectParent);
+				$('#projectChilden').attr('data-id',itemRes[0].projectChildenId);
+                $('#projectChilden').text(itemRes[0].projectChilden);
+                $('#dayNum').val(itemRes[0].dayNum);
+                $('#needNum').val(itemRes[0].needNum);
+                $('#setCost').text(itemRes[0].setCost);
+				$('#tax').val(itemRes[0].tax);
+				$('#free').val(itemRes[0].free);
+				$('#setDir').text(itemRes[0].setDir);
+			
+				if(itemRes[0].typeId !=''){		
+					console.info('嘿'+itemRes[0].typeId);
+					loadData(function(res){
+						var src = res;
+						var body = $('#orderCome');
+						body.html('');
+						if(src != null && src != undefined){
+							for (var i = 0; i < src.length; i++) {
+								$('#orderCome').append(createDetail(src[i]))
+							}
+							initMultSelect();
+						}
+					}, getContextPath() + '/quotation/select/type?typeId='+itemRes[0].typeId,null);
+					
+				}
+								
+				if(itemRes[0].cacheTable.length > 0){
+					finalAsc = itemRes[0].cacheTable;
+					sortItem(finalAsc);
+					controlArray.createTable();
+				}	
+				
+			}
+		}, getContextPath() + '/cache/get',$.toJSON({
+			type:0
+		}));	
+}
 

@@ -328,7 +328,6 @@
                         <input type="hidden" id="createTime" name="createTime" value="${projectId}">
      </form> 
      
-      <input type="hidden" id="projectId" name="projectId" value="${projectId}">
       <input type="hidden" id="createTime" name="createTime" value="">
     
 	
