@@ -33,6 +33,7 @@ $().ready(function() {
         editable: true,
 // events: dayData,
     });
+    
     leftbtn();
     initSelect();
     sun();
@@ -49,9 +50,34 @@ $().ready(function() {
     	inthings();
     }   
     
-    setInterval(getCacheValue,5000);
+  //打开项目
+    $('#openFrom').on('click',function(){
+       $('#loadProductModel').show();     
+       	var body = $('.modelProductContent');
+       	body.html('');
+       	loadData(function(res){
+       		for (var i = 0; i < res.length; i++) {
+       			 body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
+       		 }
+       		 loadProductEven();
+       	}, getContextPath() + '/schedule/list/synergetic','');
+        loadProductEven();
+    });	
+    
+    
+    //   setInterval(getCacheValue,5000);
     
 });
+
+
+function test(){
+	
+	var date = new Date('2018-6-2');
+	
+	$('#calendar').fullCalendar( 'gotoDate', date );
+	
+}
+
 // 初始化获取地址
 function inthings(){
 	if  ($('#projectNames').val()){
@@ -320,23 +346,14 @@ function timebook(){
 	$('.closeModel').on('click',function(){
 		  $('.cusModel').hide();
 	});	
-	// 打开项目
-	$('#openFrom').on('click',function(){
-	   $('#loadProductModel').show();     
-	   	var body = $('.modelProductContent');
-	   	body.html('');
-	   	loadData(function(res){
-	   		for (var i = 0; i < res.length; i++) {
-	   			 body.append('<div class="modelProItem" projectname="'+res[i].projectName+'" data-id="'+res[i].quotationId+'" data-pid="'+res[i].projectId+' ">'+res[i].projectName+'</div>')
-	   		 }
-	   		 loadProductEven();
-	   	}, getContextPath() + '/schedule/list/synergetic','');
-	    loadProductEven();
-	});	
+	
 	
 }
+
+
+
 // 选中项目的 回显
-function getBoxInfo(){
+function getBoxInfo(getDay){
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		$(this).find('textarea').val('');
@@ -347,8 +364,16 @@ function getBoxInfo(){
 	if(project != null && project !='' && project != undefined ){
 	loadData(function(src){		
 		var objectbox=src.items;	
-		console.log(src.items);
-		arrobject=src.items;		
+		arrobject=src.items;	
+				
+		if(getDay == 1){
+			var date = new Date(arrobject[0].start);
+			var year = date.getFullYear(); //获取当前年份(2位)
+			var month = date.getMonth(); //获取当前月份(0-11,0代表1月)
+			$('#calendar').fullCalendar( 'gotoDate', date );
+			$('.divine').text(year+"年"+(month+1)+"月");
+		}
+		
 		var xiaos=JSON.stringify(src.items);
 		xiaos = xiaos.replace(/}{/g, '},{');
 		xiaos=xiaos.replace(/\n/g,'\\\\n');
@@ -386,14 +411,14 @@ function loadProductEven(){
 				// 此处要打开 选中项目的 日程
 				$('#projectNames').val($('.modelPActive').attr('projectname'));		
 				$('#projectId').val($('.modelPActive').attr('data-pid'));
-				getBoxInfo();	 				
+				getBoxInfo(1);	 				
 			}else{
 				$('#clearTable').show();
 				$('#setTableTitle').html('排期表编辑中，是否加载并覆盖当前排期表?');
 				$('.sureClear').off('click').on('click',function(){
 					$('#projectNames').val($('.modelPActive').attr('projectname'));		
 					$('#projectId').val($('.modelPActive').attr('data-pid'));
-					getBoxInfo();
+					getBoxInfo(1);
 					$('#clearTable').hide();
 					$('#loadProductModel').hide();
 					$('#projectName').text(thisName);
@@ -481,7 +506,7 @@ function submitDateMyDate(num){
     			$('#submitCheck').hide();
     			$('.cusModel').hide();
     			$('#items').val($('#pumpum').val());
-    			getBoxInfo();
+    			getBoxInfo(0);
     		});
     		$('#productSelect').html('');
 	    }else {
@@ -675,7 +700,7 @@ function leftbtn() {
     	getday();
     	dbmatter();
     	colorthing();
-    	getBoxInfo();
+    	getBoxInfo(0);
         $('tbody .fc-other-month .much').attr('style', 'display: none;');
         $('tbody .fc-other-month .boxs').attr('style', 'display: none;');       
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
@@ -689,7 +714,7 @@ function leftbtn() {
     	getday();
     	dbmatter();
     	colorthing();
-    	getBoxInfo();
+    	getBoxInfo(0);
         if (!$('.fc-header-left .fc-button-today').hasClass('fc-state-disabled')) {
             $('tbody .fc-other-month .much').attr('style', 'display: none;');
             $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
@@ -835,11 +860,11 @@ function getCacheValue(){
 	
 	if(cacheData.length == 0){	
 		cacheData = new Array();
-		cacheData.push(new cacheEntity(arr,scheduleId,projectId,projectNames,updateDate));
+		cacheData.push(new cacheEntity(chaunqi,scheduleId,projectId,projectNames,updateDate));
 		saveCache();
 	}else if (isDiff){
 		cacheData = new Array();
-		cacheData.push(new cacheEntity(arr,scheduleId,projectId,projectNames,updateDate));
+		cacheData.push(new cacheEntity(chaunqi,scheduleId,projectId,projectNames,updateDate));
 		saveCache();
 	}
 }
@@ -854,13 +879,15 @@ function cacheEntity(item,scheduleId,projectId,projectNames,updateDate){
 
 function saveCache(){
 	
+	console.info(cacheData[0].item);
+	
 	loadData(function(res){
            
 		console.info('缓存成功');
 		
 	}, getContextPath() + '/cache/save',$.toJSON({
 		type:1,
-		dataContent:cacheData
+		dataContent:cacheData[0].item
 	}));
 	
 }
