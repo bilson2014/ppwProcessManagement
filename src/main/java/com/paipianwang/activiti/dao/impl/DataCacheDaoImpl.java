@@ -30,10 +30,6 @@ public class DataCacheDaoImpl implements DataCacheDao {
 			jedis = pool.getResource();
 			jedis.select(1);
 			if(ValidateUtil.isValid(data)){
-				/*Transaction t = jedis.multi();
-				t.hset(key, type, data);
-//				t.lset(key, Long.parseLong(type), data);
-				t.exec();*/
 				jedis.hset(key, type, data);
 			}
 		} catch (Exception e) {
@@ -81,6 +77,23 @@ public class DataCacheDaoImpl implements DataCacheDao {
 			jedis.select(1);
 			jedis.expire(key, expireSeconds);
 			
+		} catch (Exception e) {
+			// do something for logger
+			throw new RuntimeException(e);
+		} finally {
+			if(jedis != null){
+				jedis.disconnect();
+				jedis.close();
+			}
+		}
+	}
+	@Override
+	public Long deleteCacheData(String key, String type) {
+		Jedis jedis = null;
+		try {
+			jedis = pool.getResource();
+			jedis.select(1);
+			return jedis.hdel(key, type);
 		} catch (Exception e) {
 			// do something for logger
 			throw new RuntimeException(e);

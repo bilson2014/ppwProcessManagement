@@ -39,32 +39,43 @@ public class DataCacheController extends BaseController {
 			if (data.getType() != null && ValidateUtil.isValid(data.getDataContent())) {
 				String key = session.getId() + PmsConstant.CACHE_KEYNAME ;
 				String value = data.getDataContent();
-
-				//TODO 如果字节数超过400，进行压缩；否则头部加tiny
 				try {
-					dataCacheDao.setCacheData(key,data.getType()+"", DataGZIUtils.compress(value));
-					result.setResult(true);
-					
-					Integer cacheTab=info.getCacheTab()!=null ? info.getCacheTab():0;
-					info.setCacheTab( BitUtils.setBit(cacheTab, data.getType()));
-					
+					if (ValidateUtil.isValid(value)) {
+						// TODO 如果字节数超过400，进行压缩；否则头部加tiny
+						dataCacheDao.setCacheData(key, data.getType() + "", DataGZIUtils.compress(value));
+						
+						Integer cacheTab = info.getCacheTab() != null ? info.getCacheTab() : 0;
+						info.setCacheTab(BitUtils.setBit(cacheTab, data.getType()));
+						
+						result.setResult(true);
+					} else {
+						// 清空数据 删除缓存
+						dataCacheDao.deleteCacheData(key, data.getType() + "");
+						// 清空session标记位
+						Integer cacheTab = info.getCacheTab() != null ? info.getCacheTab() : 0;
+						info.setCacheTab(BitUtils.cleanBit(cacheTab, data.getType()));
+
+						result.setResult(true);
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				
 			}else {
-				result.setMsg("数据格式不正确");
+				result.setErr("数据格式不正确");
 			}
 		}else {
-			result.setMsg("请登录");
+			result.setErr("请登录");
 		}
 
 		return result;
 	}
-	
+
 	@RequestMapping("/get")
 	public PmsResult getCacheData(@RequestBody final DataCacheEntity data, final HttpServletRequest request,
 			final HttpServletResponse response) {
 		PmsResult result = new PmsResult();		
+		result.setResult(false);
 
 		HttpSession session = request.getSession();
 		final SessionInfo info = (SessionInfo) session.getAttribute(PmsConstant.SESSION_INFO);
@@ -75,20 +86,21 @@ public class DataCacheController extends BaseController {
 					String key = session.getId() + PmsConstant.CACHE_KEYNAME;
 					try {
 						String value=dataCacheDao.getCacheData(key,data.getType()+"");
-						//TODO 如果头部有tiny，表示未压缩，直接返回
-						result.setMsg(DataGZIUtils.unCompress(value));
+						if(ValidateUtil.isValid(value)) {
+							//TODO 如果头部有tiny，表示未压缩，直接返回
+							result.setMsg(DataGZIUtils.unCompress(value));
+							result.setResult(true);
+						}
 					} catch (IOException e) {
 						result.setResult(false);
 						e.printStackTrace();
 					}
 				}	
 			}else {
-				result.setResult(false);
-				result.setMsg("数据格式不正确");
+				result.setErr("数据格式不正确");
 			}
 		}else {
-			result.setResult(false);
-			result.setMsg("请登录");
+			result.setErr("请登录");
 		}
 
 		return result;

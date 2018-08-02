@@ -6,4 +6,6 @@ public interface DataCacheDao {
 	public String getCacheData(String key,String type);
 	
 	public void setExpire(String key,int expireSeconds);
+	
+	public Long deleteCacheData(String key,String type);
 }
