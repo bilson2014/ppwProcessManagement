@@ -920,7 +920,7 @@ function getCacheValue(){
 	var arr = boxData;
 	var scheduleId = $('#scheduleId').val();
 	var projectId = $('#projectId').val();
-	var projectNames = $('#projectNames').text();
+	var projectNames = $('#projectName').text();
 	var updateDate = $('#updateDate').val();
 	var cacheItem = new Array();
 	if(cacheData.length !=0){
@@ -999,7 +999,7 @@ function loadCache(){
 			var arrMsg = jQuery.parseJSON(res.msg);
 				$('#scheduleId').val(arrMsg.scheduleId);
 				$('#projectId').val(arrMsg.projectId);
-				$('#projectNames').text(arrMsg.projectNames);
+				$('#projectName').text(arrMsg.projectNames);
 				$('#updateDate').val(arrMsg.updateDate);
 			if(arrMsg.item.length !=0){	
 					var arrItem = arrMsg.item;
