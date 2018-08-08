@@ -582,7 +582,7 @@ function loadProductEven(){
          }); 
          
          if (boxData.length > 0){
-        	 if($('#projectName').text()=='未命名项目'){
+        	 if($('#projectId').text()==''||$('#projectId').text()== null||$('#projectId').text()== undefined){
         		 $('#showProductName').show();
         		 findAutoInfo('');
             	 $('#savesProductName').off('click').on('click',function(){
