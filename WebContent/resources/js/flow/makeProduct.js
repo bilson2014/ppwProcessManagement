@@ -671,8 +671,6 @@ function detailItem(){
 					
 		}, getContextPath() + '/production/get/?type='+type+'&id='+id,null);
 	    
-		
-		
 		$(window.parent.parent.parent.document).find('html').scrollTop(0);
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		

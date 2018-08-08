@@ -13,7 +13,13 @@ $().ready(function() {
 	});
     init();
     setInterval(autoSave,5000);
-    loadSave(); 
+    
+    var pro = $('#projectId').val();
+    if(!pro){
+    	loadSave(); 
+    }
+    
+   
 });
 
 function init(){

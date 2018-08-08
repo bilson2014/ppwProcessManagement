@@ -66,7 +66,11 @@ $().ready(function() {
     });	
     
     	setInterval(getCacheValue,5000);
-    	loadCache();
+    	 var pro = $('#projectId').val();
+    	    if(!pro){
+    	    	loadCache(); 
+    	    }
+    	
     
 });
 
