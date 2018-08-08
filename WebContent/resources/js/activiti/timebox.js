@@ -954,6 +954,8 @@ function getCacheValue(){
 		}
 
 	}
+	
+
 
 	if(cacheData.length == 0){	
 		cacheData = new Array();
@@ -1011,6 +1013,15 @@ function loadCache(){
 					    var getDate;
 					    for (var int = 0; int < arrItem.length; int++) {
 					    	var thisDay = arrItem[int].start;
+					    	cacheItem = new Array();
+						   	var map = {};
+							map['jobContent'] = arrItem[int].jobContent;
+							map['start'] = arrItem[int].start;
+							map['end'] = arrItem[int].end;
+							map['day'] = arrItem[int].day; 
+						    cacheItem.push(map);
+							cacheData = new Array();
+							cacheData.push(new cacheEntity(cacheItem,scheduleId,projectId,projectNames,updateDate));
 					    	if(int == 0){
 					    		getDate = thisDay;
 					    	}else if(getDate > thisDay){
