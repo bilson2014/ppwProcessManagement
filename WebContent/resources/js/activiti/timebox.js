@@ -920,7 +920,7 @@ function getCacheValue(){
 	var arr = boxData;
 	var scheduleId = $('#scheduleId').val();
 	var projectId = $('#projectId').val();
-	var projectNames = $('#projectNames').val();
+	var projectNames = $('#projectNames').text();
 	var updateDate = $('#updateDate').val();
 	var cacheItem = new Array();
 	if(cacheData.length !=0){
