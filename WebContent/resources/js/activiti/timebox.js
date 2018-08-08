@@ -997,7 +997,7 @@ function loadCache(){
 			var arrMsg = jQuery.parseJSON(res.msg);
 				$('#scheduleId').val(arrMsg.scheduleId);
 				$('#projectId').val(arrMsg.projectId);
-				$('#projectNames').val(arrMsg.projectNames);
+				$('#projectNames').text(arrMsg.projectNames);
 				$('#updateDate').val(arrMsg.updateDate);
 			if(arrMsg.item.length !=0){	
 					var arrItem = arrMsg.item;
