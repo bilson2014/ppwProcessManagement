@@ -660,7 +660,7 @@ function detailItem(){
 						var photos=info.photo.split(";");
 						for(var i=0;i<photos.length;i++){
 							if(photos[i]!=''){
-								$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+photos[i]+'">');
+								$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+photos[i]+'" onerror="'+newPath+'" />');
 							}
 						}
 					}
@@ -1568,7 +1568,7 @@ var productList_tpl = {
 	    "                       {@if it.num==3}                     "+
 		"		                <div class='itemContentFour itemCommon'>"+
 	    "                       {@/if}"+
-		"	                        <img src='https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg'>"+
+		"	                        <img src='https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg' onerror="+newPath+"/>"+
 		"	                        <div class='info'>"+
 		"	                                <div class='who'>我 / 员工</div>"+
 		"	                                <div class='price'>￥600</div>"+
@@ -1606,7 +1606,7 @@ var productList_tpl = {
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} onerror="'+newPath+'" />'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -1623,7 +1623,7 @@ var productList_tpl = {
 		 ].join(""),
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}>'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} onerror="'+newPath+'">'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+

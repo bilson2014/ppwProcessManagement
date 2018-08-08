@@ -102,10 +102,8 @@ function loadProductTable(id){
 			arrobject=src.items;
 			var xiao=JSON.stringify(src.items);
 			xiao = xiao.replace(/}{/g, '},{');
-			$('#items').val(xiao);// 最初获取的数据
 			var objectbox=src.items;
 			var tibo=$('.fc-day');
-			chengnum='';
 			tibo.each(function(){
 				var countext =  $(this).attr('data-date');
 				for(var k in objectbox){
@@ -118,6 +116,8 @@ function loadProductTable(id){
 					}					
 				}
 			})
+			boxData = new Array(); 
+			boxData = src.items;
 		}else {
 			$('#projectId').val(id);
 			$('#projectNames').val($('#projectName').text());	
@@ -182,10 +182,22 @@ function dbmatter(){
 					} 
 				}
 				if(isDiffer){
-					boxData.push(new boxEntity(kous,nowtimes,'',''));
+					var map = {};
+					map['jobContent'] = kous;
+					map['start'] = nowtimes;
+					map['end'] = '';
+					map['day'] = ''; 
+			//		boxData.push(new boxEntity(kous,nowtimes,'',''));
+					boxData.push(map);
 				}
 			}else{
-				boxData.push(new boxEntity(kous,nowtimes,'',''));
+				var map = {};
+				map['jobContent'] = kous;
+				map['start'] = nowtimes;
+				map['end'] = '';
+				map['day'] = ''; 
+			//	boxData.push(new boxEntity(kous,nowtimes,'',''));
+				boxData.push(map);
 			}
 		}
 		
@@ -200,6 +212,8 @@ function dbmatter(){
     			boxData = (new boxEntity(jsonthings,nowtimes,'',''));
     		}
     	});*/
+		
+		var s = boxData;
     	
     /*	chengnum=gamethings;
     	jiafei=+gamethings*/
@@ -427,12 +441,7 @@ function timebook(){
 
 }
 
-function boxEntity(jobContent,start,end,day){
-	this.jobContent =  jobContent;
-	this.start = start;
-	this.end = end;
-	this.day = day;
-}
+
 
 // 选中项目的 回显
 function getBoxInfo(getDay){
@@ -442,10 +451,54 @@ function getBoxInfo(getDay){
 		$(this).find('textarea').text('');
 		$(this).find('textarea').attr('style','display:none;')
 	});	
-	var project = $('#projectId').val();
-	if(project != null && project !='' && project != undefined ){
-	loadData(function(src){		
-		var objectbox=src.items;	
+	loadData(function(res){		
+		var arrMsg = res.items;
+		$('#scheduleId').val(res.scheduleId);
+		$('#projectId').val(res.projectId);
+		$('#projectNames').val(res.projectNames);
+		$('#updateDate').val(res.updateDate);
+	if(arrMsg.length !=0){	
+			var arrItem = arrMsg;
+			var tibo=$('.fc-day');
+			tibo.each(function(){
+				$(this).find('textarea').val('');
+				$(this).find('textarea').text('');
+				$(this).find('textarea').attr('style','display:none;')
+			});	
+			
+			    var getDate;
+			    for (var int = 0; int < arrItem.length; int++) {
+			    	var thisDay = arrItem[int].start;
+			    	if(int == 0){
+			    		getDate = thisDay;
+			    	}else if(getDate > thisDay){
+			    		getDate = thisDay;
+			    	}
+			    	
+				}
+				var date = new Date(getDate);
+				var year = date.getFullYear(); //获取当前年份(2位)
+				var month = date.getMonth(); //获取当前月份(0-11,0代表1月)
+				$('#calendar').fullCalendar( 'gotoDate', date );
+				$('.divine').text(year+"年"+(month+1)+"月");
+				initEven();
+				var tibo=$('.fc-day');
+				tibo.each(function(){
+					var countext =  $(this).attr('data-date');
+					for(var k in arrItem){
+						if (countext==arrItem[k].start){					
+							if (!$(this).hasClass('fc-other-month')){
+								$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
+								$(this).find('textarea').val(arrItem[k].jobContent);
+								$(this).find('textarea').text(arrItem[k].jobContent);	
+							}			
+						}				
+					}
+				})
+		}
+	    boxData = new Array(); 
+		boxData = arrMsg;
+	/*	var objectbox=src.items;	
 		arrobject=src.items;	
 				
 		if(getDay == 1){
@@ -475,9 +528,9 @@ function getBoxInfo(getDay){
 					}			
 				}				
 			}
-		})
+		})*/
 	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
-	}	
+		
 }
 // 加载事件
 function loadProductEven(){
@@ -888,12 +941,16 @@ function getCacheValue(){
 	        	console.info('不同2');
 	        	isDiff = true;
 	        }
-	        cacheItem.push(new boxEntity(jobContent,start,end,day));
+	        var map = {};
+			map['jobContent'] = jobContent;
+			map['start'] = start;
+			map['end'] = end;
+			map['day'] = day; 
+	        cacheItem.push(map);
 		}
 
-		
 	}
-	
+
 	if(cacheData.length == 0){	
 		cacheData = new Array();
 		cacheData.push(new cacheEntity(cacheItem,scheduleId,projectId,projectNames,updateDate));
@@ -977,6 +1034,7 @@ function loadCache(){
 							}
 						})
 				}
+			    boxData = new Array();
 				boxData = arrMsg.item;
 		}
 	},  getContextPath() + '/cache/get',$.toJSON({
