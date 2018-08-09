@@ -1503,6 +1503,9 @@ function autoSave(){
 	var projectName = $('#projectName').text();
 	var templateId = $('#templateId').val();
 	
+	
+	
+	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
 				||  tax != lastAsc[0].tax	||  free != lastAsc[0].free	

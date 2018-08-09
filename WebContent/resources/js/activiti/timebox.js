@@ -494,7 +494,10 @@ function getBoxInfo(getDay){
 							if (!$(this).hasClass('fc-other-month')){
 								$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
 								$(this).find('textarea').val(arrItem[k].jobContent);
-								$(this).find('textarea').text(arrItem[k].jobContent);	
+								$(this).find('textarea').text(arrItem[k].jobContent);
+								if(arrItem[k].jobContent == ''||arrItem[k].jobContent == null || arrItem[k].jobContent ==undefined){
+									$(this).find('textarea').attr('style',"display:none");	
+								}
 							}			
 						}				
 					}
@@ -958,10 +961,9 @@ function getCacheValue(){
 			map['jobContent'] = jobContent;
 			map['start'] = start;
 			map['end'] = end;
-			map['day'] = day; 
-			if(jobContent != ''){
-				cacheItem.push(map);
-			}
+			map['day'] = day; 			
+		    cacheItem.push(map);
+			
 		}
 
 	}
@@ -1018,7 +1020,6 @@ function loadCache(){
 						$(this).find('textarea').text('');
 						$(this).find('textarea').attr('style','display:none;')
 					});	
-					
 					    var getDate;
 					    for (var int = 0; int < arrItem.length; int++) {
 					    	var thisDay = arrItem[int].start;
@@ -1053,6 +1054,9 @@ function loadCache(){
 										$(this).find('textarea').attr('style',"border: none; resize: none;background: transparent;box-shadow: none;");
 										$(this).find('textarea').val(arrItem[k].jobContent);
 										$(this).find('textarea').text(arrItem[k].jobContent);	
+										if(arrItem[k].jobContent == ''||arrItem[k].jobContent == null || arrItem[k].jobContent ==undefined){
+										$(this).find('textarea').attr('style',"display:none");	
+										}
 									}			
 								}				
 							}
