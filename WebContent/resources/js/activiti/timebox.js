@@ -426,7 +426,7 @@ function timebook(){
 				$(this).find('textarea').text(boxData[k].jobContent);				
 				var meiyi=boxData[k].jobContent;				
 				meiyi=meiyi.replace(/n/g,'\\\n');// 加了\
-				meiyi=meiyi.replace(/\\/g,'  ');
+				meiyi=meiyi.replace(/\\/g,'');
 				$(this).find('textarea').val(meiyi);
 				$(this).find('textarea').text(meiyi);				
 				 var thisValue = boxData[k].jobContent;
@@ -444,8 +444,6 @@ function timebook(){
 	});		
 
 }
-
-
 
 // 选中项目的 回显
 function getBoxInfo(getDay){
@@ -585,7 +583,7 @@ function loadProductEven(){
          }); 
          
          if (boxData.length > 0){
-        	 if($('#projectId').text()==''||$('#projectId').text()== null||$('#projectId').text()== undefined){
+        	 if($('#projectId').val()==''||$('#projectId').val()== null||$('#projectId').val()== undefined){
         		 $('#showProductName').show();
         		 findAutoInfo('');
             	 $('#savesProductName').off('click').on('click',function(){

@@ -29,6 +29,7 @@ function loadSave(){
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
 				setReShow(itemRes[0].item,0);	
+				
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:3

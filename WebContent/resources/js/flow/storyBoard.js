@@ -835,7 +835,6 @@ function autoSave(){
 			 }		
 		 }
 		
-		 
 		 if(setCache.length == 0){
 			setCache = new Array();
 			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime));
@@ -883,7 +882,7 @@ function loadSave(){
 				var itemRes = jQuery.parseJSON(res.msg);
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
-				setReShow(itemRes[0]);	
+				setReShow(itemRes[0]);					
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:2
