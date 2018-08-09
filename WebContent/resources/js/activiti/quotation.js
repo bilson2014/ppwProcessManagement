@@ -55,6 +55,7 @@ function getTableInfo(){
 			for (var int = 0; int < src.items.length; int++) {
 				finalAsc.push(new cTable(src.items[int]));
 			}
+			sortItem(finalAsc);
 			controlArray.createTable();
 			dataEven();
 			$('.orderItem').attr('data-content','');
@@ -301,6 +302,7 @@ function initCheckBtn(){
 }
 
 function submitDate(){
+	
 	var jsonStr=JSON.stringify(finalAsc);
 	$('#sitems').val(jsonStr);
 	$('#squotationId').val($('#quotationId').val());
@@ -720,6 +722,8 @@ function createType(item){
 
 function initMultType(){
 	$('.oredrTypeSelect').off('click').on('click',function(e){
+		    $('ul').slideUp();
+		    $('.orderSelect').removeClass('selectColor');
 		if(!$('.oredrTypeSelect').hasClass('selectColor')){
 			$('.oredrTypeSelect').removeClass('selectColor');
 			$(this).find('#orderType').slideDown();
@@ -727,7 +731,7 @@ function initMultType(){
 		}
 		e.stopPropagation();
 	});
-	$('#orderType li').off('click').on('click',function(e){
+	$('#orderType li').off('click').on('click',function(e){		
 		$('.oredrTypeSelect').removeClass('selectColor');
 		$('#type').text($(this).text());
 		$('#type').attr("data-id",$(this).attr('data-id'));
@@ -844,6 +848,8 @@ function createDetail(item){
 
 function initMultSelect(){
 	$('.orderMultSelect').off('click').on('click',function(e){
+		$('ul').slideUp();
+		$('.orderSelect ').removeClass('selectColor');
 		if(!$('.orderMultSelect').hasClass('selectColor')){
 			$('.orderMultSelect').removeClass('selectColor');
 			$(this).find('.setMultSelect').slideDown();
@@ -1059,7 +1065,7 @@ function productLineEven(){
     $('#loadProduct').off('click').on('click',function(){
     	var setTr = $('.setTr tr').length;
     	var thisId = $('.modelActive').attr('data-id');
-    	$('#templateId').val(thisId);
+ 
     	var thisName = $('.modelActive').text();
     	if(thisId>0){
 	    	if(setTr > 0){
@@ -1069,6 +1075,7 @@ function productLineEven(){
 					loadProductTable(thisId);
 					$('#clearTable').hide();
 				    $('#productWindow').hide();
+				    $('#templateId').val(thisId);
 				  //  $('#projectName').text(thisName);
 				});
 				$('.cancle').off('click').on('click',function(){							  
@@ -1491,6 +1498,10 @@ function autoSave(){
 	var tax = $('#tax').val();
 	var free = $('#free').val();
 	var setDir = $('#setDir').text();
+	var projectId = $('#projectId').val();
+	var quotationId = $('#quotationId').val();
+	var projectName = $('#projectName').text();
+	var templateId = $('#templateId').val();
 	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
@@ -1504,12 +1515,12 @@ function autoSave(){
 	if(lastAsc.length == 0){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId));
 		saveCache();
 	}else if(isDiffer){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId));
 		saveCache();
 	}
 	
@@ -1555,7 +1566,7 @@ function getcacheTable(){
 	
 }
 
-function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir){
+function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId){
 	
 	this.cacheTable = cacheTable;
 	this.type = type;
@@ -1570,6 +1581,10 @@ function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectC
 	this.tax = tax;
 	this.free = free;
 	this.setDir = setDir
+	this.quotationId = quotationId;
+	this.projectId = projectId;
+	this.projectName = projectName;
+	this.templateId = templateId;
 	
 }
 
@@ -1590,6 +1605,10 @@ function loadSave(){
 				$('#tax').val(itemRes[0].tax);
 				$('#free').val(itemRes[0].free);
 				$('#setDir').text(itemRes[0].setDir);
+				$('#quotationId').val(itemRes[0].quotationId);
+				$('#projectId').val(itemRes[0].projectId);
+				$('#projectName').text(itemRes[0].projectName);
+				$('#templateId').val(itemRes[0].templateId);
 			
 				if(itemRes[0].typeId !=''){		
 					console.info('嘿'+itemRes[0].typeId);
@@ -1609,7 +1628,7 @@ function loadSave(){
 								
 				if(itemRes[0].cacheTable.length > 0){
 					finalAsc = itemRes[0].cacheTable;
-					sortItem(finalAsc);
+					//sortItem(finalAsc);
 					controlArray.createTable();
 				}	
 				

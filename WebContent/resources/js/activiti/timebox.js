@@ -42,7 +42,6 @@ $().ready(function() {
     getday();
     bestthings();
     delselc();
-    textareval();
     dbmatter();
     timebook();
     colorthing();
@@ -70,8 +69,7 @@ $().ready(function() {
     	    if(!pro){
     	    	loadCache(); 
     	    }
-    	
-    
+    	       	    
 });
 
 // 初始化获取地址
@@ -128,6 +126,7 @@ function loadProductTable(id){
 		}	
 	}, getContextPath() + '/schedule/get/'+id,null);
 }
+
 // 日期样式添加事件
 function colorthing(){
 	var tibo=$('.fc-day');
@@ -137,6 +136,7 @@ function colorthing(){
 		}		
 	});
 }
+
 // 双击事件和失去焦点事件文本框的显示
 function dbmatter(){
 	$('.orderSelect').click(function(){
@@ -149,32 +149,38 @@ function dbmatter(){
 		$(this).parent().parent().parent().parent().parent().find('.fc-day').removeClass('cheng');
 		$(this).parent().parent().parent().addClass('cheng');
 		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
-		// 获取焦点
-		$('.matter').blur();
-		$(this).parent().parent().find('.matter').focus();	
+
 		$(this).parent().parent().parent().focus();	
 		$(this).parent().parent().parent().siblings().find('.fc-day').blur();
 		$(this).parent().parent().parent().parent().find('.fc-day').blur();
 		$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
 		$(this).parent().parent().parent().siblings().attr('style', 'background: ;');
-		$(this).parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
-		$(this).parent().parent().parent().parent().siblings().find('.matter').blur();
+		$(this).parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');	
 		$(this).parent().parent().find(".matter").attr('style', 'display: block;');
-	    $(this).parent().parent().find(".matter").focus();
-   	    $(this).parent().parent().parent().parent().siblings().find('.matter').blur();
    	    $(this).parent().parent().find(".matter").attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
+   	    
+		// 获取焦点
+		//	$('.matter').blur();
+		//	$(this).parent().parent().find('.matter').focus();	
+		//	$(this).parent().parent().parent().parent().siblings().find('.matter').blur();
+		//  $(this).parent().parent().find(".matter").focus();
+	   	//  $(this).parent().parent().parent().parent().siblings().find('.matter').blur();
+   	    
 	});
-	 $(".matter").blur(function(){
-		var matbur= $(this).val();
-		if(matbur== null || matbur == "" || matbur == undefined){
-			$(this).attr('style', 'display: none;');
-		}else{
-			$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
-		}
-		$('tbody .fc-other-month .matter').attr('style','display: none;');
+	
+	 $(".matter").blur(function(){	 
+		 	var matter= $(this).val();
+		 	
+			if(matter== null || matter == "" || matter == undefined){
+				$(this).attr('style', 'display: none;');
+			}else{
+				$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
+			}
+			
+			$('tbody .fc-other-month .matter').attr('style','display: none;');
 		
-		var kous=$(this).val();
-		if(kous){
+			var kous=$(this).val();
+			
 			var nowtimes=$(this).parent().parent().attr('data-date');
 			if(boxData.length > 0){
 				var isDiffer = true;
@@ -191,7 +197,6 @@ function dbmatter(){
 					map['start'] = nowtimes;
 					map['end'] = '';
 					map['day'] = ''; 
-			//		boxData.push(new boxEntity(kous,nowtimes,'',''));
 					boxData.push(map);
 				}
 			}else{
@@ -200,43 +205,31 @@ function dbmatter(){
 				map['start'] = nowtimes;
 				map['end'] = '';
 				map['day'] = ''; 
-			//	boxData.push(new boxEntity(kous,nowtimes,'',''));
 				boxData.push(map);
 			}
-		}
-		
-		/*var end=$(".fc-week td");
-    	var gamethings=[];
-    	end.each(function(){
-    		var kous=$(this).find('.matter').val();
-    		if(kous){
-    			var nowtimes=$(this).attr('data-date');
-    			var jsonthings='{"jobContent":"'+kous+'","start":"'+nowtimes+'"}';	
-    			//gamethings+=jsonthings;	
-    			boxData = (new boxEntity(jsonthings,nowtimes,'',''));
-    		}
-    	});*/
-		
-		var s = boxData;
+
     	
-    /*	chengnum=gamethings;
-    	jiafei=+gamethings*/
 	 });
-	 $('.fc-day .xuan .boxs').click(function(){
+	 $('.xuan .boxs').click(function(){
 		 $(this).parent().addClass('wolf');	 
 	 })
 	 $('.fc-day .xuan').removeClass('wolf'); 	
 	 $('.pages').click(function(){
 		 $(this).find('.boxs .city-select').remove('.city-select');
 		 $(this).find('.orderSelect').removeClass('selectColor');
+		 var matter = $('.matter');
+		 for (var int = 0; int < matter.length; int++) {
+			 if($(matter[int]).val()==""){
+				 $(matter[int]).attr('style','display:none');
+			 }
+		}
 	 })
 	 $('.fc-day').click(function(){
+		$(this).parent().addClass('wolf');	
 		if (!$(this).hasClass('cheng')){
 			$(this).parent().find('.boxs .city-select').remove('.city-select');
 			$(this).parent().siblings().find('.boxs .city-select').remove('.city-select');
-		}
-		$(this).parent().find('.matter').blur();	
-		$(this).parent().parent().siblings().find('.matter').blur();
+		}			
 		$(this).attr('style', 'background: #F6F9F9;');
 		$(this).siblings().attr('style', 'background: ;');
 		$(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');
@@ -264,7 +257,8 @@ function dbmatter(){
 			$(this).siblings().removeClass('wolf');
 			$(this).parent().parent().find('.fc-day').removeClass('wolf');
 			$(this).addClass('onlyul');
-			setTimeout($(this).removeClass('onlyul'),1000);	
+			$(this).removeClass('onlyul');
+		//	setTimeout($(this).removeClass('onlyul'),1000);	
 		}else {
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
@@ -285,7 +279,7 @@ function dbmatter(){
 					$(this).find(".matter").attr('style', 'display: none;');
 				}else {
 					$(this).find(".matter").attr('style', 'display: block;');
-				    $(this).find(".matter").focus();
+					$(this).find(".matter").focus();
 			   	    $(this).parent().parent().siblings().find('.matter').blur();
 				}	 
 			}
@@ -434,7 +428,13 @@ function timebook(){
 				meiyi=meiyi.replace(/n/g,'\\\n');// 加了\
 				meiyi=meiyi.replace(/\\/g,'  ');
 				$(this).find('textarea').val(meiyi);
-				$(this).find('textarea').text(meiyi);
+				$(this).find('textarea').text(meiyi);				
+				 var thisValue = boxData[k].jobContent;
+					 if(thisValue!=''&&thisValue!=null&&thisValue!=undefined){
+							$(this).find('textarea').attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
+					 }else{
+						    $(this).find('textarea').attr('style', 'display: none;');
+					 }
 			}
 		}		
 	});	
@@ -667,7 +667,7 @@ function submitDateMyDate(num){
     		$('#productSelect').html('');
 	    }
 	// 提交之后的 处理
-  	 	$('.matter').blur();
+  //	 	$('.matter').blur();
 	}, getContextPath() + '/schedule/save',$.toJSON({
 		scheduleId:  $('#scheduleId').val(), 
 		projectId:   $('#projectId').val(),
@@ -728,14 +728,14 @@ function bestthings() {
     	$('#calendar').find('.boxs .city-select').remove('.city-select');
     	$('#calendar').find('.fc-day').removeClass('cheng');
     	$('#calendar').find('.fc-day').attr('style', 'background: ;');
-    	$('#calendar').find('.matter').blur();	 
+   // 	$('#calendar').find('.matter').blur();	 
     	var end=$(".fc-week td");
     	var projectName = $('#projectName').val();  	
     	$('#projectNames').val($('#projectName').text());
     	submitDate();	
     	$('.proerr').text('');
     	$('tbody .fc-other-month .matter').attr('style', 'display: none;');
-    	$('.matter').blur();  	
+ //   	$('.matter').blur();  	
     });
 }
 // 表单提交
@@ -751,11 +751,11 @@ function submitDate(){
 }
 
 // 实时获取textare的数据
-function textareval(){
+/*function textareval(){
 	 $("textarea").blur(function(){
 		 $(this).text($(this).val());
 	 });
-}
+}*/
 // 获取事件的时间
 function getday(){
 	$('.fc-event-time').text('');// 清空插件中时间限制
@@ -767,6 +767,9 @@ function getday(){
 		mm=times.substr(6,2);// 月
 		dd=times.substr(9,2);// 日
 	})	
+	
+	
+	
 }
 
 // 下拉框
@@ -782,16 +785,21 @@ function sun(){
         search: false,// 开启搜索功能，默认是true ，开启
         placeholder: '请选择任务',
         onInit: function() {// 插件初始化的回调
-// console.log(this)
+               
+        	$('.not-search').off('click').on('click',function(){    
+        		      		$('.city-select').slideUp();
+        	});
+        	
         },
         onForbid: function() {// 插件禁止后再点击的回调
-// console.log(this)
+
         },
         onTabsAfter: function(target) {// 点击tabs切换显示城市后的回调
-// console.log(event)
+
         },
         // 选择城市后的回调
         onCallerAfter: function(target, values) {
+
         	var shaonv=JSON.stringify(values.name);
         	// 获取选中日期的 时间
         	var demo = $('#calendar').find('.cheng').attr('data-date');	
@@ -809,15 +817,13 @@ function sun(){
                 		var countext =  $(this).text()+ '\n' ;
                 		shus+=countext;
                 	}); 
-// 添加当前的内容到当前时间下面
+           // 添加当前的内容到当前时间下面
                  	$(".fc-week td[data-date="+time+"]").find(".matter").val(season+shus);                    	            	
-                	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');
-                
+                	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');               
             	}
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
-// console.log('没有数据可以添加');
             }
             delselc();
         }       
@@ -827,41 +833,42 @@ function sun(){
 }
 // 刪除框数据的同步
 function delselc(){
-	$('.city-info i').on('click',function(){
+	
+	$('.city-info i').on('click',function(e){
+		console.info('del');
 		var deltext=$(this).parent().parent().parent().find(".city-info span");
 		if (deltext.length==1){
 // 通过删除都删掉了
 			$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
         	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
 		}
-	})	
+ //		e.stopPropagation();
+	});
 }
 // 月份左右跳转
 function leftbtn() {
     $('tbody .fc-other-month .much').attr('style', 'display: none;');
     $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
     $('tbody .fc-other-month .matter').attr('style', 'display: none;');
-    $('.fc-header-left .fc-button').on('click', function() {
+    $('.fc-header-left').on('click', function() {
     	initSelect();
     	sun();
     	getday();
     	dbmatter();
     	colorthing();
-     	//getBoxInfo(0);
         $('tbody .fc-other-month .much').attr('style', 'display: none;');
         $('tbody .fc-other-month .boxs').attr('style', 'display: none;');       
         $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
         timebook();
         $('tbody .fc-other-month .matter').attr('style', 'display: none;');
-        $('.matter').blur();
+        
     })
-    $('.fc-header-left .fc-button-today').on('click', function() {
+    $('.fc-button-today').on('click', function() {
     	initSelect();
     	sun();
     	getday();
     	dbmatter();
     	colorthing();
-    	//getBoxInfo(0);
         if (!$('.fc-header-left .fc-button-today').hasClass('fc-state-disabled')) {
             $('tbody .fc-other-month .much').attr('style', 'display: none;');
             $('tbody .fc-other-month .boxs').attr('style', 'display: none;');
@@ -871,10 +878,12 @@ function leftbtn() {
             $('.fc-header-left .fc-button-today').attr('style', 'pointer-events: none;');
         }
         timebook();
-        $('.matter').blur();
+        
     })
     $('.fc-header-right').hide();  
 }
+
+
 // 自定义复选框
 function initSelect() {
 	var wuding=$('.fc-header-title h2').text();
@@ -884,29 +893,31 @@ function initSelect() {
 	}else {
 		$('.divine').text(wuding.substring(4,8)+"年"+wuding.substring(0,4));
 	}
+	
 	$('.city-select').slideUp();
+	
     $('.orderSelect').off('click').on('click', function(e) {
     	$(this).parent().parent().parent().siblings().attr('style', 'background: ;');
     	$(this).parent().parent().parent().parent().siblings().find('.fc-day').attr('style', 'background: ;');
     	$(this).parent().parent().parent().attr('style', 'background: #F6F9F9;');
-	    $('.matter').blur();
+	//    $('.matter').blur();
     	$('.boxs .city-select').remove('.city-select');
     	// 添加append() - 在被选元素的结尾插入内容
     	// prepend() - 在被选元素的开头插入内容
     	// empty() - 从被选元素中删除子元素
-        if ($(this).hasClass('selectColor')) {    
+     /*   if ($(this).hasClass('selectColor')) {    
         	$(this).parent().parent().find('.boxs .city-select').remove('.city-select');         	
         	$(this).parent().parent().find('.city-select').removeAttr('style', 'display: none;');
         	$(this).parent().parent().find('.city-select').slideUp();
             $(this).removeClass('selectColor');
-        } else {
+        } else {*/
         	$(this).parent().parent().find('.boxs').prepend( "<div class='city-select' id=''></div>" );
         	sun();
             $('.orderSelect').removeClass('selectColor');
             $(this).parent().parent().find('.city-select').slideDown();
             $(this).addClass('selectColor'); 
             $(this).parent().parent().find('.boxs .city-pavilion').removeClass('hide');
-        }
+       // }
         e.stopPropagation();
     });
     var pro = $('#projectName').text();
@@ -923,8 +934,7 @@ function getCacheValue(){
 	var projectNames = $('#projectName').text();
 	var updateDate = $('#updateDate').val();
 	var cacheItem = new Array();
-	if(cacheData.length !=0){
-		
+	if(cacheData.length !=0){		
 		var cache=cacheData[0].item;
         var isDiff = false;
         for(var k=0;k<arr.length;k++){
@@ -933,8 +943,7 @@ function getCacheValue(){
 	        var jobContent = arr[k].jobContent;
 	        var start = arr[k].start;
 	        var otherItem = cache[k];
-	        var otherInfoItem = cacheData[0];
-	        
+	        var otherInfoItem = cacheData[0];	        
 	        if(cache.length != arr.length){
 		        console.info('不同1');
 		        isDiff = true;
@@ -950,13 +959,13 @@ function getCacheValue(){
 			map['start'] = start;
 			map['end'] = end;
 			map['day'] = day; 
-	        cacheItem.push(map);
+			if(jobContent != ''){
+				cacheItem.push(map);
+			}
 		}
 
 	}
 	
-
-
 	if(cacheData.length == 0){	
 		cacheData = new Array();
 		cacheData.push(new cacheEntity(cacheItem,scheduleId,projectId,projectNames,updateDate));
@@ -1070,7 +1079,7 @@ function initEven(){
     $('.fc-header-left .fc-button-today').removeAttr('style', 'pointer-events: none;');
     timebook();
     $('tbody .fc-other-month .matter').attr('style', 'display: none;');
-    $('.matter').blur();
+ //   $('.matter').blur();
 	
 }
 
