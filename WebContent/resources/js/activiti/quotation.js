@@ -5,7 +5,6 @@
  var titleTr = "";
 $().ready(function() {
 	document.domain = getUrl();
-	$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 	$('body').off('click').on('click',function(){
 		$('ul').slideUp();
 		$('.oredrTypeSelect').removeClass('selectColor');

@@ -56,7 +56,8 @@
 </head>
 
 
-<body>   
+<body style="    overflow: hidden;
+    background: white;">   
 
 <input type="hidden" id="quotationId" value='${quotationId}'>
 <input type="hidden" id="projectId" value='${projectId}'>
