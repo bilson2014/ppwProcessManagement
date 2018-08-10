@@ -25,7 +25,6 @@ $().ready(function() {
 function init(){
 	
 	findModelNames();
-	projectName();
 	initMultSelect();
 	costFunction.init();
 	controlArray.init();
@@ -199,6 +198,7 @@ function clickEven(){
             	 $('#savesProductName').off('click').on('click',function(){
             		 hasId = $('.modelMActive').attr('data-id');
             		 $('#projectId').val(hasId);
+            		 $('#projectName').text($('.modelMActive').text());
                 	 if(hasId == null || hasId == '' || hasId == undefined){
                 		// $('#projectNameError').attr('data-content','请选择项目');
                 	 }else{
@@ -1233,8 +1233,7 @@ function delProduct(id){
 
 
 function initLoadProduct(){
-		getLoadProduct();
-		projectName();
+		getLoadProduct();		
 }
 
 function loadProductEven(){
