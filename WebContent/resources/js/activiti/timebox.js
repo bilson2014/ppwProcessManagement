@@ -1121,6 +1121,7 @@ function loadCache(){
 				}
 			    boxData = new Array();
 				boxData = arrMsg.item;
+				
 		}
 	},  getContextPath() + '/cache/get',$.toJSON({
 		type:1

@@ -18,7 +18,7 @@ $().ready(function() {
     if(!pro){
     	loadSave(); 
     }
-    
+    $(window.parent.document).find('.frame').css('height',800);
    
 });
 
@@ -58,6 +58,7 @@ function getTableInfo(){
 			controlArray.createTable();
 			dataEven();
 			$('.orderItem').attr('data-content','');
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 300);
 		}
 	}, getContextPath() + '/quotation/get/'+$('#projectId').val(),null);
 	}else{
@@ -1506,7 +1507,7 @@ function autoSave(){
 	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
-				||  tax != lastAsc[0].tax	||  free != lastAsc[0].free	
+				||  tax != lastAsc[0].tax	||  free != lastAsc[0].free	||projectName !=lastAsc[0].projectName ||projectId !=lastAsc[0].projectId
 		){
 			isDiffer = true;
 			console.info('不同3');
