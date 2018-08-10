@@ -194,7 +194,7 @@ function dbmatter(){
 			var kous=$(this).val().trim();
 			var nowtimes=$(this).parent().parent().attr('data-date');
 
-			if(boxData.length > 0){
+//			if(boxData.length > 0){
 				var isDiffer = true;
 			
 				
@@ -202,8 +202,8 @@ function dbmatter(){
 					if(nowtimes == boxData[int].start){
 						if(kous == ""||kous == null||kous == undefined){
 							boxData.splice(int, 1);
-							isDiffer = false;
-							break;
+//							isDiffer = false;
+//							break;
 						}else{
 							boxData[int].jobContent = kous;
 						}
@@ -212,23 +212,24 @@ function dbmatter(){
 					} 
 				}
 				if(isDiffer){
-					var map = {};
-					map['jobContent'] = kous;
-					map['start'] = nowtimes;
-					map['end'] = '';
-					map['day'] = ''; 
+					
 					if(kous != ""&&kous != null&&kous != undefined){
+						var map = {};
+						map['jobContent'] = kous;
+						map['start'] = nowtimes;
+						map['end'] = '';
+						map['day'] = ''; 
 						boxData.push(map);
 					}
 				}
-			}else{
+			/*}else{
 				var map = {};
 				map['jobContent'] = kous;
 				map['start'] = nowtimes;
 				map['end'] = '';
 				map['day'] = ''; 
 				boxData.push(map);
-			}
+			}*/
 			
 			console.info(boxData);
     	
@@ -976,27 +977,49 @@ function getCacheValue(){
 	var projectId = $('#projectId').val();
 	var projectNames = $('#projectName').text();
 	var updateDate = $('#updateDate').val();
-	var cacheItem = new Array();
-	if(cacheData.length !=0){		
+	var cacheItem = new Array();	
+	var isDiff = false;
+	
+	if(cacheData.length !=0){	
 		var cache=cacheData[0].item;
-        var isDiff = false;
+		var otherInfoItem = cacheData[0];	
+		 
+		if(cache.length != arr.length || scheduleId != otherInfoItem.scheduleId||projectId != otherInfoItem.projectId||projectNames != otherInfoItem.projectNames||	
+	    		updateDate != otherInfoItem.updateDate
+	    ){
+	        console.info('不同1');
+	        isDiff = true;
+	    }
+		
         for(var k=0;k<arr.length;k++){
 			var day = arr[k].day;
 	        var end = arr[k].end;
 	        var jobContent = arr[k].jobContent;
 	        var start = arr[k].start;
-	        var otherItem = cache[k];
-	        var otherInfoItem = cacheData[0];	        
-	        if(cache.length != arr.length){
-		        console.info('不同1');
-		        isDiff = true;
-	        }else if(day!=otherItem.day || end!=otherItem.end || jobContent!=otherItem.jobContent || start!=otherItem.start ||
-	        		scheduleId != otherInfoItem.scheduleId||projectId != otherInfoItem.projectId||projectNames != otherInfoItem.projectNames||	
-	        		updateDate != otherInfoItem.updateDate
-	        ){
-	        	console.info('不同2');
-	        	isDiff = true;
+	        
+	        if(!isDiff){
+	        	var otherItem = cache[k];
+	        	if(day!=otherItem.day || end!=otherItem.end || jobContent!=otherItem.jobContent || start!=otherItem.start){
+		        	console.info('不同2');
+		        	isDiff = true;
+		        }
 	        }
+	     
+	        var map = {};
+			map['jobContent'] = jobContent;
+			map['start'] = start;
+			map['end'] = end;
+			map['day'] = day; 			
+		    cacheItem.push(map);	
+		}
+	}else if(arr.length>0){
+		isDiff = true;
+		for(var k=0;k<arr.length;k++){
+			var day = arr[k].day;
+	        var end = arr[k].end;
+	        var jobContent = arr[k].jobContent;
+	        var start = arr[k].start;
+	       
 	        var map = {};
 			map['jobContent'] = jobContent;
 			map['start'] = start;
@@ -1006,11 +1029,7 @@ function getCacheValue(){
 		}
 	}
 	
-	if(cacheData.length == 0){	
-		cacheData = new Array();
-		cacheData.push(new cacheEntity(cacheItem,scheduleId,projectId,projectNames,updateDate));
-		saveCache();
-	}else if (isDiff){
+   if (isDiff){
 		cacheData = new Array();
 		cacheData.push(new cacheEntity(cacheItem,scheduleId,projectId,projectNames,updateDate));
 		saveCache();
