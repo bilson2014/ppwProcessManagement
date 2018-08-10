@@ -16,7 +16,7 @@ $().ready(function() {
 	document.domain = getUrl();	
 	initOption();
 	loadSave();
-    setInterval(autoSave,5000);
+    setInterval(autoSave,cacheTime);
     
 });
 
@@ -29,7 +29,7 @@ function loadSave(){
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
 				setReShow(itemRes[0].item,0);	
-				$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
+				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:3
@@ -68,10 +68,10 @@ function getCacheSave(){
 		if(lastItem.length >0){
 			if(lastItem[0].item.length != imgItem.length){
 				isDiffer = true;
-				console.info('不同1');
+
 			}else if(id != lastItem[0].item[int].id || type != lastItem[0].item[int].type||lastItem[0].id != $('#id').val()||lastItem[0].projectId != $('#projectId').val()){
 				isDiffer = true;
-				console.info('不同2');
+
 			}
 		}
 		cacheItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
@@ -95,7 +95,7 @@ function saveCache(){
 	
 	loadData(function(item){
 		
-		console.log('缓存成功');
+
 		
 	}, getContextPath() + '/cache/save', $.toJSON({
 		type:3,

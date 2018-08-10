@@ -25,7 +25,7 @@ $().ready(function() {
 	initPos();
 	imgUpload.init();
 	imgUpdate.init();
-	setInterval(autoSave,5000);
+	setInterval(autoSave,cacheTime);
 	loadSave();
 });
 
@@ -867,7 +867,7 @@ function saveCache(){
 	
 	loadData(function(item){
 		
-		console.log('缓存成功');
+	
 		
 	}, getContextPath() + '/cache/save', $.toJSON({
 		type:2,

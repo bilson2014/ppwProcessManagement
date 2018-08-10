@@ -64,7 +64,7 @@ $().ready(function() {
         loadProductEven();
     });	
     
-    	setInterval(getCacheValue,5000);
+    	setInterval(getCacheValue,cacheTime);
     	 var pro = $('#projectId').val();
     	    if(!pro){
     	    	loadCache(); 
@@ -231,7 +231,7 @@ function dbmatter(){
 				boxData.push(map);
 			}*/
 			
-			console.info(boxData);
+		
     	
 	 });
 	 $('.xuan .boxs').click(function(){
@@ -714,7 +714,7 @@ function submitDateMyDate(num){
 	}, getContextPath() + '/schedule/save',$.toJSON({
 		scheduleId:  $('#scheduleId').val(), 
 		projectId:   $('#projectId').val(),
-		projectName: $('#projectNames').val(),
+		projectName: $('#projectName').text(),
 		updateDate:  $('#updateDate').val(),
 		itemContent:setItem
 	}));  
@@ -879,7 +879,7 @@ function sun(){
 function delselc(){
 	
 	$('.city-info i').on('click',function(e){
-		console.info('del');
+
 		var deltext=$(this).parent().parent().parent().find(".city-info span");
 		if (deltext.length==1){
 // 通过删除都删掉了
@@ -987,7 +987,7 @@ function getCacheValue(){
 		if(cache.length != arr.length || scheduleId != otherInfoItem.scheduleId||projectId != otherInfoItem.projectId||projectNames != otherInfoItem.projectNames||	
 	    		updateDate != otherInfoItem.updateDate
 	    ){
-	        console.info('不同1');
+
 	        isDiff = true;
 	    }
 		
@@ -1000,7 +1000,7 @@ function getCacheValue(){
 	        if(!isDiff){
 	        	var otherItem = cache[k];
 	        	if(day!=otherItem.day || end!=otherItem.end || jobContent!=otherItem.jobContent || start!=otherItem.start){
-		        	console.info('不同2');
+		        	
 		        	isDiff = true;
 		        }
 	        }
@@ -1050,7 +1050,7 @@ function saveCache(){
 	
 		loadData(function(res){
 	           
-			console.info('缓存成功');
+			
 			
 		}, getContextPath() + '/cache/save',$.toJSON({
 			type:1,

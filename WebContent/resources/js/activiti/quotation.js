@@ -11,7 +11,7 @@ $().ready(function() {
 		$('.orderMultSelect ').removeClass('selectColor');
 	});
     init();
-    setInterval(autoSave,5000);
+    setInterval(autoSave,cacheTime);
     
     var pro = $('#projectId').val();
     if(!pro){
@@ -667,7 +667,7 @@ function clearTable(){
 
 function findAutoInfo(userName){
 	loadData(function(res){
-		console.log(res);
+
 		var res = res;
 		var body = $('#productSelect');
 		body.html('');
@@ -1451,7 +1451,7 @@ function autoSave(){
 	if(lastAsc.length > 0){
 		if(lastAsc[0].cacheTable.length != finalAsc.length){
 			isDiffer = true;
-			console.info('不同1');
+		
 		}else {
 			
 			for (var int = 0; int < finalAsc.length; int++) {
@@ -1465,7 +1465,7 @@ function autoSave(){
 				   last.sum != finalS.sum || last.fullJob != finalS.fullJob 
 				){
 					isDiffer = true;
-					console.info('不同2');
+					
 				}
 				
      		}
@@ -1507,9 +1507,10 @@ function autoSave(){
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
 				||  tax != lastAsc[0].tax	||  free != lastAsc[0].free	||projectName !=lastAsc[0].projectName ||projectId !=lastAsc[0].projectId
+				||projectChilden != lastAsc[0].projectChilden
 		){
 			isDiffer = true;
-			console.info('不同3');
+			
 		}
 	}
 	
@@ -1533,7 +1534,7 @@ function saveCache(){
 	
 	loadData(function(item){
 		
-		console.log('缓存成功');
+		
 		
 	}, getContextPath() + '/cache/save', $.toJSON({
 		type:0,
@@ -1612,7 +1613,7 @@ function loadSave(){
 				$('#templateId').val(itemRes[0].templateId);
 			
 				if(itemRes[0].typeId !=''){		
-					console.info('嘿'+itemRes[0].typeId);
+				
 					loadData(function(res){
 						var src = res;
 						var body = $('#orderCome');
