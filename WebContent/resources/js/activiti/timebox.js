@@ -47,9 +47,8 @@ $().ready(function() {
     timebook();
     colorthing();
     loadProductEven();
-    if ( inthings()){
-    	inthings();
-    }   
+    inthings();
+     
     
   //打开项目
     $('#openFrom').on('click',function(){
@@ -66,15 +65,15 @@ $().ready(function() {
     });	
     
     	setInterval(getCacheValue,5000);
-    	var pro = $('#projectId').val();
+    	 var pro = $('#projectId').val();
     	    if(!pro){
     	    	loadCache(); 
     	    }
+    	       	    
 });
 
 function getMap(){	
 	for (var value of myMap.values()) {
-		    var map = {};
 		  	map['jobContent'] = value.jobContent;
 			map['start'] = value.start;
 			map['end'] = value.end;
@@ -97,15 +96,16 @@ function inthings(){
     var urls=getQueryString('projectId');
     if ( urls== null || urls== "" || urls== undefined){
     	$('#openFrom').show();
-    	return false;
     }else {
     	loadProductTable(urls);
     	$('#openFrom').hide();
-    	return true;   	
     }  
 }
 function loadProductTable(id){
-	loadData(function(src){
+	
+	getBoxInfo(0,id); 
+	
+/*	loadData(function(src){
 		if (src.scheduleId!=null && src.scheduleId!="" && src.scheduleId!=undefined){
 			$('#scheduleId').val(src.scheduleId);
 			$('#projectId').val(src.projectId);
@@ -135,7 +135,7 @@ function loadProductTable(id){
 			$('#projectId').val(id);
 			$('#projectNames').val($('#projectName').text());	
 		}	
-	}, getContextPath() + '/schedule/get/'+id,null);
+	}, getContextPath() + '/schedule/get/'+id,null);*/
 }
 
 // 日期样式添加事件
@@ -182,19 +182,44 @@ function dbmatter(){
 	 $(".matter").blur(function(){	 
 		 
 		 	var matter= $(this).val();
+		 	
 			if(matter== null || matter == "" || matter == undefined){
 				$(this).attr('style', 'display: none;');
 			}else{
 				$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
 			}
+			
 			$('tbody .fc-other-month .matter').attr('style','display: none;');
 		
-			var kous=$(this).val();
-			var toSet = false;
+			var kous=$(this).val().trim();
 			var nowtimes=$(this).parent().parent().attr('data-date');
-			if(kous == '' || kous == null || kous == undefined){
-				if(myMap.has(nowtimes)){
-					   myMap.delete(nowtimes);
+
+			if(boxData.length > 0){
+				var isDiffer = true;
+			
+				
+				for (var int = 0; int < boxData.length; int++) {				
+					if(nowtimes == boxData[int].start){
+						if(kous == ""||kous == null||kous == undefined){
+							boxData.splice(int, 1);
+							isDiffer = false;
+							break;
+						}else{
+							boxData[int].jobContent = kous;
+						}
+						isDiffer = false;
+						break;
+					} 
+				}
+				if(isDiffer){
+					var map = {};
+					map['jobContent'] = kous;
+					map['start'] = nowtimes;
+					map['end'] = '';
+					map['day'] = ''; 
+					if(kous != ""&&kous != null&&kous != undefined){
+						boxData.push(map);
+					}
 				}
 			}else{
 				var map = {};
@@ -202,11 +227,11 @@ function dbmatter(){
 				map['start'] = nowtimes;
 				map['end'] = '';
 				map['day'] = ''; 
-				myMap.set(nowtimes,map);
-				toSet = true;
+				boxData.push(map);
 			}
-			if(toSet)
-			getMap();
+			
+			console.info(boxData);
+    	
 	 });
 	 $('.xuan .boxs').click(function(){
 		 $(this).parent().addClass('wolf');	 
@@ -219,6 +244,8 @@ function dbmatter(){
 		 for (var int = 0; int < matter.length; int++) {
 			 if($(matter[int]).val()==""){
 				 $(matter[int]).attr('style','display:none');
+			 }else{
+				 $(matter[int]).attr('style','border: none; resize: none;background: transparent;box-shadow: none');
 			 }
 		}
 	 })
@@ -447,13 +474,22 @@ function timebook(){
 }
 
 // 选中项目的 回显
-function getBoxInfo(getDay){
+function getBoxInfo(getDay,secId){
 	var tibo=$('.fc-day');
 	tibo.each(function(){
 		$(this).find('textarea').val('');
 		$(this).find('textarea').text('');
 		$(this).find('textarea').attr('style','display:none;')
 	});	
+	var id;
+	if(secId!=''||secId!=null||secId!=undefined){
+		id = $('#projectId').val();
+	}
+	else
+	{
+		id = secId;
+	}
+	
 	loadData(function(res){		
 		var arrMsg = res.items;
 		$('#scheduleId').val(res.scheduleId);
@@ -535,7 +571,7 @@ function getBoxInfo(getDay){
 				}				
 			}
 		})*/
-	}, getContextPath() + '/schedule/get/'+$('#projectId').val(),null);
+	}, getContextPath() + '/schedule/get/'+id,null);
 		
 }
 // 加载事件
@@ -776,9 +812,7 @@ function getday(){
 
 // 下拉框
 function sun(){
-	if (inthings()){
-    	inthings();
-    }
+	
     // 多选
     var MulticitySelect1 = $('.city-select').citySelect({
         dataJson: cityData,// json 数据 是HTML显示的列表数据
@@ -813,6 +847,7 @@ function sun(){
             		shus=shaonv.substring(2,shaonv.length-2);
                    	$(".fc-week td[data-date="+demo+"]").find(".matter").val(season+shus);                	          	
                 	$(".fc-week td[data-date="+demo+"]").find(".matter").attr('style', 'display:block;');
+                	$(".fc-week td[data-date="+demo+"]").find(".matter").focus();  
             	}else {    
             		var shus='';
                 	bestval.each(function(){
@@ -821,11 +856,13 @@ function sun(){
                 	}); 
            // 添加当前的内容到当前时间下面
                  	$(".fc-week td[data-date="+time+"]").find(".matter").val(season+shus);                    	            	
-                	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');               
+                	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display:block;');  
+                	$(".fc-week td[data-date="+demo+"]").find(".matter").focus();
             	}
             }else{
             	$(".fc-week td[data-date="+time+"]").find(".matter").attr('style', 'display: none;');
             	$(".fc-week td[data-date="+time+"]").find(".matter").val('');
+            	$(".fc-week td[data-date="+demo+"]").find(".matter").focus();
             }
             delselc();
         }       
@@ -961,10 +998,8 @@ function getCacheValue(){
 			map['start'] = start;
 			map['end'] = end;
 			map['day'] = day; 			
-		    cacheItem.push(map);
-			
+		    cacheItem.push(map);	
 		}
-
 	}
 	
 	if(cacheData.length == 0){	
@@ -1063,7 +1098,6 @@ function loadCache(){
 				}
 			    boxData = new Array();
 				boxData = arrMsg.item;
-				$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 		}
 	},  getContextPath() + '/cache/get',$.toJSON({
 		type:1
