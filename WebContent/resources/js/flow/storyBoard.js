@@ -837,18 +837,18 @@ function autoSave(){
 		
 		 if(setCache.length == 0){
 			setCache = new Array();
-			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime));
+			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime,delImgGroup));
 			saveCache();
 		 }
 		 else if (isDiffer){
 			setCache = new Array();
-			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime));
+			setCache.push(new cacheEntity(setData,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime,delImgGroup));
 			saveCache();
 		 }
 				
 }
 
-function cacheEntity(setImg,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime){
+function cacheEntity(setImg,storyName,dimensionId,pictureRatio,videoStyle,id,projectId,projectName,createTime,delImgGroup){
 	this.scripts =  setImg;
 	this.storyName = storyName;
 	this.dimensionId = dimensionId;
@@ -858,6 +858,7 @@ function cacheEntity(setImg,storyName,dimensionId,pictureRatio,videoStyle,id,pro
 	this.projectId = projectId;
 	this.projectName = projectName;
 	this.createTime = createTime;
+	this.delImgGroup = delImgGroup;
 }
 
 function saveCache(){
@@ -882,6 +883,7 @@ function loadSave(){
 				var itemRes = jQuery.parseJSON(res.msg);
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
+				delImgGroup = itemRes[0].delImgGroup;
 				setReShow(itemRes[0]);	
 				$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 			}

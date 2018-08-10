@@ -627,7 +627,7 @@ function loadProductEven(){
             		 var hasId = $('.modelMActive').attr('data-id');
             		 $('#projectId').val(hasId);
             		 var hasname= $('.modelMActive').text();
-            		 $('#projectNames').val(hasname);
+            		 $('#projectName').val(hasname);
             		 timebook();
             		 submitDateMyDate(0); 
             		 $('#showProductName').hide();               	 

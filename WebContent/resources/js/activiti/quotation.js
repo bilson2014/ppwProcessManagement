@@ -214,7 +214,6 @@ function clickEven(){
         		 $('#errorSaveModel').show();
         		 $('.SaveModelBtn').off('click').on('click',function(){
         			 submitDateMyDate(1);
-        			 $('#projectName').text($('#modelMActive').text());
         		 });
         	 }
          }else{
