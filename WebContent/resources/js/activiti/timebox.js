@@ -627,7 +627,7 @@ function loadProductEven(){
             		 var hasId = $('.modelMActive').attr('data-id');
             		 $('#projectId').val(hasId);
             		 var hasname= $('.modelMActive').text();
-            		 $('#projectName').val(hasname);
+            		 $('#projectName').text(hasname);
             		 timebook();
             		 submitDateMyDate(0); 
             		 $('#showProductName').hide();               	 
@@ -637,7 +637,8 @@ function loadProductEven(){
                  });
         	 }else{
         		 $('#errorSaveModel').show();
-        		 $('.SaveModelBtn').off('click').on('click',function(){      			
+        		 $('.SaveModelBtn').off('click').on('click',function(){    
+
        /* 			 var popo;
         			 popo=chengnum;
         			 popo=popo.replace(/}{/g,'},{');
@@ -676,7 +677,10 @@ function submitDateMyDate(num){
 	var setItem = JSON.stringify(boxData);
 	loadData(function(res){
 	    if (res.result){
-	    	$('#projectName').text($('#projectNames').val());
+	 /*   	if(num == 0){
+	    		$('#projectName').text($('#projectNames').val());
+	    	}
+	    	*/
 	    	$('#errorSaveModel').hide();
 	    	$('#submitCheck').show();
     		$('#isSuccess').text('保存至项目排期表');

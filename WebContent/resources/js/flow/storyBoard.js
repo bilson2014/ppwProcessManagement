@@ -885,7 +885,7 @@ function loadSave(){
 				$('#id').val(itemRes[0].id);
 				delImgGroup = itemRes[0].delImgGroup;
 				setReShow(itemRes[0]);	
-				$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
+				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:2
