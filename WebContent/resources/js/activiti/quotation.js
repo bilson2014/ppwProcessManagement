@@ -1636,6 +1636,7 @@ function loadSave(){
 				}	
 				
 			}
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:0
 		}));	

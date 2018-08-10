@@ -16,6 +16,7 @@ var arrobject = [];
 var myxuan = new Array();
 var cacheData = new Array();
 var boxData = new Array();
+var myMap = new Map();
 
 $().ready(function() {
 	document.domain = getUrl();
@@ -65,12 +66,22 @@ $().ready(function() {
     });	
     
     	setInterval(getCacheValue,5000);
-    	 var pro = $('#projectId').val();
+    	var pro = $('#projectId').val();
     	    if(!pro){
     	    	loadCache(); 
     	    }
-    	       	    
 });
+
+function getMap(){	
+	for (var value of myMap.values()) {
+		    var map = {};
+		  	map['jobContent'] = value.jobContent;
+			map['start'] = value.start;
+			map['end'] = value.end;
+			map['day'] = value.day; 
+			boxData.push(map)
+		}
+}
 
 // 初始化获取地址
 function inthings(){
@@ -169,35 +180,21 @@ function dbmatter(){
 	});
 	
 	 $(".matter").blur(function(){	 
+		 
 		 	var matter= $(this).val();
-		 	
 			if(matter== null || matter == "" || matter == undefined){
 				$(this).attr('style', 'display: none;');
 			}else{
 				$(this).attr('style', 'border: none; resize: none;background: transparent;box-shadow: none;');
 			}
-			
 			$('tbody .fc-other-month .matter').attr('style','display: none;');
 		
 			var kous=$(this).val();
-			
+			var toSet = false;
 			var nowtimes=$(this).parent().parent().attr('data-date');
-			if(boxData.length > 0){
-				var isDiffer = true;
-				for (var int = 0; int < boxData.length; int++) {				
-					if(nowtimes == boxData[int].start){
-						boxData[int].jobContent = kous;
-						isDiffer = false;
-						break;
-					} 
-				}
-				if(isDiffer){
-					var map = {};
-					map['jobContent'] = kous;
-					map['start'] = nowtimes;
-					map['end'] = '';
-					map['day'] = ''; 
-					boxData.push(map);
+			if(kous == '' || kous == null || kous == undefined){
+				if(myMap.has(nowtimes)){
+					   myMap.delete(nowtimes);
 				}
 			}else{
 				var map = {};
@@ -205,10 +202,11 @@ function dbmatter(){
 				map['start'] = nowtimes;
 				map['end'] = '';
 				map['day'] = ''; 
-				boxData.push(map);
+				myMap.set(nowtimes,map);
+				toSet = true;
 			}
-
-    	
+			if(toSet)
+			getMap();
 	 });
 	 $('.xuan .boxs').click(function(){
 		 $(this).parent().addClass('wolf');	 
@@ -246,13 +244,13 @@ function dbmatter(){
 			$('.orderSelect').removeClass('selectColor');
 		}
 		else if ($('.fc-day').hasClass('wolf')||$('.fc-day .xuan').hasClass('wolf')){
-			$(this).find('.matter').blur();					
+		//	$(this).find('.matter').blur();					
 			$(this).removeClass('cheng');	
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
 			$(this).addClass('cheng');
 			$(this).find(".matter").attr('style', 'display: block;');			
-			$(this).find('.matter').focus();			
+		//	$(this).find('.matter').focus();			
 			$(this).removeClass('wolf');				
 			$(this).siblings().removeClass('wolf');
 			$(this).parent().parent().find('.fc-day').removeClass('wolf');
@@ -263,17 +261,17 @@ function dbmatter(){
 			$(this).siblings().removeClass('cheng');
 			$(this).parent().parent().find('.fc-day').removeClass('cheng');
 			$(this).addClass('cheng');			
-			$('.matter').blur();
+		//	$('.matter').blur();
 			if($('.boxs').html()){
 				$(this).siblings().find('.boxs .city-select').remove('.city-select');
 				$(this).parent().siblings().find('.boxs .city-select').remove('.city-select');
 				$(this).attr('style', 'background: ;');		
 			}else {
 				$(this).attr('style', 'background: #F6F9F9;');
-				$('.matter').blur();
+		//		$('.matter').blur();
 				$(this).siblings().attr('style', 'background: ;');
 				$(this).parent().siblings().find('.fc-day').attr('style', 'background: ;');		 
-				$(this).parent().siblings().find('.matter').blur();
+		//		$(this).parent().siblings().find('.matter').blur();
 				// 排除其余月份的 显示textarea框
 				if ($(this).hasClass('fc-other-month')){
 					$(this).find(".matter").attr('style', 'display: none;');
@@ -410,6 +408,9 @@ function timebook(){
 		  $('.cusModel').hide();
 	});		
 }*/
+
+
+
 
 // 回显功能New
 function timebook(){
@@ -1062,6 +1063,7 @@ function loadCache(){
 				}
 			    boxData = new Array();
 				boxData = arrMsg.item;
+				$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
 		}
 	},  getContextPath() + '/cache/get',$.toJSON({
 		type:1
