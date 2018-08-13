@@ -1479,13 +1479,13 @@ function autoSave(){
 		typeId = '';
 	}
 	
-	var projectParentId = $('#projectParentId').attr('data-id');
+	var projectParentId = $('#projectParent').attr('data-id');
 	if(projectParentId == undefined){
 		projectParentId = '';
 	}	
 	var projectParent = $('#projectParent').val();
 	
-	var projectChildenId = $('#projectChildenId').attr('data-id');
+	var projectChildenId = $('#projectChilden').attr('data-id');
 	if(projectChildenId == undefined){
 	   projectChildenId = '';
 	}
@@ -1500,9 +1500,6 @@ function autoSave(){
 	var quotationId = $('#quotationId').val();
 	var projectName = $('#projectName').text();
 	var templateId = $('#templateId').val();
-	
-	
-	
 	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum

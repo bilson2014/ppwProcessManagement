@@ -651,6 +651,8 @@ function detailItem(){
 					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
 				}
 				
+			
+				
 				$('#'+detailDialog+' .noteInfo').html(info.remark);
 				
 				$("#"+detailDialog+" .setShowImg").html('');

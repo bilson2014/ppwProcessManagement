@@ -223,6 +223,10 @@
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
                     </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
+                    </div>
                                      
                      <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin" style="margin-top: 45px;">备注信息</div>
@@ -264,6 +268,10 @@
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
                     </div>
                     
                     <div class="setShowImg">
@@ -308,6 +316,10 @@
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
                     </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
+                    </div>
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin">备注信息</div>
@@ -341,6 +353,10 @@
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
                     </div>
                     
                     <div class="setShowImg">
@@ -383,6 +399,10 @@
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
                     </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
+                    </div>
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
                      <div class="title titleMargin">备注信息</div>
@@ -411,6 +431,10 @@
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
                     </div>
                                      
                     <img class="setInfoImg" src="https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg">
@@ -448,6 +472,10 @@
                     <div class="contentItem">
                          <div class="itemTitle">城市</div>
                          <div class="itemInfo" data-name="city"></div>
+                    </div>
+                     <div class="contentItem">
+                         <div class="itemTitle">推荐人</div>
+                         <div class="itemInfo" data-name="referrerName"></div>
                     </div>
                     
                     <div class="setShowImg">
