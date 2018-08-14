@@ -17,8 +17,13 @@ $().ready(function() {
 	initOption();
 	loadSave();
     setInterval(autoSave,cacheTime);
-    
+    $(window).resize(function() {
+    	 sizeChangeImg();
+    });
+	
+   
 });
+
 
 function loadSave(){
 	
@@ -29,6 +34,7 @@ function loadSave(){
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
 				setReShow(itemRes[0].item,0);	
+				
 				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
@@ -139,6 +145,36 @@ function initImgSizeHor(){
 }
 
 
+function sizeChangeImg(){
+	var needWidth = $('.itemContentFive').css('width');
+	var needHeight = $('.itemContentFive').css('height');	
+	var changeImg = $('.itemContentFive .setSize');
+	$(changeImg).each(function() {
+			var realHeight = $(this).height();
+			var realWidth  = $(this).width();			
+				if(realWidth/realHeight < (4/3)){
+					$(this).css('width',needWidth).css('height','auto');
+				}else{
+					$(this).css('height','auto').css('width',needWidth);
+				}	
+    });
+		
+	var needWidth = $('.itemContentFour').css('width');
+	var needHeight = $('.itemContentFour').css('height');	
+	var changeImg = $('.itemContentFour .setSize');
+	$(changeImg).each(function() {
+			var realHeight = $(this).height();
+			var realWidth  = $(this).width();			
+				if(realWidth/realHeight < (16/9)){
+					$(this).css('height',needHeight).css('width','auto');
+				}else{
+					$(this).css('height','auto').css('width',needWidth);
+				}
+    });
+}
+
+
+
 //打开项目
 function openProejct(){
 	
@@ -179,6 +215,12 @@ function reShow(proId){
 function setReShow(item,num){
 	$('.noImg').hide();
 	$('.toolBtn').removeClass('hide');
+	
+	if(item.length == 0){
+		$('.noImg').show();
+		$('.toolBtn').addClass('hide');
+	}
+	
 	if(num == 0){
 		$('#setProduct').html('');
 	}
@@ -285,6 +327,7 @@ function setReShow(item,num){
 	$(window.parent.parent.parent.document).find('html').scrollTop(0);
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 	$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
+	setSize();
 }
 
 /*  */
@@ -651,8 +694,6 @@ function detailItem(){
 					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
 				}
 				
-			
-				
 				$('#'+detailDialog+' .noteInfo').html(info.remark);
 				
 				$("#"+detailDialog+" .setShowImg").html('');
@@ -663,7 +704,7 @@ function detailItem(){
 						var photos=info.photo.split(";");
 						for(var i=0;i<photos.length;i++){
 							if(photos[i]!=''){
-								$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+photos[i]+'" onerror="'+newPath+'" />');
+								$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+photos[i]+'"  />');
 							}
 						}
 					}
@@ -1051,7 +1092,8 @@ function setHeight(){
 	$(window.parent.document).find('.frame').css('height',$('.addContent').height() + 600);
 	initImgSizeVer();
 	initImgSizeHor();
-	
+	setSize();
+
 }
 
 
@@ -1569,7 +1611,7 @@ var productList_tpl = {
 	    "                       {@if it.num==3}                     "+
 		"		                <div class='itemContentFour itemCommon'>"+
 	    "                       {@/if}"+
-		"	                        <img src='https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg' onerror="+newPath+"/>"+
+		"	                        <img src='https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg'/>"+
 		"	                        <div class='info'>"+
 		"	                                <div class='who'>我 / 员工</div>"+
 		"	                                <div class='price'>￥600</div>"+
@@ -1607,7 +1649,8 @@ var productList_tpl = {
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} onerror="'+newPath+'" />'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}  />'+
+		              '		<div class="showNoImgInfo"><div>{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -1624,7 +1667,8 @@ var productList_tpl = {
 		 ].join(""),
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
-		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} onerror="'+newPath+'">'+
+		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} >'+
+		              '		<div class="showNoImgInfo"><div>{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -1772,3 +1816,39 @@ function successToolTipShow(error){
 function hideSuccessTooltip(){
 		$('.tooltip-success-show').hide();
 	}
+
+function setSize(){
+	
+	var setSize = $('.setSize');
+	
+	$(setSize).each(function() {
+		$(this).error(function(){
+			$(this).parent().find('.showNoImgInfo').show();
+			$(this).hide();
+		});
+    });
+	
+	/*for (var int = 0; int < setSize.length; int++) {
+		
+		$(setSize[int]).load(function(){
+			var url = $(setSize[int]).attr('src');
+			if(!CheckImgExists(url)){
+				$(setSize[int]).parent().find('.showNoImgInfo').show();
+				$(setSize[int]).hide();
+			}
+		});
+		
+	}*/
+}
+
+
+function CheckImgExists(imgurl) {  
+	  var ImgObj = new Image(); //判断图片是否存在  
+	  ImgObj.src = imgurl;  
+	  //没有图片，则返回-1  
+	  if (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0)) {  
+	    return true;  
+	  } else {  
+	    return false;
+      }
+}
