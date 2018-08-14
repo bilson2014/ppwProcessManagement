@@ -26,8 +26,7 @@ $().ready(function() {
 
 
 function loadSave(){
-	
-	
+		
 		loadData(function(res){		
 			if(res.result){
 				var itemRes = jQuery.parseJSON(res.msg);

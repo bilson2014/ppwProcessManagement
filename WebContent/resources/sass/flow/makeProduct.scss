@@ -730,13 +730,14 @@ $padding: 20px;
         }
         .noteInfo {
             width: 500px;
-            min-height: 120px;
-            border: 1px solid #D1D1D1;
+            min-height: 50px;
             border-radius: 4px;
             font-size: 14px;
             color: #666666;
             margin: 0 auto;
+            line-height: 20px;
             padding: 10px 10px 10px 10px;
+            margin-top: -15px;
         }
     }
 } //添加

@@ -202,7 +202,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">导演信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
@@ -240,7 +239,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">演员信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
@@ -295,7 +293,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">设备信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent type2">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">名称</div>
                          <div class="itemInfo" data-name="quoTypeName"></div>
@@ -333,7 +330,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">场地信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent type2">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
@@ -378,7 +374,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">摄影师信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
@@ -415,7 +410,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">人员信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
@@ -448,7 +442,6 @@
            <div class="showInfoModel">
                <div class="infoTitle"><div class="title">服装道具信息</div><div class="closeBtn"></div></div>
                <div class="showInfoContent type2">
-                    <div class="title">基本信息</div>
                     <div class="contentItem">
                          <div class="itemTitle">姓名</div>
                          <div class="itemInfo" data-name="name"></div>
