@@ -228,7 +228,7 @@ public class QuotationServiceImpl implements QuotationService {
 
 				if(sum!=Double.parseDouble(item.getSum())){
 					result.setResult(false);
-					result.setErr(item.getTypeName()+"结果有误.");
+					result.setErr("'"+item.getDetailName()+"'计算结果不一致，请核对单价后重新保存.");
 					return result;
 				}
 			}
@@ -237,7 +237,7 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		if(subTotal.compareTo(new BigDecimal(pmsQuotation.getSubTotal()))!=0){
 			result.setResult(false);
-			result.setErr("合计结果有误.");
+			result.setErr("不含税价格计算结果不一致，请核对后重新保存.");
 			return result;
 		}
 		
@@ -248,7 +248,7 @@ public class QuotationServiceImpl implements QuotationService {
 		}
 		if(new BigDecimal(pmsQuotation.getTotal()).compareTo(total)!=0){
 			result.setResult(false);
-			result.setErr("最终结果有误.");
+			result.setErr("含税总价格计算结果不一致，请核对税率及优惠金额后重新保存.");
 			return result;
 		}
 		return null;
