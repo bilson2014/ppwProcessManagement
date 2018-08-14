@@ -266,7 +266,7 @@ public class ProductionServiceImpl implements ProductionService {
 					device.setPhoto(detailType.getPhoto());
 				}
 			}
-			return device;//setTypeShowName(device);
+			return setShowReferrer(device);//setTypeShowName(device);
 		} else if (ProductionResource.studio.getKey().equals(type)) {
 			//场地
 			PmsProductionStudio studio = pmsProductionStudioFacade.getById(id);
@@ -299,6 +299,16 @@ public class ProductionServiceImpl implements ProductionService {
 			if(type!=null)
 				entity.setQuoTypeName(type.getTypeName());
 		}
+//		if(entity!=null && ValidateUtil.isValid(entity.getReferrer())) {
+//			PmsEmployee employee=pmsEmployeeFacade.findEmployeeById(Long.parseLong(entity.getReferrer()));
+//			if(employee!=null)
+//				entity.setReferrerName(employee.getEmployeeRealName());
+//		}
+//		return entity;
+		return setShowReferrer(entity);
+	}
+	
+	private BaseProductionEntity setShowReferrer(BaseProductionEntity entity) {
 		if(entity!=null && ValidateUtil.isValid(entity.getReferrer())) {
 			PmsEmployee employee=pmsEmployeeFacade.findEmployeeById(Long.parseLong(entity.getReferrer()));
 			if(employee!=null)
