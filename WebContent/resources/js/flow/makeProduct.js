@@ -10,6 +10,7 @@ var actorZones=[];
 var cameramanSkills=[];
 var clothingTypes=[];
 var accredits=[];
+var props = [];
 
 $().ready(function() {
 	
@@ -17,11 +18,10 @@ $().ready(function() {
 	initOption();
 	loadSave();
     setInterval(autoSave,cacheTime);
-    $(window).resize(function() {
-    	 sizeChangeImg();
-    });
-	
-   
+    window.onresize=function(){
+    	sizeChangeImg();
+    } 
+    
 });
 
 
@@ -32,8 +32,7 @@ function loadSave(){
 				var itemRes = jQuery.parseJSON(res.msg);
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
-				setReShow(itemRes[0].item,0);	
-				
+				setReShow(itemRes[0].item,0);					
 				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
@@ -676,6 +675,7 @@ function detailItem(){
 				$("#info7 .infoTitle .title").html('服装信息');
 			}else if(type=='props'){
 				detailDialog='info7';
+				info.type=getTextForDetail(info.type,props);
 				info.accredit=getTextForDetail(info.accredit,accredits);	
 				$("#info7 .infoTitle .title").html('道具信息');
 			}else if(type=='lighter' || type=='editor' || type=='packer'
@@ -693,8 +693,7 @@ function detailItem(){
 					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
 				}
 				
-				$('#'+detailDialog+' .noteInfo').html(info.remark);
-				
+				$('#'+detailDialog+' .noteInfo').html(info.remark);				
 				$("#"+detailDialog+" .setShowImg").html('');
 				$('#'+detailDialog+' .setInfoImg')[0].src='';
 				if(info.mainPhoto!=undefined && info.mainPhoto!=null && info.mainPhoto!=''){
@@ -977,7 +976,7 @@ function initSelectInfo(){
 	//服装
 	if(!$("#clothingTypeUl").hasClass('hasInfo')){
 		loadData(function(src){
-			 clothingTypes=src.accreditList;
+			 clothingTypes=src.clothingTypeList;
 		     $("#clothingTypeUl").html('');
 		     $("#clothingTypeUl").addClass('hasInfo');
 		     for (var int = 0; int < src.clothingTypeList.length; int++) {
@@ -996,6 +995,7 @@ function initSelectInfo(){
 	if(!$("#propsAccreditUl").hasClass('hasInfo')){
 		loadData(function(src){
 			 accredits=src.accreditList;
+			 props = src.propsTypeList;
 		     $("#propsAccreditUl").html('');
 		     $("#propsAccreditUl").addClass('hasInfo');
 		     for (var int = 0; int < src.accreditList.length; int++) {
@@ -1092,7 +1092,7 @@ function setHeight(){
 	initImgSizeVer();
 	initImgSizeHor();
 	setSize();
-
+	checkWordsLength();
 }
 
 
@@ -1169,6 +1169,7 @@ function searchDevice(){
 		initAddCanEven();
 		detailItem();
 		setHeight();
+
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
 		city:city,
@@ -1358,29 +1359,38 @@ function setCheckRedCommon(){
 }
 
 function setCheckRedDevice(){
-	
+	var itemContent  = $('.itemContent .itemCommon');
 	var theAddItem = $('#addSetProductInfo').find('.itemCommon');
-	for (var int3 = 0; int3 < theAddItem.length; int3++) {
-		var subId = $(theAddItem[int3]).attr('data-subtypeid');
-		var itemContent  = $('.itemContent');
-		var itemContentNum;
-		for (var int = 0; int < itemContent.length; int++) {
-			var hasSubId = $(itemContent[int]).attr('data-id');
-			if(hasSubId == subId){
-				itemContentNum = $(itemContent[int]).find('.itemCommon');
-				if(itemContentNum.length > 0){
-					for (var int2 = 0; int2 < theAddItem.length; int2++) {
-						 var itemId = $(theAddItem[int2]).attr('data-id');
-						 for (var int3 = 0; int3 < itemContentNum.length; int3++) {
-							 if(itemId == $(itemContentNum[int3]).attr('data-id')){
-								 $(theAddItem[int2]).addClass('itemCommonRed');
-							 }
+	
+	if(itemContent.length > 0){
+			for (var int3 = 0; int3 < theAddItem.length; int3++) {
+				var subId = $(theAddItem[int3]).attr('data-subtypeid');
+				var dataId = $(theAddItem[int3]).attr('data-id');
+				var itemContentNum;
+				for (var int = 0; int < itemContent.length; int++) {
+					var hasSubId = $(itemContent[int]).attr('data-subtypeid');
+					var hasDataId = $(itemContent[int]).attr('data-id');
+					
+					if(subId == hasSubId && dataId == hasDataId){
+						 $(theAddItem[int3]).addClass('itemCommonRed');
+					}
+					
+					/*if(hasSubId == subId){
+						 $(theAddItem[int3]).addClass('itemCommonRed');
+						if(itemContentNum.length > 0){
+							for (var int2 = 0; int2 < theAddItem.length; int2++) {
+								 var itemId = $(theAddItem[int2]).attr('data-id');
+								 for (var int3 = 0; int3 < itemContentNum.length; int3++) {
+									 if(itemId == $(itemContentNum[int3]).attr('data-id')){
+										
+									 }
+								}
+							}
 						}
 					}
-				}
+*/				}
 			}
-		}
-	}
+	   }
 }
 
 
@@ -1649,7 +1659,7 @@ var productList_tpl = {
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}  />'+
-		              '		<div class="showNoImgInfo"><div>{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
+		              '		<div class="showNoImgInfo"><div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -1667,7 +1677,7 @@ var productList_tpl = {
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} >'+
-		              '		<div class="showNoImgInfo"><div>{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
+		              '		<div class="showNoImgInfo"><div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if}">{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -1851,3 +1861,37 @@ function CheckImgExists(imgurl) {
 	    return false;
       }
 }
+
+function checkWordsLength(){
+	
+	var wordH = $('.showWordFour');
+	if(wordH.length > 0){
+		for (var int = 0; int < wordH.length; int++) {
+			 var nowItem = $(wordH[int]);
+			 var str = nowItem.text();
+			 if(str.length > 8){
+				 str=str.substring(0,8);
+				 nowItem.text(str+'...');
+			 }
+		}
+	}
+	
+	var wordV = $('.showWords');
+	if(wordV.length > 0){
+		for (var int = 0; int < wordV.length; int++) {
+			 var nowItem = $(wordV[int]);
+			 var str = nowItem.text();
+			 if(str.length > 6){
+				 str=str.substring(0,6);
+				 nowItem.text(str);
+				 nowItem.parent().find('.showWords').append('<div>.</div>');
+				 nowItem.parent().find('.showWords').append('<div>.</div>');
+				 nowItem.parent().find('.showWords').append('<div>.</div>');
+			 }
+		}
+	}
+
+	
+}
+
+

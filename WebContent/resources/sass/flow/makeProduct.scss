@@ -191,8 +191,8 @@ $smallDiv: 730px;
 $padding: 20px;
 
 
-.showWord{
-	position: absolute;
+.showWord {
+    position: absolute;
     width: 100%;
     text-align: center;
     font-size: 14px;
@@ -201,8 +201,8 @@ $padding: 20px;
     top: 46%;
 }
 
-.setSize{
-	position: absolute;
+.setSize {
+    position: absolute;
     top: 0px;
     left: 0px;
     bottom: 0px;
@@ -277,6 +277,23 @@ $padding: 20px;
             @media screen and (max-width: 775px) {
                 width: ($smallDiv - $padding*2)/3;
                 height: ($smallDiv - $padding*2)/3/3*4;
+            }
+
+
+            .showNoImgInfo {
+                .showWords {
+                    width: 20px !important;
+                    position: relative;
+                    top: 50% !important;
+                    left: 45% !important;
+                    transform: translateY(-55%);
+                    font-size: 22px;
+                    line-height: 25px;
+                    div{
+                    	height: 5px !important;
+                    	line-height: 0px !important;
+                    }
+                }
             }
         }
 
@@ -353,21 +370,21 @@ $padding: 20px;
                 }
             }
 
-            .showNoImgInfo{
-	            position: absolute;
-	            z-index: 2;
-	            background: #ebebeb;
-	            font-size: $font-size-base;
-	            color:$gray-light;
-	            width: 100%;
-	            height: 100%;
-	            font-weight: 700;
-	            text-align: center;
-	            display: none;
-	            div{
-	            	position: relative;
-	            	top:45%;
-	            }
+            .showNoImgInfo {
+                position: absolute;
+                z-index: 2;
+                background: #ebebeb;
+                font-size: $font-size-lg;
+                color: $gray-light;
+                width: 100%;
+                height: 100%;
+                font-weight: 710;
+                text-align: center;
+                display: none;
+                .showWordFour{
+                    position: relative;
+                    top: 45%;
+                }
             }
 
 
@@ -699,7 +716,7 @@ $padding: 20px;
         .setInfoImg {
             width: 190px;
             position: absolute;
-            top:0px;
+            top: 0px;
             right: 90px;
         }
 
