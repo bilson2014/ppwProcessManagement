@@ -692,8 +692,10 @@ function detailItem(){
 					var itemInfo=itemInfos[i];
 					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
 				}
-				
-				$('#'+detailDialog+' .noteInfo').html(info.remark);				
+				var remake = info.remark;
+				var htmlMake = remake.replace(/\r\n/g,"<br>");
+				htmlMake = htmlMake.replace(/\n/g,"<br>");
+				$('#'+detailDialog+' .noteInfo').html(htmlMake);				
 				$("#"+detailDialog+" .setShowImg").html('');
 				$('#'+detailDialog+' .setInfoImg')[0].src='';
 				if(info.mainPhoto!=undefined && info.mainPhoto!=null && info.mainPhoto!=''){
