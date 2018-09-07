@@ -34,7 +34,7 @@ public class UploadController extends BaseController{
 	@RequestMapping("/web/upload")
 	public BaseMsg getAllProvince(HttpServletRequest request,MultipartFile file,String oldUrl) {
 		// 检测视频是否大于限制
-		final BaseMsg msg = checkFile(file,1024l);
+		final BaseMsg msg = checkFile(file,2048l);
 		if (0 == msg.getCode()) {
 			String fileId = FastDFSClient.uploadFile(file);
 			//删除旧地址

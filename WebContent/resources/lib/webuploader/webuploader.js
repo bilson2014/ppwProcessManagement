@@ -2159,8 +2159,11 @@
              *     // 此属性可能会影响图片自动纠正功能
              *     noCompressIfLarger: false,
              *
-             *     // 单位字节，如果图片大小小于此值，不会采用压缩。
+             *     // 单位字节，如果图片大小小于此值，不会采用压缩。 修改默认值为1M
              *     compressSize: 0
+             *     
+             *     //png有损压缩,设置成TRUE后png采用JPEG方式进行有损压缩，为处理png透明背景变黑问题，添加白色背景色
+             *     pngLossy:true
              * }
              * ```
              */
@@ -2170,7 +2173,9 @@
                 quality: 90,
                 allowMagnify: false,
                 crop: false,
-                preserveHeaders: true
+                preserveHeaders: true,
+                compressSize:1024*1024,
+                pngLossy:true
             }
         });
     
@@ -2282,8 +2287,8 @@
     
                 // 只压缩 jpeg 图片格式。
                 // gif 可能会丢失针
-                // bmp png 基本上尺寸都不大，且压缩比比较小。
-                if ( !opts || !~'image/jpeg,image/jpg'.indexOf( file.type ) ||
+                // bmp png 基本上尺寸都不大，且压缩比比较小。--改为压缩 ：JPEG方式有损压缩，透明背景改白色
+                if ( !opts || !~'image/jpeg,image/jpg,image/png'.indexOf( file.type ) ||
                         file.size < compressSize ||
                         file._compressed ) {
                     return;
@@ -6431,7 +6436,13 @@
                             return blob;
                         }
                     } else {
-                        blob = Util.canvasToDataUrl( canvas, type );
+                    	if(opts.pngLossy){
+                    		// png 有损压缩
+                    		blob = Util.canvasToDataUrl( canvas, 'image/jpeg', opts.quality );
+                    	}else{
+                    		blob = Util.canvasToDataUrl( canvas, type );
+                    	}
+                        
                     }
     
                     blob = Util.dataURL2Blob( blob );
@@ -6596,11 +6607,18 @@
             // blob/master/src/megapix-image.js
             _renderImageToCanvas: (function() {
     
+            	
                 // 如果不是ios, 不需要这么复杂！
                 if ( !Base.os.ios ) {
                     return function( canvas ) {
                         var args = Base.slice( arguments, 1 ),
                             ctx = canvas.getContext('2d');
+                        
+                        if(this.options.pngLossy && this.type === 'image/png'){
+                        	//铺底色
+                            ctx.fillStyle = "#fff";
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        }
     
                         ctx.drawImage.apply( ctx, args );
                     };
@@ -6701,6 +6719,7 @@
                         iw /= 2;
                         ih /= 2;
                     }
+                   
     
                     ctx.save();
                     tmpCanvas = document.createElement('canvas');

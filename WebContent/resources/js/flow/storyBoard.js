@@ -1,5 +1,5 @@
-var image_max_size = 1024*1024; // 250KB
-var image_err_msg = '图片大小超出1MB上限,请重新上传!';
+var image_max_size = 20*1024*1024; // 20M
+var image_err_msg = '图片大小超出20MB上限,请重新上传!';
 var upload_Video;
 var upload_Update;
 var successIntervalObj; // timer变量，控制时间
@@ -633,7 +633,7 @@ var imgUpload = {
 						reUpdate();
 						$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 				}else{
-					successToolTipShow('图片获取失败');
+					successToolTipShow('图片处理失败,请联系客服协助您上传(400-660-9728)');
 				}
 				
 			});
@@ -644,7 +644,7 @@ var imgUpload = {
 				 if (type=="Q_TYPE_DENIED"){
 					 	successToolTipShow('请上传正确格式的图片');
 			        }else if(type=="F_EXCEED_SIZE"){
-						successToolTipShow('请上传1M以内的图片');
+						successToolTipShow(image_err_msg);
 			        }
 			});
 
@@ -724,7 +724,7 @@ var imgUpdate = {
 						initImgSize();
 						$('.updateImg').removeClass('hasUpdate');
 				}else{
-					successToolTipShow('图片获取失败');
+					successToolTipShow('图片处理失败,请联系客服协助您上传(400-660-9728)');
 				}
 				
 			});
@@ -743,7 +743,7 @@ var imgUpdate = {
 				 if (type=="Q_TYPE_DENIED"){
 					 	successToolTipShow('请上传正确格式的图片');
 			        }else if(type=="F_EXCEED_SIZE"){
-						successToolTipShow('请上传1M以内的图片');
+						successToolTipShow(image_err_msg);
 			        }
 			});
 
