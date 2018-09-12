@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.paipianwang.activiti.dao.StorageLocateDao;
+import com.paipianwang.pat.common.config.PublicConfig;
+import com.paipianwang.pat.common.constant.PmsConstant;
 import com.paipianwang.pat.common.entity.PmsResult;
 import com.paipianwang.pat.common.entity.SessionInfo;
 import com.paipianwang.pat.common.util.DateUtils;
@@ -247,15 +250,19 @@ public class ContinuityController extends BaseController {
 			throw new RuntimeException("分镜脚本不存在");
 		}
 		pmsContinuity.scriptToEntity();
-
+		
+		String path=PublicConfig.FDFS_TRACKER_INNER_PATH;
+		String[] paths=path.split(",");
+		
 		for (int i = 0; i < pmsContinuity.getScripts().size(); i++) {
 			PmsContinuity.ShootingScript script = pmsContinuity.getScripts().get(i);
 			Map<String, Object> item = new HashMap<>();
 			item.put("num", i + 1);
-			item.put("title",script.getType()==null?"": ContinuityScriptType.getEnum(script.getType()).getText());
+			item.put("title",ValidateUtil.isValid(script.getType())?ContinuityScriptType.getEnum(script.getType()).getText():"");
 			item.put("des", script.getDescription()==null?"":script.getDescription());
 			
-			item.put("img",ValidateUtil.isValid(script.getPicture())?GenerateFileByTemplate.getFullImgPath(script.getPicture()):"defaultImg.jpg");
+//			item.put("img",ValidateUtil.isValid(script.getPicture())?GenerateFileByTemplate.getFullImgPath(script.getPicture()):"defaultImg.jpg");
+			item.put("img",ValidateUtil.isValid(script.getPicture())?"http://"+paths[i%paths.length]+"/"+script.getPicture():"defaultImg.jpg");
 			questions.add(item);
 		}
 		
@@ -285,4 +292,5 @@ public class ContinuityController extends BaseController {
 		return pmsProjectFlowFacade.getSynerteticProjectByName(session.getReqiureId(), pmsProjectFlow.getProjectName());
 	}
 
+	
 }
