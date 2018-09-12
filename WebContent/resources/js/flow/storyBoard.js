@@ -320,8 +320,8 @@ function getValue(projectId,who){
 		   successToolTipShow('文件制作中');
 		   xhr.onload = function () {
 		       // 请求完成
-		       if (this.status === 200) {
-		           // 返回200
+		       if (this.status === 200) {  
+		    	   // 返回200
 		    	   var name = $('#projectName').text();
 		    	   if(name == "未命名"){
 		    		   name = "分镜脚本"
@@ -330,7 +330,16 @@ function getValue(projectId,who){
 		    	   }
 		    	   successToolTipShow('导出成功');
 		           var blob = this.response;
-		           var reader = new FileReader();
+
+			   // 转换完成，创建一个a标签用于下载
+		           var a = document.createElement('a');
+		           a.download = name+'.pdf';
+		           a.href =URL.createObjectURL(blob);
+		           $("body").append(a);    // 修复firefox中无法触发click
+		           a.click();
+		           $(a).remove();
+
+		         /*  var reader = new FileReader();
 		           reader.readAsDataURL(blob);    // 转换为base64，可以直接放入a表情href
 		           reader.onload = function (e) {
 		               // 转换完成，创建一个a标签用于下载
@@ -341,6 +350,7 @@ function getValue(projectId,who){
 		               a.click();
 		               $(a).remove();
 		           }
+		           */
 		       }else{
 		    	   $('#madeModel').hide();
 		    	   successToolTipShow('导出失败');
