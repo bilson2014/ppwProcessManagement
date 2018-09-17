@@ -428,7 +428,11 @@ var controlArray = {
 			var dayTime = $('#dayTime').val();
 			var type = $('#type').text();
 			var typeId = $('#type').attr('data-id');
+			var typeTime = $('#type').attr('data-time');
 			var projectParent = $('#projectParent').val();
+			var projectParentId = $('#projectParent').attr('data-id');
+			var projectPTime= $('#projectParent').attr('data-ptime');
+			var projectCTime= $('#projectParent').attr('data-ctime');
 			var projectParentId = $('#projectParent').attr('data-id');
 			var projectChilden = $('#projectChilden').text();
 			var projectChildenId = $('#projectChilden').attr('data-id');
@@ -456,7 +460,10 @@ var controlArray = {
 			map['unitPrice'] = unitPrice;
 			map['sum'] = sum;
 			map['description'] = dir;
-			map['fullJob'] = projectFull;		
+			map['fullJob'] = projectFull;	
+			map['typeDate'] = typeTime;
+			map['itemDate'] = projectPTime;
+			map['detailDate'] = projectCTime;
 			finalAsc.push(new cTable(map));
 			/*finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
 			finalAsc = orderByTwo();*/
@@ -714,7 +721,7 @@ function reLoadItem(item){
 
 function createType(item){ 
 		var html = [
-		    		'<li data-id="'+item.typeId+'">'+item.typeName+'</li>'
+		    		'<li data-id="'+item.typeId+'"  data-time="'+item.createDate+'">'+item.typeName+'</li>'
 		    	].join('');
 		    	return html;
 	}
@@ -734,6 +741,8 @@ function initMultType(){
 		$('.oredrTypeSelect').removeClass('selectColor');
 		$('#type').text($(this).text());
 		$('#type').attr("data-id",$(this).attr('data-id'));
+		var s = $(this).attr('data-time');
+		$('#type').attr("data-time",$(this).attr('data-time'));
 		$('#orderType').slideUp();
 		var typeId = $(this).attr('data-id');
 		$('#projectChilden').text('');
@@ -786,11 +795,17 @@ function cTable(map) {
 	this.sum = map.sum;
 	
 	this.fullJob = map.fullJob;
+	
+	this.typeDate = map.typeDate;
+	
+	this.itemDate = map.itemDate;
+	
+	this.detailDate = map.detailDate;
 }
 
 function getTrTitle(item){
 	    	if(item.typeId != titleTr){
-	    		setTitle = '<tr class="titleTr"><td colSpan="8">'+item.typeName+'</td></tr>'
+	    		setTitle = '<tr class="titleTr"><td colSpan="8">'+item.typeName+''+item.typeDate+'</td></tr>'
 	    		titleTr = item.typeId;
 	    		return setTitle;
 	    	}else{
@@ -812,8 +827,8 @@ function createMultOption(item,index){
 		var html = [
 			        ''+hasTitle+'',
 		    	    '<tr>',
- 		    		'<td>'+item.itemName+'</td>',
- 		    		'<td>'+item.detailName+'</td>',
+ 		    		'<td>'+item.itemName+''+item.itemDate+'</td>',
+ 		    		'<td>'+item.detailName+''+item.detailDate+'</td>',
  		    		'<td class="dayTd" >'+days+'</td>',
  		    		'<td class="dayTd" >'+quantity+'</td>',
  		    		'<td class="payCost payBaseCost dayTd"><input class="updateBase" data-id='+index+' style="width:80px" value='+item.unitPrice+'></td>',
@@ -827,14 +842,14 @@ function createMultOption(item,index){
 function createDetail(item){ 
 	var setChildren = "";
 	for (var i = 0; i < item.children.length; i++) {
-		setChildren += ' <div data-full="'+item.children[i].fullJob+'" data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
+		setChildren += ' <div data-time="'+item.children[i].createDate+'"  data-full="'+item.children[i].fullJob+'" data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
 	}
 		var html = [
 					  ' <li>                                                   ',
 				      '   <div class="multSelect">                             ',
 				      '        <div class="multTitle">                         ',
 				      '            <img src="/resources/images/index/quoIcon.png" >   ',
-				      '            <div class="title"  data-id="'+item.typeId+'">'+item.typeName+'</div>               ',
+				      '            <div class="title"  data-id="'+item.typeId+'" data-time="'+item.createDate+'">'+item.typeName+'</div>               ',
 				      '        </div>                                          ',
 					  '        <div class="productList" id="productList">      ',
 					  '     '+setChildren+'                                    ',
@@ -867,8 +882,12 @@ function initMultSelect(){
 		$('#projectChilden').attr('data-full',$(this).attr('data-full'));
 		var parentText = $(this).parent().parent().find('.multTitle').find('div').text();
 		var parentId = $(this).parent().parent().find('.multTitle').find('div').attr('data-id');
+		var parentTime = $(this).parent().parent().find('.multTitle').find('div').attr('data-time');
+		var myTime = $(this).attr('data-time');
 		$('#projectParent').val(parentText);
 		$('#projectParent').attr('data-id',parentId);
+		$('#projectParent').attr('data-pTime',parentTime);
+		$('#projectParent').attr('data-cTime',myTime);
 		$('#setDir').html($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
 		var unitPrice = $('#projectChilden').attr('data-price');
@@ -1004,7 +1023,7 @@ function isInteger(obj) {
 	}else{
 		return false;
 	}
-	return false;
+	    return false;
 }
 
 
@@ -1426,19 +1445,94 @@ function sortItem(resources){
 }
 
 function compare(nodeA,nodeB){
-	if(nodeA.typeId > nodeB.typeId){
-		return 1;
-	}else if(nodeA.typeId < nodeB.typeId){
-		return -1;
-	}else{
-		if(nodeA.itemId > nodeB.itemId){
-			return 1;
-		}else if(nodeA.itemId < nodeB.itemId){
-			return -1;
+
+		
+		var typeSort=compareDateAndId(nodeA.typeDate,nodeB.typeDate,nodeA.typeId,nodeB.typeId);
+		if(typeSort==0){
+			var itemSort=compareDateAndId(nodeA.itemDate,nodeB.itemDate,nodeA.itemId,nodeB.itemId);
+			if(itemSort==0){
+				return compareDateAndId(nodeA.detailDate,nodeB.detailDate,nodeA.detailId,nodeB.detailId);
+			}else{
+				return itemSort;
+			}
+		}else{
+			return typeSort;
 		}
 	}
-	return 0;
+
+function compareDateAndId(dateA,dateB,IdA,IdB){
+		if(dateA==null || dateB==null || dateA==dateB){
+			if(IdA > IdB){
+				return 1;
+			}else if(IdA < IdB){
+				return -1;
+			}else{
+				return 0;
+			}
+		}else if(dateA > dateB){
+			return 1;
+		}else{
+			return -1;
+		}
 }
+
+//function compare(nodeA,nodeB){
+//	
+//	
+//	if(nodeA.createDate == nodeB.createDate||nodeA.createDate==null|| nodeB.createDate==null ){
+//		if(nodeA.typeId > nodeB.typeId){
+//			return 1;
+//		}else if(nodeA.typeId < nodeB.typeId){
+//			return -1;
+//		}else{
+//			if(nodeA.itemDate == nodeB.itemDate||nodeA.itemDate==null|| nodeB.itemDate==null ){
+//					if(nodeA.itemId > nodeB.itemId){
+//							return 1;
+//						}else if(nodeA.itemId < nodeB.itemId){
+//							return -1;
+//						}else{
+//							if(nodeA.detailDate == nodeB.detailDate||nodeA.detailDate==null|| nodeB.detailDate==null ){
+//								if(nodeA.detailId > nodeB.detailId){
+//									return 1;
+//								}else if(nodeA.detailId < nodeB.detailId){
+//									return -1;
+//								}
+//							}else{
+//								if(nodeA.detailDate > nodeB.detailDate){
+//									return 1;
+//								}else{
+//									return -1;
+//								}
+//							}
+//						}
+//			}else{
+//				if(nodeA.itemDate > nodeB.itemDate){
+//					return 1;
+//				}else{
+//					return -1;
+//				}
+//			}
+//		}
+//	}else{
+//		if(nodeA.typeDate > nodeB.typeDate){
+//			return 1;
+//		}else{
+//			return -1;
+//		}
+//	}
+//	
+//	return 0;
+//}
+
+//if(nodeA.createDate == nodeB.createDate){
+//    
+//	if(nodeA.pCreateDate > nodeB.pCreateDate){
+//		return 1;
+//	}else if(nodeA.pCreateDate < nodeB.pCreateDate){
+//		return -1;
+//	}
+//	
+//}else{
 
 
 //缓存
@@ -1558,7 +1652,10 @@ function getcacheTable(){
 		map['unitPrice'] = finalAsc[int].unitPrice;
 		map['sum'] = finalAsc[int].sum;
 		map['description'] = finalAsc[int].description;
-		map['fullJob'] = finalAsc[int].fullJob;		
+		map['fullJob'] = finalAsc[int].fullJob;	
+		map['typeDate'] = finalAsc[int].typeDate;
+		map['itemDate'] = finalAsc[int].itemDate;
+		map['detailDate'] = finalAsc[int].detailDate;
 		cacheTable.push(new cTable(map));
 		
 	}
@@ -1627,7 +1724,7 @@ function loadSave(){
 								
 				if(itemRes[0].cacheTable.length > 0){
 					finalAsc = itemRes[0].cacheTable;
-					//sortItem(finalAsc);
+					sortItem(finalAsc);
 					controlArray.createTable();
 				}	
 				
