@@ -190,7 +190,7 @@ public class ProductionServiceImpl implements ProductionService {
 			picScale=ProductionResource.cameraman.getPicScale();
 		}else if(ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
 				||ProductionResource.packer.getKey().equals(type) ||ProductionResource.colorist.getKey().equals(type)
-				||ProductionResource.propMaster.getKey().equals(type) ||ProductionResource.artist.getKey().equals(type)
+				||ProductionResource.propMaster.getKey().equals(type) //||ProductionResource.artist.getKey().equals(type)
 				||ProductionResource.costumer.getKey().equals(type) ||ProductionResource.dresser.getKey().equals(type)
 				||ProductionResource.mixer.getKey().equals(type)) {
 			paramMap.put("profession",type);
@@ -255,7 +255,7 @@ public class ProductionServiceImpl implements ProductionService {
 			PmsProductionDevice device = pmsProductionDeviceFacade.getById(id);
 			if (device != null && ValidateUtil.isValid(device.getType())) {
 				PmsQuotationType deviceType = pmsQuotationTypeFacade.getById(Long.parseLong(device.getType()));
-				device.setTypeName(deviceType.getTypeName());
+				device.setTypeName(deviceType!=null?deviceType.getTypeName():"");
 //				device.setPhoto(deviceType.getPhoto());
 			}
 			if(device!=null && device.getTypeId()!=null) {
@@ -281,7 +281,8 @@ public class ProductionServiceImpl implements ProductionService {
 		} else if (ProductionResource.lighter.getKey().equals(type) || ProductionResource.editor.getKey().equals(type)
 				|| ProductionResource.packer.getKey().equals(type) || ProductionResource.colorist.getKey().equals(type)
 				|| ProductionResource.propMaster.getKey().equals(type)
-				|| ProductionResource.artist.getKey().equals(type) || ProductionResource.costumer.getKey().equals(type)
+				//|| ProductionResource.artist.getKey().equals(type) 
+				|| ProductionResource.costumer.getKey().equals(type)
 				|| ProductionResource.dresser.getKey().equals(type) || ProductionResource.mixer.getKey().equals(type)) {
 			//其他职业
 			return setShowName(pmsProductionPersonnelFacade.getById(id));

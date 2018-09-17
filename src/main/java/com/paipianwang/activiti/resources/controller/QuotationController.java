@@ -3,6 +3,7 @@ package com.paipianwang.activiti.resources.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -92,7 +93,31 @@ public class QuotationController extends BaseController {
 	 */
 	@RequestMapping("/get/{projectId}")
 	public PmsQuotation getByProjectId(@PathVariable("projectId")String projectId){
-		return pmsQuotationFacade.getByProjectId(projectId);
+		PmsQuotation quotation= pmsQuotationFacade.getByProjectId(projectId);
+		
+		if(ValidateUtil.isValid(quotation.getItems())) {
+			List<PmsQuotationType> all=pmsQuotationTypeFacade.findAll();
+			for(PmsQuotationItem item:quotation.getItems()) {
+				int flag=3;
+				for(PmsQuotationType type:all) {
+					if(item.getItemId().equals(type.getTypeId())) {
+						item.setItemDate(type.getCreateDate());
+						flag--;
+					}else if(item.getDetailId().equals(type.getTypeId())) {
+						item.setDetailDate(type.getCreateDate());
+						flag--;
+					}else if(item.getTypeId().equals(type.getTypeId())) {
+						item.setTypeDate(type.getCreateDate());
+						flag--;	
+					}
+					if(flag<=0) {
+						break;
+					}
+				}
+			}
+		}
+			
+		return quotation;
 	}
 	
 	/**
@@ -414,13 +439,15 @@ public class QuotationController extends BaseController {
 	public List<PmsQuotationType> listByProduction(String productionType,String subType){
 		List<PmsQuotationType> result=new ArrayList<>();
 		
-		Long[] typeIds;
+		Long[] typeIds=new Long[0];;
 		
 		if(ProductionResource.device.getKey().equals(productionType) && ValidateUtil.isValid(subType)) {
 			typeIds=new Long[] {Long.parseLong(subType)};//同getChildren
 		}else {
 			ProductionResource relation=ProductionResource.getEnum(productionType);
-			typeIds=relation.getQuotationType();
+			if(relation!=null) {
+				typeIds=relation.getQuotationType();
+			}
 		}
 		
 		for(Long typeId:typeIds) {
@@ -435,7 +462,7 @@ public class QuotationController extends BaseController {
 	
 		return result;
 	}
-	
+
 	/**
 	 * 获取下一级子节点
 	 * @param typeId

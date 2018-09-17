@@ -202,6 +202,14 @@ public class QuotationServiceImpl implements QuotationService {
 				result=pmsQuotationFacade.insert(pmsQuotation);
 			}
 		}*/
+		//去除不保存数据
+		for(PmsQuotationItem item:items) {
+			item.setTypeDate(null);
+			item.setDetailDate(null);
+			item.setItemDate(null);
+			item.setTemplateId(null);
+		}
+		
 		PmsQuotation old=pmsQuotationFacade.getByProjectId(pmsQuotation.getProjectId());
 		if(old!=null){
 			//项目作为唯一标记
