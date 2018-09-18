@@ -88,10 +88,12 @@ function clickEven(){
 	
 	$('#dayNum').on('blur',function(){
 		$('#dayNumError').attr('data-content','');
+		$('input').removeClass('errorItem');
 	});
 	
 	$('#needNum').on('blur',function(){
 		$('#needNumError').attr('data-content','');
+		$('input').removeClass('errorItem');
 	});
 	
 	$('.closeWindow').off('click').on('click',function(){
@@ -380,10 +382,13 @@ var controlArray = {
 						}*/
 						if(type == null || type == "" || type == undefined){
 							$('#typeError').attr('data-content','类别未选择');
+							$('#typeErrorItem').addClass('errorItem');
+							
 							return false;
 						}
 						if(projectChilden == null || projectChilden == "" || projectChilden == undefined){
 							$('#projectChildenError').attr('data-content','项目未选择');
+							$('#projectChildenErrorItem').addClass('errorItem');
 							return false;
 						}
 						
@@ -391,26 +396,32 @@ var controlArray = {
 						if(checkPack != 1 ){
 							if(dayNum == null || dayNum == "" || dayNum == undefined){
 								$('#dayNumError').attr('data-content','天数未填写');
+								$('#dayNum').addClass('errorItem');
 								return false;
 							}
 							if(dayNum == 0){
 								$('#dayNumError').attr('data-content','天数不正确');
+								$('#dayNum').addClass('errorItem');
 								return false;
 							}
 							if(!checkRate(dayNum) ||  !isInteger(dayNum)){
 								$('#dayNumError').attr('data-content','请输入整数');
+								$('#dayNum').addClass('errorItem');
 								return false;
 							}
 							if(needNum == null || needNum == "" || needNum == undefined){
 								$('#needNumError').attr('data-content','数量未填写');
+								$('#needNum').addClass('errorItem');
 								return false;
 							}
 							if(needNum == 0){
 								$('#needNumError').attr('data-content','数量未填写');
+								$('#needNum').addClass('errorItem');
 								return false;
 							}
 							if(!checkRate(needNum) ||  !isInteger(needNum)){
 								$('#needNumError').attr('data-content','请输入整数');
+								$('#needNum').addClass('errorItem');
 								return false;
 							}
 						}
@@ -440,7 +451,7 @@ var controlArray = {
 			var dayNum = $('#dayNum').val();
 			var needNum = $('#needNum').val();
 			var dir = $('#setDir').text();
-			var unitPrice = $('#projectChilden').attr('data-price');
+			var unitPrice = $('#setCost').text();
 			if(projectFull != 1){
 				var sum = dayNum * needNum * unitPrice;
 			}else{
@@ -753,6 +764,7 @@ function initMultType(){
 		$('#setCost').text('');
 		$('#orderCome').html('');
 		$('#typeError').attr('data-content','');
+		$('div').removeClass('errorItem');
 		loadData(function(res){
 			var src = res;
 			var body = $('#orderCome');
@@ -870,8 +882,10 @@ function initMultSelect(){
 			$(this).addClass('selectColor');
 		}
 		$('#projectChildenError').attr('data-content','');
+		$('#div').removeClass('errorItem');
 		$('#dayNumError').attr('data-content','');
 		$('#needNumError').attr('data-content','');
+		$('input').removeClass('errorItem');
 		e.stopPropagation();
 	});
 	$('.productList div').off('click').on('click',function(e){
@@ -1594,6 +1608,9 @@ function autoSave(){
 	var quotationId = $('#quotationId').val();
 	var projectName = $('#projectName').text();
 	var templateId = $('#templateId').val();
+	var typeTime = $('#type').attr('data-time');
+	var projectPTime= $('#projectParent').attr('data-ptime');
+	var projectCTime= $('#projectParent').attr('data-ctime');
 	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
@@ -1608,12 +1625,12 @@ function autoSave(){
 	if(lastAsc.length == 0){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime));
 		saveCache();
 	}else if(isDiffer){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime));
 		saveCache();
 	}
 	
@@ -1656,13 +1673,24 @@ function getcacheTable(){
 		map['typeDate'] = finalAsc[int].typeDate;
 		map['itemDate'] = finalAsc[int].itemDate;
 		map['detailDate'] = finalAsc[int].detailDate;
+//		var unitPrice = $('#projectChilden').attr('data-price');
+//		
+//		if(projectFull != 1){
+//			var sum = dayNum * needNum * unitPrice;
+//		}else{
+//			dayNum = -1;
+//			needNum = -1;
+//			var sum = unitPrice;
+//		}
+//		map['sum'] = sum;
+		
 		cacheTable.push(new cTable(map));
 		
 	}
 	
 }
 
-function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId){
+function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeDate,itemDate,detailDate){
 	
 	this.cacheTable = cacheTable;
 	this.type = type;
@@ -1681,6 +1709,9 @@ function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectC
 	this.projectId = projectId;
 	this.projectName = projectName;
 	this.templateId = templateId;
+	this.typeDate = typeDate;
+	this.itemDate = itemDate;
+	this.detailDate = detailDate;
 	
 }
 
@@ -1691,8 +1722,11 @@ function loadSave(){
 				var itemRes = jQuery.parseJSON(res.msg);
 				$('#type').text(itemRes[0].type);
 				$('#type').attr('data-id',itemRes[0].typeId);
+				$('#type').attr('data-time',itemRes[0].typeDate);
                 $('#projectParent').attr('data-id',itemRes[0].projectParentId);
 				$('#projectParent').val(itemRes[0].projectParent);
+				$('#projectParent').attr('data-ptime',itemRes[0].itemDate);
+				$('#projectParent').attr('data-ctime',itemRes[0].detailDate);
 				$('#projectChilden').attr('data-id',itemRes[0].projectChildenId);
                 $('#projectChilden').text(itemRes[0].projectChilden);
                 $('#dayNum').val(itemRes[0].dayNum);

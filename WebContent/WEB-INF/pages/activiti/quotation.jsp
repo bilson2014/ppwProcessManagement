@@ -317,7 +317,7 @@
 	          <br/>  --%> 
              <div class="orderItem" id="typeError"> 
 		            <div class="mR8">收费类</div>
-		            <div class="orderSelect oredrTypeSelect"  >
+		            <div class="orderSelect oredrTypeSelect"  id="typeErrorItem" >
 		                <div id="type"></div>
 		                <img src="${imgPath}/index/select.png">
 		                <ul class="oSelect searchSelect" id="orderType">
@@ -328,7 +328,7 @@
 			  
 			   <div class="orderItem" id="projectChildenError" > 
 		            <div class="mR8">收费项</div>
-		            <div class="orderSelect orderMultSelect" style="width: 220px !important;">
+		            <div class="orderSelect orderMultSelect" style="width: 220px !important;" id="projectChildenErrorItem" >
 		                <input type="hidden" id="projectParent"/>
 		                <div id="projectChilden"></div>
 		                <img src="${imgPath}/index/select.png">
@@ -341,7 +341,7 @@
 	      <div class="changePos">
 	        <div  class="orderItem changeitem" id="dayNumError">
 	            <div class="mR8" id="dayT">天数</div>
-	            <input class="shortDiv" id="dayNum"  value="">
+	            <input class="shortDiv" id="dayNum"  value="" >
             </div>
             <div  class="orderItem changeitem" id="needNumError">
 	            <div class="mR8" id="needT">数量</div>
