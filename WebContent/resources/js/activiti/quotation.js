@@ -817,7 +817,7 @@ function cTable(map) {
 
 function getTrTitle(item){
 	    	if(item.typeId != titleTr){
-	    		setTitle = '<tr class="titleTr"><td colSpan="8">'+item.typeName+''+item.typeDate+'</td></tr>'
+	    		setTitle = '<tr class="titleTr"><td colSpan="8">'+item.typeName+'</td></tr>'
 	    		titleTr = item.typeId;
 	    		return setTitle;
 	    	}else{
@@ -839,8 +839,8 @@ function createMultOption(item,index){
 		var html = [
 			        ''+hasTitle+'',
 		    	    '<tr>',
- 		    		'<td>'+item.itemName+''+item.itemDate+'</td>',
- 		    		'<td>'+item.detailName+''+item.detailDate+'</td>',
+ 		    		'<td>'+item.itemName+'</td>',
+ 		    		'<td>'+item.detailName+'</td>',
  		    		'<td class="dayTd" >'+days+'</td>',
  		    		'<td class="dayTd" >'+quantity+'</td>',
  		    		'<td class="payCost payBaseCost dayTd"><input class="updateBase" data-id='+index+' style="width:80px" value='+item.unitPrice+'></td>',
