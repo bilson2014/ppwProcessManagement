@@ -207,7 +207,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -256,11 +256,11 @@
                          <div class="itemInfo" data-name="zone"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">等级</div>
+                         <div class="itemTitle">职业</div>
                          <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
@@ -302,7 +302,7 @@
                          <div class="itemInfo" data-name="typeName"></div>
                     </div>
                       <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                       <div class="contentItem">
@@ -343,7 +343,7 @@
                          <div class="itemInfo" data-name="area"></div>
                     </div>
                     <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                     <div class="contentItem">
@@ -379,7 +379,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -415,7 +415,7 @@
                          <div class="itemInfo" data-name="name"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
@@ -459,7 +459,7 @@
                          <div class="itemInfo" data-name="stockNumber"></div>
                     </div>
                     <div class="contentItem">
-                         <div class="itemTitle">报价 (元/天)</div>
+                         <div class="itemTitle changName">参考报价 (元)</div>
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                     <div class="contentItem">
@@ -524,7 +524,7 @@
 						                    <li class="hoverColor"><div class="findTYpe" data-id='packer'>包装师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='colorist'>调色师</div></li>  
 						                    <li class="hoverColor"><div class="findTYpe" data-id='propMaster'>道具师</div></li> 
-						                    <li class="hoverColor"><div class="findTYpe" data-id='artist'>美术师</div></li> 
+						                   <!--  <li class="hoverColor"><div class="findTYpe" data-id='artist'>美术师</div></li>  -->
 						                    <li class="hoverColor"><div class="findTYpe" data-id='costumer'>服装师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='dresser'>化妆师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='mixer'>录音师</div></li> 
@@ -615,9 +615,9 @@
 							     </div>
 							</div>
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="actorLevel">请选择等级</div>
+						                <div class="imgType" id="actorLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="actorLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -626,9 +626,9 @@
 						
 						<div class="show4 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 				              	 <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="directorLevel">请选择等级</div>
+						                <div class="imgType" id="directorLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="directorLevelUl" style="display: none;"></ul>    
 							     </div>
@@ -644,9 +644,9 @@
 						</div>
 						<div class="show5 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="cameramanLevel">请选择等级</div>
+						                <div class="imgType" id="cameramanLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="cameramanLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -662,9 +662,9 @@
 						</div>
 						<div class="show6 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="lighterLevel">请选择等级</div>
+						                <div class="imgType" id="lighterLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="lighterLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -672,9 +672,9 @@
 						</div>
 						<div class="show7 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="editorLevel">请选择等级</div>
+						                <div class="imgType" id="editorLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="editorLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -682,9 +682,9 @@
 						</div>
 						<div class="show8 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="packerLevel">请选择等级</div>
+						                <div class="imgType" id="packerLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="packerLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -692,9 +692,9 @@
 						</div>
 						<div class="show9 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="coloristLevel">请选择等级</div>
+						                <div class="imgType" id="coloristLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="coloristLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -702,9 +702,9 @@
 						</div>
 						<div class="show10 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="propMasterLevel">请选择等级</div>
+						                <div class="imgType" id="propMasterLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="propMasterLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -712,9 +712,9 @@
 						</div>
 						<div class="show11 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="artistLevel">请选择等级</div>
+						                <div class="imgType" id="artistLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="artistLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -722,9 +722,9 @@
 						</div>
 						<div class="show13 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="dresserLevel">请选择等级</div>
+						                <div class="imgType" id="dresserLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="dresserLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -732,9 +732,9 @@
 						</div>
 						<div class="show14 showUnmInfo" style="display:none">
 							<div class="optionItem">
-			                     <div class="title">等级</div>
+			                     <div class="title">职业</div>
 			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="mixerLevel">请选择等级</div>
+						                <div class="imgType" id="mixerLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="mixerLevelUl" style="display: none;"></ul>    
 							     </div>				              	 
@@ -776,6 +776,30 @@
    
 		    </div>
       </div>
+      
+      
+<div class="cusModel" id="showModelName" >
+           <div class="modelCard" >
+	           <div class="cardTop">
+	                   <div class="title">填写个人模板名</div>
+	                   <div class="closeModel"></div>
+	            </div>
+	            <div class="modelName">
+	                <div class="modelWarn">输入要修改的实际报价</div>
+		            <div class="orderItem" id="tempNameError">
+			                <div class="modelNameTitle">实际报价</div>
+				            <div class="orderSelect oredrProduct tomid" >
+				                 <input class="modelNameInput" id="getModelPrice" />
+					        </div>
+		           		 </div>
+	                <!-- <div class="modelNameTitle">模板名称</div>
+	                <input class="modelNameInput" id="modelName" /> -->
+	            </div>
+               <div class="btnMid">
+			           <div class="btn-c-r closeWindow" id="saveModelPrice" style="position: relative;left: 80px;margin-bottom: 30px;">确定</div>
+		       </div>
+           </div>
+</div>
       
       <form method="post" action="/production/export" id="toListForm" class="hide">
                        <input type="hidden" id="projectId" name="projectId">

@@ -73,7 +73,7 @@ function getCacheSave(){
 			if(lastItem[0].item.length != imgItem.length){
 				isDiffer = true;
 
-			}else if(id != lastItem[0].item[int].id || type != lastItem[0].item[int].type||lastItem[0].id != $('#id').val()||lastItem[0].projectId != $('#projectId').val()){
+			}else if(price!=lastItem[0].item[int].price||id != lastItem[0].item[int].id || type != lastItem[0].item[int].type||lastItem[0].id != $('#id').val()||lastItem[0].projectId != $('#projectId').val()){
 				isDiffer = true;
 
 			}
@@ -563,6 +563,7 @@ function initOption(){
 	saveToproject();
 	searchInit();
 	detailItem();
+	updatePrice();
 	initSelectInfo();
 	
 	//$(".setProductInfo").before(juicer(videoList_tpl.upload_Tpl,{item:''}));
@@ -610,14 +611,53 @@ function delItem(){
 	});
 	
 }
+function updatePrice(){
+	
+	
+	$('.updateItem').off('click').on('click',function(){
+		var id = $(this)
+		var price = id.attr('data-price');
+		
+		$('#showModelName').show();
+		$('#getModelPrice').val(price);
+		
+		
+		$('.closeModel').off('click').on('click',function(){
+			$('#showModelName').hide();
+			
+		});
+		
+		$('#saveModelPrice').off('click').on('click',function(){
+			price =  $('#getModelPrice').val();
+			id.attr('data-price',price);
+			id.parent().find('.detailItem').attr('data-price',price);
+			id.parent().parent().parent().find('.info').find('.price').text('实际报价'+price+'元');
+			id.parent().parent().parent().attr('data-price',price);
+			$('#showModelName').hide();
+			getCacheSave();
+		});
+		
+		
+		
+		
+	});
+	
+	
+}
 
 function detailItem(){
 	$('.detailItem').off('click').on('click',function(){
 	    var nowItem = $(this);
-	    
 	    var item = $(this).parent().parent().parent();
 	    var id= item.attr('data-id');
 		var type= item.attr('data-type');	
+		var price= item.attr('data-price');	
+		var checkId = $(this).attr('data-id');
+		if(checkId == 0){
+			$('.changName').text('实际报价 ');
+		}else{
+			$('.changName').text('参考报价 ');
+		}
 		
 		loadData(function(src){
 			
@@ -690,7 +730,17 @@ function detailItem(){
 				var itemInfos=$('#'+detailDialog+' .itemInfo');
 				for(var i=0;i<itemInfos.length;i++){
 					var itemInfo=itemInfos[i];
-					$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
+					if($(itemInfo).attr('data-name') == 'price'){
+						
+						if(price >=0){
+							$(itemInfo).html(price+'元');
+						}else{
+							$(itemInfo).html(info.price+'元');
+						}						
+					}else{
+						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
+					}
+					
 				}
 				var remake = info.remark;
 				var htmlMake = remake.replace(/\r\n/g,"<br>");
@@ -1115,6 +1165,7 @@ function searchActor(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();	
 		detailItem();
+		updatePrice();
 		setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1145,6 +1196,7 @@ function searchDirector(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
+		updatePrice();
 		setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1170,6 +1222,7 @@ function searchDevice(){
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
+		updatePrice();
 		setHeight();
 
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
@@ -1195,6 +1248,7 @@ function searchStudio(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1221,6 +1275,7 @@ function searchCameraman(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1246,6 +1301,7 @@ function searchPersonWithType(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1268,6 +1324,7 @@ function searchPerson(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1293,6 +1350,7 @@ function searchClothing(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1319,6 +1377,7 @@ function searchProps(){
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
+		 updatePrice();
 		 setHeight();
 	}, getContextPath() +  '/production/resource/list',$.toJSON({
 		category:category,
@@ -1625,11 +1684,11 @@ var productList_tpl = {
 		"	                        <img src='https://file1.apaipian.com:8000/group1/M00/00/26/Cgqp51m40FGATWfEAAAKH4Shw48846.jpg'/>"+
 		"	                        <div class='info'>"+
 		"	                                <div class='who'>我 / 员工</div>"+
-		"	                                <div class='price'>￥600</div>"+
+		"	                                <div class='price'>￥item.price </div>"+
 		"	                        </div>"+
 		"	                        <div class='showTool'>"+
-	    "                                <div class='toolDiv'>"+
-	    "			                        <div class='moveItem'>移除</div><div class='detailItem'>查看详情</div>"+
+	    "                                <div class='toolDiv moreToolDiv'>"+
+	    "			                        <div class='moveItem'>移除</div><div class='detailItem'>查看详情</div><div class='updateItem' data-price='${item.price}'>修改报价</div>"+
 	    "                                </div>"+
 	    "                           </div>"+
         "                      </div>"+
@@ -1657,6 +1716,12 @@ var productList_tpl = {
 					  "	        </div>"+ 
 		              "   </li>"
 		 ].join(""),
+																											
+																											 
+																								
+																											
+																										
+																					
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
@@ -1666,11 +1731,11 @@ var productList_tpl = {
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}  </div>"+
+					  "		        <div class='price'>{@if item.price > 99999}参考报价99999+ {@/if} {@if item.price < 99999}参考报价${item.price}{@/if}  </div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
-					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >移除</div><div class='detailItem'>查看详情</div>"+
+					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >移除</div><div class='detailItem' data-id='1'>查看详情</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"+
@@ -1684,11 +1749,11 @@ var productList_tpl = {
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>{@if item.price > 99999}￥99999+ /天{@/if} {@if item.price < 99999}￥${item.price} /天{@/if}</div>"+
+					  "		        <div class='price'>{@if item.price > 99999}实际报价99999+ /天{@/if} {@if item.price < 99999}实际报价${item.price}{@/if}</div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
-					  "		    <div class='toolDiv'>"+
-					  "		    		<div class='moveItem'>移除</div><div class='detailItem'>查看详情</div>"+
+					  "		    <div class='toolDiv moreToolDiv'>"+
+					  "		    		<div class='moveItem'>移除</div><div class='detailItem' data-price='${item.price}' data-id='0'>查看详情</div><div class='updateItem' data-price='${item.price}'>修改价格</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"

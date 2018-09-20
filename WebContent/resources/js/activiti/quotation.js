@@ -816,12 +816,12 @@ function cTable(map) {
 }
 
 function getTrTitle(item){
-	    	if(item.typeId != titleTr){
+	    	if(item.typeName != titleTr){
 	    		setTitle = '<tr class="titleTr"><td colSpan="8">'+item.typeName+'</td></tr>'
-	    		titleTr = item.typeId;
+	    		titleTr = item.typeName;
 	    		return setTitle;
 	    	}else{
-	    		titleTr = item.typeId;
+	    		titleTr = item.typeName;
 	    		return "";
 	    	}
 }
@@ -1377,6 +1377,12 @@ function findModelNames(){
 		$('#templateId').val('');
 		findAutoModelInfo(theName);
 	});
+	
+	$('#getModelName').on('focus',function() {
+		var theName = $(this).val();
+		$('#templateId').val('');
+		findAutoModelInfo(theName);
+	});
 }
 
 function findAutoModelInfo(userName){
@@ -1463,8 +1469,20 @@ function compare(nodeA,nodeB){
 		
 		var typeSort=compareDateAndId(nodeA.typeDate,nodeB.typeDate,nodeA.typeId,nodeB.typeId);
 		if(typeSort==0){
+			
+			var typeName=compareDateName(nodeA.typeName,nodeB.typeName);
+			
+			if(typeName !=0){
+				return typeName;
+			}
 			var itemSort=compareDateAndId(nodeA.itemDate,nodeB.itemDate,nodeA.itemId,nodeB.itemId);
+			
 			if(itemSort==0){
+				
+				var itemName=compareDateName(nodeA.itemName,nodeB.itemName);
+				if(itemName !=0){
+					return itemName;
+				}
 				return compareDateAndId(nodeA.detailDate,nodeB.detailDate,nodeA.detailId,nodeB.detailId);
 			}else{
 				return itemSort;
@@ -1473,6 +1491,16 @@ function compare(nodeA,nodeB){
 			return typeSort;
 		}
 	}
+
+function compareDateName(dIdA,IdB){
+	if(dIdA > IdB){
+		return 1;
+	}else if(dIdA < IdB){
+		return -1;
+	}else{
+		return 0;
+	}
+}
 
 function compareDateAndId(dateA,dateB,IdA,IdB){
 		if(dateA==null || dateB==null || dateA==dateB){
