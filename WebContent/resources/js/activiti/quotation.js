@@ -1,4 +1,5 @@
 // var setTableData = new Array();
+ var successIntervalObj; // timer变量，控制时间
  var finalAsc = new Array();
  var lastAsc = new Array();
  var cacheTable = new Array();
@@ -1097,18 +1098,18 @@ function productLineEven(){
     $('#loadProduct').off('click').on('click',function(){
     	var setTr = $('.setTr tr').length;
     	var thisId = $('.modelActive').attr('data-id');
- 
     	var thisName = $('.modelActive').text();
     	if(thisId>0){
 	    	if(setTr > 0){
 	    		$('#clearTable').show();
 				$('#setTableTitle').html('报价单编辑中，是否加载并覆盖当前报价单?');
 				$('.sureClear').off('click').on('click',function(){
-					loadProductTable(thisId);
+					
 					$('#clearTable').hide();
 				    $('#productWindow').hide();
-				    $('#templateId').val(thisId);
-				  //  $('#projectName').text(thisName);
+				    $('#templateId').val();
+				    checkLoadProduct(thisId);
+
 				});
 				$('.cancle').off('click').on('click',function(){							  
 			    	$('#clearTable').hide();
@@ -1116,10 +1117,10 @@ function productLineEven(){
 				$('#quotationId').val('');
 				
 	    	}else{
-	    		loadProductTable(thisId);
+	    		checkLoadProduct(thisId);
 	        	$('#productWindow').hide();
-	        	$('#quotationId').val('');
-			//	$('#projectName').text(thisName);
+	       // 	$('#quotationId').val('');
+
 	    	}
     	}
 
@@ -1128,7 +1129,7 @@ function productLineEven(){
     $('#delProduct').off('click').on('click',function(){
     	var thisId = $('.modelActive').attr('data-id');
     	$('#templateId').val(thisId);
-    	if(thisId>0){
+    	if(thisId>0){	
     		$('#submitCheckBtn').show();
     		$('.submitCheckBtn').off('click').on('click',function(){
     			delProduct(thisId);
@@ -1144,23 +1145,30 @@ function productLineEven(){
     
 }
 
-function loadProdcut(num){
-	loadData(function(res){
-	  var result;
-	  var body = $('.modelContent');
-	  body.html('');
-	  if(num == 0 ){
-		  result = res.person;
-	  }else{
-		  result = res.chanpin;
-	  }
-	  
-	  for (var i = 0; i < result.length; i++) {
-		  body.append('<div class="modelItem" data-id="'+result[i].id+'">'+result[i].name+'</div>')
-	  }
-	  productLineEven();
-	}, getContextPath() + '/quotation/temp/list',null);
+function checkLoadProduct(num){
+	
+loadData(function(res){
+		
+		if(res.code == 0){
+			loadProductTable(num);
+		}else{
+			    $('#tdOpen').text(res.msg);
+				$('#checkSureModel').show();
+			$('#tOModel').off('click',function(){
+				
+			});
+            $('#cOModel').off('click',function(){
+            	$('#checkSureModel').hide();
+			});
+			
+		}
+
+		
+		
+	}, getContextPath() + '/quotation/temp/validate/'+num,null);
+	
 }
+
 
 function loadProdcut(num){
 	loadData(function(res){
@@ -1182,6 +1190,8 @@ function loadProdcut(num){
 
 function loadProductTable(id){
 	loadData(function(src){
+		    $('#quotationId').val('');
+		    //新
 			$('#templateId').val(src.templateId);
 			$('#quotationId').val(src.quotationId);
 			$('#tax').val(src.taxRate);
@@ -1213,9 +1223,9 @@ function checkProduct(){
 		for (var int = 0; int < list.length; int++) {
 			if($(list[int]).text() == getModelName){
 				$('#templateId').val($(list[int]).attr('data-id'));
-			}
-			saveProduct();	
+			}		
 		}
+		checkModel();
 	}else{
 		saveProduct();	
 	}
@@ -1245,6 +1255,29 @@ function saveProduct(){
         templateId : $('#templateId').val(),
         templateName : $('#getModelName').val()	
 	}));
+	
+}
+
+function checkModel(){
+	
+	loadData(function(res){
+			
+		if(res.code !=0){
+			successToolTipShows(res.msg);
+		}else{
+			saveProduct();
+		}
+	
+	}, getContextPath() + '/quotation/temp/validate',$.toJSON({
+		items : finalAsc,
+		taxRate: $('#tax').val(),
+		discount:$('#free').val(),
+		subTotal:$('#localPrice').text(),
+        total: $('#setFinalCost').text(),
+        templateId : $('#templateId').val(),
+        templateName : $('#getModelName').val()	
+	}));
+	
 	
 }
 
@@ -1796,4 +1829,18 @@ function loadSave(){
 			type:0
 		}));	
 }
+
+//错误提示
+function successToolTipShows(error){
+		window.clearInterval(successIntervalObj);
+		$('.tooltip-success-show').show();
+		$(".tooltip-success-show").text(error);
+		$(window.parent.parent.parent.document).find('html').scrollTop(0);
+		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+		successIntervalObj = window.setInterval(hideSuccessTooltip, 3000);
+	}
+	
+function hideSuccessTooltip(){
+		$('.tooltip-success-show').hide();
+	}
 

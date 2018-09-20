@@ -231,7 +231,8 @@ function setReShow(item,num){
 			var hasSame = false;
 			for (var int2 = 0; int2 < hasBigItem.length; int2++) {
 				var checkSame = $(hasBigItem[int2]).attr('data-id');
-				if(checkSame == theItem.categoryId){
+				var checkSameName = $(hasBigItem[int2]).find('.titleB').text();
+				if(checkSame == theItem.categoryId && checkSameName == theItem.category){
 					hasSame = true;
 					break;
 				}else{
@@ -256,7 +257,8 @@ function setReShow(item,num){
 			    var hasSame = false;
 				for (var int2 = 0; int2 < checkMidItem.length; int2++) {
 					var checkSame = $(checkMidItem[int2]).attr('data-id');
-					if(checkSame == theItem.subTypeId){
+					var checkSameName = $(hasBigItem[int2]).parent().find('.titleM').text();
+					if(checkSame == theItem.subTypeId &&checkSameName == theItem.subType ){
 						hasSame = true;
 						break;
 					}else{

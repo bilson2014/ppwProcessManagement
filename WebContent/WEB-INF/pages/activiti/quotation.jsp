@@ -291,6 +291,19 @@
      </div>
 </div>
 
+      <div class="cusModel" id="checkOpenModel">
+           <div class="successModel">
+               <div class="closeBtn"></div>
+			   <div class="oSContent">
+			        <div class="tdOpen" id="tdOpen" style="padding-top:80px;">确认删除吗?</div>
+			        <div class="sureBtn" style="padding-top:40px;">
+			           <div class="btn-c-r" id="tOModel">确定</div>
+			           <div class="btn-c-g" id="cOModel">取消</div>
+			        </div>
+			   </div>
+           </div>
+      </div>
+
  
 
 
@@ -396,6 +409,8 @@
          </div>
     </div>
   </div> 
+  
+    <div class="tooltip-success-show" style="z-index:999"></div>
   
 <form method="post" action="/quotation/export/" id="toListForm" class="hide">
 			            <input type='hidden' name="itemContent" id="sitems" />
