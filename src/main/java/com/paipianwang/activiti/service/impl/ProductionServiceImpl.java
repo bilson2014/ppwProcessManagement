@@ -111,12 +111,18 @@ public class ProductionServiceImpl implements ProductionService {
 	public PmsProductionInfo getByProjectId(String projectId) {
 		PmsProductionInfo info = pmsProductionInfoFacade.getByProjectId(projectId);
 
-		if (info != null && ValidateUtil.isValid(info.getResources())) {
+		/*if (info != null && ValidateUtil.isValid(info.getResources())) {
 			editQuotationTypeName(info);
-		}
+		}*/
 		
 		for (PmsProductionInfo.ProductionResource resource : info.getResources()) {
-			resource.setPicScale(ProductionResource.getEnum(resource.getType()).getPicScale());
+			ProductionResource type=ProductionResource.getEnum(resource.getType());
+			if(type!=null) {
+				resource.setPicScale(type.getPicScale());
+			}else {
+				resource.setPicScale(1);
+			}
+			
 		}
 		return info;
 	}
