@@ -158,7 +158,7 @@
 	<div class="cusModel" id="loadProductModel" style="">
 	     <div class="modelCard">
 	            <div class="cardTop">
-	                   <div class="title">项目分镜</div>
+	                   <div class="title">制片工具</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelBanner">

@@ -1151,32 +1151,17 @@ function productLineEven(){
 function checkLoadProduct(num){
 	
 loadData(function(res){
+	
+	
 		
-		if(res.code == 0){
+		if(res.code !=0){
+			successToolTipShows(res.msg);
 			loadProductTable(num);
 		}else{
-			$('#tdOpen').text(res.msg);
-		    $('#checkOpenModel').show();
-			$('.sureBtn #tOModel').on('click',function(){
-				
-				loadProductTable(num);
-				$('#checkOpenModel').hide();
-				
-			});
-            $('.sureBtn #cOModel').on('click',function(){
-            	$('#checkOpenModel').hide();
-			});
-            
-            $('.closeBtn').on('click',function(){
-            	$('#checkOpenModel').hide();
-			});
-            
-            
-			
+			loadProductTable(num);
 		}
+	
 
-		
-		
 	}, getContextPath() + '/quotation/temp/validate/'+num,null);
 	
 }
@@ -1273,13 +1258,23 @@ function saveProduct(){
 function checkModel(){
 	
 	loadData(function(res){
-			
-		if(res.code !=0){
-			successToolTipShows(res.msg);
-		}else{
+		
+		$('#tdOpen').text(res.msg);
+	    $('#checkOpenModel').show();
+		$('.sureBtn #tOModel').on('click',function(){
 			saveProduct();
-		}
-	
+			$('#checkOpenModel').hide();
+			
+		});
+        $('.sureBtn #cOModel').on('click',function(){
+        	$('#checkOpenModel').hide();
+        	
+		});
+        
+        $('.closeBtn').on('click',function(){
+        	$('#checkOpenModel').hide();
+		});
+			
 	}, getContextPath() + '/quotation/temp/validate',$.toJSON({
 		items : finalAsc,
 		taxRate: $('#tax').val(),
