@@ -457,6 +457,11 @@ public class QuotationController extends BaseController {
 		result.setCode("0");
 		
 		List<PmsQuotationItem> items=template.getItems();
+		
+		if(!ValidateUtil.isValid(items)) {
+			return result;
+		}
+		
 		List<PmsQuotationType> types=pmsQuotationTypeFacade.findAll();
 		
 		int reDate=0;
