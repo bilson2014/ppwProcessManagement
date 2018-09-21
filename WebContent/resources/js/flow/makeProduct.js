@@ -625,15 +625,14 @@ function updatePrice(){
 		
 		
 		$('.closeModel').off('click').on('click',function(){
-			$('#showModelName').hide();
-			
+			$('.cusModel').hide();
 		});
 		
 		$('#saveModelPrice').off('click').on('click',function(){
 			price =  $('#getModelPrice').val();
 			id.attr('data-price',price);
 			id.parent().find('.detailItem').attr('data-price',price);
-			id.parent().parent().parent().find('.info').find('.price').text('实际报价'+price+'元');
+			id.parent().parent().parent().find('.info').find('.price').text('项目报价'+price+'元');
 			id.parent().parent().parent().attr('data-price',price);
 			$('#showModelName').hide();
 			getCacheSave();
@@ -656,7 +655,7 @@ function detailItem(){
 		var price= item.attr('data-price');	
 		var checkId = $(this).attr('data-id');
 		if(checkId == 0){
-			$('.changName').text('实际报价 ');
+			$('.changName').text('项目报价 ');
 		}else{
 			$('.changName').text('参考报价 ');
 		}
@@ -1626,7 +1625,7 @@ function chooseType(){
 			$('.show9').show();
 			$('#searchName').show();
 			toCleanAdd();
-		}else if(parentText == '道具师'){
+		}else if(parentText == '道具美术师'){
 			$('.showUnmInfo').hide();
 			$('.show10').show();
 			$('#searchName').show();
@@ -1751,7 +1750,7 @@ var productList_tpl = {
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>{@if item.price > 99999}实际报价99999+ /天{@/if} {@if item.price < 99999}实际报价${item.price}{@/if}</div>"+
+					  "		        <div class='price'>{@if item.price > 99999}项目报价99999+ /天{@/if} {@if item.price < 99999}项目报价${item.price}{@/if}</div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv moreToolDiv'>"+

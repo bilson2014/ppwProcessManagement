@@ -1155,14 +1155,23 @@ loadData(function(res){
 		if(res.code == 0){
 			loadProductTable(num);
 		}else{
-			    $('#tdOpen').text(res.msg);
-				$('#checkSureModel').show();
-			$('#tOModel').off('click',function(){
+			$('#tdOpen').text(res.msg);
+		    $('#checkOpenModel').show();
+			$('.sureBtn #tOModel').on('click',function(){
+				
+				loadProductTable(num);
+				$('#checkOpenModel').hide();
 				
 			});
-            $('#cOModel').off('click',function(){
-            	$('#checkSureModel').hide();
+            $('.sureBtn #cOModel').on('click',function(){
+            	$('#checkOpenModel').hide();
 			});
+            
+            $('.closeBtn').on('click',function(){
+            	$('#checkOpenModel').hide();
+			});
+            
+            
 			
 		}
 

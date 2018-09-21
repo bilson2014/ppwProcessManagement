@@ -523,7 +523,7 @@
 						                    <li class="hoverColor"><div class="findTYpe" data-id='editor'>剪辑师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='packer'>包装师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='colorist'>调色师</div></li>  
-						                    <li class="hoverColor"><div class="findTYpe" data-id='propMaster'>道具师</div></li> 
+						                    <li class="hoverColor"><div class="findTYpe" data-id='propMaster'>道具美术师</div></li> 
 						                   <!--  <li class="hoverColor"><div class="findTYpe" data-id='artist'>美术师</div></li>  -->
 						                    <li class="hoverColor"><div class="findTYpe" data-id='costumer'>服装师</div></li> 
 						                    <li class="hoverColor"><div class="findTYpe" data-id='dresser'>化妆师</div></li> 
@@ -781,13 +781,13 @@
 <div class="cusModel" id="showModelName" >
            <div class="modelCard" >
 	           <div class="cardTop">
-	                   <div class="title">填写个人模板名</div>
+	                   <div class="title">填写个人项目报价</div>
 	                   <div class="closeModel"></div>
 	            </div>
 	            <div class="modelName">
-	                <div class="modelWarn">输入要修改的实际报价</div>
+	                <div class="modelWarn">输入要修改的项目报价</div>
 		            <div class="orderItem" id="tempNameError">
-			                <div class="modelNameTitle">实际报价</div>
+			                <div class="modelNameTitle">项目报价</div>
 				            <div class="orderSelect oredrProduct tomid" >
 				                 <input class="modelNameInput" id="getModelPrice" />
 					        </div>
