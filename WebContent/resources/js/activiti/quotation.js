@@ -912,6 +912,9 @@ function initMultSelect(){
 	    }else{
 	    	allPackClear();
 	    }
+	    
+	    $('.orderMultSelect').removeClass('errorItem');
+	    
 		e.stopPropagation();
 	});
 }
@@ -1411,7 +1414,7 @@ function findModelNames(){
 		findAutoModelInfo(theName);
 	});
 	
-	$('#getModelName').on('focus',function() {
+	$('#getModelName').on('click',function() {
 		var theName = $(this).val();
 		$('#templateId').val('');
 		findAutoModelInfo(theName);
