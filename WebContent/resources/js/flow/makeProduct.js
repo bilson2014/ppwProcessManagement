@@ -781,29 +781,20 @@ function detailItem(){
 				var itemInfos=$('#'+detailDialog+' .itemInfo');
 				for(var i=0;i<itemInfos.length;i++){
 					var itemInfo=itemInfos[i];
-					if($(itemInfo).attr('data-name') == 'price'){
-						
+					if($(itemInfo).attr('data-name') == 'price'){					
 						if(price >=0){
 							$(itemInfo).html(price+'元');
 						}else{
-							$(itemInfo).html(info.price+'元');
+						  	$(itemInfo).html(info.price+'元');
 						}						
-					}else{
-						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
-					}
-					
-                    if($(itemInfo).attr('data-name') == 'name'){
+					}else if($(itemInfo).attr('data-name') == 'name'){
 						
 						if(name!=''){
 							$(itemInfo).html(name);
 						}else{
 							$(itemInfo).html(info.name);
 						}						
-					}else{
-						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
-					}
-                    
-                    if($(itemInfo).attr('data-name') == 'type'){
+					}else if($(itemInfo).attr('data-name') == 'type'){
 						
 						if(typeName!=''){
 							$(itemInfo).html(typeName);
@@ -2025,7 +2016,9 @@ function checkWordsLength(){
 	if(wordH.length > 0){
 		for (var int = 0; int < wordH.length; int++) {
 			 var nowItem = $(wordH[int]);
-			 var str = nowItem.text();
+			 var str = nowItem.text().trim();
+			 console.info(str);
+			 console.info(str.length);
 			 if(str.length > 8){
 				 str=str.substring(0,8);
 				 nowItem.text(str+'...');
@@ -2037,7 +2030,7 @@ function checkWordsLength(){
 	if(wordV.length > 0){
 		for (var int = 0; int < wordV.length; int++) {
 			 var nowItem = $(wordV[int]);
-			 var str = nowItem.text();
+			 var str = nowItem.text().trim();
 			  console.info(str);
 			  console.info(str.length);
 			 if(str.length > 6){
