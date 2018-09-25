@@ -653,7 +653,10 @@ function detailItem(){
 	    var id= item.attr('data-id');
 		var type= item.attr('data-type');	
 		var price= item.attr('data-price');	
-		var checkId = $(this).attr('data-id');
+		var name = item.attr('data-name');	
+		var typeName = item.attr('data-typeName');	
+		var mainPhoto = item.attr('data-mainPhoto');
+		var checkId = $(this).attr('data-check');
 		if(checkId == 0){
 			$('.changName').text('项目报价 ');
 		}else{
@@ -663,9 +666,54 @@ function detailItem(){
 		loadData(function(src){
 			
 			if(!src.result){
-				successToolTipShow("查看失败");
+			//	successToolTipShow("查看失败");
+						if(type=='director'){
+							detailDialog='info1';			
+														
+						}else if(type=='actor'){
+							detailDialog='info2';
+
+						}else if(type=='device'){
+							detailDialog='info3';
+						}else if(type=='studio'){
+							detailDialog='info4';
+							if(info.type=='1'){
+								info.type='内景';
+							}else if(info.type=='2'){
+								info.type='外景';
+							}
+						}else if(type=='cameraman'){
+							detailDialog='info5';
+						}else if(type=='clothing'){
+							detailDialog='info7';
+							$("#info7 .infoTitle .title").html('服装信息');
+						}else if(type=='props'){
+							detailDialog='info7';
+							$("#info7 .infoTitle .title").html('道具信息');
+						}else if(type=='lighter' || type=='editor' || type=='packer'
+							|| type=='colorist' || type=='propMaster' || type=='artist' 
+								|| type=='costumer' || type=='dresser' || type=='mixer'){
+							detailDialog='info6';				
+							$("#info6 .infoTitle .title").html(getTitleByType(type));
+						}
+						$('#'+detailDialog).show();
+						var itemInfos=$('#'+detailDialog+' .itemInfo');
+						for(var i=0;i<itemInfos.length;i++){
+							var itemInfo=itemInfos[i];
+							if($(itemInfo).attr('data-name') == 'price'){
+									$(itemInfo).html(price+'元');				
+							}
+		                    if($(itemInfo).attr('data-name') == 'name'){
+									$(itemInfo).html(name);							                    
+		                    if($(itemInfo).attr('data-name') == 'type'){
+									$(itemInfo).html(typeName);
+							}
+						}
+						
+						$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+mainPhoto[i]+'"  />');
+					}
 			}
-			
+			else{
 			var info=$.parseJSON( src.msg );
 			
 			if(info.city!=undefined && info.city!=null && info.city!=''){
@@ -742,6 +790,28 @@ function detailItem(){
 						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
 					}
 					
+                    if($(itemInfo).attr('data-name') == 'name'){
+						
+						if(name!=''){
+							$(itemInfo).html(name);
+						}else{
+							$(itemInfo).html(info.name);
+						}						
+					}else{
+						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
+					}
+                    
+                    if($(itemInfo).attr('data-name') == 'type'){
+						
+						if(typeName!=''){
+							$(itemInfo).html(typeName);
+						}else{
+							$(itemInfo).html(info.typeName);
+						}						
+					}else{
+						$(itemInfo).html(info[$(itemInfo).attr('data-name')]);
+					}
+					
 				}
 				var remake = info.remark;
 				var htmlMake = remake.replace(/\r\n/g,"<br>");
@@ -761,13 +831,16 @@ function detailItem(){
 					}
 				}else if(info.photo!=undefined && info.photo!=null && info.photo!=''){
 					$('#'+detailDialog+' .setInfoImg')[0].src=getResourcesName()+(info.photo.split(";")[0]);
+				}else{
+					$('#'+detailDialog+' .setInfoImg')[0].src=getResourcesName()+mainPhoto;
 				}
 			}
-					
+		  }		
 		}, getContextPath() + '/production/get/?type='+type+'&id='+id,null);
 	    
 		$(window.parent.parent.parent.document).find('html').scrollTop(0);
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
+	
 		
 	});
 }
@@ -1731,12 +1804,12 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
-					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
+					  "		        <div class='who'>${item.name}</div>"+
 					  "		        <div class='price'>{@if item.price > 99999}参考报价99999+ {@/if} {@if item.price < 99999}参考报价${item.price}{@/if}  </div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
-					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >移除</div><div class='detailItem' data-id='1'>查看详情</div>"+
+					  "		    		<div class='addImgContent'>添加</div><div class='cancelImgContent' >移除</div><div class='detailItem' data-check='1'>查看详情</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"+
@@ -1749,12 +1822,12 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
-					  "		        <div class='who'>{@if item.name!=null}${item.name} / {@/if}${item.typeName}</div>"+
-					  "		        <div class='price'>{@if item.price > 99999}项目报价99999+ /天{@/if} {@if item.price < 99999}项目报价${item.price}{@/if}</div>"+
+					  "		        <div class='who'>${item.name}</div>"+
+					  "		        <div class='price'>{@if item.price > 99999}项目报价99999+ /天{@/if} {@if item.price < 99999}项目报价${item.price}元{@/if}</div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv moreToolDiv'>"+
-					  "		    		<div class='moveItem'>移除</div><div class='detailItem' data-price='${item.price}' data-id='0'>查看详情</div><div class='updateItem' data-price='${item.price}'>修改价格</div>"+
+					  "		    		<div class='moveItem'>移除</div><div class='detailItem'   data-check='0'   data-mainPhoto='${item.mainPhoto}' data-type='${item.type}' data-price='${item.price}' data-typeName='${item.typeName}' data-name='${item.name}' data-id='0'>查看详情</div><div class='updateItem' data-price='${item.price}'>修改价格</div>"+
 					  "		    </div>"+
 					  "		</div>"+
 					  "	</div>"

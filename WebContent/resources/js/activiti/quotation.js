@@ -493,7 +493,7 @@ var controlArray = {
 		     }
 		     costFunction.finalCost();
 		     costFunction.init();
-		 	 $(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
+		 	 $(window.parent.document).find('.frame').css('height',$('.pages').height() + 150);
 		}
 }
 
@@ -1182,6 +1182,7 @@ function loadProdcut(num){
 		  body.append('<div class="modelItem" data-id="'+result[i].id+'">'+result[i].name+'</div>')
 	  }
 	  productLineEven();
+	
 	}, getContextPath() + '/quotation/temp/list',null);
 }
 
@@ -1831,7 +1832,7 @@ function loadSave(){
 				}	
 				
 			}
-			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 50);
+			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 150);
 		}, getContextPath() + '/cache/get',$.toJSON({
 			type:0
 		}));	

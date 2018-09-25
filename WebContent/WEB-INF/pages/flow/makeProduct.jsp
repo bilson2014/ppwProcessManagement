@@ -550,7 +550,7 @@
 						     </div>
 						</div>
 						 <div class="optionItem">
-		                     <div class="title">价格 (元/天)</div>
+		                     <div class="title">参考报价</div>
 			              	 <input class="numInput" id="beginPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
 			              	 <div class="fu">~</div>
 			              	 <input class="numInput" id="endPrice" onkeyup="value=value.replace(/[^\d]/g,'')">
