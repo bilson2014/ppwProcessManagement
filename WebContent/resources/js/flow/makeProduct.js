@@ -709,8 +709,7 @@ function detailItem(){
 									$(itemInfo).html(typeName);
 							}
 						}
-						
-						$("#"+detailDialog+" .setShowImg").append('<img class="setShowInfoImg" src="'+getResourcesName()+mainPhoto[i]+'"  />');
+		                    $('#'+detailDialog+' .setInfoImg')[0].src=getResourcesName()+mainPhoto;
 					}
 			}
 			else{
@@ -1804,7 +1803,9 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
-					  "		        <div class='who'>${item.name}</div>"+
+					  "     	 {@if item.type == 'device' }<div class='who'>${item.typeName}</div>" +
+                      "        	  {@else}<div class='who'>${item.name}</div>"+
+					  "    		 {@/if}"+
 					  "		        <div class='price'>{@if item.price > 99999}参考报价99999+ {@/if} {@if item.price < 99999}参考报价${item.price}{@/if}  </div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
@@ -1822,7 +1823,9 @@ var productList_tpl = {
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
-					  "		        <div class='who'>${item.name}</div>"+
+					  "     {@if item.type == 'device' }<div class='who'>${item.typeName}</div>" +
+                      "          {@else}<div class='who'>${item.name}</div>"+
+					  "     {@/if}"+
 					  "		        <div class='price'>{@if item.price > 99999}项目报价99999+ /天{@/if} {@if item.price < 99999}项目报价${item.price}元{@/if}</div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
