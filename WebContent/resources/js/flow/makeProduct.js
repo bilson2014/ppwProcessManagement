@@ -657,6 +657,9 @@ function detailItem(){
 		var typeName = item.attr('data-typeName');	
 		var mainPhoto = item.attr('data-mainPhoto');
 		var checkId = $(this).attr('data-check');
+		
+		$('.itemInfo').text('');
+		
 		if(checkId == 0){
 			$('.changName').text('项目报价 ');
 		}else{
@@ -1507,6 +1510,8 @@ function setCheckRedDevice(){
 					
 					if(subId == hasSubId && dataId == hasDataId){
 						 $(theAddItem[int3]).addClass('itemCommonRed');
+						 $(theAddItem[int3]).find('.addImgContent').hide();
+						 $(theAddItem[int3]).find('.cancelImgContent').show();
 					}
 					
 					/*if(hasSubId == subId){
@@ -1602,12 +1607,15 @@ function chooseType(){
 		$(this).parent().parent().parent().parent().parent().find('.imgType').text(parentText);
 		$(this).parent().parent().parent().parent().parent().find('.imgType').attr('data-id',parentId);
 		$('.orderMultSelect').removeClass('selectColor'); 
+		 $("#speNameUl").removeClass('hasInfo');
 		
 		if($(this).parent().parent().parent().parent().hasClass('deviceTypeUl')){
 			if(!$("#speNameUl").hasClass('hasInfo')){
 				loadData(function(src){
 				     $("#speNameUl").html('');
 				     $("#speNameUl").addClass('hasInfo');
+				     $('#speName').text('');
+				     $('#speName').attr('data-id','');
 				 for (var int = 0; int < src.length; int++) {
 			    	 $("#speNameUl").append('<li data-id='+src[int].key+'>'+src[int].value+'</li>');
 				}
@@ -1789,24 +1797,24 @@ var productList_tpl = {
 					  "	        </div>"+ 
 		              "   </li>"
 		 ].join(""),
-																											
-																											 
-																								
-																											
-																										
-																					
+																																										
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
 					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}  />'+
-		              '		<div class="showNoImgInfo"><div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
+		              '		<div class="showNoImgInfo">'+
+		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
+					  "     {@if item.type == 'device' }${item.typeName}" +
+                      "          {@else}${item.name}"+
+					  "     {@/if}"+
+		              '     </div> </div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
 					  "     	 {@if item.type == 'device' }<div class='who'>${item.typeName}</div>" +
                       "        	  {@else}<div class='who'>${item.name}</div>"+
 					  "    		 {@/if}"+
-					  "		        <div class='price'>{@if item.price > 99999}参考报价99999+ {@/if} {@if item.price < 99999}参考报价${item.price}{@/if}  </div>"+
+					  "		        <div class='price'>{@if item.price > 99999}参考报价99999+ {@/if} {@if item.price < 99999}参考报价${item.price}元{@/if}  </div>"+
 					  "		</div>"+
 					  "		<div class='showTool'>"+
 					  "		    <div class='toolDiv'>"+
@@ -1819,7 +1827,12 @@ var productList_tpl = {
 		 item_Tpl:[
 					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} >'+
-		              '		<div class="showNoImgInfo"><div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if}">{@if item.name!=null}${item.name}{@else}${item.typeName}{@/if}</div></div>'+
+		              '		<div class="showNoImgInfo">'+
+		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
+					  "     {@if item.type == 'device' }${item.typeName}" +
+                      "          {@else}${item.name}"+
+					  "     {@/if}"+
+		              '     </div> </div>'+
 					  "		<img class='checkRed' src='/resources/images/flow/checkRed.png'>"+
 					  "		{@if item.mainPhoto == null}<div class='showWord'>${item.name}</div>{@/if}"+
 					  "		<div class='info'>"+
@@ -2025,6 +2038,8 @@ function checkWordsLength(){
 		for (var int = 0; int < wordV.length; int++) {
 			 var nowItem = $(wordV[int]);
 			 var str = nowItem.text();
+			  console.info(str);
+			  console.info(str.length);
 			 if(str.length > 6){
 				 str=str.substring(0,6);
 				 nowItem.text(str);
