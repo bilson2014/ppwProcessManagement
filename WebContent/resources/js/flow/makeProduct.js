@@ -328,6 +328,7 @@ function setReShow(item,num){
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 	$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
 	setSize();
+	checkWordsLength();
 }
 
 /*  */

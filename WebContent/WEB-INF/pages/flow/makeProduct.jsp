@@ -215,7 +215,7 @@
                          <div class="itemInfo" data-name="specialty"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">角色</div>
+                         <div class="itemTitle">职业</div>
                          <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
@@ -387,7 +387,7 @@
                          <div class="itemInfo" data-name="specialSkill"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">角色</div>
+                         <div class="itemTitle">职业</div>
                          <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
@@ -419,7 +419,7 @@
                          <div class="itemInfo" data-name="price"></div>
                     </div>
                      <div class="contentItem">
-                         <div class="itemTitle">角色</div>
+                         <div class="itemTitle">职业</div>
                          <div class="itemInfo" data-name="quoTypeName"></div>
                     </div>
                     <div class="contentItem">
