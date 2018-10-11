@@ -521,8 +521,8 @@ public class QuotationController extends BaseController {
 	public List<PmsQuotationType> listByProduction(String productionType,String subType){
 		List<PmsQuotationType> result=new ArrayList<>();
 		
-		Long[] typeIds=new Long[0];;
-		
+		Long[] typeIds=new Long[0];
+				
 		if(ProductionResource.device.getKey().equals(productionType) && ValidateUtil.isValid(subType)) {
 			typeIds=new Long[] {Long.parseLong(subType)};//同getChildren
 		}else {
@@ -536,10 +536,14 @@ public class QuotationController extends BaseController {
 			PmsQuotationType self=pmsQuotationTypeFacade.getById(typeId);
 			if(self!=null) {
 				List<PmsQuotationType> types= pmsQuotationTypeFacade.findByParent(typeId);
-				self.setChildren(types);
-				result.add(self);
+				//如果对应顶级节点，则只取其下的两级节点
+				if(!ProductionResource.device.getKey().equals(productionType) && PmsQuotationType.GRADE_TYPE.equals(self.getGrade())) {
+					result.addAll(types);
+				}else {
+					self.setChildren(types);
+					result.add(self);
+				}	
 			}
-			
 		}
 	
 		return result;

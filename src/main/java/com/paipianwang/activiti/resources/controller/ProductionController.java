@@ -93,7 +93,7 @@ public class ProductionController extends BaseController{
 	}
 
 	/**
-	 * 保存/更新分镜头脚本
+	 * 保存/更新制片工具
 	 * 
 	 * @param pmsProductionInfo
 	 */
