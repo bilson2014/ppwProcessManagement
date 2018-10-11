@@ -587,6 +587,14 @@
 						</div>
 						
 						<div class="show3 showUnmInfo" style="display:none">
+							<div class="optionItem" >
+			                     <div class="title">职业</div>
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
+						                <div class="imgType" id="actorLevel">请选择职业</div>
+						                <img src="/resources/images/flow/selectS.png"> 
+						                <ul class="setMultSelect" id="actorLevelUl" style="display: none;"></ul>    
+							     </div>				              	 
+							</div>
 							<div class="optionItem">
 			                     <div class="title">性别</div>
 				              	 <div class="orderSelect" id="isOther">
@@ -614,14 +622,7 @@
 						                <ul class="oSelect" id="zoneUl" style="display: none;"></ul>    
 							     </div>
 							</div>
-							<div class="optionItem">
-			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
-						                <div class="imgType" id="actorLevel">请选择职业</div>
-						                <img src="/resources/images/flow/selectS.png"> 
-						                <ul class="setMultSelect" id="actorLevelUl" style="display: none;"></ul>    
-							     </div>				              	 
-							</div>
+							
 						</div>
 						
 						<div class="show4 showUnmInfo" style="display:none">

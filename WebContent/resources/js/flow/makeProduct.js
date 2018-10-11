@@ -743,9 +743,9 @@ function detailItem(){
 			}else if(type=='actor'){
 				detailDialog='info2';
 				info.zone=getTextForDetail(info.zone,actorZones);	
-				if(info.sex==0){
+				if(info.sex==1){
 					info.sex='男';
-				}else if(info.sex==1){
+				}else if(info.sex==2){
 					info.sex='女';
 				}
 			}else if(type=='device'){
