@@ -1,5 +1,7 @@
 package com.paipianwang.activiti.utils;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,6 +10,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -161,6 +165,7 @@ public class QRCodeHandler {
 			line_color.put("g", rgb[1]);
 			line_color.put("b", rgb[2]);
 			param.put("line_color", line_color);
+			param.put("is_hyaline", is_hyaline);//透明底色
 			
 			MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
 			HttpEntity requestEntity = new HttpEntity(param, headers);
@@ -174,7 +179,8 @@ public class QRCodeHandler {
 		return null;
 	}
 
-	enum page {
-		main, quotation;
-	}
+//	enum page {
+//		main, quotation;
+//	}
+	
 }

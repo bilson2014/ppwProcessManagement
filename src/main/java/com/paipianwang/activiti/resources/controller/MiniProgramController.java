@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.paipianwang.activiti.utils.ImageMergeUtil;
 import com.paipianwang.activiti.utils.QRCodeHandler;
 
 @RestController
@@ -29,12 +30,13 @@ public class MiniProgramController {
 		
 		String id=request.getParameter("id");
 		
-		byte[] imgs=qrCodeHandler.getminiqrQr(id, qrCodeHandler.getProToken(),  new int[] {0,0,0}, false);
+		byte[] imgs=qrCodeHandler.getminiqrQr(id, qrCodeHandler.getProToken(),  new int[] {0,0,0}, true);
 		
 		OutputStream out=null;
 		try {
 			out=resp.getOutputStream();
-			out.write(imgs);
+//			out.write(imgs);
+			ImageMergeUtil.mergeQRCodeImg(imgs, out);
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
