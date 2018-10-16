@@ -34,17 +34,7 @@ $().ready(function() {
 	initStateBtn();
 	provNewInit();
 	loadProvCard();
-	showWeChat();
 });
-
-function showWeChat(){
-	
-	$('.shareWeChat').off('click').on('click',function(){
-		 $('#shareWeChat').show();
-	 });
-	
-	
-}
 
 function getScroll(){
 	 $(window.parent.parent.parent.document).find('html').scrollTop(0);

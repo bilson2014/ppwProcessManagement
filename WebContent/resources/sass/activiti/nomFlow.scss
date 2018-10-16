@@ -170,6 +170,9 @@
                         @include ellipsis;
                         font-weight: bold;
                     }
+
+               
+
                     .point {
                         width: 40px;
                         height: 20px;
@@ -256,6 +259,7 @@
                     display: inline-block;
                     vertical-align: top;
                     @include cardhead;
+                    position: relative;
                     .cardContent {
                         img {
                             width: 70px;
@@ -445,3 +449,95 @@
             .redWord {
                 border: 1px solid $red-base !important;
             }
+
+
+
+            .share{
+    font-size: 12px;
+    color: #666;
+    width: auto;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    z-index: 999;
+    cursor: pointer;
+    &:hover{
+        color:#fe5453;
+    }
+            }
+            
+
+               #shareWeChatCode{
+            width: 400px;
+        }
+
+        #shareWeChat{
+            text-align: center;
+        }
+
+         #shareWeChat .modelCard{
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 400px;
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            margin-left: -200px;
+        }
+
+
+         .cusModel {
+        width: 100%;
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 999;
+        display: none;
+ 
+        .modelCard {
+            background: #FFFFFF;
+            border-radius: 6px;
+            width: 664px;
+            position: absolute;
+            left: 50%;
+            top: 100px;
+            margin-left: -332px;
+            max-height: 500px;
+           
+            .cardTop {
+                height: 50px;
+                border-bottom: 1px solid $border-line;
+                position: relative;
+                .title {
+                    vertical-align: top;
+                    display: inline-block;
+                    font-size: $font-size;
+                    color: $gray-dark;
+                    padding-left: 30px;
+                    line-height: 50px;
+                    span {
+                        color: $red-base;
+                        margin-left: 10px;
+                        font-size: $font-size-sm;
+                    }
+                }
+              
+                .closeModel {
+                    position: absolute;
+                    right: 30px;
+                    top: 18px;
+                    width: 14px;
+                    height: 14px;
+                    background: url(/resources/images/flow/closeModel.png);
+                    background-size: 14px 28px;
+                    &:hover {
+                        background-position-y: 14px;
+                    }
+                }
+            }
+   
+         }
+           
+    }

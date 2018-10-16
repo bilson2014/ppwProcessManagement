@@ -4,6 +4,7 @@ $().ready(function() {
 	titleNameInput();
 	initPageEven();
 	toSearch();
+	showWeChat();
 });
 function titleNameInput(){
 	$('.productListAreas #titleNameInput').focus(function(){
@@ -61,6 +62,7 @@ function getAllSearchInfo(search){
 					 otherCard.append(html);
 				 }
 			}
+			showWeChat();
 			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 			$('#daiNum').text($('.waitCard').length);
 			$('#otherNum').text($('.otherCard').length);
@@ -91,6 +93,7 @@ function getState(name){
 			$('#otherNum').text($('.otherCard').length);
 //			$(window.parent.document).find('.frame').css('height',$('.pages').height() + 100);
 		 }	
+		showWeChat();
 	}, getContextPath() + '/project/agent/search', $.toJSON({
 		taskStage : name
 	}));
@@ -201,9 +204,10 @@ function createWaitCard(res){
 	
   var html = [
 	  '<div class="waitCard cardNum">',
+	  '         <div class="share" data-id='+res.projectId+'>分享</div>                                                          ',
 	  '   <a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?task">',
 	  '     <div class="cardH">                                                                                                       ',
-	  '         <div class="title">'+res.projectName+'</div>                                                          ',
+	  '         <div class="title">'+res.projectName+'1111</div>                                                          ',
 	  '     </div>                                                                                                                    ',
 	  '     <div class="cardContent">                                                                                                 ',
 	  '          '+timeImg+'                                                                        ',
@@ -271,7 +275,7 @@ function createOtherCard(res){
 		  var getTime = res.finishedDate;
 		  time = "结束于"+formatDate(getTime);
 		  taskname = "";
-		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?status=finished">';
+		  aTag = ' <div class="share" data-id='+res.projectId+'>分享</div> <a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?status=finished">';
 	}	
 	if(taskStatus == "cancel"){
 		  img= '<img src="/resources/images/flow/isCancle.png"> ';
@@ -284,7 +288,7 @@ function createOtherCard(res){
 				' <div class="otherCard redWord">',
 				'	        '+aTag+' ',
 				'           <div class="cardH">                                                                                                           ',
-				'               <div class="title">'+res.projectName+'</div>                                                              ',              
+				'               <div class="title">'+res.projectName+'</div>                                                              ',  
 				'           </div>                                                                                                                        ',
 				'           <div class="cardContent">                                                                                                     ',
 				'                <div class="setContent">                                                                                                 ',
@@ -300,3 +304,23 @@ function createOtherCard(res){
 		].join('');                                                                                                                       
 		return html;
 	}
+
+
+function showWeChat(res){
+	
+	
+
+	$('.share').off('click').on('click',function(){
+		 $('#shareWeChatCode').attr('src','');
+		 var id = $(this).attr('data-id');
+		 $('#shareWeChat').show();
+		 $('#shareWeChatCode').attr('src','/mini/qrcode?id='+id+'');
+	 });
+	
+	$('.closeModel').off('click').on('click',function(){
+		 $('#shareWeChat').hide();
+	 });
+	
+	
+	
+}

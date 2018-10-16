@@ -30,7 +30,7 @@
 <script type="text/javascript" src="${jqueryJs}"></script>
 <script type="text/javascript" src="${commonJs}"></script>
 <script type="text/javascript" src="${jsonJs}"></script>
-<script type="text/javascript" src="${textFlowJs}"></script>
+
 
 <!--[if lt IE 9]>
         <script>window.html5 || document.write('<script src="html5shivJs"><\/script>')</script>
@@ -70,7 +70,7 @@
 	                	 <c:if test="${!empty finishedTasks}">
 							<c:forEach items="${finishedTasks }" var="staff" varStatus="status">
 						   		<div class="otherCard">
-	
+	                                <div class="share"  data-id="${staff.pmsProjectFlow.projectId}">分享</div>
 									<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
 				                       <a href="/project/task/${staff.task.id}/${staff.pmsProjectFlow.projectId }/${staff.pmsProjectFlow.processInstanceId}?cancel">
 				                    </c:if>
@@ -80,7 +80,7 @@
 							      	
 			                             <div class="cardH">
 			                                 <div class="title">${staff.pmsProjectFlow.projectName}</div>
-				                                 
+				                                
 			                             </div>
 			                             <div class="cardContent">
 			                             	<c:if test="${staff.pmsProjectFlow.projectStatus == 'cancel'}">
@@ -137,6 +137,20 @@
 	</div> 
 	
 </div>	  
+
+<!-- 动态加载信息信息修改 -->
+<div class="cusModel" id="shareWeChat">
+	<div class="modelCard">
+	            <div class="cardTop autoSetTop">
+	                   <div class="title">右键复制图片至剪切板<span id="errorInfo"></span> </div>
+	                   <div class="closeModel"></div>
+	            </div>
+				                
+	            <img id="shareWeChatCode" src="/mini/qrcode?id=${projectId}">
+	            
+	</div>
+</div>
+<script type="text/javascript" src="${textFlowJs}"></script>
 	<!-- video-->
 </body>
 

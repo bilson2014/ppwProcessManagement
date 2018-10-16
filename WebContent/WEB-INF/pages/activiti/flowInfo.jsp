@@ -1078,11 +1078,12 @@
 <div class="cusModel" id="shareWeChat">
 	<div class="modelCard">
 	            <div class="cardTop autoSetTop">
-	                   <div class="title">分享至微信小程序<span id="errorInfo"></span> </div>
+	                   <div class="title">右键复制图片至剪切板<span id="errorInfo"></span> </div>
 	                   <div class="closeModel"></div>
 	            </div>
 				                
-	            <img id="shareWeChatCode" src="/mini/qrcode?id=${projectId}">
+	            <img id="shareWeChatCode" src="">
+	            
 	</div>
 </div>
 
