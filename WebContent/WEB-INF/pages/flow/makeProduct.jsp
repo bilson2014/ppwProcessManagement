@@ -628,7 +628,7 @@
 						<div class="show4 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-				              	 <div class="orderSelect orderMultSelect">
+				              	 <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="directorLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="directorLevelUl" style="display: none;"></ul>    
@@ -646,7 +646,7 @@
 						<div class="show5 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="cameramanLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="cameramanLevelUl" style="display: none;"></ul>    
@@ -664,7 +664,7 @@
 						<div class="show6 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="lighterLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="lighterLevelUl" style="display: none;"></ul>    
@@ -674,7 +674,7 @@
 						<div class="show7 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="editorLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="editorLevelUl" style="display: none;"></ul>    
@@ -684,7 +684,7 @@
 						<div class="show8 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="packerLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="packerLevelUl" style="display: none;"></ul>    
@@ -694,7 +694,7 @@
 						<div class="show9 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="coloristLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="coloristLevelUl" style="display: none;"></ul>    
@@ -704,7 +704,7 @@
 						<div class="show10 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="propMasterLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="propMasterLevelUl" style="display: none;"></ul>    
@@ -714,7 +714,7 @@
 						<div class="show11 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="artistLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="artistLevelUl" style="display: none;"></ul>    
@@ -724,7 +724,7 @@
 						<div class="show13 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="dresserLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="dresserLevelUl" style="display: none;"></ul>    
@@ -734,7 +734,7 @@
 						<div class="show14 showUnmInfo" style="display:none">
 							<div class="optionItem">
 			                     <div class="title">职业</div>
-			                      <div class="orderSelect orderMultSelect">
+			                      <div class="orderSelect orderMultSelect" style="width:180px">
 						                <div class="imgType" id="mixerLevel">请选择职业</div>
 						                <img src="/resources/images/flow/selectS.png"> 
 						                <ul class="setMultSelect" id="mixerLevelUl" style="display: none;"></ul>    

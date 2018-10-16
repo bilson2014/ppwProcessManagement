@@ -72,6 +72,8 @@
 		                     </div>
 	                     </c:if>
 	                     
+	                     <div class="shareWeChat">分享至微信小程序</div>
+	                     
 	                     <r:group role="sale" role2="saleDirector">
 	                     	<div class="proControl">
 	                                                        	项目操作
@@ -1070,6 +1072,18 @@
 		            </div>
             </div>
 </div>
+</div>
+
+<!-- 动态加载信息信息修改 -->
+<div class="cusModel" id="shareWeChat">
+	<div class="modelCard">
+	            <div class="cardTop autoSetTop">
+	                   <div class="title">分享至微信小程序<span id="errorInfo"></span> </div>
+	                   <div class="closeModel"></div>
+	            </div>
+				                
+	            <img id="shareWeChatCode" src="/mini/qrcode?id=${projectId}">
+	</div>
 </div>
 
 <!-- 动态加载信息信息修改 -->

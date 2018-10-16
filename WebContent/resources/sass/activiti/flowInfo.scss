@@ -124,6 +124,32 @@
                 }
             }
         }
+
+
+
+
+         .shareWeChat {
+            width: 150px;
+            height: 30px;
+            border-radius: 4px;
+            font-size: $font-size-base;
+            line-height: 28px;
+            border: 1px solid $gray-light;
+            position: absolute;
+            right: 150px;
+            top: 12px;
+            text-align: center;
+            cursor: pointer;
+
+            &:hover{
+            	color:white;
+            	border:none;
+            	background: $red-base;
+            }
+        }
+
+
+
         .proControl {
             width: 102px;
             height: 30px;
