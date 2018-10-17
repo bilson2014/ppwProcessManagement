@@ -449,6 +449,9 @@ var controlArray = {
 			var projectChilden = $('#projectChilden').text();
 			var projectChildenId = $('#projectChilden').attr('data-id');
 			var projectFull =  $('#projectChilden').attr('data-full');
+			var typeEName =  $('#type').attr('data-ename');
+			var itemEName =  $('#projectParent').attr('data-ename');
+			var detailEName =  $('#projectChilden').attr('data-ename');
 			var dayNum = $('#dayNum').val();
 			var needNum = $('#needNum').val();
 			var dir = $('#setDir').text();
@@ -476,6 +479,9 @@ var controlArray = {
 			map['typeDate'] = typeTime;
 			map['itemDate'] = projectPTime;
 			map['detailDate'] = projectCTime;
+			map['typeEName'] = typeEName;
+			map['itemEName'] = itemEName;
+			map['detailEName'] = detailEName;
 			finalAsc.push(new cTable(map));
 			/*finalAsc = orderBy(finalAsc, ['typeId'], 'asc');
 			finalAsc = orderByTwo();*/
@@ -733,7 +739,7 @@ function reLoadItem(item){
 
 function createType(item){ 
 		var html = [
-		    		'<li data-id="'+item.typeId+'"  data-time="'+item.createDate+'">'+item.typeName+'</li>'
+		    		'<li data-id="'+item.typeId+'"  data-ename="'+item.enName+'" data-time="'+item.createDate+'">'+item.typeName+'</li>'
 		    	].join('');
 		    	return html;
 	}
@@ -753,6 +759,7 @@ function initMultType(){
 		$('.oredrTypeSelect').removeClass('selectColor');
 		$('#type').text($(this).text());
 		$('#type').attr("data-id",$(this).attr('data-id'));
+		$('#type').attr("data-ename",$(this).attr('data-ename'));
 		var s = $(this).attr('data-time');
 		$('#type').attr("data-time",$(this).attr('data-time'));
 		$('#orderType').slideUp();
@@ -814,6 +821,12 @@ function cTable(map) {
 	this.itemDate = map.itemDate;
 	
 	this.detailDate = map.detailDate;
+	
+	this.typeEName = map.typeEName;
+	
+	this.itemEName = map.itemEName;
+	
+	this.detailEName = map.detailEName;
 }
 
 function getTrTitle(item){
@@ -855,14 +868,14 @@ function createMultOption(item,index){
 function createDetail(item){ 
 	var setChildren = "";
 	for (var i = 0; i < item.children.length; i++) {
-		setChildren += ' <div data-time="'+item.children[i].createDate+'"  data-full="'+item.children[i].fullJob+'" data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
+		setChildren += ' <div data-time="'+item.children[i].createDate+'"  data-ename="'+item.enName+'"  data-full="'+item.children[i].fullJob+'" data-content="'+item.children[i].description+'" data-price="'+item.children[i].unitPrice+'"  data-id="'+item.children[i].typeId+'">'+item.children[i].typeName+'</div>';
 	}
 		var html = [
 					  ' <li>                                                   ',
 				      '   <div class="multSelect">                             ',
 				      '        <div class="multTitle">                         ',
 				      '            <img src="/resources/images/index/quoIcon.png" >   ',
-				      '            <div class="title"  data-id="'+item.typeId+'" data-time="'+item.createDate+'">'+item.typeName+'</div>               ',
+				      '            <div class="title"  data-id="'+item.typeId+'" data-ename="'+item.enName+'" data-time="'+item.createDate+'">'+item.typeName+'</div>               ',
 				      '        </div>                                          ',
 					  '        <div class="productList" id="productList">      ',
 					  '     '+setChildren+'                                    ',
@@ -895,14 +908,17 @@ function initMultSelect(){
 		$('#projectChilden').attr('data-id',$(this).attr('data-id'));
 		$('#projectChilden').attr('data-price',$(this).attr('data-price'));
 		$('#projectChilden').attr('data-full',$(this).attr('data-full'));
+		$('#projectChilden').attr('data-ename',$(this).attr('data-ename'));
 		var parentText = $(this).parent().parent().find('.multTitle').find('div').text();
 		var parentId = $(this).parent().parent().find('.multTitle').find('div').attr('data-id');
 		var parentTime = $(this).parent().parent().find('.multTitle').find('div').attr('data-time');
+		var parentName = $(this).parent().parent().find('.multTitle').find('div').attr('data-ename');
 		var myTime = $(this).attr('data-time');
 		$('#projectParent').val(parentText);
 		$('#projectParent').attr('data-id',parentId);
 		$('#projectParent').attr('data-pTime',parentTime);
 		$('#projectParent').attr('data-cTime',myTime);
+		$('#projectParent').attr('data-ename',parentName);
 		$('#setDir').html($(this).attr('data-content'));
 		$('.orderMultSelect').removeClass('selectColor'); 
 		var unitPrice = $('#projectChilden').attr('data-price');
@@ -1680,6 +1696,10 @@ function autoSave(){
 	var typeTime = $('#type').attr('data-time');
 	var projectPTime= $('#projectParent').attr('data-ptime');
 	var projectCTime= $('#projectParent').attr('data-ctime');
+	var typeEName = $('#type').attr('data-ename');
+	var itemEName = $('#projectParent').attr('data-ename');
+	var detailEName = $('#projectChilden').attr('data-ename');
+
 	
 	if(lastAsc.length > 0){
 		if(typeId !=lastAsc[0].typeId || projectParentId != lastAsc[0].projectParentId || dayNum != lastAsc[0].dayNum ||  needNum != lastAsc[0].needNum
@@ -1694,12 +1714,12 @@ function autoSave(){
 	if(lastAsc.length == 0){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime,typeEName,itemEName,detailEName));
 		saveCache();
 	}else if(isDiffer){
 		getcacheTable();
 		lastAsc = new Array();
-		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime));
+		lastAsc.push(new cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeTime,projectPTime,projectCTime,typeEName,itemEName,detailEName));
 		saveCache();
 	}
 	
@@ -1742,6 +1762,9 @@ function getcacheTable(){
 		map['typeDate'] = finalAsc[int].typeDate;
 		map['itemDate'] = finalAsc[int].itemDate;
 		map['detailDate'] = finalAsc[int].detailDate;
+		map['typeEName'] = finalAsc[int].typeEName;
+		map['itemEName'] = finalAsc[int].itemEName;
+		map['detailEName'] = finalAsc[int].detailEName;
 //		var unitPrice = $('#projectChilden').attr('data-price');
 //		
 //		if(projectFull != 1){
@@ -1759,7 +1782,7 @@ function getcacheTable(){
 	
 }
 
-function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeDate,itemDate,detailDate){
+function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectChildenId,projectChilden,dayNum,needNum,setCost,tax,free,setDir,quotationId,projectId,projectName,templateId,typeDate,itemDate,detailDate,typeEName,itemEName,detailEName){
 	
 	this.cacheTable = cacheTable;
 	this.type = type;
@@ -1773,14 +1796,16 @@ function cacheItem(cacheTable,type,typeId,projectParentId,projectParent,projectC
 	this.setCost = setCost;
 	this.tax = tax;
 	this.free = free;
-	this.setDir = setDir
+	this.setDir = setDir;
 	this.quotationId = quotationId;
 	this.projectId = projectId;
 	this.projectName = projectName;
 	this.templateId = templateId;
 	this.typeDate = typeDate;
 	this.itemDate = itemDate;
-	this.detailDate = detailDate;
+	this.typeEName = typeEName;
+	this.itemEName = itemEName;
+	this.detailEName = detailEName;
 	
 }
 
@@ -1792,12 +1817,15 @@ function loadSave(){
 				$('#type').text(itemRes[0].type);
 				$('#type').attr('data-id',itemRes[0].typeId);
 				$('#type').attr('data-time',itemRes[0].typeDate);
+				$('#type').attr('data-ename',itemRes[0].typeEName);
                 $('#projectParent').attr('data-id',itemRes[0].projectParentId);
 				$('#projectParent').val(itemRes[0].projectParent);
 				$('#projectParent').attr('data-ptime',itemRes[0].itemDate);
 				$('#projectParent').attr('data-ctime',itemRes[0].detailDate);
+				$('#projectParent').attr('data-ename',itemRes[0].itemEName);
 				$('#projectChilden').attr('data-id',itemRes[0].projectChildenId);
                 $('#projectChilden').text(itemRes[0].projectChilden);
+                $('#projectChilden').attr('data-ename',itemRes[0].detailEName);
                 $('#dayNum').val(itemRes[0].dayNum);
                 $('#needNum').val(itemRes[0].needNum);
                 $('#setCost').text(itemRes[0].setCost);
@@ -1808,6 +1836,7 @@ function loadSave(){
 				$('#projectId').val(itemRes[0].projectId);
 				$('#projectName').text(itemRes[0].projectName);
 				$('#templateId').val(itemRes[0].templateId);
+				
 			
 				if(itemRes[0].typeId !=''){		
 				
