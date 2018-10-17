@@ -1082,7 +1082,7 @@
 	                   <div class="closeModel"></div>
 	            </div>
 				                
-	            <img id="shareWeChatCode" src="">
+	            <img id="shareWeChatCode" src="/mini/qrcode?id=${projectId}">
 	            
 	</div>
 </div>

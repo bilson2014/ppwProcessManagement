@@ -230,7 +230,7 @@ function createOtherCard(res){
 	var time = res.dueDate;
 	var img = "";
 	var redWord = "";
-	var aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
+	var aTag = '<div class="share" data-id='+res.projectId+'>分享</div><a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?doing">';
 	
 	if(res.isPrincipal == 1){
 		isWho = '<div class="your">'+res.principalName+'</div>';  
@@ -268,7 +268,7 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isPause.png"> ';
 		  var getTime = res.suspendDate;
 		  time ="暂停于"+formatDate(getTime);
-		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?pause">';
+		  aTag = '<div class="share" data-id='+res.projectId+'>分享</div><a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?pause">';
 	}
 	if(taskStatus == "completed"){
 		  img= '<img src="/resources/images/flow/isFinish.png"> ';
@@ -281,7 +281,7 @@ function createOtherCard(res){
 		  img= '<img src="/resources/images/flow/isCancle.png"> ';
 		  var getTime = res.cancelDate;
 		  time = "取消于"+formatDate(getTime);
-		  aTag = '<a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?cancel">';
+		  aTag = '<div class="share" data-id='+res.projectId+'>分享</div><a href="/project/task/'+res.taskId+'/'+res.projectId+'/'+res.processInstanceId+'?cancel">';
 	}
 		
 	            var html = [
@@ -308,8 +308,6 @@ function createOtherCard(res){
 
 function showWeChat(res){
 	
-	
-
 	$('.share').off('click').on('click',function(){
 		 $('#shareWeChatCode').attr('src','');
 		 var id = $(this).attr('data-id');
@@ -319,8 +317,6 @@ function showWeChat(res){
 	
 	$('.closeModel').off('click').on('click',function(){
 		 $('#shareWeChat').hide();
-	 });
-	
-	
+	 });	
 	
 }

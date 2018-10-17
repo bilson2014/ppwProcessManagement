@@ -34,6 +34,7 @@ $().ready(function() {
 	initStateBtn();
 	provNewInit();
 	loadProvCard();
+	shareWeChat();
 });
 
 function getScroll(){
@@ -2477,6 +2478,13 @@ function addSubmitProv(){
 	
 }
 
+function shareWeChat(){
+	
+	$('.shareWeChat').off('click').on('click',function(){
+		$('#shareWeChat').show();
+	})
+	
+}
 
 
 
