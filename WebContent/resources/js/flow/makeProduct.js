@@ -24,7 +24,6 @@ $().ready(function() {
     
 });
 
-
 function loadSave(){
 		
 		loadData(function(res){		
@@ -32,6 +31,7 @@ function loadSave(){
 				var itemRes = jQuery.parseJSON(res.msg);
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
+				$('#projectNameTitle').text(itemRes[0].projectName);
 				setReShow(itemRes[0].item,0);					
 				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
@@ -83,11 +83,11 @@ function getCacheSave(){
 	   
 	    if(lastItem.length == 0){
 	    	lastItem = new Array();
-			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()));
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()),$('#projectNameTitle').tex());
 			saveCache();
 	    }else if(isDiffer){
 	    	lastItem = new Array();
-			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()));
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()),$('#projectNameTitle').tex());
 			saveCache();
 	    }
 	    
@@ -421,6 +421,8 @@ function openProjectModel(){
 			var modelVal = $('.modelProductContent .modelPActive');
 			if(modelVal.length>0){
 				reShow(modelVal.attr('data-id'));
+				var s = modelVal.text();
+				$('#projectNameTitle').text(modelVal.text());
 				$('#loadProductModel').hide();
 			}
 		});
@@ -1857,10 +1859,11 @@ function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId
 	this.picScale =  picScale;
 }
 
-function cacheEntity(item,id,projectId){
+function cacheEntity(item,id,projectId,projectName){
 	this.item =  item;
 	this.id = id;
 	this.projectId = projectId;
+	this.projectName = projectName;
 }
 
 //同步添加

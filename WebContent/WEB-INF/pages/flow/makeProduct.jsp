@@ -56,7 +56,7 @@
 				        <img class="noImg" src="/resources/images/flow/noInfo.png">
 				
 				       <div class="toolsHead">
-				             <div id="projectName" style="font-size: 1.4rem;font-weight: 500;color:#666;"></div>
+				             <div id="projectNameTitle" style="font-size: 1.4rem;color:#333;">未命名项目</div>
 						     <div class="toolTitle">制片工具</div>
 				             <div class="openTool" style="right:247px" id="openProejct">打开项目制片表</div>
 				             <div class="openTool addP" style="right:140px" id="openAdd"><div></div>添加资源</div>
@@ -176,7 +176,7 @@
            <div class="successModel">
                <div class="closeBtn"></div>
 			   <div class="oSContent">
-			        <div class="tdDes" style="padding-top:80px;">存在镜头脚本是否覆盖?</div>
+			        <div class="tdDes" style="padding-top:80px;">存在制片工具是否覆盖?</div>
 			        <div class="sureBtn" style="padding-top:40px;">
 			           <div class="btn-c-r" id="toSame">确定</div>
 			           <div class="btn-c-g" id="toCSame">取消</div>
