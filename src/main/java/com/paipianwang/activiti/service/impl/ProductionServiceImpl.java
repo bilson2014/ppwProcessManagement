@@ -84,10 +84,13 @@ public class ProductionServiceImpl implements ProductionService {
 				if (type.getTypeId().equals(resource.getTypeId())) {
 
 					resource.setTypeName(type.getTypeName());
+					resource.setTypeDate(type.getCreateDate());
 					resource.setCategory(type.getParent().getParent().getTypeName());
 					resource.setCategoryId(type.getParent().getParent().getTypeId());
+					resource.setCategoryDate(type.getParent().getParent().getCreateDate());
 					resource.setSubType(type.getParent().getTypeName());
 					resource.setSubTypeId(type.getParentId());
+					resource.setSubTypeDate(type.getParent().getCreateDate());
 
 					/*
 					 * if(ValidateUtil.isValid(resource.getName())) {
@@ -103,6 +106,34 @@ public class ProductionServiceImpl implements ProductionService {
 
 					break;
 				}
+			}
+		}
+		//处理标准化类型不存在情况--直接找到资源类型对应类型
+		for (PmsProductionInfo.ProductionResource resource : info.getResources()) {
+			if (resource.getCategoryId() != null || resource.getSubTypeId()!=null) {
+				continue;
+			}
+			Long[] corrTypes=ProductionResource.getEnum(resource.getType()).getQuotationType();
+			for(Long resourceType:corrTypes) {
+				//根据资源找类型
+				for (PmsQuotationType type : types) {
+					if(resourceType.equals(type.getTypeId())) {
+						if(PmsQuotationType.GRADE_SUBTYPE.equals(type.getGrade())) {
+							resource.setCategory(type.getParent().getTypeName());
+							resource.setCategoryId(type.getParent().getTypeId());
+							resource.setCategoryDate(type.getParent().getCreateDate());
+							
+							resource.setSubType(type.getTypeName());
+							resource.setSubTypeId(type.getTypeId());
+							resource.setSubTypeDate(type.getCreateDate());
+						}else if(PmsQuotationType.GRADE_TYPE.equals(type.getGrade())) {
+							resource.setCategory(type.getTypeName());
+							resource.setCategoryId(type.getTypeId());
+							resource.setCategoryDate(type.getCreateDate());	
+						}
+					}
+				}
+				
 			}
 		}
 	}
