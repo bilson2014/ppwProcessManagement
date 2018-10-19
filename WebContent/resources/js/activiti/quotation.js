@@ -1167,16 +1167,13 @@ function productLineEven(){
 function checkLoadProduct(num){
 	
 loadData(function(res){
-	
-	
-		
+			
 		if(res.code !=0){
 			successToolTipShows(res.msg);
 			loadProductTable(num);
 		}else{
 			loadProductTable(num);
 		}
-	
 
 	}, getContextPath() + '/quotation/temp/validate/'+num,null);
 	

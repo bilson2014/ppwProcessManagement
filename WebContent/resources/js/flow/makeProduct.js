@@ -22,6 +22,9 @@ $().ready(function() {
     	sizeChangeImg();
     } 
     
+   
+
+    
 });
 
 function loadSave(){
@@ -32,7 +35,8 @@ function loadSave(){
 				$('#projectId').val(itemRes[0].projectId);
 				$('#id').val(itemRes[0].id);
 				$('#projectNameTitle').text(itemRes[0].projectName);
-				setReShow(itemRes[0].item,0);					
+				nowItem = itemRes[0].item;
+				setReShow(nowItem,0);					
 				$(window.parent.document).find('.frame').css('height',$('.page').height() + 50);
 			}
 		}, getContextPath() + '/cache/get',$.toJSON({
@@ -68,6 +72,10 @@ function getCacheSave(){
 		var subTypeId= $(imgItem[int]).attr('data-subTypeId');
 		var subType= $(imgItem[int]).attr('data-subType');
 		var picScale= $(imgItem[int]).attr('data-picScale');
+		var categoryDate = $(imgItem[int]).attr('data-categoryDate');
+		var subTypeDate = $(imgItem[int]).attr('data-subTypeDate');
+		var typeDate = $(imgItem[int]).attr('data-typeDate');
+		
 				
 		if(lastItem.length >0){
 			if(lastItem[0].item.length != imgItem.length){
@@ -78,16 +86,19 @@ function getCacheSave(){
 
 			}
 		}
-		cacheItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+		cacheItem.push(arrStr);
 	}
+	
 	   
+	    var proName = $('#projectNameTitle').text();
 	    if(lastItem.length == 0){
 	    	lastItem = new Array();
-			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()),$('#projectNameTitle').tex());
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val(),proName));
 			saveCache();
 	    }else if(isDiffer){
 	    	lastItem = new Array();
-			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val()),$('#projectNameTitle').tex());
+			lastItem.push(new cacheEntity(cacheItem,$('#id').val(),$('#projectId').val(),proName));
 			saveCache();
 	    }
 	    
@@ -96,11 +107,9 @@ function getCacheSave(){
 function saveCache(){
 	
     var jsonStr = JSON.stringify(lastItem);
-	
-	loadData(function(item){
-		
 
-		
+	loadData(function(item){
+			
 	}, getContextPath() + '/cache/save', $.toJSON({
 		type:3,
 		dataContent:jsonStr
@@ -172,38 +181,13 @@ function sizeChangeImg(){
 }
 
 
-
-//打开项目
-function openProejct(){
-	
-	$('#openProejct').off('click').on('click',function(){
-		$('#loadProductModel').show();
-		$(".modelProductContent").html('');
-		$('#CheckloadProduct').text('打开');
-		loadData(function(src){
-			for (var int = 0; int < src.length; int++) {
-				 $(".modelProductContent").append(juicer(productList_tpl.project_Tpl,{file:src[int]}));	 
-			}
-			initCheckProject();
-			$('#CheckloadProduct').off('click').on('click',function(){
-				var modelVal = $('.modelProductContent .modelPActive');
-				if(modelVal.length>0){
-				//	reShow(modelVal.attr('data-id'));
-					$('#loadProductModel').hide();
-				}
-			});
-			
-		}, getContextPath() + '/continuity/list/synergetic','');
-		
-	});
-	
-}
-
 //回显 
 function reShow(proId){
 	
 	loadData(function(src){
-		setReShow(src.resources,0);	
+		
+		nowItem = src.resources
+		setReShow(nowItem,0);	
 		$('#projectId').val(src.projectId);
 		$('#id').val(src.id);
 	}, getContextPath() + '/production/get/'+proId,'');
@@ -222,7 +206,9 @@ function setReShow(item,num){
 	if(num == 0){
 		$('#setProduct').html('');
 	}
-	
+		
+	var item = sortItem(item)
+
 	//生成父节点
 	for (var int = 0; int < item.length; int++) {
 		var theItem = $(item)[int];
@@ -323,12 +309,15 @@ function setReShow(item,num){
 					}
 				}
 		 }
+	
 	initOption();
 	$(window.parent.parent.parent.document).find('html').scrollTop(0);
 	$(window.parent.parent.parent.document).find('body').scrollTop(0);
 	$(window.parent.document).find('.frame').css('height',$('.page').height() + 300);
 	setSize();
 	checkWordsLength();
+	toCleanNullItem();
+	saveCache()
 }
 
 /*  */
@@ -450,7 +439,15 @@ function getValue(projectId,who){
 		var subTypeId= $(imgItem[int]).attr('data-subTypeId');
 		var subType= $(imgItem[int]).attr('data-subType');
 		var picScale= $(imgItem[int]).attr('data-picScale');
-		nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+		var subTypeId= $(imgItem[int]).attr('data-subTypeId');
+		var subType= $(imgItem[int]).attr('data-subType');
+		var picScale= $(imgItem[int]).attr('data-picScale');
+		var categoryDate = $(imgItem[int]).attr('data-categoryDate');
+		var subTypeDate = $(imgItem[int]).attr('data-subTypeDate');
+		var typeDate = $(imgItem[int]).attr('data-typeDate');
+		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+	//	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale,categoryDate,subTypeDate,typeDate));
+		nowItem.push(arrStr);
 	}
 	
 	var setArray = JSON.stringify(nowItem);
@@ -587,6 +584,7 @@ function delItem(){
 			$('.toolBtn').addClass('hide');
 			$('#id').val('');
 			$('#projectId').val('');
+			$('#projectNameTitle').text('');
 			$('#resources').val('');	
 			lastItem = new Array();
 			saveCache();
@@ -594,16 +592,23 @@ function delItem(){
 	});
 	
 	$('.moveItem').off('click').on('click',function(){
-	    var nowItem = $(this);
+	    var nowItemDel = $(this);
 		$('#checkSureModel').show();
 		$('.tdDes').text('确认删除吗');
 		$(window.parent.parent.parent.document).find('html').scrollTop(0);
 		$(window.parent.parent.parent.document).find('body').scrollTop(0);
 		$('#tModel').off('click').on('click',function(){
+			var id = nowItemDel.parent().parent().parent().attr('data-id');
+			var typeId = nowItemDel.parent().parent().parent().attr('data-typeId');
+			var subTypeId = nowItemDel.parent().parent().parent().attr('data-subTypeId');
+			var name = nowItemDel.parent().parent().parent().attr('data-name');
+			
+			clearDataItem(id,typeId,subTypeId,name);
 			$('#checkSureModel').hide();
-			nowItem.parent().parent().parent().remove();
+			nowItemDel.parent().parent().parent().remove();
 			successToolTipShow('删除成功');
 			toCleanNullItem();
+			
 		});
 	});
 	
@@ -616,6 +621,24 @@ function delItem(){
 	});
 	
 }
+
+function clearDataItem(id,typeId,subTypeId,name){
+	
+	for (var int = 0; int < nowItem.length; int++) {
+		
+		var ids = nowItem[int].id;
+		var typeIds = nowItem[int].typeId;
+		var subTypeIds = nowItem[int].subTypeId;
+		var names = nowItem[int].name;
+		
+		if(ids == id && typeIds == typeId && subTypeIds == subTypeId  && names == name){
+			nowItem = delArray(nowItem,int)
+		}
+		
+	}
+
+}
+
 function updatePrice(){
 	
 	
@@ -1232,6 +1255,7 @@ function searchActor(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		$("#addSetProductInfo").html('');
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();	
 		detailItem();
@@ -1263,6 +1287,7 @@ function searchDirector(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		$("#addSetProductInfo").html('');
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
@@ -1289,6 +1314,7 @@ function searchDevice(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		$("#addSetProductInfo").html('');
 		$("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		initAddCanEven();
 		detailItem();
@@ -1315,6 +1341,7 @@ function searchStudio(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1342,6 +1369,7 @@ function searchCameraman(){
 	var specialSkill=$('#cameramanSkill').attr('data-id');
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1368,6 +1396,7 @@ function searchPersonWithType(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1391,6 +1420,7 @@ function searchPerson(){
 	var endPrice = $('#endPrice').val();
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1417,6 +1447,7 @@ function searchClothing(){
 	var accredit = $('#clothingAccredit').attr('data-id');
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1444,6 +1475,7 @@ function searchProps(){
 	var accredit = $('#propsAccredit').attr('data-id');
 	
 	loadData(function(src){
+		 $("#addSetProductInfo").html('');
 		 $("#addSetProductInfo").append(juicer(productList_tpl.search_Tpl,{itemInfo:src}));
 		 initAddCanEven();
 		 detailItem();
@@ -1527,6 +1559,21 @@ function setCheckRedDevice(){
 }
 
 
+//var id= $(imgItem[int]).attr('data-id');
+//var type= $(imgItem[int]).attr('data-type');
+//var price= $(imgItem[int]).attr('data-price');
+//var name= $(imgItem[int]).attr('data-name');
+//var mainPhoto= $(imgItem[int]).attr('data-mainPhoto');
+//var typeId= $(imgItem[int]).attr('data-typeId');
+//var typeName= $(imgItem[int]).attr('data-typeName');
+//var categoryId= $(imgItem[int]).attr('data-categoryId');
+//var category= $(imgItem[int]).attr('data-category');
+//var subTypeId= $(imgItem[int]).attr('data-subTypeId');
+//var subType= $(imgItem[int]).attr('data-subType');
+//var picScale= $(imgItem[int]).attr('data-picScale');
+//nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+
+
 function initAddCanEven(){
 	
 	$('.addImgContent').off('click').on('click',function(){
@@ -1534,7 +1581,7 @@ function initAddCanEven(){
 		$(this).parent().parent().parent().addClass('itemCommonRedS');
 		$(this).hide();
 		$(this).parent().find('.cancelImgContent').show();
-		var item = $(this).parent().parent().parent();
+		var item = $(this).parent().parent().parent();		
 		toGetAddItem(item);
 	});
 	
@@ -1794,7 +1841,7 @@ var productList_tpl = {
 																																										
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
-					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryDate='${item.categoryDate}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}'data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}  />'+
 		              '		<div class="showNoImgInfo">'+
 		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
@@ -1819,7 +1866,7 @@ var productList_tpl = {
 					  "	{@/each}"
 		 ].join(""),
 		 item_Tpl:[
-					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryDate='${item.categoryDate}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} >'+
 		              '		<div class="showNoImgInfo">'+
 		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
@@ -1844,7 +1891,7 @@ var productList_tpl = {
 		 ].join(""),
 }
 
-function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale){
+function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale,categoryDate,subTypeDate,typeDate){
 	this.id =  id;
 	this.type = type;
 	this.price = price;
@@ -1857,6 +1904,9 @@ function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId
 	this.subTypeId = subTypeId;
 	this.subType = subType;
 	this.picScale =  picScale;
+	this.categoryDate = categoryDate;
+	this.subTypeDate = subTypeDate;
+	this.typeDate = typeDate;
 }
 
 function cacheEntity(item,id,projectId,projectName){
@@ -1869,7 +1919,6 @@ function cacheEntity(item,id,projectId,projectName){
 //同步添加
 function toGetAddItem(item){
 	
-		    nowItem = new Array();
 			var theValue = $(item);
 			var id= theValue.attr('data-id');
 			var type= theValue.attr('data-type');
@@ -1883,15 +1932,21 @@ function toGetAddItem(item){
 			var subTypeId= theValue.attr('data-subTypeId');
 			var subType= theValue.attr('data-subType');
 			var picScale= theValue.attr('data-picScale');
-			nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
-            setReShow(nowItem,1);
-
+			var subTypeId= theValue.attr('data-subTypeId');
+			var subType= theValue.attr('data-subType');
+			var picScale= theValue.attr('data-picScale');
+			var categoryDate = theValue.attr('data-categoryDate');
+			var subTypeDate = theValue.attr('data-subTypeDate');
+			var typeDate = theValue.attr('data-typeDate');
+			var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+			nowItem.push(arrStr);
+			setReShow(nowItem,1);
 	
 }
 //同步删除
 function toGetDelItem(item){
 	
-    nowItem = new Array();
+	var delArray = new Array(); 
 	var theValue = $(item);
 	var id= theValue.attr('data-id');
 	var type= theValue.attr('data-type');
@@ -1905,10 +1960,34 @@ function toGetDelItem(item){
 	var subTypeId= theValue.attr('data-subTypeId');
 	var subType= theValue.attr('data-subType');
 	var picScale= theValue.attr('data-picScale');
-	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
-	clearCancelItem(nowItem);
+	var categoryDate= theValue.attr('data-categoryDate');
+	var subTypeDate= theValue.attr('data-subTypeDate');
+	var typeDate= theValue.attr('data-typeDate');
+	var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+	delArray.push(arrStr);
+//	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
+	clearCancelItem(delArray);
     toCleanNullItem();
+    clearData(delArray);
     
+}
+
+function clearData(item){
+
+	for (var int = 0; int < nowItem.length; int++) {
+		
+		var id = nowItem[int].id;
+		var typeId = nowItem[int].typeId;
+		var subTypeId = nowItem[int].subTypeId;
+		var name = nowItem[int].name;
+		
+		if(id == item[0].id && typeId == item[0].typeId && subTypeId == item[0].subTypeId && name == item[0].name){
+			nowItem = delArray(nowItem,int)
+		}
+		
+	}
+	
+	
 }
 
 function clearCancelItem(item){
@@ -2021,10 +2100,8 @@ function checkWordsLength(){
 		for (var int = 0; int < wordH.length; int++) {
 			 var nowItem = $(wordH[int]);
 			 var str = nowItem.text().trim();
-			 console.info(str);
-			 console.info(str.length);
-			 if(str.length > 8){
-				 str=str.substring(0,8);
+			 if(str.length > 6){
+				 str=str.substring(0,6);
 				 nowItem.text(str+'...');
 			 }
 		}
@@ -2035,10 +2112,8 @@ function checkWordsLength(){
 		for (var int = 0; int < wordV.length; int++) {
 			 var nowItem = $(wordV[int]);
 			 var str = nowItem.text().trim();
-			  console.info(str);
-			  console.info(str.length);
-			 if(str.length > 6){
-				 str=str.substring(0,6);
+			 if(str.length > 5){
+				 str=str.substring(0,5);
 				 nowItem.text(str);
 				 nowItem.parent().find('.showWords').append('<div>.</div>');
 				 nowItem.parent().find('.showWords').append('<div>.</div>');
@@ -2046,8 +2121,102 @@ function checkWordsLength(){
 			 }
 		}
 	}
+	
+	var wordW = $('.who');
+	if(wordW.length > 0){
+		for (var int = 0; int < wordW.length; int++) {
+			 var nowItem = $(wordW[int]);
+			 var str = nowItem.text().trim();
+			 if(str.length > 6){
+				 str=str.substring(0,6);
+				 nowItem.text(str + '...');
+			 }
+		}
+	}
 
 	
 }
 
+
+
+//新排序
+function sortItem(resources){
+	var temp;
+	for(var i=0;i<resources.length;i++){
+		for(var j=i;j<resources.length;j++){
+			if(compare(resources[i],resources[j])>0){
+				temp=resources[i];
+				resources[i]=resources[j];
+				resources[j]=temp;
+			}
+		}
+	}
+	return resources
+}
+
+
+function compare(nodeA,nodeB){
+
+	var typeSort=compareDateAndId(nodeA.categoryDate,nodeB.categoryDate,nodeA.categoryId,nodeB.categoryId);
+	if(typeSort==0){
+		
+		var typeName=compareDateName(nodeA.typeName,nodeB.typeName);
+		
+		if(typeName !=0){
+			return typeName;
+		}
+		var itemSort=compareDateAndId(nodeA.subTypeDate,nodeB.subTypeDate,nodeA.subTypeId,nodeB.subTypeId);
+		
+		if(itemSort==0){
+			
+			var itemName=compareDateName(nodeA.itemName,nodeB.itemName);
+			if(itemName !=0){
+				return itemName;
+			}
+			return compareDateAndId(nodeA.typeDate,nodeB.typeDate,nodeA.typeId,nodeB.typeId);
+		}else{
+			return itemSort;
+		}
+	}else{
+		return typeSort;
+	}
+}
+
+function compareDateAndId(dateA,dateB,IdA,IdB){
+	if(dateA==null || dateB==null || dateA==dateB){
+		if(IdA > IdB){
+			return 1;
+		}else if(IdA < IdB){
+			return -1;
+		}else{
+			return 0;
+		}
+	}else if(dateA > dateB){
+		return 1;
+	}else{
+		return -1;
+	}
+}
+
+function compareDateName(dIdA,IdB){
+	if(dIdA > IdB){
+		return 1;
+	}else if(dIdA < IdB){
+		return -1;
+	}else{
+		return 0;
+	}
+}
+
+//删除数组
+function delArray(data,n) {
+	
+    if(n<0){
+    	return data;
+	}
+	else{
+		return data.slice(0,n).concat(data.slice(n+1,data.length));
+	}
+	
+}
 

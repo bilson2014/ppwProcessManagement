@@ -63,7 +63,7 @@
 	
 	<div class="page">
 	       <div class="toolsHead" style="height:54px;line-height:54px;" >
-	             <div id="projectName" style="font-size: 1.4rem;font-weight: 500;color:#666;">未命名</div>
+	             <div id="projectName" style="font-size: 1.4rem;font-weight: 500;color:#666;">未命名项目</div>
 	             <div class="toolTitle">分镜工具</div>
 	             <div class="openTool" style="top:12px">打开项目分镜</div>
 	       </div>

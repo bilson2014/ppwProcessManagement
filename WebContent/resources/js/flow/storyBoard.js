@@ -323,7 +323,7 @@ function getValue(projectId,who){
 		       if (this.status === 200) {  
 		    	   // 返回200
 		    	   var name = $('#projectName').text();
-		    	   if(name == "未命名"){
+		    	   if(name == "未命名项目"){
 		    		   name = "分镜脚本"
 		    	   }else{
 		    		   name = "《"+name+"》分镜脚本";
