@@ -207,11 +207,11 @@ function setReShow(item,num){
 		$('#setProduct').html('');
 	}
 		
-	var item = sortItem(item)
-
+	nowItem = sortItem(item)
+	$('#setProduct').html('')
 	//生成父节点
-	for (var int = 0; int < item.length; int++) {
-		var theItem = $(item)[int];
+	for (var int = 0; int < nowItem.length; int++) {
+		var theItem = $(nowItem)[int];
 		var hasBigItem = $('.BigItem');
 		if(hasBigItem.length >0){
 			var hasSame = false;
@@ -234,8 +234,8 @@ function setReShow(item,num){
 		}
 	}
 	//生成子节点
-	for (var int = 0; int < item.length; int++) {
-		 var theItem = $(item)[int];
+	for (var int = 0; int < nowItem.length; int++) {
+		 var theItem = $(nowItem)[int];
 		 var hasBigItem = $('.BigItem');
 		 var checkMidItem = $('.checkMidItem');
 		 
@@ -280,8 +280,8 @@ function setReShow(item,num){
 	}
 	
 	//生成内容
-	for (var int = 0; int < item.length; int++) {
-		 var theItem = $(item)[int];
+	for (var int = 0; int < nowItem.length; int++) {
+		 var theItem = $(nowItem)[int];
 		 var checkMidItem = $('.checkMidItem');
 				for (var int2 = 0; int2 < checkMidItem.length; int2++) {
 					var checkSame = $(checkMidItem[int2]).attr('data-id');
@@ -586,6 +586,7 @@ function delItem(){
 			$('#projectId').val('');
 			$('#projectNameTitle').text('');
 			$('#resources').val('');	
+			nowItem = new Array();
 			lastItem = new Array();
 			saveCache();
 		});
