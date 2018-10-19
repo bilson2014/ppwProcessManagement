@@ -114,27 +114,26 @@ public class ProductionServiceImpl implements ProductionService {
 				continue;
 			}
 			Long[] corrTypes=ProductionResource.getEnum(resource.getType()).getQuotationType();
-			for(Long resourceType:corrTypes) {
-				//根据资源找类型
-				for (PmsQuotationType type : types) {
-					if(resourceType.equals(type.getTypeId())) {
-						if(PmsQuotationType.GRADE_SUBTYPE.equals(type.getGrade())) {
-							resource.setCategory(type.getParent().getTypeName());
-							resource.setCategoryId(type.getParent().getTypeId());
-							resource.setCategoryDate(type.getParent().getCreateDate());
-							
-							resource.setSubType(type.getTypeName());
-							resource.setSubTypeId(type.getTypeId());
-							resource.setSubTypeDate(type.getCreateDate());
-						}else if(PmsQuotationType.GRADE_TYPE.equals(type.getGrade())) {
-							resource.setCategory(type.getTypeName());
-							resource.setCategoryId(type.getTypeId());
-							resource.setCategoryDate(type.getCreateDate());	
-						}
+			Long resourceType=corrTypes[0];//默认类型取第一个的
+			// 根据资源找类型--也可以写一变量，存resourceKey及对应类型，后面的对比resourceKey相同则直接取值
+			for (PmsQuotationType type : types) {
+				if (resourceType.equals(type.getTypeId())) {
+					if (PmsQuotationType.GRADE_SUBTYPE.equals(type.getGrade())) {
+						resource.setCategory(type.getParent().getTypeName());
+						resource.setCategoryId(type.getParent().getTypeId());
+						resource.setCategoryDate(type.getParent().getCreateDate());
+
+						resource.setSubType(type.getTypeName());
+						resource.setSubTypeId(type.getTypeId());
+						resource.setSubTypeDate(type.getCreateDate());
+					} else if (PmsQuotationType.GRADE_TYPE.equals(type.getGrade())) {
+						resource.setCategory(type.getTypeName());
+						resource.setCategoryId(type.getTypeId());
+						resource.setCategoryDate(type.getCreateDate());
 					}
+					break;
 				}
-				
-			}
+			}	
 		}
 	}
 
