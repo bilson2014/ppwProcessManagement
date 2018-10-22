@@ -269,7 +269,7 @@ public class ProductionServiceImpl implements ProductionService {
 			}
 			
 			resource.setTypeId(entity.getTypeId());
-			resource.setRemark(entity.getRemark());
+//			resource.setRemark(entity.getRemark());
 			info.getResources().add(resource);
 		
 		}
