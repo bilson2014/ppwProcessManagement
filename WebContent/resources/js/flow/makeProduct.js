@@ -75,8 +75,10 @@ function getCacheSave(){
 		var categoryDate = $(imgItem[int]).attr('data-categoryDate');
 		var subTypeDate = $(imgItem[int]).attr('data-subTypeDate');
 		var typeDate = $(imgItem[int]).attr('data-typeDate');
-		
-				
+		var categoryEN = $(imgItem[int]).attr('data-categoryEN');
+		var subTypeEN = $(imgItem[int]).attr('data-subTypeEN');;
+		var typeEName = $(imgItem[int]).attr('data-typeEName');;
+			
 		if(lastItem.length >0){
 			if(lastItem[0].item.length != imgItem.length){
 				isDiffer = true;
@@ -86,7 +88,8 @@ function getCacheSave(){
 
 			}
 		}
-		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+
+		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate,categoryEN:categoryEN,subTypeEN:subTypeEN,typeEName:typeEName};
 		cacheItem.push(arrStr);
 	}
 	
@@ -445,7 +448,10 @@ function getValue(projectId,who){
 		var categoryDate = $(imgItem[int]).attr('data-categoryDate');
 		var subTypeDate = $(imgItem[int]).attr('data-subTypeDate');
 		var typeDate = $(imgItem[int]).attr('data-typeDate');
-		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+		var categoryEN = $(imgItem[int]).attr('data-categoryEN');
+		var subTypeEN = $(imgItem[int]).attr('data-subTypeEN');;
+		var typeEName = $(imgItem[int]).attr('data-typeEName');;
+		var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate,categoryEN:categoryEN,subTypeEN:subTypeEN,typeEName:typeEName};
 	//	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale,categoryDate,subTypeDate,typeDate));
 		nowItem.push(arrStr);
 	}
@@ -1842,7 +1848,7 @@ var productList_tpl = {
 																																										
 		 search_Tpl:[
 		              " {@each itemInfo.resources as item}"+ 
-					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryDate='${item.categoryDate}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}'data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+					  "	<div class=' {@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryEN='${item.categoryEN}' data-subTypeEN='${item.subTypeEN}' data-subTypeEN='${item.subTypeEN}' data-typeEName='${item.typeEName}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}'data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName}  />'+
 		              '		<div class="showNoImgInfo">'+
 		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
@@ -1867,7 +1873,7 @@ var productList_tpl = {
 					  "	{@/each}"
 		 ].join(""),
 		 item_Tpl:[
-					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryDate='${item.categoryDate}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
+					  "	<div class='{@if item.picScale == 2 }itemContentFive{@/if} {@if item.picScale == 1 }itemContentFour{@/if} itemCommon' data-categoryEN='${item.categoryEN}' data-subTypeEN='${item.subTypeEN}' data-subTypeEN='${item.subTypeEN}' data-categoryDate='${item.categoryDate}' data-subTypeDate='${item.subTypeDate}' data-typeDate='${item.typeDate}' data-picScale='${item.picScale}' data-id='${item.id}' data-type='${item.type}' data-price='${item.price}' data-name='${item.name}' data-mainPhoto='${item.mainPhoto}' data-typeId='${item.typeId}' data-typeName='${item.typeName}' data-categoryId='${item.categoryId}' data-category='${item.category}' data-subTypeId='${item.subTypeId}' data-subType='${item.subType}'>"+
 		              '		<img class="setSize" src="' + getResourcesName()+ '${item.mainPhoto}" alt=${item.typeName} >'+
 		              '		<div class="showNoImgInfo">'+
 		              '           <div class=" {@if item.picScale == 2 }showWords{@/if} {@if item.picScale == 1 }showWordFour{@/if} ">'+
@@ -1892,7 +1898,7 @@ var productList_tpl = {
 		 ].join(""),
 }
 
-function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale,categoryDate,subTypeDate,typeDate){
+function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale,categoryDate,subTypeDate,typeDate,categoryEN,subTypeEN,typeEName){
 	this.id =  id;
 	this.type = type;
 	this.price = price;
@@ -1908,6 +1914,9 @@ function resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId
 	this.categoryDate = categoryDate;
 	this.subTypeDate = subTypeDate;
 	this.typeDate = typeDate;
+	this.categoryEN = categoryEN;
+	this.subTypeEN = subTypeEN;
+	this.typeEName = typeEName;
 }
 
 function cacheEntity(item,id,projectId,projectName){
@@ -1939,7 +1948,10 @@ function toGetAddItem(item){
 			var categoryDate = theValue.attr('data-categoryDate');
 			var subTypeDate = theValue.attr('data-subTypeDate');
 			var typeDate = theValue.attr('data-typeDate');
-			var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+			var categoryEN = theValue.attr('data-categoryEN');
+			var subTypeEN = theValue.attr('data-subTypeEN');
+			var typeEName = theValue.attr('data-typeEName');
+			var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate,categoryEN:categoryEN,subTypeEN:subTypeEN,typeEName:typeEName};
 			nowItem.push(arrStr);
 			setReShow(nowItem,1);
 	
@@ -1964,7 +1976,10 @@ function toGetDelItem(item){
 	var categoryDate= theValue.attr('data-categoryDate');
 	var subTypeDate= theValue.attr('data-subTypeDate');
 	var typeDate= theValue.attr('data-typeDate');
-	var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate};
+	var categoryEN = theValue.attr('data-categoryEN');
+	var subTypeEN = theValue.attr('data-subTypeEN');
+	var typeEName = theValue.attr('data-typeEName');
+	var arrStr = {id:id,type:type,price:price,name:name,mainPhoto:mainPhoto,typeId:typeId,typeName:typeName,categoryId:categoryId,category:category,subTypeId:subTypeId,subType:subType,picScale:picScale,categoryDate:categoryDate,subTypeDate:subTypeDate,typeDate:typeDate,categoryEN:categoryEN,subTypeEN:subTypeEN,typeEName:typeEName};
 	delArray.push(arrStr);
 //	nowItem.push(new resourcesEntity(id,type,price,name,mainPhoto,typeId,typeName,categoryId,category,subTypeId,subType,picScale));
 	clearCancelItem(delArray);
