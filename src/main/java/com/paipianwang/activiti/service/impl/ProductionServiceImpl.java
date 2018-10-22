@@ -85,12 +85,15 @@ public class ProductionServiceImpl implements ProductionService {
 
 					resource.setTypeName(type.getTypeName());
 					resource.setTypeDate(type.getCreateDate());
+					resource.setTypeEName(type.getEnName());
 					resource.setCategory(type.getParent().getParent().getTypeName());
 					resource.setCategoryId(type.getParent().getParent().getTypeId());
 					resource.setCategoryDate(type.getParent().getParent().getCreateDate());
+					resource.setCategoryEN(type.getParent().getParent().getEnName());
 					resource.setSubType(type.getParent().getTypeName());
 					resource.setSubTypeId(type.getParentId());
 					resource.setSubTypeDate(type.getParent().getCreateDate());
+					resource.setSubTypeEN(type.getParent().getEnName());
 
 					/*
 					 * if(ValidateUtil.isValid(resource.getName())) {
@@ -122,14 +125,17 @@ public class ProductionServiceImpl implements ProductionService {
 						resource.setCategory(type.getParent().getTypeName());
 						resource.setCategoryId(type.getParent().getTypeId());
 						resource.setCategoryDate(type.getParent().getCreateDate());
+						resource.setCategoryEN(type.getParent().getEnName());
 
 						resource.setSubType(type.getTypeName());
 						resource.setSubTypeId(type.getTypeId());
 						resource.setSubTypeDate(type.getCreateDate());
+						resource.setSubTypeEN(type.getEnName());
 					} else if (PmsQuotationType.GRADE_TYPE.equals(type.getGrade())) {
 						resource.setCategory(type.getTypeName());
 						resource.setCategoryId(type.getTypeId());
 						resource.setCategoryDate(type.getCreateDate());
+						resource.setCategoryEN(type.getEnName());
 					}
 					break;
 				}
@@ -263,6 +269,7 @@ public class ProductionServiceImpl implements ProductionService {
 			}
 			
 			resource.setTypeId(entity.getTypeId());
+			resource.setRemark(entity.getRemark());
 			info.getResources().add(resource);
 		
 		}
