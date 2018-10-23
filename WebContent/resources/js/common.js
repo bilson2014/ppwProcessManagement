@@ -307,7 +307,7 @@ function getDfsHostName(){
  */
 function getResourcesName(){
 	//var rPath = "http://resource.apaipian.com/resource/";
-	var rPath = "https://file1.apaipian.com:8000/";
+	var rPath = "https://test.apaipian.com:8000/";
 	return rPath;
 }
 
