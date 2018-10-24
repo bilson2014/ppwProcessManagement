@@ -587,13 +587,13 @@ var costFunction = {
 					$(this).val(6);
 				}
 				if(!checkRate($(this).val())||!isInteger($(this).val())){
-					$(this).val(6);
+					$('#tax').val(Math.floor($("#tax").val() * 100) / 100); 
 				}
 				costFunction.finalCost();
 			});
 			$("#free").blur(function(){
 				if(!checkRate($(this).val())||!isInteger($(this).val())){
-					$(this).val(0);
+					$('#free').val(Math.floor($("#free").val() * 100) / 100); 
 				}
 				costFunction.finalCost();
 			});			
