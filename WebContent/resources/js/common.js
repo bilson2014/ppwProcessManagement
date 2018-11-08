@@ -9,10 +9,8 @@ var InterValObj; // timer变量，控制时间 - 注册
 var newPath = "javascript:this.src='/resources/images/index/noImg.jpg';";
 var cacheTime = 3000;
 
-//var UrlDo = "apaipian.com";
-//var UrlDo = "test.apaipian.com";
-var UrlDo = "localhost";
-//var UrlDo = "192.168.0.147";
+var UrlDo = window.location.host;
+
 
 $().ready(function(){
 	getImgUrl();
@@ -152,7 +150,8 @@ function getData(Func,url){
 	});
 }
 function getUrl(){
-	return UrlDo;
+	var domain= UrlDo.match(/((?:\w+\.){1}(?:cn|top|com\.cn|com\.tw|com))/);
+	return domain[0];
 }
 
 // AJAX POST
