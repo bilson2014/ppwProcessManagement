@@ -41,7 +41,7 @@ public class ProductionController extends BaseController{
 	private ProductionService productionService;
 
 	/**
-	 * 分镜头脚本制作主页
+	 * 制片表制作主页
 	 * 
 	 * @param projectId
 	 * @param model
@@ -54,7 +54,7 @@ public class ProductionController extends BaseController{
 	}
 
 	/**
-	 * 获取用户参与过的进行中的项目分镜头脚本
+	 * 获取用户参与过的进行中的项目制片表
 	 * 
 	 * @param request
 	 * @return
@@ -66,7 +66,7 @@ public class ProductionController extends BaseController{
 	}
 
 	/**
-	 * 获取项目分镜头脚本 TODO 修改此种类型为PmsResult封装
+	 * 获取项目制片表 TODO 修改此种类型为PmsResult封装
 	 * 
 	 * @param projectId
 	 * @return
